@@ -2,6 +2,7 @@
 declare namespace Attributes {
   /** the accuracy in bits with which a number can be represented. */
   interface Precision<bits extends number> {
+    readonly _bits: bits;
   }
 
   /** a whole number; a number that is not a fraction. */
@@ -23,6 +24,8 @@ declare namespace Attributes {
   /** A constraint is a declarative type used in intersection types to specify a run time value validation  */
   interface Constraint {
   }
+
+
 }
 
 /** Hints to express how to encode a given string value */

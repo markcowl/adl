@@ -23,6 +23,8 @@ options: APIDL, AiDL, TSADL, AltDL, 1dl (ie, IDL, but 1 :) ,  , etc?
   - all unexpected OAI extensions (ie,`x-foo-bar` ) just add an @extension doc tag, and inline the value in the doctag?
   - Identify how third-party typings extensions work (ie, ARM specific things) and how others can add strong typing and support for custom extensions (and linting/restrictions,etc)
   - review how `tsconfig.json` and `package.json` are used to configure an ADL project.
+  - support Models/Resources/Operations spanning multiple API versions. (without having to perform disambiguation/deduplication/reduction )
+  - ensure that there is sufficient grammar to support describing deprecation, removal, renaming between API versions 
 
 #### - Loading/Saving an API model:
 From the following formats
@@ -34,6 +36,7 @@ From the following formats
 The loading and saving should preserve all source location as a persisted [SourceMap](#SourceMaps).
 
 The fidelity of the AM should permit 100% of the data in the input to be preserved. (including comments)
+
 
 #### - Abstract model (AM)
 - The AM should be able to be persisted to a serialized state (YAML)

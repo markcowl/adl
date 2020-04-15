@@ -2,7 +2,6 @@
 
 ## Globally Install packages:
  - `npm install -g @microsoft/rush` -- rush.js is used by this repository
- - `npm install -g @autorest/autorest` -- autorest beta needed to generate scenarios
 
 ## Local install
  - `npm install` - local install of typescript and eslint for the project
