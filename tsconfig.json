@@ -22,5 +22,10 @@
     ],
     "experimentalDecorators": true,
     "newLine": "LF",
+    "plugins": [
+      {
+        "name": "typescript-eslint-language-service"
+      }
+    ]
   }
 }

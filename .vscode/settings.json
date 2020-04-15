@@ -1,4 +1,5 @@
 {
+  "typescript.tsdk": "common/temp/node_modules/.registry.npmjs.org/typescript/3.8.3/node_modules/typescript/lib",
   "files.eol": "\n",
   "files.exclude": {
     "**/common/temp/**": true,
@@ -54,99 +55,11 @@
   "eslint.workingDirectories": [
     {
       "changeProcessCWD": true,
-      "directory": "./perks/async-io",
+      "directory": "./adl",
     },
     {
       "changeProcessCWD": true,
-      "directory": "./perks/autorest-extension-base",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./perks/codegen",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./perks/codegen-csharp",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./perks/codemodel-v3",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./perks/codemodel",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./perks/datastore",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./perks/deduplication",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./perks/eventing",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./perks/extension",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./perks/linq",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./perks/oai2-to-oai3",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./perks/object-comparison",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./perks/openapi",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./perks/tasks",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./perks/uri"
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./autorest/autorest"
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./autorest/core"
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./autorest.remodeler/remodeler"
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./autorest.modelerfour/modelerfour"
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./autorest.powershell/powershell"
-    }
-  ],
-  "eslint.autoFixOnSave": true,
-  "eslint.validate": [
-    "javascript",
-    {
-      "language": "typescript",
-      "autoFix": true,
-    },
-    {
-      "language": "typescriptreact",
-      "autoFix": false
+      "directory": "./adl.types",
     }
   ],
   "git.ignoreLimitWarning": true,
