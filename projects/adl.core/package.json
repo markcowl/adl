@@ -1,7 +1,7 @@
 {
-  "name": "@azure-tools/adl",
+  "name": "@azure-tools/adl.core",
   "version": "1.0.0",
-  "description": "ADL Parsing Tools",
+  "description": "ADL core library",
   "main": "dist/exports.js",
   "typings": "dist/exports.d.ts",
   "directories": {

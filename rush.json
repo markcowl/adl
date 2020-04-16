@@ -46,25 +46,37 @@
   "projects": [
     {
       "packageName": "@azure-tools/adl.core",
-      "projectFolder": "core",
+      "projectFolder": "projects/adl.core",
       "reviewCategory": "production",
       "shouldPublish": true
     },
     {
       "packageName": "@azure-tools/arm.types",
-      "projectFolder": "arm.types",
+      "projectFolder": "projects/arm.types",
       "reviewCategory": "production",
       "shouldPublish": true
     },
     {
       "packageName": "@azure-tools/adl.types",
-      "projectFolder": "adl.types",
+      "projectFolder": "projects/adl.types",
       "reviewCategory": "production",
       "shouldPublish": true
     },
     {
       "packageName": "@azure-tools/adl",
-      "projectFolder": "cli",
+      "projectFolder": "projects/adl",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@azure-tools/sourcemap",
+      "projectFolder": "projects/sourcemap",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@azure-tools/openapi",
+      "projectFolder": "projects/openapi",
       "reviewCategory": "production",
       "shouldPublish": true
     },
