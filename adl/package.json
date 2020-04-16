@@ -1,12 +1,8 @@
 {
-  "name": "@azure-tools/adl",
+  "name": "adl",
   "version": "1.0.0",
-  "description": "ADL Parsing Tools",
-  "main": "dist/exports.js",
-  "typings": "dist/exports.d.ts",
-  "directories": {
-    "doc": "docs"
-  },
+  "description": "ADL cli tool",
+  "main": "dist/main.js",
   "engines": {
     "node": ">=10.12.0"
   },
@@ -23,7 +19,8 @@
     "url": "git+https://github.com/Azure/adl.git"
   },
   "keywords": [
-    "adl"
+    "adl",
+    "cli"
   ],
   "author": "",
   "license": "MIT",
@@ -33,24 +30,12 @@
   "homepage": "https://github.com/Azure/adl#readme",
   "readme": "https://github.com/Azure/adl/blob/master/readme.md",
   "devDependencies": {
-    "@types/js-yaml": "3.12.1",
-    "@types/mocha": "5.2.5",
     "@types/node": "12.7.2",
-    "mocha": "5.2.0",
-    "mocha-typescript": "1.1.17",
+    "mocha": "7.1.1",
     "typescript": "~3.8.3",
     "@typescript-eslint/eslint-plugin": "2.28.0",
     "@typescript-eslint/parser": "2.28.0",
     "eslint": "6.8.0"
   },
-  "dependencies": {
-    "@azure-tools/openapi": "~3.0.0",
-    "@azure-tools/linq": "~3.1.0",
-    "@azure-tools/codegen": "~2.1.0",
-    "@azure-tools/async-io": "~3.0.0",
-    "source-map-support": "0.5.13",
-    "@azure-tools/adl.types": "~1.0.0",
-    "ts-morph": "~6.0.2",
-    "js-yaml": "3.13.1"
-  }
+  "dependencies": {}
 }
