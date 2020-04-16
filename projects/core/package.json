@@ -39,6 +39,7 @@
     "typescript": "~3.8.3",
     "@typescript-eslint/eslint-plugin": "2.28.0",
     "@typescript-eslint/parser": "2.28.0",
+    "typescript-eslint-language-service": "2.1.8",
     "eslint": "6.8.0"
   },
   "dependencies": {
@@ -47,7 +48,6 @@
     "@azure-tools/codegen": "~2.1.0",
     "@azure-tools/async-io": "~3.0.0",
     "source-map-support": "0.5.13",
-    "@azure-tools/adl.types": "~1.0.0",
     "ts-morph": "~6.0.2",
     "js-yaml": "3.13.1"
   }

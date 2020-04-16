@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import * as OpenAPI from '@azure-tools/openapi';
 
 import { loadADL } from '../serialization/adl/adl';
-import { loadOpenApi } from '../serialization/openapi/openapi';
+import { loadOpenApi } from '../serialization/openapiv3/serializer';
 import { readFile, writeFile, readdir, mkdir, exists, rmdir } from '@azure-tools/async-io';
 
 require('source-map-support').install();

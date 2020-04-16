@@ -46,7 +46,7 @@
   "projects": [
     {
       "packageName": "@azure-tools/adl.core",
-      "projectFolder": "projects/adl.core",
+      "projectFolder": "projects/core",
       "reviewCategory": "production",
       "shouldPublish": true
     },
@@ -79,12 +79,6 @@
       "projectFolder": "projects/openapi",
       "reviewCategory": "production",
       "shouldPublish": true
-    },
-    {
-      "packageName": "prototype",
-      "projectFolder": "examples/prototype",
-      "reviewCategory": "production",
-      "shouldPublish": false
     }
   ]
 }
