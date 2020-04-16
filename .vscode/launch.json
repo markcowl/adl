@@ -10,6 +10,7 @@
       "name": "Attach",
       "port": 9229,
       "smartStep": true,
+      "sourceMaps": true,
       "skipFiles": [
         "<node_internals>/**/*.js"
       ],
@@ -25,6 +26,7 @@
         "--timeout=2000000"
       ],
       "smartStep": true,
+      "sourceMaps": true,
       "skipFiles": [
         "<node_internals>/**/*.js"
       ],

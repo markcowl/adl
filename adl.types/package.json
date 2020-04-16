@@ -12,8 +12,8 @@
   "scripts": {
     "eslint-fix": "eslint  . --fix --ext .ts",
     "eslint": "eslint  . --ext .ts",
-    "build": "echo done.",
-    "watch": "echo none thanks.",
+    "build": "",
+    "watch": "",
     "prepare": "npm run build",
     "test": "npm run build && mocha dist/test"
   },

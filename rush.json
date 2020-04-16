@@ -45,14 +45,26 @@
   "telemetryEnabled": false,
   "projects": [
     {
-      "packageName": "@azure-tools/adl",
-      "projectFolder": "adl",
+      "packageName": "@azure-tools/adl.core",
+      "projectFolder": "core",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@azure-tools/arm.types",
+      "projectFolder": "arm.types",
       "reviewCategory": "production",
       "shouldPublish": true
     },
     {
       "packageName": "@azure-tools/adl.types",
       "projectFolder": "adl.types",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@azure-tools/adl",
+      "projectFolder": "cli",
       "reviewCategory": "production",
       "shouldPublish": true
     },

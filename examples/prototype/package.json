@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Example prototype",
   "main": "sample-service.adl.ts",
+  "scripts": {
+    "build": ""
+  },
   "devDependencies": {
     "typescript": "3.8.3",
     "@azure-tools/adl.types": "~1.0.0",

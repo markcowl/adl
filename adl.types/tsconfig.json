@@ -9,6 +9,8 @@
   ],
   "exclude": [
     "dist",
+    "../node_modules",
+    "definitions",
     "resources",
     "node_modules",
   ]

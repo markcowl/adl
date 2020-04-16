@@ -24,7 +24,7 @@ tsconfig.json   # the settings to use the ADL support
   "description": "My API Description for the SampleService",
   "main": "sample-service.adl.ts",
   "devDependencies": { 
-    "typescript": "~3.7.4",
+    "typescript": "~3.8.3",
     "@azure-tools/adl.types": "~1.0.0"
   }
 }

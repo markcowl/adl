@@ -2,12 +2,12 @@
  * Types for ADL
  */
 
-/// <reference path="./types/adl.d.ts" />
-/// <reference path="./types/autorest.d.ts" />
-/// <reference path="./types/azure.d.ts" />
-/// <reference path="./types/constraints.d.ts" />
-/// <reference path="./types/http.d.ts" />
-/// <reference path="./types/lib.d.ts" />
-/// <reference path="./types/openapi.d.ts" />
-/// <reference path="./types/primitives.d.ts" />
-/// <reference path="./types/arm.d.ts" />
+/// <reference path="./definitions/adl.d.ts" />
+/// <reference path="./definitions/autorest.d.ts" />
+/// <reference path="./definitions/azure.d.ts" />
+/// <reference path="./definitions/constraints.d.ts" />
+/// <reference path="./definitions/http.d.ts" />
+/// <reference path="./definitions/lib.d.ts" />
+/// <reference path="./definitions/openapi.d.ts" />
+/// <reference path="./definitions/primitives.d.ts" />
+/// <reference path="./definitions/arm.d.ts" />
