@@ -2,7 +2,6 @@
 import { Tracker, Path } from '@azure-tools/sourcemap';
 import { values, items, Dictionary } from '@azure-tools/linq';
 import { OnAdd, setPath } from '../model/element';
-import { Property } from '../serialization/adl/api';
 
 
 export function isObjectClean(obj: any): boolean {

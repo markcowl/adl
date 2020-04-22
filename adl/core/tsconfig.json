@@ -14,7 +14,7 @@
     "dist",
     "test/scenarios/**",
     "resources",
-    "node_modules",
+    "node_modules/**",
     "**/*.d.ts",
     "**/*.adl.ts"
   ]

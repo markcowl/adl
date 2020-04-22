@@ -5,7 +5,6 @@
 
 import * as assert from 'assert';
 import { readFile, writeFile, readdir, mkdir } from '@azure-tools/async-io';
-import { Api } from '../serialization/adl/api';
 
 const $example = `${__dirname}/../../../examples/prototype`;
 

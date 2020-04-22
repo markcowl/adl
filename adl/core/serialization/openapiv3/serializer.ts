@@ -5,7 +5,7 @@ import { VersionInfo } from '../../model/version-info';
 import { Dictionary, hasSchema, } from '@azure-tools/openapi/v3';
 import * as oai3 from '@azure-tools/openapi/v3';
 import { isReference, isVendorExtension, JsonReference, VendorExtensions, ExternalDocumentation, vendorExtensions, unzip, Tag } from '@azure-tools/openapi/common';
-import { Api, TypeReference } from '../adl/api';
+
 import { values, items } from '@azure-tools/linq';
 import { Visitor, anonymous } from '../../support/visitor';
 import { Path } from '@azure-tools/sourcemap';
@@ -20,10 +20,8 @@ export function warn(text: string) {
 
 /** takes an openapi3 model, converts it into a ADL model, and returns that */
 export function loadOpenApi(filename: string, model: oai3.Model) {
-  const result = new Api();
+  // nothing;
 
-
-  return result;
 }
 
 // node types that are objects
