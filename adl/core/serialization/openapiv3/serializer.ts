@@ -1,268 +1,251 @@
-import * as OpenAPI from '@azure-tools/openapi';
-import { dereference, JsonType, isReference } from '@azure-tools/openapi';
+import { ApiModel } from '../../model/aam';
+import { Schema } from '../../model/schema';
+import { HttpHeader } from '../../model/http/header';
+import { VersionInfo } from '../../model/version-info';
+import { Dictionary, hasSchema, } from '@azure-tools/openapi/v3';
+import * as oai3 from '@azure-tools/openapi/v3';
+import { isReference, isVendorExtension, JsonReference, VendorExtensions, ExternalDocumentation, vendorExtensions, unzip, Tag } from '@azure-tools/openapi/common';
 import { Api, TypeReference } from '../adl/api';
-import { values, Dictionary, items } from '@azure-tools/linq';
-import { pascalCase } from '@azure-tools/codegen';
+import { values, items } from '@azure-tools/linq';
+import { Visitor, anonymous } from '../../support/visitor';
+import { Path } from '@azure-tools/sourcemap';
 
+
+export function error(text: string) {
+  throw new Error(text);
+}
+export function warn(text: string) {
+  // throw new Error(text);
+}
 
 /** takes an openapi3 model, converts it into a ADL model, and returns that */
-export function loadOpenApi(model: OpenAPI.Model) {
+export function loadOpenApi(filename: string, model: oai3.Model) {
   const result = new Api();
 
-  const converter = new OpenApiConverter(result, model);
-  converter.processSchemas();
 
   return result;
 }
 
+// node types that are objects
+export type Ctx<T> = Visitor<ApiModel, oai3.Model, T>;
 
-function docDescription(value?: string) {
-  return { description: value || '' };
+// node types that are objects or references
+export type CtxDict<T> = Visitor<ApiModel, oai3.Model, Dictionary<T | JsonReference<T>>>;
+
+
+const ApiVersion = ['info', 'version'];
+
+
+export function deserializeOpenAPI3(target: ApiModel, input: oai3.Model) {
+  const context = new Visitor(target, input, 'inputfile.ymal');
+  const extensions = vendorExtensions(input);
+
+  for (const { key, value: extension } of extensions) {
+    switch (key) {
+      case 'x-ms-metadata':
+
+        break;
+      default:
+        // record unknown extensions at model level
+        break;
+    }
+  }
+
+  context.process(processInfo, 'info');
+  context.process(processComponents, 'components', input.components);
+  context.process(processPaths, 'paths', input.paths);
+  context.process(processExternalDocs, 'externalDocs', input.externalDocs);
+  context.process(processServers, 'servers', input.servers);
+  context.process(processSecurity, 'security', input.security);
+  context.process(processTags, 'tags', input.tags);
+
+}
+async function processInfo(context: Ctx<oai3.Info>) {
+  const { key, value, input, output } = context;
+  // const md = new MetaData;
+
+}
+async function processComponents(context: Ctx<oai3.Components>) {
+  const { key, value: components, input, output } = context;
+  for (const { key, value: extension } of vendorExtensions(components)) {
+    // switch(key)
+  }
+
+  const q = components['schemas'];
+  await context.process(processSchemas, 'schemas', components.schemas);
+  await context.process(processHeaders, 'headers', components.headers);
+  await context.process(processCallbacks, 'callbacks', components.callbacks);
+  await context.process(processExamples, 'examples', components.examples);
+  await context.process(processLinks, 'links', components.links);
+  await context.process(processParameters, 'parameters', components.parameters);
+  await context.process(processRequestBodies, 'requestBodies', components.requestBodies);
+  await context.process(processResponses, 'responses', components.responses);
+  await context.process(processSecuritySchemes, 'securitySchemes', components.securitySchemes);
 }
 
-function quoteForIdentifier(value: string) {
-  return /[^\w]/g.exec(value) ? `'${value}'` : value;
+async function processSecuritySchemes(context: CtxDict<oai3.SecurityScheme>) {
+  throw 'unimplmeneted';
 }
 
-// ref: https://www.w3schools.com/charsets/ref_html_ascii.asp
-const specialCharacterMapping: { [character: string]: string } = {
-  '!': 'exclamation mark',
-  '"': 'quotation mark',
-  '#': 'number sign',
-  '$': 'dollar sign',
-  '%': 'percent sign',
-  '&': 'ampersand',
-  '\'': 'apostrophe',
-  '(': 'left parenthesis',
-  ')': 'right parenthesis',
-  '*': 'asterisk',
-  '+': 'plus sign',
-  ',': 'comma',
-  '-': 'hyphen',
-  '.': 'dot',
-  '/': 'slash',
-  ':': 'colon',
-  ';': 'semicolon',
-  '<': 'less-than',
-  '=': 'equals-to',
-  '>': 'greater-than',
-  '?': 'question mark',
-  '@': 'at sign',
-  '[': 'left square bracket',
-  '\\': 'backslash',
-  ']': 'right square bracket',
-  '^': 'caret',
-  '_': 'underscore',
-  '`': 'grave accent',
-  '{': 'left curly brace',
-  '|': 'vertical bar',
-  '}': 'right curly brace',
-  '~': 'tilde'
-};
-
-
-export function getValidEnumValueName(originalString: string): string {
-
-  return pascalCase(originalString.split('').map(x => specialCharacterMapping[x] || x).join(''));
+async function processResponses(context: CtxDict<oai3.Response>) {
+  throw 'unimplmeneted';
 }
 
-class OpenApiConverter {
-  protected processed = new Map<any, any>();
+async function processRequestBodies(context: CtxDict<oai3.RequestBody>) {
+  throw 'unimplmeneted';
+}
 
-  constructor(protected api: Api, protected model: OpenAPI.Model) {
+async function processParameters(context: CtxDict<oai3.Parameter>) {
+  throw 'unimplmeneted';
+}
 
+async function processLinks(context: CtxDict<oai3.Link>) {
+  throw 'unimplmeneted';
+}
+
+async function processExamples(context: CtxDict<oai3.Example>) {
+  throw 'unimplmeneted';
+}
+
+async function processCallbacks(context: CtxDict<oai3.Callback>) {
+  throw 'unimplmeneted';
+}
+
+
+async function processSchemas(context: CtxDict<oai3.Schema>) {
+  const { value } = context;
+  const { extensions, references, values: schemas } = unzip<oai3.Schema>(value);
+
+  // handle extensions first
+  for (const { key, value: extension } of values(extensions)) {
+    // switch block to handle specific vendor extension?
+    // unknown ones need to get attached to something.
+    switch (key) {
+      case 'x-whatever':
+        // do something with the extension
+        // make sure it gets deleted
+        delete value[key];
+        break;
+    }
   }
 
-
-  deref<T>(source?: Array<OpenAPI.Refable<T>>) {
-    return values(source).select(each => dereference(this.model, each).instance);
+  // handle actual items next
+  for (const { key, value: schema } of values(schemas)) {
+    const newSchema = await context.process(processSchema, key, schema);
   }
 
-  derefD<T>(source?: Dictionary<OpenAPI.Refable<T>>) {
-    return items(source).select(each => ({
-      key: each.key,
-      value: dereference(this.model, each.value).instance
-    }));
+  // handle references last 
+  for (const { key, value: reference } of values(references)) {
+    // we're going to create an alias type for these.
+    await context.process(processReference, key, reference);
+  }
+}
+// function processReferenceOf<T,Q>( ): ( ) => (context:Ctx<JsonReference<T>>) => Q|undefined {
+// }
+
+async function processReference<T>(context: Ctx<JsonReference<T>>) {
+  throw 'unimplmeneted';
+}
+
+async function processHeaders(context: CtxDict<oai3.Header>) {
+  const { value, process } = context;
+  const { extensions, references, values: headers } = unzip<oai3.Header>(value);
+
+  // handle extensions first
+  for (const { key, value: extension } of values(extensions)) {
+    // switch block to handle specific vendor extension?
+    // unknown ones need to get attached to something.
+
+    switch (key) {
+
+      case 'x-whatever':
+        // do something with the extension
+        // make sure it gets deleted
+        // delete value[key];
+        break;
+    }
   }
 
-
-  createFile(schema: OpenAPI.Schema) {
-    const modelName: string = pascalCase(schema['x-ms-metadata'].name);
-    if (schema.enum) {
-      return this.api.addEnum(modelName);
-    }
-
-    return this.api.addSchema(modelName);
+  // handle actual items next
+  for (const { key, value: header } of values(headers)) {
+    await process(processHeader, key);
   }
 
-  /*
-  createIntersectionType(schema: OpenAPI.Schema) {
-    const typeAlias = this.createTypeAlias(schema);
-    const file = this.createFile(schema);
-
-    const allOf = this.deref(schema.allOf).select(a => this.addImportFor<TypeReference>(file, this.acquireTypeForSchema(a))).toArray().joinWith(each => each.getName(), '&');
-    const oneOf = this.deref(schema.oneOf).select(a => this.addImportFor<TypeReference>(file, this.acquireTypeForSchema(a))).toArray().joinWith(each => each.getName(), '|');
-    const anyOfCombinations = combinations(this.deref(schema.anyOf).select(a => this.addImportFor<TypeReference>(file, this.acquireTypeForSchema(a))).toArray());
-    const anyOf = anyOfCombinations.map(s => s.joinWith(each => each.getName(), '&')).join('|');
-    let set = allOf;
-    if (oneOf) {
-      set = set ? `${set} & (${oneOf})` : oneOf;
-    }
-    if (anyOf) {
-      set = set ? `${set} | (${anyOf})` : anyOf;
-    }
-    if (schema.properties) {
-      const iface = this.createInterface(schema, file, this.schemaName(schema), true);
-      set = `internal.${iface.getName()} & ${set}`;
-    }
-
-    typeAlias.setType(set);
-    return typeAlias;
-  }
-  */
-
-  createInterface(schema: OpenAPI.Schema) {
-    //as
-  }
-
-  createEnum(schema: OpenAPI.Schema) {
-    if (schema.enum) {
-      const enumName = schema['x-ms-metadata'] ? pascalCase(schema['x-ms-metadata'].name) : 'unknown';
-      const e = this.api.addEnum(enumName);
-      e.addJsDoc(docDescription(schema.description));
-      e.addMembers(
-        schema['x-ms-enum']?.values ? schema['x-ms-enum'].values.map(
-          (each: any) => ({
-            docs: [docDescription(each.description)],
-            name: quoteForIdentifier(getValidEnumValueName(`${(each.name !== undefined) ? each.name : each.value}`)),
-            value: each.value
-          })) :
-          schema.enum.map(each => ({
-            name: quoteForIdentifier(getValidEnumValueName(each)),
-            value: each
-          }))
-      );
-
-      this.processed.set(schema, e);
-
-      if (schema.deprecated) {
-        e.addJsDoc('deprecated');
-      }
-      return e;
-    }
-    throw Error(`Enum failed ${JSON.stringify(schema, undefined, 2)}`);
-  }
-
-  @cache
-  acquireTypeForSchema(schema: OpenAPI.Schema) { //: TypeReference {
-    if (this.processed.has(schema)) {
-      return;// this.processed.get(schema);
-    }
-
-    if (schema.enum && schema.enum.length > 1) {
-      //return
-      this.createEnum(schema);
-    }
-
-    /*
-    // if the schema is an 
-    // allOf/anyOf/oneOf 
-    // or has properties and has 'AdditionalProperties'
-    //  the target type must be a union/intersection type
-    // 
-    // and the underlying schema is 'internal' to that.
-
-    if (schema.allOf || schema.anyOf || schema.oneOf) {
-      return this.createIntersectionType(schema);
-    }
-
-    if (schema.additionalProperties) {
-      // this is some kind of additional properties model
-
-      if (values(schema.properties).any()) {
-        // it has some declared properties too.
-        // create the interface as internal, and 
-        // add an alias
-        const typeAlias = this.createTypeAlias(schema);
-        const iface = this.createInterface(schema, undefined, undefined, true);
-
-        if (schema.additionalProperties === true) {
-          typeAlias.setType(`internal.${iface.getName()} & AdditionalProperties<any>`);
-        } else {
-          const t = this.acquireTypeForSchema(dereference(this.model, schema.additionalProperties).instance);
-          typeAlias.setType(`internal.${iface.getName()} & AdditionalProperties<${t.getName()}>`);
-          return typeAlias;
-        }
-      }
-
-      if (schema.additionalProperties === true) {
-        // this type is literally just AdditionalProperties<any>
-        return { getName: () => 'AdditionalProperties<any>' };
-      }
-
-      if (isReference(schema.additionalProperties)) {
-        const t = this.acquireTypeForSchema(dereference(this.model, schema.additionalProperties).instance);
-        return {
-          getName: () => `AdditionalProperties<${t.getName()}>`,
-          applyImport: this.forwardTypeReference(t)
-        };
-      }
-    }
-*/
-
-
-    if (schema.properties || schema.type === JsonType.Object) {
-      return this.createInterface(schema);
-    }
-    /*
-    switch (schema.type) {
-      case JsonType.Number:
-        return { getName: () => and('number', format(schema.format), maximum(schema.maximum, schema.exclusiveMaximum), minimum(schema.minimum, schema.exclusiveMaximum)) };
-
-      case JsonType.Integer:
-        return { getName: () => and('number', format(schema.format), maximum(schema.maximum, schema.exclusiveMaximum), minimum(schema.minimum, schema.exclusiveMaximum)) };
-
-      case JsonType.Boolean:
-        return { getName: () => 'boolean' };
-
-      case JsonType.String:
-        if (schema.enum && schema.enum.length === 1) {
-          return { getName: () => `Constant<'${(<any>schema.enum)[0]}'>` };
-        }
-        return { getName: () => and('string', format(schema.format), maxLength(schema.maxLength), minLength(schema.minLength), pattern(schema.pattern)) };
-
-      case JsonType.Array:
-        if (schema.items) {
-          const i = dereference(this.model, schema.items).instance;
-          if (i) {
-            const r = this.acquireTypeForSchema(i);
-            return {
-              getName: () => `${schema.uniqueItems ? 'Set' : 'Array'}<${r.getName()}>`,
-              applyImport: this.forwardTypeReference(r)
-            };
-          }
-        }
-    }
-    throw new Error(`NoType! ${JSON.stringify(schema, undefined, 2)}`);
-*/
-
-  }
-
-  processSchemas() {
-    for (const schema of values(this.model?.components?.schemas).select(schema => dereference(this.model, schema).instance)) {
-      this.acquireTypeForSchema(schema);
-    }
+  // handle references last 
+  for (const { key, value: reference } of values(references)) {
+    await context.process(processHeaderReference, key, reference);
   }
 }
 
-function cache(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-  const fn = target[propertyKey];
-  target[propertyKey] = (input: any) => {
-    if (target.processed.has(input)) {
-      return target.processed.get(input);
-    }
-    const output = fn(input);
-    target.processed.set(input, output);
-    return output;
-  };
+async function processHeaderReference(context: Ctx<oai3.HeaderReference>) {
+  const { key, value: headerReference, input, output } = context;
+}
+
+async function processHeader(context: Ctx<oai3.Header>) {
+  const { key, value: header, input, output, use, create, set, sourceFile, process, track } = context;
+
+  // these are in the OAI schema, but should not be in headers - freakout if they are used
+  use('explode') && error('header definitions must not contain property \'explode\'');
+  use('required') && warn('header definitions should not contain property \'required\'');
+
+  // get the schema for the header 
+  const schema = hasSchema(header) ?
+    isReference(header.schema) ?
+      // they have used a $ref to a schema - resolve that.
+      // await process(processReference, header.schema)
+      undefined :
+      // an inlined schema --process that first
+      await process(processSchema, anonymous('schema'), header.schema) :
+    // nope, no schema.
+    undefined;
+
+  // create the http header object and track it. 
+  const httpHeader = track(new HttpHeader({
+    // maintain the key
+    $key: key.toString(),
+
+    // use the schema
+    schema,
+
+    // set a specific value 
+    description: use('description', `-- test -- ${header.description}`),
+
+    // set the style value
+    style: use('style'),
+  }));
+
+  // preserve data that we're not using
+  httpHeader.addToAttic('example', use('example'));
+
+
+  // handle version information
+  httpHeader.versionInfo.push(track<VersionInfo>({
+    deprecated: use('deprecated', input.info.version),
+    added: set(input.info.version, ApiVersion),
+  }));
+  httpHeader.addInternalData('oai3', { preferredFile: sourceFile });
+
+  // add it to the model and return the header to the caller.
+  return output.http.headers.push(httpHeader);
+}
+
+async function processSchema(context: Ctx<oai3.Schema>): Promise<Schema> {
+  throw 'unimplmeneted';
+}
+
+async function processExternalDocs(context: Ctx<oai3.ExternalDocumentation>) {
+  throw 'unimplmeneted';
+}
+
+async function processPaths(context: CtxDict<oai3.PathItem>) {
+  throw 'unimplmeneted';
+}
+async function processSecurity(context: Ctx<Array<oai3.SecurityRequirement>>) {
+  throw 'unimplmeneted';
+}
+async function processServers(context: Ctx<Array<oai3.Server>>) {
+  throw 'unimplmeneted';
+}
+async function processTags(context: Ctx<Array<oai3.Tag>>) {
+  throw 'unimplmeneted';
 }

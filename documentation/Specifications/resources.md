@@ -11,4 +11,10 @@ export interface MyResourceProperties {
 
 export type MyResource = ARM.TrackedEntityResource<'Microsoft.Foo', 'MyResource', MyResourceProperties>;
 
+export class MyResource extends ARM.TrackedEntityResource<'Microsoft.Foo', 'MyResource', MyResourceProperties> {
+  delete: void;
+  restart(...) => 
+    
+}
+
 ```

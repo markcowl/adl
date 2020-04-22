@@ -381,7 +381,7 @@ interface ContactInfo {
 
 The following are the currently supported validation constraints:
 
-|JSDoc Tag|applies to|Descrpition | 
+|Constraint|applies to|Descrpition | 
 |--|--|--|
 |`MultipleOf<number value>`|`number`/`float`/`integer` etc|Property must be a multiple of the given value|
 |`Maximum<number value>`|`number`/`float`/`integer` etc|Property must be less than or equal to the given value|

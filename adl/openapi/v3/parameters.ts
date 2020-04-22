@@ -3,18 +3,30 @@ import { ExampleOrExamples } from './example';
 import { Schema, SchemaReference } from './schema';
 import { MediaType } from './media-type';
 import { JsonReference } from '../common/json-reference';
+import { Dictionary } from '../v2/openapiv2';
 
-/** Schema and Content are mutually exclusive. */
-export type SchemaOrContent = {
+export interface HasSchema {
   /** The schema defining the type used for the parameter. */
   schema: Schema | SchemaReference;
-} | {
-  /** A map containing the representations for the parameter. The key is the media type and the value describes it. The map MUST only contain one entry. */
-  content: { [mediaType: string]: MediaType };
+}
+export function hasSchema(instance: any): instance is HasSchema {
+  return instance && 'schema' in instance;
 }
 
+export interface HasContent {
+  /** A map containing the representations for the parameter. The key is the media type and the value describes it. The map MUST only contain one entry. */
+  content: Dictionary<MediaType>;
+}
+
+export function hasContent(instance: any): instance is HasContent {
+  return instance && 'content' in instance;
+}
+
+/** Schema and Content are mutually exclusive. */
+export type SchemaOrContent = (HasSchema | HasContent);
+
 /** Describes common properties between header and parameter . */
-export type ParameterBase = {
+export type ParameterBase = SchemaOrContent & {
   /**A brief description of the parameter. This could contain examples of use. CommonMark syntax MAY be used for rich text representation. */
   description?: string;
 
@@ -27,7 +39,7 @@ export type ParameterBase = {
   /** When this is true, parameter values of type array or object generate separate parameters for each value of the array or key-value pair of the map. For other types of parameters this property has no effect. When style is form, the default value is true. For all other styles, the default value is false.  */
   explode?: boolean;
 
-} & ExampleOrExamples & SchemaOrContent;
+} & ExampleOrExamples;
 
 /** 
  * Describes a single operation parameter.

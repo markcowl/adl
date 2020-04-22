@@ -1,4 +1,3 @@
-import { Dictionary } from '../common/dictionary';
 import { VendorExtensions } from '../common/vendor-extensions';
 import { ExternalDocumentation } from '../common/external-docs';
 import { Info } from '../common/info';
@@ -15,7 +14,7 @@ export type Versions = '3.0.0' | '3.0.1' | '3.1.0';
  *  
  * @see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md
  */
-export interface OpenAPIv3 extends VendorExtensions {
+export interface Model extends VendorExtensions {
   /** The available paths and operations for the API. */
   paths: Paths;
 
@@ -40,3 +39,23 @@ export interface OpenAPIv3 extends VendorExtensions {
   /** An element to hold various schemas for the specification. */
   components?: Components;
 }
+
+export * from './callback';
+export * from './components';
+export * from './discriminator';
+export * from './encoding';
+export * from './example';
+export * from './header';
+export * from './http-status';
+export * from './link';
+export * from './media-type';
+export * from './openapiv3';
+export * from './operation';
+export * from './parameter-location';
+export * from './parameters';
+export * from './path';
+export * from './request-body';
+export * from './response';
+export * from './schema';
+export * from './security';
+export * from './server';

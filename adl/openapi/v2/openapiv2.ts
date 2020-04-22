@@ -15,7 +15,7 @@ import { Dictionary } from '../common/dictionary';
  * 
  * @see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md
  */
-export interface OpenAPIv2 extends VendorExtensions {
+export interface Model extends VendorExtensions {
   /** Specifies the Swagger Specification version being used. It can be used by the Swagger UI and other clients to interpret the API listing. The value MUST be "2.0". */
   swagger: '2.0';
 
@@ -61,3 +61,30 @@ export interface OpenAPIv2 extends VendorExtensions {
   /** A list of tags used by the specification with additional metadata. The order of the tags can be used to reflect on their order by the parsing tools. Not all tags that are used by the Operation Object must be declared. The tags that are not declared may be organized randomly or based on the tools' logic. Each tag name in the list MUST be unique. */
   tags?: Array<Tag>;
 }
+export * from './collection-format';
+export * from './definitions';
+export * from './example';
+export * from './header';
+export * from './http-method';
+export * from './http-status';
+
+export * from './operation';
+export * from './parameter-location';
+export * from './parameters';
+export * from './path';
+export * from './response';
+export * from './schema';
+export * from './schemes';
+export * from './security';
+
+export * from '../common/contact';
+export * from '../common/dictionary';
+export * from '../common/external-docs';
+export * from '../common/info';
+export * from '../common/json-reference';
+export * from '../common/jsontype';
+export * from '../common/license';
+export * from '../common/tag';
+export * from '../common/uri';
+export * from '../common/vendor-extensions';
+export * from '../common/xml';

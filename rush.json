@@ -79,6 +79,12 @@
       "projectFolder": "adl/openapi",
       "reviewCategory": "production",
       "shouldPublish": true
+    },
+    {
+      "packageName": "visitor-generator",
+      "projectFolder": "adl/visitor",
+      "reviewCategory": "production",
+      "shouldPublish": false
     }
   ]
 }

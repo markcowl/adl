@@ -8,7 +8,7 @@
  * @see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#specification-extensions
  * */
 export interface VendorExtensions {
-
+  'x-ms-metadata': any;
   /** Allows extensions to the Swagger Schema. The field name MUST begin with x-, for example, x-internal-id. The value can be null, a primitive, an array or an object. */
-  [key: string]: any;
+  // [key: string]: any;
 }

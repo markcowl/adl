@@ -4,6 +4,7 @@ import { JsonReference } from '../common/json-reference';
 import { QueryParameter, PathParameter, HeaderParameter, CookieParameter, ParameterReference } from './parameters';
 import { Server } from './server';
 import { Operation } from './operation';
+import { Dictionary } from '../v2/openapiv2';
 
 /** Path item contents */
 export interface PathItemBase extends VendorExtensions {
@@ -41,6 +42,6 @@ export type PathItem = {
  * 
  * @see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#paths-object
  */
-export interface Paths extends VendorExtensions {
-  [pathName: string]: PathItem | JsonReference<PathItem>;
+export interface Paths extends VendorExtensions, Dictionary<PathItem | JsonReference<PathItem>> {
+
 }

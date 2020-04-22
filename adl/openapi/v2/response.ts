@@ -34,4 +34,3 @@ export interface Response {
 export type Responses = {
   [status in HttpStatus]: Response | JsonReference<Response>;
 } & VendorExtensions;
-

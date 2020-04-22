@@ -11,11 +11,17 @@ export interface FirstProperties {
   value: int32;
 
   /** any other values are strings */
-  morestuff: Dictionary<string>;
+  morestuff: Dictionary<string> & MyConstraint<100>;
 
   /** even weird names are ok
    * 
    * @clientName WeirdName
    */
   'weird-name': string;
+}
+
+export class MyConstraint<T> extends Constraint {
+  validate(property: Property) {
+
+  }
 }
