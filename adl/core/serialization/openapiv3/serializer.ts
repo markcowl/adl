@@ -1,4 +1,4 @@
-import { ApiModel } from '../../model/aam';
+import { ApiModel } from '../../model/api-model';
 import { Schema } from '../../model/schema';
 import { HttpHeader } from '../../model/http/header';
 import { VersionInfo } from '../../model/version-info';

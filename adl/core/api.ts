@@ -1,5 +1,5 @@
 /** Interface for manipulating an API Description */
-import { ApiModel } from './model/aam';
+import { ApiModel } from './model/api-model';
 import { Path } from '@azure-tools/sourcemap';
 import { Visitor } from './support/visitor';
 import { Model as oai3 } from '@azure-tools/openapi/v3';
