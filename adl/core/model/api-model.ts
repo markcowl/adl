@@ -33,7 +33,7 @@ function TypeInfo<U extends new (...args: any) => any>(type: U) {
 export class ApiModel extends Element {
   internalData: Dictionary<InternalData> = {};
 
-  metaData = new Metadata();
+  metaData = new Metadata('');
 
   resources = new ElementArray<Resource>(this, 'resources');
 

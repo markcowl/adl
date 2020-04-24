@@ -30,11 +30,25 @@ export interface OnAdd {
 
 /** inheriting from Initializer adds an apply<T> method to the class, allowing you to accept an object initalizer, and applying it to the class in the constructor. */
 export class Initializer {
-  protected apply<T>(...initializer: Array<Partial<T> | undefined>) {
+  protected initialize<T>(initializer?: Partial<T>) {
     for (const { key, value } of items(initializer)) {
       // copy the true value of the item.
-      if (value) {
-        (<any>this)[key] = value.valueOf();
+      const raw = (<any>this);
+      const target = raw[key];
+      const rawValue = <any>value;
+      if (value !== undefined) {
+        if (Array.isArray(target)) {
+          if (rawValue[Symbol.iterator]) {
+            // copy elements to target
+            for (const each of rawValue) {
+              raw[key].push(each);
+            }
+            continue;
+          }
+          throw new Error(`Initializer for object with array member '${key}', must be initialized with something that can be iterated.`);
+        }
+        // just copy the value across.
+        (<any>this)[key] = rawValue.valueOf();
       }
     }
   }
@@ -56,7 +70,7 @@ export class Element extends Initializer implements OnAdd {
 
   constructor(initializer?: Partial<Element>) {
     super();
-    this.apply(initializer);
+    this.initialize(initializer);
   }
 
   /** @internal*/ setPath(instance: OnAdd, ...relativePath: Path) {
@@ -68,9 +82,11 @@ export class Element extends Initializer implements OnAdd {
       delete instance.$onAdd;
     }
     else {
+      const orig = this.$onAdd.bind(this);
+
       // otherwise, we have to have it do it when this gets set
       this.$onAdd = (p) => {
-        this.$onAdd?.(p);
+        orig(p);
         const path = [...p, ...relativePath];
         (<any>instance).$path = () => path;
         instance.$onAdd?.(path);
@@ -85,6 +101,7 @@ export class Element extends Initializer implements OnAdd {
       this.attic[name] = value.valueOf();
       this.setPath(value, 'attic', name);
     }
+    return this;
   }
 
   addInternalData(key: string, internalData: InternalData) {
@@ -100,9 +117,11 @@ export class ElementArray<T extends OnAdd> extends Array {
     super();
   }
 
-  push(...values: Array<T>) {
+  push(...values: Array<T | undefined>) {
     for (const value of values) {
-      this.parent.setPath(value, this.name, super.push(value));
+      if (value !== undefined) {
+        this.parent.setPath(value, this.name, super.push(value));
+      }
     }
     return this.length;
   }

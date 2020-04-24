@@ -1,4 +1,4 @@
-import { Element } from './element';
+import { Element, ElementArray } from './element';
 
 export class Schema extends Element {
   anonymous = false;
@@ -24,15 +24,19 @@ export class Default extends Schema {
 }
 
 export class Alias extends Schema {
-
+  // 
+  constructor(public target: Schema, initializer?: Partial<Alias>) {
+    super();
+    this.initialize(initializer);
+  }
 }
 
 
 export class Schemas extends Element {
-  objects?: Array<ObjectSchema>;
-  constants?: Array<Constant>;
-  enums?: Array<Enum>;
-  constraints?: Array<Constraint>;
-  defaults?: Array<Default>;
-  aliases?: Array<Alias>;
+  objects = new ElementArray<ObjectSchema>(this, 'objects');
+  constants = new ElementArray<Constant>(this, 'constants');
+  enums = new ElementArray<Enum>(this, 'enums');
+  constraints = new ElementArray<Constraint>(this, 'constraints');
+  defaults = new ElementArray<Default>(this, 'defaults');
+  aliases = new ElementArray<Alias>(this, 'aliases');
 }

@@ -17,6 +17,6 @@ export class HttpHeader extends Element {
 
   constructor(initializer?: Partial<HttpHeader>) {
     super();
-    this.apply(initializer);
+    this.initialize(initializer);
   }
 }

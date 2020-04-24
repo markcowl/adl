@@ -1,0 +1,10 @@
+metaData:
+  versionInfo:
+    - added: 1.0.0
+  name: Swagger Petstore
+  licenses:
+    - versionInfo:
+        - added: 1.0.0
+      name: MIT
+schemas: {}
+http: {}

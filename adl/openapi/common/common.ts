@@ -9,6 +9,7 @@ export * from './tag';
 export * from './uri';
 export * from './vendor-extensions';
 export * from './xml';
+export * from './format';
 
 import { JsonReference } from './json-reference';
 import { Dictionary } from './dictionary';

@@ -2,14 +2,12 @@
 import { ApiModel } from './model/api-model';
 import { Path } from '@azure-tools/sourcemap';
 import { Visitor } from './support/visitor';
-import { Model as oai3 } from '@azure-tools/openapi/v3';
-import { Model as oai2 } from '@azure-tools/openapi/v2';
 
 /** load an API from a set of source files or folders */
 async function loadApi(...inputs: Array<string>): Promise<ApiModel> {
   throw 'unimplemented';
 }
-
+/*
 export interface TypeofExtension {
   readonly name: string;
 
