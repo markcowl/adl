@@ -5,7 +5,7 @@ import { OnAdd, setPath, Element } from '../model/element';
 import { FileSystem } from './file-system';
 import { parse } from 'yaml';
 import { VersionInfo } from '../model/version-info';
-import { Info, JsonReference } from '@azure-tools/openapi';
+import { Info, JsonReference, isReference } from '@azure-tools/openapi';
 import { ApiModel } from '../model/api-model';
 import { isObject } from 'util';
 
@@ -137,16 +137,17 @@ export class Visitor<TSourceModel extends OAIModel> {
         return ctx.process(action, key);
       }
     }
-    throw new Error(`Unable to process Ref ${sourceFile}#${path}`);
+    throw new Error(`Unable to process Ref ${sourceFile}#/${path}`);
   }
 }
 
 
 export async function processRefTarget<Tin, Tout extends Element, TSourceModel extends OAIModel>(context: Context<TSourceModel, JsonReference<Tin>>, action: (c: Context<TSourceModel, Tin>) => Promise<Tout | undefined>) {
-  const { visitor, value, normalizeReference } = context;
+  const { visitor, value } = context;
 
   // figure out if the target of the reference is already done
-  const { $ref, file, path } = normalizeReference(value.$ref);
+  console.log(context.normalizeReference(value.$ref));
+  const { $ref, file, path } = context.normalizeReference(value.$ref);
 
   return <Tout>visitor.$refs.get($ref) || <Tout>await visitor.processRef(file, path, action);
 }
@@ -189,7 +190,7 @@ export class Context<TSourceModel extends OAIModel, TValue> {
     return isAnonymous(this.key);
   }
   get refToHere() {
-    return `${this.sourceFile}#${this.path.join('/')}`;
+    return `${this.sourceFile}#/${this.path.join('/')}`;
   }
 
   normalizeReference(ref: string) {
@@ -198,7 +199,8 @@ export class Context<TSourceModel extends OAIModel, TValue> {
       throw new Error(`$ref '${ref}' not legal`);
     }
     // eslint-disable-next-line prefer-const
-    let [file, , path] = split;
+    let [, file, path] = split;
+
 
     // is the file pointing to this file?
     if (file === '' || file === '.' || file === './') {
@@ -206,6 +208,9 @@ export class Context<TSourceModel extends OAIModel, TValue> {
     } else {
       file = this.visitor.fileSystem.resolve(file);
     }
+
+    console.log(`${ref} , ${file} ,, ${path}`);
+
     return {
       file: file,
       path: path.split('/'),
@@ -289,10 +294,29 @@ export class Context<TSourceModel extends OAIModel, TValue> {
     return result;
   }
 
+  async processPossibleReference<TInput, TOutput extends Element>(
+    refAction: (t: Context<TSourceModel, JsonReference<TInput>>) => Promise<TOutput | undefined>,
+    action: (t: Context<TSourceModel, NonNullable<TInput>>) => Promise<TOutput | undefined>
+    , key: keyof TValue | anonymous, value?: TInput | JsonReference<TInput> | NonNullable<TInput>): Promise<TOutput | undefined> {
+
+    const v = value || (!isAnonymous(key) && <NonNullable<TInput>><unknown>this.value[key]);
+    if (v !== undefined) {
+      return (isReference(v) ?
+        // they have used a $ref to a schema - resolve that.
+        await this.process(refAction, key, v) :
+        // an inlined schema --process that first
+        await this.process(action, key, <TInput>v));
+    }
+    return undefined;
+
+  }
+
   async process<TInput, TOutput extends Element>(action: (t: Context<TSourceModel, NonNullable<TInput>>) => Promise<TOutput | undefined>, key: keyof TValue | anonymous, value?: TInput | NonNullable<TInput>): Promise<TOutput | undefined> {
 
     // check to see if there is a result for this node already done
-    const result = this.visitor.$refs.get(`${this.sourceFile}#${[...this.path, key].join('/')}`);
+    const ref = `${this.sourceFile}#/${[...this.path, key].join('/')}`;
+    const result = this.visitor.$refs.get(ref);
+
     if (result) {
       return result;
     }
@@ -319,6 +343,7 @@ export class Context<TSourceModel extends OAIModel, TValue> {
           added: context.set(this.source.apiVersion, ['info', 'version']),
         }));
         result.addInternalData(this.visitor.inputType, { preferredFile: this.sourceFile });
+        this.visitor.$refs.set(ref, result);
       }
       return result;
     }

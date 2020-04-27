@@ -24,6 +24,7 @@ const propertyPriority = [
 
 const propertyNegativePriority = [
   'versionInfo',
+  'aliases',
   'attic'
 ];
 

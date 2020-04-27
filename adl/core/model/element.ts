@@ -40,9 +40,11 @@ export class Initializer {
       const target = raw[key];
       const rawValue = <any>value;
 
-      if (key === '$' && typeof target.track === 'function') {
-        // special case for source tracking.
-        target.track(this);
+      if (key === '$') {
+        if (typeof (<any>value)?.track === 'function') {
+          // special case for source tracking.
+          (<any>value).track(this);
+        }
         continue;
       }
 
