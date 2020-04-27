@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Tracker, Path, PathItem, anonymous, isAnonymous } from '@azure-tools/sourcemap';
-import { values, items, Dictionary } from '@azure-tools/linq';
+import { values, items, Dictionary, keys } from '@azure-tools/linq';
 import { OnAdd, setPath, Element } from '../model/element';
 import { FileSystem } from './file-system';
 import { parse } from 'yaml';
 import { VersionInfo } from '../model/version-info';
 import { Info, JsonReference } from '@azure-tools/openapi';
 import { ApiModel } from '../model/api-model';
+import { isObject } from 'util';
 
 export interface OAIModel {
   info: Info;
@@ -21,7 +22,7 @@ export function is<T extends Object>(instance: any): instance is T {
       if (is(each)) {
         return true;
       }
-      // the chicd is empty, so this doesn't make it real yet.
+      // the child is empty, so this doesn't make it real yet.
       continue;
     }
 
@@ -37,18 +38,19 @@ export function is<T extends Object>(instance: any): instance is T {
 
 export function isObjectClean(obj: any): boolean {
   if (obj && typeof obj === 'object') {
+
     for (const each of values(obj)) {
-      if (each && typeof each === 'object') {
-        return false;
+      if (each !== undefined && typeof each === 'object') {
+        if (!isObjectClean(each)) {
+          return false;
+        }
+        continue;
       }
+      return false;
     }
   }
   return true;
 }
-
-export type Unspecified = { $fake: true };
-const unspecified: Unspecified = { $fake: true };
-
 
 export interface SourceFile<TSourceModel extends OAIModel> {
   sourceModel: TSourceModel;
@@ -97,7 +99,11 @@ export class Visitor<TSourceModel extends OAIModel> {
 
   async process<TOutput>(action: (t: Context<TSourceModel, TSourceModel>) => Promise<TOutput>) {
     for (const { key, value } of items(this.sourceFiles)) {
-      await action(await value);
+      const ctx = await value;
+      await action(ctx);
+      if (!isObjectClean(ctx.sourceModel)) {
+        this.api.addToAttic(key, ctx.sourceModel);
+      }
     }
     return this.api;
   }
@@ -228,27 +234,9 @@ export class Context<TSourceModel extends OAIModel, TValue> {
     return instance;
   }
 
-  /** creates an proxy object for the target node  */
-  create<TClass extends new (...args: any) => any>(type: TClass, instance: Partial<InstanceType<TClass>>): InstanceType<TClass> {
-    // ensure this is an instance of the class
-    Object.setPrototypeOf(instance, (<any>type).prototype);
-    const i = <InstanceType<TClass>>instance;
-
-    // attach the $onAdd function.
-    i.$onAdd = (path: Path) => {
-      // tell the tracker where we're going
-      this.tracker.add(path, this.path);
-
-      // for each property, call it's onAdd too.
-      for (const { key, value } of items(<Dictionary<any>>instance)) {
-        // first, ensure the actual value is set
-        (<any>instance)[key] = value.valueOf();
-
-        // call each $onAdd function and remove it.
-        setPath(value, [...path, key]);
-      }
-    };
-    return i;
+  /** marks a property as used */
+  mark<LN, K extends keyof TValue>(key: K) {
+    delete this.value[key];
   }
 
   /** takes a value of a property and then removes the property */
@@ -278,8 +266,12 @@ export class Context<TSourceModel extends OAIModel, TValue> {
     return undefined;
   }
 
+  get anyKeys() {
+    return keys(this.value).any();
+  }
+
   /** takes a value of a property but leaves the property in the parent */
-  copy<LN, K extends keyof TValue>(key: K, v: LN | Unspecified = unspecified) {
+  copy<LN, K extends keyof TValue>(key: K, v: LN) {
     return this.use(key, v, false);
   }
 
@@ -310,8 +302,11 @@ export class Context<TSourceModel extends OAIModel, TValue> {
       const context = new Context(this.source, <NonNullable<TInput>>v, [...this.path, key.valueOf()], key);
 
       const result = await action(context);
-      if (isObjectClean(value)) {
+      if (!isAnonymous(key) && isObjectClean(v)) {
+        console.log(key);
         delete (<any>this.value)[key.valueOf()];
+      } else {
+        console.log(v);
       }
 
       if (result) {
@@ -319,8 +314,6 @@ export class Context<TSourceModel extends OAIModel, TValue> {
         // this is common to every element
         // - set the api version that it was added
         // - set the deprecated version if it's deprecated in this version.
-
-
         result.versionInfo.push(context.track<VersionInfo>({
           // deprecated isn't on everything, but this is safe when it's not there
           deprecated: context.use(<any>'deprecated', this.source.apiVersion),

@@ -1,10 +1,11 @@
-import { unzip, JsonReference, StringFormat } from '@azure-tools/openapi';
-import { values, length } from '@azure-tools/linq';
+import { unzip, JsonReference, StringFormat, isReference, IntegerFormat } from '@azure-tools/openapi';
+import { values, length, items } from '@azure-tools/linq';
 import { Element } from '../../model/element';
 import { v3 } from '@azure-tools/openapi';
 import { Context, DictionaryContext } from './serializer';
-import { Alias, Schema, Schemas } from '../../model/schema';
-import { processRefTarget } from '../../support/visitor';
+import { Alias, Schema, Schemas, Constraint, MaxLengthConstraint, MinLengthConstraint, ObjectSchema, Property, RegularExpressionConstraint } from '../../model/schema';
+import { processRefTarget, isObjectClean } from '../../support/visitor';
+import { anonymous } from '@azure-tools/sourcemap';
 
 export async function processSchemas($: DictionaryContext<v3.Schema>): Promise<Element | undefined> {
   const { value } = $;
@@ -50,6 +51,11 @@ export async function processSchemaReference($: Context<JsonReference<v3.Schema>
 export async function processSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
   const { value: schema } = $;
 
+  // is enum or x-ms-enum specified?
+  if (schema.enum || (<any>schema)['x-ms-enum']) {
+    return processEnumSchema($);
+  }
+
   switch (schema.type) {
     case v3.JsonType.String:
       return processStringSchema($);
@@ -88,14 +94,11 @@ export async function processSchema($: Context<v3.Schema>): Promise<Schema | und
         return processObjectSchema($);
       }
 
-      // is enum or x-ms-enum specified?
-      if (schema.enum || (<any>schema)['x-ms-enum']) {
-        return processEnumSchema($);
-      }
 
       if (schema.allOf) {
         // this could be an 'inheritance'
         // or a back-door way to $ref 
+
 
       }
 
@@ -110,7 +113,6 @@ export async function processSchema($: Context<v3.Schema>): Promise<Schema | und
         // of those types, but they could also have other properties
         // in here too.
       }
-
 
       if (schema.items || schema.maxItems !== undefined || schema.uniqueItems) {
         // these only apply to arrays
@@ -133,6 +135,108 @@ export async function processSchema($: Context<v3.Schema>): Promise<Schema | und
 }
 
 export async function processStringSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+  const { value: schema, api, } = $;
+
+  switch (schema.format) {
+    case StringFormat.Base64Url:
+    case StringFormat.Byte:
+    case StringFormat.Binary:
+      return processByteArraySchema($);
+
+    case StringFormat.Char:
+      return processCharSchema($);
+
+    case StringFormat.Date:
+      return processDateSchema($);
+
+    case StringFormat.Time:
+      return processTimeSchema($);
+
+    case StringFormat.DateTime:
+    case StringFormat.DateTimeRfc1123:
+      return processDateTimeSchema($);
+
+    case StringFormat.Duration:
+      return processDurationSchema($);
+
+    case StringFormat.Uuid:
+      return processUuidSchema($);
+
+    case StringFormat.Url:
+      return processUriSchema($);
+
+    case StringFormat.Password:
+      return processPasswordSchema($);
+
+    case StringFormat.OData:
+      return processOdataSchema($);
+  }
+  // we're going to treat it as a standard string schema
+  $.mark('type');
+
+  // if this is just a plain string with no adornments, just return the common string instance. 
+  if (!$.anyKeys) {
+    return $.api.schemas.String;
+  }
+
+  // otherwise, we have to get the standard string and make an alias for it with the adornments. 
+  const result = $.track(new Alias($.api.schemas.String));
+
+  if (schema.maxLength) {
+    result.constraints.push($.track(new MaxLengthConstraint($.use('maxLength'))));
+  }
+
+  if (schema.minLength) {
+    result.constraints.push($.track(new MinLengthConstraint($.use('minLength'))));
+  }
+
+  if (schema.pattern) {
+    result.constraints.push($.track(new RegularExpressionConstraint($.use('pattern'))));
+  }
+
+  // add it to the container.
+  $.api.schemas.aliases.push(result);
+
+  return result;
+}
+
+export async function processByteArraySchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+  return undefined;
+}
+
+export async function processCharSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+  return undefined;
+}
+
+export async function processDateSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+  return undefined;
+}
+
+export async function processTimeSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+  return undefined;
+}
+
+export async function processDateTimeSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+  return undefined;
+}
+
+export async function processDurationSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+  return undefined;
+}
+
+export async function processUuidSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+  return undefined;
+}
+
+export async function processUriSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+  return undefined;
+}
+
+export async function processPasswordSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+  return undefined;
+}
+
+export async function processOdataSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
   return undefined;
 }
 
@@ -141,7 +245,12 @@ export async function processBooleanSchema($: Context<v3.Schema>): Promise<Schem
 }
 
 export async function processIntegerSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
-  return undefined;
+  //switch ($.value.format) {
+  //case IntegerFormat.Int32:
+
+  //case IntegerFormat.Int64:
+  //}
+
 }
 
 export async function processNumberSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
@@ -151,8 +260,52 @@ export async function processNumberSchema($: Context<v3.Schema>): Promise<Schema
 export async function processArraySchema($: Context<v3.Schema>): Promise<Schema | undefined> {
   return undefined;
 }
+
+
 export async function processObjectSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
-  return undefined;
+  const { key, value: schema } = $;
+
+  // creating an object schema 
+  const result = $.track(new ObjectSchema($.set(key, [...$.path, 'key']), {
+    // properties to include
+    description: $.use('description'),
+
+    // set the summary
+    summary: $.use('title'),
+    // foo: $.use('additionalProperties')
+  }));
+
+  for (const { key: propertyName, value: property } of items($.value.properties)) {
+
+    const propSchema = (isReference(property) ?
+      // they have used a $ref to a schema - resolve that.
+      await $.process(processSchemaReference, anonymous(propertyName), property) :
+      // an inlined schema --process that first
+      await $.process(processSchema, anonymous(propertyName), property)) || $.api.schemas.Any;  // any? or unknown?
+
+    // remove empty property
+    if (isObjectClean(property)) {
+      delete (<any>$.value.properties)[propertyName];
+    }
+
+    // urg. messy. todo: clean up this
+    // grabs the 'required' value for the property
+    const i = schema.required?.indexOf(propertyName);
+    let required = undefined;
+    if (i && i > -1) {
+      // was a required property
+      schema.required?.splice(i, 1);
+      required = $.set(true, [...$.path, 'required', i]);
+    }
+    result.properties.push($.track(new Property(propertyName, propSchema, {
+      required
+    })));
+  }
+
+  $.api.schemas.objects.push(result);
+
+
+  return result;
 }
 
 export async function processFileSchema($: Context<v3.Schema>): Promise<Schema | undefined> {

@@ -2,7 +2,7 @@ import { Element } from '../element';
 import { Schema } from '../schema';
 
 
-export class HttpHeader extends Element {
+export class Header extends Element {
   // the header name in container. might not be unique in parent? 
   $key!: string;
 
@@ -15,7 +15,7 @@ export class HttpHeader extends Element {
   /** the schema for the header */
   schema?: Schema;
 
-  constructor(initializer?: Partial<HttpHeader>) {
+  constructor(initializer?: Partial<Header>) {
     super();
     this.initialize(initializer);
   }

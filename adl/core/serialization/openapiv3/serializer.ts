@@ -58,6 +58,10 @@ async function processRoot($: Context<v3.Model>) {
   // must go last, since we're going to be reading values out of it 
   await $.process(processInfo, 'info');
 
+  // we don't need this.
+  $.mark('openapi');
+
+
   return $.api;
 }
 

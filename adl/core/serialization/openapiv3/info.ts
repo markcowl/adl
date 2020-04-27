@@ -57,6 +57,10 @@ export async function processInfo($: Context<v3.Info>): Promise<Metadata | undef
   if (metadata.$onAdd) {
     metadata.$onAdd(['metadata']);
   }
+
+  // we handled version much earler.
+  $.mark('version');
+
   return metadata;
 }
 

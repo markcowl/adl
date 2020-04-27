@@ -1,5 +1,5 @@
 import { ElementArray, Element } from '../element';
-import { HttpHeader } from './header';
+import { Header } from './header';
 import * as base from '../operation';
 
 export class Authentication extends Element {
@@ -27,7 +27,7 @@ export class Parameter extends base.Parameter {
 }
 
 export class HttpProtocol extends Element {
-  headers = new ElementArray<HttpHeader>(this, 'headers');
+  headers = new ElementArray<Header>(this, 'headers');
   authentications = new ElementArray<Authentication>(this, 'authentications');
   connections = new ElementArray<Connection>(this, 'connections');
   operations = new ElementArray<Operation>(this, 'operations');

@@ -19,7 +19,7 @@ export interface Model extends VendorExtensions {
   paths: Paths;
 
   /** his string MUST be the semantic version number of the OpenAPI Specification version that the OpenAPI document uses. The openapi field SHOULD be used by tooling specifications and clients to interpret the OpenAPI document. This is not related to the API info.version string. */
-  openApi: Versions;
+  openapi: Versions;
 
   /**  Provides metadata about the API. The metadata MAY be used by tooling as required. */
   info: Info;

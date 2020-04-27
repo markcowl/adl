@@ -7,34 +7,65 @@ import { stringify, Document, CST, AST } from 'yaml';
 import { Schema, YAMLMap, Scalar, YAMLSeq } from 'yaml/types';
 import { parseMap, parseSeq } from 'yaml/util';
 import { Element } from '../model/element';
-import { items } from '@azure-tools/linq';
+import { items, values, keys } from '@azure-tools/linq';
 import { KeyObject } from 'crypto';
 import { isArray } from 'util';
 
 const $scenarios = `${__dirname}/../../test/scenarios`;
 
-class ElementSerializer extends YAMLMap {
-  toJSON(arg?: any, ctx?: AST.NodeToJsonContext) {
-    const copy = <any>super.toJSON(arg, ctx);
-    delete copy.$path;
-    return copy;
+
+const propertyPriority = [
+  '$key',
+  'name',
+  'type',
+
+  'primitives',
+];
+
+const propertyNegativePriority = [
+  'versionInfo'
+];
+
+function sortWithPriorty(a: any, b: any): number {
+  if (a == b) {
+    return 0;
   }
+  const ia = propertyPriority.indexOf(a);
+  const ib = propertyPriority.indexOf(b);
+  const na = propertyNegativePriority.indexOf(a);
+  const nb = propertyNegativePriority.indexOf(b);
+
+  const dota = `${a}`.startsWith('.');
+  const dotb = `${b}`.startsWith('.');
+
+  if (dota) {
+    if (!dotb) {
+      return 1;
+    }
+  } else {
+    if (dotb) {
+      return -1;
+    }
+  }
+
+  if (na > -1) {
+    if (nb > -1) {
+      return na - nb;
+    }
+    return 1;
+  }
+
+  if (nb > -1) {
+    return -1;
+  }
+
+  if (ia != -1) {
+    return ib != -1 ? ia - ib : -1;
+  }
+
+  return ib != -1 || a > b ? 1 : a < b ? -1 : 0;
 }
 
-const elementTag = <Schema.CustomTag>{
-  identify: (v: any) => v instanceof Function,
-  tag: '!FN',
-  resolve: (doc: Document, cst: CST.Node): AST.Node => {
-    const map = parseMap(doc, <any>cst);
-    return Object.assign(new Object(), map);
-  },
-
-  stringify: (item: AST.Node, ctx: Schema.StringifyContext, onComment?: () => void, onChompKeep?: () => void): string => {
-    return <string><any>undefined;
-  },
-
-
-};
 const eTag = <Schema.CustomTag>{
   identify: (v: any) => !Array.isArray(v) && (v instanceof Element || (v.$path !== undefined)),
   default: true,
@@ -44,19 +75,36 @@ const eTag = <Schema.CustomTag>{
     return Object.assign(new Element(), map);
   },
   createNode: (schema: Schema, value: any, ctx: Schema.CreateNodeContext) => {
-    const y = new YAMLMap();
-    for (const each of items(value)) {
-      switch (each.key) {
+    const sch = <any>schema;
+    const s = <any>(YAMLMap);
+    const y = new s(schema);
+
+    for (const key of keys(value).toArray().sort(sortWithPriorty)) {
+
+      switch (key) {
         case '$path':
         case 'internalData':
           continue;
       }
-      if ((Array.isArray(each.value) && each.value.length === 0)) {
+      const v = value[<any>key];
+      // skip empty arrays
+      if ((Array.isArray(v) && v.length === 0)) {
         continue;
       }
-      y.add(each);
+
+      if (v instanceof Promise) {
+        throw new Error(`Property ${key} is a Promise. Missing an await?`);
+      }
+
+      // use createPair (which uses createNode, and ensures that anchors work)
+      y.add(sch.createPair(key, v, ctx));
     }
 
+    // todo: see how we can override the anchor name if possible.
+    // if (ctx.prevObjects && ctx.prevObjects.get(value)) {
+    // console.log(ctx.prevObjects.get(value));
+    // ctx.prevObjects.set(value, `AA${ctx.prevObjects.get(value)}`);
+    //}
     return y;
   }
 };
@@ -86,7 +134,10 @@ describe('Load OAI3', () => {
     const api = await deserializeOpenAPI3(fs, 'petstore.yaml');
 
 
-    await writeFile(`${$scenarios}/single/petstore.api.yaml`, stringify(api, { customTags: [elementTag, eTag] }));
+    // const d = new Document({ customTags: [elementTag, eTag] });
+    // stringify
+
+    await writeFile(`${$scenarios}/single/petstore.api.yaml`, stringify(api, { customTags: [eTag] }));
   });
 
 });

@@ -112,7 +112,7 @@ export class Element extends Initializer implements OnAdd {
 
 
 export class ElementArray<T extends OnAdd> extends Array {
-
+  #set = new Set<string>();
   constructor(private parent: Element, private name: string) {
     super();
   }
@@ -120,7 +120,12 @@ export class ElementArray<T extends OnAdd> extends Array {
   push(...values: Array<T | undefined>) {
     for (const value of values) {
       if (value !== undefined) {
-        this.parent.setPath(value, this.name, super.push(value));
+        const vv = JSON.stringify(value);
+        // todo: fix temporary means to stop duplicates
+        if (!this.#set.has(vv)) {
+          this.parent.setPath(value, this.name, super.push(value));
+          this.#set.add(vv);
+        }
       }
     }
     return this.length;
@@ -129,7 +134,7 @@ export class ElementArray<T extends OnAdd> extends Array {
 
 
 export function setPath(instance: Element, path: Path) {
-  if (instance) {
+  if (instance && typeof instance === 'object') {
     instance.$path = () => path;
     instance.$onAdd?.(path);
     delete instance.$onAdd;

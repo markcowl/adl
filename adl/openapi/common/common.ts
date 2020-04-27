@@ -13,7 +13,7 @@ export * from './format';
 
 import { JsonReference } from './json-reference';
 import { Dictionary } from './dictionary';
-import { items, } from '@azure-tools/linq';
+import { items, values } from '@azure-tools/linq';
 import { VendorExtensions } from './vendor-extensions';
 
 /** asserts that the element passed in is a JsonRefernce */
@@ -27,12 +27,12 @@ export function isVendorExtension(key: string | number | symbol): boolean {
 
 export function unzip<T>(value: Dictionary<T | JsonReference<T>>) {
   const [extensions, remaining] = items(value).bifurcate(each => isVendorExtension(each.key));
-  const [refs, values] = items(remaining).bifurcate(each => isReference(each.value));
+  const [refs, vals] = values(remaining).bifurcate(each => isReference(each.value));
 
   return {
     extensions: <Array<{ key: string; value: any }>>extensions,
     references: <Array<{ key: string; value: JsonReference<T> }>><unknown>refs,
-    values: <Array<{ key: string; value: T }>><unknown>values,
+    values: <Array<{ key: string; value: T }>><unknown>vals,
   };
 }
 

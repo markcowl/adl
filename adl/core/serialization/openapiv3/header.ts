@@ -1,5 +1,5 @@
 import { v3, isVendorExtension, JsonReference, VendorExtensions, ExternalDocumentation, vendorExtensions, unzip, Tag } from '@azure-tools/openapi';
-import { HttpHeader } from '../../model/http/header';
+import { Header } from '../../model/http/header';
 
 import { isReference } from '@azure-tools/openapi';
 import { Context, DictionaryContext } from './serializer';
@@ -44,13 +44,13 @@ export async function processHeaders($: DictionaryContext<v3.Header>): Promise<E
   return undefined;
 }
 
-async function processHeaderReference($: Context<v3.HeaderReference>): Promise<HttpHeader | undefined> {
+async function processHeaderReference($: Context<v3.HeaderReference>): Promise<Header | undefined> {
 
   return undefined;
 }
 
 
-export async function processHeader($: Context<v3.Header>): Promise<HttpHeader | undefined> {
+export async function processHeader($: Context<v3.Header>): Promise<Header | undefined> {
   const { key, value: header, api, visitor, isAnonymous, refToHere } = $;
 
   // these are in the OAI schema, but should not be in headers - freakout if they are used
@@ -69,7 +69,7 @@ export async function processHeader($: Context<v3.Header>): Promise<HttpHeader |
     undefined;
 
   // create the http header object and track it. 
-  const httpHeader = $.track(new HttpHeader({
+  const httpHeader = $.track(new Header({
     // maintain the key
     $key: key.toString(),
     // use the schema
