@@ -1,3 +1,47 @@
+http: {}
+metaData:
+  name: Swagger Petstore
+  licenses:
+    - name: MIT
+      versionInfo:
+        - added: 1.0.0
+  versionInfo:
+    - added: 1.0.0
+schemas:
+  primitives:
+    - &a1
+      type: int64
+      versionInfo:
+        - added: 1.0.0
+    - &a2
+      type: string
+      versionInfo:
+        - added: 1.0.0
+    - &a3
+      type: int32
+      versionInfo:
+        - added: 1.0.0
+  objects:
+    - $key: Pet
+      properties:
+        - name: id
+          schema: *a1
+        - name: name
+          required: true
+          schema: *a2
+        - name: tag
+          schema: *a2
+      versionInfo:
+        - added: 1.0.0
+    - $key: Error
+      properties:
+        - name: code
+          schema: *a3
+        - name: message
+          required: true
+          schema: *a2
+      versionInfo:
+        - added: 1.0.0
 attic:
   petstore.yaml:
     components:
@@ -6,10 +50,7 @@ attic:
           type: object
           required:
             - id
-          properties:
-            id:
-              type: integer
-              format: int64
+          properties: {}
         Pets:
           type: array
           items:
@@ -18,10 +59,7 @@ attic:
           type: object
           required:
             - code
-          properties:
-            code:
-              type: integer
-              format: int32
+          properties: {}
     paths:
       /pets:
         get:
@@ -97,41 +135,3 @@ attic:
                     $ref: "#/components/schemas/Error"
     servers:
       - url: http://petstore.swagger.io/v1
-http: {}
-metaData:
-  name: Swagger Petstore
-  licenses:
-    - name: MIT
-      versionInfo:
-        - added: 1.0.0
-  versionInfo:
-    - added: 1.0.0
-schemas:
-  primitives:
-    - &a1
-      type: any
-    - &a2
-      type: string
-      versionInfo:
-        - added: 1.0.0
-  objects:
-    - $key: Pet
-      properties:
-        - name: id
-          schema: *a1
-        - name: name
-          required: true
-          schema: *a2
-        - name: tag
-          schema: *a2
-      versionInfo:
-        - added: 1.0.0
-    - $key: Error
-      properties:
-        - name: code
-          schema: *a1
-        - name: message
-          required: true
-          schema: *a2
-      versionInfo:
-        - added: 1.0.0

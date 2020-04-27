@@ -3,7 +3,7 @@ import { values, length, items } from '@azure-tools/linq';
 import { Element } from '../../model/element';
 import { v3 } from '@azure-tools/openapi';
 import { Context, DictionaryContext } from './serializer';
-import { Alias, Schema, Schemas, Constraint, MaxLengthConstraint, MinLengthConstraint, ObjectSchema, Property, RegularExpressionConstraint } from '../../model/schema';
+import { Alias, Schema, Schemas, Constraint, MaxLengthConstraint, MinLengthConstraint, ObjectSchema, Property, RegularExpressionConstraint, MinimumConstraint, MaximumConstraint, ExclusiveMinimumConstraint, ExclusiveMaximumConstraint, MultipleOfConstraint } from '../../model/schema';
 import { processRefTarget, isObjectClean } from '../../support/visitor';
 import { anonymous } from '@azure-tools/sourcemap';
 
@@ -245,12 +245,52 @@ export async function processBooleanSchema($: Context<v3.Schema>): Promise<Schem
 }
 
 export async function processIntegerSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
-  //switch ($.value.format) {
-  //case IntegerFormat.Int32:
+  const { value: schema } = $;
 
-  //case IntegerFormat.Int64:
-  //}
-  return undefined;
+  $.mark('type');
+  const format = $.mark('format');
+
+  let result = undefined;
+
+  switch (format) {
+    case IntegerFormat.Int32:
+      result = $.api.schemas.Int32;
+      break;
+
+    case undefined:
+    case IntegerFormat.Int64:
+      result = $.api.schemas.Int64;
+      break;
+  }
+
+  // if this is just a number with no adornments, just return the common instance
+  if (!$.anyKeys) {
+    return result;
+  }
+  if (!result) {
+    throw new Error('Whoops');
+
+  }
+  // gonna need an alias
+  const alias = new Alias(result, { $ });
+  if (schema.minimum) {
+    alias.constraints.push(new MinimumConstraint($.use('minimum')));
+  }
+  if (schema.maximum) {
+    alias.constraints.push(new MaximumConstraint($.use('maximum')));
+  }
+  if (schema.exclusiveMinimum) {
+    alias.constraints.push(new ExclusiveMinimumConstraint($.use('exclusiveMinimum')));
+  }
+  if (schema.exclusiveMaximum) {
+    alias.constraints.push(new ExclusiveMaximumConstraint($.use('exclusiveMaximum')));
+  }
+  if (schema.multipleOf) {
+    alias.constraints.push(new MultipleOfConstraint($.use('multipleOf')));
+  }
+
+  $.api.schemas.aliases.push(alias);
+  return alias;
 }
 
 export async function processNumberSchema($: Context<v3.Schema>): Promise<Schema | undefined> {

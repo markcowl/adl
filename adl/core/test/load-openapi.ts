@@ -23,7 +23,8 @@ const propertyPriority = [
 ];
 
 const propertyNegativePriority = [
-  'versionInfo'
+  'versionInfo',
+  'attic'
 ];
 
 function sortWithPriorty(a: any, b: any): number {

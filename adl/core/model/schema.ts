@@ -50,6 +50,38 @@ export class Constraint extends Schema {
   }
 }
 
+export class MinimumConstraint extends Constraint {
+  constructor(public minimum: number, initializer?: Partial<MinimumConstraint>) {
+    super('Minimum');
+    this.initialize(initializer);
+  }
+}
+export class MaximumConstraint extends Constraint {
+  constructor(public maximum: number, initializer?: Partial<MaximumConstraint>) {
+    super('Maximum');
+    this.initialize(initializer);
+  }
+}
+export class ExclusiveMinimumConstraint extends Constraint {
+  constructor(public minimum: number, initializer?: Partial<ExclusiveMinimumConstraint>) {
+    super('ExclusiveMinimum');
+    this.initialize(initializer);
+  }
+}
+export class ExclusiveMaximumConstraint extends Constraint {
+  constructor(public maximum: number, initializer?: Partial<ExclusiveMaximumConstraint>) {
+    super('ExclusiveMaximum');
+    this.initialize(initializer);
+  }
+}
+
+export class MultipleOfConstraint extends Constraint {
+  constructor(public multipleOf: number, initializer?: Partial<MultipleOfConstraint>) {
+    super('MultipleOf');
+    this.initialize(initializer);
+  }
+}
+
 export class MaxLengthConstraint extends Constraint {
   constructor(public length: number, initializer?: Partial<MaxLengthConstraint>) {
     super('MaxLength');
@@ -97,6 +129,20 @@ export class StringPrimitive extends Primitive {
   }
 }
 
+export class Int32Primitive extends Primitive {
+  constructor(initializer?: Partial<Int32Primitive>) {
+    super('int32');
+    this.initialize(initializer);
+  }
+}
+
+export class Int64Primitive extends Primitive {
+  constructor(initializer?: Partial<Int64Primitive>) {
+    super('int64');
+    this.initialize(initializer);
+  }
+}
+
 export class CharPrimitive extends Primitive {
   constructor(initializer?: Partial<CharPrimitive>) {
     super('char');
@@ -127,6 +173,8 @@ export class Schemas extends Element {
   #any?: AnySchema;
   #string?: StringPrimitive;
   #char?: CharPrimitive;
+  #int32?: Int32Primitive;
+  #int64?: Int64Primitive;
 
   get Unknown(): UnknownSchema {
     return this.#unknown || (this.addPrimitive(this.#unknown = new UnknownSchema()));
@@ -139,6 +187,12 @@ export class Schemas extends Element {
   }
   get Char(): CharPrimitive {
     return this.#char || (this.addPrimitive(this.#char = new CharPrimitive()));
+  }
+  get Int32(): Int32Primitive {
+    return this.#int32 || (this.addPrimitive(this.#int32 = new Int32Primitive()));
+  }
+  get Int64(): Int64Primitive {
+    return this.#int64 || (this.addPrimitive(this.#int64 = new Int64Primitive()));
   }
 
   objects = new ElementArray<ObjectSchema>(this, 'objects');

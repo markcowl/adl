@@ -26,6 +26,9 @@ export interface OnAdd {
    * @parameter path - the full Path to the child once it's been added
    */
   $onAdd?: (p: Path) => void;
+
+  /** Context object, used for source tracking. */
+  $?: any;
 }
 
 /** inheriting from Initializer adds an apply<T> method to the class, allowing you to accept an object initalizer, and applying it to the class in the constructor. */
@@ -36,6 +39,13 @@ export class Initializer {
       const raw = (<any>this);
       const target = raw[key];
       const rawValue = <any>value;
+
+      if (key === '$' && typeof target.track === 'function') {
+        // special case for source tracking.
+        target.track(this);
+        continue;
+      }
+
       if (value !== undefined) {
         if (Array.isArray(target)) {
           if (rawValue[Symbol.iterator]) {
@@ -63,6 +73,7 @@ export class Element extends Initializer implements OnAdd {
  */
   $path: () => Path = () => [];
   $onAdd?: (p: Path) => void;
+  $?: any;
 
   internalData?: Dictionary<InternalData>;
   versionInfo = new ElementArray<VersionInfo>(this, 'versionInfo');

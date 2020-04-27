@@ -1,14 +1,14 @@
 # Proposed Timeline: 
 
-### May 1 
+### May 8
   - Abstract Model clearly defined 
   - OAI2, OAI3 input deserialization     
   - Sourcemap API 
 
 ### May 29
   - TS serialization 
-  - TS deserialization full
-  - ALPHA ADL Consumer API (load/save/manipulate model)
+  - TS deserialization full 
+  - ALPHA ADL Consumer API (load/save/manipulate model*)
 
 ### Jun 5
   - OAI2, OAI3 output serialization 

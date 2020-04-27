@@ -236,7 +236,9 @@ export class Context<TSourceModel extends OAIModel, TValue> {
 
   /** marks a property as used */
   mark<LN, K extends keyof TValue>(key: K) {
+    const v = this.value[key];
     delete this.value[key];
+    return v;
   }
 
   /** takes a value of a property and then removes the property */
@@ -303,10 +305,7 @@ export class Context<TSourceModel extends OAIModel, TValue> {
 
       const result = await action(context);
       if (!isAnonymous(key) && isObjectClean(v)) {
-        console.log(key);
         delete (<any>this.value)[key.valueOf()];
-      } else {
-        console.log(v);
       }
 
       if (result) {
