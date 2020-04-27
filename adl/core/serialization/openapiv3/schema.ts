@@ -250,7 +250,7 @@ export async function processIntegerSchema($: Context<v3.Schema>): Promise<Schem
 
   //case IntegerFormat.Int64:
   //}
-
+  return undefined;
 }
 
 export async function processNumberSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
