@@ -74,6 +74,13 @@ schemas:
       type: int64
     - &a6
       type: int32
+    - &a11
+      type: boolean
+      versionInfo:
+        - added: "2.3"
+        - added: "2.3"
+        - added: "2.3"
+        - added: "2.3"
   objects:
     - $key: AnimatedGif
       properties:
@@ -109,9 +116,9 @@ schemas:
       properties:
         - name: height
           schema:
-            &a35
+            &a36
             target:
-              &a32
+              &a33
               constraints:
                 - name: Minimum
                   minimum: 0
@@ -122,15 +129,15 @@ schemas:
               - added: "2.3"
         - name: media_key
           schema:
-            &a36
+            &a37
             target: *a1
             versionInfo:
               - added: "2.3"
         - name: width
           schema:
-            &a37
+            &a38
             target:
-              &a33
+              &a34
               constraints:
                 - name: Minimum
                   minimum: 0
@@ -165,19 +172,19 @@ schemas:
           schema: *a1
       versionInfo:
         - added: "2.3"
-    - &a12
+    - &a13
       $key: ContextAnnotation
       description: Annotation inferred from the tweet text.
       properties:
         - name: domain
           schema:
-            &a38
+            &a39
             target: *a4
             versionInfo:
               - added: "2.3"
         - name: entity
           schema:
-            &a39
+            &a40
             target: *a5
             versionInfo:
               - added: "2.3"
@@ -204,7 +211,7 @@ schemas:
       properties:
         - name: end
           schema:
-            &a40
+            &a41
             constraints:
               - name: Minimum
                 minimum: 0
@@ -213,7 +220,7 @@ schemas:
               - added: "2.3"
         - name: start
           schema:
-            &a41
+            &a42
             constraints:
               - name: Minimum
                 minimum: 0
@@ -226,7 +233,7 @@ schemas:
       properties:
         - name: code
           schema:
-            &a42
+            &a43
             target: *a6
             versionInfo:
               - added: "2.3"
@@ -234,7 +241,7 @@ schemas:
           schema: *a1
       versionInfo:
         - added: "2.3"
-    - &a22
+    - &a23
       $key: Media
       versionInfo:
         - added: "2.3"
@@ -246,9 +253,9 @@ schemas:
       properties:
         - name: coordinates
           schema:
-            &a50
+            &a51
             target:
-              &a49
+              &a50
               type: array
               elementSchema: *a2
               versionInfo:
@@ -268,14 +275,14 @@ schemas:
       properties:
         - name: bbox
           schema:
-            &a48
+            &a49
             type: array
             elementSchema: *a2
             versionInfo:
               - added: "2.3"
         - name: geometry
           schema:
-            &a51
+            &a52
             target: *a7
             versionInfo:
               - added: "2.3"
@@ -285,15 +292,15 @@ schemas:
           schema: *a2
       versionInfo:
         - added: "2.3"
-    - &a23
+    - &a24
       $key: Place
       properties:
         - name: contained_within
           schema:
-            &a46
+            &a47
             type: array
             elementSchema:
-              &a45
+              &a46
               target: *a1
               versionInfo:
                 - added: "2.3"
@@ -303,7 +310,7 @@ schemas:
           schema: *a1
         - name: country_code
           schema:
-            &a47
+            &a48
             target: *a1
             versionInfo:
               - added: "2.3"
@@ -311,13 +318,13 @@ schemas:
           schema: *a1
         - name: geo
           schema:
-            &a52
+            &a53
             target: *a9
             versionInfo:
               - added: "2.3"
         - name: id
           schema:
-            &a53
+            &a54
             target: *a1
             versionInfo:
               - added: "2.3"
@@ -325,7 +332,7 @@ schemas:
           schema: *a1
         - name: place_type
           schema:
-            &a54
+            &a55
             versionInfo:
               - added: "2.3"
       versionInfo:
@@ -338,25 +345,25 @@ schemas:
           schema: *a1
         - name: position
           schema:
-            &a59
+            &a60
             target: *a3
             versionInfo:
               - added: "2.3"
         - name: votes
           schema:
-            &a60
+            &a61
             target: *a3
             versionInfo:
               - added: "2.3"
       versionInfo:
         - added: "2.3"
-    - &a24
+    - &a25
       $key: Poll
       description: Represent a Poll attached to a Tweet
       properties:
         - name: duration_minutes
           schema:
-            &a57
+            &a58
             target: *a3
             versionInfo:
               - added: "2.3"
@@ -364,16 +371,16 @@ schemas:
           schema: *a2
         - name: id
           schema:
-            &a58
+            &a59
             target: *a1
             versionInfo:
               - added: "2.3"
         - name: options
           schema:
-            &a62
+            &a63
             type: array
             elementSchema:
-              &a61
+              &a62
               target: *a10
               versionInfo:
                 - added: "2.3"
@@ -383,16 +390,16 @@ schemas:
           schema: *a2
       versionInfo:
         - added: "2.3"
-    - &a11
+    - &a12
       $key: attachments
       description: Specifies the type of attachments (if any) present in this Tweet.
       properties:
         - name: media_keys
           schema:
-            &a66
+            &a67
             type: array
             elementSchema:
-              &a65
+              &a66
               target: *a1
               versionInfo:
                 - added: "2.3"
@@ -400,56 +407,11 @@ schemas:
               - added: "2.3"
         - name: poll_ids
           schema:
-            &a68
+            &a69
             type: array
             elementSchema:
-              &a67
+              &a68
               target: *a1
-              versionInfo:
-                - added: "2.3"
-            versionInfo:
-              - added: "2.3"
-      versionInfo:
-        - added: "2.3"
-    - &a13
-      $key: FullTextEntities
-      properties:
-        - name: cashtags
-          schema:
-            &a73
-            type: array
-            elementSchema:
-              &a72
-              versionInfo:
-                - added: "2.3"
-            versionInfo:
-              - added: "2.3"
-        - name: hashtags
-          schema:
-            &a75
-            type: array
-            elementSchema:
-              &a74
-              versionInfo:
-                - added: "2.3"
-            versionInfo:
-              - added: "2.3"
-        - name: mentions
-          schema:
-            &a77
-            type: array
-            elementSchema:
-              &a76
-              versionInfo:
-                - added: "2.3"
-            versionInfo:
-              - added: "2.3"
-        - name: urls
-          schema:
-            &a79
-            type: array
-            elementSchema:
-              &a78
               versionInfo:
                 - added: "2.3"
             versionInfo:
@@ -457,59 +419,104 @@ schemas:
       versionInfo:
         - added: "2.3"
     - &a14
-      $key: geo
-      description: The location tagged on the Tweet, if the user provided one.
+      $key: FullTextEntities
       properties:
-        - name: coordinates
+        - name: cashtags
           schema:
-            &a81
-            target: *a7
+            &a74
+            type: array
+            elementSchema:
+              &a73
+              versionInfo:
+                - added: "2.3"
             versionInfo:
               - added: "2.3"
-        - name: place_id
+        - name: hashtags
           schema:
-            &a82
-            target: *a1
+            &a76
+            type: array
+            elementSchema:
+              &a75
+              versionInfo:
+                - added: "2.3"
+            versionInfo:
+              - added: "2.3"
+        - name: mentions
+          schema:
+            &a78
+            type: array
+            elementSchema:
+              &a77
+              versionInfo:
+                - added: "2.3"
+            versionInfo:
+              - added: "2.3"
+        - name: urls
+          schema:
+            &a80
+            type: array
+            elementSchema:
+              &a79
+              versionInfo:
+                - added: "2.3"
             versionInfo:
               - added: "2.3"
       versionInfo:
         - added: "2.3"
     - &a15
-      $key: public_metrics
-      description: Engagement metrics for the Tweet at the time of the request.
+      $key: geo
+      description: The location tagged on the Tweet, if the user provided one.
       properties:
-        - name: like_count
+        - name: coordinates
           schema:
-            &a85
-            target: *a3
+            &a82
+            target: *a7
             versionInfo:
               - added: "2.3"
-        - name: quote_count
+        - name: place_id
           schema:
-            &a86
-            target: *a3
-            versionInfo:
-              - added: "2.3"
-        - name: reply_count
-          schema:
-            &a87
-            target: *a3
-            versionInfo:
-              - added: "2.3"
-        - name: retweet_count
-          schema:
-            &a88
-            target: *a3
+            &a83
+            target: *a1
             versionInfo:
               - added: "2.3"
       versionInfo:
         - added: "2.3"
     - &a16
+      $key: public_metrics
+      description: Engagement metrics for the Tweet at the time of the request.
+      properties:
+        - name: like_count
+          schema:
+            &a86
+            target: *a3
+            versionInfo:
+              - added: "2.3"
+        - name: quote_count
+          schema:
+            &a87
+            target: *a3
+            versionInfo:
+              - added: "2.3"
+        - name: reply_count
+          schema:
+            &a88
+            target: *a3
+            versionInfo:
+              - added: "2.3"
+        - name: retweet_count
+          schema:
+            &a89
+            target: *a3
+            versionInfo:
+              - added: "2.3"
+      versionInfo:
+        - added: "2.3"
+    - &a17
       $key: items
       properties:
         - name: id
           schema:
-            &a89
+            &a90
             target: *a1
             versionInfo:
               - added: "2.3"
@@ -517,169 +524,19 @@ schemas:
           schema: *a2
       versionInfo:
         - added: "2.3"
-    - &a17
+    - &a18
       $key: TweetWithheld
       description: Indicates withholding details for [withheld
         content](https://help.twitter.com/en/rules-and-policies/tweet-withheld-by-country).
       properties:
         - name: copyright
-          schema: *a2
-        - name: country_codes
-          schema:
-            &a92
-            type: array
-            elementSchema:
-              &a91
-              target: *a1
-              versionInfo:
-                - added: "2.3"
-            versionInfo:
-              - added: "2.3"
-        - name: scope
-          schema: *a2
-      versionInfo:
-        - added: "2.3"
-    - &a25
-      $key: Tweet
-      properties:
-        - name: attachments
           schema: *a11
-        - name: author_id
-          schema:
-            &a69
-            target: *a1
-            versionInfo:
-              - added: "2.3"
-        - name: context_annotations
-          schema:
-            &a71
-            type: array
-            elementSchema:
-              &a70
-              target: *a12
-              versionInfo:
-                - added: "2.3"
-            versionInfo:
-              - added: "2.3"
-        - name: created_at
-          schema: *a2
-        - name: entities
-          schema:
-            &a80
-            target: *a13
-            versionInfo:
-              - added: "2.3"
-        - name: geo
-          schema: *a14
-        - name: id
-          schema:
-            &a83
-            target: *a1
-            versionInfo:
-              - added: "2.3"
-        - name: in_reply_to_user_id
-          schema:
-            &a84
-            target: *a1
-            versionInfo:
-              - added: "2.3"
-        - name: lang
-          schema: *a1
-        - name: possibly_sensitive
-          schema: *a2
-        - name: public_metrics
-          schema: *a15
-        - name: referenced_tweets
-          schema:
-            &a90
-            type: array
-            elementSchema: *a16
-            versionInfo:
-              - added: "2.3"
-        - name: source
-          schema: *a1
-        - name: text
-          schema: *a1
-        - name: withheld
+        - name: country_codes
           schema:
             &a93
-            target: *a17
-            versionInfo:
-              - added: "2.3"
-      versionInfo:
-        - added: "2.3"
-    - &a18
-      $key: url
-      description: Expanded details for the URL specified in the user's profile, with
-        start and end indices.
-      properties:
-        - name: urls
-          schema:
-            &a98
             type: array
             elementSchema:
-              &a97
-              versionInfo:
-                - added: "2.3"
-            versionInfo:
-              - added: "2.3"
-      versionInfo:
-        - added: "2.3"
-    - &a19
-      $key: entities
-      description: A list of metadata found in the user's profile description.
-      properties:
-        - name: description
-          schema:
-            &a96
-            target: *a13
-            versionInfo:
-              - added: "2.3"
-        - name: url
-          schema: *a18
-      versionInfo:
-        - added: "2.3"
-    - &a20
-      $key: public_metrics
-      description: A list of metrics for this user
-      properties:
-        - name: followers_count
-          schema:
-            &a101
-            target: *a3
-            versionInfo:
-              - added: "2.3"
-        - name: following_count
-          schema:
-            &a102
-            target: *a3
-            versionInfo:
-              - added: "2.3"
-        - name: listed_count
-          schema:
-            &a103
-            target: *a3
-            versionInfo:
-              - added: "2.3"
-        - name: tweet_count
-          schema:
-            &a104
-            target: *a3
-            versionInfo:
-              - added: "2.3"
-      versionInfo:
-        - added: "2.3"
-    - &a21
-      $key: UserWithheld
-      description: Indicates withholding details for [withheld
-        content](https://help.twitter.com/en/rules-and-policies/tweet-withheld-by-country).
-      properties:
-        - name: country_codes
-          schema:
-            &a107
-            type: array
-            elementSchema:
-              &a106
+              &a92
               target: *a1
               versionInfo:
                 - added: "2.3"
@@ -690,6 +547,156 @@ schemas:
       versionInfo:
         - added: "2.3"
     - &a26
+      $key: Tweet
+      properties:
+        - name: attachments
+          schema: *a12
+        - name: author_id
+          schema:
+            &a70
+            target: *a1
+            versionInfo:
+              - added: "2.3"
+        - name: context_annotations
+          schema:
+            &a72
+            type: array
+            elementSchema:
+              &a71
+              target: *a13
+              versionInfo:
+                - added: "2.3"
+            versionInfo:
+              - added: "2.3"
+        - name: created_at
+          schema: *a2
+        - name: entities
+          schema:
+            &a81
+            target: *a14
+            versionInfo:
+              - added: "2.3"
+        - name: geo
+          schema: *a15
+        - name: id
+          schema:
+            &a84
+            target: *a1
+            versionInfo:
+              - added: "2.3"
+        - name: in_reply_to_user_id
+          schema:
+            &a85
+            target: *a1
+            versionInfo:
+              - added: "2.3"
+        - name: lang
+          schema: *a1
+        - name: possibly_sensitive
+          schema: *a11
+        - name: public_metrics
+          schema: *a16
+        - name: referenced_tweets
+          schema:
+            &a91
+            type: array
+            elementSchema: *a17
+            versionInfo:
+              - added: "2.3"
+        - name: source
+          schema: *a1
+        - name: text
+          schema: *a1
+        - name: withheld
+          schema:
+            &a94
+            target: *a18
+            versionInfo:
+              - added: "2.3"
+      versionInfo:
+        - added: "2.3"
+    - &a19
+      $key: url
+      description: Expanded details for the URL specified in the user's profile, with
+        start and end indices.
+      properties:
+        - name: urls
+          schema:
+            &a99
+            type: array
+            elementSchema:
+              &a98
+              versionInfo:
+                - added: "2.3"
+            versionInfo:
+              - added: "2.3"
+      versionInfo:
+        - added: "2.3"
+    - &a20
+      $key: entities
+      description: A list of metadata found in the user's profile description.
+      properties:
+        - name: description
+          schema:
+            &a97
+            target: *a14
+            versionInfo:
+              - added: "2.3"
+        - name: url
+          schema: *a19
+      versionInfo:
+        - added: "2.3"
+    - &a21
+      $key: public_metrics
+      description: A list of metrics for this user
+      properties:
+        - name: followers_count
+          schema:
+            &a102
+            target: *a3
+            versionInfo:
+              - added: "2.3"
+        - name: following_count
+          schema:
+            &a103
+            target: *a3
+            versionInfo:
+              - added: "2.3"
+        - name: listed_count
+          schema:
+            &a104
+            target: *a3
+            versionInfo:
+              - added: "2.3"
+        - name: tweet_count
+          schema:
+            &a105
+            target: *a3
+            versionInfo:
+              - added: "2.3"
+      versionInfo:
+        - added: "2.3"
+    - &a22
+      $key: UserWithheld
+      description: Indicates withholding details for [withheld
+        content](https://help.twitter.com/en/rules-and-policies/tweet-withheld-by-country).
+      properties:
+        - name: country_codes
+          schema:
+            &a108
+            type: array
+            elementSchema:
+              &a107
+              target: *a1
+              versionInfo:
+                - added: "2.3"
+            versionInfo:
+              - added: "2.3"
+        - name: scope
+          schema: *a2
+      versionInfo:
+        - added: "2.3"
+    - &a27
       $key: User
       description: The Twitter User object
       properties:
@@ -698,10 +705,10 @@ schemas:
         - name: description
           schema: *a1
         - name: entities
-          schema: *a19
+          schema: *a20
         - name: id
           schema:
-            &a99
+            &a100
             target: *a1
             versionInfo:
               - added: "2.3"
@@ -711,88 +718,88 @@ schemas:
           schema: *a1
         - name: pinned_tweet_id
           schema:
-            &a100
+            &a101
             target: *a1
             versionInfo:
               - added: "2.3"
         - name: profile_image_url
           schema: *a1
         - name: protected
-          schema: *a2
+          schema: *a11
         - name: public_metrics
-          schema: *a20
+          schema: *a21
         - name: url
           schema: *a1
         - name: username
           schema:
-            &a105
+            &a106
             target: *a1
             versionInfo:
               - added: "2.3"
         - name: verified
-          schema: *a2
+          schema: *a11
         - name: withheld
           schema:
-            &a108
-            target: *a21
+            &a109
+            target: *a22
             versionInfo:
               - added: "2.3"
       versionInfo:
         - added: "2.3"
-    - &a30
+    - &a31
       $key: Expansions
       properties:
         - name: media
           schema:
-            &a44
+            &a45
             type: array
             elementSchema:
-              &a43
-              target: *a22
+              &a44
+              target: *a23
               versionInfo:
                 - added: "2.3"
             versionInfo:
               - added: "2.3"
         - name: places
           schema:
-            &a56
+            &a57
             type: array
             elementSchema:
-              &a55
-              target: *a23
+              &a56
+              target: *a24
               versionInfo:
                 - added: "2.3"
             versionInfo:
               - added: "2.3"
         - name: polls
           schema:
-            &a64
+            &a65
             type: array
             elementSchema:
-              &a63
-              target: *a24
+              &a64
+              target: *a25
               versionInfo:
                 - added: "2.3"
             versionInfo:
               - added: "2.3"
         - name: tweets
           schema:
-            &a95
+            &a96
             type: array
             elementSchema:
-              &a94
-              target: *a25
+              &a95
+              target: *a26
               versionInfo:
                 - added: "2.3"
             versionInfo:
               - added: "2.3"
         - name: users
           schema:
-            &a110
+            &a111
             type: array
             elementSchema:
-              &a109
-              target: *a26
+              &a110
+              target: *a27
               versionInfo:
                 - added: "2.3"
             versionInfo:
@@ -805,7 +812,7 @@ schemas:
       properties:
         - name: status
           schema:
-            &a111
+            &a112
             target: *a3
             versionInfo:
               - added: "2.3"
@@ -821,17 +828,17 @@ schemas:
           schema: *a1
       versionInfo:
         - added: "2.3"
-    - &a27
+    - &a28
       $key: parameters
       versionInfo:
         - added: "2.3"
-    - &a28
+    - &a29
       $key: items
       properties:
         - name: message
           schema: *a1
         - name: parameters
-          schema: *a27
+          schema: *a28
       versionInfo:
         - added: "2.3"
     - $key: InvalidRequestProblem
@@ -839,9 +846,9 @@ schemas:
       properties:
         - name: errors
           schema:
-            &a113
+            &a114
             type: array
-            elementSchema: *a28
+            elementSchema: *a29
             versionInfo:
               - added: "2.3"
         - name: type
@@ -854,7 +861,7 @@ schemas:
       properties:
         - name: username
           schema:
-            &a114
+            &a115
             target: *a1
             versionInfo:
               - added: "2.3"
@@ -868,7 +875,7 @@ schemas:
           schema: *a1
       versionInfo:
         - added: "2.3"
-    - &a29
+    - &a30
       $key: Problem
       description: An HTTP Problem Details object, as defined in IETF RFC 7807
         (https://tools.ietf.org/html/rfc7807).
@@ -915,25 +922,25 @@ schemas:
       properties:
         - name: data
           schema:
-            &a115
-            target: *a25
+            &a116
+            target: *a26
             versionInfo:
               - added: "2.3"
         - name: errors
           schema:
-            &a117
+            &a118
             type: array
             elementSchema:
-              &a116
-              target: *a29
+              &a117
+              target: *a30
               versionInfo:
                 - added: "2.3"
             versionInfo:
               - added: "2.3"
         - name: includes
           schema:
-            &a118
-            target: *a30
+            &a119
+            target: *a31
             versionInfo:
               - added: "2.3"
       versionInfo:
@@ -942,25 +949,25 @@ schemas:
       properties:
         - name: data
           schema:
-            &a119
-            target: *a26
+            &a120
+            target: *a27
             versionInfo:
               - added: "2.3"
         - name: errors
           schema:
-            &a121
+            &a122
             type: array
             elementSchema:
-              &a120
-              target: *a29
+              &a121
+              target: *a30
               versionInfo:
                 - added: "2.3"
             versionInfo:
               - added: "2.3"
         - name: includes
           schema:
-            &a122
-            target: *a30
+            &a123
+            target: *a31
             versionInfo:
               - added: "2.3"
       versionInfo:
@@ -969,35 +976,35 @@ schemas:
       properties:
         - name: data
           schema:
-            &a124
+            &a125
             type: array
             elementSchema:
-              &a123
-              target: *a25
+              &a124
+              target: *a26
               versionInfo:
                 - added: "2.3"
             versionInfo:
               - added: "2.3"
         - name: errors
           schema:
-            &a126
+            &a127
             type: array
             elementSchema:
-              &a125
-              target: *a29
+              &a126
+              target: *a30
               versionInfo:
                 - added: "2.3"
             versionInfo:
               - added: "2.3"
         - name: includes
           schema:
-            &a127
-            target: *a30
+            &a128
+            target: *a31
             versionInfo:
               - added: "2.3"
       versionInfo:
         - added: "2.3"
-    - &a31
+    - &a32
       $key: meta
       properties:
         - name: newest_id
@@ -1008,7 +1015,7 @@ schemas:
           schema: *a1
         - name: result_count
           schema:
-            &a133
+            &a134
             target: *a6
             versionInfo:
               - added: "2.3"
@@ -1018,56 +1025,56 @@ schemas:
       properties:
         - name: data
           schema:
-            &a129
+            &a130
             type: array
             elementSchema:
-              &a128
-              target: *a25
+              &a129
+              target: *a26
               versionInfo:
                 - added: "2.3"
             versionInfo:
               - added: "2.3"
         - name: errors
           schema:
-            &a131
+            &a132
             type: array
             elementSchema:
-              &a130
-              target: *a29
+              &a131
+              target: *a30
               versionInfo:
                 - added: "2.3"
             versionInfo:
               - added: "2.3"
         - name: includes
           schema:
-            &a132
-            target: *a30
+            &a133
+            target: *a31
             versionInfo:
               - added: "2.3"
         - name: meta
-          schema: *a31
+          schema: *a32
       versionInfo:
         - added: "2.3"
-    - &a34
+    - &a35
       $key: URLImage
       description: Represent the information for the URL image
       properties:
         - name: height
           schema:
-            &a135
-            target: *a32
+            &a136
+            target: *a33
             versionInfo:
               - added: "2.3"
         - name: url
           schema:
-            &a136
+            &a137
             target: *a1
             versionInfo:
               - added: "2.3"
         - name: width
           schema:
-            &a137
-            target: *a33
+            &a138
+            target: *a34
             versionInfo:
               - added: "2.3"
       versionInfo:
@@ -1081,26 +1088,26 @@ schemas:
           schema: *a1
         - name: expanded_url
           schema:
-            &a134
+            &a135
             target: *a1
             versionInfo:
               - added: "2.3"
         - name: images
           schema:
-            &a139
+            &a140
             type: array
             elementSchema:
-              &a138
-              target: *a34
+              &a139
+              target: *a35
               versionInfo:
                 - added: "2.3"
             versionInfo:
               - added: "2.3"
         - name: status
           schema:
-            &a140
+            &a141
             target:
-              &a112
+              &a113
               constraints:
                 - name: Minimum
                   minimum: 100
@@ -1117,7 +1124,7 @@ schemas:
           schema: *a1
         - name: url
           schema:
-            &a141
+            &a142
             target: *a1
             versionInfo:
               - added: "2.3"
@@ -1145,30 +1152,30 @@ schemas:
       properties:
         - name: data
           schema:
-            &a143
+            &a144
             type: array
             elementSchema:
-              &a142
-              target: *a26
+              &a143
+              target: *a27
               versionInfo:
                 - added: "2.3"
             versionInfo:
               - added: "2.3"
         - name: errors
           schema:
-            &a145
+            &a146
             type: array
             elementSchema:
-              &a144
-              target: *a29
+              &a145
+              target: *a30
               versionInfo:
                 - added: "2.3"
             versionInfo:
               - added: "2.3"
         - name: includes
           schema:
-            &a146
-            target: *a30
+            &a147
+            target: *a31
             versionInfo:
               - added: "2.3"
       versionInfo:
@@ -1177,7 +1184,7 @@ schemas:
       properties:
         - name: duration_ms
           schema:
-            &a147
+            &a148
             target: *a3
             versionInfo:
               - added: "2.3"
@@ -1188,102 +1195,101 @@ schemas:
       versionInfo:
         - added: "2.3"
   aliases:
-    - *a32
-    - *a35
-    - *a36
     - *a33
+    - *a36
     - *a37
+    - *a34
     - *a38
     - *a39
     - *a40
     - *a41
     - *a42
     - *a43
+    - *a44
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a44
-    - *a45
+      target: *a45
+    - *a46
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a46
-    - *a47
-    - constraints:
-        - name: MaximumElements
-          count: {}
-        - name: MinimumElements
-          count: {}
-      target: *a48
+      target: *a47
+    - *a48
     - constraints:
         - name: MaximumElements
           count: {}
         - name: MinimumElements
           count: {}
       target: *a49
-    - *a50
-    - *a51
-    - *a52
-    - *a53
-    - *a54
-    - *a55
-    - constraints:
-        - name: MinimumElements
-          count: {}
-      target: *a56
-    - *a57
-    - *a58
-    - *a59
-    - *a60
-    - *a61
     - constraints:
         - name: MaximumElements
           count: {}
         - name: MinimumElements
           count: {}
-      target: *a62
-    - *a63
+      target: *a50
+    - *a51
+    - *a52
+    - *a53
+    - *a54
+    - *a55
+    - *a56
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a64
-    - *a65
+      target: *a57
+    - *a58
+    - *a59
+    - *a60
+    - *a61
+    - *a62
+    - constraints:
+        - name: MaximumElements
+          count: {}
+        - name: MinimumElements
+          count: {}
+      target: *a63
+    - *a64
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a66
-    - *a67
+      target: *a65
+    - *a66
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a68
-    - *a69
+      target: *a67
+    - *a68
+    - constraints:
+        - name: MinimumElements
+          count: {}
+      target: *a69
     - *a70
+    - *a71
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a71
-    - *a72
+      target: *a72
+    - *a73
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a73
-    - *a74
+      target: *a74
+    - *a75
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a75
-    - *a76
+      target: *a76
+    - *a77
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a77
-    - *a78
+      target: *a78
+    - *a79
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a79
-    - *a80
+      target: *a80
     - *a81
     - *a82
     - *a83
@@ -1293,30 +1299,30 @@ schemas:
     - *a87
     - *a88
     - *a89
+    - *a90
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a90
-    - *a91
+      target: *a91
+    - *a92
     - constraints:
         - name: MinimumElements
           count: {}
         - name: UniqueElements
           unique: {}
-      target: *a92
-    - *a93
+      target: *a93
     - *a94
+    - *a95
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a95
-    - *a96
+      target: *a96
     - *a97
+    - *a98
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a98
-    - *a99
+      target: *a99
     - *a100
     - *a101
     - *a102
@@ -1324,79 +1330,80 @@ schemas:
     - *a104
     - *a105
     - *a106
+    - *a107
     - constraints:
         - name: MinimumElements
           count: {}
         - name: UniqueElements
           unique: {}
-      target: *a107
-    - *a108
+      target: *a108
     - *a109
+    - *a110
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a110
-    - *a111
+      target: *a111
     - *a112
-    - target: *a113
-    - *a114
+    - *a113
+    - target: *a114
     - *a115
     - *a116
+    - *a117
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a117
-    - *a118
+      target: *a118
     - *a119
     - *a120
+    - *a121
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a121
-    - *a122
+      target: *a122
     - *a123
+    - *a124
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a124
-    - *a125
+      target: *a125
+    - *a126
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a126
-    - *a127
+      target: *a127
     - *a128
+    - *a129
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a129
-    - *a130
+      target: *a130
+    - *a131
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a131
-    - *a132
+      target: *a132
     - *a133
     - *a134
     - *a135
     - *a136
     - *a137
     - *a138
+    - *a139
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a139
-    - *a140
+      target: *a140
     - *a141
     - *a142
+    - *a143
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a143
-    - *a144
+      target: *a144
+    - *a145
     - constraints:
         - name: MinimumElements
           count: {}
-      target: *a145
-    - *a146
+      target: *a146
     - *a147
+    - *a148

@@ -237,7 +237,8 @@ export async function processOdataSchema(schema: v3.Schema, $: Context): Promise
 }
 
 export async function processBooleanSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  return undefined;
+  use(schema.type);
+  return $.api.schemas.Boolean
 }
 
 export async function processIntegerSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
