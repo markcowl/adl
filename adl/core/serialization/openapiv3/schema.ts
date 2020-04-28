@@ -3,7 +3,7 @@ import { values, length, items } from '@azure-tools/linq';
 import { Element } from '../../model/element';
 import { v3 } from '@azure-tools/openapi';
 import { Context, DictionaryContext } from './serializer';
-import { Alias, Schema, Schemas, Constraint, MaxLengthConstraint, MinLengthConstraint, ObjectSchema, Property, RegularExpressionConstraint, MinimumConstraint, MaximumConstraint, ExclusiveMinimumConstraint, ExclusiveMaximumConstraint, MultipleOfConstraint } from '../../model/schema';
+import { Alias, Schema, Schemas, Constraint, MaxLengthConstraint, MinLengthConstraint, ObjectSchema, Property, RegularExpressionConstraint, MinimumConstraint, MaximumConstraint, ExclusiveMinimumConstraint, ExclusiveMaximumConstraint, MultipleOfConstraint, ArraySchema, MaximumElementsConstraint, MinimumElementsConstraint, UniqueElementsConstraint } from '../../model/schema';
 import { processRefTarget, isObjectClean } from '../../support/visitor';
 import { anonymous } from '@azure-tools/sourcemap';
 
@@ -298,12 +298,36 @@ export async function processNumberSchema($: Context<v3.Schema>): Promise<Schema
 }
 
 export async function processArraySchema($: Context<v3.Schema>): Promise<Schema | undefined> {
-  return undefined;
+  const { value: schema } = $;
+  const elementSchema = await $.processPossibleReference(processSchemaReference, processSchema, anonymous('array'), schema.items) || $.api.schemas.Any;
+  $.mark('items');
+  $.mark('type');
+  const result = new ArraySchema(elementSchema, { $ });
+  if (!$.anyKeys) {
+    $.api.schemas.primitives.push(result);
+    return result;
+  }
+  const alias = new Alias(result, { $ });
+  if (schema.maxItems) {
+    alias.constraints.push(new MaximumElementsConstraint($.use('maxItems')));
+  }
+  if (schema.minItems) {
+    alias.constraints.push(new MinimumElementsConstraint($.use('maxItems')));
+  }
+  if (schema.uniqueItems) {
+    alias.constraints.push(new UniqueElementsConstraint($.use('maxItems')));
+  }
+
+  $.api.schemas.aliases.push(alias);
+
+  return result;
 }
 
 
 export async function processObjectSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
   const { key, value: schema } = $;
+
+  $.mark('type');
 
   // creating an object schema 
   const result = $.track(new ObjectSchema($.set(key, [...$.path, 'key']), {
@@ -317,11 +341,8 @@ export async function processObjectSchema($: Context<v3.Schema>): Promise<Schema
 
   for (const { key: propertyName, value: property } of items($.value.properties)) {
 
-    const propSchema = (isReference(property) ?
-      // they have used a $ref to a schema - resolve that.
-      await $.process(processSchemaReference, anonymous(propertyName), property) :
-      // an inlined schema --process that first
-      await $.process(processSchema, anonymous(propertyName), property)) || $.api.schemas.Any;  // any? or unknown?
+    // process schema/reference inline
+    const propSchema = await $.processPossibleReference(processSchemaReference, processSchema, anonymous(propertyName), property) || $.api.schemas.Any;
 
     // remove empty property
     if (isObjectClean(property)) {
@@ -330,9 +351,9 @@ export async function processObjectSchema($: Context<v3.Schema>): Promise<Schema
 
     // urg. messy. todo: clean up this
     // grabs the 'required' value for the property
-    const i = schema.required?.indexOf(propertyName);
+    const i = schema.required?.indexOf(propertyName) ?? -1;
     let required = undefined;
-    if (i && i > -1) {
+    if (i > -1) {
       // was a required property
       schema.required?.splice(i, 1);
       required = $.set(true, [...$.path, 'required', i]);

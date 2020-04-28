@@ -17,49 +17,47 @@ schemas:
       type: string
       versionInfo:
         - added: 1.0.0
-    - &a3
+    - type: array
+      elementSchema:
+        &a5
+        target:
+          &a3
+          $key: Pet
+          properties:
+            - name: id
+              required: true
+              schema: *a1
+            - name: name
+              required: true
+              schema: *a2
+            - name: tag
+              schema: *a2
+          versionInfo:
+            - added: 1.0.0
+        versionInfo:
+          - added: 1.0.0
+      versionInfo:
+        - added: 1.0.0
+    - &a4
       type: int32
       versionInfo:
         - added: 1.0.0
   objects:
-    - $key: Pet
-      properties:
-        - name: id
-          schema: *a1
-        - name: name
-          required: true
-          schema: *a2
-        - name: tag
-          schema: *a2
-      versionInfo:
-        - added: 1.0.0
+    - *a3
     - $key: Error
       properties:
         - name: code
-          schema: *a3
+          required: true
+          schema: *a4
         - name: message
           required: true
           schema: *a2
       versionInfo:
         - added: 1.0.0
+  aliases:
+    - *a5
 attic:
   petstore.yaml:
-    components:
-      schemas:
-        Pet:
-          type: object
-          required:
-            - id
-          properties: {}
-        Pets:
-          type: array
-          items:
-            $ref: "#/components/schemas/Pet"
-        Error:
-          type: object
-          required:
-            - code
-          properties: {}
     paths:
       /pets:
         get:

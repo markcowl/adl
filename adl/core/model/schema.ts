@@ -88,8 +88,6 @@ export class MaxLengthConstraint extends Constraint {
     this.initialize(initializer);
   }
 }
-
-
 export class MinLengthConstraint extends Constraint {
   constructor(public length: number, initializer?: Partial<MinLengthConstraint>) {
     super('MinLength');
@@ -98,11 +96,34 @@ export class MinLengthConstraint extends Constraint {
 }
 
 export class RegularExpressionConstraint extends Constraint {
-  constructor(public length: string, initializer?: Partial<MinLengthConstraint>) {
-    super('MinLength');
+  constructor(public length: string, initializer?: Partial<RegularExpressionConstraint>) {
+    super('RegularExpression');
     this.initialize(initializer);
   }
 }
+
+export class MaximumElementsConstraint extends Constraint {
+  constructor(public count: string, initializer?: Partial<MaximumElementsConstraint>) {
+    super('MaximumElements');
+    this.initialize(initializer);
+  }
+}
+
+export class MinimumElementsConstraint extends Constraint {
+  constructor(public count: string, initializer?: Partial<MinimumElementsConstraint>) {
+    super('MinimumElements');
+    this.initialize(initializer);
+  }
+}
+
+export class UniqueElementsConstraint extends Constraint {
+  constructor(public unique: boolean, initializer?: Partial<UniqueElementsConstraint>) {
+    super('UniqueElements');
+    this.initialize(initializer);
+  }
+}
+
+
 export class Default extends Schema {
 }
 
@@ -118,6 +139,13 @@ export class Alias extends Schema {
 export class Primitive extends Schema {
   constructor(public type: string, initializer?: Partial<Primitive>) {
     super();
+    this.initialize(initializer);
+  }
+}
+
+export class ArraySchema extends Primitive {
+  constructor(public elementSchema: Schema, initializer?: Partial<ArraySchema>) {
+    super('array');
     this.initialize(initializer);
   }
 }

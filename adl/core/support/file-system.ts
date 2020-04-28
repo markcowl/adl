@@ -26,7 +26,7 @@ export class UrlFileSystem implements FileSystem {
 
     // check for GitHub OAuth token
     if (this.githubAuthToken && uri.startsWith('https://raw.githubusercontent.com')) {
-      console.log(`Used GitHub authentication token to request '${uri}'.`);
+      // console.log(`Used GitHub authentication token to request '${uri}'.`);
       headers.authorization = `Bearer ${this.githubAuthToken}`;
     }
     return ReadUri(uri, headers);
