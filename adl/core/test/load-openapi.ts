@@ -8,8 +8,6 @@ import { Schema, YAMLMap, Scalar, YAMLSeq } from 'yaml/types';
 import { parseMap, parseSeq } from 'yaml/util';
 import { Element } from '../model/element';
 import { items, values, keys } from '@azure-tools/linq';
-import { KeyObject } from 'crypto';
-import { isArray } from 'util';
 
 const $scenarios = `${__dirname}/../../test/scenarios`;
 
@@ -134,10 +132,6 @@ describe('Load OAI3', () => {
   it('load file ', async () => {
     //
     const api = await deserializeOpenAPI3(fs, 'petstore.yaml');
-
-
-    // const d = new Document({ customTags: [elementTag, eTag] });
-    // stringify
 
     await writeFile(`${$scenarios}/single/petstore.api.yaml`, stringify(api, { customTags: [eTag] }));
   });
