@@ -197,48 +197,58 @@ export async function processStringSchema(schema: v3.Schema, $: Context): Promis
 }
 
 export async function processByteArraySchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  return undefined;
+  use(schema.type);
+  return $.api.schemas.ByteArray;
 }
 
 export async function processCharSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  return undefined;
+  use(schema.type);
+  return $.api.schemas.Char;
 }
 
 export async function processDateSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  return undefined;
+  use(schema.type);
+  return $.api.schemas.Date;
 }
 
 export async function processTimeSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  return undefined;
+  use(schema.type);
+  return $.api.schemas.Time;
 }
 
 export async function processDateTimeSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  return undefined;
+  use(schema.type);
+  return $.api.schemas.DateTime;
 }
 
 export async function processDurationSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  return undefined;
+  use(schema.type);
+  return $.api.schemas.Duration;
 }
 
 export async function processUuidSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  return undefined;
+  use(schema.type);
+  return $.api.schemas.Uuid;
 }
 
 export async function processUriSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  return undefined;
+  use(schema.type);
+  return $.api.schemas.Uri;
 }
 
 export async function processPasswordSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  return undefined;
+  use(schema.type);
+  return $.api.schemas.Password;
 }
 
 export async function processOdataSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  return undefined;
+  use(schema.type);
+  return $.api.schemas.OData;
 }
 
 export async function processBooleanSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   use(schema.type);
-  return $.api.schemas.Boolean
+  return $.api.schemas.Boolean;
 }
 
 export async function processIntegerSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
@@ -385,7 +395,8 @@ export async function processObjectSchema(schema: v3.Schema, $: Context): Promis
 }
 
 export async function processFileSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  return undefined;
+  use(schema.type);
+  return $.api.schemas.File;
 }
 
 export async function processEnumSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
@@ -402,5 +413,6 @@ export async function processEnumSchema(schema: v3.Schema, $: Context): Promise<
 }
 
 export async function processAnySchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  return undefined;
+  use(schema.type);
+  return $.api.schemas.Any;
 }

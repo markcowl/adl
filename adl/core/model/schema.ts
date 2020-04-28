@@ -202,6 +202,77 @@ export class FloatPrimitive extends Primitive {
   }
 }
 
+export class ByteArrayPrimitive extends Primitive {
+  constructor(initializer?: Partial<ByteArrayPrimitive>) {
+    super('byteArray');
+    this.initialize(initializer);
+  }
+}
+
+export class DatePrimitive extends Primitive {
+  constructor(initializer?: Partial<DatePrimitive>) {
+    super('date');
+    this.initialize(initializer);
+  }
+}
+
+export class TimePrimitive extends Primitive {
+  constructor(initializer?: Partial<TimePrimitive>) {
+    super('time');
+    this.initialize(initializer);
+  }
+}
+
+export class DateTimePrimitive extends Primitive {
+  constructor(initializer?: Partial<DateTimePrimitive>) {
+    super('dateTime');
+    this.initialize(initializer);
+  }
+}
+
+export class DurationPrimitive extends Primitive {
+  constructor(initializer?: Partial<DurationPrimitive>) {
+    super('duration');
+    this.initialize(initializer);
+  }
+}
+
+export class UuidPrimitive extends Primitive {
+  constructor(initializer?: Partial<UuidPrimitive>) {
+    super('uuid');
+    this.initialize(initializer);
+  }
+}
+
+export class UriPrimitive extends Primitive {
+  constructor(initializer?: Partial<UriPrimitive>) {
+    super('uri');
+    this.initialize(initializer);
+  }
+}
+
+export class PasswordPrimitive extends Primitive {
+  constructor(initializer?: Partial<PasswordPrimitive>) {
+    super('password');
+    this.initialize(initializer);
+  }
+}
+
+export class ODataPrimitive extends Primitive {
+  constructor(initializer?: Partial<ODataPrimitive>) {
+    super('odata');
+    this.initialize(initializer);
+  }
+}
+
+export class FilePrimitive extends Primitive {
+  constructor(initializer?: Partial<FilePrimitive>) {
+    super('file');
+    this.initialize(initializer);
+  }
+}
+
+
 export class CharPrimitive extends Primitive {
   constructor(initializer?: Partial<CharPrimitive>) {
     super('char');
@@ -237,6 +308,16 @@ export class Schemas extends Element {
   #boolean?: BooleanPrimitive;
   #double?: DoublePrimitive;
   #float?: FloatPrimitive;
+  #byteArray?: ByteArrayPrimitive;
+  #date?: DatePrimitive;
+  #time?: TimePrimitive;
+  #dateTime?: DateTimePrimitive;
+  #duration?: DurationPrimitive;
+  #uuid?: UuidPrimitive;
+  #uri?: UriPrimitive;
+  #password?: PasswordPrimitive;
+  #odata?: ODataPrimitive;
+  #file?: FilePrimitive;
 
   get Unknown(): UnknownSchema {
     return this.#unknown || (this.addPrimitive(this.#unknown = new UnknownSchema()));
@@ -264,6 +345,36 @@ export class Schemas extends Element {
   }
   get Float(): FloatPrimitive {
     return this.#float || (this.addPrimitive(this.#float = new FloatPrimitive()));
+  }
+  get ByteArray(): ByteArrayPrimitive {
+    return this.#byteArray || (this.addPrimitive(this.#byteArray = new ByteArrayPrimitive()));
+  }
+  get Date(): DatePrimitive {
+    return this.#date || (this.addPrimitive(this.#date = new DatePrimitive()));
+  }
+  get Time(): TimePrimitive {
+    return this.#time || (this.addPrimitive(this.#time = new TimePrimitive()));
+  }
+  get DateTime(): DateTimePrimitive {
+    return this.#dateTime || (this.addPrimitive(this.#dateTime = new DateTimePrimitive()));
+  }
+  get Duration(): DurationPrimitive {
+    return this.#duration || (this.addPrimitive(this.#duration = new DurationPrimitive()));
+  }
+  get Uuid(): UuidPrimitive {
+    return this.#uuid || (this.addPrimitive(this.#uuid = new UuidPrimitive()));
+  }
+  get Uri(): UriPrimitive {
+    return this.#uri || (this.addPrimitive(this.#uri = new UriPrimitive()));
+  }
+  get Password(): PasswordPrimitive {
+    return this.#password || (this.addPrimitive(this.#password = new PasswordPrimitive()));
+  }
+  get OData(): ODataPrimitive {
+    return this.#odata || (this.addPrimitive(this.#odata = new ODataPrimitive()));
+  }
+  get File(): FilePrimitive {
+    return this.#file || (this.addPrimitive(this.#file = new FilePrimitive()));
   }
 
   objects = trackTarget(new ElementArray<ObjectSchema>());

@@ -88,9 +88,25 @@ schemas:
         - added: 2018-11-25
         - added: 2018-11-25
         - added: 2018-11-25
+    - type: any
+      versionInfo:
+        - added: 2018-11-25
+        - added: 2018-11-25
+        - added: 2018-11-25
+        - added: 2018-11-25
+        - added: 2018-11-25
+        - added: 2018-11-25
+        - added: 2018-11-25
     - &a5
       type: int64
     - &a10
+      type: dateTime
+      versionInfo:
+        - added: 2018-11-25
+        - added: 2018-11-25
+        - added: 2018-11-25
+        - added: 2018-11-25
+    - &a11
       type: double
   objects:
     - &a3
@@ -99,37 +115,37 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a18
+            &a19
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: LifeCycle
           schema:
-            &a19
+            &a20
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: OpsItemSNSTopicArn
           schema:
-            &a20
+            &a21
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: OpsCenterEnabled
           schema:
-            &a21
+            &a22
             target: *a2
             versionInfo:
               - added: 2018-11-25
         - name: CWEMonitorEnabled
           schema:
-            &a22
+            &a23
             target: *a2
             versionInfo:
               - added: 2018-11-25
         - name: Remarks
           schema:
-            &a23
+            &a24
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -139,7 +155,7 @@ schemas:
       properties:
         - name: ApplicationInfo
           schema:
-            &a24
+            &a25
             target: *a3
             versionInfo:
               - added: 2018-11-25
@@ -167,13 +183,13 @@ schemas:
       properties:
         - name: Key
           schema:
-            &a29
+            &a30
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: Value
           schema:
-            &a30
+            &a31
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -183,36 +199,36 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a25
+            &a26
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: OpsCenterEnabled
           schema:
-            &a26
+            &a27
             target: *a2
             versionInfo:
               - added: 2018-11-25
         - name: CWEMonitorEnabled
           schema:
-            &a27
+            &a28
             target: *a2
             versionInfo:
               - added: 2018-11-25
         - name: OpsItemSNSTopicArn
           schema:
-            &a28
+            &a29
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: Tags
           schema:
-            &a32
+            &a33
             target:
-              &a17
+              &a18
               type: array
               elementSchema:
-                &a31
+                &a32
                 target: *a4
                 versionInfo:
                   - added: 2018-11-25
@@ -230,24 +246,24 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a33
+            &a34
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: ComponentName
           schema:
-            &a34
+            &a35
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: ResourceList
           schema:
-            &a36
+            &a37
             target:
               &a9
               type: array
               elementSchema:
-                &a35
+                &a36
                 target: *a1
                 versionInfo:
                   - added: 2018-11-25
@@ -265,25 +281,25 @@ schemas:
       properties:
         - name: PatternSetName
           schema:
-            &a37
+            &a38
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: PatternName
           schema:
-            &a38
+            &a39
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: Pattern
           schema:
-            &a39
+            &a40
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: Rank
           schema:
-            &a40
+            &a41
             target:
               &a7
               target: *a5
@@ -297,13 +313,13 @@ schemas:
       properties:
         - name: LogPattern
           schema:
-            &a41
+            &a42
             target: *a6
             versionInfo:
               - added: 2018-11-25
         - name: ResourceGroupName
           schema:
-            &a42
+            &a43
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -313,31 +329,31 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a43
+            &a44
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: PatternSetName
           schema:
-            &a44
+            &a45
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: PatternName
           schema:
-            &a45
+            &a46
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: Pattern
           schema:
-            &a46
+            &a47
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: Rank
           schema:
-            &a47
+            &a48
             target: *a7
             versionInfo:
               - added: 2018-11-25
@@ -351,7 +367,7 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a48
+            &a49
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -365,13 +381,13 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a49
+            &a50
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: ComponentName
           schema:
-            &a50
+            &a51
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -385,19 +401,19 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a51
+            &a52
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: PatternSetName
           schema:
-            &a52
+            &a53
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: PatternName
           schema:
-            &a53
+            &a54
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -408,7 +424,7 @@ schemas:
       properties:
         - name: ApplicationInfo
           schema:
-            &a54
+            &a55
             target: *a3
             versionInfo:
               - added: 2018-11-25
@@ -418,7 +434,7 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a55
+            &a56
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -432,24 +448,24 @@ schemas:
       properties:
         - name: ComponentName
           schema:
-            &a56
+            &a57
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: ResourceType
           schema:
-            &a57
+            &a58
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: Tier
           schema:
-            &a58
+            &a59
             versionInfo:
               - added: 2018-11-25
         - name: Monitor
           schema:
-            &a59
+            &a60
             target: *a2
             versionInfo:
               - added: 2018-11-25
@@ -459,13 +475,13 @@ schemas:
       properties:
         - name: ApplicationComponent
           schema:
-            &a60
+            &a61
             target: *a8
             versionInfo:
               - added: 2018-11-25
         - name: ResourceList
           schema:
-            &a61
+            &a62
             target: *a9
             versionInfo:
               - added: 2018-11-25
@@ -475,13 +491,13 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a62
+            &a63
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: ComponentName
           schema:
-            &a63
+            &a64
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -492,18 +508,18 @@ schemas:
       properties:
         - name: Monitor
           schema:
-            &a64
+            &a65
             target: *a2
             versionInfo:
               - added: 2018-11-25
         - name: Tier
           schema:
-            &a65
+            &a66
             versionInfo:
               - added: 2018-11-25
         - name: ComponentConfiguration
           schema:
-            &a66
+            &a67
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -513,13 +529,13 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a67
+            &a68
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: ComponentName
           schema:
-            &a68
+            &a69
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -530,7 +546,7 @@ schemas:
       properties:
         - name: ComponentConfiguration
           schema:
-            &a69
+            &a70
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -540,19 +556,19 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a70
+            &a71
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: ComponentName
           schema:
-            &a71
+            &a72
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: Tier
           schema:
-            &a72
+            &a73
             versionInfo:
               - added: 2018-11-25
       summary: DescribeComponentConfigurationRecommendationRequest
@@ -562,13 +578,13 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a73
+            &a74
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: LogPattern
           schema:
-            &a74
+            &a75
             target: *a6
             versionInfo:
               - added: 2018-11-25
@@ -578,195 +594,198 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a75
+            &a76
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: PatternSetName
           schema:
-            &a76
+            &a77
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: PatternName
           schema:
-            &a77
+            &a78
             target: *a1
             versionInfo:
               - added: 2018-11-25
       summary: DescribeLogPatternRequest
       versionInfo:
         - added: 2018-11-25
-    - &a11
+    - &a12
       $key: Observation
       description: Describes an anomaly or error with the application.
       properties:
         - name: Id
           schema:
-            &a78
+            &a79
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: StartTime
           schema:
-            &a79
+            &a80
+            target: *a10
             versionInfo:
               - added: 2018-11-25
         - name: EndTime
           schema:
-            &a80
+            &a81
+            target: *a10
             versionInfo:
               - added: 2018-11-25
         - name: SourceType
-          schema:
-            &a81
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
-        - name: SourceARN
           schema:
             &a82
             target: *a1
             versionInfo:
               - added: 2018-11-25
-        - name: LogGroup
+        - name: SourceARN
           schema:
             &a83
             target: *a1
             versionInfo:
               - added: 2018-11-25
-        - name: LineTime
+        - name: LogGroup
           schema:
             &a84
+            target: *a1
+            versionInfo:
+              - added: 2018-11-25
+        - name: LineTime
+          schema:
+            &a85
+            target: *a10
             versionInfo:
               - added: 2018-11-25
         - name: LogText
           schema:
-            &a85
+            &a86
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: LogFilter
           schema:
-            &a86
+            &a87
             versionInfo:
               - added: 2018-11-25
         - name: MetricNamespace
-          schema:
-            &a87
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
-        - name: MetricName
           schema:
             &a88
             target: *a1
             versionInfo:
               - added: 2018-11-25
-        - name: Unit
+        - name: MetricName
           schema:
             &a89
             target: *a1
             versionInfo:
               - added: 2018-11-25
+        - name: Unit
+          schema:
+            &a90
+            target: *a1
+            versionInfo:
+              - added: 2018-11-25
         - name: Value
           schema:
-            &a91
+            &a92
             target:
-              &a90
-              target: *a10
+              &a91
+              target: *a11
               versionInfo:
                 - added: 2018-11-25
             versionInfo:
               - added: 2018-11-25
         - name: CloudWatchEventId
           schema:
-            &a92
+            &a93
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: CloudWatchEventSource
           schema:
-            &a93
+            &a94
             versionInfo:
               - added: 2018-11-25
         - name: CloudWatchEventDetailType
-          schema:
-            &a94
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
-        - name: HealthEventArn
           schema:
             &a95
             target: *a1
             versionInfo:
               - added: 2018-11-25
-        - name: HealthService
+        - name: HealthEventArn
           schema:
             &a96
             target: *a1
             versionInfo:
               - added: 2018-11-25
-        - name: HealthEventTypeCode
+        - name: HealthService
           schema:
             &a97
             target: *a1
             versionInfo:
               - added: 2018-11-25
-        - name: HealthEventTypeCategory
+        - name: HealthEventTypeCode
           schema:
             &a98
             target: *a1
             versionInfo:
               - added: 2018-11-25
-        - name: HealthEventDescription
+        - name: HealthEventTypeCategory
           schema:
             &a99
             target: *a1
             versionInfo:
               - added: 2018-11-25
-        - name: CodeDeployDeploymentId
+        - name: HealthEventDescription
           schema:
             &a100
             target: *a1
             versionInfo:
               - added: 2018-11-25
-        - name: CodeDeployDeploymentGroup
+        - name: CodeDeployDeploymentId
           schema:
             &a101
             target: *a1
             versionInfo:
               - added: 2018-11-25
-        - name: CodeDeployState
+        - name: CodeDeployDeploymentGroup
           schema:
             &a102
             target: *a1
             versionInfo:
               - added: 2018-11-25
-        - name: CodeDeployApplication
+        - name: CodeDeployState
           schema:
             &a103
             target: *a1
             versionInfo:
               - added: 2018-11-25
-        - name: CodeDeployInstanceGroupId
+        - name: CodeDeployApplication
           schema:
             &a104
             target: *a1
             versionInfo:
               - added: 2018-11-25
-        - name: Ec2State
+        - name: CodeDeployInstanceGroupId
           schema:
             &a105
             target: *a1
             versionInfo:
               - added: 2018-11-25
+        - name: Ec2State
+          schema:
+            &a106
+            target: *a1
+            versionInfo:
+              - added: 2018-11-25
         - name: XRayFaultPercent
           schema:
-            &a107
+            &a108
             target:
-              &a106
+              &a107
               target: *a5
               versionInfo:
                 - added: 2018-11-25
@@ -774,9 +793,9 @@ schemas:
               - added: 2018-11-25
         - name: XRayThrottlePercent
           schema:
-            &a109
+            &a110
             target:
-              &a108
+              &a109
               target: *a5
               versionInfo:
                 - added: 2018-11-25
@@ -784,9 +803,9 @@ schemas:
               - added: 2018-11-25
         - name: XRayErrorPercent
           schema:
-            &a111
+            &a112
             target:
-              &a110
+              &a111
               target: *a5
               versionInfo:
                 - added: 2018-11-25
@@ -794,9 +813,9 @@ schemas:
               - added: 2018-11-25
         - name: XRayRequestCount
           schema:
-            &a113
+            &a114
             target:
-              &a112
+              &a113
               target: *a5
               versionInfo:
                 - added: 2018-11-25
@@ -804,9 +823,9 @@ schemas:
               - added: 2018-11-25
         - name: XRayRequestAverageLatency
           schema:
-            &a115
+            &a116
             target:
-              &a114
+              &a115
               target: *a5
               versionInfo:
                 - added: 2018-11-25
@@ -814,13 +833,13 @@ schemas:
               - added: 2018-11-25
         - name: XRayNodeName
           schema:
-            &a116
+            &a117
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: XRayNodeType
           schema:
-            &a117
+            &a118
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -830,8 +849,8 @@ schemas:
       properties:
         - name: Observation
           schema:
-            &a118
-            target: *a11
+            &a119
+            target: *a12
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -840,75 +859,77 @@ schemas:
       properties:
         - name: ObservationId
           schema:
-            &a119
+            &a120
             target: *a1
             versionInfo:
               - added: 2018-11-25
       summary: DescribeObservationRequest
       versionInfo:
         - added: 2018-11-25
-    - &a12
+    - &a13
       $key: Feedback
       versionInfo:
         - added: 2018-11-25
-    - &a13
+    - &a14
       $key: Problem
       description: Describes a problem that is detected by correlating observations.
       properties:
         - name: Id
           schema:
-            &a120
+            &a121
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: Title
           schema:
-            &a121
+            &a122
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: Insights
           schema:
-            &a122
+            &a123
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: Status
           schema:
-            &a123
+            &a124
             versionInfo:
               - added: 2018-11-25
         - name: AffectedResource
           schema:
-            &a124
+            &a125
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: StartTime
           schema:
-            &a125
+            &a126
+            target: *a10
             versionInfo:
               - added: 2018-11-25
         - name: EndTime
           schema:
-            &a126
+            &a127
+            target: *a10
             versionInfo:
               - added: 2018-11-25
         - name: SeverityLevel
           schema:
-            &a127
+            &a128
             versionInfo:
               - added: 2018-11-25
         - name: ResourceGroupName
           schema:
-            &a128
+            &a129
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: Feedback
           schema:
-            &a129
-            target: *a12
+            &a130
+            target: *a13
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -917,8 +938,8 @@ schemas:
       properties:
         - name: Problem
           schema:
-            &a130
-            target: *a13
+            &a131
+            target: *a14
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -927,26 +948,26 @@ schemas:
       properties:
         - name: ProblemId
           schema:
-            &a131
+            &a132
             target: *a1
             versionInfo:
               - added: 2018-11-25
       summary: DescribeProblemRequest
       versionInfo:
         - added: 2018-11-25
-    - &a14
+    - &a15
       $key: RelatedObservations
       description: Describes observations related to the problem.
       properties:
         - name: ObservationList
           schema:
-            &a134
+            &a135
             target:
-              &a133
+              &a134
               type: array
               elementSchema:
-                &a132
-                target: *a11
+                &a133
+                target: *a12
                 versionInfo:
                   - added: 2018-11-25
               versionInfo:
@@ -959,8 +980,8 @@ schemas:
       properties:
         - name: RelatedObservations
           schema:
-            &a135
-            target: *a14
+            &a136
+            target: *a15
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -969,7 +990,7 @@ schemas:
       properties:
         - name: ProblemId
           schema:
-            &a136
+            &a137
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -980,12 +1001,12 @@ schemas:
       properties:
         - name: ApplicationInfoList
           schema:
-            &a139
+            &a140
             target:
-              &a138
+              &a139
               type: array
               elementSchema:
-                &a137
+                &a138
                 target: *a3
                 versionInfo:
                   - added: 2018-11-25
@@ -995,7 +1016,7 @@ schemas:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            &a140
+            &a141
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -1005,9 +1026,9 @@ schemas:
       properties:
         - name: MaxResults
           schema:
-            &a141
+            &a142
             target:
-              &a15
+              &a16
               constraints:
                 - name: Minimum
                   minimum: 1
@@ -1020,7 +1041,7 @@ schemas:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            &a142
+            &a143
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -1031,12 +1052,12 @@ schemas:
       properties:
         - name: ApplicationComponentList
           schema:
-            &a145
+            &a146
             target:
-              &a144
+              &a145
               type: array
               elementSchema:
-                &a143
+                &a144
                 target: *a8
                 versionInfo:
                   - added: 2018-11-25
@@ -1046,7 +1067,7 @@ schemas:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            &a146
+            &a147
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -1056,59 +1077,60 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a147
+            &a148
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: MaxResults
           schema:
-            &a148
-            target: *a15
+            &a149
+            target: *a16
             versionInfo:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            &a149
+            &a150
             target: *a1
             versionInfo:
               - added: 2018-11-25
       summary: ListComponentsRequest
       versionInfo:
         - added: 2018-11-25
-    - &a16
+    - &a17
       $key: ConfigurationEvent
       description: " The event information. "
       properties:
         - name: MonitoredResourceARN
           schema:
-            &a150
+            &a151
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: EventStatus
           schema:
-            &a151
+            &a152
             versionInfo:
               - added: 2018-11-25
         - name: EventResourceType
           schema:
-            &a152
+            &a153
             versionInfo:
               - added: 2018-11-25
         - name: EventTime
           schema:
-            &a153
+            &a154
+            target: *a10
             versionInfo:
               - added: 2018-11-25
         - name: EventDetail
           schema:
-            &a154
+            &a155
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: EventResourceName
           schema:
-            &a155
+            &a156
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -1118,13 +1140,13 @@ schemas:
       properties:
         - name: EventList
           schema:
-            &a158
+            &a159
             target:
-              &a157
+              &a158
               type: array
               elementSchema:
-                &a156
-                target: *a16
+                &a157
+                target: *a17
                 versionInfo:
                   - added: 2018-11-25
               versionInfo:
@@ -1133,7 +1155,7 @@ schemas:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            &a159
+            &a160
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -1143,34 +1165,36 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a160
+            &a161
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: StartTime
           schema:
-            &a161
+            &a162
+            target: *a10
             versionInfo:
               - added: 2018-11-25
         - name: EndTime
           schema:
-            &a162
+            &a163
+            target: *a10
             versionInfo:
               - added: 2018-11-25
         - name: EventStatus
           schema:
-            &a163
+            &a164
             versionInfo:
               - added: 2018-11-25
         - name: MaxResults
           schema:
-            &a164
-            target: *a15
+            &a165
+            target: *a16
             versionInfo:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            &a165
+            &a166
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -1181,18 +1205,18 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a166
+            &a167
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: LogPatternSets
           schema:
-            &a169
+            &a170
             target:
-              &a168
+              &a169
               type: array
               elementSchema:
-                &a167
+                &a168
                 target: *a1
                 versionInfo:
                   - added: 2018-11-25
@@ -1202,7 +1226,7 @@ schemas:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            &a170
+            &a171
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -1212,19 +1236,19 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a171
+            &a172
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: MaxResults
           schema:
-            &a172
-            target: *a15
+            &a173
+            target: *a16
             versionInfo:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            &a173
+            &a174
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -1235,18 +1259,18 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a174
+            &a175
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: LogPatterns
           schema:
-            &a177
+            &a178
             target:
-              &a176
+              &a177
               type: array
               elementSchema:
-                &a175
+                &a176
                 target: *a6
                 versionInfo:
                   - added: 2018-11-25
@@ -1256,7 +1280,7 @@ schemas:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            &a178
+            &a179
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -1266,25 +1290,25 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a179
+            &a180
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: PatternSetName
           schema:
-            &a180
+            &a181
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: MaxResults
           schema:
-            &a181
-            target: *a15
+            &a182
+            target: *a16
             versionInfo:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            &a182
+            &a183
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -1295,13 +1319,13 @@ schemas:
       properties:
         - name: ProblemList
           schema:
-            &a185
+            &a186
             target:
-              &a184
+              &a185
               type: array
               elementSchema:
-                &a183
-                target: *a13
+                &a184
+                target: *a14
                 versionInfo:
                   - added: 2018-11-25
               versionInfo:
@@ -1310,7 +1334,7 @@ schemas:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            &a186
+            &a187
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -1320,29 +1344,31 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a187
+            &a188
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: StartTime
           schema:
-            &a188
+            &a189
+            target: *a10
             versionInfo:
               - added: 2018-11-25
         - name: EndTime
           schema:
-            &a189
+            &a190
+            target: *a10
             versionInfo:
               - added: 2018-11-25
         - name: MaxResults
           schema:
-            &a190
-            target: *a15
+            &a191
+            target: *a16
             versionInfo:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            &a191
+            &a192
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -1353,8 +1379,8 @@ schemas:
       properties:
         - name: Tags
           schema:
-            &a192
-            target: *a17
+            &a193
+            target: *a18
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -1363,7 +1389,7 @@ schemas:
       properties:
         - name: ResourceARN
           schema:
-            &a193
+            &a194
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -1377,14 +1403,14 @@ schemas:
       properties:
         - name: ResourceARN
           schema:
-            &a194
+            &a195
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: Tags
           schema:
-            &a195
-            target: *a17
+            &a196
+            target: *a18
             versionInfo:
               - added: 2018-11-25
       summary: TagResourceRequest
@@ -1397,18 +1423,18 @@ schemas:
       properties:
         - name: ResourceARN
           schema:
-            &a196
+            &a197
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: TagKeys
           schema:
-            &a199
+            &a200
             target:
-              &a198
+              &a199
               type: array
               elementSchema:
-                &a197
+                &a198
                 target: *a1
                 versionInfo:
                   - added: 2018-11-25
@@ -1423,7 +1449,7 @@ schemas:
       properties:
         - name: ApplicationInfo
           schema:
-            &a200
+            &a201
             target: *a3
             versionInfo:
               - added: 2018-11-25
@@ -1433,31 +1459,31 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a201
+            &a202
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: OpsCenterEnabled
           schema:
-            &a202
+            &a203
             target: *a2
             versionInfo:
               - added: 2018-11-25
         - name: CWEMonitorEnabled
           schema:
-            &a203
+            &a204
             target: *a2
             versionInfo:
               - added: 2018-11-25
         - name: OpsItemSNSTopicArn
           schema:
-            &a204
+            &a205
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: RemoveSNSTopic
           schema:
-            &a205
+            &a206
             target: *a2
             versionInfo:
               - added: 2018-11-25
@@ -1471,25 +1497,25 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a206
+            &a207
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: ComponentName
           schema:
-            &a207
+            &a208
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: NewComponentName
           schema:
-            &a208
+            &a209
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: ResourceList
           schema:
-            &a209
+            &a210
             target: *a9
             versionInfo:
               - added: 2018-11-25
@@ -1503,30 +1529,30 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a210
+            &a211
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: ComponentName
           schema:
-            &a211
+            &a212
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: Monitor
           schema:
-            &a212
+            &a213
             target: *a2
             versionInfo:
               - added: 2018-11-25
         - name: Tier
           schema:
-            &a213
+            &a214
             versionInfo:
               - added: 2018-11-25
         - name: ComponentConfiguration
           schema:
-            &a214
+            &a215
             target: *a1
             versionInfo:
               - added: 2018-11-25
@@ -1537,13 +1563,13 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a215
+            &a216
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: LogPattern
           schema:
-            &a216
+            &a217
             target: *a6
             versionInfo:
               - added: 2018-11-25
@@ -1553,31 +1579,31 @@ schemas:
       properties:
         - name: ResourceGroupName
           schema:
-            &a217
+            &a218
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: PatternSetName
           schema:
-            &a218
+            &a219
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: PatternName
           schema:
-            &a219
+            &a220
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: Pattern
           schema:
-            &a220
+            &a221
             target: *a1
             versionInfo:
               - added: 2018-11-25
         - name: Rank
           schema:
-            &a221
+            &a222
             target: *a7
             versionInfo:
               - added: 2018-11-25
@@ -1585,7 +1611,6 @@ schemas:
       versionInfo:
         - added: 2018-11-25
   aliases:
-    - *a18
     - *a19
     - *a20
     - *a21
@@ -1599,23 +1624,23 @@ schemas:
     - *a29
     - *a30
     - *a31
+    - *a32
     - constraints:
         - name: MaximumElements
           count: {}
         - name: MinimumElements
           count: {}
-      target: *a17
-    - *a32
+      target: *a18
     - *a33
     - *a34
     - *a35
-    - target: *a9
     - *a36
+    - target: *a9
     - *a37
     - *a38
     - *a39
-    - *a7
     - *a40
+    - *a7
     - *a41
     - *a42
     - *a43
@@ -1708,20 +1733,20 @@ schemas:
     - *a130
     - *a131
     - *a132
-    - target: *a133
-    - *a134
+    - *a133
+    - target: *a134
     - *a135
     - *a136
     - *a137
-    - target: *a138
-    - *a139
+    - *a138
+    - target: *a139
     - *a140
-    - *a15
     - *a141
+    - *a16
     - *a142
     - *a143
-    - target: *a144
-    - *a145
+    - *a144
+    - target: *a145
     - *a146
     - *a147
     - *a148
@@ -1733,8 +1758,8 @@ schemas:
     - *a154
     - *a155
     - *a156
-    - target: *a157
-    - *a158
+    - *a157
+    - target: *a158
     - *a159
     - *a160
     - *a161
@@ -1744,24 +1769,24 @@ schemas:
     - *a165
     - *a166
     - *a167
-    - target: *a168
-    - *a169
+    - *a168
+    - target: *a169
     - *a170
     - *a171
     - *a172
     - *a173
     - *a174
     - *a175
-    - target: *a176
-    - *a177
+    - *a176
+    - target: *a177
     - *a178
     - *a179
     - *a180
     - *a181
     - *a182
     - *a183
-    - target: *a184
-    - *a185
+    - *a184
+    - target: *a185
     - *a186
     - *a187
     - *a188
@@ -1774,13 +1799,13 @@ schemas:
     - *a195
     - *a196
     - *a197
+    - *a198
     - constraints:
         - name: MaximumElements
           count: {}
         - name: MinimumElements
           count: {}
-      target: *a198
-    - *a199
+      target: *a199
     - *a200
     - *a201
     - *a202
@@ -1803,3 +1828,4 @@ schemas:
     - *a219
     - *a220
     - *a221
+    - *a222

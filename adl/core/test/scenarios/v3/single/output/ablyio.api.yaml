@@ -94,6 +94,8 @@ schemas:
     - *a2
     - &a6
       type: any
+      versionInfo:
+        - added: 1.1.0
   objects:
     - &a4
       $key: Occupancy
