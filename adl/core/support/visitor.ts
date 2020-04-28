@@ -146,7 +146,6 @@ export async function processRefTarget<Tin, Tout extends Element, TSourceModel e
   const { visitor, value } = context;
 
   // figure out if the target of the reference is already done
-  console.log(context.normalizeReference(value.$ref));
   const { $ref, file, path } = context.normalizeReference(value.$ref);
 
   return <Tout>visitor.$refs.get($ref) || <Tout>await visitor.processRef(file, path, action);
@@ -208,8 +207,6 @@ export class Context<TSourceModel extends OAIModel, TValue> {
     } else {
       file = this.visitor.fileSystem.resolve(file);
     }
-
-    console.log(`${ref} , ${file} ,, ${path}`);
 
     return {
       file: file,
