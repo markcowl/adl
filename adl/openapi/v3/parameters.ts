@@ -3,7 +3,7 @@ import { ExampleOrExamples } from './example';
 import { Schema, SchemaReference } from './schema';
 import { MediaType } from './media-type';
 import { JsonReference } from '../common/json-reference';
-import { Dictionary } from '../v2/openapiv2';
+import { Dictionary } from './openapiv3';
 
 export interface HasSchema {
   /** The schema defining the type used for the parameter. */

@@ -1,4 +1,4 @@
-import { HttpMethod } from './http-method';
+import { HttpMethod } from '../common/http-method';
 
 import { Operation } from './operation';
 import { VendorExtensions } from '../common/vendor-extensions';
