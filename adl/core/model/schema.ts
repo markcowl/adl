@@ -188,6 +188,20 @@ export class BooleanPrimitive extends Primitive {
   }
 }
 
+export class DoublePrimitive extends Primitive {
+  constructor(initializer?: Partial<DoublePrimitive>) {
+    super('double');
+    this.initialize(initializer);
+  }
+}
+
+export class FloatPrimitive extends Primitive {
+  constructor(initializer?: Partial<FloatPrimitive>) {
+    super('float');
+    this.initialize(initializer);
+  }
+}
+
 export class CharPrimitive extends Primitive {
   constructor(initializer?: Partial<CharPrimitive>) {
     super('char');
@@ -221,6 +235,8 @@ export class Schemas extends Element {
   #int32?: Int32Primitive;
   #int64?: Int64Primitive;
   #boolean?: BooleanPrimitive;
+  #double?: DoublePrimitive;
+  #float?: FloatPrimitive;
 
   get Unknown(): UnknownSchema {
     return this.#unknown || (this.addPrimitive(this.#unknown = new UnknownSchema()));
@@ -242,6 +258,12 @@ export class Schemas extends Element {
   }
   get Boolean(): BooleanPrimitive {
     return this.#boolean || (this.addPrimitive(this.#boolean = new BooleanPrimitive()));
+  }
+  get Double(): DoublePrimitive {
+    return this.#double || (this.addPrimitive(this.#double = new DoublePrimitive()));
+  }
+  get Float(): FloatPrimitive {
+    return this.#float || (this.addPrimitive(this.#float = new FloatPrimitive()));
   }
 
   objects = trackTarget(new ElementArray<ObjectSchema>());

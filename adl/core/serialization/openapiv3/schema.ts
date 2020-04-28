@@ -1,4 +1,4 @@
-import { unzip, JsonReference, StringFormat, isReference, IntegerFormat } from '@azure-tools/openapi';
+import { unzip, JsonReference, StringFormat, isReference, IntegerFormat, NumberFormat } from '@azure-tools/openapi';
 import { values, length, items } from '@azure-tools/linq';
 import { Element } from '../../model/element';
 import { v3 } from '@azure-tools/openapi';
@@ -246,7 +246,7 @@ export async function processIntegerSchema(schema: v3.Schema, $: Context): Promi
 
   const format = use(schema.format);
 
-  let result = undefined;
+  let result: Schema;
 
   switch (format?.valueOf()) {
     case IntegerFormat.Int32:
@@ -257,18 +257,45 @@ export async function processIntegerSchema(schema: v3.Schema, $: Context): Promi
     case IntegerFormat.Int64:
       result = $.api.schemas.Int64;
       break;
+
+    default:
+      throw new Error(`Unexpected integer format: ${format}`);
   }
 
+  return constrainNumericSchema(schema, $, result);
+}
+
+export async function processNumberSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
+  use(schema.type);
+  const format = use(schema.format);
+
+  let result: Schema;
+
+  switch (format?.valueOf()) {
+    case NumberFormat.Float:
+      result = $.api.schemas.Float;
+      break;
+
+    case undefined:
+    case NumberFormat.Double:
+      result = $.api.schemas.Double;
+      break;
+
+    default:
+      throw new Error(`Unexpected number format: ${format}`);
+  }
+
+  return constrainNumericSchema(schema, $, result);
+}
+
+function constrainNumericSchema(schema: v3.Schema, $: Context, target: Schema): Schema {
   // if this is just a number with no adornments, just return the common instance
   if (!unusedMembers(schema)) {
-    return result;
+    return target;
   }
-  if (!result) {
-    throw new Error('Whoops');
 
-  }
   // gonna need an alias
-  const alias = new Alias(result);
+  const alias = new Alias(target);
   if (schema.minimum) {
     alias.constraints.push(new MinimumConstraint(use(schema.minimum)));
   }
@@ -289,9 +316,6 @@ export async function processIntegerSchema(schema: v3.Schema, $: Context): Promi
   return alias;
 }
 
-export async function processNumberSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  return undefined;
-}
 
 export async function processArraySchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   const elementSchema = await $.processPossibleReference(processSchemaReference, processSchema, schema.items) || $.api.schemas.Any;
