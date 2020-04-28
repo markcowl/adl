@@ -2,7 +2,7 @@ import { Schemes } from './schemes';
 import { VendorExtensions } from '../common/vendor-extensions';
 import { Definitions } from './definitions';
 import { Paths } from './path';
-import { Responses } from './Response';
+import { Responses } from './response';
 import { Parameters } from './parameters';
 import { Info } from '../common/info';
 import { ExternalDocumentation } from '../common/external-docs';
