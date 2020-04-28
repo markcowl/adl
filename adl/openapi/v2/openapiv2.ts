@@ -65,7 +65,7 @@ export * from './collection-format';
 export * from './definitions';
 export * from './example';
 export * from './header';
-export * from './http-method';
+export * from '../common/http-method';
 export * from './http-status';
 
 export * from './operation';
