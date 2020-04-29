@@ -20,7 +20,7 @@
       "protocol": "inspector",
       "request": "launch",
       "name": "run test",
-      "program": "${workspaceRoot}/adl/core/node_modules/mocha/bin/_mocha",
+      "program": "${workspaceRoot}/adl/sourcemap/node_modules/mocha/bin/_mocha",
       "args": [
         "dist/test",
         "--timeout=2000000"
@@ -30,7 +30,7 @@
       "skipFiles": [
         "<node_internals>/**/*.js"
       ],
-      "cwd": "${workspaceRoot}/adl/core"
+      "cwd": "${workspaceRoot}/adl/sourcemap"
     },
   ]
 }

@@ -183,15 +183,15 @@ export async function processStringSchema($: Context<v3.Schema>): Promise<Schema
   const result = $.track(new Alias($.api.schemas.String));
 
   if (schema.maxLength) {
-    result.constraints.push($.track(new MaxLengthConstraint($.use('maxLength'))));
+    // result.constraints.push($.track(new MaxLengthConstraint($.use('maxLength'))));
   }
 
   if (schema.minLength) {
-    result.constraints.push($.track(new MinLengthConstraint($.use('minLength'))));
+    // result.constraints.push($.track(new MinLengthConstraint($.use('minLength'))));
   }
 
   if (schema.pattern) {
-    result.constraints.push($.track(new RegularExpressionConstraint($.use('pattern'))));
+    //result.constraints.push($.track(new RegularExpressionConstraint($.use('pattern'))));
   }
 
   // add it to the container.
@@ -274,19 +274,20 @@ export async function processIntegerSchema($: Context<v3.Schema>): Promise<Schem
   // gonna need an alias
   const alias = new Alias(result, { $ });
   if (schema.minimum) {
-    alias.constraints.push(new MinimumConstraint($.use('minimum')));
+    alias.constraints.push(new MinimumConstraint(schema.minimum));
+    // alias.constraints.push(new MinimumConstraint($.use('minimum')));
   }
   if (schema.maximum) {
-    alias.constraints.push(new MaximumConstraint($.use('maximum')));
+    // alias.constraints.push(new MaximumConstraint($.use('maximum')));
   }
   if (schema.exclusiveMinimum) {
-    alias.constraints.push(new ExclusiveMinimumConstraint($.use('exclusiveMinimum')));
+    // alias.constraints.push(new ExclusiveMinimumConstraint($.use('exclusiveMinimum')));
   }
   if (schema.exclusiveMaximum) {
-    alias.constraints.push(new ExclusiveMaximumConstraint($.use('exclusiveMaximum')));
+    // alias.constraints.push(new ExclusiveMaximumConstraint($.use('exclusiveMaximum')));
   }
   if (schema.multipleOf) {
-    alias.constraints.push(new MultipleOfConstraint($.use('multipleOf')));
+    // alias.constraints.push(new MultipleOfConstraint($.use('multipleOf')));
   }
 
   $.api.schemas.aliases.push(alias);
@@ -309,13 +310,13 @@ export async function processArraySchema($: Context<v3.Schema>): Promise<Schema 
   }
   const alias = new Alias(result, { $ });
   if (schema.maxItems) {
-    alias.constraints.push(new MaximumElementsConstraint($.use('maxItems')));
+    alias.constraints.push(new MaximumElementsConstraint($.use('maxItems'), { $ }));
   }
   if (schema.minItems) {
-    alias.constraints.push(new MinimumElementsConstraint($.use('maxItems')));
+    // alias.constraints.push(new MinimumElementsConstraint($.use('minItems')));
   }
   if (schema.uniqueItems) {
-    alias.constraints.push(new UniqueElementsConstraint($.use('maxItems')));
+    //alias.constraints.push(new UniqueElementsConstraint($.use('uniqueItems')));
   }
 
   $.api.schemas.aliases.push(alias);
@@ -376,6 +377,7 @@ export async function processFileSchema($: Context<v3.Schema>): Promise<Schema |
 export async function processEnumSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
   const { value: schema } = $;
   const xmsEnum = (<any>schema)['x-ms-enum'];
+
   if (length(schema.enum) === 0 && length(xmsEnum) === 0) {
     // an enum with no values?
   }

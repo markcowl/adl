@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { Tracker, Path, PathItem, anonymous, isAnonymous } from '@azure-tools/sourcemap';
+import { Tracker, Path, Member, anonymous, isAnonymous } from '@azure-tools/sourcemap';
 import { values, items, Dictionary, keys } from '@azure-tools/linq';
 import { OnAdd, setPath, Element } from '../model/element';
 import { FileSystem } from './file-system';
@@ -102,7 +102,7 @@ export class Visitor<TSourceModel extends OAIModel> {
       const ctx = await value;
       await action(ctx);
       if (!isObjectClean(ctx.sourceModel)) {
-        this.api.addToAttic(key, ctx.sourceModel);
+        // this.api.addToAttic(key, ctx.sourceModel);
       }
     }
     return this.api;
@@ -141,7 +141,6 @@ export class Visitor<TSourceModel extends OAIModel> {
   }
 }
 
-
 export async function processRefTarget<Tin, Tout extends Element, TSourceModel extends OAIModel>(context: Context<TSourceModel, JsonReference<Tin>>, action: (c: Context<TSourceModel, Tin>) => Promise<Tout | undefined>) {
   const { visitor, value } = context;
 
@@ -156,7 +155,7 @@ export class Context<TSourceModel extends OAIModel, TValue> {
     public source: SourceFile<TSourceModel>,
     public value: TValue,
     public path: Path = [],
-    public key: PathItem = '') {
+    public key: Member = '') {
   }
 
   error(text: string, relativePath: Array<string> = []) {
@@ -199,8 +198,9 @@ export class Context<TSourceModel extends OAIModel, TValue> {
     }
     // eslint-disable-next-line prefer-const
     let [, file, path] = split;
-
-
+    if (path.startsWith('/')) {
+      path = path.substr(1);
+    }
     // is the file pointing to this file?
     if (file === '' || file === '.' || file === './') {
       file = this.sourceFile;

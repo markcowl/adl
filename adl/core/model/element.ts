@@ -60,7 +60,7 @@ export class Initializer {
           throw new Error(`Initializer for object with array member '${key}', must be initialized with something that can be iterated.`);
         }
         // just copy the value across.
-        (<any>this)[key] = rawValue.valueOf();
+        (<any>this)[key] = rawValue;//.valueOf();
       }
     }
   }
@@ -84,6 +84,7 @@ export class Element extends Initializer implements OnAdd {
   constructor(initializer?: Partial<Element>) {
     super();
     this.initialize(initializer);
+    this.$onAdd = this.$onAdd || ((p: Path) => { delete this.$onAdd; });
   }
 
   /** @internal*/ setPath(instance: OnAdd, ...relativePath: Path) {
@@ -99,11 +100,12 @@ export class Element extends Initializer implements OnAdd {
 
       // otherwise, we have to have it do it when this gets set
       this.$onAdd = (p) => {
-        orig(p);
+
         const path = [...p, ...relativePath];
         (<any>instance).$path = () => path;
         instance.$onAdd?.(path);
         delete instance.$onAdd;
+        orig(p);
       };
     }
   }

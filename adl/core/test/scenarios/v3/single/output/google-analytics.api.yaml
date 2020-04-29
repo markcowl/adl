@@ -1,0 +1,19 @@
+http: {}
+metaData:
+  name: Google Analytics
+  contacts:
+    - name: Google
+      role: author
+      url: https://google.com
+      versionInfo:
+        - added: v2.4
+  description: Views and manages your Google Analytics data.
+  licenses:
+    - name: Creative Commons Attribution 3.0
+      url: http://creativecommons.org/licenses/by/3.0/
+      versionInfo:
+        - added: v2.4
+  termsOfService: https://developers.google.com/terms/
+  versionInfo:
+    - added: v2.4
+schemas: {}

@@ -1,4 +1,4 @@
-import { Dictionary } from '@azure-tools/linq';
+import { items, Dictionary } from '@azure-tools/linq';
 
 import { Format, SerializationOptions, SerializationResult } from './format';
 import { Path } from '@azure-tools/sourcemap';
@@ -43,6 +43,13 @@ export class ApiModel extends Element {
 
   // aggregate: Aggregation;
 
+
+  constructor() {
+    super();
+    if (this.$onAdd) {
+      this.$onAdd([]);
+    }
+  }
   async save(): Promise<SerializationResult> {
     throw 'unimplemented';
   }
@@ -73,4 +80,18 @@ export class ApiModel extends Element {
   async addVersion() {
     throw 'unimplemented';
   }
+}
+
+export function check(instance: any, path = '') {
+  if (instance.$onAdd) {
+    console.log(`onAdd not called for ${path}`);
+    return false;
+  }
+  for (const { key, value } of items(instance)) {
+    if (typeof value === 'object') {
+      check(value, `${path}.${key}`);
+    }
+  }
+
+  return;
 }
