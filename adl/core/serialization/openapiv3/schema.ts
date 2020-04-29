@@ -269,7 +269,7 @@ export async function processIntegerSchema(schema: v3.Schema, $: Context): Promi
   // gonna need an alias
   const alias = new Alias(result);
   if (schema.minimum) {
-    alias.constraints.push(new MinimumConstraint(schema.minimum));
+    alias.constraints.push(new MinimumConstraint(use(schema.minimum)));
   }
   if (schema.maximum) {
     alias.constraints.push(new MaximumConstraint(use(schema.maximum)));

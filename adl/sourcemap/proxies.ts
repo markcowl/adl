@@ -368,7 +368,7 @@ export function trackTarget<T extends Object>(instance: T, pathInTarget?: Path, 
           try {
             target[property] = value.valueOf();
           } catch (E) {
-            debugger;
+            // todo: ? 
           }
           // get the tracker
           // const i = (<Target>targetRegistry.get(instance));
