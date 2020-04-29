@@ -13,8 +13,7 @@ import { processSecuritySchemes } from './security-schemes';
 import { processHeaders } from './header';
 const { vendorExtensions } = v3;
 
-export async function processComponents($: Context<v3.Components>): Promise<Element | undefined> {
-  const { value: components } = $;
+export async function processComponents(components: v3.Components, $: Context): Promise<Element | undefined> {
 
   for (const { key, value: extension } of vendorExtensions(components)) {
     // switch(key)
@@ -22,15 +21,15 @@ export async function processComponents($: Context<v3.Components>): Promise<Elem
   }
 
   // definitely, schemas first, since so much will $ref them
-  await $.process(processSchemas, 'schemas', components.schemas);
-  await $.process(processHeaders, 'headers', components.headers);
-  await $.process(processCallbacks, 'callbacks', components.callbacks);
-  await $.process(processExamples, 'examples', components.examples);
-  await $.process(processLinks, 'links', components.links);
-  await $.process(processParameters, 'parameters', components.parameters);
-  await $.process(processRequestBodies, 'requestBodies', components.requestBodies);
-  await $.process(processResponses, 'responses', components.responses);
-  await $.process(processSecuritySchemes, 'securitySchemes', components.securitySchemes);
+  await $.process(processSchemas, components.schemas);
+  await $.process(processHeaders, components.headers);
+  await $.process(processCallbacks, components.callbacks);
+  await $.process(processExamples, components.examples);
+  await $.process(processLinks, components.links);
+  await $.process(processParameters, components.parameters);
+  await $.process(processRequestBodies, components.requestBodies);
+  await $.process(processResponses, components.responses);
+  await $.process(processSecuritySchemes, components.securitySchemes);
 
   return undefined;
 }

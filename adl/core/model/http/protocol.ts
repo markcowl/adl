@@ -1,6 +1,7 @@
-import { ElementArray, Element } from '../element';
+import { Element, ElementArray } from '../element';
 import { Header } from './header';
 import * as base from '../operation';
+import { trackTarget } from '@azure-tools/sourcemap';
 
 export class Authentication extends Element {
 
@@ -27,11 +28,11 @@ export class Parameter extends base.Parameter {
 }
 
 export class HttpProtocol extends Element {
-  headers = new ElementArray<Header>(this, 'headers');
-  authentications = new ElementArray<Authentication>(this, 'authentications');
-  connections = new ElementArray<Connection>(this, 'connections');
-  operations = new ElementArray<Operation>(this, 'operations');
-  requests = new ElementArray<Request>(this, 'requests');
-  responses = new ElementArray<Response>(this, 'responses');
-  parameters = new ElementArray<Parameter>(this, 'parameters');
+  headers = trackTarget(new ElementArray<Header>());
+  authentications = trackTarget(new ElementArray<Authentication>());
+  connections = trackTarget(new ElementArray<Connection>());
+  operations = trackTarget(new ElementArray<Operation>());
+  requests = trackTarget(new ElementArray<Request>());
+  responses = trackTarget(new ElementArray<Response>());
+  parameters = trackTarget(new ElementArray<Parameter>());
 }

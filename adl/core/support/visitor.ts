@@ -1,17 +1,19 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
-import { Tracker, Path, PathItem, anonymous, isAnonymous } from '@azure-tools/sourcemap';
+import { Tracker, Path, Step, anonymous, isAnonymous, trackTarget, trackSource, getSourceFile, refTo, nameOf, using, use } from '@azure-tools/sourcemap';
 import { values, items, Dictionary, keys } from '@azure-tools/linq';
-import { OnAdd, setPath, Element } from '../model/element';
+import { Element } from '../model/element';
 import { FileSystem } from './file-system';
 import { parse } from 'yaml';
 import { VersionInfo } from '../model/version-info';
 import { Info, JsonReference, isReference } from '@azure-tools/openapi';
 import { ApiModel } from '../model/api-model';
-import { isObject } from 'util';
+import { fail } from 'assert';
 
 export interface OAIModel {
   info: Info;
 }
+
 export function is<T extends Object>(instance: any): instance is T {
   if (instance === undefined || instance === null || typeof instance !== 'object') {
     return false;
@@ -62,21 +64,29 @@ export interface SourceFile<TSourceModel extends OAIModel> {
 
 export class Visitor<TSourceModel extends OAIModel> {
   key = '';
-  sourceFiles = new Map<string, Promise<Context<TSourceModel, TSourceModel>>>();
+  sourceFiles = new Map<string, Promise<Context<TSourceModel>>>();
   $refs = new Map<string, any>();
 
-  error(text: string, sourceFile: string, path: Path) {
+  error(text: string, offendingNode: any) {
     console.error(text);
   }
-  warn(text: string, sourceFile: string, path: Path) {
+  warn(text: string, offendingNode: any) {
     console.error(text);
   }
+  api: ApiModel;
+  tracker: Tracker;
 
   constructor(
-    public api: ApiModel,
+    api: ApiModel,
     public fileSystem: FileSystem,
     public inputType: 'oai3' | 'oai2',
     ...sourceFiles: Array<string>) {
+    // the source location tracker
+    this.tracker = new Tracker();
+
+    // enable target tracking on the output modle
+    this.api = trackTarget(api, [], this.tracker);
+
     // the source files are going to be YAML/JSON files for this 
     // so we can speed up the process and grab them all and hold onto them
     for (const each of new Set(sourceFiles)) {
@@ -84,26 +94,20 @@ export class Visitor<TSourceModel extends OAIModel> {
     }
   }
 
-  async loadInput(sourceFile: string, isSecondary = false): Promise<Context<TSourceModel, TSourceModel>> {
+  async loadInput(sourceFile: string, isSecondary = false): Promise<Context<TSourceModel>> {
     const content = await this.fileSystem.readFile(sourceFile);
-    const sourceModel = parse(content);
+    const sourceModel = trackSource(<TSourceModel>parse(content), { sourceFile: { filename: sourceFile }, path: [] });
     const tracker = new Tracker();
-    return new Context({
-      sourceFile,
-      apiVersion: sourceModel.info.version,
+    return new Context(
       sourceModel,
-      tracker,
-      visitor: this,
-    }, sourceModel);
+      sourceModel.info.version,
+      this);
   }
 
-  async process<TOutput>(action: (t: Context<TSourceModel, TSourceModel>) => Promise<TOutput>) {
+  async process<TOutput>(action: fnAction<TSourceModel, TSourceModel, TOutput>) {
     for (const { key, value } of items(this.sourceFiles)) {
       const ctx = await value;
-      await action(ctx);
-      if (!isObjectClean(ctx.sourceModel)) {
-        this.api.addToAttic(key, ctx.sourceModel);
-      }
+      await action(<NonNullable<TSourceModel>>ctx.sourceModel, ctx, false);
     }
     return this.api;
   }
@@ -119,77 +123,87 @@ export class Visitor<TSourceModel extends OAIModel> {
     throw new Error(`unable to resolve $ref ${path}`);
   }
 
-  async processRef<TInput, TOutput extends Element>(sourceFile: string, path: Path, action: (t: Context<TSourceModel, NonNullable<TInput>>) => Promise<TOutput | undefined>): Promise<TOutput | undefined> {
-    let target = await this.sourceFiles.get(sourceFile);
-    if (!target) {
+  async processRef<TInput, TOutput extends Element>(sourceFile: string, path: Path, action: fnAction<TSourceModel, TInput, TOutput>): Promise<TOutput | undefined> {
+    let targetContext = await this.sourceFiles.get(sourceFile);
+    if (!targetContext) {
       // the file we're looking for isn't there
       // let's add it to the list as a secondary file
       const t = this.loadInput(sourceFile, true);
       this.sourceFiles.set(sourceFile, t);
-      target = await t;
+      targetContext = await t;
     }
-    const node = this.findNode(path, target.sourceModel);
+    const node = this.findNode(path, targetContext.sourceModel);
     if (node) {
-      const key = path.pop();
-      if (key) {
-        const parentKey = path.pop();
-        const ctx = new Context(target.source, node, path, parentKey);
-        return ctx.process(action, key);
-      }
+      return targetContext.process(action, node);
     }
     throw new Error(`Unable to process Ref ${sourceFile}#/${path}`);
   }
 }
 
+type fnAction<TSourceModel extends OAIModel, TInput, TOutput> = (value: NonNullable<TInput>, context: Context<TSourceModel>, isAnonymous?: boolean) => Promise<TOutput | undefined>;
 
-export async function processRefTarget<Tin, Tout extends Element, TSourceModel extends OAIModel>(context: Context<TSourceModel, JsonReference<Tin>>, action: (c: Context<TSourceModel, Tin>) => Promise<Tout | undefined>) {
-  const { visitor, value } = context;
-
-  // figure out if the target of the reference is already done
-  const { $ref, file, path } = context.normalizeReference(value.$ref);
-
-  return <Tout>visitor.$refs.get($ref) || <Tout>await visitor.processRef(file, path, action);
-}
-
-export class Context<TSourceModel extends OAIModel, TValue> {
+export class Context<TSourceModel extends OAIModel> {
   constructor(
-    public source: SourceFile<TSourceModel>,
-    public value: TValue,
-    public path: Path = [],
-    public key: PathItem = '') {
+    public sourceModel: TSourceModel,
+    public apiVersion: string,
+    public visitor: Visitor<TSourceModel>
+  ) {
+
   }
 
-  error(text: string, relativePath: Array<string> = []) {
-    this.visitor.error(text, this.sourceFile, [...this.path, this.key, ...relativePath]);
+  error(text: string, offendingNode: any) {
+    this.visitor.error(text, offendingNode);
   }
 
-  warn(text: string, relativePath: Array<string> = []) {
-    this.visitor.warn(text, this.sourceFile, [...this.path, this.key, ...relativePath]);
+  warn(text: string, offendingNode: any) {
+    this.visitor.warn(text, offendingNode);
   }
 
-  get visitor() {
-    return this.source.visitor;
-  }
-  get tracker() {
-    return this.source.tracker;
-  }
   get api() {
     return this.visitor.api;
   }
-  get sourceModel() {
-    return this.source.sourceModel;
+
+  async processAnonymous<TInput, TOutput extends Element>(action: fnAction<TSourceModel, TInput, TOutput>, value: TInput | NonNullable<TInput>): Promise<TOutput | undefined> {
+    throw undefined;
   }
-  get sourceFile() {
-    return this.source.sourceFile;
-  }
-  get inputType() {
-    return this.visitor.inputType;
-  }
-  get isAnonymous() {
-    return isAnonymous(this.key);
-  }
-  get refToHere() {
-    return `${this.sourceFile}#/${this.path.join('/')}`;
+
+  async process<TInput, TOutput extends Element>(action: fnAction<TSourceModel, TInput, TOutput>, value: TInput | NonNullable<TInput>, isAnonymous = false): Promise<TOutput | undefined> {
+
+    if (value !== undefined && value !== null) {
+
+      // see if we've processed this node before.
+      const ref = refTo(value);
+      let result = <TOutput | undefined>this.visitor.$refs.get(ref);
+      if (result) {
+        return result;
+      }
+
+      // ok, call the action
+      result = await action(value!, this, isAnonymous);
+      if (result !== undefined) {
+        result = trackTarget(result);
+        // we got back a value for that.
+
+        // track it so we don't redo it if asked for it again later.
+        this.visitor.$refs.set(ref, result);
+
+        // let's 
+        result.versionInfo.push(trackTarget(<VersionInfo>({
+          // deprecated isn't on everything, but this is safe when it's not there
+          deprecated: using((<any>value).deprecated, this.apiVersion),
+          added: this.apiVersion,
+        })));
+        result.addInternalData(this.visitor.inputType, { preferredFile: getSourceFile(value) });
+
+        // and since we got back a value, we can safely mark the origin as used 
+        // note: does not mark the children as used. 
+
+        using(value, result);
+
+        return result;
+      }
+    }
+    return undefined;
   }
 
   normalizeReference(ref: string) {
@@ -199,11 +213,12 @@ export class Context<TSourceModel extends OAIModel, TValue> {
     }
     // eslint-disable-next-line prefer-const
     let [, file, path] = split;
-
-
+    if (path.startsWith('/')) {
+      path = path.substr(1);
+    }
     // is the file pointing to this file?
     if (file === '' || file === '.' || file === './') {
-      file = this.sourceFile;
+      file = getSourceFile(ref)?.filename || fail(`unable to get filename of $ref ${ref}`);
     } else {
       file = this.visitor.fileSystem.resolve(file);
     }
@@ -215,135 +230,25 @@ export class Context<TSourceModel extends OAIModel, TValue> {
     };
   }
 
-  track<T extends OnAdd>(instance: T): T {
-    // attach the $onAdd function.
-    instance.$onAdd = (path: Path) => {
-      // tell the tracker where we're going
-      this.tracker.add(path, this.path);
-
-      // for each property, call it's onAdd too.
-      for (const { key, value } of items(<Dictionary<any>>instance)) {
-        // call each $onAdd (recursively when they are objects)
-        if (value === undefined) {
-          delete (<any>instance)[key];
-          continue;
-        }
-        setPath(value, [...path, key]);
-        (<any>instance)[key] = value.valueOf();
-      }
-      delete instance.$onAdd;
-    };
-    return instance;
+  async processRefTarget<Tin, Tout extends Element>(ref: JsonReference<Tin>, action: fnAction<TSourceModel, Tin, Tout>): Promise<Tout> {
+    const { $ref, file, path } = this.normalizeReference(ref.$ref);
+    return <Tout>this.visitor.$refs.get($ref) || <Tout>await this.visitor.processRef(file, path, action);
   }
-
-  /** marks a property as used */
-  mark<LN, K extends keyof TValue>(key: K) {
-    const v = this.value[key];
-    delete this.value[key];
-    return v;
-  }
-
-  /** takes a value of a property and then removes the property */
-  use<LN, K extends keyof TValue>(key: K, v?: LN, removeFromSource = true) {
-    if (this.value[key] === undefined) {
-      return undefined;
-    }
-    //
-    if (v === undefined) {
-      v = <any>this.value[key];
-    }
-    if (v !== undefined) {
-      // wrap the value
-      const result = <any>new Object(v);
-
-      // attach the $tag function
-      result.$onAdd = (targetPath: Path) => {
-        this.tracker.add(targetPath, [...this.path, key]);
-      };
-
-      // remove the value from the source object.
-      if (removeFromSource) {
-        delete this.value[key];
-      }
-      return result;
-    }
-    return undefined;
-  }
-
-  get anyKeys() {
-    return keys(this.value).any();
-  }
-
-  /** takes a value of a property but leaves the property in the parent */
-  copy<LN, K extends keyof TValue>(key: K, v: LN) {
-    return this.use(key, v, false);
-  }
-
-  /** manually set a specific value and provide the Path to the source location */
-  set<T>(value: T, fullPath: Path) {
-    const result = <any>new Object(value);
-
-    // attach the $tag function
-    result.$onAdd = (targetPath: Path) => {
-      this.tracker.add(targetPath, fullPath);
-    };
-
-    return result;
-  }
-
   async processPossibleReference<TInput, TOutput extends Element>(
-    refAction: (t: Context<TSourceModel, JsonReference<TInput>>) => Promise<TOutput | undefined>,
-    action: (t: Context<TSourceModel, NonNullable<TInput>>) => Promise<TOutput | undefined>
-    , key: keyof TValue | anonymous, value?: TInput | JsonReference<TInput> | NonNullable<TInput>): Promise<TOutput | undefined> {
+    refAction: fnAction<TSourceModel, JsonReference<TInput>, TOutput>,
+    action: fnAction<TSourceModel, TInput, TOutput>,
+    value?: TInput | JsonReference<TInput> | NonNullable<TInput>): Promise<TOutput | undefined> {
 
-    const v = value || (!isAnonymous(key) && <NonNullable<TInput>><unknown>this.value[key]);
-    if (v !== undefined) {
-      return (isReference(v) ?
+    // const v = value || (!isAnonymous(key) && <NonNullable<TInput>><unknown>this.value[key]);
+    if (value !== undefined) {
+      return (isReference(value) ?
         // they have used a $ref to a schema - resolve that.
-        await this.process(refAction, key, v) :
+        await this.process(refAction, value) :
         // an inlined schema --process that first
-        await this.process(action, key, <TInput>v));
+        await this.process(action, <TInput>value));
     }
     return undefined;
 
-  }
-
-  async process<TInput, TOutput extends Element>(action: (t: Context<TSourceModel, NonNullable<TInput>>) => Promise<TOutput | undefined>, key: keyof TValue | anonymous, value?: TInput | NonNullable<TInput>): Promise<TOutput | undefined> {
-
-    // check to see if there is a result for this node already done
-    const ref = `${this.sourceFile}#/${[...this.path, key].join('/')}`;
-    const result = this.visitor.$refs.get(ref);
-
-    if (result) {
-      return result;
-    }
-
-    // get the value (based on the index, or if it was explicity passed in.)
-    const v = value || (!isAnonymous(key) && <NonNullable<TInput>><unknown>this.value[key]);
-
-    if (v) {
-      const context = new Context(this.source, <NonNullable<TInput>>v, [...this.path, key.valueOf()], key);
-
-      const result = await action(context);
-      if (!isAnonymous(key) && isObjectClean(v)) {
-        delete (<any>this.value)[key.valueOf()];
-      }
-
-      if (result) {
-        // really everything from 'process' should end up as an Element?
-        // this is common to every element
-        // - set the api version that it was added
-        // - set the deprecated version if it's deprecated in this version.
-        result.versionInfo.push(context.track<VersionInfo>({
-          // deprecated isn't on everything, but this is safe when it's not there
-          deprecated: context.use(<any>'deprecated', this.source.apiVersion),
-          added: context.set(this.source.apiVersion, ['info', 'version']),
-        }));
-        result.addInternalData(this.visitor.inputType, { preferredFile: this.sourceFile });
-        this.visitor.$refs.set(ref, result);
-      }
-      return result;
-    }
-    return undefined;
   }
 }
+

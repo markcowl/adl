@@ -1,4 +1,5 @@
 import { Element, ElementArray } from './element';
+import { trackTarget } from '@azure-tools/sourcemap';
 
 export enum ContactRole {
   Author = 'author',
@@ -45,10 +46,10 @@ export class Metadata extends Element {
 
 
   /** a collection of contacts responsible for the API  */
-  contacts = new ElementArray<Contact>(this, 'contacts');
+  contacts = trackTarget(new ElementArray<Contact>());
 
   /** a collection of contacts responsible for the API  */
-  licenses = new ElementArray<License>(this, 'licenses');
+  licenses = trackTarget(new ElementArray<License>());
 
   constructor(public name: string, initializer?: Partial<Metadata>) {
     super();

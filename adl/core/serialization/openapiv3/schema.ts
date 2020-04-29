@@ -2,13 +2,12 @@ import { unzip, JsonReference, StringFormat, isReference, IntegerFormat } from '
 import { values, length, items } from '@azure-tools/linq';
 import { Element } from '../../model/element';
 import { v3 } from '@azure-tools/openapi';
-import { Context, DictionaryContext } from './serializer';
+import { Context, ItemsOf } from './serializer';
 import { Alias, Schema, Schemas, Constraint, MaxLengthConstraint, MinLengthConstraint, ObjectSchema, Property, RegularExpressionConstraint, MinimumConstraint, MaximumConstraint, ExclusiveMinimumConstraint, ExclusiveMaximumConstraint, MultipleOfConstraint, ArraySchema, MaximumElementsConstraint, MinimumElementsConstraint, UniqueElementsConstraint } from '../../model/schema';
-import { processRefTarget, isObjectClean } from '../../support/visitor';
-import { anonymous } from '@azure-tools/sourcemap';
+import { isObjectClean } from '../../support/visitor';
+import { use, anonymous, using, nameOf, unusedMembers } from '@azure-tools/sourcemap';
 
-export async function processSchemas($: DictionaryContext<v3.Schema>): Promise<Element | undefined> {
-  const { value } = $;
+export async function processSchemas(value: ItemsOf<v3.Schema>, $: Context): Promise<Element | undefined> {
   const { extensions, references, values: schemas } = unzip<v3.Schema>(value);
   // handle extensions first
   for (const { key } of values(extensions)) {
@@ -24,74 +23,73 @@ export async function processSchemas($: DictionaryContext<v3.Schema>): Promise<E
   }
   // handle actual items next 
   for (const { key, value: schema } of values(schemas)) {
-    await $.process(processSchema, key, schema);
+    await $.process(processSchema, schema);
   }
   // handle references last 
   for (const { key, value: reference } of values(references)) {
     // we're going to create an alias type for these.
-    await $.process(processSchemaReference, key, reference);
+    await $.process(processSchemaReference, reference);
   }
   return undefined;
 }
 
 
-export async function processSchemaReference($: Context<JsonReference<v3.Schema>>) {
+export async function processSchemaReference(ref: JsonReference<v3.Schema>, $: Context) {
   const { api } = $;
-  const target = await processRefTarget($, processSchema);
+  const target = await $.processRefTarget(ref, processSchema);
 
   // now that we have a target
   // we can produce an alias to that target
-  const alias = $.track(new Alias(target));
+  const alias = new Alias(target);
 
   api.schemas.aliases.push(alias);
   return alias;
 }
 
 
-export async function processSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
-  const { value: schema } = $;
+export async function processSchema(schema: v3.Schema, $: Context, isAnonymous = false): Promise<Schema | undefined> {
 
   // is enum or x-ms-enum specified?
   if (schema.enum || (<any>schema)['x-ms-enum']) {
-    return processEnumSchema($);
+    return processEnumSchema(schema, $);
   }
 
-  switch (schema.type) {
+  switch (schema.type?.valueOf()) {
     case v3.JsonType.String:
-      return processStringSchema($);
+      return processStringSchema(schema, $);
 
     case v3.JsonType.Boolean:
-      return processBooleanSchema($);
+      return processBooleanSchema(schema, $);
 
     case v3.JsonType.Array:
-      return processArraySchema($);
+      return processArraySchema(schema, $);
 
     case v3.JsonType.Number:
-      return processNumberSchema($);
+      return processNumberSchema(schema, $);
 
     case v3.JsonType.Integer:
-      return processIntegerSchema($);
+      return processIntegerSchema(schema, $);
 
     case v3.JsonType.File:
-      return processFileSchema($);
+      return processFileSchema(schema, $);
 
     case v3.JsonType.Object:
-      return processObjectSchema($);
+      return processObjectSchema(schema, $);
 
     case undefined:
       // dig deeper to figure out what this should be.
 
       // first, let's see if we can tell by format:
-      switch (schema.format) {
+      switch (schema.format?.valueOf()) {
         // is it some kind of binary response?
         case StringFormat.Binary:
         case StringFormat.File:
-          return processFileSchema($);
+          return processFileSchema(schema, $);
       }
 
       if (length(schema.properties) > 0 || schema.discriminator || (<any>schema)['x-ms-discriminator-value'] || schema.additionalProperties !== undefined || schema.maxProperties !== undefined || schema.minProperties !== undefined) {
         // talk about properties or discriminator, pretty much mean object
-        return processObjectSchema($);
+        return processObjectSchema(schema, $);
       }
 
 
@@ -116,82 +114,80 @@ export async function processSchema($: Context<v3.Schema>): Promise<Schema | und
 
       if (schema.items || schema.maxItems !== undefined || schema.uniqueItems) {
         // these only apply to arrays
-        return processArraySchema($);
+        return processArraySchema(schema, $);
       }
 
       if (schema.pattern || schema.maxLength !== undefined || schema.minLength !== undefined) {
         // these only apply to strings
-        return processStringSchema($);
+        return processStringSchema(schema, $);
       }
 
       if (schema.minimum !== undefined || schema.maximum !== undefined || schema.exclusiveMaximum !== undefined || schema.exclusiveMinimum !== undefined || schema.multipleOf !== undefined) {
         // these only apply to numbers
-        return processNumberSchema($);
+        return processNumberSchema(schema, $);
       }
       break;
   }
   // if we didn't catch what it could be, they could be aiming for 'any' (grrrrr)
-  return processAnySchema($);
+  return processAnySchema(schema, $);
 }
 
-export async function processStringSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
-  const { value: schema, api, } = $;
-
-  switch (schema.format) {
+export async function processStringSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
+  switch (schema.format?.valueOf()) {
     case StringFormat.Base64Url:
     case StringFormat.Byte:
     case StringFormat.Binary:
-      return processByteArraySchema($);
+      return processByteArraySchema(schema, $);
 
     case StringFormat.Char:
-      return processCharSchema($);
+      return processCharSchema(schema, $);
 
     case StringFormat.Date:
-      return processDateSchema($);
+      return processDateSchema(schema, $);
 
     case StringFormat.Time:
-      return processTimeSchema($);
+      return processTimeSchema(schema, $);
 
     case StringFormat.DateTime:
     case StringFormat.DateTimeRfc1123:
-      return processDateTimeSchema($);
+      return processDateTimeSchema(schema, $);
 
     case StringFormat.Duration:
-      return processDurationSchema($);
+      return processDurationSchema(schema, $);
 
     case StringFormat.Uuid:
-      return processUuidSchema($);
+      return processUuidSchema(schema, $);
 
     case StringFormat.Url:
-      return processUriSchema($);
+      return processUriSchema(schema, $);
 
     case StringFormat.Password:
-      return processPasswordSchema($);
+      return processPasswordSchema(schema, $);
 
     case StringFormat.OData:
-      return processOdataSchema($);
+      return processOdataSchema(schema, $);
   }
   // we're going to treat it as a standard string schema
-  $.mark('type');
+  use(schema.type);
 
   // if this is just a plain string with no adornments, just return the common string instance. 
-  if (!$.anyKeys) {
+  if (unusedMembers(schema)) {
     return $.api.schemas.String;
   }
 
   // otherwise, we have to get the standard string and make an alias for it with the adornments. 
-  const result = $.track(new Alias($.api.schemas.String));
+  const result = new Alias($.api.schemas.String);
 
   if (schema.maxLength) {
-    result.constraints.push($.track(new MaxLengthConstraint($.use('maxLength'))));
+    result.constraints.push(new MaxLengthConstraint(use(schema.maxLength)));
   }
 
   if (schema.minLength) {
-    result.constraints.push($.track(new MinLengthConstraint($.use('minLength'))));
+    result.constraints.push(new MinLengthConstraint(use(schema.minLength)));
   }
 
   if (schema.pattern) {
-    result.constraints.push($.track(new RegularExpressionConstraint($.use('pattern'))));
+    result.constraints.push(new RegularExpressionConstraint(use(schema.pattern)));
   }
 
   // add it to the container.
@@ -200,59 +196,58 @@ export async function processStringSchema($: Context<v3.Schema>): Promise<Schema
   return result;
 }
 
-export async function processByteArraySchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+export async function processByteArraySchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   return undefined;
 }
 
-export async function processCharSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+export async function processCharSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   return undefined;
 }
 
-export async function processDateSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+export async function processDateSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   return undefined;
 }
 
-export async function processTimeSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+export async function processTimeSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   return undefined;
 }
 
-export async function processDateTimeSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+export async function processDateTimeSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   return undefined;
 }
 
-export async function processDurationSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+export async function processDurationSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   return undefined;
 }
 
-export async function processUuidSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+export async function processUuidSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   return undefined;
 }
 
-export async function processUriSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+export async function processUriSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   return undefined;
 }
 
-export async function processPasswordSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+export async function processPasswordSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   return undefined;
 }
 
-export async function processOdataSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+export async function processOdataSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   return undefined;
 }
 
-export async function processBooleanSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+export async function processBooleanSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   return undefined;
 }
 
-export async function processIntegerSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
-  const { value: schema } = $;
+export async function processIntegerSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
+  use(schema.type);
 
-  $.mark('type');
-  const format = $.mark('format');
+  const format = use(schema.format);
 
   let result = undefined;
 
-  switch (format) {
+  switch (format?.valueOf()) {
     case IntegerFormat.Int32:
       result = $.api.schemas.Int32;
       break;
@@ -264,7 +259,7 @@ export async function processIntegerSchema($: Context<v3.Schema>): Promise<Schem
   }
 
   // if this is just a number with no adornments, just return the common instance
-  if (!$.anyKeys) {
+  if (!unusedMembers(schema)) {
     return result;
   }
   if (!result) {
@@ -272,50 +267,49 @@ export async function processIntegerSchema($: Context<v3.Schema>): Promise<Schem
 
   }
   // gonna need an alias
-  const alias = new Alias(result, { $ });
+  const alias = new Alias(result);
   if (schema.minimum) {
-    alias.constraints.push(new MinimumConstraint($.use('minimum')));
+    alias.constraints.push(new MinimumConstraint(use(schema.minimum)));
   }
   if (schema.maximum) {
-    alias.constraints.push(new MaximumConstraint($.use('maximum')));
+    alias.constraints.push(new MaximumConstraint(use(schema.maximum)));
   }
   if (schema.exclusiveMinimum) {
-    alias.constraints.push(new ExclusiveMinimumConstraint($.use('exclusiveMinimum')));
+    alias.constraints.push(new ExclusiveMinimumConstraint(use(schema.exclusiveMinimum)));
   }
   if (schema.exclusiveMaximum) {
-    alias.constraints.push(new ExclusiveMaximumConstraint($.use('exclusiveMaximum')));
+    alias.constraints.push(new ExclusiveMaximumConstraint(use(schema.exclusiveMaximum)));
   }
   if (schema.multipleOf) {
-    alias.constraints.push(new MultipleOfConstraint($.use('multipleOf')));
+    alias.constraints.push(new MultipleOfConstraint(use(schema.multipleOf)));
   }
 
   $.api.schemas.aliases.push(alias);
   return alias;
 }
 
-export async function processNumberSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+export async function processNumberSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   return undefined;
 }
 
-export async function processArraySchema($: Context<v3.Schema>): Promise<Schema | undefined> {
-  const { value: schema } = $;
-  const elementSchema = await $.processPossibleReference(processSchemaReference, processSchema, anonymous('array'), schema.items) || $.api.schemas.Any;
-  $.mark('items');
-  $.mark('type');
-  const result = new ArraySchema(elementSchema, { $ });
-  if (!$.anyKeys) {
+export async function processArraySchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
+  const elementSchema = await $.processPossibleReference(processSchemaReference, processSchema, schema.items) || $.api.schemas.Any;
+  use(schema.items);
+  use(schema.type);
+  const result = new ArraySchema(elementSchema);
+  if (!unusedMembers(schema)) {
     $.api.schemas.primitives.push(result);
     return result;
   }
-  const alias = new Alias(result, { $ });
+  const alias = new Alias(result);
   if (schema.maxItems) {
-    alias.constraints.push(new MaximumElementsConstraint($.use('maxItems')));
+    alias.constraints.push(new MaximumElementsConstraint(use(schema.maxItems)));
   }
   if (schema.minItems) {
-    alias.constraints.push(new MinimumElementsConstraint($.use('maxItems')));
+    alias.constraints.push(new MinimumElementsConstraint(use(schema.minItems)));
   }
   if (schema.uniqueItems) {
-    alias.constraints.push(new UniqueElementsConstraint($.use('maxItems')));
+    alias.constraints.push(new UniqueElementsConstraint(use(schema.uniqueItems)));
   }
 
   $.api.schemas.aliases.push(alias);
@@ -324,58 +318,54 @@ export async function processArraySchema($: Context<v3.Schema>): Promise<Schema 
 }
 
 
-export async function processObjectSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
-  const { key, value: schema } = $;
-
-  $.mark('type');
+export async function processObjectSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
+  use(schema.type);
+  const key = nameOf(schema);
 
   // creating an object schema 
-  const result = $.track(new ObjectSchema($.set(key, [...$.path, 'key']), {
+  const result = new ObjectSchema(<string>key, {
     // properties to include
-    description: $.use('description'),
+    description: use(schema.description),
 
     // set the summary
-    summary: $.use('title'),
-    // foo: $.use('additionalProperties')
-  }));
+    summary: use(schema.title),
+  });
+  if (result === undefined) {
+    throw new Error('todo: no result');
+  }
 
-  for (const { key: propertyName, value: property } of items($.value.properties)) {
+  for (const { key: propertyName, value: property } of items(schema.properties)) {
 
     // process schema/reference inline
-    const propSchema = await $.processPossibleReference(processSchemaReference, processSchema, anonymous(propertyName), property) || $.api.schemas.Any;
+    const propSchema = await $.processPossibleReference(processSchemaReference, processSchema, property) || $.api.schemas.Any;
 
     // remove empty property
-    if (isObjectClean(property)) {
-      delete (<any>$.value.properties)[propertyName];
+    use(property);
+
+    // grabs the 'required' value for the property
+    let required = undefined;
+    if (schema.required) {
+      const i = schema.required.indexOf(propertyName);
+      required = using(schema.required[i], true);
     }
 
-    // urg. messy. todo: clean up this
-    // grabs the 'required' value for the property
-    const i = schema.required?.indexOf(propertyName) ?? -1;
-    let required = undefined;
-    if (i > -1) {
-      // was a required property
-      schema.required?.splice(i, 1);
-      required = $.set(true, [...$.path, 'required', i]);
-    }
-    result.properties.push($.track(new Property(propertyName, propSchema, {
+    result.properties.push(new Property(propertyName, propSchema, {
       required
-    })));
+    }));
   }
 
   $.api.schemas.objects.push(result);
 
-
   return result;
 }
 
-export async function processFileSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+export async function processFileSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   return undefined;
 }
 
-export async function processEnumSchema($: Context<v3.Schema>): Promise<Schema | undefined> {
-  const { value: schema } = $;
+export async function processEnumSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   const xmsEnum = (<any>schema)['x-ms-enum'];
+
   if (length(schema.enum) === 0 && length(xmsEnum) === 0) {
     // an enum with no values?
   }
@@ -386,6 +376,6 @@ export async function processEnumSchema($: Context<v3.Schema>): Promise<Schema |
   return undefined;
 }
 
-export async function processAnySchema($: Context<v3.Schema>): Promise<Schema | undefined> {
+export async function processAnySchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   return undefined;
 }

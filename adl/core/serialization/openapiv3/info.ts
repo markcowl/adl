@@ -4,72 +4,70 @@ import { Context } from './serializer';
 import { Element } from '../../model/element';
 import { isObjectClean, is } from '../../support/visitor';
 import { processLinks } from './link';
+import { use, trackTarget } from '@azure-tools/sourcemap';
 
-async function addExtensionsToAttic(element: Element, $: Context<any>, ) {
-  for (const { key } of vendorExtensions($.value)) {
-    element.addToAttic(key, $.use(key));
+async function addExtensionsToAttic(element: Element, input: any) {
+  for (const { key, value } of vendorExtensions(input)) {
+    element.addToAttic(key, use(value));
   }
   return element;
 }
 
-async function processContact($: Context<v3.Contact>) {
-  const contact = $.track(new Contact(ContactRole.Author, {
-    name: $.use('name'),
-    email: $.use('email'),
-    url: $.use('url'),
-  }));
+async function processContact(contact: v3.Contact, $: Context) {
+  const result = new Contact(ContactRole.Author, {
+    name: use(contact.name),
+    email: use(contact.email),
+    url: use(contact.url),
+  });
 
   // add remaining extensions to attic. 
-  addExtensionsToAttic(contact, $);
+  addExtensionsToAttic(result, contact);
 
-  return contact;
+  return result;
 }
 
-async function processLicense($: Context<v3.License>) {
-  const license = $.track(new License($.use('name'), {
-    url: $.use('url')
-  }));
+async function processLicense(license: v3.License, $: Context) {
+  const result = new License(use(license.name), {
+    url: use(license.url)
+  });
   // add remaining extensions to attic. 
-  addExtensionsToAttic(license, $);
+  addExtensionsToAttic(result, $);
 
-  return license;
+  return result;
 }
 
-export async function processInfo($: Context<v3.Info>): Promise<Metadata | undefined> {
+export async function processInfo(info: v3.Info, $: Context): Promise<Metadata | undefined> {
 
   // create the metadata 
-  const metadata = $.track(new Metadata($.use('title'), {
-    description: $.use('description'),
-    termsOfService: $.use('termsOfService')
-  }));
+  const metadata = new Metadata(use(info.title), {
+    description: use(info.description),
+    termsOfService: use(info.termsOfService)
+  });
 
   // add the author contact
-  if (is($.value.contact)) {
-    metadata.contacts.push(await $.process(processContact, 'contact'));
+  if (is(info.contact)) {
+    metadata.contacts.push(await $.process(processContact, info.contact));
   }
 
   // add license
-  if (is($.value.license)) {
-    metadata.licenses.push(await $.process(processLicense, 'license'));
+  if (is(info.license)) {
+    metadata.licenses.push(await $.process(processLicense, info.license));
   }
 
-  $.api.metaData = metadata;
-  if (metadata.$onAdd) {
-    metadata.$onAdd(['metadata']);
-  }
+  $.api.metaData = trackTarget(metadata);
 
   // we handled version much earler.
-  $.mark('version');
+  use(info.version);
 
   return metadata;
 }
 
 
-export async function processExternalDocs($: Context<v3.ExternalDocumentation>): Promise<Element | undefined> {
+export async function processExternalDocs(externalDocs: v3.ExternalDocumentation, $: Context): Promise<Element | undefined> {
   return undefined;
 }
 
 
-export async function processTags($: Context<Array<v3.Tag>>): Promise<Element | undefined> {
+export async function processTags(tags: Array<v3.Tag>, $: Context): Promise<Element | undefined> {
   return undefined;
 }
