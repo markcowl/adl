@@ -1,11 +1,11 @@
 import { ExternalDocumentation } from '../common/external-docs';
 import { VendorExtensions } from '../common/vendor-extensions';
 import { QueryParameter, PathParameter, HeaderParameter, CookieParameter } from './parameters';
-import { ParameterReference } from '../v2/parameters';
+import { ParameterReference } from './parameters';
 import { JsonReference } from '../common/json-reference';
 import { Dictionary } from '../common/dictionary';
 import { RequestBody } from './request-body';
-import { Responses } from '../v2/Response';
+import { Responses } from './response';
 import { Callback } from './callback';
 import { Server } from './server';
 import { SecurityRequirement } from './security';

@@ -1,7 +1,7 @@
 import { Schemes } from './schemes';
 import { VendorExtensions } from '../common/vendor-extensions';
 
-import { Responses } from './Response';
+import { Responses } from './response';
 
 import { ExternalDocumentation } from '../common/external-docs';
 import { BodyParameter, FormDataParameter, QueryParameter, PathParameter, HeaderParameter, ParameterReference } from './parameters';

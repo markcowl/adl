@@ -1,10 +1,10 @@
 import { VendorExtensions } from '../common/vendor-extensions';
-import { HttpMethod } from '../v2/http-method';
+import { HttpMethod } from '../common/http-method';
 import { JsonReference } from '../common/json-reference';
 import { QueryParameter, PathParameter, HeaderParameter, CookieParameter, ParameterReference } from './parameters';
 import { Server } from './server';
 import { Operation } from './operation';
-import { Dictionary } from '../v2/openapiv2';
+import { Dictionary } from './openapiv3';
 
 /** Path item contents */
 export interface PathItemBase extends VendorExtensions {
