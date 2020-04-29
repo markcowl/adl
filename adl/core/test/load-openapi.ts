@@ -36,7 +36,8 @@ describe('Load Single OAI3 files', () => {
       if (await isFile(output)) {
         unlinkSync(output);
       }
-      await writeFile(output, serialize(api));
+      const raw = api.valueOf();
+      await writeFile(output, serialize(api.valueOf()));
       check(api);
       equal(await isFile(output), true, `Should write file ${output} `);
     });

@@ -1,5 +1,5 @@
 import { Dictionary, items, keys } from '@azure-tools/linq';
-import { Path } from '@azure-tools/sourcemap';
+import { Path, trackTarget } from '@azure-tools/sourcemap';
 import { InternalData } from './internal-data';
 import { VersionInfo } from './version-info';
 
@@ -8,27 +8,21 @@ export interface Attic extends Dictionary<any> {
 
 }
 
-/** 
- * items that can be added to the parent have the opportunity to record
- * their known location at the time they are added to their parent
- * 
- * the $onAdd function allows them to define what happens when they are 
- * added to their parent.
- * 
- * the parent must call $onAdd if it exists when they are adding it,
- * and set the $onAdd member to undefined.
- * */
-export interface OnAdd {
-  /** 
-   * action to allow the child to record it's position when 
-   * adding it to the parent 
-   * 
-   * @parameter path - the full Path to the child once it's been added
-   */
-  $onAdd?: (p: Path) => void;
-
-  /** Context object, used for source tracking. */
-  $?: any;
+export class ElementArray<T> extends Array<T> {
+  __set = new Set<string>();
+  push(...values: Array<T | undefined>) {
+    for (const value of values) {
+      if (value !== undefined) {
+        super.push(value);
+        //const vv = JSON.stringify((<any>value).valueOf());
+        // todo: fix temporary means to stop duplicates
+        //if (!this.__set.has(vv)) {
+        //          this.__set.add(vv);
+        //      }
+      }
+    }
+    return this.length;
+  }
 }
 
 /** inheriting from Initializer adds an apply<T> method to the class, allowing you to accept an object initalizer, and applying it to the class in the constructor. */
@@ -36,19 +30,12 @@ export class Initializer {
   protected initialize<T>(initializer?: Partial<T>) {
     for (const { key, value } of items(initializer)) {
       // copy the true value of the item.
-      const raw = (<any>this);
+      const raw = (<any>trackTarget(this));
       const target = raw[key];
-      const rawValue = <any>value;
 
-      if (key === '$') {
-        if (typeof (<any>value)?.track === 'function') {
-          // special case for source tracking.
-          (<any>value).track(this);
-        }
-        continue;
-      }
 
       if (value !== undefined) {
+        const rawValue = (<any>value).valueOf();
         if (Array.isArray(target)) {
           if (rawValue[Symbol.iterator]) {
             // copy elements to target
@@ -60,7 +47,7 @@ export class Initializer {
           throw new Error(`Initializer for object with array member '${key}', must be initialized with something that can be iterated.`);
         }
         // just copy the value across.
-        (<any>this)[key] = rawValue;//.valueOf();
+        raw[key] = rawValue;//.valueOf();
       }
     }
   }
@@ -68,53 +55,20 @@ export class Initializer {
 
 
 /**  */
-export class Element extends Initializer implements OnAdd {
-  /** 
- * returns the PATH of the current node
- * 
- */
-  $path: () => Path = () => [];
-  $onAdd?: (p: Path) => void;
-  $?: any;
-
+export class Element extends Initializer {
   internalData?: Dictionary<InternalData>;
-  versionInfo = new ElementArray<VersionInfo>(this, 'versionInfo');
+  versionInfo = trackTarget(new ElementArray<VersionInfo>());
   attic?: Attic;
 
   constructor(initializer?: Partial<Element>) {
     super();
     this.initialize(initializer);
-    this.$onAdd = this.$onAdd || ((p: Path) => { delete this.$onAdd; });
-  }
-
-  /** @internal*/ setPath(instance: OnAdd, ...relativePath: Path) {
-    // if the current object's path is set, then we can do this immediately
-    if (!this.$onAdd) {
-      const path = [...this.$path(), ...relativePath];
-      (<any>instance).$path = () => path;
-      instance.$onAdd?.(path);
-      delete instance.$onAdd;
-    }
-    else {
-      const orig = this.$onAdd.bind(this);
-
-      // otherwise, we have to have it do it when this gets set
-      this.$onAdd = (p) => {
-
-        const path = [...p, ...relativePath];
-        (<any>instance).$path = () => path;
-        instance.$onAdd?.(path);
-        delete instance.$onAdd;
-        orig(p);
-      };
-    }
   }
 
   addToAttic(name: string, value: any) {
     if (value) {
       this.attic = this.attic || {};
       this.attic[name] = value.valueOf();
-      this.setPath(value, 'attic', name);
     }
     return this;
   }
@@ -122,36 +76,5 @@ export class Element extends Initializer implements OnAdd {
   addInternalData(key: string, internalData: InternalData) {
     this.internalData = this.internalData || {};
     this.internalData[key] = internalData;
-  }
-}
-
-
-export class ElementArray<T extends OnAdd> extends Array {
-  #set = new Set<string>();
-  constructor(private parent: Element, private name: string) {
-    super();
-  }
-
-  push(...values: Array<T | undefined>) {
-    for (const value of values) {
-      if (value !== undefined) {
-        const vv = JSON.stringify(value);
-        // todo: fix temporary means to stop duplicates
-        if (!this.#set.has(vv)) {
-          this.parent.setPath(value, this.name, super.push(value));
-          this.#set.add(vv);
-        }
-      }
-    }
-    return this.length;
-  }
-}
-
-
-export function setPath(instance: Element, path: Path) {
-  if (instance && typeof instance === 'object') {
-    instance.$path = () => path;
-    instance.$onAdd?.(path);
-    delete instance.$onAdd;
   }
 }

@@ -1,4 +1,5 @@
 import { Element, ElementArray } from './element';
+import { trackTarget } from '@azure-tools/sourcemap';
 
 export class Schema extends Element {
   anonymous?: boolean;
@@ -22,7 +23,7 @@ export class Property extends Element {
 
 export class ObjectSchema extends Schema {
   /** the collection of properties that are in this object */
-  properties = new ElementArray<Property>(this, 'properties');
+  properties = trackTarget(new ElementArray<Property>());
 
   /**  maximum number of properties permitted */
   maxProperties?: number;
@@ -112,14 +113,14 @@ export class RegularExpressionConstraint extends Constraint {
 }
 
 export class MaximumElementsConstraint extends Constraint {
-  constructor(public count: string, initializer?: Partial<MaximumElementsConstraint>) {
+  constructor(public count: number, initializer?: Partial<MaximumElementsConstraint>) {
     super('MaximumElements');
     this.initialize(initializer);
   }
 }
 
 export class MinimumElementsConstraint extends Constraint {
-  constructor(public count: string, initializer?: Partial<MinimumElementsConstraint>) {
+  constructor(public count: number, initializer?: Partial<MinimumElementsConstraint>) {
     super('MinimumElements');
     this.initialize(initializer);
   }
@@ -137,7 +138,7 @@ export class Default extends Schema {
 }
 
 export class Alias extends Schema {
-  constraints = new ElementArray<Constraint>(this, 'constraints');
+  constraints = trackTarget(new ElementArray<Constraint>());
   // 
   constructor(public target: Schema, initializer?: Partial<Alias>) {
     super();
@@ -232,11 +233,11 @@ export class Schemas extends Element {
     return this.#int64 || (this.addPrimitive(this.#int64 = new Int64Primitive()));
   }
 
-  objects = new ElementArray<ObjectSchema>(this, 'objects');
-  constants = new ElementArray<Constant>(this, 'constants');
-  enums = new ElementArray<Enum>(this, 'enums');
-  constraints = new ElementArray<Constraint>(this, 'constraints');
-  defaults = new ElementArray<Default>(this, 'defaults');
-  aliases = new ElementArray<Alias>(this, 'aliases');
-  primitives = new ElementArray<Primitive>(this, 'primitives');
+  objects = trackTarget(new ElementArray<ObjectSchema>());
+  constants = trackTarget(new ElementArray<Constant>());
+  enums = trackTarget(new ElementArray<Enum>());
+  constraints = trackTarget(new ElementArray<Constraint>());
+  defaults = trackTarget(new ElementArray<Default>());
+  aliases = trackTarget(new ElementArray<Alias>());
+  primitives = trackTarget(new ElementArray<Primitive>());
 }

@@ -8,6 +8,7 @@ import { Schema, YAMLMap, Scalar, YAMLSeq } from 'yaml/types';
 import { parseMap, parseSeq } from 'yaml/util';
 import { Element } from '../model/element';
 import { items, values, keys } from '@azure-tools/linq';
+import { VersionInfo } from '../model/version-info';
 
 const propertyPriority = [
   '$key',
@@ -64,7 +65,7 @@ function sortWithPriorty(a: any, b: any): number {
 }
 
 export const elementTag = <Schema.CustomTag>{
-  identify: (v: any) => v !== undefined && v !== null && !Array.isArray(v) && (v instanceof Element || (v.$path !== undefined)),
+  identify: (v: any) => v !== undefined && v !== null && typeof v === 'object' && !Array.isArray(v.valueOf()) && (v instanceof Element || v.valueOf().added),
   default: true,
   tag: 'tag:yaml.org,2002:map',
   resolve: (doc: Document, cst: CST.Node): AST.Node => {

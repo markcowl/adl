@@ -22,7 +22,10 @@ export function isReference<T>(element: JsonReference<T> | T): element is JsonRe
 }
 
 export function isVendorExtension(key: string | number | symbol): boolean {
-  return key.toString().startsWith('x-');
+  if (typeof key === 'symbol') {
+    return false;
+  }
+  return `${key}`.startsWith('x-');
 }
 
 export function unzip<T>(value: Dictionary<T | JsonReference<T>>) {

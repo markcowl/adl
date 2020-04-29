@@ -1,7 +1,17 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
 import { Path, Tracker } from './exports';
-import { items } from '@azure-tools/linq';
+import { items, values } from '@azure-tools/linq';
 
+
+/* eslint-disable */
+if (!Array.prototype.hasOwnProperty('last')) {
+  Object.defineProperty(Array.prototype, 'last', {
+    get() {
+      return this[this.length - 1];
+    }
+  });
+}
 export interface SourceFile {
   filename: string;
 }
@@ -37,15 +47,20 @@ export function typeOf(obj: any) {
   return t;
 }
 
-interface Target {
+interface TrackedTarget {
   proxy: Object;
   tracker?: Tracker;
   pathInTarget: Path;
   origin?: Origin;
 }
 
-const sourceRegistry = new WeakMap<Object, Object>();
-const targetRegistry = new WeakMap<Object, Target>();
+interface TrackedSource {
+  proxy: Object;
+  isUsed?: boolean;
+}
+
+const sourceRegistry = new WeakMap<Object, TrackedSource>();
+const targetRegistry = new WeakMap<Object, TrackedTarget>();
 
 export class NullValue {
   valueOf() {
@@ -58,67 +73,154 @@ enum SpecialProperties {
   Destination = '##Destination', // the target path to a trackedTarget object
   OnAdd = '$onAdd', // a hidden function that can bind an object to the parent.
   valueOf = 'valueOf', // a backdoor to get the actual un-proxied value. 
+  toString = 'toString', // ensure that toString works on proxy'd primitives 
   ActualValue = '##actualValue',  // another backdoor
   Tracker = '##Tracker', // instance of the tracker that this object is bound to.
-  IsProxy = '##IsProxy' // lets us know if we're in a proxy
+  IsProxy = '##IsProxy', // lets us know if we're in a proxy
+  IsUsed = '##IsUsed', // tags the property as 'used'
+  RefToHere = '##RefToHere', // gets the JSON Reference to the tracked source
+}
+
+/** marks a member in a tracked source model as 'used' */
+export function use<T>(value: T): T {
+  switch (typeOf(value)) {
+    case 'undefined':
+    case 'null':
+    case 'function':
+    case 'string':
+    case 'boolean':
+    case 'number':
+      return value;
+  }
+  // just checking to see if it has the IsUsed will set it to IsUsed.
+  if (SpecialProperties.IsUsed in value) {
+    return value;
+  }
+
+  return value;
+}
+
+export function unusedMembers<T>(value: T) {
+  if (value === undefined || value === null) {
+    return false;
+  }
+
+  return values(<any>value).any((each: any) => each[SpecialProperties.IsUsed] === false);
+}
+
+export function getSourceFile(value: any): SourceFile | undefined {
+  if (value === undefined || value === null) {
+    return undefined;
+  }
+  return value[SpecialProperties.Origin]?.sourceFile;
+}
+
+export function nameOf(value: any) {
+  if (value === undefined || value === null) {
+    return undefined;
+  }
+  return value[SpecialProperties.Origin]?.path.last;
+}
+
+export function refTo(value: any): string {
+  if (value === undefined || value === null) {
+    return '';
+  }
+  return value[SpecialProperties.RefToHere];
+}
+
+/** tags the the actual target value as being from the sourceValue */
+export function using<T>(sourceValue: any, actualTargetValue: T): T | undefined {
+  if (actualTargetValue === undefined || actualTargetValue === null) {
+    return undefined;
+  }
+  if (sourceValue === undefined || sourceValue === null) {
+    return undefined;
+  }
+
+  use(sourceValue);
+
+  const o = sourceValue[SpecialProperties.Origin];
+  if (o) {
+    return <T>trackSource(typeof actualTargetValue === 'object' ? actualTargetValue : new Object(actualTargetValue), o);
+  }
+  // todo: sourceValue wasn't a tracked value? is this an error? 
+  return actualTargetValue;
 }
 
 export function trackSource<T extends Object>(instance: T, origin: Origin): T {
   let result = sourceRegistry.get(instance);
 
   if (result === undefined) {
-    result = new Proxy<T>(instance, {
-      has: (actual: T, property: keyof T) => {
-        return property === SpecialProperties.Origin || property in actual;
-      },
+    result = {
+      proxy: new Proxy<T>(instance, {
+        has: (actual: T, property: keyof T) => {
+          switch (property) {
+            case SpecialProperties.Origin:
+              return true;
 
-      apply: function (actual, thisArg, argumentsList) {
-        return actual.valueOf();
-      },
+            // checking for IsUsed marks this property as 'used'
+            case SpecialProperties.IsUsed:
+              sourceRegistry.get(instance)!.isUsed = true;
+              return true;
+          }
+          return property in actual;
+        },
 
-      get: (actual: T, property: keyof T, proxy: T) => {
-        switch (property) {
-          case SpecialProperties.Origin:
-            return origin;
-          case SpecialProperties.IsProxy:
-            return true;
-          case SpecialProperties.ActualValue:
-            return actual;
-          case SpecialProperties.valueOf:
-            return () => actual;
+        apply: function (actual, thisArg, argumentsList) {
+          return actual.valueOf();
+        },
+
+        get: (actual: T, property: keyof T, proxy: T) => {
+          switch (property) {
+            case SpecialProperties.Origin:
+              return origin;
+            case SpecialProperties.IsProxy:
+              return true;
+            case SpecialProperties.ActualValue:
+              return actual;
+            case SpecialProperties.valueOf:
+              return () => actual.valueOf();
+            case SpecialProperties.toString:
+              return () => actual.toString();
+            case SpecialProperties.RefToHere:
+              return `${origin.sourceFile.filename}#/${origin.path.join('/')}`;
+            case SpecialProperties.IsUsed:
+              return sourceRegistry.get(instance)!.isUsed === true;
+          }
+          const value = actual[property];
+          const location = [...origin.path, property];
+
+          switch (typeOf(value)) {
+            case 'undefined':
+              return value;
+
+            case 'function':
+              return (<any>value).bind(proxy);
+
+            case 'null':
+              return value;
+
+            case 'string':
+            case 'boolean':
+            case 'number':
+              return trackSource(new Object(value), { ...origin, path: location });
+
+            case 'set':
+            case 'map':
+              throw new Error('Unsupported type in source tracker.');
+
+            case 'array':
+              return trackSource(value, { ...origin, path: location });
+            case 'object':
+              return trackSource(value, { ...origin, path: location });
+          }
         }
-        const value = actual[property];
-        const location = [...origin.path, property];
-
-        switch (typeOf(value)) {
-          case 'undefined':
-            return value;
-
-          case 'function':
-            return (<any>value).bind(proxy);
-
-          case 'null':
-            return value;
-
-          case 'string':
-          case 'boolean':
-          case 'number':
-            return trackSource(new Object(value), { ...origin, path: location });
-
-          case 'set':
-          case 'map':
-            throw new Error('Unsupported type in source tracker.');
-
-          case 'array':
-            return trackSource(value, { ...origin, path: location });
-          case 'object':
-            return trackSource(value, { ...origin, path: location });
-        }
-      }
-    });
+      })
+    };
     sourceRegistry.set(instance, result);
   }
-  return <T>result;
+  return <T>result.proxy;
 }
 
 function mkOnAdd<T>(proxy: T) {
@@ -130,7 +232,12 @@ function mkOnAdd<T>(proxy: T) {
       if (tracker) {
         (<any>proxy)[SpecialProperties.Tracker] = tracker;
 
-        tracker.add(pathInTarget, (<any>proxy)[SpecialProperties.Origin].path);
+        const o = (<any>proxy)[SpecialProperties.Origin];
+        if (o?.path) {
+          tracker.add(pathInTarget, o);
+        }
+
+
 
         for (const { key, value } of items(<any>prop)) {
           const raw = (<any>value);
@@ -187,22 +294,29 @@ export function trackTarget<T extends Object>(instance: T, pathInTarget?: Path, 
               return mkOnAdd(proxy);
 
             case SpecialProperties.Origin:
-              return (<Target>targetRegistry.get(instance)).origin;
+              return targetRegistry.get(instance)!.origin;
 
             case SpecialProperties.valueOf:
-              return () => actual;
+              return () => actual.valueOf();
+
+            case SpecialProperties.toString:
+              return () => actual.toString();
 
             case SpecialProperties.ActualValue:
               return actual;
 
             case SpecialProperties.Tracker:
-              return (<Target>targetRegistry.get(instance)).tracker;
+              return targetRegistry.get(instance)!.tracker;
 
             case SpecialProperties.Destination:
-              return (<Target>targetRegistry.get(instance)).pathInTarget;
+              return targetRegistry.get(instance)!.pathInTarget;
           }
           const value = actual[property];
-          const { pathInTarget: path, tracker } = <Target>targetRegistry.get(instance);
+
+          if (typeof value === 'object' && (<any>value)[SpecialProperties.IsProxy] === true && Object.getOwnPropertyDescriptor(instance, property)) {
+            (<any>targetRegistry.get(instance)!.proxy)[property] = value;
+          }
+          const { pathInTarget: path, tracker } = <TrackedTarget>targetRegistry.get(instance);
 
 
           const location = [...path, property];
@@ -222,11 +336,11 @@ export function trackTarget<T extends Object>(instance: T, pathInTarget?: Path, 
 
           switch (property) {
             case SpecialProperties.Tracker:
-              (<Target>targetRegistry.get(instance)).tracker = value;
+              targetRegistry.get(instance)!.tracker = value;
               return true;
 
             case SpecialProperties.Destination:
-              (<Target>targetRegistry.get(instance)).pathInTarget = value;
+              targetRegistry.get(instance)!.pathInTarget = value;
               return true;
 
             case SpecialProperties.Origin:
@@ -234,7 +348,7 @@ export function trackTarget<T extends Object>(instance: T, pathInTarget?: Path, 
                 throw new Error('origin not of type Origin');
               }
 
-              (<Target>targetRegistry.get(instance)).origin = value;
+              targetRegistry.get(instance)!.origin = value;
               return true;
           }
 
@@ -251,11 +365,14 @@ export function trackTarget<T extends Object>(instance: T, pathInTarget?: Path, 
 
           //value = tVal;
           // set the actual value to the actual target value
-          target[property] = value.valueOf();
-
+          try {
+            target[property] = value.valueOf();
+          } catch (E) {
+            debugger;
+          }
           // get the tracker
           // const i = (<Target>targetRegistry.get(instance));
-          const { pathInTarget: path, tracker } = (<Target>targetRegistry.get(instance));
+          const { pathInTarget: path, tracker } = targetRegistry.get(instance)!;
           // const path = i.pathInTarget;
           //const tracker = i.tracker;
 
@@ -273,7 +390,7 @@ export function trackTarget<T extends Object>(instance: T, pathInTarget?: Path, 
             // and/or
 
             // does the value know it's origin?
-            const origin = <Origin>value['##Origin'];
+            const origin = <Origin>value[SpecialProperties.Origin];
             if (origin) {
               // if we have the origin of the value
               // we can tell the tracker to track this
