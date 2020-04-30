@@ -373,9 +373,6 @@ export async function processObjectSchema(schema: v3.Schema, $: Context): Promis
     // process schema/reference inline
     const propSchema = await $.processPossibleReference(processSchemaReference, processSchema, property) || $.api.schemas.Any;
 
-    // remove empty property
-    // use(property);
-
     // grabs the 'required' value for the property
     let required = undefined;
 
