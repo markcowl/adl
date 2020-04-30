@@ -16,7 +16,7 @@
     "build": "tsc -p .",
     "watch": "tsc -p . --watch",
     "prepare": "npm run build",
-    "test": "npm run build && mocha dist/test"
+    "test": "npm run build && mocha dist/test --timeout 5000"
   },
   "repository": {
     "type": "git",
