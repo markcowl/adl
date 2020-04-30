@@ -140,8 +140,6 @@ export class Visitor<TSourceModel extends OAIModel> {
       const ctx = await value;
       await action(<NonNullable<TSourceModel>>ctx.sourceModel, ctx, false);
 
-      const i = isUsed(ctx.sourceModel.info.version);
-
       this.api.attic = this.api.attic || {};
       // add unused parts of the source to the attic.
       addUnusedTo(this.api.attic, ctx.sourceModel);
@@ -236,12 +234,6 @@ export class Context<TSourceModel extends OAIModel> {
           added: this.apiVersion,
         })));
         result.addInternalData(this.visitor.inputType, { preferredFile: getSourceFile(value) });
-
-        // check if the whole object was used. 
-        // if (!isUsed(value)) {
-        // this.warn(`FYI: value ${refTo(value)} was not fully used.`, value);
-        // }
-        //using(value, result);
 
         return result;
       }
