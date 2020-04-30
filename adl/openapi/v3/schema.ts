@@ -4,7 +4,7 @@ import { Dictionary } from '../common/dictionary';
 import { Discriminator } from './discriminator';
 import { XML } from '../common/xml';
 import { ExternalDocumentation } from '../common/external-docs';
-import { VendorExtensions } from '../common/vendor-extensions';
+import { SchemaVendorExtensions } from '../common/vendor-extensions';
 
 
 /**
@@ -14,7 +14,7 @@ import { VendorExtensions } from '../common/vendor-extensions';
  * 
  * @see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#schemaObject
  */
-export interface Schema extends VendorExtensions {
+export interface Schema extends SchemaVendorExtensions {
   /**
    * This attribute is a string that provides a short description of the instance property.
    *

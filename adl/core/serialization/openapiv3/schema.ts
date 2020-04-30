@@ -1,4 +1,4 @@
-import { unzip, JsonReference, StringFormat, isReference, IntegerFormat, NumberFormat } from '@azure-tools/openapi';
+import { unzip, JsonReference, StringFormat, isReference, IntegerFormat, NumberFormat, XMSEnumValue, XMSEnum } from '@azure-tools/openapi';
 import { values, length, items } from '@azure-tools/linq';
 import { Element, ElementArray } from '../../model/element';
 import { v3 } from '@azure-tools/openapi';
@@ -46,7 +46,7 @@ export async function processSchemaReference(ref: JsonReference<v3.Schema>, $: C
   return alias;
 }
 
-export async function processSchema(schema: v3.Schema, $: Context, options?: { isAnonymous?: boolean, forUnderlyingEnumType?: boolean }): Promise<Schema | undefined> {
+export async function processSchema(schema: v3.Schema, $: Context, options?: { isAnonymous?: boolean; forUnderlyingEnumType?: boolean }): Promise<Schema | undefined> {
   // if enum or x-ms-enum is specified, process as enum
   // but not if we're already processing the enum and are now processing its underlying type
   if (!options?.forUnderlyingEnumType && (schema.enum || (<any>schema)['x-ms-enum'])) {
@@ -399,36 +399,17 @@ export async function processFileSchema(schema: v3.Schema, $: Context): Promise<
 }
 
 export async function processEnumSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  // https://github.com/Azure/autorest/tree/master/docs/extensions#x-ms-enum
-  type EnumValue = {
-    value: any,
-    description?: string,
-    name?: string
-  };
-
-  type EnumInfo = {
-    name?: string,
-    modelAsString?: boolean,
-    values: EnumValue[]
-  };
+  const schemaEnum = use(schema.enum) ?? [];
+  const xmsEnum = use(schema['x-ms-enum']) ?? {};
+  const values: Array<XMSEnumValue> = xmsEnum.values ?? schemaEnum.map(v => ({ value: v }));
 
   // not using $.process here because we need to process a node that is already marked
   const type = await processSchema(schema, $, { forUnderlyingEnumType: true }) ?? $.api.schemas.Any;
-  let enumValues = use(schema.enum);
-  let enumInfo = <EnumInfo>use((<any>schema)['x-ms-enum']);
-
-  // NOTE: x-ms-enum overrides schema.enum. when there is no x-ms-enum, map
-  // schema.enum to x-ms-enum so that the rest of the logic below need only
-  // consider the x-ms-enum case.
-  if (!enumInfo) {
-    enumInfo = { values: enumValues!.map(v => <EnumValue>{ value: v }) }
-  }
-
   const result = new Enum(type);
-  result.modelAsString = enumInfo.modelAsString ?? false;
-  result.name = enumInfo.name;
+  result.modelAsString = xmsEnum.modelAsString ?? false;
+  result.name = xmsEnum.name;
 
-  for (const each of enumInfo.values) {
+  for (const each of values) {
     const constant = new Constant(type, use(each.value));
     constant.name = use(each.name);
     constant.description = use(each.description);
