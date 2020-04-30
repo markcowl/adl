@@ -1,7 +1,6 @@
 import { Element, ElementArray } from '../element';
 import { Header } from './header';
 import * as base from '../operation';
-import { trackTarget } from '@azure-tools/sourcemap';
 
 export class Authentication extends Element {
 

@@ -1,7 +1,6 @@
-import { items, Dictionary } from '@azure-tools/linq';
+import { Dictionary } from '@azure-tools/linq';
 
-import { Format, SerializationOptions, SerializationResult } from './format';
-import { Path, trackTarget } from '@azure-tools/sourcemap';
+import { SerializationResult } from './format';
 import { Metadata } from './Metadata';
 import { Element, ElementArray } from './element';
 import { InternalData } from './internal-data';
@@ -77,9 +76,4 @@ export class ApiModel extends Element {
   async addVersion() {
     throw 'unimplemented';
   }
-}
-
-export function check(instance: any, path = '') {
-
-  return;
 }

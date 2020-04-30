@@ -1,5 +1,4 @@
 import { Element, ElementArray } from './element';
-import { trackTarget } from '@azure-tools/sourcemap';
 
 export class Schema extends Element {
   anonymous?: boolean;
@@ -57,14 +56,6 @@ export class MinimumConstraint extends Constraint {
     this.initialize(initializer);
   }
 }
-
-
-const mc: { new(a: number): MinimumConstraint } = <any>
-  function (a: number) {
-    return new Proxy(new MinimumConstraint(a), {});
-  };
-
-const x = new mc(100);
 
 export class MaximumConstraint extends Constraint {
   constructor(public maximum: number, initializer?: Partial<MaximumConstraint>) {

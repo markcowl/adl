@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
-import { Tracker, Path, Step, anonymous, isAnonymous, trackTarget, trackSource, getSourceFile, refTo, nameOf, using, use, isUsed } from '@azure-tools/sourcemap';
-import { values, items, Dictionary, keys, length } from '@azure-tools/linq';
+import { Tracker, Path, trackTarget, trackSource, getSourceFile, refTo, using, use, isUsed } from '@azure-tools/sourcemap';
+import { values, items, length } from '@azure-tools/linq';
 import { Element } from '../model/element';
 import { FileSystem } from './file-system';
 import { parse } from 'yaml';
@@ -97,10 +97,10 @@ export class Visitor<TSourceModel extends OAIModel> {
   sourceFiles = new Map<string, Promise<Context<TSourceModel>>>();
   $refs = new Map<string, any>();
 
-  error(text: string, offendingNode: any) {
+  error(text: string) {
     console.error(text);
   }
-  warn(text: string, offendingNode: any) {
+  warn(text: string) {
     console.error(text);
   }
   api: ApiModel;
@@ -125,7 +125,7 @@ export class Visitor<TSourceModel extends OAIModel> {
     }
   }
 
-  async loadInput(sourceFile: string, isSecondary = false): Promise<Context<TSourceModel>> {
+  async loadInput(sourceFile: string): Promise<Context<TSourceModel>> {
     const content = await this.fileSystem.readFile(sourceFile);
     const sourceModel = trackSource(<TSourceModel>parse(content), { sourceFile: { filename: sourceFile }, path: [] });
 
@@ -136,7 +136,7 @@ export class Visitor<TSourceModel extends OAIModel> {
   }
 
   async process<TOutput>(action: fnAction<TSourceModel, TSourceModel, TOutput>) {
-    for (const { key, value } of items(this.sourceFiles)) {
+    for (const { value } of items(this.sourceFiles)) {
       const ctx = await value;
       await action(<NonNullable<TSourceModel>>ctx.sourceModel, ctx, false);
 
@@ -163,7 +163,7 @@ export class Visitor<TSourceModel extends OAIModel> {
     if (!targetContext) {
       // the file we're looking for isn't there
       // let's add it to the list as a secondary file
-      const t = this.loadInput(sourceFile, true);
+      const t = this.loadInput(sourceFile);
       this.sourceFiles.set(sourceFile, t);
       targetContext = await t;
     }
@@ -187,18 +187,18 @@ export class Context<TSourceModel extends OAIModel> {
   }
 
   error(text: string, offendingNode: any) {
-    this.visitor.error(text, offendingNode);
+    this.visitor.error(text);
   }
 
   warn(text: string, offendingNode: any) {
-    this.visitor.warn(text, offendingNode);
+    this.visitor.warn(text);
   }
 
   get api() {
     return this.visitor.api;
   }
 
-  async processAnonymous<TInput, TOutput extends Element>(action: fnAction<TSourceModel, TInput, TOutput>, value: TInput | NonNullable<TInput>): Promise<TOutput | undefined> {
+  async processAnonymous<TInput, TOutput extends Element>(): Promise<TOutput | undefined> {
     throw undefined;
   }
 

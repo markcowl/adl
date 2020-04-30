@@ -2,8 +2,7 @@ import { v3, vendorExtensions } from '@azure-tools/openapi';
 import { Metadata, Contact, ContactRole, License } from '../../model/Metadata';
 import { Context } from './serializer';
 import { Element } from '../../model/element';
-import { isObjectClean, is } from '../../support/visitor';
-import { processLinks } from './link';
+import { is } from '../../support/visitor';
 import { use, trackTarget } from '@azure-tools/sourcemap';
 
 async function addExtensionsToAttic(element: Element, input: any) {
@@ -54,7 +53,7 @@ export async function processInfo(info: v3.Info, $: Context): Promise<Metadata |
     metadata.licenses.push(await $.process(processLicense, info.license));
   }
 
-  $.api.metaData = trackTarget(metadata);
+  $.api.metaData = metadata;
 
   // we handled version much earler.
   use(info.version);

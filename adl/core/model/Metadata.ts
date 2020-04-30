@@ -1,5 +1,4 @@
 import { Element, ElementArray } from './element';
-import { trackTarget } from '@azure-tools/sourcemap';
 
 export enum ContactRole {
   Author = 'author',

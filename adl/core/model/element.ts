@@ -1,8 +1,7 @@
-import { Dictionary, items, keys } from '@azure-tools/linq';
-import { Path, trackTarget } from '@azure-tools/sourcemap';
+import { Dictionary, items } from '@azure-tools/linq';
+import { trackTarget } from '@azure-tools/sourcemap';
 import { InternalData } from './internal-data';
 import { VersionInfo } from './version-info';
-import { v3 } from '@azure-tools/openapi';
 
 
 export interface Attic extends Dictionary<any> {
@@ -40,7 +39,8 @@ export class ElementArray<T> extends Array<T> {
 export class Initializer {
   protected initialize<T>(initializer?: Partial<T>) {
     for (const { key, value } of items(initializer)) {
-      // copy the true value of the item.
+      // copy the true value of the items to the object
+      // (use the proxy)
       const raw = (<any>trackTarget(this));
       const target = raw[key];
 
