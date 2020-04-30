@@ -12,7 +12,7 @@ http:
     - $key: ErrorMessage
       description: -- test -- The error message.
       schema:
-        &a22
+        &a23
         target:
           &a1
           type: string
@@ -55,8 +55,14 @@ schemas:
   primitives:
     - *a1
     - &a3
-      type: any
+      type: boolean
+      versionInfo:
+        - added: 1.1.0
     - *a2
+    - &a6
+      type: any
+      versionInfo:
+        - added: 1.1.0
   objects:
     - &a4
       $key: Occupancy
@@ -66,7 +72,7 @@ schemas:
       properties:
         - name: presenceConnections
           schema:
-            &a15
+            &a16
             target: *a2
             versionInfo:
               - added: 1.1.0
@@ -101,7 +107,7 @@ schemas:
           schema: *a3
         - name: occupancy
           schema:
-            &a16
+            &a17
             target: *a4
             versionInfo:
               - added: 1.1.0
@@ -118,20 +124,20 @@ schemas:
           schema: *a1
         - name: status
           schema:
-            &a17
+            &a18
             target: *a5
             versionInfo:
               - added: 1.1.0
       versionInfo:
         - added: 1.1.0
-    - &a6
+    - &a7
       $key: metadata
       description: Optional metadata object for this device. The metadata for a device
         may only be set by clients with push-admin privileges and will be used
         more extensively in the future with smart notifications.
       versionInfo:
         - added: 1.1.0
-    - &a7
+    - &a8
       $key: Recipient
       description: Push recipient details for a device.
       properties:
@@ -144,7 +150,7 @@ schemas:
         - name: registrationToken
           schema: *a1
         - name: transportType
-          schema: *a3
+          schema: *a6
       versionInfo:
         - added: 1.1.0
     - $key: DeviceDetails
@@ -154,21 +160,21 @@ schemas:
         - name: deviceSecret
           schema: *a1
         - name: formFactor
-          schema: *a3
+          schema: *a6
         - name: id
           schema: *a1
         - name: metadata
-          schema: *a6
+          schema: *a7
         - name: platform
-          schema: *a3
+          schema: *a6
         - name: push.recipient
           schema:
-            &a18
-            target: *a7
+            &a19
+            target: *a8
             versionInfo:
               - added: 1.1.0
         - name: push.state
-          schema: *a3
+          schema: *a6
       versionInfo:
         - added: 1.1.0
     - $key: Error
@@ -192,7 +198,7 @@ schemas:
               - added: 1.1.0
       versionInfo:
         - added: 1.1.0
-    - &a8
+    - &a9
       $key: Notification
       properties:
         - name: body
@@ -207,20 +213,20 @@ schemas:
           schema: *a1
       versionInfo:
         - added: 1.1.0
-    - &a9
+    - &a10
       $key: apns
       description: Extends and overrides generic values when delivering via APNs. [See
         examples](https://www.ably.io/documentation/general/push/publish#payload-structure)
       properties:
         - name: notification
           schema:
-            &a19
-            target: *a8
+            &a20
+            target: *a9
             versionInfo:
               - added: 1.1.0
       versionInfo:
         - added: 1.1.0
-    - &a10
+    - &a11
       $key: fcm
       description: Extends and overrides generic values when delivering via GCM/FCM.
         [See
@@ -228,42 +234,42 @@ schemas:
       properties:
         - name: notification
           schema:
-            target: *a8
+            target: *a9
             versionInfo:
               - added: 1.1.0
       versionInfo:
         - added: 1.1.0
-    - &a11
+    - &a12
       $key: web
       description: Extends and overrides generic values when delivering via web. [See
         examples](https://www.ably.io/documentation/general/push/publish#payload-structure)
       properties:
         - name: notification
           schema:
-            target: *a8
+            target: *a9
             versionInfo:
               - added: 1.1.0
-      versionInfo:
-        - added: 1.1.0
-    - &a12
-      $key: Push
-      properties:
-        - name: apns
-          schema: *a9
-        - name: data
-          schema: *a1
-        - name: fcm
-          schema: *a10
-        - name: notification
-          schema:
-            target: *a8
-            versionInfo:
-              - added: 1.1.0
-        - name: web
-          schema: *a11
       versionInfo:
         - added: 1.1.0
     - &a13
+      $key: Push
+      properties:
+        - name: apns
+          schema: *a10
+        - name: data
+          schema: *a1
+        - name: fcm
+          schema: *a11
+        - name: notification
+          schema:
+            target: *a9
+            versionInfo:
+              - added: 1.1.0
+        - name: web
+          schema: *a12
+      versionInfo:
+        - added: 1.1.0
+    - &a14
       $key: Extras
       description: Extras object. Currently only allows for
         [push](https://www.ably.io/documentation/general/push/publish#channel-broadcast-example)
@@ -271,8 +277,8 @@ schemas:
       properties:
         - name: push
           schema:
-            &a20
-            target: *a12
+            &a21
+            target: *a13
             versionInfo:
               - added: 1.1.0
       versionInfo:
@@ -290,8 +296,8 @@ schemas:
           schema: *a1
         - name: extras
           schema:
-            &a21
-            target: *a13
+            &a22
+            target: *a14
             versionInfo:
               - added: 1.1.0
         - name: id
@@ -308,7 +314,7 @@ schemas:
     - $key: PresenceMessage
       properties:
         - name: action
-          schema: *a3
+          schema: *a6
         - name: clientId
           schema: *a1
         - name: connectionId
@@ -319,7 +325,7 @@ schemas:
           schema: *a1
         - name: extras
           schema:
-            target: *a13
+            target: *a14
             versionInfo:
               - added: 1.1.0
         - name: id
@@ -351,7 +357,7 @@ schemas:
           schema: *a1
       versionInfo:
         - added: 1.1.0
-    - &a14
+    - &a15
       $key: capability
       description: The
         [capabilities](https://www.ably.io/documentation/core-features/authentication#capabilities-explained)
@@ -364,7 +370,7 @@ schemas:
       properties:
         - name: capability
           required: true
-          schema: *a14
+          schema: *a15
         - name: clientId
           schema: *a1
         - name: keyName
@@ -382,7 +388,6 @@ schemas:
       versionInfo:
         - added: 1.1.0
   aliases:
-    - *a15
     - *a16
     - *a17
     - *a18
@@ -390,6 +395,7 @@ schemas:
     - *a20
     - *a21
     - *a22
+    - *a23
 attic:
   servers:
     - url: https://rest.ably.io
@@ -1371,7 +1377,6 @@ attic:
             description: In events relating to the activity of a channel in a specific
               region, this optionally identifies whether or not that region is
               responsible for global coordination of the channel.
-            type: boolean
           region:
             description: In events relating to the activity of a channel in a specific
               region, this optionally identifies the region.
@@ -1382,7 +1387,6 @@ attic:
               subject of the event is active. For events indicating regional
               activity of a channel this indicates activity in that region, not
               global activity.
-            type: boolean
       DeviceDetails:
         properties:
           clientId:

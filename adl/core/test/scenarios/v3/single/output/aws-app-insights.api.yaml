@@ -36,7 +36,14 @@ schemas:
       type: string
       versionInfo:
         - added: 2018-11-25
-    - &a6
+    - &a5
+      type: boolean
+      versionInfo:
+        - added: 2018-11-25
+    - type: any
+      versionInfo:
+        - added: 2018-11-25
+    - &a9
       type: array
       elementSchema:
         target: *a1
@@ -44,15 +51,23 @@ schemas:
           - added: 2018-11-25
       versionInfo:
         - added: 2018-11-25
-    - &a2
+    - &a4
       type: int64
       versionInfo:
         - added: 2018-11-25
-    - &a12
+    - &a2
+      type: dateTime
+      versionInfo:
+        - added: 2018-11-25
+    - &a3
+      type: double
+      versionInfo:
+        - added: 2018-11-25
+    - &a15
       type: array
       elementSchema:
         target:
-          &a9
+          &a12
           $key: Observation
           description: Describes an anomaly or error with the application.
           properties:
@@ -63,10 +78,13 @@ schemas:
                   - added: 2018-11-25
             - name: StartTime
               schema:
+                &a37
+                target: *a2
                 versionInfo:
                   - added: 2018-11-25
             - name: EndTime
               schema:
+                target: *a2
                 versionInfo:
                   - added: 2018-11-25
             - name: SourceType
@@ -95,6 +113,7 @@ schemas:
                   - added: 2018-11-25
             - name: LineTime
               schema:
+                target: *a2
                 versionInfo:
                   - added: 2018-11-25
             - name: LogText
@@ -135,6 +154,8 @@ schemas:
                   - added: 2018-11-25
             - name: Value
               schema:
+                &a38
+                target: *a3
                 versionInfo:
                   - added: 2018-11-25
             - name: CloudWatchEventId
@@ -247,27 +268,27 @@ schemas:
                   - added: 2018-11-25
             - name: XRayFaultPercent
               schema:
-                target: *a2
+                target: *a4
                 versionInfo:
                   - added: 2018-11-25
             - name: XRayThrottlePercent
               schema:
-                target: *a2
+                target: *a4
                 versionInfo:
                   - added: 2018-11-25
             - name: XRayErrorPercent
               schema:
-                target: *a2
+                target: *a4
                 versionInfo:
                   - added: 2018-11-25
             - name: XRayRequestCount
               schema:
-                target: *a2
+                target: *a4
                 versionInfo:
                   - added: 2018-11-25
             - name: XRayRequestAverageLatency
               schema:
-                target: *a2
+                target: *a4
                 versionInfo:
                   - added: 2018-11-25
             - name: XRayNodeName
@@ -292,23 +313,23 @@ schemas:
           - added: 2018-11-25
       versionInfo:
         - added: 2018-11-25
-    - &a14
+    - &a17
       type: array
       elementSchema:
         target:
-          &a3
+          &a6
           $key: ApplicationInfo
           description: Describes the status of the application.
           properties:
             - name: ResourceGroupName
               schema:
-                &a23
+                &a26
                 target: *a1
                 versionInfo:
                   - added: 2018-11-25
             - name: LifeCycle
               schema:
-                &a24
+                &a27
                 target:
                   target: *a1
                   versionInfo:
@@ -322,11 +343,13 @@ schemas:
                   - added: 2018-11-25
             - name: OpsCenterEnabled
               schema:
-                &a25
+                &a28
+                target: *a5
                 versionInfo:
                   - added: 2018-11-25
             - name: CWEMonitorEnabled
               schema:
+                target: *a5
                 versionInfo:
                   - added: 2018-11-25
             - name: Remarks
@@ -343,11 +366,11 @@ schemas:
           - added: 2018-11-25
       versionInfo:
         - added: 2018-11-25
-    - &a16
+    - &a19
       type: array
       elementSchema:
         target:
-          &a8
+          &a11
           $key: ApplicationComponent
           description: Describes a standalone resource or similarly grouped resources that
             the application is made up of.
@@ -355,7 +378,7 @@ schemas:
             - name: ComponentName
               schema:
                 target:
-                  &a5
+                  &a8
                   target: *a1
                   versionInfo:
                     - added: 2018-11-25
@@ -371,10 +394,12 @@ schemas:
                   - added: 2018-11-25
             - name: Tier
               schema:
+                &a35
                 versionInfo:
                   - added: 2018-11-25
             - name: Monitor
               schema:
+                target: *a5
                 versionInfo:
                   - added: 2018-11-25
           versionInfo:
@@ -383,12 +408,12 @@ schemas:
           - added: 2018-11-25
       versionInfo:
         - added: 2018-11-25
-    - &a19
+    - &a22
       type: array
       elementSchema:
-        &a41
+        &a47
         target:
-          &a18
+          &a21
           $key: ConfigurationEvent
           description: " The event information. "
           properties:
@@ -410,6 +435,7 @@ schemas:
                   - added: 2018-11-25
             - name: EventTime
               schema:
+                target: *a2
                 versionInfo:
                   - added: 2018-11-25
             - name: EventDetail
@@ -434,11 +460,11 @@ schemas:
           - added: 2018-11-25
       versionInfo:
         - added: 2018-11-25
-    - &a20
+    - &a23
       type: array
       elementSchema:
         target:
-          &a7
+          &a10
           $key: LogPattern
           description: An object that defines the log patterns that belongs to a
             <code>LogPatternSet</code>.
@@ -460,8 +486,8 @@ schemas:
                   - added: 2018-11-25
             - name: Rank
               schema:
-                &a30
-                target: *a2
+                &a33
+                target: *a4
                 versionInfo:
                   - added: 2018-11-25
           versionInfo:
@@ -470,11 +496,11 @@ schemas:
           - added: 2018-11-25
       versionInfo:
         - added: 2018-11-25
-    - &a21
+    - &a24
       type: array
       elementSchema:
         target:
-          &a11
+          &a14
           $key: Problem
           description: Describes a problem that is detected by correlating observations.
           properties:
@@ -513,10 +539,12 @@ schemas:
                   - added: 2018-11-25
             - name: StartTime
               schema:
+                target: *a2
                 versionInfo:
                   - added: 2018-11-25
             - name: EndTime
               schema:
+                target: *a2
                 versionInfo:
                   - added: 2018-11-25
             - name: SeverityLevel
@@ -530,9 +558,9 @@ schemas:
                   - added: 2018-11-25
             - name: Feedback
               schema:
-                &a34
+                &a40
                 target:
-                  &a10
+                  &a13
                   $key: Feedback
                   versionInfo:
                     - added: 2018-11-25
@@ -545,18 +573,18 @@ schemas:
       versionInfo:
         - added: 2018-11-25
   objects:
-    - *a3
+    - *a6
     - $key: CreateApplicationResponse
       properties:
         - name: ApplicationInfo
           schema:
-            &a26
-            target: *a3
+            &a29
+            target: *a6
             versionInfo:
               - added: 2018-11-25
       versionInfo:
         - added: 2018-11-25
-    - &a4
+    - &a7
       $key: Tag
       description: "<p>An object that defines the tags associated with an application.
         A <i>tag</i> is a label that you optionally define and associate with an
@@ -600,10 +628,12 @@ schemas:
               - added: 2018-11-25
         - name: OpsCenterEnabled
           schema:
+            target: *a5
             versionInfo:
               - added: 2018-11-25
         - name: CWEMonitorEnabled
           schema:
+            target: *a5
             versionInfo:
               - added: 2018-11-25
         - name: OpsItemSNSTopicArn
@@ -613,13 +643,13 @@ schemas:
               - added: 2018-11-25
         - name: Tags
           schema:
-            &a28
+            &a31
             target:
-              &a22
+              &a25
               type: array
               elementSchema:
-                &a27
-                target: *a4
+                &a30
+                target: *a7
                 versionInfo:
                   - added: 2018-11-25
               versionInfo:
@@ -643,26 +673,26 @@ schemas:
         - name: ComponentName
           required: true
           schema:
-            target: *a5
+            target: *a8
             versionInfo:
               - added: 2018-11-25
         - name: ResourceList
           required: true
           schema:
-            &a29
-            target: *a6
+            &a32
+            target: *a9
             versionInfo:
               - added: 2018-11-25
       summary: CreateComponentRequest
       versionInfo:
         - added: 2018-11-25
-    - *a7
+    - *a10
     - $key: CreateLogPatternResponse
       properties:
         - name: LogPattern
           schema:
-            &a31
-            target: *a7
+            &a34
+            target: *a10
             versionInfo:
               - added: 2018-11-25
         - name: ResourceGroupName
@@ -701,7 +731,7 @@ schemas:
         - name: Rank
           required: true
           schema:
-            target: *a2
+            target: *a4
             versionInfo:
               - added: 2018-11-25
       summary: CreateLogPatternRequest
@@ -735,7 +765,7 @@ schemas:
         - name: ComponentName
           required: true
           schema:
-            target: *a5
+            target: *a8
             versionInfo:
               - added: 2018-11-25
       summary: DeleteComponentRequest
@@ -771,7 +801,7 @@ schemas:
       properties:
         - name: ApplicationInfo
           schema:
-            target: *a3
+            target: *a6
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -787,18 +817,18 @@ schemas:
       summary: DescribeApplicationRequest
       versionInfo:
         - added: 2018-11-25
-    - *a8
+    - *a11
     - $key: DescribeComponentResponse
       properties:
         - name: ApplicationComponent
           schema:
-            &a32
-            target: *a8
+            &a36
+            target: *a11
             versionInfo:
               - added: 2018-11-25
         - name: ResourceList
           schema:
-            target: *a6
+            target: *a9
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -814,7 +844,7 @@ schemas:
         - name: ComponentName
           required: true
           schema:
-            target: *a5
+            target: *a8
             versionInfo:
               - added: 2018-11-25
       summary: DescribeComponentRequest
@@ -824,6 +854,7 @@ schemas:
       properties:
         - name: Monitor
           schema:
+            target: *a5
             versionInfo:
               - added: 2018-11-25
         - name: Tier
@@ -848,7 +879,7 @@ schemas:
         - name: ComponentName
           required: true
           schema:
-            target: *a5
+            target: *a8
             versionInfo:
               - added: 2018-11-25
       summary: DescribeComponentConfigurationRequest
@@ -874,7 +905,7 @@ schemas:
         - name: ComponentName
           required: true
           schema:
-            target: *a5
+            target: *a8
             versionInfo:
               - added: 2018-11-25
         - name: Tier
@@ -894,7 +925,7 @@ schemas:
               - added: 2018-11-25
         - name: LogPattern
           schema:
-            target: *a7
+            target: *a10
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -922,13 +953,13 @@ schemas:
       summary: DescribeLogPatternRequest
       versionInfo:
         - added: 2018-11-25
-    - *a9
+    - *a12
     - $key: DescribeObservationResponse
       properties:
         - name: Observation
           schema:
-            &a33
-            target: *a9
+            &a39
+            target: *a12
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -944,14 +975,14 @@ schemas:
       summary: DescribeObservationRequest
       versionInfo:
         - added: 2018-11-25
-    - *a10
-    - *a11
+    - *a13
+    - *a14
     - $key: DescribeProblemResponse
       properties:
         - name: Problem
           schema:
-            &a35
-            target: *a11
+            &a41
+            target: *a14
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -967,14 +998,14 @@ schemas:
       summary: DescribeProblemRequest
       versionInfo:
         - added: 2018-11-25
-    - &a13
+    - &a16
       $key: RelatedObservations
       description: Describes observations related to the problem.
       properties:
         - name: ObservationList
           schema:
-            &a36
-            target: *a12
+            &a42
+            target: *a15
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -983,8 +1014,8 @@ schemas:
       properties:
         - name: RelatedObservations
           schema:
-            &a37
-            target: *a13
+            &a43
+            target: *a16
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -1004,14 +1035,14 @@ schemas:
       properties:
         - name: ApplicationInfoList
           schema:
-            &a38
-            target: *a14
+            &a44
+            target: *a17
             versionInfo:
               - added: 2018-11-25
         - name: NextToken
           schema:
             target:
-              &a15
+              &a18
               target: *a1
               versionInfo:
                 - added: 2018-11-25
@@ -1023,22 +1054,22 @@ schemas:
       properties:
         - name: MaxResults
           schema:
-            &a39
+            &a45
             target:
-              &a17
+              &a20
               constraints:
                 - name: Minimum
                   minimum: 1
                 - name: Maximum
                   maximum: 40
-              target: *a2
+              target: *a4
               versionInfo:
                 - added: 2018-11-25
             versionInfo:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            target: *a15
+            target: *a18
             versionInfo:
               - added: 2018-11-25
       summary: ListApplicationsRequest
@@ -1048,13 +1079,13 @@ schemas:
       properties:
         - name: ApplicationComponentList
           schema:
-            &a40
-            target: *a16
+            &a46
+            target: *a19
             versionInfo:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            target: *a15
+            target: *a18
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -1069,29 +1100,29 @@ schemas:
               - added: 2018-11-25
         - name: MaxResults
           schema:
-            target: *a17
+            target: *a20
             versionInfo:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            target: *a15
+            target: *a18
             versionInfo:
               - added: 2018-11-25
       summary: ListComponentsRequest
       versionInfo:
         - added: 2018-11-25
-    - *a18
+    - *a21
     - $key: ListConfigurationHistoryResponse
       properties:
         - name: EventList
           schema:
-            &a42
-            target: *a19
+            &a48
+            target: *a22
             versionInfo:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            target: *a15
+            target: *a18
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -1105,10 +1136,12 @@ schemas:
               - added: 2018-11-25
         - name: StartTime
           schema:
+            target: *a2
             versionInfo:
               - added: 2018-11-25
         - name: EndTime
           schema:
+            target: *a2
             versionInfo:
               - added: 2018-11-25
         - name: EventStatus
@@ -1117,12 +1150,12 @@ schemas:
               - added: 2018-11-25
         - name: MaxResults
           schema:
-            target: *a17
+            target: *a20
             versionInfo:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            target: *a15
+            target: *a18
             versionInfo:
               - added: 2018-11-25
       summary: ListConfigurationHistoryRequest
@@ -1149,7 +1182,7 @@ schemas:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            target: *a15
+            target: *a18
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -1164,12 +1197,12 @@ schemas:
               - added: 2018-11-25
         - name: MaxResults
           schema:
-            target: *a17
+            target: *a20
             versionInfo:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            target: *a15
+            target: *a18
             versionInfo:
               - added: 2018-11-25
       summary: ListLogPatternSetsRequest
@@ -1184,13 +1217,13 @@ schemas:
               - added: 2018-11-25
         - name: LogPatterns
           schema:
-            &a43
-            target: *a20
+            &a49
+            target: *a23
             versionInfo:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            target: *a15
+            target: *a18
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -1210,12 +1243,12 @@ schemas:
               - added: 2018-11-25
         - name: MaxResults
           schema:
-            target: *a17
+            target: *a20
             versionInfo:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            target: *a15
+            target: *a18
             versionInfo:
               - added: 2018-11-25
       summary: ListLogPatternsRequest
@@ -1225,13 +1258,13 @@ schemas:
       properties:
         - name: ProblemList
           schema:
-            &a44
-            target: *a21
+            &a50
+            target: *a24
             versionInfo:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            target: *a15
+            target: *a18
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -1245,20 +1278,22 @@ schemas:
               - added: 2018-11-25
         - name: StartTime
           schema:
+            target: *a2
             versionInfo:
               - added: 2018-11-25
         - name: EndTime
           schema:
+            target: *a2
             versionInfo:
               - added: 2018-11-25
         - name: MaxResults
           schema:
-            target: *a17
+            target: *a20
             versionInfo:
               - added: 2018-11-25
         - name: NextToken
           schema:
-            target: *a15
+            target: *a18
             versionInfo:
               - added: 2018-11-25
       summary: ListProblemsRequest
@@ -1268,7 +1303,7 @@ schemas:
       properties:
         - name: Tags
           schema:
-            target: *a22
+            target: *a25
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -1298,7 +1333,7 @@ schemas:
         - name: Tags
           required: true
           schema:
-            target: *a22
+            target: *a25
             versionInfo:
               - added: 2018-11-25
       summary: TagResourceRequest
@@ -1319,7 +1354,7 @@ schemas:
           required: true
           schema:
             target:
-              &a45
+              &a51
               type: array
               elementSchema:
                 target: *a1
@@ -1336,7 +1371,7 @@ schemas:
       properties:
         - name: ApplicationInfo
           schema:
-            target: *a3
+            target: *a6
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -1351,10 +1386,12 @@ schemas:
               - added: 2018-11-25
         - name: OpsCenterEnabled
           schema:
+            target: *a5
             versionInfo:
               - added: 2018-11-25
         - name: CWEMonitorEnabled
           schema:
+            target: *a5
             versionInfo:
               - added: 2018-11-25
         - name: OpsItemSNSTopicArn
@@ -1364,6 +1401,7 @@ schemas:
               - added: 2018-11-25
         - name: RemoveSNSTopic
           schema:
+            target: *a5
             versionInfo:
               - added: 2018-11-25
       summary: UpdateApplicationRequest
@@ -1383,7 +1421,7 @@ schemas:
         - name: ComponentName
           required: true
           schema:
-            target: *a5
+            target: *a8
             versionInfo:
               - added: 2018-11-25
         - name: NewComponentName
@@ -1396,7 +1434,7 @@ schemas:
               - added: 2018-11-25
         - name: ResourceList
           schema:
-            target: *a6
+            target: *a9
             versionInfo:
               - added: 2018-11-25
       summary: UpdateComponentRequest
@@ -1416,11 +1454,12 @@ schemas:
         - name: ComponentName
           required: true
           schema:
-            target: *a5
+            target: *a8
             versionInfo:
               - added: 2018-11-25
         - name: Monitor
           schema:
+            target: *a5
             versionInfo:
               - added: 2018-11-25
         - name: Tier
@@ -1444,7 +1483,7 @@ schemas:
               - added: 2018-11-25
         - name: LogPattern
           schema:
-            target: *a7
+            target: *a10
             versionInfo:
               - added: 2018-11-25
       versionInfo:
@@ -1476,27 +1515,24 @@ schemas:
               - added: 2018-11-25
         - name: Rank
           schema:
-            target: *a2
+            target: *a4
             versionInfo:
               - added: 2018-11-25
       summary: UpdateLogPatternRequest
       versionInfo:
         - added: 2018-11-25
   aliases:
-    - *a23
-    - *a24
-    - *a25
     - *a26
     - *a27
+    - *a28
+    - *a29
+    - *a30
     - constraints:
         - name: MaximumElements
           count: {}
         - name: MinimumElements
           count: {}
-      target: *a22
-    - *a28
-    - *a29
-    - *a30
+      target: *a25
     - *a31
     - *a32
     - *a33
@@ -1505,19 +1541,25 @@ schemas:
     - *a36
     - *a37
     - *a38
-    - *a17
     - *a39
     - *a40
     - *a41
     - *a42
     - *a43
     - *a44
+    - *a20
+    - *a45
+    - *a46
+    - *a47
+    - *a48
+    - *a49
+    - *a50
     - constraints:
         - name: MaximumElements
           count: {}
         - name: MinimumElements
           count: {}
-      target: *a45
+      target: *a51
 attic:
   info:
     x-release: v4
@@ -3593,8 +3635,6 @@ attic:
           - SQL_SERVER
         minLength: 1
         maxLength: 50
-      Monitor:
-        type: boolean
       ApplicationComponent:
         properties:
           ComponentName:
@@ -3613,10 +3653,6 @@ attic:
       OpsItemSNSTopicArn:
         minLength: 20
         maxLength: 300
-      OpsCenterEnabled:
-        type: boolean
-      CWEMonitorEnabled:
-        type: boolean
       ApplicationInfo:
         properties:
           ResourceGroupName:
@@ -3662,7 +3698,6 @@ attic:
           - CLOUDFORMATION
           - SSM_ASSOCIATION
       ConfigurationEventTime:
-        type: string
         format: date-time
       ConfigurationEvent:
         properties:
@@ -3825,7 +3860,6 @@ attic:
           Feedback:
             description: Feedback provided by the user about the problem.
       EndTime:
-        type: string
         format: date-time
       FeedbackValue:
         type: string
@@ -3842,10 +3876,8 @@ attic:
         enum:
           - INSIGHTS_FEEDBACK
       LineTime:
-        type: string
         format: date-time
       StartTime:
-        type: string
         format: date-time
       LogFilter:
         type: string
@@ -3853,9 +3885,6 @@ attic:
           - ERROR
           - WARN
           - INFO
-      Value:
-        type: number
-        format: double
       Status:
         type: string
         enum:
@@ -3868,8 +3897,6 @@ attic:
           - Low
           - Medium
           - High
-      RemoveSNSTopic:
-        type: boolean
       ResourceARN:
         minLength: 1
         maxLength: 1011
