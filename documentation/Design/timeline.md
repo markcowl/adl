@@ -40,7 +40,7 @@ Nelson's project is going to be improving the authoring and reviewing experience
     - identify feaures for language service (navigation, intellisense, etc)
     - Design ADL linting service, including pluggability of additional rules [Azure,ARM,Etc]
 ### Jun 15
-  - Implement a sigificant set of linting rules, encapsulated in an ADL extension
+  - Implement a representative set of linting rules, encapsulated in an ADL extension
 ### Jun 29
   - initial integrated linting support
 ### Jul 6
