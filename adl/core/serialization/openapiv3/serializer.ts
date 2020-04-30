@@ -27,6 +27,7 @@ export type ItemsOf<T> = Dictionary<T | JsonReference<T>>;
 export async function deserializeOpenAPI3(fileSystem: FileSystem, ...inputs: Array<string>) {
   const output = await new Visitor<v3.Model>(new ApiModel(), fileSystem, 'oai3', ...inputs).process(processRoot);
 
+
   return output;
 }
 

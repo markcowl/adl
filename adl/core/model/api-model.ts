@@ -80,11 +80,6 @@ export class ApiModel extends Element {
 }
 
 export function check(instance: any, path = '') {
-  for (const { key, value } of items(instance)) {
-    if (typeof value === 'object') {
-      check(value, `${path}.${key}`);
-    }
-  }
 
   return;
 }

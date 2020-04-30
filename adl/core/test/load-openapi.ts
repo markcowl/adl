@@ -23,7 +23,9 @@ describe('Load Single OAI3 files', () => {
   });
 
   for (const file of files) {
-
+    // if (file !== 'petstore.yaml') {
+    //  continue;
+    // }
     it(`Processes '${file}'`, async () => {
       console.log(chalk.gray(`\n      starting ${file}`));
       const start = process.uptime() * 1000;
@@ -37,7 +39,9 @@ describe('Load Single OAI3 files', () => {
         unlinkSync(output);
       }
       const raw = api.valueOf();
+
       await writeFile(output, serialize(api.valueOf()));
+
       check(api);
       equal(await isFile(output), true, `Should write file ${output} `);
     });

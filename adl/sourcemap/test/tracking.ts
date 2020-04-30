@@ -1,5 +1,5 @@
 import { describe, it } from 'mocha';
-import { trackSource, trackTarget } from '../proxies';
+import { trackSource, trackTarget, Origin } from '../proxies';
 import { Path } from '../exports';
 import { tmpdir } from 'os';
 require('source-map-support').install();
@@ -17,11 +17,11 @@ const src = {
 describe('can track source/destinations', () => {
   it('simple', () => {
     const tracker = {
-      add: (inTarget: Path, inSource: Path) => {
+      add: (inTarget: Path, inSource: Origin) => {
         if (!inSource) {
           console.log(`Skipping add for ${inTarget.join('/')} because I don't know the source`);
         } else {
-          console.log(`adding ${inTarget.join('/')} => /${inSource.join('/')}`);
+          console.log(`adding ${inTarget.join('/')} => /${inSource.path.join('/')}`);
         }
       }
     };

@@ -2,23 +2,34 @@ import { Dictionary, items, keys } from '@azure-tools/linq';
 import { Path, trackTarget } from '@azure-tools/sourcemap';
 import { InternalData } from './internal-data';
 import { VersionInfo } from './version-info';
+import { v3 } from '@azure-tools/openapi';
 
 
 export interface Attic extends Dictionary<any> {
 
 }
 
+function clean(this: any, key: string, value: any): any {
+  return value === undefined || value === null ? value : value.valueOf();
+}
+
 export class ElementArray<T> extends Array<T> {
-  __set = new Set<string>();
+  #set = new Set<string>();
+  private uniq(value: T) {
+    const vv = JSON.stringify(value, clean, 2);
+    if (this.#set.has(vv)) {
+      return false;
+    }
+    this.#set.add(vv);
+    return true;
+  }
   push(...values: Array<T | undefined>) {
     for (const value of values) {
       if (value !== undefined) {
-        super.push(value);
-        //const vv = JSON.stringify((<any>value).valueOf());
         // todo: fix temporary means to stop duplicates
-        //if (!this.__set.has(vv)) {
-        //          this.__set.add(vv);
-        //      }
+        if ((<any>this.valueOf()).uniq(value)) {
+          super.push(value);
+        }
       }
     }
     return this.length;

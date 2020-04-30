@@ -334,16 +334,16 @@ export async function processObjectSchema(schema: v3.Schema, $: Context): Promis
     throw new Error('todo: no result');
   }
 
-  for (const { key: propertyName, value: property } of items(schema.properties)) {
-
+  for (const { key: propertyName, value: property } of items(use(schema.properties))) {
     // process schema/reference inline
     const propSchema = await $.processPossibleReference(processSchemaReference, processSchema, property) || $.api.schemas.Any;
 
     // remove empty property
-    use(property);
+    // use(property);
 
     // grabs the 'required' value for the property
     let required = undefined;
+
     if (schema.required) {
       const i = schema.required.indexOf(propertyName);
       required = using(schema.required[i], true);
@@ -353,6 +353,8 @@ export async function processObjectSchema(schema: v3.Schema, $: Context): Promis
       required
     }));
   }
+
+  // used up:
 
   $.api.schemas.objects.push(result);
 

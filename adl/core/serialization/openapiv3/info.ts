@@ -27,8 +27,8 @@ async function processContact(contact: v3.Contact, $: Context) {
 }
 
 async function processLicense(license: v3.License, $: Context) {
-  const result = new License(use(license.name), {
-    url: use(license.url)
+  const result = new License(license.name, {
+    url: license.url
   });
   // add remaining extensions to attic. 
   addExtensionsToAttic(result, $);
