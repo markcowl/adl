@@ -33,13 +33,13 @@ function TypeInfo<U extends new (...args: any) => any>(type: U) {
 export class ApiModel extends Element {
   internalData: Dictionary<InternalData> = {};
 
-  metaData = trackTarget(new Metadata(''));
+  metaData = new Metadata('');
 
-  resources = trackTarget(new ElementArray<Resource>());
+  resources = new ElementArray<Resource>();
 
-  schemas = trackTarget(new Schemas());
+  schemas = new Schemas();
 
-  http: HttpProtocol = trackTarget(new HttpProtocol());
+  http: HttpProtocol = new HttpProtocol();
 
   // aggregate: Aggregation;
 

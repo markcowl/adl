@@ -1529,9 +1529,9 @@ schemas:
     - *a30
     - constraints:
         - name: MaximumElements
-          count: {}
+          count: 200
         - name: MinimumElements
-          count: {}
+          count: 0
       target: *a25
     - *a31
     - *a32
@@ -1556,9 +1556,9 @@ schemas:
     - *a50
     - constraints:
         - name: MaximumElements
-          count: {}
+          count: 200
         - name: MinimumElements
-          count: {}
+          count: 0
       target: *a51
 attic:
   info:

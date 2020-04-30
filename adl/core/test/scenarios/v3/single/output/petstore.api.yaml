@@ -9,91 +9,62 @@ metaData:
     - added: 1.0.0
 schemas:
   primitives:
-    - &a3
+    - &a1
       type: int64
       versionInfo:
         - added: 1.0.0
-    - &a4
+    - &a2
       type: string
     - type: array
       elementSchema:
+        &a6
         target:
+          &a3
           $key: Pet
           properties:
             - name: id
               required: true
-              schema:
-                type: int64
-                versionInfo:
-                  - added: 1.0.0
+              schema: *a1
             - name: name
               required: true
               schema:
-                target:
-                  &a1
-                  type: string
+                &a5
+                target: *a2
                 versionInfo:
                   - added: 1.0.0
             - name: tag
               schema:
-                target: *a1
+                target: *a2
                 versionInfo:
                   - added: 1.0.0
           versionInfo:
             - added: 1.0.0
         versionInfo:
-          - added:
-              &a2
-              - "1"
-              - .
-              - "0"
-              - .
-              - "0"
+          - added: 1.0.0
       versionInfo:
-        - added: *a2
-    - &a5
+        - added: 1.0.0
+    - &a4
       type: int32
       versionInfo:
         - added: 1.0.0
   objects:
-    - &a7
-      $key: Pet
-      properties:
-        - name: id
-          required: true
-          schema: *a3
-        - name: name
-          required: true
-          schema:
-            &a6
-            target: *a4
-            versionInfo:
-              - added: 1.0.0
-        - name: tag
-          schema:
-            target: *a4
-            versionInfo:
-              - added: 1.0.0
-      versionInfo:
-        - added: 1.0.0
+    - *a3
     - $key: Error
       properties:
         - name: code
           required: true
-          schema: *a5
+          schema: *a4
         - name: message
           required: true
           schema:
-            target: *a4
+            target: *a2
             versionInfo:
               - added: 1.0.0
       versionInfo:
         - added: 1.0.0
   aliases:
+    - *a5
     - *a6
-    - target: *a7
-      versionInfo:
-        - added: *a2
 attic:
   servers:
     - url: http://petstore.swagger.io/v1

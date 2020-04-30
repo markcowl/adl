@@ -1181,24 +1181,24 @@ schemas:
     - *a42
     - constraints:
         - name: MinimumElements
-          count: {}
+          count: 1
       target: *a43
     - constraints:
         - name: MinimumElements
-          count: {}
+          count: 1
       target: *a44
     - *a45
     - constraints:
         - name: MaximumElements
-          count: {}
+          count: 4
         - name: MinimumElements
-          count: {}
+          count: 4
       target: *a46
     - constraints:
         - name: MaximumElements
-          count: {}
+          count: 2
         - name: MinimumElements
-          count: {}
+          count: 2
       target: *a47
     - *a48
     - *a49
@@ -1207,60 +1207,60 @@ schemas:
     - *a52
     - constraints:
         - name: MinimumElements
-          count: {}
+          count: 1
       target: *a53
     - *a54
     - *a55
     - constraints:
         - name: MaximumElements
-          count: {}
+          count: 4
         - name: MinimumElements
-          count: {}
+          count: 2
       target: *a56
     - *a57
     - constraints:
         - name: MinimumElements
-          count: {}
+          count: 1
       target: *a58
     - *a59
     - constraints:
         - name: MinimumElements
-          count: {}
+          count: 1
       target: *a60
     - *a61
     - constraints:
         - name: MinimumElements
-          count: {}
+          count: 1
       target: *a62
     - *a63
     - constraints:
         - name: MinimumElements
-          count: {}
+          count: 1
       target: *a64
     - constraints:
         - name: MinimumElements
-          count: {}
+          count: 1
         - name: UniqueElements
-          unique: {}
+          unique: true
       target: *a65
     - *a66
     - *a67
     - constraints:
         - name: MinimumElements
-          count: {}
+          count: 1
       target: *a68
     - *a69
     - *a70
     - constraints:
         - name: MinimumElements
-          count: {}
+          count: 1
       target: *a71
     - *a72
     - target: *a73
     - *a74
     - constraints:
         - name: MinimumElements
-          count: {}
+          count: 1
       target: *a75
     - *a76
     - *a77
@@ -1268,7 +1268,7 @@ schemas:
     - *a79
     - constraints:
         - name: MinimumElements
-          count: {}
+          count: 1
       target: *a80
     - *a81
 attic:

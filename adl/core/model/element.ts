@@ -68,7 +68,7 @@ export class Initializer {
 /**  */
 export class Element extends Initializer {
   internalData?: Dictionary<InternalData>;
-  versionInfo = trackTarget(new ElementArray<VersionInfo>());
+  versionInfo = new ElementArray<VersionInfo>();
   attic?: Attic;
 
   constructor(initializer?: Partial<Element>) {

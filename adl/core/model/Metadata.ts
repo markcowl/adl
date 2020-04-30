@@ -44,12 +44,11 @@ export class Metadata extends Element {
   /** The Terms of Service for the API. */
   termsOfService?: string;
 
+  /** a collection of contacts responsible for the API  */
+  contacts = new ElementArray<Contact>();
 
   /** a collection of contacts responsible for the API  */
-  contacts = trackTarget(new ElementArray<Contact>());
-
-  /** a collection of contacts responsible for the API  */
-  licenses = trackTarget(new ElementArray<License>());
+  licenses = new ElementArray<License>();
 
   constructor(public name: string, initializer?: Partial<Metadata>) {
     super();

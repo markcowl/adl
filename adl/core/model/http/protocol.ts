@@ -28,11 +28,11 @@ export class Parameter extends base.Parameter {
 }
 
 export class HttpProtocol extends Element {
-  headers = trackTarget(new ElementArray<Header>());
-  authentications = trackTarget(new ElementArray<Authentication>());
-  connections = trackTarget(new ElementArray<Connection>());
-  operations = trackTarget(new ElementArray<Operation>());
-  requests = trackTarget(new ElementArray<Request>());
-  responses = trackTarget(new ElementArray<Response>());
-  parameters = trackTarget(new ElementArray<Parameter>());
+  headers = new ElementArray<Header>();
+  authentications = new ElementArray<Authentication>();
+  connections = new ElementArray<Connection>();
+  operations = new ElementArray<Operation>();
+  requests = new ElementArray<Request>();
+  responses = new ElementArray<Response>();
+  parameters = new ElementArray<Parameter>();
 }
