@@ -22,9 +22,6 @@ describe('Load Single OAI3 files', () => {
   });
 
   for (const file of files) {
-    // if (file !== 'petstore.yaml') {
-    //  continue;
-    // }
     it(`Processes '${file}'`, async () => {
       console.log(chalk.gray(`\n      starting ${file}`));
       const start = process.uptime() * 1000;

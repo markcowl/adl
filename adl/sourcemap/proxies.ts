@@ -188,9 +188,7 @@ export function trackSource<T extends Object>(instance: T, origin: Origin, paren
   if (isSourceProxy(instance)) {
     return instance;
   }
-  if (isTargetProxy(instance)) {
-    debugger;
-  }
+
   let result = sourceRegistry.get(instance);
 
   if (result === undefined) {
@@ -324,9 +322,7 @@ function mkOnAdd<T>(proxy: T) {
         }
 
         for (const { key, value } of items(<any>prop)) {
-          if (key === 'name') {
-            debugger;
-          }
+
           const raw = getProxy(value);
 
           if (raw !== undefined && raw !== null) {
@@ -350,9 +346,7 @@ function mkOnAdd<T>(proxy: T) {
 }
 
 export function trackTarget<T extends Object>(instance: T, pathInTarget?: Path, tracker?: Tracker): T {
-  if (isSourceProxy(instance)) {
-    debugger;
-  }
+
   if (isTargetProxy(instance)) {
     return instance;
   }
@@ -407,7 +401,6 @@ export function trackTarget<T extends Object>(instance: T, pathInTarget?: Path, 
               return targetRegistry.get(instance)!.pathInTarget;
 
             case SpecialProperties.IsUsed:
-              debugger;
               return undefined;
           }
           const value = actual[property];
@@ -453,7 +446,6 @@ export function trackTarget<T extends Object>(instance: T, pathInTarget?: Path, 
               return true;
 
             case SpecialProperties.IsUsed:
-              debugger;
               return false;
           }
 
