@@ -12,7 +12,7 @@ http:
     - $key: ErrorMessage
       description: -- test -- The error message.
       schema:
-        &a23
+        &a27
         target:
           &a1
           type: string
@@ -74,8 +74,78 @@ schemas:
       versionInfo:
         - added: 1.1.0
     - *a2
+    - type: any
+      versionInfo:
+        - added: 1.1.0
+  enums:
+    - &a7
+      type: *a1
+      sealed: false
+      values:
+        - type: *a1
+          value: phone
+        - type: *a1
+          value: tablet
+        - type: *a1
+          value: desktop
+        - type: *a1
+          value: tv
+        - type: *a1
+          value: watch
+        - type: *a1
+          value: car
+        - type: *a1
+          value: embedded
+      versionInfo:
+        - added: 1.1.0
+    - &a9
+      type: *a1
+      sealed: false
+      values:
+        - type: *a1
+          value: ios
+        - type: *a1
+          value: android
+      versionInfo:
+        - added: 1.1.0
     - &a6
-      type: any
+      type: *a1
+      sealed: false
+      values:
+        - type: *a1
+          value: apns
+        - type: *a1
+          value: fcm
+        - type: *a1
+          value: gcm
+      versionInfo:
+        - added: 1.1.0
+    - &a11
+      type: *a1
+      sealed: false
+      values:
+        - type: *a1
+          value: Active
+        - type: *a1
+          value: Failing
+        - type: *a1
+          value: Failed
+      versionInfo:
+        - added: 1.1.0
+    - &a18
+      type: *a1
+      sealed: false
+      values:
+        - type: *a1
+          value: ABSENT
+        - type: *a1
+          value: PRESENT
+        - type: *a1
+          value: ENTER
+        - type: *a1
+          value: LEAVE
+        - type: *a1
+          value: UPDATE
       versionInfo:
         - added: 1.1.0
   objects:
@@ -87,7 +157,7 @@ schemas:
       properties:
         - name: presenceConnections
           schema:
-            &a16
+            &a20
             target: *a2
             versionInfo:
               - added: 1.1.0
@@ -122,7 +192,7 @@ schemas:
           schema: *a3
         - name: occupancy
           schema:
-            &a17
+            &a21
             target: *a4
             versionInfo:
               - added: 1.1.0
@@ -139,20 +209,20 @@ schemas:
           schema: *a1
         - name: status
           schema:
-            &a18
+            &a22
             target: *a5
             versionInfo:
               - added: 1.1.0
       versionInfo:
         - added: 1.1.0
-    - &a7
+    - &a8
       $key: metadata
       description: Optional metadata object for this device. The metadata for a device
         may only be set by clients with push-admin privileges and will be used
         more extensively in the future with smart notifications.
       versionInfo:
         - added: 1.1.0
-    - &a8
+    - &a10
       $key: Recipient
       description: Push recipient details for a device.
       properties:
@@ -175,21 +245,21 @@ schemas:
         - name: deviceSecret
           schema: *a1
         - name: formFactor
-          schema: *a6
+          schema: *a7
         - name: id
           schema: *a1
         - name: metadata
-          schema: *a7
+          schema: *a8
         - name: platform
-          schema: *a6
+          schema: *a9
         - name: push.recipient
           schema:
-            &a19
-            target: *a8
+            &a23
+            target: *a10
             versionInfo:
               - added: 1.1.0
         - name: push.state
-          schema: *a6
+          schema: *a11
       versionInfo:
         - added: 1.1.0
     - $key: Error
@@ -213,7 +283,7 @@ schemas:
               - added: 1.1.0
       versionInfo:
         - added: 1.1.0
-    - &a9
+    - &a12
       $key: Notification
       properties:
         - name: body
@@ -228,20 +298,20 @@ schemas:
           schema: *a1
       versionInfo:
         - added: 1.1.0
-    - &a10
+    - &a13
       $key: apns
       description: Extends and overrides generic values when delivering via APNs. [See
         examples](https://www.ably.io/documentation/general/push/publish#payload-structure)
       properties:
         - name: notification
           schema:
-            &a20
-            target: *a9
+            &a24
+            target: *a12
             versionInfo:
               - added: 1.1.0
       versionInfo:
         - added: 1.1.0
-    - &a11
+    - &a14
       $key: fcm
       description: Extends and overrides generic values when delivering via GCM/FCM.
         [See
@@ -249,42 +319,42 @@ schemas:
       properties:
         - name: notification
           schema:
-            target: *a9
+            target: *a12
             versionInfo:
               - added: 1.1.0
       versionInfo:
         - added: 1.1.0
-    - &a12
+    - &a15
       $key: web
       description: Extends and overrides generic values when delivering via web. [See
         examples](https://www.ably.io/documentation/general/push/publish#payload-structure)
       properties:
         - name: notification
           schema:
-            target: *a9
+            target: *a12
             versionInfo:
               - added: 1.1.0
       versionInfo:
         - added: 1.1.0
-    - &a13
+    - &a16
       $key: Push
       properties:
         - name: apns
-          schema: *a10
+          schema: *a13
         - name: data
           schema: *a1
         - name: fcm
-          schema: *a11
+          schema: *a14
         - name: notification
           schema:
-            target: *a9
+            target: *a12
             versionInfo:
               - added: 1.1.0
         - name: web
-          schema: *a12
+          schema: *a15
       versionInfo:
         - added: 1.1.0
-    - &a14
+    - &a17
       $key: Extras
       description: Extras object. Currently only allows for
         [push](https://www.ably.io/documentation/general/push/publish#channel-broadcast-example)
@@ -292,8 +362,8 @@ schemas:
       properties:
         - name: push
           schema:
-            &a21
-            target: *a13
+            &a25
+            target: *a16
             versionInfo:
               - added: 1.1.0
       versionInfo:
@@ -311,8 +381,8 @@ schemas:
           schema: *a1
         - name: extras
           schema:
-            &a22
-            target: *a14
+            &a26
+            target: *a17
             versionInfo:
               - added: 1.1.0
         - name: id
@@ -329,7 +399,7 @@ schemas:
     - $key: PresenceMessage
       properties:
         - name: action
-          schema: *a6
+          schema: *a18
         - name: clientId
           schema: *a1
         - name: connectionId
@@ -340,7 +410,7 @@ schemas:
           schema: *a1
         - name: extras
           schema:
-            target: *a14
+            target: *a17
             versionInfo:
               - added: 1.1.0
         - name: id
@@ -372,7 +442,7 @@ schemas:
           schema: *a1
       versionInfo:
         - added: 1.1.0
-    - &a15
+    - &a19
       $key: capability
       description: The
         [capabilities](https://www.ably.io/documentation/core-features/authentication#capabilities-explained)
@@ -385,7 +455,7 @@ schemas:
       properties:
         - name: capability
           required: true
-          schema: *a15
+          schema: *a19
         - name: clientId
           schema: *a1
         - name: keyName
@@ -403,14 +473,14 @@ schemas:
       versionInfo:
         - added: 1.1.0
   aliases:
-    - *a16
-    - *a17
-    - *a18
-    - *a19
     - *a20
     - *a21
     - *a22
     - *a23
+    - *a24
+    - *a25
+    - *a26
+    - *a27
 attic:
   servers:
     - url: https://rest.ably.io
@@ -1407,31 +1477,13 @@ attic:
             description: Secret value for the device.
           formFactor:
             description: Form factor of the push device.
-            enum:
-              - phone
-              - tablet
-              - desktop
-              - tv
-              - watch
-              - car
-              - embedded
-            type: string
           id:
             description: Unique identifier for the device generated by the device itself.
           platform:
             description: Platform of the push device.
-            enum:
-              - ios
-              - android
-            type: string
           push.state:
             description: the current state of the push device.
-            enum:
-              - Active
-              - Failing
-              - Failed
             readOnly: true
-            type: string
       Error:
         properties:
           code:
@@ -1502,14 +1554,7 @@ attic:
         properties:
           action:
             description: The event signified by a PresenceMessage.
-            enum:
-              - ABSENT
-              - PRESENT
-              - ENTER
-              - LEAVE
-              - UPDATE
             readOnly: true
-            type: string
           clientId:
             description: The client ID of the publisher of this presence update.
           connectionId:
@@ -1548,11 +1593,6 @@ attic:
             description: when using GCM or FCM, specifies the required registration token.
           transportType:
             description: Defines which push platform is being used.
-            enum:
-              - apns
-              - fcm
-              - gcm
-            type: string
       SignedTokenRequest:
         allOf:
           - $ref: "#/components/schemas/TokenRequest"

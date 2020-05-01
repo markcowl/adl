@@ -43,14 +43,13 @@ export async function processHeaders(input: ItemsOf<v3.Header>, $: Context): Pro
   return undefined;
 }
 
-async function processHeaderReference(headerReference: v3.HeaderReference, $: Context, isAnonymous = false): Promise<Header | undefined> {
-
+async function processHeaderReference(headerReference: v3.HeaderReference, $: Context, options?: { isAnonymous?: boolean }): Promise<Header | undefined> {
   return undefined;
 }
 
-export async function processHeader(header: v3.Header, $: Context, isAnonymous = false): Promise<Header | undefined> {
+export async function processHeader(header: v3.Header, $: Context, options?: { isAnonymous?: boolean }): Promise<Header | undefined> {
   const { api, visitor } = $;
-  const key = isAnonymous ? 'anonymous-header' : nameOf(header);
+  const key = options?.isAnonymous ? 'anonymous-header' : nameOf(header);
 
 
   // these are in the OAI schema, but should not be in headers - freakout if they are used
@@ -62,9 +61,9 @@ export async function processHeader(header: v3.Header, $: Context, isAnonymous =
     isReference(header.schema) ?
       // they have used a $ref to a schema - resolve that.
       // await process(processReference, header.schema)
-      await $.process(processSchemaReference, header.schema, true) :
+      await $.process(processSchemaReference, header.schema, { isAnonymous: true }) :
       // an inlined schema --process that first
-      await $.process(processSchema, header.schema, true) :
+      await $.process(processSchema, header.schema, { isAnonymous: true }) :
     // nope, no schema.
     undefined;
 
@@ -82,7 +81,7 @@ export async function processHeader(header: v3.Header, $: Context, isAnonymous =
   });
 
   // best practice - put this into the $refs collection early 
-  if (!isAnonymous) {
+  if (!options?.isAnonymous) {
     visitor.$refs.set(refTo(header), httpHeader);
   }
 
