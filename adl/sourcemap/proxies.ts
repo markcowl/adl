@@ -322,6 +322,12 @@ export class TrackedTarget<T extends Object> {
   }
 
   onAdd(tracker: Tracker, pathInTarget: Path) {
+    // if the tracker for this object is already set, we've 
+    // already met the parents and don't need to do it all again
+    // (if children get added after, they'll be told to do it then)
+    if (this.tracker) {
+      return;
+    }
     if (tracker && pathInTarget) {
       // if the tracker is set, then we have a path all the way from the root of the target model 
       // to the location that this property is being set.
