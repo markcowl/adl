@@ -100,8 +100,7 @@ export const elementTag = <Schema.CustomTag>{
       }
 
       // use createPair (which uses createNode, and ensures that anchors work)
-      // todo: use of valueOf() here probably indicates that source tracking is leaving tracked objects in the graph.
-      y.add(sch.createPair(key, v.valueOf(), ctx));
+      y.add(sch.createPair(key, v, ctx));
     }
 
     // todo: see how we can override the anchor name if possible.

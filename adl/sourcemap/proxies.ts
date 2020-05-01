@@ -59,6 +59,17 @@ export function isProxy<T>(value: T) {
   return (value !== undefined && value !== null && typeof value === 'object') && ((<any>value)[SpecialProperties.IsSourceProxy] === true || (<any>value)[SpecialProperties.IsTargetProxy] === true);
 }
 
+export function isActualValue(value: any) {
+  return value === undefined || value === null || typeof value !== 'object' || value.valueOf() !== value;
+}
+export function valueOf(value: any): any {
+  if (value === undefined || value === null || typeof value !== 'object') {
+    return value;
+  }
+  const v = value.valueOf();
+  return v !== value ? valueOf(v) : v;
+}
+
 export function isSourceProxy<T>(value: T) {
   if (value === undefined || value === null || typeof value !== 'object') {
     return false;
@@ -189,7 +200,7 @@ export class TrackedSource<T extends Object> {
         }
 
         // if the actual value isn't an object then we can just set the isUsed flag.
-        if (typeof actual.valueOf() !== 'object') {
+        if (typeof valueOf(actual) !== 'object') {
           this.isUsed = true;
         } else {
           // if we have children, the final state of isUsed is dependent on all them being used.
@@ -242,11 +253,11 @@ export class TrackedSource<T extends Object> {
       case SpecialProperties.IsSourceProxy:
         return true;
       case SpecialProperties.ActualValue:
-        return actual.valueOf();
+        return valueOf(actual);
       case SpecialProperties.valueOf:
-        return () => actual.valueOf();
+        return () => valueOf(actual);
       case SpecialProperties.toString:
-        return () => actual.toString();
+        return () => valueOf(actual).toString();
       case SpecialProperties.RefToHere:
         return `${this.origin.sourceFile.filename}#/${this.origin.path.join('/')}`;
       case SpecialProperties.IsUsed:
@@ -337,10 +348,10 @@ export class TrackedTarget<T extends Object> {
 
       // we should recursively call onAdd on the children from here
       // since this might be the first time they meet their parents.
-      if (typeof this.instance.valueOf() === 'object') {
+      if (typeof valueOf(this.instance) === 'object') {
         for (const { key, value } of items(<any>this.proxy)) {
-          const rawValue = (<any>this.instance)[key];
-          if (isProxy(rawValue)) {
+          const rawValue = valueOf((<any>this.instance)[key]);
+          if (rawValue !== value) {
             // we've still got the proxy set as the raw value 
             // which means that for certain, the property 
             // hasn't met the parents yet.
@@ -377,13 +388,13 @@ export class TrackedTarget<T extends Object> {
         return this.origin;
 
       case SpecialProperties.valueOf:
-        return () => actual.valueOf();
+        return () => valueOf(actual);
 
       case SpecialProperties.toString:
         return () => actual.toString();
 
       case SpecialProperties.ActualValue:
-        return actual.valueOf();
+        return valueOf(actual);
 
       case SpecialProperties.Tracker:
         return this.tracker;
@@ -441,7 +452,7 @@ export class TrackedTarget<T extends Object> {
       return true;
     }
 
-    const rawValue = value.valueOf();
+    const rawValue = valueOf(value);
 
     // if this isn't a proxied object, and there is one in the registry 
     // for this, let's assume the user passed that in instead.

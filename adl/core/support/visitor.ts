@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
-import { Tracker, Path, TrackedTarget, TrackedSource, getSourceFile, refTo, using, use, isUsed } from '@azure-tools/sourcemap';
+import { Tracker, Path, TrackedTarget, TrackedSource, getSourceFile, refTo, using, use, isUsed, valueOf } from '@azure-tools/sourcemap';
 import { values, items, length } from '@azure-tools/linq';
 import { Element } from '../model/element';
 import { FileSystem } from './file-system';
@@ -56,7 +56,6 @@ export function isObjectClean(obj: any): boolean {
 
 export interface SourceFile<TSourceModel extends OAIModel> {
   sourceModel: TSourceModel;
-  apiVersion: string;
   tracker: Tracker;
   sourceFile: string;
   visitor: Visitor<TSourceModel>;
@@ -132,10 +131,7 @@ export class Visitor<TSourceModel extends OAIModel> {
     const content = await this.fileSystem.readFile(sourceFile);
     const sourceModel = TrackedSource.track(<TSourceModel>parse(content), { sourceFile: { filename: sourceFile }, path: [] });
 
-    return new Context(
-      sourceModel,
-      sourceModel.info.version,
-      this);
+    return new Context(sourceModel, this);
   }
 
   async process<TOutput>(action: fnAction<TSourceModel, TSourceModel, TOutput>) {
@@ -183,12 +179,14 @@ type fnAction<TSourceModel extends OAIModel, TInput, TOutput> = (value: NonNulla
 export class Context<TSourceModel extends OAIModel> {
   constructor(
     public sourceModel: TSourceModel,
-    public apiVersion: string,
     public visitor: Visitor<TSourceModel>
   ) {
 
   }
 
+  get apiVersion() {
+    return valueOf(this.sourceModel.info.version);
+  }
   error(text: string, offendingNode: any) {
     this.visitor.error(text);
   }
@@ -231,11 +229,11 @@ export class Context<TSourceModel extends OAIModel> {
         this.visitor.$refs.set(ref, result);
 
         // let's 
-        result.versionInfo.push(TrackedTarget.track(<VersionInfo>({
+        result.versionInfo.push(new VersionInfo({
           // deprecated isn't on everything, but this is safe when it's not there
           deprecated: using((<any>value).deprecated, this.apiVersion),
           added: this.apiVersion,
-        })));
+        }));
         result.addInternalData(this.visitor.inputType, { preferredFile: getSourceFile(value) });
 
         return result;

@@ -44,7 +44,6 @@ export class Initializer {
       const proxy = (<any>TrackedTarget.track(this));
       const targetProperty = proxy[key];
 
-
       if (value !== undefined) {
         const rawValue = (<any>value).valueOf();
         if (Array.isArray(targetProperty)) {
@@ -58,7 +57,7 @@ export class Initializer {
           throw new Error(`Initializer for object with array member '${key}', must be initialized with something that can be iterated.`);
         }
         // just copy the value across.
-        proxy[key] = (<any>value);//.valueOf();
+        proxy[key] = (<any>value);
       }
     }
   }
