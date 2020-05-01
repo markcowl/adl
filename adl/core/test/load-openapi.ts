@@ -8,6 +8,7 @@ import { readdirSync, unlinkSync, statSync } from 'fs';
 import { resolve } from 'path';
 import { equal } from 'assert';
 import * as chalk from 'chalk';
+import { v3 } from '@azure-tools/openapi';
 
 require('source-map-support').Install;
 
@@ -32,22 +33,29 @@ describe('Load Single OAI3 files', () => {
       const end = process.uptime() * 1000;
       console.log(chalk.gray(`      ${file} Deserialization ${chalk.yellow(Math.floor(end - start))} ms`));
 
-      const output = resolve(`${$scenarios}/../output/${file.replace(/.yaml$/ig, '.api.yaml')}`);
-      const attic = resolve(`${$scenarios}/../output/${file.replace(/.yaml$/ig, '.attic.yaml')}`);
+      const outputPath = resolve(`${$scenarios}/../output/${file.replace(/.yaml$/ig, '.api.yaml')}`);
+      const atticPath = resolve(`${$scenarios}/../output/${file.replace(/.yaml$/ig, '.attic.yaml')}`);
 
 
-      if (await isFile(output)) {
-        unlinkSync(output);
+
+      if (await isFile(outputPath)) {
+        unlinkSync(outputPath);
       }
 
       if (api.attic) {
-        await writeFile(attic, serialize(api.attic.valueOf()));
+        const attic = <v3.Model>api.attic.valueOf();
+
+        // verify that the attic does not have things we expect to be done
+        equal(attic.info, undefined, 'Should not have an info section left in attic');
+        equal(attic.openapi, undefined, 'Should not have an openapi section left in attic');
+
+        await writeFile(atticPath, serialize(api.attic.valueOf()));
         delete api.attic;
       }
 
-      await writeFile(output, serialize(api.valueOf()));
+      await writeFile(outputPath, serialize(api.valueOf()));
 
-      equal(await isFile(output), true, `Should write file ${output} `);
+      equal(await isFile(outputPath), true, `Should write file ${outputPath} `);
     });
   }
 
