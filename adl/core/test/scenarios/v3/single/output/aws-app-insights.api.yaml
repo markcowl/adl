@@ -25,6 +25,10 @@ metaData:
   licenses:
     - name: Apache 2.0 License
       url: http://www.apache.org/licenses/
+  references:
+    - description: Amazon Web Services documentation
+      location: https://docs.aws.amazon.com/applicationinsights/
+      tagName: external-documentation
   termsOfService: https://aws.amazon.com/service-terms/
   attic:
     x-release: v4

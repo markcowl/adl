@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Tracker, Path, TrackedTarget, TrackedSource, getSourceFile, refTo, using, use, isUsed, valueOf } from '@azure-tools/sourcemap';
 import { values, items, length } from '@azure-tools/linq';
-import { Element } from '../model/element';
+import { Element, ElementArray } from '../model/element';
 import { FileSystem } from './file-system';
 import { parse } from 'yaml';
 import { VersionInfo } from '../model/version-info';
@@ -201,6 +201,16 @@ export class Context<TSourceModel extends OAIModel> {
     return this.visitor.api;
   }
 
+  async processArray<TInput, TOutput extends Element, TOptions = {}>(action: fnAction<TSourceModel, TInput, TOutput, TOptions>, value: Array<TInput> | undefined, output: ElementArray<TOutput>, options?: TOptions): Promise<ElementArray<TOutput> | undefined> {
+    if (value) {
+      for (const each of value) {
+        await this.process(action, each);
+      }
+      use(value);
+    }
+    return TrackedTarget.track(output);
+  }
+
   async process<TInput, TOutput extends Element, TOptions = {}>(action: fnAction<TSourceModel, TInput, TOutput, TOptions>, value: TInput | NonNullable<TInput>, options?: TOptions): Promise<TOutput | undefined> {
 
     if (value !== undefined && value !== null) {
@@ -226,7 +236,6 @@ export class Context<TSourceModel extends OAIModel> {
         // track it so we don't redo it if asked for it again later.
         this.visitor.$refs.set(ref, result);
 
-        // let's 
         result.versionInfo.push(new VersionInfo({
           // deprecated isn't on everything, but this is safe when it's not there
           deprecated: using((<any>value).deprecated, this.apiVersion),

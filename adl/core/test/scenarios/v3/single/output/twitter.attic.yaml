@@ -1,30 +1,6 @@
 servers:
   - description: Twitter API
     url: https://api.twitter.com
-externalDocs:
-  description: Find out more about Swagger
-  url: http://swagger.io
-tags:
-  - description: Miscellaneous endpoints for general API functionality
-    externalDocs:
-      description: Find out more
-      url: https://developer.twitter.com/en/docs/labs
-    name: General
-  - description: APIs related to Recent Search
-    externalDocs:
-      description: Find out more
-      url: https://developer.twitter.com/en/docs/labs/recent-search/overview
-    name: Search
-  - description: APIs related to Tweets
-    externalDocs:
-      description: Find out more
-      url: https://developer.twitter.com/en/docs/labs/tweets-and-users/overview
-    name: Tweets
-  - description: APIs related to Users
-    externalDocs:
-      description: Find out more
-      url: https://developer.twitter.com/en/docs/labs/tweets-and-users/overview
-    name: Users
 paths:
   /labs/2/openapi.json:
     get:

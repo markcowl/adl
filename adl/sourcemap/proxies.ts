@@ -303,8 +303,7 @@ export class TrackedSource<T extends Object, instanceType> {
       case 'object':
         return TrackedSource.track(value, value, { ...this.origin, path: location }, this);
     }
-    console.log("RETURN FUNNY?");
-    return value;
+    throw new Error('Should not get to here. ')
   }
 }
 
@@ -343,10 +342,8 @@ export class TrackedTarget<T extends Object> {
     // if the tracker for this object is already set, we've 
     // already met the parents and don't need to do it all again
     // (if children get added after, they'll be told to do it then)
-    if (this.tracker) {
-      return;
-    }
     if (tracker && pathInTarget) {
+      this.tracker = tracker;
       // if the tracker is set, then we have a path all the way from the root of the target model 
       // to the location that this property is being set.
       if (this.origin) {
@@ -357,6 +354,10 @@ export class TrackedTarget<T extends Object> {
       // since this might be the first time they meet their parents.
       if (typeof valueOf(this.instance) === 'object') {
         for (const { key, value } of items(<any>this.proxy)) {
+          if (value === undefined || value === null) {
+            continue;
+          }
+
           const rawValue = valueOf((<any>this.instance)[key]);
           if (rawValue !== value) {
             // we've still got the proxy set as the raw value 
