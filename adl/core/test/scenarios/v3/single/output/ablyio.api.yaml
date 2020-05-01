@@ -65,7 +65,7 @@ schemas:
         &a3
         type: alias
         targetSchema: *a1
-      sealed: false
+      sealed: true
       values:
         - type: constant
           value: phone
@@ -94,7 +94,7 @@ schemas:
         &a4
         type: alias
         targetSchema: *a1
-      sealed: false
+      sealed: true
       values:
         - type: constant
           value: ios
@@ -108,7 +108,7 @@ schemas:
         &a5
         type: alias
         targetSchema: *a1
-      sealed: false
+      sealed: true
       values:
         - type: constant
           value: apns
@@ -125,7 +125,7 @@ schemas:
         &a6
         type: alias
         targetSchema: *a1
-      sealed: false
+      sealed: true
       values:
         - type: constant
           value: Active
@@ -142,7 +142,7 @@ schemas:
         &a7
         type: alias
         targetSchema: *a1
-      sealed: false
+      sealed: true
       values:
         - type: constant
           value: ABSENT
