@@ -20,7 +20,7 @@ async function processContact(contact: v3.Contact, $: Context) {
   });
 
   // add remaining extensions to attic. 
-  addExtensionsToAttic(result, contact);
+  await addExtensionsToAttic(result, contact);
 
   return result;
 }
@@ -30,7 +30,7 @@ async function processLicense(license: v3.License, $: Context) {
     url: license.url
   });
   // add remaining extensions to attic. 
-  addExtensionsToAttic(result, $);
+  await addExtensionsToAttic(result, license);
 
   return result;
 }
@@ -52,6 +52,9 @@ export async function processInfo(info: v3.Info, $: Context): Promise<Metadata |
   if (is(info.license)) {
     metadata.licenses.push(await $.process(processLicense, info.license));
   }
+
+  // add remaining extensions to attic. 
+  await addExtensionsToAttic(metadata, info);
 
   $.api.metaData = metadata;
 

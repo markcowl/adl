@@ -47,10 +47,25 @@ metaData:
       url: https://www.ably.io/contact
       versionInfo:
         - added: 1.1.0
+      attic:
+        x-twitter: ablyrealtime
   description: The [REST API
     specification](https://www.ably.io/documentation/rest-api) for Ably.
   versionInfo:
     - added: 1.1.0
+  attic:
+    x-apisguru-categories:
+      - cloud
+    x-logo:
+      url: https://twitter.com/ablyrealtime/profile_image?size=original
+    x-origin:
+      - converter:
+          url: https://github.com/lucybot/api-spec-converter
+          version: 2.7.25
+        format: openapi
+        url: https://raw.githubusercontent.com/ably/open-specs/master/swagger.yaml
+        version: "3.0"
+    x-providerName: ably.io
 schemas:
   primitives:
     - *a1
@@ -400,8 +415,6 @@ attic:
   servers:
     - url: https://rest.ably.io
   info:
-    contact:
-      x-twitter: ablyrealtime
     x-apisguru-categories:
       - cloud
     x-logo:
@@ -413,7 +426,6 @@ attic:
         format: openapi
         url: https://raw.githubusercontent.com/ably/open-specs/master/swagger.yaml
         version: "3.0"
-    x-providerName: ably.io
   security:
     - basicAuth: []
     - bearerAuth: []

@@ -7,6 +7,8 @@ metaData:
       url: https://developer.twitter.com/
       versionInfo:
         - added: "2.3"
+      attic:
+        x-twitter: twitter
   description: API Reference — Labs v2
   licenses:
     - name: Twitter Developer Agreement and Policy
@@ -16,6 +18,18 @@ metaData:
   termsOfService: https://developer.twitter.com/en/developer-terms/agreement-and-policy.html
   versionInfo:
     - added: "2.3"
+  attic:
+    x-apisguru-categories:
+      - social
+    x-logo:
+      url: https://twitter.com/twitter/profile_image?size=original
+    x-origin:
+      - format: openapi
+        url: https://api.twitter.com/labs/2/openapi.json
+        version: "3.0"
+    x-preferred: true
+    x-providerName: twitter.com
+    x-serviceName: labs
 schemas:
   primitives:
     - &a1
@@ -1276,8 +1290,6 @@ attic:
     - description: Twitter API
       url: https://api.twitter.com
   info:
-    contact:
-      x-twitter: twitter
     x-apisguru-categories:
       - social
     x-logo:
@@ -1286,9 +1298,6 @@ attic:
       - format: openapi
         url: https://api.twitter.com/labs/2/openapi.json
         version: "3.0"
-    x-preferred: true
-    x-providerName: twitter.com
-    x-serviceName: labs
   externalDocs:
     description: Find out more about Swagger
     url: http://swagger.io

@@ -40,5 +40,5 @@ export function unzip<T>(value: Dictionary<T | JsonReference<T>>) {
 }
 
 export function vendorExtensions(instance: VendorExtensions) {
-  return items(<Dictionary<any>>instance).where(each => isVendorExtension(each.value));
+  return items(<Dictionary<any>>instance).where(each => isVendorExtension(each.key));
 }
