@@ -11,94 +11,133 @@ schemas:
   primitives:
     - &a1
       type: int64
+      versionInfo:
+        - added: 1.0.0
     - &a2
       type: string
+    - type: array
+      elementSchema:
+        &a6
+        target:
+          &a3
+          $key: Pet
+          properties:
+            - name: id
+              required: true
+              schema: *a1
+            - name: name
+              required: true
+              schema:
+                &a5
+                target: *a2
+                versionInfo:
+                  - added: 1.0.0
+            - name: tag
+              schema:
+                target: *a2
+                versionInfo:
+                  - added: 1.0.0
+          versionInfo:
+            - added: 1.0.0
+        versionInfo:
+          - added: 1.0.0
       versionInfo:
         - added: 1.0.0
-        - added: 1.0.0
-        - added: 1.0.0
-    - &a3
+    - &a4
       type: int32
-  objects:
-    - $key: Pet
-      properties:
-        - name: id
-          schema:
-            &a4
-            target: *a1
-            versionInfo:
-              - added: 1.0.0
-        - name: name
-          schema: *a2
-        - name: tag
-          schema: *a2
       versionInfo:
         - added: 1.0.0
+  objects:
+    - *a3
     - $key: Error
       properties:
         - name: code
+          required: true
+          schema: *a4
+        - name: message
+          required: true
           schema:
-            &a11
-            target: *a3
+            target: *a2
             versionInfo:
               - added: 1.0.0
-        - name: message
-          schema: *a2
       versionInfo:
         - added: 1.0.0
   aliases:
-    - *a4
-    - target:
-        $key: Pet
-        properties:
-          - &a6
-            name: id
+    - *a5
+    - *a6
+attic:
+  servers:
+    - url: http://petstore.swagger.io/v1
+  paths:
+    /pets:
+      get:
+        summary: List all pets
+        operationId: listPets
+        tags:
+          - pets
+        parameters:
+          - name: limit
+            in: query
+            description: How many items to return at one time (max 100)
+            required: false
             schema:
-              target:
-                type: int64
-              versionInfo:
-                - added: 1.0.0
-          - &a7
-            name: name
+              type: integer
+              format: int32
+        responses:
+          "200":
+            description: A paged array of pets
+            headers:
+              x-next:
+                description: A link to the next page of responses
+                schema:
+                  type: string
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Pets"
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+      post:
+        summary: Create a pet
+        operationId: createPets
+        tags:
+          - pets
+        responses:
+          "201":
+            description: Null response
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+    "/pets/{petId}":
+      get:
+        summary: Info for a specific pet
+        operationId: showPetById
+        tags:
+          - pets
+        parameters:
+          - name: petId
+            in: path
+            required: true
+            description: The id of the pet to retrieve
             schema:
-              &a5
               type: string
-              versionInfo:
-                - added: 1.0.0
-                - added: 1.0.0
-                - added: 1.0.0
-          - &a8
-            name: tag
-            schema: *a5
-        versionInfo:
-          - &a9
-            added: 1.0.0
-      versionInfo:
-        - added:
-            &a10
-            - "1"
-            - .
-            - "0"
-            - .
-            - "0"
-    - target:
-        type: array
-        elementSchema:
-          target:
-            $key: Pet
-            properties:
-              - *a6
-              - *a7
-              - *a8
-            versionInfo:
-              - *a9
-          versionInfo:
-            - added:
-                - "1"
-                - .
-                - "0"
-                - .
-                - "0"
-        versionInfo:
-          - added: *a10
-    - *a11
+        responses:
+          "200":
+            description: Expected response to a valid request
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Pet"
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"

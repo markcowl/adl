@@ -54,6 +54,9 @@ export async function processSchema(schema: v3.Schema, $: Context, isAnonymous =
     return processEnumSchema(schema, $);
   }
 
+  // mark this used once.
+  use(schema.type);
+
   switch (schema.type?.valueOf()) {
     case v3.JsonType.String:
       return processStringSchema(schema, $);
@@ -168,8 +171,6 @@ export async function processStringSchema(schema: v3.Schema, $: Context): Promis
       return processOdataSchema(schema, $);
   }
   // we're going to treat it as a standard string schema
-  use(schema.type);
-
   // if this is just a plain string with no adornments, just return the common string instance. 
   if (unusedMembers(schema)) {
     return $.api.schemas.String;
@@ -179,15 +180,15 @@ export async function processStringSchema(schema: v3.Schema, $: Context): Promis
   const result = new Alias($.api.schemas.String);
 
   if (schema.maxLength) {
-    result.constraints.push(new MaxLengthConstraint(use(schema.maxLength)));
+    result.constraints.push(new MaxLengthConstraint(schema.maxLength));
   }
 
   if (schema.minLength) {
-    result.constraints.push(new MinLengthConstraint(use(schema.minLength)));
+    result.constraints.push(new MinLengthConstraint(schema.minLength));
   }
 
   if (schema.pattern) {
-    result.constraints.push(new RegularExpressionConstraint(use(schema.pattern)));
+    result.constraints.push(new RegularExpressionConstraint(schema.pattern));
   }
 
   // add it to the container.
@@ -197,63 +198,51 @@ export async function processStringSchema(schema: v3.Schema, $: Context): Promis
 }
 
 export async function processByteArraySchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  use(schema.type);
+
   return $.api.schemas.ByteArray;
 }
 
 export async function processCharSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  use(schema.type);
   return $.api.schemas.Char;
 }
 
 export async function processDateSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  use(schema.type);
   return $.api.schemas.Date;
 }
 
 export async function processTimeSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  use(schema.type);
   return $.api.schemas.Time;
 }
 
 export async function processDateTimeSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  use(schema.type);
   return $.api.schemas.DateTime;
 }
 
 export async function processDurationSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  use(schema.type);
   return $.api.schemas.Duration;
 }
 
 export async function processUuidSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  use(schema.type);
   return $.api.schemas.Uuid;
 }
 
 export async function processUriSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  use(schema.type);
   return $.api.schemas.Uri;
 }
 
 export async function processPasswordSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  use(schema.type);
   return $.api.schemas.Password;
 }
 
 export async function processOdataSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  use(schema.type);
   return $.api.schemas.OData;
 }
 
 export async function processBooleanSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  use(schema.type);
   return $.api.schemas.Boolean;
 }
 
 export async function processIntegerSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  use(schema.type);
-
   const format = use(schema.format);
 
   let result: Schema;
@@ -276,7 +265,6 @@ export async function processIntegerSchema(schema: v3.Schema, $: Context): Promi
 }
 
 export async function processNumberSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  use(schema.type);
   const format = use(schema.format);
 
   let result: Schema;
@@ -307,19 +295,19 @@ function constrainNumericSchema(schema: v3.Schema, $: Context, target: Schema): 
   // gonna need an alias
   const alias = new Alias(target);
   if (schema.minimum) {
-    alias.constraints.push(new MinimumConstraint(use(schema.minimum)));
+    alias.constraints.push(new MinimumConstraint(schema.minimum));
   }
   if (schema.maximum) {
-    alias.constraints.push(new MaximumConstraint(use(schema.maximum)));
+    alias.constraints.push(new MaximumConstraint(schema.maximum));
   }
   if (schema.exclusiveMinimum) {
-    alias.constraints.push(new ExclusiveMinimumConstraint(use(schema.exclusiveMinimum)));
+    alias.constraints.push(new ExclusiveMinimumConstraint(schema.exclusiveMinimum));
   }
   if (schema.exclusiveMaximum) {
-    alias.constraints.push(new ExclusiveMaximumConstraint(use(schema.exclusiveMaximum)));
+    alias.constraints.push(new ExclusiveMaximumConstraint(schema.exclusiveMaximum));
   }
   if (schema.multipleOf) {
-    alias.constraints.push(new MultipleOfConstraint(use(schema.multipleOf)));
+    alias.constraints.push(new MultipleOfConstraint(schema.multipleOf));
   }
 
   $.api.schemas.aliases.push(alias);
@@ -328,23 +316,30 @@ function constrainNumericSchema(schema: v3.Schema, $: Context, target: Schema): 
 
 
 export async function processArraySchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  const elementSchema = await $.processPossibleReference(processSchemaReference, processSchema, schema.items) || $.api.schemas.Any;
-  use(schema.items);
-  use(schema.type);
+  const elementSchema = await $.processPossibleReference(processSchemaReference, processSchema, use(schema.items)) || $.api.schemas.Any;
+
   const result = new ArraySchema(elementSchema);
   if (!unusedMembers(schema)) {
     $.api.schemas.primitives.push(result);
     return result;
   }
+
+  /*
+  if (!schema.minItems && !schema.maxItems && !schema.uniqueItems) {
+    $.api.schemas.primitives.push(result);
+    return result;
+
+  }
+*/
   const alias = new Alias(result);
   if (schema.maxItems) {
-    alias.constraints.push(new MaximumElementsConstraint(use(schema.maxItems)));
+    alias.constraints.push(new MaximumElementsConstraint(schema.maxItems));
   }
   if (schema.minItems) {
-    alias.constraints.push(new MinimumElementsConstraint(use(schema.minItems)));
+    alias.constraints.push(new MinimumElementsConstraint(schema.minItems));
   }
   if (schema.uniqueItems) {
-    alias.constraints.push(new UniqueElementsConstraint(use(schema.uniqueItems)));
+    alias.constraints.push(new UniqueElementsConstraint(schema.uniqueItems));
   }
 
   $.api.schemas.aliases.push(alias);
@@ -354,31 +349,27 @@ export async function processArraySchema(schema: v3.Schema, $: Context): Promise
 
 
 export async function processObjectSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  use(schema.type);
   const key = nameOf(schema);
 
   // creating an object schema 
   const result = new ObjectSchema(<string>key, {
     // properties to include
-    description: use(schema.description),
+    description: schema.description,
 
     // set the summary
-    summary: use(schema.title),
+    summary: schema.title,
   });
   if (result === undefined) {
     throw new Error('todo: no result');
   }
 
-  for (const { key: propertyName, value: property } of items(schema.properties)) {
-
+  for (const { key: propertyName, value: property } of items(use(schema.properties))) {
     // process schema/reference inline
     const propSchema = await $.processPossibleReference(processSchemaReference, processSchema, property) || $.api.schemas.Any;
 
-    // remove empty property
-    use(property);
-
     // grabs the 'required' value for the property
     let required = undefined;
+
     if (schema.required) {
       const i = schema.required.indexOf(propertyName);
       required = using(schema.required[i], true);
@@ -389,13 +380,14 @@ export async function processObjectSchema(schema: v3.Schema, $: Context): Promis
     }));
   }
 
+  // used up:
+
   $.api.schemas.objects.push(result);
 
   return result;
 }
 
 export async function processFileSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  use(schema.type);
   return $.api.schemas.File;
 }
 
@@ -413,6 +405,5 @@ export async function processEnumSchema(schema: v3.Schema, $: Context): Promise<
 }
 
 export async function processAnySchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  use(schema.type);
   return $.api.schemas.Any;
 }

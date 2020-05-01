@@ -1,5 +1,5 @@
-import { Dictionary, items, keys } from '@azure-tools/linq';
-import { Path, trackTarget } from '@azure-tools/sourcemap';
+import { Dictionary, items } from '@azure-tools/linq';
+import { TrackedTarget } from '@azure-tools/sourcemap';
 import { InternalData } from './internal-data';
 import { VersionInfo } from './version-info';
 
@@ -8,17 +8,27 @@ export interface Attic extends Dictionary<any> {
 
 }
 
+function clean(this: any, key: string, value: any): any {
+  return value === undefined || value === null ? value : value.valueOf();
+}
+
 export class ElementArray<T> extends Array<T> {
-  __set = new Set<string>();
+  #set = new Set<string>();
+  private uniq(value: T) {
+    const vv = JSON.stringify(value, clean, 2);
+    if (this.#set.has(vv)) {
+      return false;
+    }
+    this.#set.add(vv);
+    return true;
+  }
   push(...values: Array<T | undefined>) {
     for (const value of values) {
       if (value !== undefined) {
-        super.push(value);
-        //const vv = JSON.stringify((<any>value).valueOf());
         // todo: fix temporary means to stop duplicates
-        //if (!this.__set.has(vv)) {
-        //          this.__set.add(vv);
-        //      }
+        if ((<any>this.valueOf()).uniq(value)) {
+          super.push(value);
+        }
       }
     }
     return this.length;
@@ -29,25 +39,25 @@ export class ElementArray<T> extends Array<T> {
 export class Initializer {
   protected initialize<T>(initializer?: Partial<T>) {
     for (const { key, value } of items(initializer)) {
-      // copy the true value of the item.
-      const raw = (<any>trackTarget(this));
-      const target = raw[key];
-
+      // copy the true value of the items to the object
+      // (use the proxy)
+      const proxy = (<any>TrackedTarget.track(this));
+      const targetProperty = proxy[key];
 
       if (value !== undefined) {
         const rawValue = (<any>value).valueOf();
-        if (Array.isArray(target)) {
+        if (Array.isArray(targetProperty)) {
           if (rawValue[Symbol.iterator]) {
             // copy elements to target
             for (const each of rawValue) {
-              raw[key].push(each);
+              proxy[key].push(each);
             }
             continue;
           }
           throw new Error(`Initializer for object with array member '${key}', must be initialized with something that can be iterated.`);
         }
         // just copy the value across.
-        raw[key] = rawValue;//.valueOf();
+        proxy[key] = (<any>value);
       }
     }
   }
@@ -57,7 +67,7 @@ export class Initializer {
 /**  */
 export class Element extends Initializer {
   internalData?: Dictionary<InternalData>;
-  versionInfo = trackTarget(new ElementArray<VersionInfo>());
+  versionInfo = new ElementArray<VersionInfo>();
   attic?: Attic;
 
   constructor(initializer?: Partial<Element>) {

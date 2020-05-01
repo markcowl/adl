@@ -2,9 +2,8 @@ import { v3, vendorExtensions } from '@azure-tools/openapi';
 import { Metadata, Contact, ContactRole, License } from '../../model/Metadata';
 import { Context } from './serializer';
 import { Element } from '../../model/element';
-import { isObjectClean, is } from '../../support/visitor';
-import { processLinks } from './link';
-import { use, trackTarget } from '@azure-tools/sourcemap';
+import { is } from '../../support/visitor';
+import { use } from '@azure-tools/sourcemap';
 
 async function addExtensionsToAttic(element: Element, input: any) {
   for (const { key, value } of vendorExtensions(input)) {
@@ -27,8 +26,8 @@ async function processContact(contact: v3.Contact, $: Context) {
 }
 
 async function processLicense(license: v3.License, $: Context) {
-  const result = new License(use(license.name), {
-    url: use(license.url)
+  const result = new License(license.name, {
+    url: license.url
   });
   // add remaining extensions to attic. 
   addExtensionsToAttic(result, $);
@@ -54,7 +53,7 @@ export async function processInfo(info: v3.Info, $: Context): Promise<Metadata |
     metadata.licenses.push(await $.process(processLicense, info.license));
   }
 
-  $.api.metaData = trackTarget(metadata);
+  $.api.metaData = metadata;
 
   // we handled version much earler.
   use(info.version);

@@ -1,3 +1,5 @@
+import { Origin } from './proxies';
+
 export type anonymous = { valueOf: () => string };
 export const anonymous = <(s: string) => anonymous>Object;
 
@@ -12,7 +14,7 @@ export function isAnonymous(instance: any): instance is anonymous {
 
 export class Tracker {
 
-  add(inTarget: Path, inSource: Path) {
+  add(inTarget: Path, inSource: Origin) {
     // 
   }
 }

@@ -1,7 +1,6 @@
-import { items, Dictionary } from '@azure-tools/linq';
+import { Dictionary } from '@azure-tools/linq';
 
-import { Format, SerializationOptions, SerializationResult } from './format';
-import { Path, trackTarget } from '@azure-tools/sourcemap';
+import { SerializationResult } from './format';
 import { Metadata } from './Metadata';
 import { Element, ElementArray } from './element';
 import { InternalData } from './internal-data';
@@ -33,13 +32,13 @@ function TypeInfo<U extends new (...args: any) => any>(type: U) {
 export class ApiModel extends Element {
   internalData: Dictionary<InternalData> = {};
 
-  metaData = trackTarget(new Metadata(''));
+  metaData = new Metadata('');
 
-  resources = trackTarget(new ElementArray<Resource>());
+  resources = new ElementArray<Resource>();
 
-  schemas = trackTarget(new Schemas());
+  schemas = new Schemas();
 
-  http: HttpProtocol = trackTarget(new HttpProtocol());
+  http: HttpProtocol = new HttpProtocol();
 
   // aggregate: Aggregation;
 
@@ -77,14 +76,4 @@ export class ApiModel extends Element {
   async addVersion() {
     throw 'unimplemented';
   }
-}
-
-export function check(instance: any, path = '') {
-  for (const { key, value } of items(instance)) {
-    if (typeof value === 'object') {
-      check(value, `${path}.${key}`);
-    }
-  }
-
-  return;
 }

@@ -8,7 +8,6 @@ import { readdirSync, unlinkSync, statSync } from 'fs';
 import { resolve } from 'path';
 import { equal } from 'assert';
 import * as chalk from 'chalk';
-import { check } from '../model/api-model';
 
 const $scenarios = `${__dirname}/../../test/scenarios/v3/single/input`;
 
@@ -23,7 +22,6 @@ describe('Load Single OAI3 files', () => {
   });
 
   for (const file of files) {
-
     it(`Processes '${file}'`, async () => {
       console.log(chalk.gray(`\n      starting ${file}`));
       const start = process.uptime() * 1000;
@@ -36,9 +34,9 @@ describe('Load Single OAI3 files', () => {
       if (await isFile(output)) {
         unlinkSync(output);
       }
-      const raw = api.valueOf();
+
       await writeFile(output, serialize(api.valueOf()));
-      check(api);
+
       equal(await isFile(output), true, `Should write file ${output} `);
     });
   }

@@ -1,5 +1,4 @@
 import { Element, ElementArray } from './element';
-import { trackTarget } from '@azure-tools/sourcemap';
 
 export class Schema extends Element {
   anonymous?: boolean;
@@ -23,7 +22,7 @@ export class Property extends Element {
 
 export class ObjectSchema extends Schema {
   /** the collection of properties that are in this object */
-  properties = trackTarget(new ElementArray<Property>());
+  properties = new ElementArray<Property>();
 
   /**  maximum number of properties permitted */
   maxProperties?: number;
@@ -57,14 +56,6 @@ export class MinimumConstraint extends Constraint {
     this.initialize(initializer);
   }
 }
-
-
-const mc: { new(a: number): MinimumConstraint } = <any>
-  function (a: number) {
-    return new Proxy(new MinimumConstraint(a), {});
-  };
-
-const x = new mc(100);
 
 export class MaximumConstraint extends Constraint {
   constructor(public maximum: number, initializer?: Partial<MaximumConstraint>) {
@@ -138,7 +129,7 @@ export class Default extends Schema {
 }
 
 export class Alias extends Schema {
-  constraints = trackTarget(new ElementArray<Constraint>());
+  constraints = new ElementArray<Constraint>();
   // 
   constructor(public target: Schema, initializer?: Partial<Alias>) {
     super();
@@ -377,11 +368,11 @@ export class Schemas extends Element {
     return this.#file || (this.addPrimitive(this.#file = new FilePrimitive()));
   }
 
-  objects = trackTarget(new ElementArray<ObjectSchema>());
-  constants = trackTarget(new ElementArray<Constant>());
-  enums = trackTarget(new ElementArray<Enum>());
-  constraints = trackTarget(new ElementArray<Constraint>());
-  defaults = trackTarget(new ElementArray<Default>());
-  aliases = trackTarget(new ElementArray<Alias>());
-  primitives = trackTarget(new ElementArray<Primitive>());
+  objects = new ElementArray<ObjectSchema>();
+  constants = new ElementArray<Constant>();
+  enums = new ElementArray<Enum>();
+  constraints = new ElementArray<Constraint>();
+  defaults = new ElementArray<Default>();
+  aliases = new ElementArray<Alias>();
+  primitives = new ElementArray<Primitive>();
 }
