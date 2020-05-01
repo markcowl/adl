@@ -13,7 +13,7 @@ schemas:
       elementSchema:
         &a5
         type: alias
-        target:
+        targetSchema:
           &a3
           $key: Pet
           type: object

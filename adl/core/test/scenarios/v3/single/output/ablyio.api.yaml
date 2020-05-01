@@ -23,7 +23,7 @@ http:
             type: constraint
             length: (<(.*)?>; rel=\"(first|current|last)?\",)*(<(.*)?>;
               rel=\"(first|current|last)?\")+
-        target: *a1
+        targetSchema: *a1
     - $key: ServerId
       description: The ID for the server communicated with.
       schema: *a1
@@ -64,7 +64,7 @@ schemas:
       elementSchema:
         &a3
         type: alias
-        target: *a1
+        targetSchema: *a1
       sealed: false
       values:
         - type: constant
@@ -93,7 +93,7 @@ schemas:
       elementSchema:
         &a4
         type: alias
-        target: *a1
+        targetSchema: *a1
       sealed: false
       values:
         - type: constant
@@ -107,7 +107,7 @@ schemas:
       elementSchema:
         &a5
         type: alias
-        target: *a1
+        targetSchema: *a1
       sealed: false
       values:
         - type: constant
@@ -124,7 +124,7 @@ schemas:
       elementSchema:
         &a6
         type: alias
-        target: *a1
+        targetSchema: *a1
       sealed: false
       values:
         - type: constant
@@ -141,7 +141,7 @@ schemas:
       elementSchema:
         &a7
         type: alias
-        target: *a1
+        targetSchema: *a1
       sealed: false
       values:
         - type: constant
@@ -171,23 +171,23 @@ schemas:
           schema:
             &a26
             type: alias
-            target: *a2
+            targetSchema: *a2
         - name: presenceMembers
           schema:
             type: alias
-            target: *a2
+            targetSchema: *a2
         - name: presenceSubscribers
           schema:
             type: alias
-            target: *a2
+            targetSchema: *a2
         - name: publishers
           schema:
             type: alias
-            target: *a2
+            targetSchema: *a2
         - name: subscribers
           schema:
             type: alias
-            target: *a2
+            targetSchema: *a2
     - &a10
       $key: ChannelStatus
       type: object
@@ -200,7 +200,7 @@ schemas:
           schema:
             &a27
             type: alias
-            target: *a9
+            targetSchema: *a9
     - $key: ChannelDetails
       type: object
       properties:
@@ -209,18 +209,18 @@ schemas:
           schema:
             &a25
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: isGlobalMaster
           schema: *a8
         - name: region
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: status
           schema:
             &a28
             type: alias
-            target: *a10
+            targetSchema: *a10
     - &a13
       $key: metadata
       type: object
@@ -235,19 +235,19 @@ schemas:
         - name: clientId
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: deviceId
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: deviceToken
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: registrationToken
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: transportType
           schema: *a11
     - $key: DeviceDetails
@@ -256,17 +256,17 @@ schemas:
         - name: clientId
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: deviceSecret
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: formFactor
           schema: *a12
         - name: id
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: metadata
           schema: *a13
         - name: platform
@@ -275,7 +275,7 @@ schemas:
           schema:
             &a29
             type: alias
-            target: *a15
+            targetSchema: *a15
         - name: push.state
           schema: *a16
     - $key: Error
@@ -285,23 +285,23 @@ schemas:
         - name: code
           schema:
             type: alias
-            target: *a2
+            targetSchema: *a2
         - name: href
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: message
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: serverId
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: statusCode
           schema:
             type: alias
-            target: *a2
+            targetSchema: *a2
     - &a17
       $key: Notification
       type: object
@@ -309,23 +309,23 @@ schemas:
         - name: body
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: collapseKey
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: icon
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: sound
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: title
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
     - &a18
       $key: apns
       type: object
@@ -336,7 +336,7 @@ schemas:
           schema:
             &a30
             type: alias
-            target: *a17
+            targetSchema: *a17
     - &a19
       $key: fcm
       type: object
@@ -347,7 +347,7 @@ schemas:
         - name: notification
           schema:
             type: alias
-            target: *a17
+            targetSchema: *a17
     - &a20
       $key: web
       type: object
@@ -357,7 +357,7 @@ schemas:
         - name: notification
           schema:
             type: alias
-            target: *a17
+            targetSchema: *a17
     - &a21
       $key: Push
       type: object
@@ -367,13 +367,13 @@ schemas:
         - name: data
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: fcm
           schema: *a19
         - name: notification
           schema:
             type: alias
-            target: *a17
+            targetSchema: *a17
         - name: web
           schema: *a20
     - &a22
@@ -387,7 +387,7 @@ schemas:
           schema:
             &a31
             type: alias
-            target: *a21
+            targetSchema: *a21
     - $key: Message
       type: object
       description: Message object.
@@ -395,36 +395,36 @@ schemas:
         - name: clientId
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: connectionId
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: data
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: encoding
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: extras
           schema:
             &a32
             type: alias
-            target: *a22
+            targetSchema: *a22
         - name: id
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: name
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: timestamp
           schema:
             type: alias
-            target: *a2
+            targetSchema: *a2
     - $key: PresenceMessage
       type: object
       properties:
@@ -433,54 +433,54 @@ schemas:
         - name: clientId
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: connectionId
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: data
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: encoding
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: extras
           schema:
             type: alias
-            target: *a22
+            targetSchema: *a22
         - name: id
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: timestamp
           schema:
             type: alias
-            target: *a2
+            targetSchema: *a2
     - $key: TokenDetails
       type: object
       properties:
         - name: capability
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: expires
           schema:
             type: alias
-            target: *a2
+            targetSchema: *a2
         - name: issued
           schema:
             type: alias
-            target: *a2
+            targetSchema: *a2
         - name: keyName
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: token
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
     - &a24
       $key: capability
       type: object
@@ -498,22 +498,22 @@ schemas:
         - name: clientId
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: keyName
           required: true
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: nonce
           required: true
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: timestamp
           required: true
           schema:
             type: alias
-            target: *a2
+            targetSchema: *a2
   aliases:
     - *a25
     - *a26

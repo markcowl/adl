@@ -38,9 +38,9 @@ async function processLicense(license: v3.License, $: Context) {
 export async function processInfo(info: v3.Info, $: Context): Promise<Metadata | undefined> {
 
   // create the metadata 
-  const metadata = new Metadata(use(info.title), {
-    description: use(info.description),
-    termsOfService: use(info.termsOfService)
+  const metadata = new Metadata(info.title, {
+    description: info.description,
+    termsOfService: info.termsOfService
   });
 
   // add the author contact

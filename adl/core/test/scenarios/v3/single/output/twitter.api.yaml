@@ -46,98 +46,98 @@ schemas:
       value: animated_gif
       valueSchema:
         type: alias
-        target: *a1
+        targetSchema: *a1
     - &a13
       type: constant
       value: https://api.twitter.com/labs/2/problems/client-forbidden
       valueSchema:
         type: alias
-        target: *a1
+        targetSchema: *a1
     - &a17
       type: constant
       value: tweet
       valueSchema:
         type: alias
-        target: *a1
+        targetSchema: *a1
     - &a19
       type: constant
       value: https://api.twitter.com/labs/2/problems/disallowed-resource
       valueSchema:
         type: alias
-        target: *a1
+        targetSchema: *a1
     - &a22
       type: constant
       value: Point
       valueSchema:
         type: alias
-        target: *a1
+        targetSchema: *a1
     - &a25
       type: constant
       value: Feature
       valueSchema:
         type: alias
-        target: *a1
+        targetSchema: *a1
     - &a49
       type: constant
       value: user
       valueSchema:
         type: alias
-        target: *a1
+        targetSchema: *a1
     - &a58
       type: constant
       value: about:blank
       valueSchema:
         type: alias
-        target: *a1
+        targetSchema: *a1
     - &a61
       type: constant
       value: https://api.twitter.com/labs/2/problems/invalid-request
       valueSchema:
         type: alias
-        target: *a1
+        targetSchema: *a1
     - &a63
       type: constant
       value: photo
       valueSchema:
         type: alias
-        target: *a1
+        targetSchema: *a1
     - &a65
       type: constant
       value: https://api.twitter.com/labs/2/problems/resource-not-found
       valueSchema:
         type: alias
-        target: *a1
+        targetSchema: *a1
     - &a67
       type: constant
       value: https://api.twitter.com/labs/2/problems/not-authorized-for-resource
       valueSchema:
         type: alias
-        target: *a1
+        targetSchema: *a1
     - &a75
       type: constant
       value: https://api.twitter.com/labs/2/problems/unsupported-authentication
       valueSchema:
         type: alias
-        target: *a1
+        targetSchema: *a1
     - &a78
       type: constant
       value: https://api.twitter.com/labs/2/problems/usage-capped
       valueSchema:
         type: alias
-        target: *a1
+        targetSchema: *a1
     - &a79
       type: constant
       value: video
       valueSchema:
         type: alias
-        target: *a1
+        targetSchema: *a1
   enums:
     - &a12
       type: enum
       elementSchema:
         &a2
         type: alias
-        target: *a1
+        targetSchema: *a1
       sealed: false
       values:
         - type: constant
@@ -151,7 +151,7 @@ schemas:
       elementSchema:
         &a3
         type: alias
-        target: *a1
+        targetSchema: *a1
       sealed: false
       values:
         - type: constant
@@ -165,7 +165,7 @@ schemas:
       elementSchema:
         &a4
         type: alias
-        target: *a1
+        targetSchema: *a1
       sealed: false
       values:
         - type: constant
@@ -191,7 +191,7 @@ schemas:
       elementSchema:
         &a5
         type: alias
-        target: *a1
+        targetSchema: *a1
       sealed: false
       values:
         - type: constant
@@ -205,7 +205,7 @@ schemas:
       elementSchema:
         &a6
         type: alias
-        target: *a1
+        targetSchema: *a1
       sealed: false
       values:
         - type: constant
@@ -222,7 +222,7 @@ schemas:
       elementSchema:
         &a7
         type: alias
-        target: *a1
+        targetSchema: *a1
       sealed: false
       values:
         - type: constant
@@ -236,7 +236,7 @@ schemas:
       elementSchema:
         &a8
         type: alias
-        target: *a1
+        targetSchema: *a1
       sealed: false
       values:
         - type: constant
@@ -250,7 +250,7 @@ schemas:
       elementSchema:
         &a9
         type: alias
-        target: *a1
+        targetSchema: *a1
       sealed: false
       values:
         - type: constant
@@ -264,7 +264,7 @@ schemas:
       elementSchema:
         &a10
         type: alias
-        target: *a1
+        targetSchema: *a1
       sealed: false
       values:
         - type: constant
@@ -281,7 +281,7 @@ schemas:
           schema:
             &a80
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: type
           schema: *a11
     - $key: CashtagFields
@@ -302,7 +302,7 @@ schemas:
         - name: registration_url
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: type
           schema: *a13
     - $key: CommonMediaFields
@@ -314,37 +314,37 @@ schemas:
           schema:
             &a81
             type: alias
-            target:
+            targetSchema:
               &a71
               type: alias
               constraints:
                 - name: Minimum
                   type: constraint
                   minimum: 0
-              target: *a14
+              targetSchema: *a14
         - name: media_key
           schema:
             &a82
             type: alias
-            target:
+            targetSchema:
               &a32
               type: alias
               constraints:
                 - name: RegularExpression
                   type: constraint
                   length: ^([0-9]+)_([0-9]+)$
-              target: *a1
+              targetSchema: *a1
         - name: width
           schema:
             type: alias
-            target:
+            targetSchema:
               &a72
               type: alias
               constraints:
                 - name: Minimum
                   type: constraint
                   minimum: 0
-              target: *a14
+              targetSchema: *a14
     - &a15
       $key: ContextAnnotationDomainFields
       type: object
@@ -353,7 +353,7 @@ schemas:
         - name: description
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: id
           required: true
           schema:
@@ -363,11 +363,11 @@ schemas:
               - name: RegularExpression
                 type: constraint
                 length: ^[0-9]{1,19}$
-            target: *a1
+            targetSchema: *a1
         - name: name
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
     - &a16
       $key: ContextAnnotationEntityFields
       type: object
@@ -376,7 +376,7 @@ schemas:
         - name: description
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: id
           required: true
           schema:
@@ -385,11 +385,11 @@ schemas:
               - name: RegularExpression
                 type: constraint
                 length: ^[0-9]{1,19}$
-            target: *a1
+            targetSchema: *a1
         - name: name
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
     - &a40
       $key: ContextAnnotation
       type: object
@@ -400,13 +400,13 @@ schemas:
           schema:
             &a84
             type: alias
-            target: *a15
+            targetSchema: *a15
         - name: entity
           required: true
           schema:
             &a85
             type: alias
-            target: *a16
+            targetSchema: *a16
     - $key: DisallowedResourceProblem
       type: object
       description: A problem that indicates that the resource requested violates the
@@ -437,7 +437,7 @@ schemas:
               - name: Minimum
                 type: constraint
                 minimum: 0
-            target: *a14
+            targetSchema: *a14
         - name: start
           required: true
           schema:
@@ -446,7 +446,7 @@ schemas:
               - name: Minimum
                 type: constraint
                 minimum: 0
-            target: *a14
+            targetSchema: *a14
     - $key: Error
       type: object
       properties:
@@ -471,7 +471,7 @@ schemas:
           schema:
             &a94
             type: alias
-            target:
+            targetSchema:
               &a93
               type: array
               elementSchema: *a21
@@ -500,12 +500,12 @@ schemas:
                 - name: Maximum
                   type: constraint
                   maximum: 180
-              target: *a21
+              targetSchema: *a21
         - name: geometry
           schema:
             &a95
             type: alias
-            target: *a23
+            targetSchema: *a23
         - name: properties
           required: true
           schema: *a24
@@ -523,24 +523,24 @@ schemas:
             elementSchema:
               &a88
               type: alias
-              target:
+              targetSchema:
                 &a27
                 type: alias
-                target: *a1
+                targetSchema: *a1
         - name: country
           schema: *a1
         - name: country_code
           schema:
             &a90
             type: alias
-            target:
+            targetSchema:
               &a37
               type: alias
               constraints:
                 - name: RegularExpression
                   type: constraint
                   length: ^[A-Z]{2}$
-              target: *a1
+              targetSchema: *a1
         - name: full_name
           required: true
           schema: *a1
@@ -548,21 +548,21 @@ schemas:
           schema:
             &a96
             type: alias
-            target: *a26
+            targetSchema: *a26
         - name: id
           required: true
           schema:
             type: alias
-            target: *a27
+            targetSchema: *a27
         - name: name
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: place_type
           schema:
             &a97
             type: alias
-            target: *a28
+            targetSchema: *a28
     - &a30
       $key: PollOption
       type: object
@@ -572,18 +572,18 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: position
           required: true
           schema:
             &a101
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: votes
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
     - &a55
       $key: Poll
       type: object
@@ -598,14 +598,14 @@ schemas:
           schema:
             &a100
             type: alias
-            target:
+            targetSchema:
               &a33
               type: alias
               constraints:
                 - name: RegularExpression
                   type: constraint
                   length: ^[0-9]{1,19}$
-              target: *a1
+              targetSchema: *a1
         - name: options
           required: true
           schema:
@@ -614,7 +614,7 @@ schemas:
             elementSchema:
               &a102
               type: alias
-              target: *a30
+              targetSchema: *a30
         - name: voting_status
           schema: *a31
     - &a39
@@ -628,14 +628,14 @@ schemas:
             type: array
             elementSchema:
               type: alias
-              target: *a32
+              targetSchema: *a32
         - name: poll_ids
           schema:
             &a107
             type: array
             elementSchema:
               type: alias
-              target: *a33
+              targetSchema: *a33
     - &a41
       $key: FullTextEntities
       type: object
@@ -647,25 +647,25 @@ schemas:
             elementSchema:
               &a110
               type: alias
-              target: *a34
+              targetSchema: *a34
         - name: hashtags
           schema:
             type: array
             elementSchema:
               type: alias
-              target: *a34
+              targetSchema: *a34
         - name: mentions
           schema:
             type: array
             elementSchema:
               type: alias
-              target: *a34
+              targetSchema: *a34
         - name: urls
           schema:
             type: array
             elementSchema:
               type: alias
-              target: *a34
+              targetSchema: *a34
     - &a42
       $key: geo
       type: object
@@ -674,11 +674,11 @@ schemas:
         - name: coordinates
           schema:
             type: alias
-            target: *a23
+            targetSchema: *a23
         - name: place_id
           schema:
             type: alias
-            target: *a27
+            targetSchema: *a27
     - &a45
       $key: public_metrics
       type: object
@@ -688,21 +688,21 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: quote_count
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: reply_count
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: retweet_count
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
     - &a46
       $key: items
       type: object
@@ -711,14 +711,14 @@ schemas:
           required: true
           schema:
             type: alias
-            target:
+            targetSchema:
               &a43
               type: alias
               constraints:
                 - name: RegularExpression
                   type: constraint
                   length: ^[0-9]{1,19}$
-              target: *a1
+              targetSchema: *a1
         - name: type
           required: true
           schema: *a35
@@ -738,7 +738,7 @@ schemas:
             type: array
             elementSchema:
               type: alias
-              target: *a37
+              targetSchema: *a37
         - name: scope
           schema: *a38
     - &a56
@@ -750,14 +750,14 @@ schemas:
         - name: author_id
           schema:
             type: alias
-            target:
+            targetSchema:
               &a44
               type: alias
               constraints:
                 - name: RegularExpression
                   type: constraint
                   length: ^[0-9]{1,19}$
-              target: *a1
+              targetSchema: *a1
         - name: context_annotations
           schema:
             &a109
@@ -765,29 +765,29 @@ schemas:
             elementSchema:
               &a108
               type: alias
-              target: *a40
+              targetSchema: *a40
         - name: created_at
           schema: *a29
         - name: entities
           schema:
             &a112
             type: alias
-            target: *a41
+            targetSchema: *a41
         - name: geo
           schema: *a42
         - name: id
           required: true
           schema:
             type: alias
-            target: *a43
+            targetSchema: *a43
         - name: in_reply_to_user_id
           schema:
             type: alias
-            target: *a44
+            targetSchema: *a44
         - name: lang
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: possibly_sensitive
           schema: *a36
         - name: public_metrics
@@ -800,17 +800,17 @@ schemas:
         - name: source
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: text
           required: true
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: withheld
           schema:
             &a115
             type: alias
-            target: *a47
+            targetSchema: *a47
     - &a48
       $key: url
       type: object
@@ -822,7 +822,7 @@ schemas:
             type: array
             elementSchema:
               type: alias
-              target: *a34
+              targetSchema: *a34
     - &a50
       $key: entities
       type: object
@@ -831,7 +831,7 @@ schemas:
         - name: description
           schema:
             type: alias
-            target: *a41
+            targetSchema: *a41
         - name: url
           schema: *a48
     - &a51
@@ -843,22 +843,22 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: following_count
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: listed_count
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: tweet_count
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
     - &a52
       $key: UserWithheld
       type: object
@@ -871,7 +871,7 @@ schemas:
             type: array
             elementSchema:
               type: alias
-              target: *a37
+              targetSchema: *a37
         - name: scope
           schema: *a49
     - &a57
@@ -884,31 +884,31 @@ schemas:
         - name: description
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: entities
           schema: *a50
         - name: id
           required: true
           schema:
             type: alias
-            target: *a44
+            targetSchema: *a44
         - name: location
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: name
           required: true
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: pinned_tweet_id
           schema:
             type: alias
-            target: *a43
+            targetSchema: *a43
         - name: profile_image_url
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: protected
           schema: *a36
         - name: public_metrics
@@ -916,27 +916,27 @@ schemas:
         - name: url
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: username
           required: true
           schema:
             &a118
             type: alias
-            target:
+            targetSchema:
               &a62
               type: alias
               constraints:
                 - name: RegularExpression
                   type: constraint
                   length: ^[A-Za-z0-9_]{1,15}$
-              target: *a1
+              targetSchema: *a1
         - name: verified
           schema: *a36
         - name: withheld
           schema:
             &a119
             type: alias
-            target: *a52
+            targetSchema: *a52
     - &a69
       $key: Expansions
       type: object
@@ -948,7 +948,7 @@ schemas:
             elementSchema:
               &a86
               type: alias
-              target: *a53
+              targetSchema: *a53
         - name: places
           schema:
             &a99
@@ -956,7 +956,7 @@ schemas:
             elementSchema:
               &a98
               type: alias
-              target: *a54
+              targetSchema: *a54
         - name: polls
           schema:
             &a105
@@ -964,7 +964,7 @@ schemas:
             elementSchema:
               &a104
               type: alias
-              target: *a55
+              targetSchema: *a55
         - name: tweets
           schema:
             &a117
@@ -972,7 +972,7 @@ schemas:
             elementSchema:
               &a116
               type: alias
-              target: *a56
+              targetSchema: *a56
         - name: users
           schema:
             &a121
@@ -980,7 +980,7 @@ schemas:
             elementSchema:
               &a120
               type: alias
-              target: *a57
+              targetSchema: *a57
     - $key: GenericProblem
       type: object
       description: A generic problem with no additional information beyond that
@@ -1000,7 +1000,7 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
     - &a59
       $key: parameters
       type: object
@@ -1032,7 +1032,7 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a62
+            targetSchema: *a62
     - $key: Photo
       type: object
       properties:
@@ -1041,7 +1041,7 @@ schemas:
         - name: url
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
     - &a68
       $key: Problem
       type: object
@@ -1060,7 +1060,7 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
     - $key: ResourceNotFoundProblem
       type: object
       description: A problem that indicates that a given Tweet, User, etc. does not exist.
@@ -1074,7 +1074,7 @@ schemas:
               - name: MinLength
                 type: constraint
                 length: 1
-            target: *a1
+            targetSchema: *a1
         - name: resource_type
           required: true
           schema: *a64
@@ -1098,7 +1098,7 @@ schemas:
             value: tweet
             valueSchema:
               type: alias
-              target: *a1
+              targetSchema: *a1
         - name: section
           required: true
           schema:
@@ -1106,7 +1106,7 @@ schemas:
             elementSchema:
               &a66
               type: alias
-              target: *a1
+              targetSchema: *a1
             sealed: false
             values:
               - type: constant
@@ -1123,7 +1123,7 @@ schemas:
         - name: data
           schema:
             type: alias
-            target: *a56
+            targetSchema: *a56
         - name: errors
           schema:
             &a126
@@ -1131,29 +1131,29 @@ schemas:
             elementSchema:
               &a125
               type: alias
-              target: *a68
+              targetSchema: *a68
         - name: includes
           schema:
             &a127
             type: alias
-            target: *a69
+            targetSchema: *a69
     - $key: SingleUserLookupResponse
       type: object
       properties:
         - name: data
           schema:
             type: alias
-            target: *a57
+            targetSchema: *a57
         - name: errors
           schema:
             type: array
             elementSchema:
               type: alias
-              target: *a68
+              targetSchema: *a68
         - name: includes
           schema:
             type: alias
-            target: *a69
+            targetSchema: *a69
     - $key: TweetLookupResponse
       type: object
       properties:
@@ -1162,17 +1162,17 @@ schemas:
             type: array
             elementSchema:
               type: alias
-              target: *a56
+              targetSchema: *a56
         - name: errors
           schema:
             type: array
             elementSchema:
               type: alias
-              target: *a68
+              targetSchema: *a68
         - name: includes
           schema:
             type: alias
-            target: *a69
+            targetSchema: *a69
     - &a70
       $key: meta
       type: object
@@ -1184,11 +1184,11 @@ schemas:
               - name: RegularExpression
                 type: constraint
                 length: ^[0-9]{1,19}$
-            target: *a1
+            targetSchema: *a1
         - name: next_token
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: oldest_id
           schema:
             type: alias
@@ -1196,12 +1196,12 @@ schemas:
               - name: RegularExpression
                 type: constraint
                 length: ^[0-9]{1,19}$
-            target: *a1
+            targetSchema: *a1
         - name: result_count
           schema:
             &a128
             type: alias
-            target: *a20
+            targetSchema: *a20
     - $key: TweetSearchResponse
       type: object
       properties:
@@ -1210,17 +1210,17 @@ schemas:
             type: array
             elementSchema:
               type: alias
-              target: *a56
+              targetSchema: *a56
         - name: errors
           schema:
             type: array
             elementSchema:
               type: alias
-              target: *a68
+              targetSchema: *a68
         - name: includes
           schema:
             type: alias
-            target: *a69
+            targetSchema: *a69
         - name: meta
           schema: *a70
     - &a74
@@ -1232,18 +1232,18 @@ schemas:
           schema:
             &a129
             type: alias
-            target: *a71
+            targetSchema: *a71
         - name: url
           schema:
             type: alias
-            target:
+            targetSchema:
               &a73
               type: alias
-              target: *a1
+              targetSchema: *a1
         - name: width
           schema:
             type: alias
-            target: *a72
+            targetSchema: *a72
     - $key: URLFields
       type: object
       description: Represent the portion of text recognized as a URL.
@@ -1251,15 +1251,15 @@ schemas:
         - name: description
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: display_url
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: expanded_url
           schema:
             type: alias
-            target: *a73
+            targetSchema: *a73
         - name: images
           schema:
             &a131
@@ -1267,12 +1267,12 @@ schemas:
             elementSchema:
               &a130
               type: alias
-              target: *a74
+              targetSchema: *a74
         - name: status
           schema:
             &a132
             type: alias
-            target:
+            targetSchema:
               &a122
               type: alias
               constraints:
@@ -1282,20 +1282,20 @@ schemas:
                 - name: Maximum
                   type: constraint
                   maximum: 599
-              target: *a14
+              targetSchema: *a14
         - name: title
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: unwound_url
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: url
           required: true
           schema:
             type: alias
-            target: *a73
+            targetSchema: *a73
     - $key: UnsupportedAuthenticationProblem
       type: object
       description: A problem that indicates that the authentication used is not supported.
@@ -1320,17 +1320,17 @@ schemas:
             type: array
             elementSchema:
               type: alias
-              target: *a57
+              targetSchema: *a57
         - name: errors
           schema:
             type: array
             elementSchema:
               type: alias
-              target: *a68
+              targetSchema: *a68
         - name: includes
           schema:
             type: alias
-            target: *a69
+            targetSchema: *a69
     - $key: Video
       type: object
       properties:
@@ -1339,7 +1339,7 @@ schemas:
         - name: preview_image_url
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: type
           schema: *a79
   aliases:
@@ -1359,14 +1359,14 @@ schemas:
         - name: MinimumElements
           type: constraint
           count: 1
-      target: *a87
+      targetSchema: *a87
     - *a88
     - type: alias
       constraints:
         - name: MinimumElements
           type: constraint
           count: 1
-      target: *a89
+      targetSchema: *a89
     - *a90
     - *a91
     - type: alias
@@ -1377,7 +1377,7 @@ schemas:
         - name: MinimumElements
           type: constraint
           count: 4
-      target: *a92
+      targetSchema: *a92
     - type: alias
       constraints:
         - name: MaximumElements
@@ -1386,7 +1386,7 @@ schemas:
         - name: MinimumElements
           type: constraint
           count: 2
-      target: *a93
+      targetSchema: *a93
     - *a94
     - *a95
     - *a96
@@ -1397,7 +1397,7 @@ schemas:
         - name: MinimumElements
           type: constraint
           count: 1
-      target: *a99
+      targetSchema: *a99
     - *a100
     - *a101
     - *a102
@@ -1409,47 +1409,47 @@ schemas:
         - name: MinimumElements
           type: constraint
           count: 2
-      target: *a103
+      targetSchema: *a103
     - *a104
     - type: alias
       constraints:
         - name: MinimumElements
           type: constraint
           count: 1
-      target: *a105
+      targetSchema: *a105
     - type: alias
       constraints:
         - name: MinimumElements
           type: constraint
           count: 1
-      target: *a106
+      targetSchema: *a106
     - type: alias
       constraints:
         - name: MinimumElements
           type: constraint
           count: 1
-      target: *a107
+      targetSchema: *a107
     - *a108
     - type: alias
       constraints:
         - name: MinimumElements
           type: constraint
           count: 1
-      target: *a109
+      targetSchema: *a109
     - *a110
     - type: alias
       constraints:
         - name: MinimumElements
           type: constraint
           count: 1
-      target: *a111
+      targetSchema: *a111
     - *a112
     - type: alias
       constraints:
         - name: MinimumElements
           type: constraint
           count: 1
-      target: *a113
+      targetSchema: *a113
     - type: alias
       constraints:
         - name: MinimumElements
@@ -1458,7 +1458,7 @@ schemas:
         - name: UniqueElements
           type: constraint
           unique: true
-      target: *a114
+      targetSchema: *a114
     - *a115
     - *a116
     - type: alias
@@ -1466,7 +1466,7 @@ schemas:
         - name: MinimumElements
           type: constraint
           count: 1
-      target: *a117
+      targetSchema: *a117
     - *a62
     - *a118
     - *a119
@@ -1476,10 +1476,10 @@ schemas:
         - name: MinimumElements
           type: constraint
           count: 1
-      target: *a121
+      targetSchema: *a121
     - *a122
     - type: alias
-      target: *a123
+      targetSchema: *a123
     - *a124
     - *a125
     - type: alias
@@ -1487,7 +1487,7 @@ schemas:
         - name: MinimumElements
           type: constraint
           count: 1
-      target: *a126
+      targetSchema: *a126
     - *a127
     - *a128
     - *a129
@@ -1497,5 +1497,5 @@ schemas:
         - name: MinimumElements
           type: constraint
           count: 1
-      target: *a131
+      targetSchema: *a131
     - *a132

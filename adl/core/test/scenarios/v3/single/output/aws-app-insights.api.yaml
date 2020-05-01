@@ -57,7 +57,7 @@ schemas:
       elementSchema:
         &a62
         type: alias
-        target:
+        targetSchema:
           &a61
           type: alias
           constraints:
@@ -67,7 +67,7 @@ schemas:
             - name: MinLength
               type: constraint
               length: 1
-          target: *a1
+          targetSchema: *a1
     - &a6
       type: int64
     - &a2
@@ -78,7 +78,7 @@ schemas:
       type: array
       elementSchema:
         type: alias
-        target:
+        targetSchema:
           &a32
           $key: Observation
           type: object
@@ -88,7 +88,7 @@ schemas:
               schema:
                 &a72
                 type: alias
-                target:
+                targetSchema:
                   &a33
                   type: alias
                   constraints:
@@ -101,47 +101,47 @@ schemas:
                     - name: RegularExpression
                       type: constraint
                       length: o-[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}
-                  target: *a1
+                  targetSchema: *a1
             - name: StartTime
               schema:
                 &a73
                 type: alias
-                target: *a2
+                targetSchema: *a2
             - name: EndTime
               schema:
                 type: alias
-                target: *a2
+                targetSchema: *a2
             - name: SourceType
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: SourceARN
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: LogGroup
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: LineTime
               schema:
                 type: alias
-                target: *a2
+                targetSchema: *a2
             - name: LogText
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: LogFilter
               schema:
                 &a74
                 type: alias
-                target:
+                targetSchema:
                   &a16
                   type: enum
                   elementSchema:
                     &a3
                     type: alias
-                    target: *a1
+                    targetSchema: *a1
                   sealed: false
                   values:
                     - type: constant
@@ -156,35 +156,35 @@ schemas:
             - name: MetricNamespace
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: MetricName
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: Unit
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: Value
               schema:
                 &a75
                 type: alias
-                target: *a4
+                targetSchema: *a4
             - name: CloudWatchEventId
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: CloudWatchEventSource
               schema:
                 &a76
                 type: alias
-                target:
+                targetSchema:
                   &a17
                   type: enum
                   elementSchema:
                     &a5
                     type: alias
-                    target: *a1
+                    targetSchema: *a1
                   sealed: false
                   values:
                     - type: constant
@@ -199,84 +199,84 @@ schemas:
             - name: CloudWatchEventDetailType
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: HealthEventArn
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: HealthService
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: HealthEventTypeCode
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: HealthEventTypeCategory
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: HealthEventDescription
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: CodeDeployDeploymentId
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: CodeDeployDeploymentGroup
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: CodeDeployState
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: CodeDeployApplication
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: CodeDeployInstanceGroupId
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: Ec2State
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: XRayFaultPercent
               schema:
                 type: alias
-                target: *a6
+                targetSchema: *a6
             - name: XRayThrottlePercent
               schema:
                 type: alias
-                target: *a6
+                targetSchema: *a6
             - name: XRayErrorPercent
               schema:
                 type: alias
-                target: *a6
+                targetSchema: *a6
             - name: XRayRequestCount
               schema:
                 type: alias
-                target: *a6
+                targetSchema: *a6
             - name: XRayRequestAverageLatency
               schema:
                 type: alias
-                target: *a6
+                targetSchema: *a6
             - name: XRayNodeName
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: XRayNodeType
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
     - &a39
       type: array
       elementSchema:
         type: alias
-        target:
+        targetSchema:
           &a23
           $key: ApplicationInfo
           type: object
@@ -286,7 +286,7 @@ schemas:
               schema:
                 &a50
                 type: alias
-                target:
+                targetSchema:
                   &a14
                   type: alias
                   constraints:
@@ -299,17 +299,17 @@ schemas:
                     - name: RegularExpression
                       type: constraint
                       length: "[a-zA-Z0-9\\.\\-_]*"
-                  target: *a1
+                  targetSchema: *a1
             - name: LifeCycle
               schema:
                 &a51
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: OpsItemSNSTopicArn
               schema:
                 &a52
                 type: alias
-                target:
+                targetSchema:
                   &a24
                   type: alias
                   constraints:
@@ -319,25 +319,25 @@ schemas:
                     - name: MinLength
                       type: constraint
                       length: 20
-                  target: *a1
+                  targetSchema: *a1
             - name: OpsCenterEnabled
               schema:
                 &a53
                 type: alias
-                target: *a7
+                targetSchema: *a7
             - name: CWEMonitorEnabled
               schema:
                 type: alias
-                target: *a7
+                targetSchema: *a7
             - name: Remarks
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
     - &a40
       type: array
       elementSchema:
         type: alias
-        target:
+        targetSchema:
           &a30
           $key: ApplicationComponent
           type: object
@@ -347,16 +347,16 @@ schemas:
             - name: ComponentName
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: ResourceType
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: Tier
               schema:
                 &a69
                 type: alias
-                target:
+                targetSchema:
                   &a15
                   type: enum
                   elementSchema:
@@ -369,7 +369,7 @@ schemas:
                       - name: MinLength
                         type: constraint
                         length: 1
-                    target: *a1
+                    targetSchema: *a1
                   sealed: false
                   values:
                     - type: constant
@@ -390,13 +390,13 @@ schemas:
             - name: Monitor
               schema:
                 type: alias
-                target: *a7
+                targetSchema: *a7
     - &a43
       type: array
       elementSchema:
         &a90
         type: alias
-        target:
+        targetSchema:
           &a42
           $key: ConfigurationEvent
           type: object
@@ -405,18 +405,18 @@ schemas:
             - name: MonitoredResourceARN
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: EventStatus
               schema:
                 &a88
                 type: alias
-                target:
+                targetSchema:
                   &a20
                   type: enum
                   elementSchema:
                     &a9
                     type: alias
-                    target: *a1
+                    targetSchema: *a1
                   sealed: false
                   values:
                     - type: constant
@@ -432,13 +432,13 @@ schemas:
               schema:
                 &a89
                 type: alias
-                target:
+                targetSchema:
                   &a21
                   type: enum
                   elementSchema:
                     &a10
                     type: alias
-                    target: *a1
+                    targetSchema: *a1
                   sealed: false
                   values:
                     - type: constant
@@ -453,20 +453,20 @@ schemas:
             - name: EventTime
               schema:
                 type: alias
-                target: *a2
+                targetSchema: *a2
             - name: EventDetail
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: EventResourceName
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
     - &a44
       type: array
       elementSchema:
         type: alias
-        target:
+        targetSchema:
           &a11
           type: alias
           constraints:
@@ -479,12 +479,12 @@ schemas:
             - name: RegularExpression
               type: constraint
               length: "[a-zA-Z0-9\\.\\-_]*"
-          target: *a1
+          targetSchema: *a1
     - &a45
       type: array
       elementSchema:
         type: alias
-        target:
+        targetSchema:
           &a27
           $key: LogPattern
           type: object
@@ -495,12 +495,12 @@ schemas:
               schema:
                 &a64
                 type: alias
-                target: *a11
+                targetSchema: *a11
             - name: PatternName
               schema:
                 &a65
                 type: alias
-                target:
+                targetSchema:
                   &a28
                   type: alias
                   constraints:
@@ -513,12 +513,12 @@ schemas:
                     - name: RegularExpression
                       type: constraint
                       length: "[a-zA-Z0-9\\.\\-_]*"
-                  target: *a1
+                  targetSchema: *a1
             - name: Pattern
               schema:
                 &a66
                 type: alias
-                target:
+                targetSchema:
                   &a29
                   type: alias
                   constraints:
@@ -528,17 +528,17 @@ schemas:
                     - name: MinLength
                       type: constraint
                       length: 1
-                  target: *a1
+                  targetSchema: *a1
             - name: Rank
               schema:
                 &a67
                 type: alias
-                target: *a6
+                targetSchema: *a6
     - &a46
       type: array
       elementSchema:
         type: alias
-        target:
+        targetSchema:
           &a35
           $key: Problem
           type: object
@@ -548,7 +548,7 @@ schemas:
               schema:
                 &a78
                 type: alias
-                target:
+                targetSchema:
                   &a36
                   type: alias
                   constraints:
@@ -561,26 +561,26 @@ schemas:
                     - name: RegularExpression
                       type: constraint
                       length: p-[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}
-                  target: *a1
+                  targetSchema: *a1
             - name: Title
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: Insights
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: Status
               schema:
                 &a79
                 type: alias
-                target:
+                targetSchema:
                   &a18
                   type: enum
                   elementSchema:
                     &a12
                     type: alias
-                    target: *a1
+                    targetSchema: *a1
                   sealed: false
                   values:
                     - type: constant
@@ -595,26 +595,26 @@ schemas:
             - name: AffectedResource
               schema:
                 type: alias
-                target: *a1
+                targetSchema: *a1
             - name: StartTime
               schema:
                 type: alias
-                target: *a2
+                targetSchema: *a2
             - name: EndTime
               schema:
                 type: alias
-                target: *a2
+                targetSchema: *a2
             - name: SeverityLevel
               schema:
                 &a80
                 type: alias
-                target:
+                targetSchema:
                   &a19
                   type: enum
                   elementSchema:
                     &a13
                     type: alias
-                    target: *a1
+                    targetSchema: *a1
                   sealed: false
                   values:
                     - type: constant
@@ -629,12 +629,12 @@ schemas:
             - name: ResourceGroupName
               schema:
                 type: alias
-                target: *a14
+                targetSchema: *a14
             - name: Feedback
               schema:
                 &a81
                 type: alias
-                target:
+                targetSchema:
                   &a34
                   $key: Feedback
                   type: object
@@ -643,7 +643,7 @@ schemas:
       value: INSIGHTS_FEEDBACK
       valueSchema:
         type: alias
-        target: *a1
+        targetSchema: *a1
   enums:
     - *a15
     - *a16
@@ -656,7 +656,7 @@ schemas:
       elementSchema:
         &a22
         type: alias
-        target: *a1
+        targetSchema: *a1
       sealed: false
       values:
         - type: constant
@@ -677,7 +677,7 @@ schemas:
           schema:
             &a54
             type: alias
-            target: *a23
+            targetSchema: *a23
     - &a25
       $key: Tag
       type: object
@@ -704,7 +704,7 @@ schemas:
           schema:
             &a56
             type: alias
-            target:
+            targetSchema:
               &a49
               type: alias
               constraints:
@@ -714,13 +714,13 @@ schemas:
                 - name: MinLength
                   type: constraint
                   length: 1
-              target: *a1
+              targetSchema: *a1
         - name: Value
           required: true
           schema:
             &a58
             type: alias
-            target:
+            targetSchema:
               &a57
               type: alias
               constraints:
@@ -730,7 +730,7 @@ schemas:
                 - name: MinLength
                   type: constraint
                   length: 0
-              target: *a1
+              targetSchema: *a1
     - $key: CreateApplicationRequest
       type: object
       properties:
@@ -739,30 +739,30 @@ schemas:
           schema:
             &a55
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: OpsCenterEnabled
           schema:
             type: alias
-            target: *a7
+            targetSchema: *a7
         - name: CWEMonitorEnabled
           schema:
             type: alias
-            target: *a7
+            targetSchema: *a7
         - name: OpsItemSNSTopicArn
           schema:
             type: alias
-            target: *a24
+            targetSchema: *a24
         - name: Tags
           schema:
             &a60
             type: alias
-            target:
+            targetSchema:
               &a47
               type: array
               elementSchema:
                 &a59
                 type: alias
-                target: *a25
+                targetSchema: *a25
       summary: CreateApplicationRequest
     - $key: CreateComponentResponse
       type: object
@@ -773,18 +773,18 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: ComponentName
           required: true
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: ResourceList
           required: true
           schema:
             &a63
             type: alias
-            target: *a26
+            targetSchema: *a26
       summary: CreateComponentRequest
     - *a27
     - $key: CreateLogPatternResponse
@@ -794,11 +794,11 @@ schemas:
           schema:
             &a68
             type: alias
-            target: *a27
+            targetSchema: *a27
         - name: ResourceGroupName
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
     - $key: CreateLogPatternRequest
       type: object
       properties:
@@ -806,27 +806,27 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: PatternSetName
           required: true
           schema:
             type: alias
-            target: *a11
+            targetSchema: *a11
         - name: PatternName
           required: true
           schema:
             type: alias
-            target: *a28
+            targetSchema: *a28
         - name: Pattern
           required: true
           schema:
             type: alias
-            target: *a29
+            targetSchema: *a29
         - name: Rank
           required: true
           schema:
             type: alias
-            target: *a6
+            targetSchema: *a6
       summary: CreateLogPatternRequest
     - $key: DeleteApplicationResponse
       type: object
@@ -837,7 +837,7 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
       summary: DeleteApplicationRequest
     - $key: DeleteComponentResponse
       type: object
@@ -848,12 +848,12 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: ComponentName
           required: true
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
       summary: DeleteComponentRequest
     - $key: DeleteLogPatternResponse
       type: object
@@ -864,17 +864,17 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: PatternSetName
           required: true
           schema:
             type: alias
-            target: *a11
+            targetSchema: *a11
         - name: PatternName
           required: true
           schema:
             type: alias
-            target: *a28
+            targetSchema: *a28
       summary: DeleteLogPatternRequest
     - $key: DescribeApplicationResponse
       type: object
@@ -882,7 +882,7 @@ schemas:
         - name: ApplicationInfo
           schema:
             type: alias
-            target: *a23
+            targetSchema: *a23
     - $key: DescribeApplicationRequest
       type: object
       properties:
@@ -890,7 +890,7 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
       summary: DescribeApplicationRequest
     - *a30
     - $key: DescribeComponentResponse
@@ -900,11 +900,11 @@ schemas:
           schema:
             &a70
             type: alias
-            target: *a30
+            targetSchema: *a30
         - name: ResourceList
           schema:
             type: alias
-            target: *a26
+            targetSchema: *a26
     - $key: DescribeComponentRequest
       type: object
       properties:
@@ -912,12 +912,12 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: ComponentName
           required: true
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
       summary: DescribeComponentRequest
     - $key: DescribeComponentConfigurationResponse
       type: object
@@ -925,16 +925,16 @@ schemas:
         - name: Monitor
           schema:
             type: alias
-            target: *a7
+            targetSchema: *a7
         - name: Tier
           schema:
             type: alias
-            target: *a15
+            targetSchema: *a15
         - name: ComponentConfiguration
           schema:
             &a71
             type: alias
-            target:
+            targetSchema:
               &a31
               type: alias
               constraints:
@@ -944,7 +944,7 @@ schemas:
                 - name: MinLength
                   type: constraint
                   length: 1
-              target: *a1
+              targetSchema: *a1
     - $key: DescribeComponentConfigurationRequest
       type: object
       properties:
@@ -952,12 +952,12 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: ComponentName
           required: true
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
       summary: DescribeComponentConfigurationRequest
     - $key: DescribeComponentConfigurationRecommendationResponse
       type: object
@@ -965,7 +965,7 @@ schemas:
         - name: ComponentConfiguration
           schema:
             type: alias
-            target: *a31
+            targetSchema: *a31
     - $key: DescribeComponentConfigurationRecommendationRequest
       type: object
       properties:
@@ -973,17 +973,17 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: ComponentName
           required: true
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: Tier
           required: true
           schema:
             type: alias
-            target: *a15
+            targetSchema: *a15
       summary: DescribeComponentConfigurationRecommendationRequest
     - $key: DescribeLogPatternResponse
       type: object
@@ -991,11 +991,11 @@ schemas:
         - name: ResourceGroupName
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: LogPattern
           schema:
             type: alias
-            target: *a27
+            targetSchema: *a27
     - $key: DescribeLogPatternRequest
       type: object
       properties:
@@ -1003,17 +1003,17 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: PatternSetName
           required: true
           schema:
             type: alias
-            target: *a11
+            targetSchema: *a11
         - name: PatternName
           required: true
           schema:
             type: alias
-            target: *a28
+            targetSchema: *a28
       summary: DescribeLogPatternRequest
     - *a32
     - $key: DescribeObservationResponse
@@ -1023,7 +1023,7 @@ schemas:
           schema:
             &a77
             type: alias
-            target: *a32
+            targetSchema: *a32
     - $key: DescribeObservationRequest
       type: object
       properties:
@@ -1031,7 +1031,7 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a33
+            targetSchema: *a33
       summary: DescribeObservationRequest
     - *a34
     - *a35
@@ -1042,7 +1042,7 @@ schemas:
           schema:
             &a82
             type: alias
-            target: *a35
+            targetSchema: *a35
     - $key: DescribeProblemRequest
       type: object
       properties:
@@ -1050,7 +1050,7 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a36
+            targetSchema: *a36
       summary: DescribeProblemRequest
     - &a38
       $key: RelatedObservations
@@ -1061,7 +1061,7 @@ schemas:
           schema:
             &a83
             type: alias
-            target: *a37
+            targetSchema: *a37
     - $key: DescribeProblemObservationsResponse
       type: object
       properties:
@@ -1069,7 +1069,7 @@ schemas:
           schema:
             &a84
             type: alias
-            target: *a38
+            targetSchema: *a38
     - $key: DescribeProblemObservationsRequest
       type: object
       properties:
@@ -1077,7 +1077,7 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a36
+            targetSchema: *a36
       summary: DescribeProblemObservationsRequest
     - $key: ListApplicationsResponse
       type: object
@@ -1086,11 +1086,11 @@ schemas:
           schema:
             &a85
             type: alias
-            target: *a39
+            targetSchema: *a39
         - name: NextToken
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
     - $key: ListApplicationsRequest
       type: object
       properties:
@@ -1098,7 +1098,7 @@ schemas:
           schema:
             &a86
             type: alias
-            target:
+            targetSchema:
               &a41
               type: alias
               constraints:
@@ -1108,11 +1108,11 @@ schemas:
                 - name: Maximum
                   type: constraint
                   maximum: 40
-              target: *a6
+              targetSchema: *a6
         - name: NextToken
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
       summary: ListApplicationsRequest
     - $key: ListComponentsResponse
       type: object
@@ -1121,11 +1121,11 @@ schemas:
           schema:
             &a87
             type: alias
-            target: *a40
+            targetSchema: *a40
         - name: NextToken
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
     - $key: ListComponentsRequest
       type: object
       properties:
@@ -1133,15 +1133,15 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: MaxResults
           schema:
             type: alias
-            target: *a41
+            targetSchema: *a41
         - name: NextToken
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
       summary: ListComponentsRequest
     - *a42
     - $key: ListConfigurationHistoryResponse
@@ -1151,38 +1151,38 @@ schemas:
           schema:
             &a91
             type: alias
-            target: *a43
+            targetSchema: *a43
         - name: NextToken
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
     - $key: ListConfigurationHistoryRequest
       type: object
       properties:
         - name: ResourceGroupName
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: StartTime
           schema:
             type: alias
-            target: *a2
+            targetSchema: *a2
         - name: EndTime
           schema:
             type: alias
-            target: *a2
+            targetSchema: *a2
         - name: EventStatus
           schema:
             type: alias
-            target: *a20
+            targetSchema: *a20
         - name: MaxResults
           schema:
             type: alias
-            target: *a41
+            targetSchema: *a41
         - name: NextToken
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
       summary: ListConfigurationHistoryRequest
     - $key: ListLogPatternSetsResponse
       type: object
@@ -1190,16 +1190,16 @@ schemas:
         - name: ResourceGroupName
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: LogPatternSets
           schema:
             &a92
             type: alias
-            target: *a44
+            targetSchema: *a44
         - name: NextToken
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
     - $key: ListLogPatternSetsRequest
       type: object
       properties:
@@ -1207,15 +1207,15 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: MaxResults
           schema:
             type: alias
-            target: *a41
+            targetSchema: *a41
         - name: NextToken
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
       summary: ListLogPatternSetsRequest
     - $key: ListLogPatternsResponse
       type: object
@@ -1223,16 +1223,16 @@ schemas:
         - name: ResourceGroupName
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: LogPatterns
           schema:
             &a93
             type: alias
-            target: *a45
+            targetSchema: *a45
         - name: NextToken
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
     - $key: ListLogPatternsRequest
       type: object
       properties:
@@ -1240,19 +1240,19 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: PatternSetName
           schema:
             type: alias
-            target: *a11
+            targetSchema: *a11
         - name: MaxResults
           schema:
             type: alias
-            target: *a41
+            targetSchema: *a41
         - name: NextToken
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
       summary: ListLogPatternsRequest
     - $key: ListProblemsResponse
       type: object
@@ -1261,34 +1261,34 @@ schemas:
           schema:
             &a94
             type: alias
-            target: *a46
+            targetSchema: *a46
         - name: NextToken
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
     - $key: ListProblemsRequest
       type: object
       properties:
         - name: ResourceGroupName
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: StartTime
           schema:
             type: alias
-            target: *a2
+            targetSchema: *a2
         - name: EndTime
           schema:
             type: alias
-            target: *a2
+            targetSchema: *a2
         - name: MaxResults
           schema:
             type: alias
-            target: *a41
+            targetSchema: *a41
         - name: NextToken
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
       summary: ListProblemsRequest
     - $key: ListTagsForResourceResponse
       type: object
@@ -1296,7 +1296,7 @@ schemas:
         - name: Tags
           schema:
             type: alias
-            target: *a47
+            targetSchema: *a47
     - $key: ListTagsForResourceRequest
       type: object
       properties:
@@ -1304,7 +1304,7 @@ schemas:
           required: true
           schema:
             type: alias
-            target:
+            targetSchema:
               &a48
               type: alias
               constraints:
@@ -1314,7 +1314,7 @@ schemas:
                 - name: MinLength
                   type: constraint
                   length: 1
-              target: *a1
+              targetSchema: *a1
       summary: ListTagsForResourceRequest
     - $key: TagResourceResponse
       type: object
@@ -1325,12 +1325,12 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a48
+            targetSchema: *a48
         - name: Tags
           required: true
           schema:
             type: alias
-            target: *a47
+            targetSchema: *a47
       summary: TagResourceRequest
     - $key: UntagResourceResponse
       type: object
@@ -1341,18 +1341,18 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a48
+            targetSchema: *a48
         - name: TagKeys
           required: true
           schema:
             &a96
             type: alias
-            target:
+            targetSchema:
               &a95
               type: array
               elementSchema:
                 type: alias
-                target: *a49
+                targetSchema: *a49
       summary: UntagResourceRequest
     - $key: UpdateApplicationResponse
       type: object
@@ -1360,7 +1360,7 @@ schemas:
         - name: ApplicationInfo
           schema:
             type: alias
-            target: *a23
+            targetSchema: *a23
     - $key: UpdateApplicationRequest
       type: object
       properties:
@@ -1368,23 +1368,23 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: OpsCenterEnabled
           schema:
             type: alias
-            target: *a7
+            targetSchema: *a7
         - name: CWEMonitorEnabled
           schema:
             type: alias
-            target: *a7
+            targetSchema: *a7
         - name: OpsItemSNSTopicArn
           schema:
             type: alias
-            target: *a24
+            targetSchema: *a24
         - name: RemoveSNSTopic
           schema:
             type: alias
-            target: *a7
+            targetSchema: *a7
       summary: UpdateApplicationRequest
     - $key: UpdateComponentResponse
       type: object
@@ -1395,20 +1395,20 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: ComponentName
           required: true
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: NewComponentName
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: ResourceList
           schema:
             type: alias
-            target: *a26
+            targetSchema: *a26
       summary: UpdateComponentRequest
     - $key: UpdateComponentConfigurationResponse
       type: object
@@ -1419,24 +1419,24 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: ComponentName
           required: true
           schema:
             type: alias
-            target: *a1
+            targetSchema: *a1
         - name: Monitor
           schema:
             type: alias
-            target: *a7
+            targetSchema: *a7
         - name: Tier
           schema:
             type: alias
-            target: *a15
+            targetSchema: *a15
         - name: ComponentConfiguration
           schema:
             type: alias
-            target: *a31
+            targetSchema: *a31
       summary: UpdateComponentConfigurationRequest
     - $key: UpdateLogPatternResponse
       type: object
@@ -1444,11 +1444,11 @@ schemas:
         - name: ResourceGroupName
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: LogPattern
           schema:
             type: alias
-            target: *a27
+            targetSchema: *a27
     - $key: UpdateLogPatternRequest
       type: object
       properties:
@@ -1456,25 +1456,25 @@ schemas:
           required: true
           schema:
             type: alias
-            target: *a14
+            targetSchema: *a14
         - name: PatternSetName
           required: true
           schema:
             type: alias
-            target: *a11
+            targetSchema: *a11
         - name: PatternName
           required: true
           schema:
             type: alias
-            target: *a28
+            targetSchema: *a28
         - name: Pattern
           schema:
             type: alias
-            target: *a29
+            targetSchema: *a29
         - name: Rank
           schema:
             type: alias
-            target: *a6
+            targetSchema: *a6
       summary: UpdateLogPatternRequest
   aliases:
     - *a14
@@ -1498,7 +1498,7 @@ schemas:
         - name: MinimumElements
           type: constraint
           count: 0
-      target: *a47
+      targetSchema: *a47
     - *a60
     - *a61
     - *a62
@@ -1549,5 +1549,5 @@ schemas:
         - name: MinimumElements
           type: constraint
           count: 0
-      target: *a95
+      targetSchema: *a95
     - *a96
