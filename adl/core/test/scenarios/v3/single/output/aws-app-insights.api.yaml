@@ -1568,8 +1568,6 @@ attic:
       backgroundColor: "#FFFFFF"
     contact:
       x-twitter: PermittedSoc
-    license:
-      url: http://www.apache.org/licenses/
     x-providerName: amazonaws.com
     x-serviceName: application-insights
     x-origin:

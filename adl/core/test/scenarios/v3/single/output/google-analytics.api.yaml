@@ -21,8 +21,6 @@ attic:
   servers:
     - url: https://www.googleapis.com/analytics/v2.4
   info:
-    license:
-      url: http://creativecommons.org/licenses/by/3.0/
     x-apiClientRegistration:
       url: https://console.developers.google.com
     x-apisguru-categories:

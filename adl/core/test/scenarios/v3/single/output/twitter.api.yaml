@@ -1278,8 +1278,6 @@ attic:
   info:
     contact:
       x-twitter: twitter
-    license:
-      url: https://developer.twitter.com/en/developer-terms/agreement-and-policy.html
     x-apisguru-categories:
       - social
     x-logo:
@@ -1911,6 +1909,14 @@ attic:
             description: Index (zero-based) at which position this entity ends.
           start:
             description: Index (zero-based) at which position this entity starts.
+      FullTextEntities:
+        properties:
+          hashtags:
+            minItems: 1
+          mentions:
+            minItems: 1
+          urls:
+            minItems: 1
       GenericProblem:
         allOf:
           - $ref: "#/components/schemas/ProblemFields"
@@ -2089,6 +2095,10 @@ attic:
             enum:
               - https://api.twitter.com/labs/2/problems/not-authorized-for-resource
             type: string
+      SingleUserLookupResponse:
+        properties:
+          errors:
+            minItems: 1
       Tweet:
         example:
           author_id: "712089797812"
@@ -2101,8 +2111,10 @@ attic:
               media_keys:
                 description: A list of Media Keys for each one of the media attachments (if
                   media are attached).
+                minItems: 1
               poll_ids:
                 description: A list of poll IDs (if polls are attached).
+                minItems: 1
           created_at:
             description: Creation time of the Tweet.
             format: date-time
@@ -2144,8 +2156,18 @@ attic:
           handle large integers.
         example: "120897978112909812"
         pattern: ^[0-9]{1,19}$
+      TweetLookupResponse:
+        properties:
+          data:
+            minItems: 1
+          errors:
+            minItems: 1
       TweetSearchResponse:
         properties:
+          data:
+            minItems: 1
+          errors:
+            minItems: 1
           meta:
             properties:
               newest_id:
@@ -2234,6 +2256,12 @@ attic:
           description:
             description: The text of this user's profile description (also known as bio), if
               the user provided one.
+          entities:
+            properties:
+              url:
+                properties:
+                  urls:
+                    minItems: 1
           location:
             description: The location specified in the user's profile, if the user provided
               one. As this is a freeform value, it may not indicate a valid
@@ -2267,6 +2295,12 @@ attic:
           handle large integers.
         example: "712089797812"
         pattern: ^[0-9]{1,19}$
+      UserLookupResponse:
+        properties:
+          data:
+            minItems: 1
+          errors:
+            minItems: 1
       UserName:
         description: The Twitter handle (screen name) of this user.
         pattern: ^[A-Za-z0-9_]{1,15}$
@@ -2274,6 +2308,8 @@ attic:
         properties:
           country_codes:
             description: Provides a list of countries where this content is not available.
+            minItems: 1
+            uniqueItems: true
           scope:
             description: Indicates that the content being withheld is a `user`.
             enum:

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
-import { Tracker, Path, trackTarget, trackSource, getSourceFile, refTo, using, use, isUsed } from '@azure-tools/sourcemap';
+import { Tracker, Path, TrackedTarget, TrackedSource, getSourceFile, refTo, using, use, isUsed } from '@azure-tools/sourcemap';
 import { values, items, length } from '@azure-tools/linq';
 import { Element } from '../model/element';
 import { FileSystem } from './file-system';
@@ -70,13 +70,16 @@ function addUnusedTo(target: any, source: any) {
   if (Array.isArray(source) && Array.isArray(target)) {
     for (const each of <any>source) {
       if (!isUsed(each)) {
-        target.push(each);
+        target.push(each.valueOf());
       }
     }
     return;
   }
 
   for (const { key, value } of items(<any>source)) {
+    if (value === undefined || value === null) {
+      continue;
+    }
     if (!isUsed(value)) {
       if (typeof (<any>value).valueOf() === 'object') {
         target[key] = Array.isArray(value) ? [] : {};
@@ -86,7 +89,7 @@ function addUnusedTo(target: any, source: any) {
         }
       }
       else {
-        target[key] = value;
+        target[key] = (<any>value).valueOf();
       }
     }
   }
@@ -115,7 +118,7 @@ export class Visitor<TSourceModel extends OAIModel> {
     this.tracker = new Tracker();
 
     // enable target tracking on the output modle
-    this.api = trackTarget(api, [], this.tracker);
+    this.api = TrackedTarget.track(api, [], this.tracker);
 
     // the source files are going to be YAML/JSON files for this 
     // so we can speed up the process and grab them all and hold onto them
@@ -127,7 +130,7 @@ export class Visitor<TSourceModel extends OAIModel> {
 
   async loadInput(sourceFile: string): Promise<Context<TSourceModel>> {
     const content = await this.fileSystem.readFile(sourceFile);
-    const sourceModel = trackSource(<TSourceModel>parse(content), { sourceFile: { filename: sourceFile }, path: [] });
+    const sourceModel = TrackedSource.track(<TSourceModel>parse(content), { sourceFile: { filename: sourceFile }, path: [] });
 
     return new Context(
       sourceModel,
@@ -221,14 +224,14 @@ export class Context<TSourceModel extends OAIModel> {
       use(value);
 
       if (result !== undefined) {
-        result = trackTarget(result);
+        result = TrackedTarget.track(result);
         // we got back a value for that.
 
         // track it so we don't redo it if asked for it again later.
         this.visitor.$refs.set(ref, result);
 
         // let's 
-        result.versionInfo.push(trackTarget(<VersionInfo>({
+        result.versionInfo.push(TrackedTarget.track(<VersionInfo>({
           // deprecated isn't on everything, but this is safe when it's not there
           deprecated: using((<any>value).deprecated, this.apiVersion),
           added: this.apiVersion,

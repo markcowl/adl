@@ -1,5 +1,5 @@
 import { describe, it } from 'mocha';
-import { trackSource, trackTarget, Origin } from '../proxies';
+import { Origin, TrackedSource, TrackedTarget } from '../proxies';
 import { Path } from '../exports';
 import { tmpdir } from 'os';
 require('source-map-support').install();
@@ -29,11 +29,11 @@ describe('can track source/destinations', () => {
     const actual = {
       msg: 'this is the dest'
     };
-    const origin = trackSource(src, { sourceFile: { filename: 'test.yaml' }, path: [] });
-    const dest = <any>trackTarget(actual, [], tracker);
+    const origin = TrackedSource.track(src, { sourceFile: { filename: 'test.yaml' }, path: [] });
+    const dest = <any>TrackedTarget.track(actual, [], tracker);
 
     const me = <any>{};
-    const tme = trackTarget(me, []);
+    const tme = TrackedTarget.track(me, []);
     tme['##Origin'] = { sourceFile: 'gws', path: [] };
 
     me.name = origin.name;

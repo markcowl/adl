@@ -1,5 +1,5 @@
 import { Dictionary, items } from '@azure-tools/linq';
-import { trackTarget } from '@azure-tools/sourcemap';
+import { TrackedTarget } from '@azure-tools/sourcemap';
 import { InternalData } from './internal-data';
 import { VersionInfo } from './version-info';
 
@@ -41,24 +41,24 @@ export class Initializer {
     for (const { key, value } of items(initializer)) {
       // copy the true value of the items to the object
       // (use the proxy)
-      const raw = (<any>trackTarget(this));
-      const target = raw[key];
+      const proxy = (<any>TrackedTarget.track(this));
+      const targetProperty = proxy[key];
 
 
       if (value !== undefined) {
         const rawValue = (<any>value).valueOf();
-        if (Array.isArray(target)) {
+        if (Array.isArray(targetProperty)) {
           if (rawValue[Symbol.iterator]) {
             // copy elements to target
             for (const each of rawValue) {
-              raw[key].push(each);
+              proxy[key].push(each);
             }
             continue;
           }
           throw new Error(`Initializer for object with array member '${key}', must be initialized with something that can be iterated.`);
         }
         // just copy the value across.
-        raw[key] = rawValue;//.valueOf();
+        proxy[key] = (<any>value);//.valueOf();
       }
     }
   }

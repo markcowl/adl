@@ -20,57 +20,6 @@ export interface Origin {
   path: Path;
 }
 
-export function typeOf(obj: any) {
-  if (obj === null) {
-    return 'null';
-  }
-  if (obj === undefined) {
-    return 'undefined';
-  }
-  const t = typeof (obj);
-  if (t === 'object') {
-    if (Array.isArray(obj)) {
-      return 'array';
-    }
-    if (obj instanceof Set) {
-      return 'set';
-    }
-    if (obj instanceof Map) {
-      return 'map';
-    }
-    if (obj instanceof Date) {
-      return 'date';
-    }
-    if (obj instanceof RegExp) {
-      return 'regexp';
-    }
-  }
-  return t;
-}
-
-interface TrackedTarget {
-  proxy: Object;
-  tracker?: Tracker;
-  pathInTarget: Path;
-  origin?: Origin;
-}
-
-interface TrackedSource {
-  proxy: Object;
-  parent?: TrackedSource;
-  trackedChildren?: Object;
-  isUsed?: boolean;
-}
-
-const sourceRegistry = new WeakMap<Object, TrackedSource>();
-const targetRegistry = new WeakMap<Object, TrackedTarget>();
-
-export class NullValue {
-  valueOf() {
-    return null;
-  }
-}
-
 enum SpecialProperties {
   Origin = '##Origin', // the source path from whence the object came.
   Destination = '##Destination', // the target path to a trackedTarget object
@@ -87,14 +36,8 @@ enum SpecialProperties {
 
 /** marks a member in a tracked source model as 'used' */
 export function use<T>(value: T): T {
-  if (value === undefined || value === null) {
+  if (value === undefined || value === null || typeof value === 'function') {
     return value;
-  }
-
-  switch (typeof value) {
-    case 'undefined':
-    case 'function':
-      return value;
   }
 
   if ((<any>value)[SpecialProperties.IsSourceProxy]) {
@@ -109,7 +52,11 @@ export function unusedMembers<T>(value: T) {
     return false;
   }
 
-  return values(<any>value).any((each: any) => each[SpecialProperties.IsUsed] === false);
+  return values(<any>value).any((each: any) => !isUsed(each));
+}
+
+export function isProxy<T>(value: T) {
+  return (value !== undefined && value !== null && typeof value === 'object') && ((<any>value)[SpecialProperties.IsSourceProxy] === true || (<any>value)[SpecialProperties.IsTargetProxy] === true);
 }
 
 export function isSourceProxy<T>(value: T) {
@@ -126,10 +73,10 @@ export function isTargetProxy<T>(value: T) {
   return (<any>value)[SpecialProperties.IsTargetProxy] === true;
 }
 
-export function isUsed<T>(value: T): value is NonNullable<T> {
+export function isUsed<T>(value: T): boolean {
   // only proxies have isUsed info
   // (so, null/undefined/bool/string/number are 'used' )
-  if (typeof value !== 'object' || !isSourceProxy(value)) {
+  if (!isSourceProxy(value)) {
     return true;
   }
   // ask the proxy if the isUsed is set.
@@ -157,7 +104,6 @@ export function refTo(value: any): string {
   return value[SpecialProperties.RefToHere];
 }
 
-/** tags the the actual target value as being from the sourceValue */
 export function using<T>(sourceValue: any, actualTargetValue: T): T | undefined {
   if (actualTargetValue === undefined || actualTargetValue === null) {
     return undefined;
@@ -165,12 +111,11 @@ export function using<T>(sourceValue: any, actualTargetValue: T): T | undefined 
   if (sourceValue === undefined || sourceValue === null) {
     return undefined;
   }
-
   use(sourceValue);
 
-  const o = sourceValue[SpecialProperties.Origin];
-  if (o) {
-    return <T>trackSource(typeof actualTargetValue === 'object' ? actualTargetValue : new Object(actualTargetValue), o);
+  const origin = sourceValue[SpecialProperties.Origin];
+  if (origin) {
+    return <T>TrackedSource.track(typeof actualTargetValue === 'object' ? actualTargetValue : new Object(actualTargetValue), origin);
   }
 
   // todo: sourceValue wasn't a tracked value? is this an error? 
@@ -178,332 +123,364 @@ export function using<T>(sourceValue: any, actualTargetValue: T): T | undefined 
 }
 
 function getProxy(instance: any) {
-  if (instance === undefined || instance === null || isSourceProxy(instance) || isTargetProxy(instance) || typeof instance !== 'object') {
+  if (instance === undefined || instance === null || typeof instance !== 'object' || isProxy(instance)) {
     return instance;
   }
-  return sourceRegistry.get(instance) || targetRegistry.get(instance) || instance;
+  return TrackedSource.registry.get(instance) || TrackedTarget.registry.get(instance) || instance;
 }
 
-export function trackSource<T extends Object>(instance: T, origin: Origin, parent?: TrackedSource): T {
-  if (isSourceProxy(instance)) {
-    return instance;
+export class TrackedSource<T extends Object> {
+  static registry = new WeakMap<Object, Object>();
+  private constructor(private instance: T, private origin: Origin, private parent?: TrackedSource<any>) {
+
+  }
+  static track<T extends Object>(instance: T, origin: Origin, parent?: TrackedSource<any>): T {
+    let result = <TrackedSource<T> | undefined>TrackedSource.registry.get(instance);
+    if (result === undefined) {
+      result = new TrackedSource(instance, origin, parent);
+      result.proxy = new Proxy(instance, result);
+      TrackedSource.registry.set(instance, result);
+    }
+    return result?.proxy;
+  }
+  proxy!: T;
+  isUsed?: boolean;
+  trackedChildren?: any;
+
+  /**
+   * returns true if the property exists
+   * 
+   * @param actual the actual instance being proxied
+   * @param property the property requested
+   */
+  has(actual: T, property: PropertyKey): boolean {
+    switch (property) {
+      case SpecialProperties.OnAdd:
+      case SpecialProperties.IsUsed:
+      case SpecialProperties.Origin:
+      case SpecialProperties.IsSourceProxy:
+      case SpecialProperties.ActualValue:
+      case SpecialProperties.valueOf:
+      case SpecialProperties.toString:
+      case SpecialProperties.RefToHere:
+        return true;
+    }
+    return property in actual;
   }
 
-  let result = sourceRegistry.get(instance);
+  /**
+   * Handles property set on the proxy 
+   * 
+   * We override this to provide a virtual property for isUsed
+   * 
+   * @param actual the actual object being proxied
+   * @param property the property being written to
+   * @param value the value to write to the object
+   */
+  set(actual: T, property: keyof T, value: any): boolean {
+    switch (property) {
+      case SpecialProperties.IsUsed:
+        // setting the IsUsed value always assumes you're setting IsUsed = true.
+        // we don't allow you to unset the isUsed flag.
 
-  if (result === undefined) {
-    result = {
-      parent,
-      proxy: new Proxy<T>(instance, {
-        has: (actual: T, property: keyof T) => {
-          switch (property) {
-            case SpecialProperties.Origin:
-              return true;
-
-            // checking for IsUsed marks this property as 'used'
-            case SpecialProperties.IsUsed:
-              return true;
-          }
-          return property in actual;
-        },
-
-        set: (target: T, property: keyof T, value: any) => {
-          switch (property) {
-            case SpecialProperties.IsUsed:
-              // setting the IsUsed value always assumes you're setting IsUsed = true.
-              // we don't allow you to unset the isUsed flag.
-
-              const trackedSource = sourceRegistry.get(instance)!;
-
-              // don't recheck if we're already used.
-              if (trackedSource.isUsed) {
-                return true;
-              }
-
-              // if the actual value isn't an object then we can just set the isUsed flag.
-              if (typeof target.valueOf() !== 'object') {
-                trackedSource.isUsed = true;
-              } else {
-                // if we have children, the final state of isUsed is dependent on all them being used.
-                // this check only happens if we set an object to used and 
-                trackedSource.isUsed = values(<any>trackedSource.proxy).all(each => (<any>each)[SpecialProperties.IsUsed]);
-              }
-
-              // if the parent has been marked as used (ie, 'false')
-              // then tell the parent to finally check if all it's children are used up.
-              if (trackedSource.parent && trackedSource.parent.isUsed === false) {
-                (<any>trackedSource.parent.proxy)[SpecialProperties.IsUsed] = true;
-              }
-              return true;
-          }
-          target[property] = value;
+        // don't recheck if we're already used.
+        if (this.isUsed) {
           return true;
-        },
-
-        apply: function (actual, thisArg, argumentsList) {
-          return actual.valueOf();
-        },
-
-        get: (actual: T, property: keyof T, proxy: T) => {
-          switch (property) {
-            case SpecialProperties.Origin:
-              return origin;
-            case SpecialProperties.IsSourceProxy:
-              return true;
-            case SpecialProperties.ActualValue:
-              return actual;
-            case SpecialProperties.valueOf:
-              return () => actual.valueOf();
-            case SpecialProperties.toString:
-              return () => actual.toString();
-            case SpecialProperties.RefToHere:
-              return `${origin.sourceFile.filename}#/${origin.path.join('/')}`;
-            case SpecialProperties.IsUsed:
-              return sourceRegistry.get(instance)!.isUsed === true;
-          }
-          const value = actual[property];
-          const location = [...origin.path, property];
-
-          switch (typeOf(value)) {
-            case 'undefined':
-              return value;
-
-            case 'function':
-              switch (property) {
-                case 'indexOf':
-                  return (<any>value).bind(actual);
-              }
-              return (<any>value).bind(proxy);
-
-            case 'null':
-              return value;
-
-            case 'string':
-            case 'boolean':
-            case 'number':
-              // track the child in the tracked children
-              // so that the object is consistent
-              const trackedSource = sourceRegistry.get(instance)!;
-              const tc = <any>(trackedSource.trackedChildren = trackedSource.trackedChildren || {});
-              if (!(property in tc)) {
-                tc[property] = trackSource(new Object(value), { ...origin, path: location }, trackedSource);
-              }
-              return tc[property];
-
-            case 'set':
-            case 'map':
-              throw new Error('Unsupported type in source tracker.');
-
-            case 'array':
-              return trackSource(value, { ...origin, path: location }, sourceRegistry.get(instance));
-            case 'object':
-              return trackSource(value, { ...origin, path: location }, sourceRegistry.get(instance));
-          }
         }
-      })
-    };
-    sourceRegistry.set(instance, result);
+
+        // if the actual value isn't an object then we can just set the isUsed flag.
+        if (typeof actual.valueOf() !== 'object') {
+          this.isUsed = true;
+        } else {
+          // if we have children, the final state of isUsed is dependent on all them being used.
+          // this check only happens if we set an object to used and 
+          this.isUsed = values(<any>this.proxy).all(each => (<any>each)[SpecialProperties.IsUsed]);
+        }
+
+        // if the parent has been marked as used (ie, 'false')
+        // then tell the parent to finally check if all it's children are used up.
+        if (this.parent && this.parent.isUsed === false) {
+          (<any>this.parent.proxy)[SpecialProperties.IsUsed] = true;
+        }
+        return true;
+    }
+
+    // delegate back to the original object
+    actual[property] = value;
+    return true;
   }
-  return <T>result.proxy;
+
+  /**
+   * On being added to a target model, the sourceTracker will ask this to record the location
+   * 
+   * @param tracker the source tracker instance 
+   * @param pathInTarget the path in the target that the value of this property is being assigned to
+   * @param propertyValue the property value being assigned.
+   */
+  onAdd(tracker: Tracker, pathInTarget: Path) {
+    if (tracker) {
+      // if the tracker is set, then that means there is a path 
+      // all the way from the target model root to the location that
+      // this property is being set
+      tracker.add(pathInTarget, this.origin);
+    }
+  }
+
+  /**
+   * Handles property get for the proxy
+   * 
+   * @param actual the actual object being proxies
+   * @param property the property requested
+   * @param proxy the proxy object (this)
+   */
+  get(actual: T, property: keyof T, proxy: T): any {
+    switch (property) {
+      case SpecialProperties.OnAdd:
+        return this.onAdd.bind(this);
+      case SpecialProperties.Origin:
+        return this.origin;
+      case SpecialProperties.IsSourceProxy:
+        return true;
+      case SpecialProperties.ActualValue:
+        return actual.valueOf();
+      case SpecialProperties.valueOf:
+        return () => actual.valueOf();
+      case SpecialProperties.toString:
+        return () => actual.toString();
+      case SpecialProperties.RefToHere:
+        return `${this.origin.sourceFile.filename}#/${this.origin.path.join('/')}`;
+      case SpecialProperties.IsUsed:
+        return this.isUsed === true;
+    }
+
+    const value = actual[property];
+    const location = [...this.origin.path, property];
+    if (value === undefined || value === null) {
+      return value;
+    }
+    switch (typeof value) {
+      case 'function':
+        switch (property) {
+          // these functions need to be bound to the actual object 
+          // otherwise, they don't work.
+          case 'indexOf':
+            return (<any>value).bind(actual);
+        }
+
+        // give back the function, but bind it to the proxy
+        // so access can be managed.
+        return (<any>value).bind(proxy);
+
+      case 'string':
+      case 'boolean':
+      case 'number':
+        // primitives.
+        // track the child in the tracked children
+        // so that the object is consistent
+        const tc = <any>(this.trackedChildren = this.trackedChildren || {});
+        if (!(property in tc)) {
+          tc[property] = TrackedSource.track(new Object(value), { ...this.origin, path: location }, this);
+        }
+        return tc[property];
+
+      case 'object':
+        return TrackedSource.track(value, { ...this.origin, path: location }, this);
+    }
+
+  }
 }
 
-function mkOnAdd<T>(proxy: T) {
-  return (tracker: Tracker, pathInTarget: Path, prop: any) => {
-    if (pathInTarget) {
-      // we have to tell the tracker that we've now got a path
-      (<any>proxy)[SpecialProperties.Destination] = pathInTarget;
+export class TrackedTarget<T extends Object> {
+  static registry = new WeakMap<Object, Object>();
+  private constructor(private instance: T, private pathInTarget: Path, private tracker?: Tracker) {
 
-      if (tracker) {
-        (<any>proxy)[SpecialProperties.Tracker] = tracker;
+  }
+  static track<T extends Object>(instance: T, pathInTarget: Path = [], tracker?: Tracker): T {
+    let result = <TrackedTarget<T> | undefined>TrackedTarget.registry.get(instance);
+    if (result === undefined) {
+      result = new TrackedTarget(instance, pathInTarget, tracker);
+      result.proxy = new Proxy(instance, result);
+      TrackedTarget.registry.set(instance, result);
+    }
+    return result?.proxy;
+  }
 
-        const o = (<any>proxy)[SpecialProperties.Origin];
-        if (o?.path) {
-          tracker.add(pathInTarget, o);
-        }
+  origin?: Origin;
+  proxy!: T;
+  has(actual: T, property: PropertyKey): boolean {
+    switch (property) {
+      case SpecialProperties.OnAdd:
+      case SpecialProperties.Origin:
+      case SpecialProperties.valueOf:
+      case SpecialProperties.ActualValue:
+      case SpecialProperties.Tracker:
+      case SpecialProperties.Destination:
+      case SpecialProperties.OnAdd:
+        return true;
+    }
+    return property in actual;
+  }
 
-        for (const { key, value } of items(<any>prop)) {
+  onAdd(tracker: Tracker, pathInTarget: Path) {
+    if (tracker && pathInTarget) {
+      // if the tracker is set, then we have a path all the way from the root of the target model 
+      // to the location that this property is being set.
+      if (this.origin) {
+        tracker.add(pathInTarget, this.origin)
+      }
 
-          const raw = getProxy(value);
+      // we should recursively call onAdd on the children from here
+      // since this might be the first time they meet their parents.
+      if (typeof this.instance.valueOf() === 'object') {
+        for (const { key, value } of items(<any>this.proxy)) {
+          const rawValue = (<any>this.instance)[key];
+          if (isProxy(rawValue)) {
+            // we've still got the proxy set as the raw value 
+            // which means that for certain, the property 
+            // hasn't met the parents yet.
+            // we need to replace the value in the instance
+            // with the raw value (still call onAdd too.)
+            (<any>this.instance)[key] = rawValue;
+          }
 
-          if (raw !== undefined && raw !== null) {
-            use(raw);
-            if (raw !== raw.valueOf()) {
-              // re-add the member so that it recognizes that it's in a tracked object now.
-              prop[key] = raw.valueOf();
-            } else {
-              if (raw.$onAdd) {
-                raw.$onAdd(tracker, [...pathInTarget, key], value);
-              }
-              if (raw[SpecialProperties.Origin]) {
-                tracker.add([...pathInTarget, key], raw[SpecialProperties.Origin]);
-              }
+          const anyValue = <any>value;
+
+          // make sure the original value is used
+          use(anyValue);
+
+          if (typeof anyValue === 'object') {
+            // value could be a TrackedSource or a TrackedTarget (or have $onAdd)
+            if (anyValue.$onAdd) {
+              anyValue.$onAdd(tracker, [...pathInTarget, key]);
             }
           }
         }
       }
     }
-  };
-}
-
-export function trackTarget<T extends Object>(instance: T, pathInTarget?: Path, tracker?: Tracker): T {
-
-  if (isTargetProxy(instance)) {
-    return instance;
   }
 
-  let result = targetRegistry.get(instance);
+  get(actual: T, property: keyof T, proxy: T): any {
+    switch (property) {
+      case SpecialProperties.IsTargetProxy:
+        return true;
 
-  if (result === undefined) {
+      case SpecialProperties.OnAdd:
+        return this.onAdd.bind(this);
 
-    result = {
-      pathInTarget: pathInTarget || [],
-      tracker,
-      proxy: new Proxy(instance, {
-        has: (target: T, property: keyof T) => {
-          switch (property) {
-            case SpecialProperties.OnAdd:
-            case SpecialProperties.Origin:
-            case SpecialProperties.valueOf:
-            case SpecialProperties.ActualValue:
-            case SpecialProperties.Tracker:
-            case SpecialProperties.Destination:
-              return true;
-          }
+      case SpecialProperties.Origin:
+        return this.origin;
 
-          return property in target;
-        },
+      case SpecialProperties.valueOf:
+        return () => actual.valueOf();
 
-        get: (actual: T, property: keyof T, proxy: T) => {
-          switch (property) {
+      case SpecialProperties.toString:
+        return () => actual.toString();
 
-            case SpecialProperties.IsTargetProxy:
-              return true;
+      case SpecialProperties.ActualValue:
+        return actual.valueOf();
 
-            case SpecialProperties.OnAdd:
-              return mkOnAdd(proxy);
+      case SpecialProperties.Tracker:
+        return this.tracker;
 
-            case SpecialProperties.Origin:
-              return targetRegistry.get(instance)!.origin;
+      case SpecialProperties.Destination:
+        return this.pathInTarget;
 
-            case SpecialProperties.valueOf:
-              return () => actual.valueOf();
+      case SpecialProperties.IsUsed:
+        return undefined;
+    }
+    const value = actual[property];
+    if (value === undefined || value === null) {
+      return value;
+    }
 
-            case SpecialProperties.toString:
-              return () => actual.toString();
+    switch (typeof value) {
+      case 'function':
+        return (<any>value).bind(proxy);
 
-            case SpecialProperties.ActualValue:
-              return actual;
-
-            case SpecialProperties.Tracker:
-              return targetRegistry.get(instance)!.tracker;
-
-            case SpecialProperties.Destination:
-              return targetRegistry.get(instance)!.pathInTarget;
-
-            case SpecialProperties.IsUsed:
-              return undefined;
-          }
-          const value = actual[property];
-
-          if (typeof value === 'object' && (<any>value)[SpecialProperties.IsTargetProxy] === true && Object.getOwnPropertyDescriptor(instance, property)) {
-            (<any>targetRegistry.get(instance)!.proxy)[property] = value;
-          }
-          const { pathInTarget: path, tracker } = <TrackedTarget>targetRegistry.get(instance);
-
-
-          const location = [...path, property];
-
-          switch (typeof value) {
-            case 'function':
-              return (<any>value).bind(proxy);
-
-            case 'object':
-              if (isSourceProxy(value) || isTargetProxy(value)) {
-                return value;
-              }
-              return trackTarget(value, location, tracker);
-          }
-
+      case 'object':
+        // if the value we have is already a proxy, return it as-is
+        if (isProxy(value)) {
           return value;
-        },
-        set(target: T, property: keyof T, value: any) {
-
-          switch (property) {
-            case SpecialProperties.Tracker:
-              targetRegistry.get(instance)!.tracker = value;
-              return true;
-
-            case SpecialProperties.Destination:
-              targetRegistry.get(instance)!.pathInTarget = value;
-              return true;
-
-            case SpecialProperties.Origin:
-              if (!value.sourceFile || !value.path) {
-                throw new Error('origin not of type Origin');
-              }
-
-              targetRegistry.get(instance)!.origin = value;
-              return true;
-
-            case SpecialProperties.IsUsed:
-              return false;
-          }
-
-          // if it's null or undefined, set it 
-          if (value === undefined || value === null) {
-            target[property] = value;
-            return true;
-          }
-          // if this isn't a proxied object, and there is one in the registry 
-          // for this, let's assume the user passed that in instead.
-          if (undefined === value[SpecialProperties.IsTargetProxy]) {
-            value = targetRegistry.get(value)?.proxy || value;
-          }
-
-          //value = tVal;
-          // set the actual value to the actual target value
-          try {
-            if (isSourceProxy(value)) {
-              use(value);
-            }
-            use(value);
-            target[property] = value.valueOf();
-          } catch (E) {
-            // todo: ? 
-            // properties that are read-only will throw at the moment. 
-            // Need to figure out how to detect that before calling set.
-          }
-
-          // get the tracker
-          const { pathInTarget: path, tracker } = targetRegistry.get(instance)!;
-
-          // we can only track a position if a registered tracker is available.
-          if (tracker) {
-
-            // if the value has an onAdd function
-            // we can have that add itself (and any possible children)
-            if (typeof value === 'object') {
-              if (SpecialProperties.OnAdd in value) {
-                value.$onAdd(tracker, [...path, property], value);
-              }
-            }
-
-            // and/or
-
-            // does the value know it's origin?
-            const origin = <Origin>value[SpecialProperties.Origin];
-            if (origin) {
-              // if we have the origin of the value
-              // we can tell the tracker to track this
-              tracker.add([...path, property], origin);
-            }
-          }
-          return true;
         }
-      })
-    };
-    targetRegistry.set(instance, result);
+        // otherwise, return a proxy for the value;
+        return TrackedTarget.track(value, [...this.pathInTarget, property], this.tracker);
+    }
+    return value;
   }
 
-  return <T>result.proxy;
+  set(actual: T, property: keyof T, value: any): boolean {
+    switch (property) {
+      case SpecialProperties.Tracker:
+        this.tracker = value;
+        return true;
+
+      case SpecialProperties.Destination:
+        this.pathInTarget = value;
+        return true;
+
+      case SpecialProperties.Origin:
+        if (!value.sourceFile || !value.path) {
+          throw new Error('origin not of type Origin');
+        }
+        this.origin = value;
+        return true;
+
+      case SpecialProperties.IsUsed:
+        return false;
+    }
+
+    // if it's null or undefined, set it 
+    if (value === undefined || value === null) {
+      actual[property] = value;
+      return true;
+    }
+
+    const rawValue = value.valueOf();
+
+    // if this isn't a proxied object, and there is one in the registry 
+    // for this, let's assume the user passed that in instead.
+    if (typeof rawValue === 'object' && !isProxy(value)) {
+      value = (<TrackedTarget<T> | undefined>TrackedTarget.registry.get(value))?.proxy ?? typeof value === 'object' ? TrackedTarget.track(value) : value;
+    }
+
+    // set the actual value to the actual target value
+    try {
+      // if it's a sourceProxy we can mark it used
+      use(value);
+
+      if (this.tracker) {
+        // if we have a tracker, that means that the whole parent
+        // is connected, and we can set the actual value.
+        actual[property] = rawValue;
+
+        // if the value has an onAdd function
+        // we can have that add itself (and any possible children)
+        if (value.$onAdd) {
+          value.$onAdd(this.tracker, [...this.pathInTarget, property]);
+        }
+
+        // and/or
+
+        // does the value know it's origin?
+        const origin = <Origin>value[SpecialProperties.Origin];
+        if (origin) {
+          // if we have the origin of the value
+          // we can tell the tracker to track this
+          this.tracker.add([...this.pathInTarget, property], origin);
+        }
+
+      } else {
+        // otherwise, we'd better set the value to the proxy so that 
+        // one day we can meet the parents.
+        actual[property] = value;
+      }
+
+    } catch (E) {
+      // I'm not expecting this should get here, but if it does, I need 
+      // to know 
+      console.error(`Internal failure: Setting a property failed. ${E}`);
+    }
+
+    return true;
+  }
 }
