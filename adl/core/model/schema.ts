@@ -59,7 +59,7 @@ export class Constant extends Schema {
 export class Enum extends Schema {
   values = new ElementArray<Constant>();
   name?: string;
-  sealed = false;
+  sealed = true;
 
   constructor(public elementSchema: Schema, initializer?: Partial<Enum>) {
     super('enum');
