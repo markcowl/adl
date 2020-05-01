@@ -35,24 +35,30 @@ enum SpecialProperties {
 }
 
 /** marks a member in a tracked source model as 'used' */
-export function use<T>(value: T): T {
+export function use<T>(value: T, recursive = false): T {
   if (value === undefined || value === null || typeof value === 'function') {
     return value;
   }
 
   if ((<any>value)[SpecialProperties.IsSourceProxy]) {
     (<any>value)[SpecialProperties.IsUsed] = true;
+
+    if (recursive && typeof valueOf(value) === 'object') {
+      for (const each of values(<any>value)) {
+        use(each, true)
+      }
+    }
   }
 
   return value;
 }
 
 export function unusedMembers<T>(value: T) {
-  if (value === undefined || value === null) {
-    return false;
+  if (value === undefined || value === null || typeof valueOf(value) !== 'object') {
+    return [];
   }
 
-  return values(<any>value).any((each: any) => !isUsed(each));
+  return items(<any>value).where((each) => !isUsed(each.value)).select(each => each.key).toArray();
 }
 
 export function isProxy<T>(value: T) {
@@ -126,7 +132,7 @@ export function using<T>(sourceValue: any, actualTargetValue: T): T | undefined 
 
   const origin = sourceValue[SpecialProperties.Origin];
   if (origin) {
-    return <T>TrackedSource.track(typeof actualTargetValue === 'object' ? actualTargetValue : new Object(actualTargetValue), origin);
+    return <T>TrackedSource.track(typeof actualTargetValue === 'object' ? actualTargetValue : new Object(actualTargetValue), actualTargetValue, origin);
   }
 
   // todo: sourceValue wasn't a tracked value? is this an error? 
@@ -140,17 +146,17 @@ function getProxy(instance: any) {
   return TrackedSource.registry.get(instance) || TrackedTarget.registry.get(instance) || instance;
 }
 
-export class TrackedSource<T extends Object> {
+export class TrackedSource<T extends Object, instanceType> {
   static registry = new WeakMap<Object, Object>();
-  private constructor(private instance: T, private origin: Origin, private parent?: TrackedSource<any>) {
+  private constructor(private wrappedInstance: T, private instance: instanceType, private origin: Origin, private parent?: TrackedSource<any, any>) {
 
   }
-  static track<T extends Object>(instance: T, origin: Origin, parent?: TrackedSource<any>): T {
-    let result = <TrackedSource<T> | undefined>TrackedSource.registry.get(instance);
+  static track<T extends Object, instanceType>(wrappedInstance: T, instance: instanceType, origin: Origin, parent?: TrackedSource<any, any>): T {
+    let result = <TrackedSource<T, instanceType> | undefined>TrackedSource.registry.get(wrappedInstance);
     if (result === undefined) {
-      result = new TrackedSource(instance, origin, parent);
-      result.proxy = new Proxy(instance, result);
-      TrackedSource.registry.set(instance, result);
+      result = new TrackedSource(wrappedInstance, instance, origin, parent);
+      result.proxy = new Proxy(wrappedInstance, result);
+      TrackedSource.registry.set(wrappedInstance, result);
     }
     return result?.proxy;
   }
@@ -176,7 +182,7 @@ export class TrackedSource<T extends Object> {
       case SpecialProperties.RefToHere:
         return true;
     }
-    return property in actual;
+    return property in this.instance;
   }
 
   /**
@@ -200,7 +206,7 @@ export class TrackedSource<T extends Object> {
         }
 
         // if the actual value isn't an object then we can just set the isUsed flag.
-        if (typeof valueOf(actual) !== 'object') {
+        if (typeof valueOf(this.instance) !== 'object') {
           this.isUsed = true;
         } else {
           // if we have children, the final state of isUsed is dependent on all them being used.
@@ -217,7 +223,7 @@ export class TrackedSource<T extends Object> {
     }
 
     // delegate back to the original object
-    actual[property] = value;
+    (<any>this.instance)[property] = value;
     return true;
   }
 
@@ -253,18 +259,18 @@ export class TrackedSource<T extends Object> {
       case SpecialProperties.IsSourceProxy:
         return true;
       case SpecialProperties.ActualValue:
-        return valueOf(actual);
+        return valueOf(this.instance);
       case SpecialProperties.valueOf:
-        return () => valueOf(actual);
+        return () => valueOf(this.instance);
       case SpecialProperties.toString:
-        return () => valueOf(actual).toString();
+        return () => valueOf(this.instance).toString();
       case SpecialProperties.RefToHere:
         return `${this.origin.sourceFile.filename}#/${this.origin.path.join('/')}`;
       case SpecialProperties.IsUsed:
         return this.isUsed === true;
     }
 
-    const value = actual[property];
+    const value = (<any>this.instance)[property];
     const location = [...this.origin.path, property];
     if (value === undefined || value === null) {
       return value;
@@ -275,7 +281,7 @@ export class TrackedSource<T extends Object> {
           // these functions need to be bound to the actual object 
           // otherwise, they don't work.
           case 'indexOf':
-            return (<any>value).bind(actual);
+            return (<any>value).bind((<any>this.instance));
         }
 
         // give back the function, but bind it to the proxy
@@ -290,14 +296,15 @@ export class TrackedSource<T extends Object> {
         // so that the object is consistent
         const tc = <any>(this.trackedChildren = this.trackedChildren || {});
         if (!(property in tc)) {
-          tc[property] = TrackedSource.track(new Object(value), { ...this.origin, path: location }, this);
+          tc[property] = TrackedSource.track(new Object(value), value, { ...this.origin, path: location }, this);
         }
         return tc[property];
 
       case 'object':
-        return TrackedSource.track(value, { ...this.origin, path: location }, this);
+        return TrackedSource.track(value, value, { ...this.origin, path: location }, this);
     }
-
+    console.log("RETURN FUNNY?");
+    return value;
   }
 }
 

@@ -25,6 +25,9 @@
      -> connects to [Protocol]/Operations
      -> connects to Aggregate/Operations (for multi-step operations)
 
+### GRPC 
+  
+
 ### Http
     Authentication - Security information (global/path/operation) -- can 'path' be handled transparently?
     Connections - Server information (global/path/operation)

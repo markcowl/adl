@@ -129,7 +129,8 @@ export class Visitor<TSourceModel extends OAIModel> {
 
   async loadInput(sourceFile: string): Promise<Context<TSourceModel>> {
     const content = await this.fileSystem.readFile(sourceFile);
-    const sourceModel = TrackedSource.track(<TSourceModel>parse(content), { sourceFile: { filename: sourceFile }, path: [] });
+    const model = parse(content);
+    const sourceModel = TrackedSource.track(<TSourceModel>model, model, { sourceFile: { filename: sourceFile }, path: [] });
 
     return new Context(sourceModel, this);
   }

@@ -29,7 +29,7 @@ describe('can track source/destinations', () => {
     const actual = {
       msg: 'this is the dest'
     };
-    const origin = TrackedSource.track(src, { sourceFile: { filename: 'test.yaml' }, path: [] });
+    const origin = TrackedSource.track(src, src, { sourceFile: { filename: 'test.yaml' }, path: [] });
     const dest = <any>TrackedTarget.track(actual, [], tracker);
 
     const me = <any>{};

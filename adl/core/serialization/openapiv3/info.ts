@@ -7,20 +7,20 @@ import { use } from '@azure-tools/sourcemap';
 
 async function addExtensionsToAttic(element: Element, input: any) {
   for (const { key, value } of vendorExtensions(input)) {
-    element.addToAttic(key, use(value));
+    element.addToAttic(key, use(value, true));
   }
   return element;
 }
 
 async function processContact(contact: v3.Contact, $: Context) {
   const result = new Contact(ContactRole.Author, {
-    name: use(contact.name),
-    email: use(contact.email),
-    url: use(contact.url),
+    name: contact.name,
+    email: contact.email,
+    url: contact.url,
   });
 
   // add remaining extensions to attic. 
-  addExtensionsToAttic(result, contact);
+  await addExtensionsToAttic(result, contact);
 
   return result;
 }
@@ -30,7 +30,7 @@ async function processLicense(license: v3.License, $: Context) {
     url: license.url
   });
   // add remaining extensions to attic. 
-  addExtensionsToAttic(result, $);
+  await addExtensionsToAttic(result, license);
 
   return result;
 }
@@ -38,9 +38,9 @@ async function processLicense(license: v3.License, $: Context) {
 export async function processInfo(info: v3.Info, $: Context): Promise<Metadata | undefined> {
 
   // create the metadata 
-  const metadata = new Metadata(use(info.title), {
-    description: use(info.description),
-    termsOfService: use(info.termsOfService)
+  const metadata = new Metadata(info.title, {
+    description: info.description,
+    termsOfService: info.termsOfService
   });
 
   // add the author contact
@@ -52,6 +52,9 @@ export async function processInfo(info: v3.Info, $: Context): Promise<Metadata |
   if (is(info.license)) {
     metadata.licenses.push(await $.process(processLicense, info.license));
   }
+
+  // add remaining extensions to attic. 
+  await addExtensionsToAttic(metadata, info);
 
   $.api.metaData = metadata;
 
