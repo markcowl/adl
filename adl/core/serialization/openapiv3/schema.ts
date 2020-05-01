@@ -323,13 +323,6 @@ export async function processArraySchema(schema: v3.Schema, $: Context): Promise
     return result;
   }
 
-  /*
-  if (!schema.minItems && !schema.maxItems && !schema.uniqueItems) {
-    $.api.schemas.primitives.push(result);
-    return result;
-
-  }
-*/
   const alias = new Alias(result);
   if (schema.maxItems) {
     alias.constraints.push(new MaximumElementsConstraint(schema.maxItems));
