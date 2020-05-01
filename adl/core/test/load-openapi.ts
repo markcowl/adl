@@ -9,6 +9,8 @@ import { resolve } from 'path';
 import { equal } from 'assert';
 import * as chalk from 'chalk';
 
+require('source-map-support').Install;
+
 const $scenarios = `${__dirname}/../../test/scenarios/v3/single/input`;
 
 
@@ -26,13 +28,21 @@ describe('Load Single OAI3 files', () => {
       console.log(chalk.gray(`\n      starting ${file}`));
       const start = process.uptime() * 1000;
       const api = await deserializeOpenAPI3(fs, file);
+
       const end = process.uptime() * 1000;
       console.log(chalk.gray(`      ${file} Deserialization ${chalk.yellow(Math.floor(end - start))} ms`));
 
       const output = resolve(`${$scenarios}/../output/${file.replace(/.yaml$/ig, '.api.yaml')}`);
+      const attic = resolve(`${$scenarios}/../output/${file.replace(/.yaml$/ig, '.attic.yaml')}`);
+
 
       if (await isFile(output)) {
         unlinkSync(output);
+      }
+
+      if (api.attic) {
+        await writeFile(attic, serialize(api.attic.valueOf()));
+        delete api.attic;
       }
 
       await writeFile(output, serialize(api.valueOf()));
