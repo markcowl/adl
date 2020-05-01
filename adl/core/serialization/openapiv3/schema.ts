@@ -49,7 +49,7 @@ export async function processSchemaReference(ref: JsonReference<v3.Schema>, $: C
 export async function processSchema(schema: v3.Schema, $: Context, options?: { isAnonymous?: boolean; forUnderlyingEnumType?: boolean }): Promise<Schema | undefined> {
   // if enum or x-ms-enum is specified, process as enum
   // but not if we're already processing the enum and are now processing its underlying type
-  if (!options?.forUnderlyingEnumType && (schema.enum || (<any>schema)['x-ms-enum'])) {
+  if (!options?.forUnderlyingEnumType && (schema.enum || schema['x-ms-enum'])) {
     return processEnumSchema(schema, $);
   }
 
