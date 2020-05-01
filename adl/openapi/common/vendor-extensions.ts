@@ -1,3 +1,5 @@
+import { vendorExtensions } from './common';
+
 /** 
  * The field name MUST begin with x-, for example, x-internal-id. The value can be null, a primitive, an array or an object. 
  * 
@@ -9,6 +11,8 @@
  * */
 export interface VendorExtensions {
   'x-ms-metadata': any;
+
   /** Allows extensions to the Swagger Schema. The field name MUST begin with x-, for example, x-internal-id. The value can be null, a primitive, an array or an object. */
   // [key: string]: any;
 }
+

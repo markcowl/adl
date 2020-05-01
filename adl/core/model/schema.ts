@@ -37,10 +37,24 @@ export class ObjectSchema extends Schema {
 }
 
 export class Constant extends Schema {
+  name?: string;
+  description?: string;
 
+  constructor(public type: Schema, public value: any, initializer?: Partial<Constant>) {
+    super();
+    this.initialize(initializer);
+  }
 }
-export class Enum extends Schema {
 
+export class Enum extends Schema {
+  values = new ElementArray<Constant>();
+  name?: string;
+  sealed = false;
+
+  constructor(public type: Schema, initializer?: Partial<Enum>) {
+    super();
+    this.initialize(initializer);
+  }
 }
 
 export class Constraint extends Schema {
