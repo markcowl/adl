@@ -1,43 +1,32 @@
 http:
   headers:
     - $key: ErrorCode
-      description: -- test -- The error code.
+      description: The error code.
       schema:
         &a2
         type: int64
-        versionInfo:
-          - added: 1.1.0
-      versionInfo:
-        - added: 1.1.0
     - $key: ErrorMessage
-      description: -- test -- The error message.
+      description: The error message.
       schema:
-        &a27
-        target:
-          &a1
-          type: string
-          versionInfo:
-            - added: 1.1.0
-        versionInfo:
-          - added: 1.1.0
-      versionInfo:
-        - added: 1.1.0
+        &a1
+        type: string
     - $key: Link
-      description: -- test -- Links to related resources, in the format defined by
-        [RFC 5988](https://tools.ietf.org/html/rfc5988#section-5). This will
+      description: Links to related resources, in the format defined by [RFC
+        5988](https://tools.ietf.org/html/rfc5988#section-5). This will
         potentially include a link with relation type `next`, `first`, and
         `current`, where appropiate.
-      schema: *a1
-      versionInfo:
-        - added: 1.1.0
-    - $key: ServerId
-      description: -- test -- The ID for the server communicated with.
       schema:
+        &a33
+        type: alias
+        constraints:
+          - name: RegularExpression
+            type: constraint
+            length: (<(.*)?>; rel=\"(first|current|last)?\",)*(<(.*)?>;
+              rel=\"(first|current|last)?\")+
         target: *a1
-        versionInfo:
-          - added: 1.1.0
-      versionInfo:
-        - added: 1.1.0
+    - $key: ServerId
+      description: The ID for the server communicated with.
+      schema: *a1
 metaData:
   name: Ably
   contacts:
@@ -45,14 +34,10 @@ metaData:
       email: support@ably.io
       role: author
       url: https://www.ably.io/contact
-      versionInfo:
-        - added: 1.1.0
       attic:
         x-twitter: ablyrealtime
   description: The [REST API
     specification](https://www.ably.io/documentation/rest-api) for Ably.
-  versionInfo:
-    - added: 1.1.0
   attic:
     x-apisguru-categories:
       - cloud
@@ -69,415 +54,473 @@ metaData:
 schemas:
   primitives:
     - *a1
-    - &a3
+    - &a8
       type: boolean
-      versionInfo:
-        - added: 1.1.0
     - *a2
     - type: any
-      versionInfo:
-        - added: 1.1.0
   enums:
-    - &a7
-      type: *a1
+    - &a12
+      type: enum
+      elementSchema:
+        &a3
+        type: alias
+        target: *a1
       sealed: false
       values:
-        - type: *a1
+        - type: constant
           value: phone
-        - type: *a1
+          valueSchema: *a3
+        - type: constant
           value: tablet
-        - type: *a1
+          valueSchema: *a3
+        - type: constant
           value: desktop
-        - type: *a1
+          valueSchema: *a3
+        - type: constant
           value: tv
-        - type: *a1
+          valueSchema: *a3
+        - type: constant
           value: watch
-        - type: *a1
+          valueSchema: *a3
+        - type: constant
           value: car
-        - type: *a1
+          valueSchema: *a3
+        - type: constant
           value: embedded
-      versionInfo:
-        - added: 1.1.0
-    - &a9
-      type: *a1
+          valueSchema: *a3
+    - &a14
+      type: enum
+      elementSchema:
+        &a4
+        type: alias
+        target: *a1
       sealed: false
       values:
-        - type: *a1
+        - type: constant
           value: ios
-        - type: *a1
+          valueSchema: *a4
+        - type: constant
           value: android
-      versionInfo:
-        - added: 1.1.0
-    - &a6
-      type: *a1
-      sealed: false
-      values:
-        - type: *a1
-          value: apns
-        - type: *a1
-          value: fcm
-        - type: *a1
-          value: gcm
-      versionInfo:
-        - added: 1.1.0
+          valueSchema: *a4
     - &a11
-      type: *a1
+      type: enum
+      elementSchema:
+        &a5
+        type: alias
+        target: *a1
       sealed: false
       values:
-        - type: *a1
+        - type: constant
+          value: apns
+          valueSchema: *a5
+        - type: constant
+          value: fcm
+          valueSchema: *a5
+        - type: constant
+          value: gcm
+          valueSchema: *a5
+    - &a16
+      type: enum
+      elementSchema:
+        &a6
+        type: alias
+        target: *a1
+      sealed: false
+      values:
+        - type: constant
           value: Active
-        - type: *a1
+          valueSchema: *a6
+        - type: constant
           value: Failing
-        - type: *a1
+          valueSchema: *a6
+        - type: constant
           value: Failed
-      versionInfo:
-        - added: 1.1.0
-    - &a18
-      type: *a1
+          valueSchema: *a6
+    - &a23
+      type: enum
+      elementSchema:
+        &a7
+        type: alias
+        target: *a1
       sealed: false
       values:
-        - type: *a1
+        - type: constant
           value: ABSENT
-        - type: *a1
+          valueSchema: *a7
+        - type: constant
           value: PRESENT
-        - type: *a1
+          valueSchema: *a7
+        - type: constant
           value: ENTER
-        - type: *a1
+          valueSchema: *a7
+        - type: constant
           value: LEAVE
-        - type: *a1
+          valueSchema: *a7
+        - type: constant
           value: UPDATE
-      versionInfo:
-        - added: 1.1.0
+          valueSchema: *a7
   objects:
-    - &a4
+    - &a9
       $key: Occupancy
+      type: object
       description: An Occupancy instance indicating the occupancy of a channel. For
         events indicating regional activity of a channel this indicates activity
         in that region, not global activity.
       properties:
         - name: presenceConnections
           schema:
-            &a20
+            &a26
+            type: alias
             target: *a2
-            versionInfo:
-              - added: 1.1.0
         - name: presenceMembers
           schema:
+            type: alias
             target: *a2
-            versionInfo:
-              - added: 1.1.0
         - name: presenceSubscribers
           schema:
+            type: alias
             target: *a2
-            versionInfo:
-              - added: 1.1.0
         - name: publishers
           schema:
+            type: alias
             target: *a2
-            versionInfo:
-              - added: 1.1.0
         - name: subscribers
           schema:
+            type: alias
             target: *a2
-            versionInfo:
-              - added: 1.1.0
-      versionInfo:
-        - added: 1.1.0
-    - &a5
+    - &a10
       $key: ChannelStatus
+      type: object
       description: A ChannelStatus instance.
       properties:
         - name: isActive
           required: true
-          schema: *a3
+          schema: *a8
         - name: occupancy
           schema:
-            &a21
-            target: *a4
-            versionInfo:
-              - added: 1.1.0
-      versionInfo:
-        - added: 1.1.0
+            &a27
+            type: alias
+            target: *a9
     - $key: ChannelDetails
+      type: object
       properties:
         - name: channelId
           required: true
-          schema: *a1
+          schema:
+            &a25
+            type: alias
+            target: *a1
         - name: isGlobalMaster
-          schema: *a3
+          schema: *a8
         - name: region
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: status
           schema:
-            &a22
-            target: *a5
-            versionInfo:
-              - added: 1.1.0
-      versionInfo:
-        - added: 1.1.0
-    - &a8
+            &a28
+            type: alias
+            target: *a10
+    - &a13
       $key: metadata
+      type: object
       description: Optional metadata object for this device. The metadata for a device
         may only be set by clients with push-admin privileges and will be used
         more extensively in the future with smart notifications.
-      versionInfo:
-        - added: 1.1.0
-    - &a10
+    - &a15
       $key: Recipient
+      type: object
       description: Push recipient details for a device.
       properties:
         - name: clientId
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: deviceId
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: deviceToken
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: registrationToken
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: transportType
-          schema: *a6
-      versionInfo:
-        - added: 1.1.0
+          schema: *a11
     - $key: DeviceDetails
+      type: object
       properties:
         - name: clientId
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: deviceSecret
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: formFactor
-          schema: *a7
+          schema: *a12
         - name: id
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: metadata
-          schema: *a8
+          schema: *a13
         - name: platform
-          schema: *a9
+          schema: *a14
         - name: push.recipient
           schema:
-            &a23
-            target: *a10
-            versionInfo:
-              - added: 1.1.0
+            &a29
+            type: alias
+            target: *a15
         - name: push.state
-          schema: *a11
-      versionInfo:
-        - added: 1.1.0
+          schema: *a16
     - $key: Error
+      type: object
       description: Returned error from failed REST.
       properties:
         - name: code
           schema:
+            type: alias
             target: *a2
-            versionInfo:
-              - added: 1.1.0
         - name: href
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: message
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: serverId
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: statusCode
           schema:
+            type: alias
             target: *a2
-            versionInfo:
-              - added: 1.1.0
-      versionInfo:
-        - added: 1.1.0
-    - &a12
+    - &a17
       $key: Notification
+      type: object
       properties:
         - name: body
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: collapseKey
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: icon
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: sound
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: title
-          schema: *a1
-      versionInfo:
-        - added: 1.1.0
-    - &a13
+          schema:
+            type: alias
+            target: *a1
+    - &a18
       $key: apns
+      type: object
       description: Extends and overrides generic values when delivering via APNs. [See
         examples](https://www.ably.io/documentation/general/push/publish#payload-structure)
       properties:
         - name: notification
           schema:
-            &a24
-            target: *a12
-            versionInfo:
-              - added: 1.1.0
-      versionInfo:
-        - added: 1.1.0
-    - &a14
+            &a30
+            type: alias
+            target: *a17
+    - &a19
       $key: fcm
+      type: object
       description: Extends and overrides generic values when delivering via GCM/FCM.
         [See
         examples](https://www.ably.io/documentation/general/push/publish#payload-structure)
       properties:
         - name: notification
           schema:
-            target: *a12
-            versionInfo:
-              - added: 1.1.0
-      versionInfo:
-        - added: 1.1.0
-    - &a15
+            type: alias
+            target: *a17
+    - &a20
       $key: web
+      type: object
       description: Extends and overrides generic values when delivering via web. [See
         examples](https://www.ably.io/documentation/general/push/publish#payload-structure)
       properties:
         - name: notification
           schema:
-            target: *a12
-            versionInfo:
-              - added: 1.1.0
-      versionInfo:
-        - added: 1.1.0
-    - &a16
+            type: alias
+            target: *a17
+    - &a21
       $key: Push
+      type: object
       properties:
         - name: apns
-          schema: *a13
+          schema: *a18
         - name: data
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: fcm
-          schema: *a14
+          schema: *a19
         - name: notification
           schema:
-            target: *a12
-            versionInfo:
-              - added: 1.1.0
+            type: alias
+            target: *a17
         - name: web
-          schema: *a15
-      versionInfo:
-        - added: 1.1.0
-    - &a17
+          schema: *a20
+    - &a22
       $key: Extras
+      type: object
       description: Extras object. Currently only allows for
         [push](https://www.ably.io/documentation/general/push/publish#channel-broadcast-example)
         extra.
       properties:
         - name: push
           schema:
-            &a25
-            target: *a16
-            versionInfo:
-              - added: 1.1.0
-      versionInfo:
-        - added: 1.1.0
+            &a31
+            type: alias
+            target: *a21
     - $key: Message
+      type: object
       description: Message object.
       properties:
         - name: clientId
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: connectionId
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: data
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: encoding
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: extras
           schema:
-            &a26
-            target: *a17
-            versionInfo:
-              - added: 1.1.0
+            &a32
+            type: alias
+            target: *a22
         - name: id
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: name
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: timestamp
           schema:
+            type: alias
             target: *a2
-            versionInfo:
-              - added: 1.1.0
-      versionInfo:
-        - added: 1.1.0
     - $key: PresenceMessage
+      type: object
       properties:
         - name: action
-          schema: *a18
+          schema: *a23
         - name: clientId
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: connectionId
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: data
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: encoding
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: extras
           schema:
-            target: *a17
-            versionInfo:
-              - added: 1.1.0
+            type: alias
+            target: *a22
         - name: id
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: timestamp
           schema:
+            type: alias
             target: *a2
-            versionInfo:
-              - added: 1.1.0
-      versionInfo:
-        - added: 1.1.0
     - $key: TokenDetails
+      type: object
       properties:
         - name: capability
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: expires
           schema:
+            type: alias
             target: *a2
-            versionInfo:
-              - added: 1.1.0
         - name: issued
           schema:
+            type: alias
             target: *a2
-            versionInfo:
-              - added: 1.1.0
         - name: keyName
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: token
-          schema: *a1
-      versionInfo:
-        - added: 1.1.0
-    - &a19
+          schema:
+            type: alias
+            target: *a1
+    - &a24
       $key: capability
+      type: object
       description: The
         [capabilities](https://www.ably.io/documentation/core-features/authentication#capabilities-explained)
         (i.e. a set of channel names/namespaces and, for each, a set of
         operations) which should be a subset of the set of capabilities
         associated with the key specified in keyName.
-      versionInfo:
-        - added: 1.1.0
     - $key: TokenRequest
+      type: object
       properties:
         - name: capability
           required: true
-          schema: *a19
+          schema: *a24
         - name: clientId
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: keyName
           required: true
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: nonce
           required: true
-          schema: *a1
+          schema:
+            type: alias
+            target: *a1
         - name: timestamp
           required: true
           schema:
+            type: alias
             target: *a2
-            versionInfo:
-              - added: 1.1.0
-      versionInfo:
-        - added: 1.1.0
   aliases:
-    - *a20
-    - *a21
-    - *a22
-    - *a23
-    - *a24
     - *a25
     - *a26
     - *a27
+    - *a28
+    - *a29
+    - *a30
+    - *a31
+    - *a32
+    - *a33

@@ -6,8 +6,6 @@ metaData:
       email: mike.ralphson@gmail.com
       role: author
       url: https://github.com/mermade/aws2openapi
-      versionInfo:
-        - added: 2018-11-25
       attic:
         x-twitter: PermittedSoc
   description: <fullname>Amazon CloudWatch Application Insights for .NET and SQL
@@ -27,11 +25,7 @@ metaData:
   licenses:
     - name: Apache 2.0 License
       url: http://www.apache.org/licenses/
-      versionInfo:
-        - added: 2018-11-25
   termsOfService: https://aws.amazon.com/service-terms/
-  versionInfo:
-    - added: 2018-11-25
   attic:
     x-release: v4
     x-logo:
@@ -55,683 +49,638 @@ schemas:
   primitives:
     - &a1
       type: string
-      versionInfo:
-        - added: 2018-11-25
-    - &a5
+    - &a7
       type: boolean
-      versionInfo:
-        - added: 2018-11-25
     - type: any
-      versionInfo:
-        - added: 2018-11-25
-    - &a16
+    - &a26
       type: array
       elementSchema:
-        target: *a1
-        versionInfo:
-          - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
-    - &a4
+        &a62
+        type: alias
+        target:
+          &a61
+          type: alias
+          constraints:
+            - name: MaxLength
+              type: constraint
+              length: 1011
+            - name: MinLength
+              type: constraint
+              length: 1
+          target: *a1
+    - &a6
       type: int64
-      versionInfo:
-        - added: 2018-11-25
     - &a2
       type: dateTime
-      versionInfo:
-        - added: 2018-11-25
-    - &a3
+    - &a4
       type: double
-      versionInfo:
-        - added: 2018-11-25
-    - &a22
+    - &a37
       type: array
       elementSchema:
+        type: alias
         target:
-          &a19
+          &a32
           $key: Observation
+          type: object
           description: Describes an anomaly or error with the application.
           properties:
             - name: Id
               schema:
-                target: *a1
-                versionInfo:
-                  - added: 2018-11-25
+                &a72
+                type: alias
+                target:
+                  &a33
+                  type: alias
+                  constraints:
+                    - name: MaxLength
+                      type: constraint
+                      length: 38
+                    - name: MinLength
+                      type: constraint
+                      length: 38
+                    - name: RegularExpression
+                      type: constraint
+                      length: o-[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}
+                  target: *a1
             - name: StartTime
               schema:
-                &a44
+                &a73
+                type: alias
                 target: *a2
-                versionInfo:
-                  - added: 2018-11-25
             - name: EndTime
               schema:
+                type: alias
                 target: *a2
-                versionInfo:
-                  - added: 2018-11-25
             - name: SourceType
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: SourceARN
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: LogGroup
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: LineTime
               schema:
+                type: alias
                 target: *a2
-                versionInfo:
-                  - added: 2018-11-25
             - name: LogText
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: LogFilter
               schema:
-                &a45
+                &a74
+                type: alias
                 target:
-                  &a7
-                  type: *a1
+                  &a16
+                  type: enum
+                  elementSchema:
+                    &a3
+                    type: alias
+                    target: *a1
                   sealed: false
                   values:
-                    - type: *a1
+                    - type: constant
                       value: ERROR
-                    - type: *a1
+                      valueSchema: *a3
+                    - type: constant
                       value: WARN
-                    - type: *a1
+                      valueSchema: *a3
+                    - type: constant
                       value: INFO
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                      valueSchema: *a3
             - name: MetricNamespace
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: MetricName
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: Unit
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: Value
               schema:
-                &a46
-                target: *a3
-                versionInfo:
-                  - added: 2018-11-25
+                &a75
+                type: alias
+                target: *a4
             - name: CloudWatchEventId
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: CloudWatchEventSource
               schema:
-                &a47
+                &a76
+                type: alias
                 target:
-                  &a8
-                  type: *a1
+                  &a17
+                  type: enum
+                  elementSchema:
+                    &a5
+                    type: alias
+                    target: *a1
                   sealed: false
                   values:
-                    - type: *a1
+                    - type: constant
                       value: EC2
-                    - type: *a1
+                      valueSchema: *a5
+                    - type: constant
                       value: CODE_DEPLOY
-                    - type: *a1
+                      valueSchema: *a5
+                    - type: constant
                       value: HEALTH
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                      valueSchema: *a5
             - name: CloudWatchEventDetailType
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: HealthEventArn
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: HealthService
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: HealthEventTypeCode
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: HealthEventTypeCategory
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: HealthEventDescription
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: CodeDeployDeploymentId
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: CodeDeployDeploymentGroup
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: CodeDeployState
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: CodeDeployApplication
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: CodeDeployInstanceGroupId
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: Ec2State
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: XRayFaultPercent
               schema:
-                target: *a4
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a6
             - name: XRayThrottlePercent
               schema:
-                target: *a4
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a6
             - name: XRayErrorPercent
               schema:
-                target: *a4
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a6
             - name: XRayRequestCount
               schema:
-                target: *a4
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a6
             - name: XRayRequestAverageLatency
               schema:
-                target: *a4
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a6
             - name: XRayNodeName
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: XRayNodeType
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
-          versionInfo:
-            - added: 2018-11-25
-        versionInfo:
-          - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
-    - &a24
+                type: alias
+                target: *a1
+    - &a39
       type: array
       elementSchema:
+        type: alias
         target:
-          &a13
+          &a23
           $key: ApplicationInfo
+          type: object
           description: Describes the status of the application.
           properties:
             - name: ResourceGroupName
               schema:
-                &a33
-                target: *a1
-                versionInfo:
-                  - added: 2018-11-25
+                &a50
+                type: alias
+                target:
+                  &a14
+                  type: alias
+                  constraints:
+                    - name: MaxLength
+                      type: constraint
+                      length: 256
+                    - name: MinLength
+                      type: constraint
+                      length: 1
+                    - name: RegularExpression
+                      type: constraint
+                      length: "[a-zA-Z0-9\\.\\-_]*"
+                  target: *a1
             - name: LifeCycle
               schema:
-                &a34
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                &a51
+                type: alias
+                target: *a1
             - name: OpsItemSNSTopicArn
               schema:
-                target: *a1
-                versionInfo:
-                  - added: 2018-11-25
+                &a52
+                type: alias
+                target:
+                  &a24
+                  type: alias
+                  constraints:
+                    - name: MaxLength
+                      type: constraint
+                      length: 300
+                    - name: MinLength
+                      type: constraint
+                      length: 20
+                  target: *a1
             - name: OpsCenterEnabled
               schema:
-                &a35
-                target: *a5
-                versionInfo:
-                  - added: 2018-11-25
+                &a53
+                type: alias
+                target: *a7
             - name: CWEMonitorEnabled
               schema:
-                target: *a5
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a7
             - name: Remarks
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
-          versionInfo:
-            - added: 2018-11-25
-        versionInfo:
-          - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
-    - &a26
+                type: alias
+                target: *a1
+    - &a40
       type: array
       elementSchema:
+        type: alias
         target:
-          &a18
+          &a30
           $key: ApplicationComponent
+          type: object
           description: Describes a standalone resource or similarly grouped resources that
             the application is made up of.
           properties:
             - name: ComponentName
               schema:
-                target:
-                  &a15
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: ResourceType
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: Tier
               schema:
-                &a42
+                &a69
+                type: alias
                 target:
-                  &a6
-                  type: *a1
+                  &a15
+                  type: enum
+                  elementSchema:
+                    &a8
+                    type: alias
+                    constraints:
+                      - name: MaxLength
+                        type: constraint
+                        length: 50
+                      - name: MinLength
+                        type: constraint
+                        length: 1
+                    target: *a1
                   sealed: false
                   values:
-                    - type: *a1
+                    - type: constant
                       value: DEFAULT
-                    - type: *a1
+                      valueSchema: *a8
+                    - type: constant
                       value: DOT_NET_CORE
-                    - type: *a1
+                      valueSchema: *a8
+                    - type: constant
                       value: DOT_NET_WORKER
-                    - type: *a1
+                      valueSchema: *a8
+                    - type: constant
                       value: DOT_NET_WEB
-                    - type: *a1
+                      valueSchema: *a8
+                    - type: constant
                       value: SQL_SERVER
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                      valueSchema: *a8
             - name: Monitor
               schema:
-                target: *a5
-                versionInfo:
-                  - added: 2018-11-25
-          versionInfo:
-            - added: 2018-11-25
-        versionInfo:
-          - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
-    - &a29
+                type: alias
+                target: *a7
+    - &a43
       type: array
       elementSchema:
-        &a60
+        &a90
+        type: alias
         target:
-          &a28
+          &a42
           $key: ConfigurationEvent
+          type: object
           description: " The event information. "
           properties:
             - name: MonitoredResourceARN
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: EventStatus
               schema:
-                &a58
+                &a88
+                type: alias
                 target:
-                  &a11
-                  type: *a1
+                  &a20
+                  type: enum
+                  elementSchema:
+                    &a9
+                    type: alias
+                    target: *a1
                   sealed: false
                   values:
-                    - type: *a1
+                    - type: constant
                       value: INFO
-                    - type: *a1
+                      valueSchema: *a9
+                    - type: constant
                       value: WARN
-                    - type: *a1
+                      valueSchema: *a9
+                    - type: constant
                       value: ERROR
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                      valueSchema: *a9
             - name: EventResourceType
               schema:
-                &a59
+                &a89
+                type: alias
                 target:
-                  &a12
-                  type: *a1
+                  &a21
+                  type: enum
+                  elementSchema:
+                    &a10
+                    type: alias
+                    target: *a1
                   sealed: false
                   values:
-                    - type: *a1
+                    - type: constant
                       value: CLOUDWATCH_ALARM
-                    - type: *a1
+                      valueSchema: *a10
+                    - type: constant
                       value: CLOUDFORMATION
-                    - type: *a1
+                      valueSchema: *a10
+                    - type: constant
                       value: SSM_ASSOCIATION
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                      valueSchema: *a10
             - name: EventTime
               schema:
+                type: alias
                 target: *a2
-                versionInfo:
-                  - added: 2018-11-25
             - name: EventDetail
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: EventResourceName
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
-          versionInfo:
-            - added: 2018-11-25
-        versionInfo:
-          - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
-    - &a30
+                type: alias
+                target: *a1
+    - &a44
       type: array
       elementSchema:
+        type: alias
         target:
-          &a17
+          &a11
+          type: alias
+          constraints:
+            - name: MaxLength
+              type: constraint
+              length: 30
+            - name: MinLength
+              type: constraint
+              length: 1
+            - name: RegularExpression
+              type: constraint
+              length: "[a-zA-Z0-9\\.\\-_]*"
+          target: *a1
+    - &a45
+      type: array
+      elementSchema:
+        type: alias
+        target:
+          &a27
           $key: LogPattern
+          type: object
           description: An object that defines the log patterns that belongs to a
             <code>LogPatternSet</code>.
           properties:
             - name: PatternSetName
               schema:
-                target: *a1
-                versionInfo:
-                  - added: 2018-11-25
+                &a64
+                type: alias
+                target: *a11
             - name: PatternName
               schema:
-                target: *a1
-                versionInfo:
-                  - added: 2018-11-25
+                &a65
+                type: alias
+                target:
+                  &a28
+                  type: alias
+                  constraints:
+                    - name: MaxLength
+                      type: constraint
+                      length: 50
+                    - name: MinLength
+                      type: constraint
+                      length: 1
+                    - name: RegularExpression
+                      type: constraint
+                      length: "[a-zA-Z0-9\\.\\-_]*"
+                  target: *a1
             - name: Pattern
               schema:
-                target: *a1
-                versionInfo:
-                  - added: 2018-11-25
+                &a66
+                type: alias
+                target:
+                  &a29
+                  type: alias
+                  constraints:
+                    - name: MaxLength
+                      type: constraint
+                      length: 50
+                    - name: MinLength
+                      type: constraint
+                      length: 1
+                  target: *a1
             - name: Rank
               schema:
-                &a40
-                target: *a4
-                versionInfo:
-                  - added: 2018-11-25
-          versionInfo:
-            - added: 2018-11-25
-        versionInfo:
-          - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
-    - &a31
+                &a67
+                type: alias
+                target: *a6
+    - &a46
       type: array
       elementSchema:
+        type: alias
         target:
-          &a21
+          &a35
           $key: Problem
+          type: object
           description: Describes a problem that is detected by correlating observations.
           properties:
             - name: Id
               schema:
-                target: *a1
-                versionInfo:
-                  - added: 2018-11-25
+                &a78
+                type: alias
+                target:
+                  &a36
+                  type: alias
+                  constraints:
+                    - name: MaxLength
+                      type: constraint
+                      length: 38
+                    - name: MinLength
+                      type: constraint
+                      length: 38
+                    - name: RegularExpression
+                      type: constraint
+                      length: p-[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}
+                  target: *a1
             - name: Title
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: Insights
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: Status
               schema:
-                &a49
+                &a79
+                type: alias
                 target:
-                  &a9
-                  type: *a1
+                  &a18
+                  type: enum
+                  elementSchema:
+                    &a12
+                    type: alias
+                    target: *a1
                   sealed: false
                   values:
-                    - type: *a1
+                    - type: constant
                       value: IGNORE
-                    - type: *a1
+                      valueSchema: *a12
+                    - type: constant
                       value: RESOLVED
-                    - type: *a1
+                      valueSchema: *a12
+                    - type: constant
                       value: PENDING
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                      valueSchema: *a12
             - name: AffectedResource
               schema:
-                target:
-                  target: *a1
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a1
             - name: StartTime
               schema:
+                type: alias
                 target: *a2
-                versionInfo:
-                  - added: 2018-11-25
             - name: EndTime
               schema:
+                type: alias
                 target: *a2
-                versionInfo:
-                  - added: 2018-11-25
             - name: SeverityLevel
               schema:
-                &a50
+                &a80
+                type: alias
                 target:
-                  &a10
-                  type: *a1
+                  &a19
+                  type: enum
+                  elementSchema:
+                    &a13
+                    type: alias
+                    target: *a1
                   sealed: false
                   values:
-                    - type: *a1
+                    - type: constant
                       value: Low
-                    - type: *a1
+                      valueSchema: *a13
+                    - type: constant
                       value: Medium
-                    - type: *a1
+                      valueSchema: *a13
+                    - type: constant
                       value: High
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
+                      valueSchema: *a13
             - name: ResourceGroupName
               schema:
-                target: *a1
-                versionInfo:
-                  - added: 2018-11-25
+                type: alias
+                target: *a14
             - name: Feedback
               schema:
-                &a51
+                &a81
+                type: alias
                 target:
-                  &a20
+                  &a34
                   $key: Feedback
-                  versionInfo:
-                    - added: 2018-11-25
-                versionInfo:
-                  - added: 2018-11-25
-          versionInfo:
-            - added: 2018-11-25
-        versionInfo:
-          - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+                  type: object
   constants:
-    - type: *a1
+    - type: constant
       value: INSIGHTS_FEEDBACK
-      versionInfo:
-        - added: 2018-11-25
+      valueSchema:
+        type: alias
+        target: *a1
   enums:
-    - *a6
-    - *a7
-    - *a8
-    - *a9
-    - *a10
-    - *a11
-    - *a12
-    - type: *a1
+    - *a15
+    - *a16
+    - *a17
+    - *a18
+    - *a19
+    - *a20
+    - *a21
+    - type: enum
+      elementSchema:
+        &a22
+        type: alias
+        target: *a1
       sealed: false
       values:
-        - type: *a1
+        - type: constant
           value: NOT_SPECIFIED
-        - type: *a1
+          valueSchema: *a22
+        - type: constant
           value: USEFUL
-        - type: *a1
+          valueSchema: *a22
+        - type: constant
           value: NOT_USEFUL
-      versionInfo:
-        - added: 2018-11-25
+          valueSchema: *a22
   objects:
-    - *a13
+    - *a23
     - $key: CreateApplicationResponse
+      type: object
       properties:
         - name: ApplicationInfo
           schema:
-            &a36
-            target: *a13
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
-    - &a14
+            &a54
+            type: alias
+            target: *a23
+    - &a25
       $key: Tag
+      type: object
       description: "<p>An object that defines the tags associated with an application.
         A <i>tag</i> is a label that you optionally define and associate with an
         application. Tags can help you categorize and manage resources in
@@ -753,966 +702,852 @@ schemas:
         - name: Key
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            &a56
+            type: alias
+            target:
+              &a49
+              type: alias
+              constraints:
+                - name: MaxLength
+                  type: constraint
+                  length: 128
+                - name: MinLength
+                  type: constraint
+                  length: 1
+              target: *a1
         - name: Value
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            &a58
+            type: alias
+            target:
+              &a57
+              type: alias
+              constraints:
+                - name: MaxLength
+                  type: constraint
+                  length: 256
+                - name: MinLength
+                  type: constraint
+                  length: 0
+              target: *a1
     - $key: CreateApplicationRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            &a55
+            type: alias
+            target: *a14
         - name: OpsCenterEnabled
           schema:
-            target: *a5
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a7
         - name: CWEMonitorEnabled
           schema:
-            target: *a5
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a7
         - name: OpsItemSNSTopicArn
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a24
         - name: Tags
           schema:
-            &a38
+            &a60
+            type: alias
             target:
-              &a32
+              &a47
               type: array
               elementSchema:
-                &a37
-                target: *a14
-                versionInfo:
-                  - added: 2018-11-25
-              versionInfo:
-                - added: 2018-11-25
-            versionInfo:
-              - added: 2018-11-25
+                &a59
+                type: alias
+                target: *a25
       summary: CreateApplicationRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: CreateComponentResponse
-      versionInfo:
-        - added: 2018-11-25
+      type: object
     - $key: CreateComponentRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: ComponentName
           required: true
           schema:
-            target: *a15
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a1
         - name: ResourceList
           required: true
           schema:
-            &a39
-            target: *a16
-            versionInfo:
-              - added: 2018-11-25
+            &a63
+            type: alias
+            target: *a26
       summary: CreateComponentRequest
-      versionInfo:
-        - added: 2018-11-25
-    - *a17
+    - *a27
     - $key: CreateLogPatternResponse
+      type: object
       properties:
         - name: LogPattern
           schema:
-            &a41
-            target: *a17
-            versionInfo:
-              - added: 2018-11-25
+            &a68
+            type: alias
+            target: *a27
         - name: ResourceGroupName
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            type: alias
+            target: *a14
     - $key: CreateLogPatternRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: PatternSetName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a11
         - name: PatternName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a28
         - name: Pattern
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a29
         - name: Rank
           required: true
           schema:
-            target: *a4
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a6
       summary: CreateLogPatternRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: DeleteApplicationResponse
-      versionInfo:
-        - added: 2018-11-25
+      type: object
     - $key: DeleteApplicationRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
       summary: DeleteApplicationRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: DeleteComponentResponse
-      versionInfo:
-        - added: 2018-11-25
+      type: object
     - $key: DeleteComponentRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: ComponentName
           required: true
           schema:
-            target: *a15
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a1
       summary: DeleteComponentRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: DeleteLogPatternResponse
-      versionInfo:
-        - added: 2018-11-25
+      type: object
     - $key: DeleteLogPatternRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: PatternSetName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a11
         - name: PatternName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a28
       summary: DeleteLogPatternRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: DescribeApplicationResponse
+      type: object
       properties:
         - name: ApplicationInfo
           schema:
-            target: *a13
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            type: alias
+            target: *a23
     - $key: DescribeApplicationRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
       summary: DescribeApplicationRequest
-      versionInfo:
-        - added: 2018-11-25
-    - *a18
+    - *a30
     - $key: DescribeComponentResponse
+      type: object
       properties:
         - name: ApplicationComponent
           schema:
-            &a43
-            target: *a18
-            versionInfo:
-              - added: 2018-11-25
+            &a70
+            type: alias
+            target: *a30
         - name: ResourceList
           schema:
-            target: *a16
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            type: alias
+            target: *a26
     - $key: DescribeComponentRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: ComponentName
           required: true
           schema:
-            target: *a15
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a1
       summary: DescribeComponentRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: DescribeComponentConfigurationResponse
+      type: object
       properties:
         - name: Monitor
           schema:
-            target: *a5
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a7
         - name: Tier
           schema:
-            target: *a6
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a15
         - name: ComponentConfiguration
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            &a71
+            type: alias
+            target:
+              &a31
+              type: alias
+              constraints:
+                - name: MaxLength
+                  type: constraint
+                  length: 10000
+                - name: MinLength
+                  type: constraint
+                  length: 1
+              target: *a1
     - $key: DescribeComponentConfigurationRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: ComponentName
           required: true
           schema:
-            target: *a15
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a1
       summary: DescribeComponentConfigurationRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: DescribeComponentConfigurationRecommendationResponse
+      type: object
       properties:
         - name: ComponentConfiguration
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            type: alias
+            target: *a31
     - $key: DescribeComponentConfigurationRecommendationRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: ComponentName
           required: true
           schema:
-            target: *a15
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a1
         - name: Tier
           required: true
           schema:
-            target: *a6
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a15
       summary: DescribeComponentConfigurationRecommendationRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: DescribeLogPatternResponse
+      type: object
       properties:
         - name: ResourceGroupName
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: LogPattern
           schema:
-            target: *a17
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            type: alias
+            target: *a27
     - $key: DescribeLogPatternRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: PatternSetName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a11
         - name: PatternName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a28
       summary: DescribeLogPatternRequest
-      versionInfo:
-        - added: 2018-11-25
-    - *a19
+    - *a32
     - $key: DescribeObservationResponse
+      type: object
       properties:
         - name: Observation
           schema:
-            &a48
-            target: *a19
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            &a77
+            type: alias
+            target: *a32
     - $key: DescribeObservationRequest
+      type: object
       properties:
         - name: ObservationId
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a33
       summary: DescribeObservationRequest
-      versionInfo:
-        - added: 2018-11-25
-    - *a20
-    - *a21
+    - *a34
+    - *a35
     - $key: DescribeProblemResponse
+      type: object
       properties:
         - name: Problem
           schema:
-            &a52
-            target: *a21
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            &a82
+            type: alias
+            target: *a35
     - $key: DescribeProblemRequest
+      type: object
       properties:
         - name: ProblemId
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a36
       summary: DescribeProblemRequest
-      versionInfo:
-        - added: 2018-11-25
-    - &a23
+    - &a38
       $key: RelatedObservations
+      type: object
       description: Describes observations related to the problem.
       properties:
         - name: ObservationList
           schema:
-            &a53
-            target: *a22
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            &a83
+            type: alias
+            target: *a37
     - $key: DescribeProblemObservationsResponse
+      type: object
       properties:
         - name: RelatedObservations
           schema:
-            &a54
-            target: *a23
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            &a84
+            type: alias
+            target: *a38
     - $key: DescribeProblemObservationsRequest
+      type: object
       properties:
         - name: ProblemId
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a36
       summary: DescribeProblemObservationsRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: ListApplicationsResponse
+      type: object
       properties:
         - name: ApplicationInfoList
           schema:
-            &a55
-            target: *a24
-            versionInfo:
-              - added: 2018-11-25
+            &a85
+            type: alias
+            target: *a39
         - name: NextToken
           schema:
-            target:
-              &a25
-              target: *a1
-              versionInfo:
-                - added: 2018-11-25
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            type: alias
+            target: *a1
     - $key: ListApplicationsRequest
+      type: object
       properties:
         - name: MaxResults
           schema:
-            &a56
+            &a86
+            type: alias
             target:
-              &a27
+              &a41
+              type: alias
               constraints:
                 - name: Minimum
+                  type: constraint
                   minimum: 1
                 - name: Maximum
+                  type: constraint
                   maximum: 40
-              target: *a4
-              versionInfo:
-                - added: 2018-11-25
-            versionInfo:
-              - added: 2018-11-25
+              target: *a6
         - name: NextToken
           schema:
-            target: *a25
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a1
       summary: ListApplicationsRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: ListComponentsResponse
+      type: object
       properties:
         - name: ApplicationComponentList
           schema:
-            &a57
-            target: *a26
-            versionInfo:
-              - added: 2018-11-25
+            &a87
+            type: alias
+            target: *a40
         - name: NextToken
           schema:
-            target: *a25
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            type: alias
+            target: *a1
     - $key: ListComponentsRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: MaxResults
           schema:
-            target: *a27
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a41
         - name: NextToken
           schema:
-            target: *a25
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a1
       summary: ListComponentsRequest
-      versionInfo:
-        - added: 2018-11-25
-    - *a28
+    - *a42
     - $key: ListConfigurationHistoryResponse
+      type: object
       properties:
         - name: EventList
           schema:
-            &a61
-            target: *a29
-            versionInfo:
-              - added: 2018-11-25
+            &a91
+            type: alias
+            target: *a43
         - name: NextToken
           schema:
-            target: *a25
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            type: alias
+            target: *a1
     - $key: ListConfigurationHistoryRequest
+      type: object
       properties:
         - name: ResourceGroupName
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: StartTime
           schema:
+            type: alias
             target: *a2
-            versionInfo:
-              - added: 2018-11-25
         - name: EndTime
           schema:
+            type: alias
             target: *a2
-            versionInfo:
-              - added: 2018-11-25
         - name: EventStatus
           schema:
-            target: *a11
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a20
         - name: MaxResults
           schema:
-            target: *a27
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a41
         - name: NextToken
           schema:
-            target: *a25
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a1
       summary: ListConfigurationHistoryRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: ListLogPatternSetsResponse
+      type: object
       properties:
         - name: ResourceGroupName
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: LogPatternSets
           schema:
-            target:
-              type: array
-              elementSchema:
-                target: *a1
-                versionInfo:
-                  - added: 2018-11-25
-              versionInfo:
-                - added: 2018-11-25
-            versionInfo:
-              - added: 2018-11-25
+            &a92
+            type: alias
+            target: *a44
         - name: NextToken
           schema:
-            target: *a25
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            type: alias
+            target: *a1
     - $key: ListLogPatternSetsRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: MaxResults
           schema:
-            target: *a27
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a41
         - name: NextToken
           schema:
-            target: *a25
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a1
       summary: ListLogPatternSetsRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: ListLogPatternsResponse
+      type: object
       properties:
         - name: ResourceGroupName
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: LogPatterns
           schema:
-            &a62
-            target: *a30
-            versionInfo:
-              - added: 2018-11-25
+            &a93
+            type: alias
+            target: *a45
         - name: NextToken
           schema:
-            target: *a25
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            type: alias
+            target: *a1
     - $key: ListLogPatternsRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: PatternSetName
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a11
         - name: MaxResults
           schema:
-            target: *a27
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a41
         - name: NextToken
           schema:
-            target: *a25
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a1
       summary: ListLogPatternsRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: ListProblemsResponse
+      type: object
       properties:
         - name: ProblemList
           schema:
-            &a63
-            target: *a31
-            versionInfo:
-              - added: 2018-11-25
+            &a94
+            type: alias
+            target: *a46
         - name: NextToken
           schema:
-            target: *a25
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            type: alias
+            target: *a1
     - $key: ListProblemsRequest
+      type: object
       properties:
         - name: ResourceGroupName
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: StartTime
           schema:
+            type: alias
             target: *a2
-            versionInfo:
-              - added: 2018-11-25
         - name: EndTime
           schema:
+            type: alias
             target: *a2
-            versionInfo:
-              - added: 2018-11-25
         - name: MaxResults
           schema:
-            target: *a27
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a41
         - name: NextToken
           schema:
-            target: *a25
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a1
       summary: ListProblemsRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: ListTagsForResourceResponse
+      type: object
       properties:
         - name: Tags
           schema:
-            target: *a32
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            type: alias
+            target: *a47
     - $key: ListTagsForResourceRequest
+      type: object
       properties:
         - name: ResourceARN
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target:
+              &a48
+              type: alias
+              constraints:
+                - name: MaxLength
+                  type: constraint
+                  length: 1011
+                - name: MinLength
+                  type: constraint
+                  length: 1
+              target: *a1
       summary: ListTagsForResourceRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: TagResourceResponse
-      versionInfo:
-        - added: 2018-11-25
+      type: object
     - $key: TagResourceRequest
+      type: object
       properties:
         - name: ResourceARN
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a48
         - name: Tags
           required: true
           schema:
-            target: *a32
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a47
       summary: TagResourceRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: UntagResourceResponse
-      versionInfo:
-        - added: 2018-11-25
+      type: object
     - $key: UntagResourceRequest
+      type: object
       properties:
         - name: ResourceARN
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a48
         - name: TagKeys
           required: true
           schema:
+            &a96
+            type: alias
             target:
-              &a64
+              &a95
               type: array
               elementSchema:
-                target: *a1
-                versionInfo:
-                  - added: 2018-11-25
-              versionInfo:
-                - added: 2018-11-25
-            versionInfo:
-              - added: 2018-11-25
+                type: alias
+                target: *a49
       summary: UntagResourceRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: UpdateApplicationResponse
+      type: object
       properties:
         - name: ApplicationInfo
           schema:
-            target: *a13
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            type: alias
+            target: *a23
     - $key: UpdateApplicationRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: OpsCenterEnabled
           schema:
-            target: *a5
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a7
         - name: CWEMonitorEnabled
           schema:
-            target: *a5
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a7
         - name: OpsItemSNSTopicArn
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a24
         - name: RemoveSNSTopic
           schema:
-            target: *a5
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a7
       summary: UpdateApplicationRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: UpdateComponentResponse
-      versionInfo:
-        - added: 2018-11-25
+      type: object
     - $key: UpdateComponentRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: ComponentName
           required: true
           schema:
-            target: *a15
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a1
         - name: NewComponentName
           schema:
-            target:
-              target: *a1
-              versionInfo:
-                - added: 2018-11-25
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a1
         - name: ResourceList
           schema:
-            target: *a16
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a26
       summary: UpdateComponentRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: UpdateComponentConfigurationResponse
-      versionInfo:
-        - added: 2018-11-25
+      type: object
     - $key: UpdateComponentConfigurationRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: ComponentName
           required: true
           schema:
-            target: *a15
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a1
         - name: Monitor
           schema:
-            target: *a5
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a7
         - name: Tier
           schema:
-            target: *a6
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a15
         - name: ComponentConfiguration
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a31
       summary: UpdateComponentConfigurationRequest
-      versionInfo:
-        - added: 2018-11-25
     - $key: UpdateLogPatternResponse
+      type: object
       properties:
         - name: ResourceGroupName
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: LogPattern
           schema:
-            target: *a17
-            versionInfo:
-              - added: 2018-11-25
-      versionInfo:
-        - added: 2018-11-25
+            type: alias
+            target: *a27
     - $key: UpdateLogPatternRequest
+      type: object
       properties:
         - name: ResourceGroupName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a14
         - name: PatternSetName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a11
         - name: PatternName
           required: true
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a28
         - name: Pattern
           schema:
-            target: *a1
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a29
         - name: Rank
           schema:
-            target: *a4
-            versionInfo:
-              - added: 2018-11-25
+            type: alias
+            target: *a6
       summary: UpdateLogPatternRequest
-      versionInfo:
-        - added: 2018-11-25
   aliases:
-    - *a33
-    - *a34
-    - *a35
-    - *a36
-    - *a37
-    - constraints:
-        - name: MaximumElements
-          count: 200
-        - name: MinimumElements
-          count: 0
-      target: *a32
-    - *a38
-    - *a39
-    - *a40
-    - *a41
-    - *a42
-    - *a43
-    - *a44
-    - *a45
-    - *a46
-    - *a47
-    - *a48
-    - *a49
+    - *a14
     - *a50
     - *a51
+    - *a24
     - *a52
     - *a53
     - *a54
     - *a55
-    - *a27
+    - *a49
     - *a56
     - *a57
     - *a58
     - *a59
+    - type: alias
+      constraints:
+        - name: MaximumElements
+          type: constraint
+          count: 200
+        - name: MinimumElements
+          type: constraint
+          count: 0
+      target: *a47
     - *a60
     - *a61
     - *a62
     - *a63
-    - constraints:
+    - *a11
+    - *a64
+    - *a28
+    - *a65
+    - *a29
+    - *a66
+    - *a67
+    - *a68
+    - *a69
+    - *a70
+    - *a31
+    - *a71
+    - *a33
+    - *a72
+    - *a73
+    - *a74
+    - *a75
+    - *a76
+    - *a77
+    - *a36
+    - *a78
+    - *a79
+    - *a80
+    - *a81
+    - *a82
+    - *a83
+    - *a84
+    - *a85
+    - *a41
+    - *a86
+    - *a87
+    - *a88
+    - *a89
+    - *a90
+    - *a91
+    - *a92
+    - *a93
+    - *a94
+    - type: alias
+      constraints:
         - name: MaximumElements
+          type: constraint
           count: 200
         - name: MinimumElements
+          type: constraint
           count: 0
-      target: *a64
+      target: *a95
+    - *a96

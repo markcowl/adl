@@ -5,8 +5,6 @@ metaData:
     - name: Support
       email: support@github.com
       role: author
-      versionInfo:
-        - added: 9.0.0
   description: >-
     # Introduction
 
@@ -14,11 +12,7 @@ metaData:
     This describes the resources that make up the official GitHub REST API v3. If you have any problems or requests, please contact [GitHub Support](https://github.com/contact).
   licenses:
     - name: MIT
-      versionInfo:
-        - added: 9.0.0
   termsOfService: https://help.github.com/articles/github-terms-of-service/
-  versionInfo:
-    - added: 9.0.0
   attic:
     x-apisguru-categories:
       - collaboration

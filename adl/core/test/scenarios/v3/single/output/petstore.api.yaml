@@ -3,65 +3,41 @@ metaData:
   name: Swagger Petstore
   licenses:
     - name: MIT
-      versionInfo:
-        - added: 1.0.0
-  versionInfo:
-    - added: 1.0.0
 schemas:
   primitives:
     - &a1
       type: int64
-      versionInfo:
-        - added: 1.0.0
     - &a2
       type: string
     - type: array
       elementSchema:
-        &a6
+        &a5
+        type: alias
         target:
           &a3
           $key: Pet
+          type: object
           properties:
             - name: id
               required: true
               schema: *a1
             - name: name
               required: true
-              schema:
-                &a5
-                target: *a2
-                versionInfo:
-                  - added: 1.0.0
+              schema: *a2
             - name: tag
-              schema:
-                target: *a2
-                versionInfo:
-                  - added: 1.0.0
-          versionInfo:
-            - added: 1.0.0
-        versionInfo:
-          - added: 1.0.0
-      versionInfo:
-        - added: 1.0.0
+              schema: *a2
     - &a4
       type: int32
-      versionInfo:
-        - added: 1.0.0
   objects:
     - *a3
     - $key: Error
+      type: object
       properties:
         - name: code
           required: true
           schema: *a4
         - name: message
           required: true
-          schema:
-            target: *a2
-            versionInfo:
-              - added: 1.0.0
-      versionInfo:
-        - added: 1.0.0
+          schema: *a2
   aliases:
     - *a5
-    - *a6

@@ -7,16 +7,16 @@ import { use } from '@azure-tools/sourcemap';
 
 async function addExtensionsToAttic(element: Element, input: any) {
   for (const { key, value } of vendorExtensions(input)) {
-    element.addToAttic(key, use(value));
+    element.addToAttic(key, use(value, true));
   }
   return element;
 }
 
 async function processContact(contact: v3.Contact, $: Context) {
   const result = new Contact(ContactRole.Author, {
-    name: use(contact.name),
-    email: use(contact.email),
-    url: use(contact.url),
+    name: contact.name,
+    email: contact.email,
+    url: contact.url,
   });
 
   // add remaining extensions to attic. 

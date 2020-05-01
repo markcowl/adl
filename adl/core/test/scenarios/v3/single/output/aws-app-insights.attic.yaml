@@ -2031,12 +2031,6 @@ components:
           description: The log pattern.
         Rank:
           description: Rank of the log pattern.
-    AmazonResourceName:
-      minLength: 1
-      maxLength: 1011
-    Tier:
-      minLength: 1
-      maxLength: 50
     ApplicationComponent:
       properties:
         ComponentName:
@@ -2048,13 +2042,6 @@ components:
           description: The stack tier of the application component.
         Monitor:
           description: "Indicates whether the application component is monitored. "
-    ResourceGroupName:
-      pattern: "[a-zA-Z0-9\\.\\-_]*"
-      minLength: 1
-      maxLength: 256
-    OpsItemSNSTopicArn:
-      minLength: 20
-      maxLength: 300
     ApplicationInfo:
       properties:
         ResourceGroupName:
@@ -2078,9 +2065,6 @@ components:
             <ul> <li> <p>“Configuring application, detected 1 Errors, 3
             Warnings”</p> </li> <li> <p>“Configuring application, detected 1
             Unconfigured Components”</p> </li> </ul>
-    ComponentConfiguration:
-      minLength: 1
-      maxLength: 10000
     ConfigurationEventTime:
       format: date-time
     ConfigurationEvent:
@@ -2100,17 +2084,6 @@ components:
         EventResourceName:
           description: " The name of the resource Application Insights attempted to
             configure. "
-    LogPatternSetName:
-      pattern: "[a-zA-Z0-9\\.\\-_]*"
-      minLength: 1
-      maxLength: 30
-    LogPatternName:
-      pattern: "[a-zA-Z0-9\\.\\-_]*"
-      minLength: 1
-      maxLength: 50
-    LogPatternRegex:
-      minLength: 1
-      maxLength: 50
     LogPattern:
       properties:
         PatternSetName:
@@ -2128,10 +2101,6 @@ components:
             can contains at many as 50 characters, and it cannot be empty.
         Rank:
           description: Rank of the log pattern.
-    ObservationId:
-      pattern: o-[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}
-      minLength: 38
-      maxLength: 38
     Observation:
       properties:
         Id:
@@ -2211,10 +2180,6 @@ components:
           description: " The name of the X-Ray node. "
         XRayNodeType:
           description: " The type of the X-Ray node. "
-    ProblemId:
-      pattern: p-[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}
-      minLength: 38
-      maxLength: 38
     RelatedObservations:
       properties:
         ObservationList:
@@ -2251,15 +2216,6 @@ components:
       format: date-time
     StartTime:
       format: date-time
-    ResourceARN:
-      minLength: 1
-      maxLength: 1011
-    TagKey:
-      minLength: 1
-      maxLength: 128
-    TagValue:
-      minLength: 0
-      maxLength: 256
     Tag:
       properties:
         Key:

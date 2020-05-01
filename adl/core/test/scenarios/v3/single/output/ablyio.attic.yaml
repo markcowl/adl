@@ -858,11 +858,6 @@ paths:
       - $ref: "#/components/parameters/versionHeader"
       - $ref: "#/components/parameters/responseFormat"
 components:
-  headers:
-    Link:
-      schema:
-        pattern: (<(.*)?>; rel=\"(first|current|last)?\",)*(<(.*)?>;
-          rel=\"(first|current|last)?\")+
   parameters:
     channelId:
       description: The [Channel's ID](https://www.ably.io/documentation/rest/channels).

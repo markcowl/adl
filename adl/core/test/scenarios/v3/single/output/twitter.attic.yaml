@@ -569,7 +569,6 @@ components:
           description: Description of the context annotation domain.
         id:
           description: The unique id for a context annotation domain.
-          pattern: ^[0-9]{1,19}$
         name:
           description: Name of the context annotation domain.
     ContextAnnotationEntityFields:
@@ -578,11 +577,8 @@ components:
           description: Description of the context annotation entity.
         id:
           description: The unique id for a context annotation entity.
-          pattern: ^[0-9]{1,19}$
         name:
           description: Name of the context annotation entity.
-    CountryCode:
-      pattern: ^[A-Z]{2}$
     DisallowedResourceProblem:
       allOf:
         - $ref: "#/components/schemas/ProblemFields"
@@ -642,7 +638,6 @@ components:
       description: The height of the media in pixels
     MediaKey:
       description: The Media Key identifier for this attachment.
-      pattern: ^([0-9]+)_([0-9]+)$
     MediaWidth:
       description: The width of the media in pixels
     MentionEntity:
@@ -667,7 +662,6 @@ components:
           format: date-time
     PollId:
       description: Unique identifier of this poll.
-      pattern: ^[0-9]{1,19}$
     PollOption:
       properties:
         label:
@@ -709,8 +703,6 @@ components:
       allOf:
         - $ref: "#/components/schemas/ProblemFields"
       properties:
-        parameter:
-          minLength: 1
         value:
           description: Value will match the schema of the field.
     ResourceUnauthorizedProblem:
@@ -732,10 +724,8 @@ components:
             media_keys:
               description: A list of Media Keys for each one of the media attachments (if
                 media are attached).
-              minItems: 1
             poll_ids:
               description: A list of poll IDs (if polls are attached).
-              minItems: 1
         created_at:
           description: Creation time of the Tweet.
           format: date-time
@@ -768,7 +758,6 @@ components:
         order to avoid complications with languages and tools that cannot handle
         large integers.
       example: "120897978112909812"
-      pattern: ^[0-9]{1,19}$
     TweetLookupResponse:
       properties:
         data:
@@ -785,13 +774,11 @@ components:
           properties:
             newest_id:
               description: Most recent Tweet Id returned by search query
-              pattern: ^[0-9]{1,19}$
             next_token:
               description: This value is used to get the next 'page' of results by providing
                 it to the next_token parameter.
             oldest_id:
               description: Oldest Tweet Id returned by search query
-              pattern: ^[0-9]{1,19}$
             result_count:
               description: Number of search query results
     TweetWithheld:
@@ -883,7 +870,6 @@ components:
         order to avoid complications with languages and tools that cannot handle
         large integers.
       example: "712089797812"
-      pattern: ^[0-9]{1,19}$
     UserLookupResponse:
       properties:
         data:
@@ -892,7 +878,6 @@ components:
           minItems: 1
     UserName:
       description: The Twitter handle (screen name) of this user.
-      pattern: ^[A-Za-z0-9_]{1,15}$
     UserWithheld:
       properties:
         country_codes:

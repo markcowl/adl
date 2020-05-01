@@ -47,91 +47,101 @@ export async function processSchemaReference(ref: JsonReference<v3.Schema>, $: C
 }
 
 export async function processSchema(schema: v3.Schema, $: Context, options?: { isAnonymous?: boolean; forUnderlyingEnumType?: boolean }): Promise<Schema | undefined> {
-  // if enum or x-ms-enum is specified, process as enum
-  // but not if we're already processing the enum and are now processing its underlying type
-  if (!options?.forUnderlyingEnumType && (schema.enum || schema['x-ms-enum'])) {
-    return processEnumSchema(schema, $);
-  }
 
-  // mark this used once.
-  use(schema.type);
+  try {
+    // if enum or x-ms-enum is specified, process as enum
+    // but not if we're already processing the enum and are now processing its underlying type
+    if (!options?.forUnderlyingEnumType && (schema.enum || schema['x-ms-enum'])) {
+      return processEnumSchema(schema, $);
+    }
 
-  switch (schema.type?.valueOf()) {
-    case v3.JsonType.String:
-      return processStringSchema(schema, $);
+    // mark this used once.
+    use(schema.type);
 
-    case v3.JsonType.Boolean:
-      return processBooleanSchema(schema, $);
-
-    case v3.JsonType.Array:
-      return processArraySchema(schema, $);
-
-    case v3.JsonType.Number:
-      return processNumberSchema(schema, $);
-
-    case v3.JsonType.Integer:
-      return processIntegerSchema(schema, $);
-
-    case v3.JsonType.File:
-      return processFileSchema(schema, $);
-
-    case v3.JsonType.Object:
-      return processObjectSchema(schema, $);
-
-    case undefined:
-      // dig deeper to figure out what this should be.
-
-      // first, let's see if we can tell by format:
-      switch (schema.format?.valueOf()) {
-        // is it some kind of binary response?
-        case StringFormat.Binary:
-        case StringFormat.File:
-          return processFileSchema(schema, $);
-      }
-
-      if (length(schema.properties) > 0 || schema.discriminator || (<any>schema)['x-ms-discriminator-value'] || schema.additionalProperties !== undefined || schema.maxProperties !== undefined || schema.minProperties !== undefined) {
-        // talk about properties or discriminator, pretty much mean object
-        return processObjectSchema(schema, $);
-      }
-
-
-      if (schema.allOf) {
-        // this could be an 'inheritance'
-        // or a back-door way to $ref 
-
-
-      }
-
-      if (schema.anyOf) {
-        // if they have anyOf, that means it has to be one or more 
-        // of those types, but they could also have other properties
-        // in here too.
-      }
-
-      if (schema.oneOf) {
-        // if they have oneOf, that means it has to be one  
-        // of those types, but they could also have other properties
-        // in here too.
-      }
-
-      if (schema.items || schema.maxItems !== undefined || schema.uniqueItems) {
-        // these only apply to arrays
-        return processArraySchema(schema, $);
-      }
-
-      if (schema.pattern || schema.maxLength !== undefined || schema.minLength !== undefined) {
-        // these only apply to strings
+    switch (schema.type?.valueOf()) {
+      case v3.JsonType.String:
         return processStringSchema(schema, $);
-      }
 
-      if (schema.minimum !== undefined || schema.maximum !== undefined || schema.exclusiveMaximum !== undefined || schema.exclusiveMinimum !== undefined || schema.multipleOf !== undefined) {
-        // these only apply to numbers
+      case v3.JsonType.Boolean:
+        return processBooleanSchema(schema, $);
+
+      case v3.JsonType.Array:
+        return processArraySchema(schema, $);
+
+      case v3.JsonType.Number:
         return processNumberSchema(schema, $);
-      }
-      break;
+
+      case v3.JsonType.Integer:
+        return processIntegerSchema(schema, $);
+
+      case v3.JsonType.File:
+        return processFileSchema(schema, $);
+
+      case v3.JsonType.Object:
+        return processObjectSchema(schema, $);
+
+      case undefined:
+        // dig deeper to figure out what this should be.
+
+        // first, let's see if we can tell by format:
+        switch (schema.format?.valueOf()) {
+          // is it some kind of binary response?
+          case StringFormat.Binary:
+          case StringFormat.File:
+            return processFileSchema(schema, $);
+        }
+
+        if (length(schema.properties) > 0 || schema.discriminator || (<any>schema)['x-ms-discriminator-value'] || schema.additionalProperties !== undefined || schema.maxProperties !== undefined || schema.minProperties !== undefined) {
+          // talk about properties or discriminator, pretty much mean object
+          return processObjectSchema(schema, $);
+        }
+
+
+        if (schema.allOf) {
+          // this could be an 'inheritance'
+          // or a back-door way to $ref 
+
+
+        }
+
+        if (schema.anyOf) {
+          // if they have anyOf, that means it has to be one or more 
+          // of those types, but they could also have other properties
+          // in here too.
+        }
+
+        if (schema.oneOf) {
+          // if they have oneOf, that means it has to be one  
+          // of those types, but they could also have other properties
+          // in here too.
+        }
+
+        if (schema.items || schema.maxItems !== undefined || schema.uniqueItems) {
+          // these only apply to arrays
+          return processArraySchema(schema, $);
+        }
+
+        if (schema.pattern || schema.maxLength !== undefined || schema.minLength !== undefined) {
+          // these only apply to strings
+          return processStringSchema(schema, $);
+        }
+
+        if (schema.minimum !== undefined || schema.maximum !== undefined || schema.exclusiveMaximum !== undefined || schema.exclusiveMinimum !== undefined || schema.multipleOf !== undefined) {
+          // these only apply to numbers
+          return processNumberSchema(schema, $);
+        }
+        break;
+    }
+    // if we didn't catch what it could be, they could be aiming for 'any' (grrrrr)
+    return processAnySchema(schema, $);
+  } finally {
+
+    // turning this on will show unused properties 
+    // const unused = unusedMembers(schema);
+    // for (const each of unused) {
+    //  $.warn(`Unused property ${each} in processed schema.`, schema);
+    // }
   }
-  // if we didn't catch what it could be, they could be aiming for 'any' (grrrrr)
-  return processAnySchema(schema, $);
 }
 
 export async function processStringSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
@@ -171,7 +181,7 @@ export async function processStringSchema(schema: v3.Schema, $: Context): Promis
   }
   // we're going to treat it as a standard string schema
   // if this is just a plain string with no adornments, just return the common string instance. 
-  if (unusedMembers(schema)) {
+  if (length(unusedMembers(schema)) === 0) {
     return $.api.schemas.String;
   }
 
@@ -287,7 +297,7 @@ export async function processNumberSchema(schema: v3.Schema, $: Context): Promis
 
 function constrainNumericSchema(schema: v3.Schema, $: Context, target: Schema): Schema {
   // if this is just a number with no adornments, just return the common instance
-  if (!unusedMembers(schema)) {
+  if (length(unusedMembers(schema)) === 0) {
     return target;
   }
 
@@ -318,7 +328,7 @@ export async function processArraySchema(schema: v3.Schema, $: Context): Promise
   const elementSchema = await $.processPossibleReference(processSchemaReference, processSchema, use(schema.items)) || $.api.schemas.Any;
 
   const result = new ArraySchema(elementSchema);
-  if (!unusedMembers(schema)) {
+  if (length(unusedMembers(schema)) === 0) {
     $.api.schemas.primitives.push(result);
     return result;
   }

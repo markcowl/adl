@@ -74,8 +74,7 @@ export async function processHeader(header: v3.Header, $: Context, options?: { i
     // use the schema
     schema,
     // set a specific value 
-    // description: header.description ? `-- test -- ${use(header.description)}` : undefined,
-    description: using(header.description, `-- test -- ${header.description}`),
+    description: header.description,
     // set the style value
     style: use(header.style),
   });

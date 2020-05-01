@@ -85,7 +85,8 @@ export const elementTag = <Schema.CustomTag>{
       }
 
       switch (key) {
-        case '$path':
+        // temporary -- this is just noisy while we only have one version to play with.
+        case 'versionInfo':
         case 'internalData':
           continue;
       }

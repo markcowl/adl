@@ -9,6 +9,16 @@ export class Schema extends Element {
   /* long description */
   description?: string;
 
+  /**
+   * 
+   * @param type the schema 'type' that this schema represents. 
+   * @param initializer optional object initializer
+   */
+  constructor(public type: string, initializer?: Partial<Schema>) {
+    super();
+    this.initialize(initializer);
+  }
+
 }
 
 export class Property extends Element {
@@ -31,7 +41,7 @@ export class ObjectSchema extends Schema {
   minProperties?: number;
 
   constructor(public $key: string, initializer?: Partial<ObjectSchema>) {
-    super();
+    super('object');
     this.initialize(initializer);
   }
 }
@@ -40,8 +50,8 @@ export class Constant extends Schema {
   name?: string;
   description?: string;
 
-  constructor(public type: Schema, public value: any, initializer?: Partial<Constant>) {
-    super();
+  constructor(public valueSchema: Schema, public value: any, initializer?: Partial<Constant>) {
+    super('constant');
     this.initialize(initializer);
   }
 }
@@ -51,15 +61,15 @@ export class Enum extends Schema {
   name?: string;
   sealed = false;
 
-  constructor(public type: Schema, initializer?: Partial<Enum>) {
-    super();
+  constructor(public elementSchema: Schema, initializer?: Partial<Enum>) {
+    super('enum');
     this.initialize(initializer);
   }
 }
 
 export class Constraint extends Schema {
   constructor(public name: string, initializer?: Partial<Constraint>) {
-    super();
+    super('constraint');
     this.initialize(initializer);
   }
 }
@@ -145,15 +155,15 @@ export class Default extends Schema {
 export class Alias extends Schema {
   constraints = new ElementArray<Constraint>();
   // 
-  constructor(public target: Schema, initializer?: Partial<Alias>) {
-    super();
+  constructor(public targetSchema: Schema, initializer?: Partial<Alias>) {
+    super('alias');
     this.initialize(initializer);
   }
 }
 
 export class Primitive extends Schema {
-  constructor(public type: string, initializer?: Partial<Primitive>) {
-    super();
+  constructor(kind: string, initializer?: Partial<Primitive>) {
+    super(kind);
     this.initialize(initializer);
   }
 }
