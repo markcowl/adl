@@ -1,9 +1,9 @@
-import { unzip, JsonReference, StringFormat, isReference, IntegerFormat, NumberFormat } from '@azure-tools/openapi';
+import { unzip, JsonReference, StringFormat, isReference, IntegerFormat, NumberFormat, XMSEnumValue, XMSEnum } from '@azure-tools/openapi';
 import { values, length, items } from '@azure-tools/linq';
-import { Element } from '../../model/element';
+import { Element, ElementArray } from '../../model/element';
 import { v3 } from '@azure-tools/openapi';
 import { Context, ItemsOf } from './serializer';
-import { Alias, Schema, Schemas, Constraint, MaxLengthConstraint, MinLengthConstraint, ObjectSchema, Property, RegularExpressionConstraint, MinimumConstraint, MaximumConstraint, ExclusiveMinimumConstraint, ExclusiveMaximumConstraint, MultipleOfConstraint, ArraySchema, MaximumElementsConstraint, MinimumElementsConstraint, UniqueElementsConstraint } from '../../model/schema';
+import { Alias, Schema, Schemas, Constraint, MaxLengthConstraint, MinLengthConstraint, ObjectSchema, Property, RegularExpressionConstraint, MinimumConstraint, MaximumConstraint, ExclusiveMinimumConstraint, ExclusiveMaximumConstraint, MultipleOfConstraint, ArraySchema, MaximumElementsConstraint, MinimumElementsConstraint, UniqueElementsConstraint, Constant, Enum } from '../../model/schema';
 import { isObjectClean } from '../../support/visitor';
 import { use, anonymous, using, nameOf, unusedMembers } from '@azure-tools/sourcemap';
 
@@ -46,11 +46,10 @@ export async function processSchemaReference(ref: JsonReference<v3.Schema>, $: C
   return alias;
 }
 
-
-export async function processSchema(schema: v3.Schema, $: Context, isAnonymous = false): Promise<Schema | undefined> {
-
-  // is enum or x-ms-enum specified?
-  if (schema.enum || (<any>schema)['x-ms-enum']) {
+export async function processSchema(schema: v3.Schema, $: Context, options?: { isAnonymous?: boolean; forUnderlyingEnumType?: boolean }): Promise<Schema | undefined> {
+  // if enum or x-ms-enum is specified, process as enum
+  // but not if we're already processing the enum and are now processing its underlying type
+  if (!options?.forUnderlyingEnumType && (schema.enum || (<any>schema)['x-ms-enum'])) {
     return processEnumSchema(schema, $);
   }
 
@@ -392,16 +391,31 @@ export async function processFileSchema(schema: v3.Schema, $: Context): Promise<
 }
 
 export async function processEnumSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  const xmsEnum = (<any>schema)['x-ms-enum'];
+  const schemaEnum = use(schema.enum) ?? [];
+  const xmsEnum = use(schema['x-ms-enum']) ?? {};
+  const values: Array<XMSEnumValue> = xmsEnum.values ?? schemaEnum.map(v => ({ value: v }));
 
-  if (length(schema.enum) === 0 && length(xmsEnum) === 0) {
-    // an enum with no values?
-  }
-  if (length(schema.enum) === 1 || length(xmsEnum) === 1) {
-    // a single value enum 
+  // not using $.process here because we need to process a node that is already marked
+  const type = await processSchema(schema, $, { forUnderlyingEnumType: true }) ?? $.api.schemas.Any;
+  const result = new Enum(type);
+  result.sealed = xmsEnum.modelAsString ?? false;
+  result.name = xmsEnum.name;
 
+  for (const each of values) {
+    const constant = new Constant(type, use(each.value));
+    constant.name = use(each.name);
+    constant.description = use(each.description);
+    result.values.push(constant);
   }
-  return undefined;
+
+  // an enum with only one value is treated as single constant directly
+  if (result.values.length == 1) {
+    $.api.schemas.constants.push(result.values[0]);
+    return result.values[0];
+  }
+
+  $.api.schemas.enums.push(result);
+  return result;
 }
 
 export async function processAnySchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {

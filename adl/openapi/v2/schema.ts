@@ -4,6 +4,7 @@ import { ExternalDocumentation } from '../common/external-docs';
 import { JsonReference } from '../common/json-reference';
 import { JsonType } from '../common/jsontype';
 import { VendorExtensions } from '../common/vendor-extensions';
+import { SchemaExtensions } from '../v3/openapiv3';
 /**
  * The Schema Object allows the definition of input and output data types. These types can be objects, but also primitives and arrays.
  * This object is based on the JSON Schema Specification Draft 4 and uses a predefined subset of it.
@@ -67,7 +68,7 @@ export interface Schema extends SchemaBase {
   default?: string | boolean | number | Record<string, any>;
 }
 
-export interface SchemaBase extends VendorExtensions {
+export interface SchemaBase extends VendorExtensions, SchemaExtensions {
   /** the JSON type for the schema */
   type?: JsonType;
 

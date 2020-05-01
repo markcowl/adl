@@ -8,6 +8,7 @@ export * from './license';
 export * from './tag';
 export * from './uri';
 export * from './vendor-extensions';
+export * from './schema-extensions';
 export * from './xml';
 export * from './format';
 

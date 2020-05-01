@@ -157,7 +157,7 @@ export class Visitor<TSourceModel extends OAIModel> {
     throw new Error(`unable to resolve $ref ${path}`);
   }
 
-  async processRef<TInput, TOutput extends Element>(sourceFile: string, path: Path, action: fnAction<TSourceModel, TInput, TOutput>): Promise<TOutput | undefined> {
+  async processRef<TInput, TOutput extends Element, TOptions>(sourceFile: string, path: Path, action: fnAction<TSourceModel, TInput, TOutput, TOptions>): Promise<TOutput | undefined> {
     let targetContext = await this.sourceFiles.get(sourceFile);
     if (!targetContext) {
       // the file we're looking for isn't there
@@ -174,7 +174,8 @@ export class Visitor<TSourceModel extends OAIModel> {
   }
 }
 
-type fnAction<TSourceModel extends OAIModel, TInput, TOutput> = (value: NonNullable<TInput>, context: Context<TSourceModel>, isAnonymous?: boolean) => Promise<TOutput | undefined>;
+type fnAction<TSourceModel extends OAIModel, TInput, TOutput, TOptions = {}> =
+  (value: NonNullable<TInput>, context: Context<TSourceModel>, options?: TOptions) => Promise<TOutput | undefined>;
 
 export class Context<TSourceModel extends OAIModel> {
   constructor(
@@ -199,11 +200,7 @@ export class Context<TSourceModel extends OAIModel> {
     return this.visitor.api;
   }
 
-  async processAnonymous<TInput, TOutput extends Element>(): Promise<TOutput | undefined> {
-    throw undefined;
-  }
-
-  async process<TInput, TOutput extends Element>(action: fnAction<TSourceModel, TInput, TOutput>, value: TInput | NonNullable<TInput>, isAnonymous = false): Promise<TOutput | undefined> {
+  async process<TInput, TOutput extends Element, TOptions = {}>(action: fnAction<TSourceModel, TInput, TOutput, TOptions>, value: TInput | NonNullable<TInput>, options?: TOptions): Promise<TOutput | undefined> {
 
     if (value !== undefined && value !== null) {
 
@@ -215,7 +212,7 @@ export class Context<TSourceModel extends OAIModel> {
       }
 
       // ok, call the action
-      result = await action(value!, this, isAnonymous);
+      result = await action(value!, this, options);
 
       // we're going to mark the original value as used
       // note: does not mark the children as used. 
