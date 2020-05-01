@@ -3,7 +3,7 @@ import { Metadata, Contact, ContactRole, License, Reference } from '../../model/
 import { Context } from './serializer';
 import { Element } from '../../model/element';
 import { is } from '../../support/visitor';
-import { use, isProxy } from '@azure-tools/sourcemap';
+import { use } from '@azure-tools/sourcemap';
 
 async function addExtensionsToAttic(element: Element, input: any) {
   for (const { key, value } of vendorExtensions(input)) {
