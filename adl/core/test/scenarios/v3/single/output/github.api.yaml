@@ -13,9 +13,9 @@ metaData:
   licenses:
     - name: MIT
   references:
-    - description: GitHub v3 REST API
+    - name: external-documentation
+      description: GitHub v3 REST API
       location: https://developer.github.com/v3/
-      tagName: external-documentation
   termsOfService: https://help.github.com/articles/github-terms-of-service/
   attic:
     x-apisguru-categories:

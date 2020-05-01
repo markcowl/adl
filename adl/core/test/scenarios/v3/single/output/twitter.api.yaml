@@ -12,25 +12,25 @@ metaData:
     - name: Twitter Developer Agreement and Policy
       url: https://developer.twitter.com/en/developer-terms/agreement-and-policy.html
   references:
-    - description: Find out more about Swagger
+    - name: external-documentation
+      description: Find out more about Swagger
       location: http://swagger.io
-      tagName: external-documentation
-    - description: Find out more
+    - name: General
+      description: Find out more
       location: https://developer.twitter.com/en/docs/labs
       summary: Miscellaneous endpoints for general API functionality
-      tagName: General
-    - description: Find out more
+    - name: Search
+      description: Find out more
       location: https://developer.twitter.com/en/docs/labs/recent-search/overview
       summary: APIs related to Recent Search
-      tagName: Search
-    - description: Find out more
+    - name: Tweets
+      description: Find out more
       location: https://developer.twitter.com/en/docs/labs/tweets-and-users/overview
       summary: APIs related to Tweets
-      tagName: Tweets
-    - description: Find out more
+    - name: Users
+      description: Find out more
       location: https://developer.twitter.com/en/docs/labs/tweets-and-users/overview
       summary: APIs related to Users
-      tagName: Users
   termsOfService: https://developer.twitter.com/en/developer-terms/agreement-and-policy.html
   attic:
     x-apisguru-categories:

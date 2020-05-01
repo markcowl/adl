@@ -51,7 +51,7 @@ export class Reference extends Element {
   /** A link to additional information. */
   location?: URL;
 
-  constructor(public tagName: string, initializer?: Partial<Reference>) {
+  constructor(public name: string, initializer?: Partial<Reference>) {
     super();
     this.initialize(initializer);
   }
