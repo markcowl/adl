@@ -401,7 +401,7 @@ export async function processEnumSchema(schema: v3.Schema, $: Context): Promise<
   // not using $.process here because we need to process a node that is already marked
   const type = await processSchema(schema, $, { forUnderlyingEnumType: true }) ?? $.api.schemas.Any;
   const result = new Enum(type);
-  result.sealed = xmsEnum.modelAsString ?? false;
+  result.sealed = !xmsEnum.modelAsString;
   result.name = xmsEnum.name;
 
   for (const each of values) {

@@ -158,7 +158,7 @@ schemas:
         &a2
         type: alias
         targetSchema: *a1
-      sealed: false
+      sealed: true
       values:
         - type: constant
           value: official-client-forbidden
@@ -172,7 +172,7 @@ schemas:
         &a3
         type: alias
         targetSchema: *a1
-      sealed: false
+      sealed: true
       values:
         - type: constant
           value: data
@@ -186,7 +186,7 @@ schemas:
         &a4
         type: alias
         targetSchema: *a1
-      sealed: false
+      sealed: true
       values:
         - type: constant
           value: poi
@@ -212,7 +212,7 @@ schemas:
         &a5
         type: alias
         targetSchema: *a1
-      sealed: false
+      sealed: true
       values:
         - type: constant
           value: open
@@ -226,7 +226,7 @@ schemas:
         &a6
         type: alias
         targetSchema: *a1
-      sealed: false
+      sealed: true
       values:
         - type: constant
           value: retweeted
@@ -243,7 +243,7 @@ schemas:
         &a7
         type: alias
         targetSchema: *a1
-      sealed: false
+      sealed: true
       values:
         - type: constant
           value: tweet
@@ -257,7 +257,7 @@ schemas:
         &a8
         type: alias
         targetSchema: *a1
-      sealed: false
+      sealed: true
       values:
         - type: constant
           value: user
@@ -271,7 +271,7 @@ schemas:
         &a9
         type: alias
         targetSchema: *a1
-      sealed: false
+      sealed: true
       values:
         - type: constant
           value: Daily
@@ -285,7 +285,7 @@ schemas:
         &a10
         type: alias
         targetSchema: *a1
-      sealed: false
+      sealed: true
       values:
         - type: constant
           value: Account
@@ -1127,7 +1127,7 @@ schemas:
               &a66
               type: alias
               targetSchema: *a1
-            sealed: false
+            sealed: true
             values:
               - type: constant
                 value: data

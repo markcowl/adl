@@ -146,7 +146,7 @@ schemas:
                     &a3
                     type: alias
                     targetSchema: *a1
-                  sealed: false
+                  sealed: true
                   values:
                     - type: constant
                       value: ERROR
@@ -189,7 +189,7 @@ schemas:
                     &a5
                     type: alias
                     targetSchema: *a1
-                  sealed: false
+                  sealed: true
                   values:
                     - type: constant
                       value: EC2
@@ -374,7 +374,7 @@ schemas:
                         type: constraint
                         length: 1
                     targetSchema: *a1
-                  sealed: false
+                  sealed: true
                   values:
                     - type: constant
                       value: DEFAULT
@@ -421,7 +421,7 @@ schemas:
                     &a9
                     type: alias
                     targetSchema: *a1
-                  sealed: false
+                  sealed: true
                   values:
                     - type: constant
                       value: INFO
@@ -443,7 +443,7 @@ schemas:
                     &a10
                     type: alias
                     targetSchema: *a1
-                  sealed: false
+                  sealed: true
                   values:
                     - type: constant
                       value: CLOUDWATCH_ALARM
@@ -585,7 +585,7 @@ schemas:
                     &a12
                     type: alias
                     targetSchema: *a1
-                  sealed: false
+                  sealed: true
                   values:
                     - type: constant
                       value: IGNORE
@@ -619,7 +619,7 @@ schemas:
                     &a13
                     type: alias
                     targetSchema: *a1
-                  sealed: false
+                  sealed: true
                   values:
                     - type: constant
                       value: Low
@@ -661,7 +661,7 @@ schemas:
         &a22
         type: alias
         targetSchema: *a1
-      sealed: false
+      sealed: true
       values:
         - type: constant
           value: NOT_SPECIFIED
