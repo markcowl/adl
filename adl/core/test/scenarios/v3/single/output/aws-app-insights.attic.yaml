@@ -1,6 +1,3 @@
-externalDocs:
-  description: Amazon Web Services documentation
-  url: https://docs.aws.amazon.com/applicationinsights/
 servers:
   - url: http://applicationinsights.{region}.amazonaws.com
     variables:

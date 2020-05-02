@@ -1,5 +1,5 @@
 import { v3, vendorExtensions } from '@azure-tools/openapi';
-import { Metadata, Contact, ContactRole, License } from '../../model/Metadata';
+import { Metadata, Contact, ContactRole, License, Reference } from '../../model/Metadata';
 import { Context } from './serializer';
 import { Element } from '../../model/element';
 import { is } from '../../support/visitor';
@@ -66,10 +66,30 @@ export async function processInfo(info: v3.Info, $: Context): Promise<Metadata |
 
 
 export async function processExternalDocs(externalDocs: v3.ExternalDocumentation, $: Context): Promise<Element | undefined> {
-  return undefined;
+
+  // external docs are just a kind of reference. 
+
+  const reference = new Reference('external-documentation', {
+    location: externalDocs.url,
+    description: externalDocs.description,
+  });
+  await addExtensionsToAttic(reference, externalDocs);
+
+  $.api.metaData.references.push(reference);
+  return reference;
 }
 
 
-export async function processTags(tags: Array<v3.Tag>, $: Context): Promise<Element | undefined> {
-  return undefined;
+export async function processTags(tag: v3.Tag, $: Context) {
+  const reference = new Reference(tag.name, {
+    summary: tag.description,
+    location: tag.externalDocs ? tag.externalDocs.url : undefined,
+    description: tag.externalDocs ? tag.externalDocs.description : undefined,
+  });
+  use(tag.externalDocs);
+
+  await addExtensionsToAttic(reference, tag);
+
+  $.api.metaData.references.push(reference);
+  return reference;
 }

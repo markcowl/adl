@@ -35,6 +35,28 @@ export class Contact extends Element {
   }
 }
 
+export type URL = string;
+
+
+/**
+ * A tag is a bit of arbitrary information about the API.
+ */
+export class Reference extends Element {
+  /** A short description about the locationreference. Commonmark syntax can be used for rich text representation. */
+  summary?: string;
+
+  /** A description for the tag. Commonmark syntax can be used for rich text representation. */
+  description?: string;
+
+  /** A link to additional information. */
+  location?: URL;
+
+  constructor(public name: string, initializer?: Partial<Reference>) {
+    super();
+    this.initialize(initializer);
+  }
+}
+
 /** Information about the API Surface */
 export class Metadata extends Element {
   /** a short description of the API */
@@ -48,6 +70,10 @@ export class Metadata extends Element {
 
   /** a collection of contacts responsible for the API  */
   licenses = new ElementArray<License>();
+
+  /** a collection of reference information regarding the API  */
+  references = new ElementArray<Reference>();
+
 
   constructor(public name: string, initializer?: Partial<Metadata>) {
     super();

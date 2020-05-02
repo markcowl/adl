@@ -9,6 +9,11 @@ metaData:
   licenses:
     - name: Creative Commons Attribution 3.0
       url: http://creativecommons.org/licenses/by/3.0/
+  references:
+    - name: external-documentation
+      location: https://developers.google.com/analytics/
+    - name: data
+    - name: management
   termsOfService: https://developers.google.com/terms/
   attic:
     x-apiClientRegistration:

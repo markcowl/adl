@@ -45,19 +45,18 @@ async function processRoot(oai3: v3.Model, $: Context) {
     }
   }
 
+  await $.process(processInfo, oai3.info);
+  await $.process(processExternalDocs, oai3.externalDocs);
+  await $.processArray(processTags, oai3.tags, $.api.metaData.references);
 
   // components will have to be early, since other things will $ref them 
   await $.process(processComponents, oai3.components);
-  await $.process(processExternalDocs, oai3.externalDocs);
+
   await $.process(processServers, oai3.servers);
   await $.process(processSecurity, oai3.security);
-  await $.process(processTags, oai3.tags);
 
   // paths second to last
   await $.process(processPaths, oai3.paths);
-
-  // must go last, since we're going to be reading values out of it 
-  await $.process(processInfo, oai3.info);
 
   // we don't need this.
   use(oai3.openapi);

@@ -12,6 +12,10 @@ metaData:
     This describes the resources that make up the official GitHub REST API v3. If you have any problems or requests, please contact [GitHub Support](https://github.com/contact).
   licenses:
     - name: MIT
+  references:
+    - name: external-documentation
+      description: GitHub v3 REST API
+      location: https://developer.github.com/v3/
   termsOfService: https://help.github.com/articles/github-terms-of-service/
   attic:
     x-apisguru-categories:
