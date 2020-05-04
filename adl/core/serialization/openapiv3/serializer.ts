@@ -52,7 +52,7 @@ async function processRoot(oai3: v3.Model, $: Context) {
   // components will have to be early, since other things will $ref them 
   await $.process(processComponents, oai3.components);
 
-  await $.process(processServers, oai3.servers);
+  await $.processArray(processServers, oai3.servers, $.api.http.connections);
   await $.process(processSecurity, oai3.security);
 
   // paths second to last

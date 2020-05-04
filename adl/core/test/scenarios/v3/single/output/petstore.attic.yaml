@@ -1,5 +1,3 @@
-servers:
-  - url: http://petstore.swagger.io/v1
 paths:
   /pets:
     get:

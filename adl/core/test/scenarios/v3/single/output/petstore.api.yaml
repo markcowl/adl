@@ -1,4 +1,6 @@
-http: {}
+http:
+  connections:
+    - url: http://petstore.swagger.io/v1
 metaData:
   name: Swagger Petstore
   licenses:

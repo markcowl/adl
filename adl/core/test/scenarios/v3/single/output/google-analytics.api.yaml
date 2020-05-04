@@ -1,4 +1,6 @@
-http: {}
+http:
+  connections:
+    - url: https://www.googleapis.com/analytics/v2.4
 metaData:
   name: Google Analytics
   contacts:
