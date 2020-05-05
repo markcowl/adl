@@ -27,7 +27,7 @@ export class Parameter extends Element {
    * @param name the name of the parameter
    * @param initializer object initializer for this constructor
    */
-  constructor(public name: string, initializer: Partial<Parameter>) {
+  constructor(public name: string, initializer?: Partial<Parameter>) {
     super();
     this.initialize(initializer);
   }

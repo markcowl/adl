@@ -2,7 +2,7 @@ import { items, length, values } from '@azure-tools/linq';
 import { IntegerFormat, JsonReference, NumberFormat, StringFormat, unzip, v3, XMSEnumValue } from '@azure-tools/openapi';
 import { anonymous, nameOf, unusedMembers, use, using, isUsed } from '@azure-tools/sourcemap';
 import { Element } from '../../../model/element';
-import { Alias, AndSchema, AnyOfSchema, ArraySchema, Constant, DictionarySchema, Enum, ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ObjectSchema, Property, RegularExpressionConstraint, Schema, SchemaName, UniqueElementsConstraint, XorSchema } from '../../../model/schema';
+import { Alias, AndSchema, AnyOfSchema, ArraySchema, Constant, DictionarySchema, Enum, ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ObjectSchema, Property, RegularExpressionConstraint, Schema, SchemaName, UniqueElementsConstraint, XorSchema, ServerDefaultValue } from '../../../model/schema';
 import { isEnumSchema, isObjectSchema, isPrimitiveSchema } from '../common';
 import { Context, ItemsOf } from './serializer';
 import { fail } from 'assert';
@@ -380,6 +380,10 @@ export async function processStringSchema(schema: v3.Schema, $: Context): Promis
   // otherwise, we have to get the standard string and make an alias for it with the adornments. 
   const result = new Alias($.api.schemas.String, commonProperties(schema));
 
+  if (schema.default) {
+    result.defaults.push(new ServerDefaultValue(schema.default));
+  }
+
   if (schema.maxLength) {
     result.constraints.push(new MaxLengthConstraint(schema.maxLength));
   }
@@ -406,12 +410,22 @@ export async function processByteArraySchema(schema: v3.Schema, $: Context): Pro
   return $.api.schemas.ByteArray;
 }
 
+function addAliasWithDefault(schema: v3.Schema, resultSchema: Schema, $: Context) {
+  if (schema.default) {
+    const alias = new Alias(resultSchema, commonProperties(schema));
+    alias.defaults.push(new ServerDefaultValue(schema.default))
+    $.api.schemas.aliases.push(alias);
+    return alias;
+  }
+  return resultSchema;
+}
+
 export async function processCharSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
   if ($.forbiddenProperties(schema, ...stringProperties, ...objectProperties, ...arrayProperties, ...numberProperties)) {
     return undefined;
   }
 
-  return $.api.schemas.Char;
+  return addAliasWithDefault(schema, $.api.schemas.Char, $);
 }
 
 export async function processDateSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
@@ -419,7 +433,7 @@ export async function processDateSchema(schema: v3.Schema, $: Context): Promise<
     return undefined;
   }
 
-  return $.api.schemas.Date;
+  return addAliasWithDefault(schema, $.api.schemas.Date, $);
 }
 
 export async function processTimeSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
@@ -427,7 +441,7 @@ export async function processTimeSchema(schema: v3.Schema, $: Context): Promise<
     return undefined;
   }
 
-  return $.api.schemas.Time;
+  return addAliasWithDefault(schema, $.api.schemas.Time, $);
 }
 
 export async function processDateTimeSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
@@ -435,7 +449,7 @@ export async function processDateTimeSchema(schema: v3.Schema, $: Context): Prom
     return undefined;
   }
 
-  return $.api.schemas.DateTime;
+  return addAliasWithDefault(schema, $.api.schemas.DateTime, $);
 }
 
 export async function processDurationSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
@@ -443,7 +457,7 @@ export async function processDurationSchema(schema: v3.Schema, $: Context): Prom
     return undefined;
   }
 
-  return $.api.schemas.Duration;
+  return addAliasWithDefault(schema, $.api.schemas.Duration, $);
 }
 
 export async function processUuidSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
@@ -451,7 +465,7 @@ export async function processUuidSchema(schema: v3.Schema, $: Context): Promise<
     return undefined;
   }
 
-  return $.api.schemas.Uuid;
+  return addAliasWithDefault(schema, $.api.schemas.Uuid, $);
 }
 
 export async function processUriSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
@@ -460,7 +474,7 @@ export async function processUriSchema(schema: v3.Schema, $: Context): Promise<S
   }
   use(schema.example);
 
-  return $.api.schemas.Uri;
+  return addAliasWithDefault(schema, $.api.schemas.Uri, $);
 }
 
 export async function processPasswordSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
@@ -468,7 +482,7 @@ export async function processPasswordSchema(schema: v3.Schema, $: Context): Prom
     return undefined;
   }
 
-  return $.api.schemas.Password;
+  return addAliasWithDefault(schema, $.api.schemas.Password, $);
 }
 
 export async function processOdataSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
@@ -476,7 +490,7 @@ export async function processOdataSchema(schema: v3.Schema, $: Context): Promise
     return undefined;
   }
 
-  return $.api.schemas.OData;
+  return addAliasWithDefault(schema, $.api.schemas.OData, $);
 }
 
 export async function processBooleanSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
@@ -484,7 +498,7 @@ export async function processBooleanSchema(schema: v3.Schema, $: Context): Promi
     return undefined;
   }
 
-  return $.api.schemas.Boolean;
+  return addAliasWithDefault(schema, $.api.schemas.Boolean, $);
 }
 
 export async function processIntegerSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
@@ -547,6 +561,11 @@ function constrainNumericSchema(schema: v3.Schema, $: Context, target: Schema): 
 
   // gonna need an alias
   const alias = new Alias(target, commonProperties(schema));
+
+  if (schema.default) {
+    alias.defaults.push(new ServerDefaultValue(schema.default));
+  }
+
   if (schema.minimum) {
     alias.constraints.push(new MinimumConstraint(schema.minimum));
   }
@@ -593,6 +612,10 @@ export async function processArraySchema(schema: v3.Schema, $: Context, options?
     ...common
   });
 
+  if (schema.default) {
+    alias.defaults.push(new ServerDefaultValue(schema.default));
+  }
+
   if (schema.maxItems !== undefined) {
     alias.constraints.push(new MaximumElementsConstraint(schema.maxItems));
   }
@@ -635,6 +658,10 @@ export async function processAdditionalProperties(schema: v3.Schema, $: Context,
     if (schema.minProperties !== undefined) {
       alias.constraints.push(new MinimumPropertiesConstraint(schema.minProperties));
     }
+    if (schema.default) {
+      alias.defaults.push(new ServerDefaultValue(schema.default));
+    }
+
     return alias;
   }
 

@@ -132,6 +132,8 @@ export type PathParameter = Parameter & {
 
   /** This property is REQUIRED and its value MUST be true */
   required: true;
+
+  style?: PathStyle;
 }
 
 /** A parameter passed in as a cookie value */

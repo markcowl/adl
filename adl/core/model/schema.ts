@@ -220,10 +220,23 @@ export class XorSchema extends Schema {
 
 
 export class Default extends Schema {
+  constructor(public name: SchemaName, initializer?: Partial<Default>) {
+    super('default');
+    this.initialize(initializer);
+  }
 }
+
+export class ServerDefaultValue extends Schema {
+  constructor(public value: any, initializer?: Partial<ServerDefaultValue>) {
+    super('server-default');
+    this.initialize(initializer);
+  }
+}
+
 
 export class Alias extends Schema {
   constraints = new ElementArray<Constraint>();
+  defaults = new ElementArray<Default>();
   // 
   constructor(public targetSchema: Schema, initializer?: Partial<Alias>) {
     super('alias');

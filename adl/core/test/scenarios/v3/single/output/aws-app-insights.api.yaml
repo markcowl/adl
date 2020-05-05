@@ -70,6 +70,53 @@ http:
             - cn-northwest-1
           defaultValue: cn-north-1
           description: The AWS region
+  parameters:
+    - name: X-Amz-Content-Sha256
+      type: header
+      expandParameterValues: false
+      renderStyle: simple
+      required: false
+      schema:
+        &a1
+        name:
+          anonymous: ""
+        type: string
+    - name: X-Amz-Date
+      type: header
+      expandParameterValues: false
+      renderStyle: simple
+      required: false
+      schema: *a1
+    - name: X-Amz-Algorithm
+      type: header
+      expandParameterValues: false
+      renderStyle: simple
+      required: false
+      schema: *a1
+    - name: X-Amz-Credential
+      type: header
+      expandParameterValues: false
+      renderStyle: simple
+      required: false
+      schema: *a1
+    - name: X-Amz-Security-Token
+      type: header
+      expandParameterValues: false
+      renderStyle: simple
+      required: false
+      schema: *a1
+    - name: X-Amz-Signature
+      type: header
+      expandParameterValues: false
+      renderStyle: simple
+      required: false
+      schema: *a1
+    - name: X-Amz-SignedHeaders
+      type: header
+      expandParameterValues: false
+      renderStyle: simple
+      required: false
+      schema: *a1
 metaData:
   name: Amazon CloudWatch Application Insights
   contacts:
@@ -122,10 +169,7 @@ metaData:
     x-preferred: true
 schemas:
   primitives:
-    - &a1
-      name:
-        anonymous: ""
-      type: string
+    - *a1
     - &a8
       name:
         anonymous: ""
