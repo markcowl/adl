@@ -3,12 +3,13 @@ import { anonymous } from '@azure-tools/sourcemap';
 
 export class Schema extends Element {
   anonymous?: boolean;
-  /** name of this schema - may be an alias or an actual string name */
+  /** 
+   * name of this schema - may be an alias or an actual string name 
+   */
   name: SchemaName;
 
   /**
    * short description of the schema
-   * 
    */
   summary?: string;
 
@@ -51,9 +52,9 @@ export class Property extends Element {
   writeonly?: boolean;
 
   /**
-  * description of the property
-  * CommonMark syntax MAY be used for rich text representation.
-  */
+   * Description of the property
+   * CommonMark syntax MAY be used for rich text representation.
+   */
   description?: string;
 
   constructor(public name: string, public schema: Schema, initializer?: Partial<Property>) {

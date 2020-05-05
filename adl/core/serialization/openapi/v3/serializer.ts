@@ -2,8 +2,9 @@ import { ApiModel } from '../../../model/api-model';
 import { Dictionary } from '@azure-tools/openapi';
 import { v3, JsonReference, vendorExtensions } from '@azure-tools/openapi';
 
-import { Visitor, Context as Ctx } from '../../../support/visitor';
 import { Host } from '../../../support/file-system';
+import { Visitor, Context as Ctx } from '../../../support/visitor';
+import { FileSystem } from '../../../support/file-system';
 import { processInfo, processExternalDocs, processTag } from './info';
 import { processComponents } from './components';
 import { processPaths } from './path';

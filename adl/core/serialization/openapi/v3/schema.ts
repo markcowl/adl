@@ -69,7 +69,7 @@ const arrayProperties = <Array<keyof v3.Schema>>['maxItems', 'minItems', 'unique
 const numberProperties = <Array<keyof v3.Schema>>['multipleOf', 'maximum', 'exclusiveMaximum', 'minimum', 'exclusiveMinimum',];
 const stringProperties = <Array<keyof v3.Schema>>["maxLength", "minLength", "pattern",];
 const objectProperties = <Array<keyof v3.Schema>>['properties', 'discriminator', 'additionalProperties', 'minProperties', 'maxProperties'];
-
+const notPrimitiveProperties = <Array<keyof v3.Schema>>[...stringProperties, ...objectProperties, ...arrayProperties, ...numberProperties];
 const notObject = [...arrayProperties, ...numberProperties, ...stringProperties];
 
 function commonProperties(schema: v3.Schema) {
@@ -81,42 +81,6 @@ function commonProperties(schema: v3.Schema) {
 
 export async function processInline(schema: v3.Schema | v3.SchemaReference | undefined, $: Context, options?: Options) {
   return schema ? $.processPossibleReference(processSchemaReference, processSchema, use(schema), { ...options, isAnonymous: true }) : undefined;
-}
-
-export async function processAllOf(schema: v3.Schema, $: Context, options?: Options): Promise<Schema | undefined> {
-  // allOf[A,B,C] literally means [A & B & C]
-  // is a combination of everything.
-  //
-  // this function is not to process $ref-replacement allOf (where they use an allOf instead of a $ref.)
-  // 
-
-  if (isPrimitiveSchema(schema)) {
-    return $.error(`Schema of type '${schema.type}' may not be in an allOf`, schema);
-  }
-  if (isEnumSchema(schema)) {
-    return $.error(`Enum schema may not be in an allOf`, schema);
-  }
-  if ($.forbiddenProperties(schema, ...notObject)) {
-    return undefined;
-  }
-
-  const schemaName = options?.isAnonymous ? anonymous('allOf') : nameOf(schema);
-
-  const objectSchema = options?.justTargetType ? undefined : await (isObjectSchema(schema) ? processObjectSchema(schema, $, { isAnonymous: true, justTargetType: true }) : undefined);
-
-  const schemas = (await Promise.all(values(use(schema.allOf)).select(each => processInline(each, $)).toArray())).map(each => each!);
-
-  if (objectSchema) {
-    const result = new AndSchema(schemaName, [...schemas, objectSchema], commonProperties(schema));
-    $.api.schemas.combinations.push(result);
-    return result;
-  }
-
-  // no object combinations
-  const result = new AndSchema(schemaName, schemas, commonProperties(schema));
-  $.api.schemas.combinations.push(result);
-  return result;
-
 }
 
 export async function processAnyOf(schema: v3.Schema, $: Context, options?: Options): Promise<Schema | undefined> {
@@ -158,9 +122,6 @@ export async function processAnyOf(schema: v3.Schema, $: Context, options?: Opti
   if (oneOf) {
     combineWith.push(oneOf);
   }
-  // if (allOf) {
-  // combineWith.push(allOf);
-  // }
 
   const schemas = (await Promise.all(values(use(schema.anyOf)).select(each => processInline(each, $)).toArray())).map(each => each!);
 
@@ -221,7 +182,7 @@ export async function processOneOf(schema: v3.Schema, $: Context, options?: Opti
 }
 
 export async function processSillyRef(schema: v3.Schema, $: Context, options?: { isAnonymous?: boolean; forUnderlyingEnumType?: boolean }): Promise<Schema | undefined> {
-  throw undefined;
+  throw new Error('TODO: process silly references');
 }
 
 export async function processSchema(schema: v3.Schema, $: Context, options?: { isAnonymous?: boolean; forUnderlyingEnumType?: boolean }): Promise<Schema | undefined> {
@@ -421,7 +382,7 @@ function addAliasWithDefault(schema: v3.Schema, resultSchema: Schema, $: Context
 }
 
 export async function processCharSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, ...stringProperties, ...objectProperties, ...arrayProperties, ...numberProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
@@ -429,7 +390,7 @@ export async function processCharSchema(schema: v3.Schema, $: Context): Promise<
 }
 
 export async function processDateSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, ...stringProperties, ...objectProperties, ...arrayProperties, ...numberProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
@@ -437,7 +398,7 @@ export async function processDateSchema(schema: v3.Schema, $: Context): Promise<
 }
 
 export async function processTimeSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, ...stringProperties, ...objectProperties, ...arrayProperties, ...numberProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
@@ -445,7 +406,7 @@ export async function processTimeSchema(schema: v3.Schema, $: Context): Promise<
 }
 
 export async function processDateTimeSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, ...stringProperties, ...objectProperties, ...arrayProperties, ...numberProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
@@ -453,7 +414,7 @@ export async function processDateTimeSchema(schema: v3.Schema, $: Context): Prom
 }
 
 export async function processDurationSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, ...stringProperties, ...objectProperties, ...arrayProperties, ...numberProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
@@ -461,7 +422,7 @@ export async function processDurationSchema(schema: v3.Schema, $: Context): Prom
 }
 
 export async function processUuidSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, ...stringProperties, ...objectProperties, ...arrayProperties, ...numberProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
@@ -469,7 +430,7 @@ export async function processUuidSchema(schema: v3.Schema, $: Context): Promise<
 }
 
 export async function processUriSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, ...stringProperties, ...objectProperties, ...arrayProperties, ...numberProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
   use(schema.example);
@@ -478,7 +439,7 @@ export async function processUriSchema(schema: v3.Schema, $: Context): Promise<S
 }
 
 export async function processPasswordSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, ...stringProperties, ...objectProperties, ...arrayProperties, ...numberProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
@@ -486,7 +447,7 @@ export async function processPasswordSchema(schema: v3.Schema, $: Context): Prom
 }
 
 export async function processOdataSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, ...stringProperties, ...objectProperties, ...arrayProperties, ...numberProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
@@ -494,7 +455,7 @@ export async function processOdataSchema(schema: v3.Schema, $: Context): Promise
 }
 
 export async function processBooleanSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, ...stringProperties, ...objectProperties, ...arrayProperties, ...numberProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
