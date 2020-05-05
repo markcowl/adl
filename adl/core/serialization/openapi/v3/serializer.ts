@@ -3,12 +3,12 @@ import { Dictionary } from '@azure-tools/openapi';
 import { v3, JsonReference, vendorExtensions } from '@azure-tools/openapi';
 
 import { Visitor, Context as Ctx } from '../../../support/visitor';
-import { FileSystem, Host } from '../../../support/file-system';
-import { processInfo, processExternalDocs, processTags } from './info';
+import { Host } from '../../../support/file-system';
+import { processInfo, processExternalDocs, processTag } from './info';
 import { processComponents } from './components';
 import { processPaths } from './path';
 import { processSecurity } from './security';
-import { processServers } from './server';
+import { processServer } from './server';
 import { use } from '@azure-tools/sourcemap';
 
 
@@ -47,12 +47,12 @@ async function processRoot(oai3: v3.Model, $: Context) {
 
   await $.process(processInfo, oai3.info);
   await $.process(processExternalDocs, oai3.externalDocs);
-  await $.processArray(processTags, oai3.tags, $.api.metaData.references);
+  await $.processArray(processTag, oai3.tags, $.api.metaData.references);
 
   // components will have to be early, since other things will $ref them 
   await $.process(processComponents, oai3.components);
 
-  await $.process(processServers, oai3.servers);
+  await $.processArray(processServer, oai3.servers, $.api.http.connections);
   await $.process(processSecurity, oai3.security);
 
   // paths second to last

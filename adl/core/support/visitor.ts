@@ -240,7 +240,7 @@ export class Context<TSourceModel extends OAIModel> {
   async processArray<TInput, TOutput extends Element, TOptions = {}>(action: fnAction<TSourceModel, TInput, TOutput, TOptions>, value: Array<TInput> | undefined, output: ElementArray<TOutput>, options?: TOptions): Promise<ElementArray<TOutput> | undefined> {
     if (value) {
       for (const each of value) {
-        await this.process(action, each);
+        output.push(await this.process(action, each));
       }
       use(value);
     }

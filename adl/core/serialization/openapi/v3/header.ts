@@ -49,7 +49,7 @@ async function processHeaderReference(headerReference: v3.HeaderReference, $: Co
 
 export async function processHeader(header: v3.Header, $: Context, options?: { isAnonymous?: boolean }): Promise<Header | undefined> {
   const { api, visitor } = $;
-  const key = options?.isAnonymous ? 'anonymous-header' : nameOf(header);
+  const key = options?.isAnonymous ? anonymous('header') : nameOf(header);
 
 
   // these are in the OAI schema, but should not be in headers - freakout if they are used

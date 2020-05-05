@@ -1,4 +1,6 @@
-http: {}
+http:
+  connections:
+    - url: https://www.googleapis.com/analytics/v2.4
 metaData:
   name: Google Analytics
   contacts:
@@ -32,4 +34,25 @@ metaData:
     x-preferred: false
     x-providerName: googleapis.com
     x-serviceName: analytics
-schemas: {}
+schemas:
+  primitives:
+    - &a1
+      name:
+        anonymous: ""
+      type: string
+    - name:
+        anonymous: ""
+      type: boolean
+  constants:
+    - name:
+        anonymous: ""
+      type: constant
+      value: atom
+      valueSchema:
+        &a2
+        name:
+          anonymous: ""
+        type: alias
+        targetSchema: *a1
+  aliases:
+    - *a2

@@ -79,7 +79,7 @@ function commonProperties(schema: v3.Schema) {
   }
 }
 
-async function processInline(schema: v3.Schema | v3.SchemaReference | undefined, $: Context, options?: Options) {
+export async function processInline(schema: v3.Schema | v3.SchemaReference | undefined, $: Context, options?: Options) {
   return schema ? $.processPossibleReference(processSchemaReference, processSchema, use(schema), { ...options, isAnonymous: true }) : undefined;
 }
 
