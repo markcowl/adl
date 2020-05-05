@@ -368,7 +368,7 @@ export async function processByteArraySchema(schema: v3.Schema, $: Context): Pro
 }
 
 export async function processCharSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, notPrimitiveProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
@@ -376,7 +376,7 @@ export async function processCharSchema(schema: v3.Schema, $: Context): Promise<
 }
 
 export async function processDateSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, notPrimitiveProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
@@ -384,7 +384,7 @@ export async function processDateSchema(schema: v3.Schema, $: Context): Promise<
 }
 
 export async function processTimeSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, notPrimitiveProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
@@ -392,7 +392,7 @@ export async function processTimeSchema(schema: v3.Schema, $: Context): Promise<
 }
 
 export async function processDateTimeSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, notPrimitiveProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
@@ -400,7 +400,7 @@ export async function processDateTimeSchema(schema: v3.Schema, $: Context): Prom
 }
 
 export async function processDurationSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, notPrimitiveProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
@@ -408,7 +408,7 @@ export async function processDurationSchema(schema: v3.Schema, $: Context): Prom
 }
 
 export async function processUuidSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, notPrimitiveProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
@@ -416,7 +416,7 @@ export async function processUuidSchema(schema: v3.Schema, $: Context): Promise<
 }
 
 export async function processUriSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, notPrimitiveProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
   use(schema.example);
@@ -425,7 +425,7 @@ export async function processUriSchema(schema: v3.Schema, $: Context): Promise<S
 }
 
 export async function processPasswordSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, notPrimitiveProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
@@ -433,7 +433,7 @@ export async function processPasswordSchema(schema: v3.Schema, $: Context): Prom
 }
 
 export async function processOdataSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, notPrimitiveProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
@@ -441,7 +441,7 @@ export async function processOdataSchema(schema: v3.Schema, $: Context): Promise
 }
 
 export async function processBooleanSchema(schema: v3.Schema, $: Context): Promise<Schema | undefined> {
-  if ($.forbiddenProperties(schema, notPrimitiveProperties)) {
+  if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return undefined;
   }
 
