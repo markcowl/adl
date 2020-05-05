@@ -6,16 +6,21 @@ metaData:
 schemas:
   primitives:
     - &a1
+      name: ""
       type: int64
     - &a2
+      name: ""
       type: string
-    - type: array
+    - name: ""
+      type: array
       elementSchema:
         &a5
+        name: ""
         type: alias
         targetSchema:
           &a3
           $key: Pet
+          name: ""
           type: object
           properties:
             - name: id
@@ -27,10 +32,12 @@ schemas:
             - name: tag
               schema: *a2
     - &a4
+      name: ""
       type: int32
   objects:
     - *a3
     - $key: Error
+      name: ""
       type: object
       properties:
         - name: code

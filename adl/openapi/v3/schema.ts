@@ -8,6 +8,7 @@ import { SchemaExtensions } from '../common/schema-extensions';
 import { VendorExtensions } from '../common/vendor-extensions';
 
 
+
 /**
  * The Schema Object allows the definition of input and output data types. These types can be objects, but also primitives and arrays. This object is an extended subset of the JSON Schema Specification Wright Draft 00.
  * 
@@ -194,7 +195,7 @@ export interface Schema extends VendorExtensions, SchemaExtensions {
    * order of the instance properties MAY be in any order.
    *
    */
-  properties?: Dictionary<Schema | SchemaReference>;
+  properties?: Dictionary<Property & (Schema | SchemaReference)>;
 
   /** indicates that additional unlisted properties can exist in this schema */
   additionalProperties?: boolean | Schema | SchemaReference;
@@ -213,14 +214,8 @@ export interface Schema extends VendorExtensions, SchemaExtensions {
   /** Adds support for polymorphism. The discriminator is an object name that is used to differentiate between other schemas which may satisfy the payload description  */
   discriminator: Discriminator;
 
-  /** Relevant only for Schema "properties" definitions. Declares the property as "read only". This means that it MAY be sent as part of a response but SHOULD NOT be sent as part of the request. If the property is marked as readOnly being true and is in the required list, the required will take effect on the response only. A property MUST NOT be marked as both readOnly and writeOnly being true. Default value is false. */
-  readOnly?: boolean;
 
-  /** Relevant only for Schema "properties" definitions. Declares the property as "write only". Therefore, it MAY be sent as part of a request but SHOULD NOT be sent as part of the response. If the property is marked as writeOnly being true and is in the required list, the required will take effect on the request only. A property MUST NOT be marked as both readOnly and writeOnly being true. Default value is false. */
-  writeOnly?: boolean;
 
-  /** This MAY be used only on properties schemas. It has no effect on root schemas. Adds additional metadata to describe the XML representation of this property. */
-  xml?: XML;
 
   /** Additional external documentation for this schema. */
   externalDocs?: ExternalDocumentation;
@@ -230,6 +225,20 @@ export interface Schema extends VendorExtensions, SchemaExtensions {
 
   /** Specifies that a schema is deprecated and SHOULD be transitioned out of usage.Default value is false. */
   deprecated?: boolean;
+}
+
+export interface Property {
+  /** Relevant only for Schema "properties" definitions. Declares the property as "read only". This means that it MAY be sent as part of a response but SHOULD NOT be sent as part of the request. If the property is marked as readOnly being true and is in the required list, the required will take effect on the response only. A property MUST NOT be marked as both readOnly and writeOnly being true. Default value is false. */
+  readOnly?: boolean;
+
+  /** Relevant only for Schema "properties" definitions. Declares the property as "write only". Therefore, it MAY be sent as part of a request but SHOULD NOT be sent as part of the response. If the property is marked as writeOnly being true and is in the required list, the required will take effect on the request only. A property MUST NOT be marked as both readOnly and writeOnly being true. Default value is false. */
+  writeOnly?: boolean;
+
+  /** This MAY be used only on properties schemas. It has no effect on root schemas. Adds additional metadata to describe the XML representation of this property. */
+  xml?: XML;
+
+  /**  This attribute is a string that provides a full description of the schema */
+  description?: string;
 }
 
 export type SchemaReference = JsonReference<Schema>;

@@ -23,13 +23,18 @@ export async function processComponents(components: v3.Components, $: Context): 
   // definitely, schemas first, since so much will $ref them
   await $.process(processSchemas, components.schemas);
   await $.process(processHeaders, components.headers);
-  await $.process(processCallbacks, components.callbacks);
-  await $.process(processExamples, components.examples);
-  await $.process(processLinks, components.links);
+
   await $.process(processParameters, components.parameters);
   await $.process(processRequestBodies, components.requestBodies);
   await $.process(processResponses, components.responses);
+
   await $.process(processSecuritySchemes, components.securitySchemes);
+
+  await $.process(processExamples, components.examples); // send to attic 
+
+  await $.process(processCallbacks, components.callbacks);  // ok skip
+  await $.process(processLinks, components.links); // ok skip
+
 
   return undefined;
 }

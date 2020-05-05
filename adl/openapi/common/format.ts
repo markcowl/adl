@@ -49,6 +49,9 @@ export enum StringFormat {
   /** @description a string that should be an URL */
   Url = 'url',
 
+  /** @description a string that should be an URi */
+  Uri = 'url',
+
   /** @description an encoded odata query string */
   OData = 'odata-query',
 

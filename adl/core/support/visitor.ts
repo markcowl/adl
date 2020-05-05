@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
 import { Tracker, Path, TrackedTarget, TrackedSource, getSourceFile, refTo, using, use, isUsed, valueOf } from '@azure-tools/sourcemap';
-import { values, items, length } from '@azure-tools/linq';
+import { values, items, length, keys } from '@azure-tools/linq';
 import { Element, ElementArray } from '../model/element';
 import { FileSystem } from './file-system';
 import { parse } from 'yaml';
 import { VersionInfo } from '../model/version-info';
-import { Info, JsonReference, isReference } from '@azure-tools/openapi';
+import { Info, JsonReference, isReference, Dictionary } from '@azure-tools/openapi';
 import { ApiModel } from '../model/api-model';
 import { fail } from 'assert';
 
@@ -191,10 +191,23 @@ export class Context<TSourceModel extends OAIModel> {
   }
   error(text: string, offendingNode: any) {
     this.visitor.error(text);
+    return undefined;
   }
 
   warn(text: string, offendingNode: any) {
     this.visitor.warn(text);
+    return undefined;
+  }
+
+  forbiddenProperties<T extends Dictionary<any>>(instance: T, ...properties: Array<keyof T>) {
+    let result = false;
+    for (const each of keys(instance)) {
+      if (properties.indexOf(each) > -1) {
+        this.error(`may not contain property ${each}`, instance);
+        result = true;
+      }
+    }
+    return result
   }
 
   get api() {
@@ -273,23 +286,23 @@ export class Context<TSourceModel extends OAIModel> {
     };
   }
 
-  async processRefTarget<Tin, Tout extends Element>(ref: JsonReference<Tin>, action: fnAction<TSourceModel, Tin, Tout>): Promise<Tout> {
+  async processRefTarget<Tin, Tout extends Element, TOptions = {}>(ref: JsonReference<Tin>, action: fnAction<TSourceModel, Tin, Tout>, options?: TOptions): Promise<Tout> {
     const { $ref, file, path } = this.normalizeReference(ref.$ref);
     use(ref.$ref);
     return <Tout>this.visitor.$refs.get($ref) || <Tout>await this.visitor.processRef(file, path, action);
   }
-  async processPossibleReference<TInput, TOutput extends Element>(
+  async processPossibleReference<TInput, TOutput extends Element, TOptions = {}>(
     refAction: fnAction<TSourceModel, JsonReference<TInput>, TOutput>,
     action: fnAction<TSourceModel, TInput, TOutput>,
-    value?: TInput | JsonReference<TInput> | NonNullable<TInput>): Promise<TOutput | undefined> {
+    value?: TInput | JsonReference<TInput> | NonNullable<TInput>, options?: TOptions): Promise<TOutput | undefined> {
 
     // const v = value || (!isAnonymous(key) && <NonNullable<TInput>><unknown>this.value[key]);
     if (value !== undefined) {
       return (isReference(value) ?
         // they have used a $ref to a schema - resolve that.
-        await this.process(refAction, value) :
+        await this.process(refAction, value, options) :
         // an inlined schema --process that first
-        await this.process(action, <TInput>value));
+        await this.process(action, <TInput>value, { ...options, isAnonymous: true }));
     }
     return undefined;
 
