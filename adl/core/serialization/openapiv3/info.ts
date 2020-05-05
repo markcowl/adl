@@ -80,7 +80,7 @@ export async function processExternalDocs(externalDocs: v3.ExternalDocumentation
 }
 
 
-export async function processTags(tag: v3.Tag, $: Context) {
+export async function processTag(tag: v3.Tag, $: Context): Promise<Reference> {
   const reference = new Reference(tag.name, {
     summary: tag.description,
     location: tag.externalDocs ? tag.externalDocs.url : undefined,
@@ -90,6 +90,5 @@ export async function processTags(tag: v3.Tag, $: Context) {
 
   await addExtensionsToAttic(reference, tag);
 
-  $.api.metaData.references.push(reference);
   return reference;
 }

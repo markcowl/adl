@@ -1,4 +1,6 @@
 http:
+  connections:
+    - url: https://rest.ably.io
   headers:
     - $key: ErrorCode
       description: The error code.

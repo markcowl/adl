@@ -1,4 +1,7 @@
-http: {}
+http:
+  connections:
+    - description: Twitter API
+      url: https://api.twitter.com
 metaData:
   name: Tweets and Users
   contacts:

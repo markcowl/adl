@@ -1,5 +1,3 @@
-servers:
-  - url: https://rest.ably.io
 security:
   - basicAuth: []
   - bearerAuth: []
