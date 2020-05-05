@@ -54,7 +54,6 @@ describe('Load Single OAI3 files', () => {
       const stopwatch = new Stopwatch();
 
       const api = await deserializeOpenAPI3(host, file);
-
       const outputPath = resolve(`${$scenarios}/../output/${file.replace(/.yaml$/ig, '.api.yaml')}`);
       const atticPath = resolve(`${$scenarios}/../output/${file.replace(/.yaml$/ig, '.attic.yaml')}`);
 
@@ -78,6 +77,7 @@ describe('Load Single OAI3 files', () => {
         errors.check(() => equal(attic.externalDocs, undefined, 'Should not have an externalDocs section left in attic'));
 
         errors.check(() => equal(attic.components?.schemas, undefined, 'Should not have components/schemas section left in attic'));
+        errors.check(() => equal(attic.components?.parameters, undefined, 'Should not have components/parameters section left in attic'));
 
         await writeFile(atticPath, serialize(api.attic.valueOf()));
         delete api.attic;

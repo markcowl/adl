@@ -338,54 +338,6 @@ paths:
       tags:
         - Users
 components:
-  parameters:
-    MediaFieldsParameter:
-      description: A comma separated list of Media fields to display.
-      explode: false
-      in: query
-      name: media.fields
-      required: false
-      style: form
-    PlaceFieldsParameter:
-      description: A comma separated list of Place fields to display.
-      explode: false
-      in: query
-      name: place.fields
-      required: false
-      style: form
-    PollFieldsParameter:
-      description: A comma separated list of Poll fields to display.
-      explode: false
-      in: query
-      name: poll.fields
-      required: false
-      style: form
-    TweetExpansionsParameter:
-      description: A comma separated list of fields to expand.
-      explode: false
-      in: query
-      name: expansions
-      style: form
-    TweetFieldsParameter:
-      description: A comma separated list of Tweet fields to display.
-      explode: false
-      in: query
-      name: tweet.fields
-      required: false
-      style: form
-    UserExpansionsParameter:
-      description: A comma separated list of fields to expand.
-      explode: false
-      in: query
-      name: expansions
-      style: form
-    UserFieldsParameter:
-      description: A comma separated list of User fields to display.
-      explode: false
-      in: query
-      name: user.fields
-      required: false
-      style: form
   responses:
     HttpErrorResponse:
       content:

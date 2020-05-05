@@ -1,6 +1,86 @@
 http:
   connections:
     - url: https://www.googleapis.com/analytics/v2.4
+  parameters:
+    - name: alt
+      type: query
+      description: Data format for the response.
+      expandParameterValues: true
+      renderStyle: form
+      schema:
+        &a3
+        name:
+          anonymous: ""
+        type: constant
+        value: atom
+        valueSchema:
+          &a4
+          name:
+            anonymous: ""
+          type: alias
+          defaults:
+            - name:
+                anonymous: ""
+              type: server-default
+              value: atom
+          targetSchema:
+            &a1
+            name:
+              anonymous: ""
+            type: string
+    - name: fields
+      type: query
+      description: Selector specifying which fields to include in a partial response.
+      expandParameterValues: true
+      renderStyle: form
+      schema: *a1
+    - name: key
+      type: query
+      description: API key. Your API key identifies your project and provides you with
+        API access, quota, and reports. Required unless you provide an OAuth 2.0
+        token.
+      expandParameterValues: true
+      renderStyle: form
+      schema: *a1
+    - name: oauth_token
+      type: query
+      description: OAuth 2.0 token for the current user.
+      expandParameterValues: true
+      renderStyle: form
+      schema: *a1
+    - name: prettyPrint
+      type: query
+      description: Returns response with indentations and line breaks.
+      expandParameterValues: true
+      renderStyle: form
+      schema:
+        &a5
+        name:
+          anonymous: ""
+        type: alias
+        defaults:
+          - name:
+              anonymous: ""
+            type: server-default
+            value: false
+        targetSchema:
+          &a2
+          name:
+            anonymous: ""
+          type: boolean
+    - name: quotaUser
+      type: query
+      description: An opaque string that represents a user for quota purposes. Must
+        not exceed 40 characters.
+      expandParameterValues: true
+      renderStyle: form
+      schema: *a1
+    - name: userIp
+      type: query
+      description: Deprecated. Please use quotaUser instead.
+      expandParameterValues: true
+      renderStyle: form
+      schema: *a1
 metaData:
   name: Google Analytics
   contacts:
@@ -36,23 +116,10 @@ metaData:
     x-serviceName: analytics
 schemas:
   primitives:
-    - &a1
-      name:
-        anonymous: ""
-      type: string
-    - name:
-        anonymous: ""
-      type: boolean
-  constants:
-    - name:
-        anonymous: ""
-      type: constant
-      value: atom
-      valueSchema:
-        &a2
-        name:
-          anonymous: ""
-        type: alias
-        targetSchema: *a1
-  aliases:
+    - *a1
     - *a2
+  constants:
+    - *a3
+  aliases:
+    - *a4
+    - *a5
