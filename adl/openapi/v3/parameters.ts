@@ -26,7 +26,7 @@ export function hasContent(instance: any): instance is HasContent {
 export type SchemaOrContent = (HasSchema | HasContent);
 
 /** Describes common properties between header and parameter . */
-export type ParameterBase = SchemaOrContent & {
+export type ParameterBase = HasSchema & {
   /**A brief description of the parameter. This could contain examples of use. CommonMark syntax MAY be used for rich text representation. */
   description?: string;
 

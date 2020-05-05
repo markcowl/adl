@@ -1,7 +1,12 @@
 import { Origin } from './proxies';
 
-export type anonymous = { valueOf: () => string };
-export const anonymous = <(s: string) => anonymous>Object;
+export interface anonymous extends Anonymous { };
+
+class Anonymous {
+  constructor(protected anonymous: string) {
+  }
+}
+export const anonymous = (instance: any) => new Anonymous(instance);
 
 export type Step = string | number | symbol | anonymous;
 export type Path = Array<Step>;
@@ -9,7 +14,7 @@ export type Path = Array<Step>;
 export * from './proxies';
 
 export function isAnonymous(instance: any): instance is anonymous {
-  return instance && typeof instance === 'object';
+  return instance instanceof Anonymous;
 }
 
 export class Tracker {

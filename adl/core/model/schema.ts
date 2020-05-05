@@ -1,12 +1,22 @@
 import { Element, ElementArray } from './element';
+import { anonymous } from '@azure-tools/sourcemap';
 
 export class Schema extends Element {
   anonymous?: boolean;
+  /** 
+   * name of this schema - may be an alias or an actual string name 
+   */
+  name: SchemaName;
 
-  /* short description */
+  /**
+   * short description of the schema
+   */
   summary?: string;
 
-  /* long description */
+  /**
+   * extended description of the schema
+   * CommonMark syntax MAY be used for rich text representation.
+   */
   description?: string;
 
   /**
@@ -16,6 +26,7 @@ export class Schema extends Element {
    */
   constructor(public type: string, initializer?: Partial<Schema>) {
     super();
+    this.name = anonymous('');
     this.initialize(initializer);
   }
 
@@ -24,6 +35,28 @@ export class Schema extends Element {
 export class Property extends Element {
   /** indicates the properts is required */
   required?: boolean;
+
+  /**
+   * Declares the property as "read only".  
+   * A property MUST NOT be marked as both readOnly and writeOnly being true. 
+   * Default value is false.
+   */
+  readonly?: boolean;
+
+  /**
+   * Declares the property as "write only". 
+   * A property MUST NOT be marked as both readOnly and writeOnly being true. 
+   * Default value is false.
+   * 
+   */
+  writeonly?: boolean;
+
+  /**
+   * Description of the property
+   * CommonMark syntax MAY be used for rich text representation.
+   */
+  description?: string;
+
   constructor(public name: string, public schema: Schema, initializer?: Partial<Property>) {
     super();
     this.initialize(initializer);
@@ -40,16 +73,18 @@ export class ObjectSchema extends Schema {
   /**  minimum number of properties permitted */
   minProperties?: number;
 
-  constructor(public $key: string, initializer?: Partial<ObjectSchema>) {
+  /** schemas that this object extends */
+  extends = new ElementArray<Schema>();
+
+  constructor(public name: string, initializer?: Partial<ObjectSchema>) {
     super('object');
     this.initialize(initializer);
   }
 }
 
-export class Constant extends Schema {
-  name?: string;
-  description?: string;
+export type SchemaName = string | anonymous;
 
+export class Constant extends Schema {
   constructor(public valueSchema: Schema, public value: any, initializer?: Partial<Constant>) {
     super('constant');
     this.initialize(initializer);
@@ -58,7 +93,6 @@ export class Constant extends Schema {
 
 export class Enum extends Schema {
   values = new ElementArray<Constant>();
-  name?: string;
   sealed = true;
 
   constructor(public elementSchema: Schema, initializer?: Partial<Enum>) {
@@ -68,7 +102,7 @@ export class Enum extends Schema {
 }
 
 export class Constraint extends Schema {
-  constructor(public name: string, initializer?: Partial<Constraint>) {
+  constructor(public name: SchemaName, initializer?: Partial<Constraint>) {
     super('constraint');
     this.initialize(initializer);
   }
@@ -134,6 +168,7 @@ export class MaximumElementsConstraint extends Constraint {
   }
 }
 
+
 export class MinimumElementsConstraint extends Constraint {
   constructor(public count: number, initializer?: Partial<MinimumElementsConstraint>) {
     super('MinimumElements');
@@ -147,6 +182,42 @@ export class UniqueElementsConstraint extends Constraint {
     this.initialize(initializer);
   }
 }
+
+export class MinimumPropertiesConstraint extends Constraint {
+  constructor(public count: number, initializer?: Partial<MinimumPropertiesConstraint>) {
+    super('MinimumProperties');
+    this.initialize(initializer);
+  }
+}
+
+export class MaximumPropertiesConstraint extends Constraint {
+  constructor(public count: number, initializer?: Partial<MaximumPropertiesConstraint>) {
+    super('MaximumProperties');
+    this.initialize(initializer);
+  }
+}
+
+export class AnyOfSchema extends Schema {
+  constructor(public name: SchemaName, public oneOrMoreOf: Array<Schema>, initializer?: Partial<AnyOfSchema>) {
+    super('AnyOf');
+    this.initialize(initializer);
+  }
+}
+
+export class AndSchema extends Schema {
+  constructor(public name: SchemaName, public allOf: Array<Schema>, initializer?: Partial<AndSchema>) {
+    super('And');
+    this.initialize(initializer);
+  }
+}
+
+export class XorSchema extends Schema {
+  constructor(public name: SchemaName, public oneOf: Array<Schema>, initializer?: Partial<XorSchema>) {
+    super('Xor');
+    this.initialize(initializer);
+  }
+}
+
 
 
 export class Default extends Schema {
@@ -171,6 +242,13 @@ export class Primitive extends Schema {
 export class ArraySchema extends Primitive {
   constructor(public elementSchema: Schema, initializer?: Partial<ArraySchema>) {
     super('array');
+    this.initialize(initializer);
+  }
+}
+
+export class DictionarySchema extends Primitive {
+  constructor(public elementSchema: Schema, initializer?: Partial<DictionarySchema>) {
+    super('dictionary');
     this.initialize(initializer);
   }
 }
@@ -393,6 +471,7 @@ export class Schemas extends Element {
   }
 
   objects = new ElementArray<ObjectSchema>();
+  combinations = new ElementArray<AndSchema | XorSchema | AnyOfSchema>();
   constants = new ElementArray<Constant>();
   enums = new ElementArray<Enum>();
   constraints = new ElementArray<Constraint>();

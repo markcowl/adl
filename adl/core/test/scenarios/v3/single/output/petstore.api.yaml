@@ -8,31 +8,36 @@ metaData:
 schemas:
   primitives:
     - &a1
+      name:
+        anonymous: ""
       type: int64
     - &a2
+      name:
+        anonymous: ""
       type: string
-    - type: array
+    - name:
+        anonymous: ""
+      type: array
       elementSchema:
-        &a5
-        type: alias
-        targetSchema:
-          &a3
-          $key: Pet
-          type: object
-          properties:
-            - name: id
-              required: true
-              schema: *a1
-            - name: name
-              required: true
-              schema: *a2
-            - name: tag
-              schema: *a2
+        &a3
+        name: Pet
+        type: object
+        properties:
+          - name: id
+            required: true
+            schema: *a1
+          - name: name
+            required: true
+            schema: *a2
+          - name: tag
+            schema: *a2
     - &a4
+      name:
+        anonymous: ""
       type: int32
   objects:
     - *a3
-    - $key: Error
+    - name: Error
       type: object
       properties:
         - name: code
@@ -41,5 +46,3 @@ schemas:
         - name: message
           required: true
           schema: *a2
-  aliases:
-    - *a5
