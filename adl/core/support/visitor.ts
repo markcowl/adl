@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
-import { Tracker, Path, TrackedTarget, TrackedSource, getSourceFile, refTo, using, use, isUsed, valueOf } from '@azure-tools/sourcemap';
-import { values, items, length, keys } from '@azure-tools/linq';
-import { Element, ElementArray } from '../model/element';
-import { FileSystem } from './file-system';
-import { parse } from 'yaml';
-import { VersionInfo } from '../model/version-info';
-import { Info, JsonReference, isReference, Dictionary } from '@azure-tools/openapi';
-import { ApiModel } from '../model/api-model';
+import { items, keys, length, values } from '@azure-tools/linq';
+import { Dictionary, Info, isReference, JsonReference } from '@azure-tools/openapi';
+import { getSourceFile, isUsed, Path, refTo, TrackedSource, TrackedTarget, Tracker, use, using, valueOf, isAnonymous } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
+import { parse } from 'yaml';
+import { ApiModel } from '../model/api-model';
+import { Element, ElementArray } from '../model/element';
+import { VersionInfo } from '../model/version-info';
+import { Host } from './file-system';
+import { Stopwatch } from './stopwatch';
 
 export interface OAIModel {
   info: Info;
@@ -67,9 +68,21 @@ function addUnusedTo(target: any, source: any) {
   }
 
   if (Array.isArray(source) && Array.isArray(target)) {
-    for (const each of <any>source) {
-      if (!isUsed(each)) {
-        target.push(each.valueOf());
+    for (const value of <any>source) {
+      if (!isUsed(value)) {
+        const raw = valueOf(value);
+
+        if (typeof raw === 'object') {
+          const v = Array.isArray(value) ? [] : {};
+
+          addUnusedTo(v, value);
+          if (length(v) !== 0) {
+            target.push(v);
+          }
+        }
+        else {
+          target.push(valueOf(raw))
+        }
       }
     }
     return;
@@ -79,16 +92,19 @@ function addUnusedTo(target: any, source: any) {
     if (value === undefined || value === null) {
       continue;
     }
+
     if (!isUsed(value)) {
-      if (typeof (<any>value).valueOf() === 'object') {
-        target[key] = Array.isArray(value) ? [] : {};
-        addUnusedTo(target[key], value);
-        if (length(target[key]) === 0) {
-          delete target[key];
+      const raw = valueOf(<any>value);
+      if (typeof raw === 'object') {
+        const v = Array.isArray(value) ? [] : {};
+
+        addUnusedTo(v, value);
+        if (length(target[key]) !== 0) {
+          target[key] = v;
         }
       }
       else {
-        target[key] = (<any>value).valueOf();
+        target[key] = raw;
       }
     }
   }
@@ -99,18 +115,13 @@ export class Visitor<TSourceModel extends OAIModel> {
   sourceFiles = new Map<string, Promise<Context<TSourceModel>>>();
   $refs = new Map<string, any>();
 
-  error(text: string) {
-    console.error(text);
-  }
-  warn(text: string) {
-    console.error(text);
-  }
+
   api: ApiModel;
   tracker: Tracker;
 
   constructor(
     api: ApiModel,
-    public fileSystem: FileSystem,
+    public host: Host,
     public inputType: 'oai3' | 'oai2',
     ...sourceFiles: Array<string>) {
     // the source location tracker
@@ -122,34 +133,43 @@ export class Visitor<TSourceModel extends OAIModel> {
     // the source files are going to be YAML/JSON files for this 
     // so we can speed up the process and grab them all and hold onto them
     for (const each of new Set(sourceFiles)) {
-
-      this.sourceFiles.set(this.fileSystem.resolve(each), this.loadInput(this.fileSystem.resolve(each)));
+      this.sourceFiles.set(this.host.fileSystem.resolve(each), this.loadInput(this.host.fileSystem.resolve(each)));
     }
   }
 
   async loadInput(sourceFile: string): Promise<Context<TSourceModel>> {
-    const content = await this.fileSystem.readFile(sourceFile);
+
+    const watch = new Stopwatch();
+    const content = await this.host.fileSystem.readFile(sourceFile);
+    this.host.loaded(sourceFile, watch.time);
     const model = parse(content);
+    this.host.parsed(sourceFile, watch.time);
+
     const sourceModel = TrackedSource.track(<TSourceModel>model, model, { sourceFile: { filename: sourceFile }, path: [] });
 
-    return new Context(sourceModel, this);
+    return new Context(sourceModel, sourceFile, this);
   }
 
   async process<TOutput>(action: fnAction<TSourceModel, TSourceModel, TOutput>) {
+
     for (const { value } of items(this.sourceFiles)) {
       const ctx = await value;
+      const watch = new Stopwatch();
+
       await action(<NonNullable<TSourceModel>>ctx.sourceModel, ctx, false);
+      this.host.processed(ctx.sourceFile, watch.time);
 
       this.api.attic = this.api.attic || {};
       // add unused parts of the source to the attic.
       addUnusedTo(this.api.attic, ctx.sourceModel);
+      this.host.attic(ctx.sourceFile, watch.time);
     }
     return this.api;
   }
 
   findNode(path: Path, graph: any): any {
     const [member, ...rest] = path;
-    if (member) {
+    if (member && !isAnonymous(member)) {
       const node = graph[member.valueOf()];
       if (node) {
         return rest.length > 0 ? this.findNode(rest, node) : node;
@@ -181,21 +201,24 @@ type fnAction<TSourceModel extends OAIModel, TInput, TOutput, TOptions = {}> =
 export class Context<TSourceModel extends OAIModel> {
   constructor(
     public sourceModel: TSourceModel,
+    public sourceFile: string,
     public visitor: Visitor<TSourceModel>
   ) {
 
   }
-
+  get host() {
+    return this.visitor.host;
+  }
   get apiVersion() {
     return valueOf(this.sourceModel.info.version);
   }
   error(text: string, offendingNode: any) {
-    this.visitor.error(text);
+    this.host.error(text, offendingNode);
     return undefined;
   }
 
   warn(text: string, offendingNode: any) {
-    this.visitor.warn(text);
+    this.host.warning(text, offendingNode);
     return undefined;
   }
 
@@ -276,7 +299,7 @@ export class Context<TSourceModel extends OAIModel> {
     if (file === '' || file === '.' || file === './') {
       file = getSourceFile(ref)?.filename || fail(`unable to get filename of $ref ${ref}`);
     } else {
-      file = this.visitor.fileSystem.resolve(file);
+      file = this.visitor.host.fileSystem.resolve(file);
     }
 
     return {
@@ -296,7 +319,6 @@ export class Context<TSourceModel extends OAIModel> {
     action: fnAction<TSourceModel, TInput, TOutput>,
     value?: TInput | JsonReference<TInput> | NonNullable<TInput>, options?: TOptions): Promise<TOutput | undefined> {
 
-    // const v = value || (!isAnonymous(key) && <NonNullable<TInput>><unknown>this.value[key]);
     if (value !== undefined) {
       return (isReference(value) ?
         // they have used a $ref to a schema - resolve that.

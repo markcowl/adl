@@ -1,6 +1,6 @@
 import { v3 } from '@azure-tools/openapi';
 import { Context } from './serializer';
-import { Element } from '../../model/element';
+import { Element } from '../../../model/element';
 
 import { processSchemas } from './schema';
 import { processCallbacks } from './callback';

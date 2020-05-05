@@ -1,11 +1,11 @@
 import { v3, isVendorExtension, JsonReference, VendorExtensions, ExternalDocumentation, vendorExtensions, unzip, Tag } from '@azure-tools/openapi';
-import { Header } from '../../model/http/header';
+import { Header } from '../../../model/http/header';
 
 import { isReference } from '@azure-tools/openapi';
 import { Context, ItemsOf } from './serializer';
 import { values, items, length } from '@azure-tools/linq';
 
-import { Element } from '../../model/element';
+import { Element } from '../../../model/element';
 import { processSchemaReference, processSchema } from './schema';
 import { anonymous, use, using, nameOf, refTo } from '@azure-tools/sourcemap';
 
@@ -70,7 +70,7 @@ export async function processHeader(header: v3.Header, $: Context, options?: { i
   // create the http header object and track it. 
   const httpHeader = new Header({
     // maintain the key
-    $key: key.toString(),
+    name: key.toString(),
     // use the schema
     schema,
     // set a specific value 

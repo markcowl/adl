@@ -45,6 +45,7 @@
     "chalk": "~4.0.0"
   },
   "dependencies": {
+    "ee-ts": "~1.0.1",
     "@azure-tools/openapi": "~4.0.0",
     "@azure-tools/sourcemap": "~1.0.0",
     "@azure-tools/linq": "~3.1.0",

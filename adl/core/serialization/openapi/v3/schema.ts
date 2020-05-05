@@ -1,10 +1,11 @@
-import { unzip, JsonReference, StringFormat, isReference, IntegerFormat, NumberFormat, XMSEnumValue, XMSEnum, v2 } from '@azure-tools/openapi';
-import { values, length, items } from '@azure-tools/linq';
-import { Element, ElementArray } from '../../model/element';
-import { v3, common } from '@azure-tools/openapi';
+import { items, length, values } from '@azure-tools/linq';
+import { IntegerFormat, JsonReference, NumberFormat, StringFormat, unzip, v3, XMSEnumValue } from '@azure-tools/openapi';
+import { anonymous, nameOf, unusedMembers, use, using, isUsed } from '@azure-tools/sourcemap';
+import { Element } from '../../../model/element';
+import { Alias, AndSchema, AnyOfSchema, ArraySchema, Constant, DictionarySchema, Enum, ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ObjectSchema, Property, RegularExpressionConstraint, Schema, SchemaName, UniqueElementsConstraint, XorSchema } from '../../../model/schema';
+import { isEnumSchema, isObjectSchema, isPrimitiveSchema } from '../common';
 import { Context, ItemsOf } from './serializer';
-import { Alias, Schema, Schemas, MaximumPropertiesConstraint, MinimumPropertiesConstraint, MaxLengthConstraint, MinLengthConstraint, ObjectSchema, Property, RegularExpressionConstraint, MinimumConstraint, MaximumConstraint, ExclusiveMinimumConstraint, ExclusiveMaximumConstraint, MultipleOfConstraint, ArraySchema, MaximumElementsConstraint, MinimumElementsConstraint, UniqueElementsConstraint, Constant, Enum, AnyOfSchema, AndSchema, XorSchema, SchemaName, DictionarySchema } from '../../model/schema';
-import { use, anonymous, using, nameOf, unusedMembers, valueOf, isAnonymous } from '@azure-tools/sourcemap';
+import { fail } from 'assert';
 
 export async function processSchemas(value: ItemsOf<v3.Schema>, $: Context): Promise<Element | undefined> {
   const { extensions, references, values: schemas } = unzip<v3.Schema>(value);
@@ -49,10 +50,13 @@ type Options = Partial<{
   forUnderlyingEnumType: boolean;
 }>;
 
-export async function processSchemaReference(ref: JsonReference<v3.Schema>, $: Context) {
+export async function processSchemaReference(ref: JsonReference<v3.Schema>, $: Context, options?: Options) {
   const { api } = $;
   const target = await $.processRefTarget(ref, processSchema);
 
+  if (options?.isAnonymous) {
+    return target;
+  }
   // now that we have a target
   // we can produce an alias to that target
   const alias = new Alias(target);
@@ -74,6 +78,11 @@ function commonProperties(schema: v3.Schema) {
     summary: schema.title,
   }
 }
+
+async function processInline(schema: v3.Schema | v3.SchemaReference | undefined, $: Context, options?: Options) {
+  return schema ? $.processPossibleReference(processSchemaReference, processSchema, use(schema), { ...options, isAnonymous: true }) : undefined;
+}
+
 export async function processAllOf(schema: v3.Schema, $: Context, options?: Options): Promise<Schema | undefined> {
   // allOf[A,B,C] literally means [A & B & C]
   // is a combination of everything.
@@ -95,7 +104,7 @@ export async function processAllOf(schema: v3.Schema, $: Context, options?: Opti
 
   const objectSchema = options?.justTargetType ? undefined : await (isObjectSchema(schema) ? processObjectSchema(schema, $, { isAnonymous: true, justTargetType: true }) : undefined);
 
-  const schemas = (await Promise.all(values(use(schema.allOf)).select(each => $.processPossibleReference(processSchemaReference, processSchema, use(each))).toArray())).map(each => each!);
+  const schemas = (await Promise.all(values(use(schema.allOf)).select(each => processInline(each, $)).toArray())).map(each => each!);
 
   if (objectSchema) {
     const result = new AndSchema(schemaName, [...schemas, objectSchema], commonProperties(schema));
@@ -139,7 +148,7 @@ export async function processAnyOf(schema: v3.Schema, $: Context, options?: Opti
 
   const oneOf = await (schema.oneOf ? processOneOf(schema, $, { isAnonymous: true, justTargetType: true }) : undefined);
 
-  const allOf = await (schema.oneOf ? processAllOf(schema, $, { isAnonymous: true, justTargetType: true }) : undefined);
+  // const allOf = await (schema.oneOf ? processAllOf(schema, $, { isAnonymous: true, justTargetType: true }) : undefined);
 
   const schemaName = options?.isAnonymous ? anonymous('anyOf') : nameOf(schema);
   const combineWith = new Array<Schema>();
@@ -149,11 +158,11 @@ export async function processAnyOf(schema: v3.Schema, $: Context, options?: Opti
   if (oneOf) {
     combineWith.push(oneOf);
   }
-  if (allOf) {
-    combineWith.push(allOf);
-  }
+  // if (allOf) {
+  // combineWith.push(allOf);
+  // }
 
-  const schemas = (await Promise.all(values(use(schema.anyOf)).select(each => $.processPossibleReference(processSchemaReference, processSchema, use(each))).toArray())).map(each => each!);
+  const schemas = (await Promise.all(values(use(schema.anyOf)).select(each => processInline(each, $)).toArray())).map(each => each!);
 
   // if this is combined with anything
   if (combineWith.length > 0) {
@@ -171,37 +180,6 @@ export async function processAnyOf(schema: v3.Schema, $: Context, options?: Opti
   return result;
 }
 
-function isObjectSchema(schema: v3.Schema) {
-  return schema.type == common.JsonType.Object ||
-    length(schema.properties) > 0 ||
-    schema.discriminator ||
-    (<any>schema)['x-ms-discriminator-value'] ||
-    schema.additionalProperties !== undefined ||
-    schema.maxProperties !== undefined ||
-    schema.minProperties !== undefined;
-}
-
-function isPrimitiveSchema(schema: v3.Schema | v2.Schema) {
-  switch (valueOf(schema.type)) {
-    case common.JsonType.String:
-      // file format generally means a blob body
-      if (schema.format == StringFormat.File) {
-        return false;
-      }
-
-    case common.JsonType.Number:
-    case common.JsonType.Integer:
-    case common.JsonType.Boolean:
-    case common.JsonType.Array:
-      return true;
-  }
-
-  return false;
-}
-
-function isEnumSchema(schema: v3.Schema) {
-  return (schema.enum || schema['x-ms-enum']);
-}
 
 export async function processOneOf(schema: v3.Schema, $: Context, options?: Options): Promise<Schema | undefined> {
   // oneof[A,B,C] literally means [A] or [B] or [C]
@@ -228,7 +206,7 @@ export async function processOneOf(schema: v3.Schema, $: Context, options?: Opti
 
   const objectSchema = options?.justTargetType ? undefined : await (isObjectSchema(schema) ? processObjectSchema(schema, $, { isAnonymous: true, justTargetType: true }) : undefined);
 
-  const schemas = (await Promise.all(values(use(schema.oneOf)).select(each => $.processPossibleReference(processSchemaReference, processSchema, use(each))).toArray())).map(each => each!);
+  const schemas = (await Promise.all(values(use(schema.oneOf)).select(each => processInline(each, $)).toArray())).map(each => each!);
 
   if (objectSchema) {
     const result = new XorSchema(schemaName, [...schemas, objectSchema], commonProperties(schema));
@@ -281,8 +259,8 @@ export async function processSchema(schema: v3.Schema, $: Context, options?: { i
           return processSillyRef(schema, $, options);
         }
       }
-      return processAllOf(schema, $, options)
-
+      // process schemas with allOf as objects 
+      return processObjectSchema(schema, $, options)
     }
 
     switch (schema.type?.valueOf()) {
@@ -343,9 +321,7 @@ export async function processSchema(schema: v3.Schema, $: Context, options?: { i
     return processAnySchema(schema, $);
   };
   const result = await impl();
-  if (result === undefined) {
-    debugger;
-  }
+
   if (result && schema.example) {
     use(schema.example, true);
     result.addToAttic('example', schema.example);
@@ -599,7 +575,7 @@ export async function processArraySchema(schema: v3.Schema, $: Context, options?
 
 
 
-  const elementSchema = await $.processPossibleReference(processSchemaReference, processSchema, use(schema.items), { isAnonymous: true }) || $.api.schemas.Any;
+  const elementSchema = await processInline(schema.items, $) || $.api.schemas.Any;
 
   if ($.forbiddenProperties(schema, ...stringProperties, ...numberProperties)) {
     return undefined;
@@ -642,7 +618,7 @@ export async function processAdditionalProperties(schema: v3.Schema, $: Context,
   const common = schema.properties ? {} : commonProperties(schema);
 
   // true means type == any
-  const dictionaryType = schema.additionalProperties != true ? await $.processPossibleReference(processSchemaReference, processSchema, schema.additionalProperties) || $.api.schemas.Any : $.api.schemas.Any;
+  const dictionaryType = schema.additionalProperties != true ? await processInline(schema.additionalProperties, $) || $.api.schemas.Any : $.api.schemas.Any;
 
   if (length(common) > 0 || schema.maxProperties !== undefined || schema.minProperties !== undefined) {
     const result = new DictionarySchema(dictionaryType);
@@ -674,22 +650,25 @@ export async function processAdditionalProperties(schema: v3.Schema, $: Context,
 
 
 export async function processObjectSchema(schema: v3.Schema, $: Context, options?: Options): Promise<Schema | undefined> {
-  if (schema.additionalProperties && length(schema.properties) === 0) {
+  const schemas = (await Promise.all(values(use(schema.allOf)).select(each => processInline(each, $)).toArray())).map(each => each!);
+
+  if (schema.additionalProperties && length(schema.properties) === 0 && schemas.length === 0) {
     // if it has no actual properties of it's own, but it has additionalProperties, return just the dictionary
     // as the type.
     return processAdditionalProperties(schema, $, options);
   }
 
-  const schemaName = options?.isAnonymous ? anonymous('allOf') : nameOf(schema);
+  const schemaName = options?.isAnonymous ? anonymous('object') : nameOf(schema);
 
   // creating an object schema 
   const result = new ObjectSchema(schemaName, commonProperties(schema));
 
+  result.extends.push(...schemas);
+
   // process the properties
   for (const { key: propertyName, value: property } of items(use(schema.properties))) {
-
     // process schema/reference inline
-    const propSchema = await $.processPossibleReference(processSchemaReference, processSchema, property) || $.api.schemas.Any;
+    const propSchema = await processInline(property, $, { isProperty: true }) || $.api.schemas.Any;
 
     // grabs the 'required' value for the property
     let required = undefined;
@@ -705,6 +684,14 @@ export async function processObjectSchema(schema: v3.Schema, $: Context, options
       writeonly: property.writeOnly,
       readonly: property.readOnly,
     }));
+  }
+  use(schema.required);
+
+  if (!isUsed(schema.required)) {
+    for (const each of unusedMembers(schema.required)) {
+      $.error(`Schema '${nameOf(schema)}' has required for property named '${(<any>schema.required)[each]}' `, schema)
+    }
+    throw new Error('fatal error');
   }
 
   if (schema.additionalProperties) {

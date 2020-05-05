@@ -1,9 +1,9 @@
-import { ApiModel } from '../../model/api-model';
+import { ApiModel } from '../../../model/api-model';
 import { Dictionary } from '@azure-tools/openapi';
 import { v3, JsonReference, vendorExtensions } from '@azure-tools/openapi';
 
-import { Visitor, Context as Ctx } from '../../support/visitor';
-import { FileSystem } from '../../support/file-system';
+import { Visitor, Context as Ctx } from '../../../support/visitor';
+import { FileSystem, Host } from '../../../support/file-system';
 import { processInfo, processExternalDocs, processTags } from './info';
 import { processComponents } from './components';
 import { processPaths } from './path';
@@ -24,8 +24,8 @@ export type Context = Ctx<v3.Model>;
 // node types that are objects or references
 export type ItemsOf<T> = Dictionary<T | JsonReference<T>>;
 
-export async function deserializeOpenAPI3(fileSystem: FileSystem, ...inputs: Array<string>) {
-  const output = await new Visitor<v3.Model>(new ApiModel(), fileSystem, 'oai3', ...inputs).process(processRoot);
+export async function deserializeOpenAPI3(host: Host, ...inputs: Array<string>) {
+  const output = await new Visitor<v3.Model>(new ApiModel(), host, 'oai3', ...inputs).process(processRoot);
 
   return output;
 }

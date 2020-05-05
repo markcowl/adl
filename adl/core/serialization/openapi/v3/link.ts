@@ -1,4 +1,4 @@
-import { Element } from '../../model/element';
+import { Element } from '../../../model/element';
 import { ItemsOf, Context } from './serializer';
 import { v3 } from '@azure-tools/openapi';
 

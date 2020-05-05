@@ -1,8 +1,8 @@
 import { v3, vendorExtensions } from '@azure-tools/openapi';
-import { Metadata, Contact, ContactRole, License, Reference } from '../../model/Metadata';
+import { Metadata, Contact, ContactRole, License, Reference } from '../../../model/Metadata';
 import { Context } from './serializer';
-import { Element } from '../../model/element';
-import { is } from '../../support/visitor';
+import { Element } from '../../../model/element';
+import { is } from '../../../support/visitor';
 import { use } from '@azure-tools/sourcemap';
 
 async function addExtensionsToAttic(element: Element, input: any) {

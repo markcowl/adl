@@ -1,17 +1,10 @@
-import { describe, it } from 'mocha';
-import * as assert from 'assert';
-import { readFile, writeFile, readdir, mkdir } from '@azure-tools/async-io';
-import { FileSystem, UrlFileSystem } from '../support/file-system';
-import { deserializeOpenAPI3 } from '../serialization/openapiv3/serializer';
-import { stringify, Document, CST, AST } from 'yaml';
-import { Schema, YAMLMap, Scalar, YAMLSeq } from 'yaml/types';
-import { parseMap, parseSeq } from 'yaml/util';
+import { keys } from '@azure-tools/linq';
+import { AST, CST, Document, stringify } from 'yaml';
+import { Schema, YAMLMap } from 'yaml/types';
+import { parseMap } from 'yaml/util';
 import { Element } from '../model/element';
-import { items, values, keys } from '@azure-tools/linq';
-import { VersionInfo } from '../model/version-info';
 
 const propertyPriority = [
-  '$key',
   'name',
   'type',
 

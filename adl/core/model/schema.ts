@@ -75,7 +75,7 @@ export class ObjectSchema extends Schema {
   /** schemas that this object extends */
   extends = new ElementArray<Schema>();
 
-  constructor(public $key: string, initializer?: Partial<ObjectSchema>) {
+  constructor(public name: string, initializer?: Partial<ObjectSchema>) {
     super('object');
     this.initialize(initializer);
   }

@@ -52,951 +52,755 @@ metaData:
 schemas:
   primitives:
     - &a1
-      name: ""
+      name:
+        anonymous: ""
       type: string
     - &a8
-      name: ""
+      name:
+        anonymous: ""
       type: boolean
     - &a29
-      name: ""
+      name:
+        anonymous: ""
       type: array
       elementSchema:
-        &a62
-        name: ""
-        type: alias
-        targetSchema:
-          &a27
-          $key: Tag
-          name: ""
-          type: object
-          description: "<p>An object that defines the tags associated with an application.
-            A <i>tag</i> is a label that you optionally define and associate
-            with an application. Tags can help you categorize and manage
-            resources in different ways, such as by purpose, owner, environment,
-            or other criteria.</p> <p>Each tag consists of a required <i>tag
-            key</i> and an associated <i>tag value</i>, both of which you
-            define. A tag key is a general label that acts as a category for a
-            more specific tag value. A tag value acts as a descriptor within a
-            tag key. A tag key can contain as many as 128 characters. A tag
-            value can contain as many as 256 characters. The characters can be
-            Unicode letters, digits, white space, or one of the following
-            symbols: _ . : / = + -. The following additional restrictions apply
-            to tags:</p> <ul> <li> <p>Tag keys and values are case
-            sensitive.</p> </li> <li> <p>For each associated resource, each tag
-            key must be unique and it can have only one value.</p> </li> <li>
-            <p>The <code>aws:</code> prefix is reserved for use by AWS; you
-            can’t use it in any tag keys or values that you define. In addition,
-            you can't edit or remove tag keys or values that use this prefix.
-            </p> </li> </ul>"
-          properties:
-            - name: Key
-              description: One part of a key-value pair that defines a tag. The maximum length
-                of a tag key is 128 characters. The minimum length is 1
-                character.
-              required: true
-              schema:
-                &a59
-                name: ""
-                type: alias
-                targetSchema:
-                  &a17
-                  name: ""
-                  type: alias
-                  constraints:
-                    - name: MaxLength
-                      type: constraint
-                      length: 128
-                    - name: MinLength
-                      type: constraint
-                      length: 1
-                  targetSchema: *a1
-            - name: Value
-              description: The optional part of a key-value pair that defines a tag. The
-                maximum length of a tag value is 256 characters. The minimum
-                length is 0 characters. If you don't want an application to have
-                a specific tag value, don't specify a value for this parameter.
-              required: true
-              schema:
-                &a61
-                name: ""
-                type: alias
-                targetSchema:
-                  &a60
-                  name: ""
-                  type: alias
-                  constraints:
-                    - name: MaxLength
-                      type: constraint
-                      length: 256
-                    - name: MinLength
-                      type: constraint
-                      length: 0
-                  targetSchema: *a1
-    - name: []
+        &a27
+        name: Tag
+        type: object
+        description: "<p>An object that defines the tags associated with an application.
+          A <i>tag</i> is a label that you optionally define and associate with
+          an application. Tags can help you categorize and manage resources in
+          different ways, such as by purpose, owner, environment, or other
+          criteria.</p> <p>Each tag consists of a required <i>tag key</i> and an
+          associated <i>tag value</i>, both of which you define. A tag key is a
+          general label that acts as a category for a more specific tag value. A
+          tag value acts as a descriptor within a tag key. A tag key can contain
+          as many as 128 characters. A tag value can contain as many as 256
+          characters. The characters can be Unicode letters, digits, white
+          space, or one of the following symbols: _ . : / = + -. The following
+          additional restrictions apply to tags:</p> <ul> <li> <p>Tag keys and
+          values are case sensitive.</p> </li> <li> <p>For each associated
+          resource, each tag key must be unique and it can have only one
+          value.</p> </li> <li> <p>The <code>aws:</code> prefix is reserved for
+          use by AWS; you can’t use it in any tag keys or values that you
+          define. In addition, you can't edit or remove tag keys or values that
+          use this prefix. </p> </li> </ul>"
+        properties:
+          - name: Key
+            description: One part of a key-value pair that defines a tag. The maximum length
+              of a tag key is 128 characters. The minimum length is 1 character.
+            required: true
+            schema:
+              &a17
+              name:
+                anonymous: ""
+              type: alias
+              constraints:
+                - name: MaxLength
+                  type: constraint
+                  length: 128
+                - name: MinLength
+                  type: constraint
+                  length: 1
+              targetSchema: *a1
+          - name: Value
+            description: The optional part of a key-value pair that defines a tag. The
+              maximum length of a tag value is 256 characters. The minimum
+              length is 0 characters. If you don't want an application to have a
+              specific tag value, don't specify a value for this parameter.
+            required: true
+            schema:
+              &a53
+              name:
+                anonymous: ""
+              type: alias
+              constraints:
+                - name: MaxLength
+                  type: constraint
+                  length: 256
+                - name: MinLength
+                  type: constraint
+                  length: 0
+              targetSchema: *a1
+    - name:
+        anonymous: ""
       type: any
     - &a30
-      name: ""
+      name:
+        anonymous: ""
       type: array
       elementSchema:
-        &a65
-        name: ""
+        &a54
+        name:
+          anonymous: ""
         type: alias
-        targetSchema:
-          &a64
-          name: ""
-          type: alias
-          constraints:
-            - name: MaxLength
-              type: constraint
-              length: 1011
-            - name: MinLength
-              type: constraint
-              length: 1
-          targetSchema: *a1
+        constraints:
+          - name: MaxLength
+            type: constraint
+            length: 1011
+          - name: MinLength
+            type: constraint
+            length: 1
+        targetSchema: *a1
     - &a7
-      name: ""
+      name:
+        anonymous: ""
       type: int64
     - &a3
-      name: ""
+      name:
+        anonymous: ""
       type: dateTime
     - &a5
-      name: ""
+      name:
+        anonymous: ""
       type: double
     - &a16
-      name: ""
+      name:
+        anonymous: ""
       type: dictionary
       elementSchema:
-        &a84
-        name: ""
-        type: alias
-        targetSchema:
-          &a23
-          name: ""
-          type: enum
-          elementSchema:
-            &a2
-            name: ""
-            type: alias
-            targetSchema: *a1
-          sealed: true
-          values:
-            - name: ""
-              type: constant
-              value: NOT_SPECIFIED
-              valueSchema: *a2
-            - name: ""
-              type: constant
-              value: USEFUL
-              valueSchema: *a2
-            - name: ""
-              type: constant
-              value: NOT_USEFUL
-              valueSchema: *a2
-    - &a40
-      name: ""
-      type: array
-      elementSchema:
-        name: ""
-        type: alias
-        targetSchema:
-          &a36
-          $key: Observation
-          name: ""
-          type: object
-          description: Describes an anomaly or error with the application.
-          properties:
-            - name: Id
-              description: The ID of the observation type.
-              schema:
-                &a75
-                name: ""
-                type: alias
-                targetSchema:
-                  &a37
-                  name: ""
-                  type: alias
-                  constraints:
-                    - name: MaxLength
-                      type: constraint
-                      length: 38
-                    - name: MinLength
-                      type: constraint
-                      length: 38
-                    - name: RegularExpression
-                      type: constraint
-                      length: o-[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}
-                  targetSchema: *a1
-            - name: StartTime
-              description: The time when the observation was first detected, in epoch seconds.
-              schema:
-                &a76
-                name: ""
-                type: alias
-                targetSchema: *a3
-            - name: EndTime
-              description: The time when the observation ended, in epoch seconds.
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a3
-            - name: SourceType
-              description: The source type of the observation.
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: SourceARN
-              description: The source resource ARN of the observation.
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: LogGroup
-              description: The log group name.
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: LineTime
-              description: The timestamp in the CloudWatch Logs that specifies when the
-                matched line occurred.
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a3
-            - name: LogText
-              description: The log text of the observation.
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: LogFilter
-              description: The log filter of the observation.
-              schema:
-                &a77
-                name: ""
-                type: alias
-                targetSchema:
-                  &a19
-                  name: ""
-                  type: enum
-                  elementSchema:
-                    &a4
-                    name: ""
-                    type: alias
-                    targetSchema: *a1
-                  sealed: true
-                  values:
-                    - name: ""
-                      type: constant
-                      value: ERROR
-                      valueSchema: *a4
-                    - name: ""
-                      type: constant
-                      value: WARN
-                      valueSchema: *a4
-                    - name: ""
-                      type: constant
-                      value: INFO
-                      valueSchema: *a4
-            - name: MetricNamespace
-              description: The namespace of the observation metric.
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: MetricName
-              description: The name of the observation metric.
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: Unit
-              description: The unit of the source observation metric.
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: Value
-              description: The value of the source observation metric.
-              schema:
-                &a78
-                name: ""
-                type: alias
-                targetSchema: *a5
-            - name: CloudWatchEventId
-              description: " The ID of the CloudWatch Event-based observation related to the
-                detected problem. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: CloudWatchEventSource
-              description: " The source of the CloudWatch Event. "
-              schema:
-                &a79
-                name: ""
-                type: alias
-                targetSchema:
-                  &a20
-                  name: ""
-                  type: enum
-                  elementSchema:
-                    &a6
-                    name: ""
-                    type: alias
-                    targetSchema: *a1
-                  sealed: true
-                  values:
-                    - name: ""
-                      type: constant
-                      value: EC2
-                      valueSchema: *a6
-                    - name: ""
-                      type: constant
-                      value: CODE_DEPLOY
-                      valueSchema: *a6
-                    - name: ""
-                      type: constant
-                      value: HEALTH
-                      valueSchema: *a6
-            - name: CloudWatchEventDetailType
-              description: " The detail type of the CloudWatch Event-based observation, for
-                example, <code>EC2 Instance State-change Notification</code>. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: HealthEventArn
-              description: " The Amazon Resource Name (ARN) of the AWS Health Event-based
-                observation."
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: HealthService
-              description: " The service to which the AWS Health Event belongs, such as EC2. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: HealthEventTypeCode
-              description: " The type of the AWS Health event, for example,
-                <code>AWS_EC2_POWER_CONNECTIVITY_ISSUE</code>. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: HealthEventTypeCategory
-              description: " The category of the AWS Health event, such as <code>issue</code>.
-                "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: HealthEventDescription
-              description: " The description of the AWS Health event provided by the service,
-                such as Amazon EC2. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: CodeDeployDeploymentId
-              description: " The deployment ID of the CodeDeploy-based observation related to
-                the detected problem. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: CodeDeployDeploymentGroup
-              description: " The deployment group to which the CodeDeploy deployment belongs.
-                "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: CodeDeployState
-              description: " The status of the CodeDeploy deployment, for example
-                <code>SUCCESS</code> or <code> FAILURE</code>. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: CodeDeployApplication
-              description: " The CodeDeploy application to which the deployment belongs. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: CodeDeployInstanceGroupId
-              description: " The instance group to which the CodeDeploy instance belongs. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: Ec2State
-              description: " The state of the instance, such as <code>STOPPING</code> or
-                <code>TERMINATING</code>. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: XRayFaultPercent
-              description: " The X-Ray request fault percentage for this node. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a7
-            - name: XRayThrottlePercent
-              description: " The X-Ray request throttle percentage for this node. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a7
-            - name: XRayErrorPercent
-              description: " The X-Ray request error percentage for this node. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a7
-            - name: XRayRequestCount
-              description: " The X-Ray request count for this node. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a7
-            - name: XRayRequestAverageLatency
-              description: " The X-Ray node request average latency for this node. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a7
-            - name: XRayNodeName
-              description: " The name of the X-Ray node. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: XRayNodeType
-              description: " The type of the X-Ray node. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-    - &a42
-      name: ""
-      type: array
-      elementSchema:
-        name: ""
-        type: alias
-        targetSchema:
-          &a26
-          $key: ApplicationInfo
-          name: ""
-          type: object
-          description: Describes the status of the application.
-          properties:
-            - name: ResourceGroupName
-              description: The name of the resource group used for the application.
-              schema:
-                &a53
-                name: ""
-                type: alias
-                targetSchema:
-                  &a15
-                  name: ""
-                  type: alias
-                  constraints:
-                    - name: MaxLength
-                      type: constraint
-                      length: 256
-                    - name: MinLength
-                      type: constraint
-                      length: 1
-                    - name: RegularExpression
-                      type: constraint
-                      length: "[a-zA-Z0-9\\.\\-_]*"
-                  targetSchema: *a1
-            - name: LifeCycle
-              description: "The lifecycle of the application. "
-              schema:
-                &a54
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: OpsItemSNSTopicArn
-              description: " The SNS topic provided to Application Insights that is associated
-                to the created opsItems to receive SNS notifications for opsItem
-                updates. "
-              schema:
-                &a55
-                name: ""
-                type: alias
-                targetSchema:
-                  &a28
-                  name: ""
-                  type: alias
-                  constraints:
-                    - name: MaxLength
-                      type: constraint
-                      length: 300
-                    - name: MinLength
-                      type: constraint
-                      length: 20
-                  targetSchema: *a1
-            - name: OpsCenterEnabled
-              description: " Indicates whether Application Insights will create opsItems for
-                any problem detected by Application Insights for an application.
-                "
-              schema:
-                &a56
-                name: ""
-                type: alias
-                targetSchema: *a8
-            - name: CWEMonitorEnabled
-              description: " Indicates whether Application Insights can listen to CloudWatch
-                events for the application resources, such as <code>instance
-                terminated</code>, <code>failed deployment</code>, and others. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a8
-            - name: Remarks
-              description: <p>The issues on the user side that block Application Insights from
-                successfully monitoring an application. Example remarks
-                include:</p> <ul> <li> <p>“Configuring application, detected 1
-                Errors, 3 Warnings”</p> </li> <li> <p>“Configuring application,
-                detected 1 Unconfigured Components”</p> </li> </ul>
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-    - &a43
-      name: ""
-      type: array
-      elementSchema:
-        name: ""
-        type: alias
-        targetSchema:
-          &a34
-          $key: ApplicationComponent
-          name: ""
-          type: object
-          description: Describes a standalone resource or similarly grouped resources that
-            the application is made up of.
-          properties:
-            - name: ComponentName
-              description: The name of the component.
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: ResourceType
-              description: The resource type. Supported resource types include EC2 instances,
-                Auto Scaling group, Classic ELB, Application ELB, and SQS Queue.
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: Tier
-              description: The stack tier of the application component.
-              schema:
-                &a72
-                name: ""
-                type: alias
-                targetSchema:
-                  &a18
-                  name: ""
-                  type: enum
-                  elementSchema:
-                    &a9
-                    name: ""
-                    type: alias
-                    constraints:
-                      - name: MaxLength
-                        type: constraint
-                        length: 50
-                      - name: MinLength
-                        type: constraint
-                        length: 1
-                    targetSchema: *a1
-                  sealed: true
-                  values:
-                    - name: ""
-                      type: constant
-                      value: DEFAULT
-                      valueSchema: *a9
-                    - name: ""
-                      type: constant
-                      value: DOT_NET_CORE
-                      valueSchema: *a9
-                    - name: ""
-                      type: constant
-                      value: DOT_NET_WORKER
-                      valueSchema: *a9
-                    - name: ""
-                      type: constant
-                      value: DOT_NET_WEB
-                      valueSchema: *a9
-                    - name: ""
-                      type: constant
-                      value: SQL_SERVER
-                      valueSchema: *a9
-            - name: Monitor
-              description: "Indicates whether the application component is monitored. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a8
-    - &a46
-      name: ""
-      type: array
-      elementSchema:
-        &a94
-        name: ""
-        type: alias
-        targetSchema:
-          &a45
-          $key: ConfigurationEvent
-          name: ""
-          type: object
-          description: " The event information. "
-          properties:
-            - name: MonitoredResourceARN
-              description: " The resource monitored by Application Insights. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: EventStatus
-              description: " The status of the configuration update event. Possible values
-                include INFO, WARN, and ERROR. "
-              schema:
-                &a92
-                name: ""
-                type: alias
-                targetSchema:
-                  &a24
-                  name: ""
-                  type: enum
-                  elementSchema:
-                    &a10
-                    name: ""
-                    type: alias
-                    targetSchema: *a1
-                  sealed: true
-                  values:
-                    - name: ""
-                      type: constant
-                      value: INFO
-                      valueSchema: *a10
-                    - name: ""
-                      type: constant
-                      value: WARN
-                      valueSchema: *a10
-                    - name: ""
-                      type: constant
-                      value: ERROR
-                      valueSchema: *a10
-            - name: EventResourceType
-              description: " The resource type that Application Insights attempted to
-                configure, for example, CLOUDWATCH_ALARM. "
-              schema:
-                &a93
-                name: ""
-                type: alias
-                targetSchema:
-                  &a25
-                  name: ""
-                  type: enum
-                  elementSchema:
-                    &a11
-                    name: ""
-                    type: alias
-                    targetSchema: *a1
-                  sealed: true
-                  values:
-                    - name: ""
-                      type: constant
-                      value: CLOUDWATCH_ALARM
-                      valueSchema: *a11
-                    - name: ""
-                      type: constant
-                      value: CLOUDFORMATION
-                      valueSchema: *a11
-                    - name: ""
-                      type: constant
-                      value: SSM_ASSOCIATION
-                      valueSchema: *a11
-            - name: EventTime
-              description: " The timestamp of the event. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a3
-            - name: EventDetail
-              description: " The details of the event in plain text. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: EventResourceName
-              description: " The name of the resource Application Insights attempted to
-                configure. "
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-    - &a47
-      name: ""
-      type: array
-      elementSchema:
-        name: ""
-        type: alias
-        targetSchema:
-          &a12
-          name: ""
+        &a23
+        name:
+          anonymous: ""
+        type: enum
+        elementSchema:
+          &a2
+          name:
+            anonymous: ""
           type: alias
-          constraints:
-            - name: MaxLength
-              type: constraint
-              length: 30
-            - name: MinLength
-              type: constraint
-              length: 1
-            - name: RegularExpression
-              type: constraint
-              length: "[a-zA-Z0-9\\.\\-_]*"
           targetSchema: *a1
+        sealed: true
+        values:
+          - name:
+              anonymous: ""
+            type: constant
+            value: NOT_SPECIFIED
+            valueSchema: *a2
+          - name:
+              anonymous: ""
+            type: constant
+            value: USEFUL
+            valueSchema: *a2
+          - name:
+              anonymous: ""
+            type: constant
+            value: NOT_USEFUL
+            valueSchema: *a2
+    - &a40
+      name:
+        anonymous: ""
+      type: array
+      elementSchema:
+        &a36
+        name: Observation
+        type: object
+        description: Describes an anomaly or error with the application.
+        properties:
+          - name: Id
+            description: The ID of the observation type.
+            schema:
+              &a37
+              name:
+                anonymous: ""
+              type: alias
+              constraints:
+                - name: MaxLength
+                  type: constraint
+                  length: 38
+                - name: MinLength
+                  type: constraint
+                  length: 38
+                - name: RegularExpression
+                  type: constraint
+                  length: o-[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}
+              targetSchema: *a1
+          - name: StartTime
+            description: The time when the observation was first detected, in epoch seconds.
+            schema: *a3
+          - name: EndTime
+            description: The time when the observation ended, in epoch seconds.
+            schema: *a3
+          - name: SourceType
+            description: The source type of the observation.
+            schema: *a1
+          - name: SourceARN
+            description: The source resource ARN of the observation.
+            schema: *a1
+          - name: LogGroup
+            description: The log group name.
+            schema: *a1
+          - name: LineTime
+            description: The timestamp in the CloudWatch Logs that specifies when the
+              matched line occurred.
+            schema: *a3
+          - name: LogText
+            description: The log text of the observation.
+            schema: *a1
+          - name: LogFilter
+            description: The log filter of the observation.
+            schema:
+              &a19
+              name:
+                anonymous: ""
+              type: enum
+              elementSchema:
+                &a4
+                name:
+                  anonymous: ""
+                type: alias
+                targetSchema: *a1
+              sealed: true
+              values:
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: ERROR
+                  valueSchema: *a4
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: WARN
+                  valueSchema: *a4
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: INFO
+                  valueSchema: *a4
+          - name: MetricNamespace
+            description: The namespace of the observation metric.
+            schema: *a1
+          - name: MetricName
+            description: The name of the observation metric.
+            schema: *a1
+          - name: Unit
+            description: The unit of the source observation metric.
+            schema: *a1
+          - name: Value
+            description: The value of the source observation metric.
+            schema: *a5
+          - name: CloudWatchEventId
+            description: " The ID of the CloudWatch Event-based observation related to the
+              detected problem. "
+            schema: *a1
+          - name: CloudWatchEventSource
+            description: " The source of the CloudWatch Event. "
+            schema:
+              &a20
+              name:
+                anonymous: ""
+              type: enum
+              elementSchema:
+                &a6
+                name:
+                  anonymous: ""
+                type: alias
+                targetSchema: *a1
+              sealed: true
+              values:
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: EC2
+                  valueSchema: *a6
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: CODE_DEPLOY
+                  valueSchema: *a6
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: HEALTH
+                  valueSchema: *a6
+          - name: CloudWatchEventDetailType
+            description: " The detail type of the CloudWatch Event-based observation, for
+              example, <code>EC2 Instance State-change Notification</code>. "
+            schema: *a1
+          - name: HealthEventArn
+            description: " The Amazon Resource Name (ARN) of the AWS Health Event-based
+              observation."
+            schema: *a1
+          - name: HealthService
+            description: " The service to which the AWS Health Event belongs, such as EC2. "
+            schema: *a1
+          - name: HealthEventTypeCode
+            description: " The type of the AWS Health event, for example,
+              <code>AWS_EC2_POWER_CONNECTIVITY_ISSUE</code>. "
+            schema: *a1
+          - name: HealthEventTypeCategory
+            description: " The category of the AWS Health event, such as <code>issue</code>.
+              "
+            schema: *a1
+          - name: HealthEventDescription
+            description: " The description of the AWS Health event provided by the service,
+              such as Amazon EC2. "
+            schema: *a1
+          - name: CodeDeployDeploymentId
+            description: " The deployment ID of the CodeDeploy-based observation related to
+              the detected problem. "
+            schema: *a1
+          - name: CodeDeployDeploymentGroup
+            description: " The deployment group to which the CodeDeploy deployment belongs.
+              "
+            schema: *a1
+          - name: CodeDeployState
+            description: " The status of the CodeDeploy deployment, for example
+              <code>SUCCESS</code> or <code> FAILURE</code>. "
+            schema: *a1
+          - name: CodeDeployApplication
+            description: " The CodeDeploy application to which the deployment belongs. "
+            schema: *a1
+          - name: CodeDeployInstanceGroupId
+            description: " The instance group to which the CodeDeploy instance belongs. "
+            schema: *a1
+          - name: Ec2State
+            description: " The state of the instance, such as <code>STOPPING</code> or
+              <code>TERMINATING</code>. "
+            schema: *a1
+          - name: XRayFaultPercent
+            description: " The X-Ray request fault percentage for this node. "
+            schema: *a7
+          - name: XRayThrottlePercent
+            description: " The X-Ray request throttle percentage for this node. "
+            schema: *a7
+          - name: XRayErrorPercent
+            description: " The X-Ray request error percentage for this node. "
+            schema: *a7
+          - name: XRayRequestCount
+            description: " The X-Ray request count for this node. "
+            schema: *a7
+          - name: XRayRequestAverageLatency
+            description: " The X-Ray node request average latency for this node. "
+            schema: *a7
+          - name: XRayNodeName
+            description: " The name of the X-Ray node. "
+            schema: *a1
+          - name: XRayNodeType
+            description: " The type of the X-Ray node. "
+            schema: *a1
+    - &a42
+      name:
+        anonymous: ""
+      type: array
+      elementSchema:
+        &a26
+        name: ApplicationInfo
+        type: object
+        description: Describes the status of the application.
+        properties:
+          - name: ResourceGroupName
+            description: The name of the resource group used for the application.
+            schema:
+              &a15
+              name:
+                anonymous: ""
+              type: alias
+              constraints:
+                - name: MaxLength
+                  type: constraint
+                  length: 256
+                - name: MinLength
+                  type: constraint
+                  length: 1
+                - name: RegularExpression
+                  type: constraint
+                  length: "[a-zA-Z0-9\\.\\-_]*"
+              targetSchema: *a1
+          - name: LifeCycle
+            description: "The lifecycle of the application. "
+            schema: *a1
+          - name: OpsItemSNSTopicArn
+            description: " The SNS topic provided to Application Insights that is associated
+              to the created opsItems to receive SNS notifications for opsItem
+              updates. "
+            schema:
+              &a28
+              name:
+                anonymous: ""
+              type: alias
+              constraints:
+                - name: MaxLength
+                  type: constraint
+                  length: 300
+                - name: MinLength
+                  type: constraint
+                  length: 20
+              targetSchema: *a1
+          - name: OpsCenterEnabled
+            description: " Indicates whether Application Insights will create opsItems for
+              any problem detected by Application Insights for an application. "
+            schema: *a8
+          - name: CWEMonitorEnabled
+            description: " Indicates whether Application Insights can listen to CloudWatch
+              events for the application resources, such as <code>instance
+              terminated</code>, <code>failed deployment</code>, and others. "
+            schema: *a8
+          - name: Remarks
+            description: <p>The issues on the user side that block Application Insights from
+              successfully monitoring an application. Example remarks
+              include:</p> <ul> <li> <p>“Configuring application, detected 1
+              Errors, 3 Warnings”</p> </li> <li> <p>“Configuring application,
+              detected 1 Unconfigured Components”</p> </li> </ul>
+            schema: *a1
+    - &a43
+      name:
+        anonymous: ""
+      type: array
+      elementSchema:
+        &a34
+        name: ApplicationComponent
+        type: object
+        description: Describes a standalone resource or similarly grouped resources that
+          the application is made up of.
+        properties:
+          - name: ComponentName
+            description: The name of the component.
+            schema: *a1
+          - name: ResourceType
+            description: The resource type. Supported resource types include EC2 instances,
+              Auto Scaling group, Classic ELB, Application ELB, and SQS Queue.
+            schema: *a1
+          - name: Tier
+            description: The stack tier of the application component.
+            schema:
+              &a18
+              name:
+                anonymous: ""
+              type: enum
+              elementSchema:
+                &a9
+                name:
+                  anonymous: ""
+                type: alias
+                constraints:
+                  - name: MaxLength
+                    type: constraint
+                    length: 50
+                  - name: MinLength
+                    type: constraint
+                    length: 1
+                targetSchema: *a1
+              sealed: true
+              values:
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: DEFAULT
+                  valueSchema: *a9
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: DOT_NET_CORE
+                  valueSchema: *a9
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: DOT_NET_WORKER
+                  valueSchema: *a9
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: DOT_NET_WEB
+                  valueSchema: *a9
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: SQL_SERVER
+                  valueSchema: *a9
+          - name: Monitor
+            description: "Indicates whether the application component is monitored. "
+            schema: *a8
+    - &a46
+      name:
+        anonymous: ""
+      type: array
+      elementSchema:
+        &a45
+        name: ConfigurationEvent
+        type: object
+        description: " The event information. "
+        properties:
+          - name: MonitoredResourceARN
+            description: " The resource monitored by Application Insights. "
+            schema: *a1
+          - name: EventStatus
+            description: " The status of the configuration update event. Possible values
+              include INFO, WARN, and ERROR. "
+            schema:
+              &a24
+              name:
+                anonymous: ""
+              type: enum
+              elementSchema:
+                &a10
+                name:
+                  anonymous: ""
+                type: alias
+                targetSchema: *a1
+              sealed: true
+              values:
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: INFO
+                  valueSchema: *a10
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: WARN
+                  valueSchema: *a10
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: ERROR
+                  valueSchema: *a10
+          - name: EventResourceType
+            description: " The resource type that Application Insights attempted to
+              configure, for example, CLOUDWATCH_ALARM. "
+            schema:
+              &a25
+              name:
+                anonymous: ""
+              type: enum
+              elementSchema:
+                &a11
+                name:
+                  anonymous: ""
+                type: alias
+                targetSchema: *a1
+              sealed: true
+              values:
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: CLOUDWATCH_ALARM
+                  valueSchema: *a11
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: CLOUDFORMATION
+                  valueSchema: *a11
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: SSM_ASSOCIATION
+                  valueSchema: *a11
+          - name: EventTime
+            description: " The timestamp of the event. "
+            schema: *a3
+          - name: EventDetail
+            description: " The details of the event in plain text. "
+            schema: *a1
+          - name: EventResourceName
+            description: " The name of the resource Application Insights attempted to
+              configure. "
+            schema: *a1
+    - &a47
+      name:
+        anonymous: ""
+      type: array
+      elementSchema:
+        &a12
+        name:
+          anonymous: ""
+        type: alias
+        constraints:
+          - name: MaxLength
+            type: constraint
+            length: 30
+          - name: MinLength
+            type: constraint
+            length: 1
+          - name: RegularExpression
+            type: constraint
+            length: "[a-zA-Z0-9\\.\\-_]*"
+        targetSchema: *a1
     - &a48
-      name: ""
+      name:
+        anonymous: ""
       type: array
       elementSchema:
-        name: ""
-        type: alias
-        targetSchema:
-          &a31
-          $key: LogPattern
-          name: ""
-          type: object
-          description: An object that defines the log patterns that belongs to a
-            <code>LogPatternSet</code>.
-          properties:
-            - name: PatternSetName
-              description: "The name of the log pattern. A log pattern name can contains at
-                many as 30 characters, and it cannot be empty. The characters
-                can be Unicode letters, digits or one of the following symbols:
-                period, dash, underscore."
-              schema:
-                &a67
-                name: ""
-                type: alias
-                targetSchema: *a12
-            - name: PatternName
-              description: "The name of the log pattern. A log pattern name can contains at
-                many as 50 characters, and it cannot be empty. The characters
-                can be Unicode letters, digits or one of the following symbols:
-                period, dash, underscore."
-              schema:
-                &a68
-                name: ""
-                type: alias
-                targetSchema:
-                  &a32
-                  name: ""
-                  type: alias
-                  constraints:
-                    - name: MaxLength
-                      type: constraint
-                      length: 50
-                    - name: MinLength
-                      type: constraint
-                      length: 1
-                    - name: RegularExpression
-                      type: constraint
-                      length: "[a-zA-Z0-9\\.\\-_]*"
-                  targetSchema: *a1
-            - name: Pattern
-              description: A regular expression that defines the log pattern. A log pattern
-                can contains at many as 50 characters, and it cannot be empty.
-              schema:
-                &a69
-                name: ""
-                type: alias
-                targetSchema:
-                  &a33
-                  name: ""
-                  type: alias
-                  constraints:
-                    - name: MaxLength
-                      type: constraint
-                      length: 50
-                    - name: MinLength
-                      type: constraint
-                      length: 1
-                  targetSchema: *a1
-            - name: Rank
-              description: Rank of the log pattern.
-              schema:
-                &a70
-                name: ""
-                type: alias
-                targetSchema: *a7
+        &a31
+        name: LogPattern
+        type: object
+        description: An object that defines the log patterns that belongs to a
+          <code>LogPatternSet</code>.
+        properties:
+          - name: PatternSetName
+            description: "The name of the log pattern. A log pattern name can contains at
+              many as 30 characters, and it cannot be empty. The characters can
+              be Unicode letters, digits or one of the following symbols:
+              period, dash, underscore."
+            schema: *a12
+          - name: PatternName
+            description: "The name of the log pattern. A log pattern name can contains at
+              many as 50 characters, and it cannot be empty. The characters can
+              be Unicode letters, digits or one of the following symbols:
+              period, dash, underscore."
+            schema:
+              &a32
+              name:
+                anonymous: ""
+              type: alias
+              constraints:
+                - name: MaxLength
+                  type: constraint
+                  length: 50
+                - name: MinLength
+                  type: constraint
+                  length: 1
+                - name: RegularExpression
+                  type: constraint
+                  length: "[a-zA-Z0-9\\.\\-_]*"
+              targetSchema: *a1
+          - name: Pattern
+            description: A regular expression that defines the log pattern. A log pattern
+              can contains at many as 50 characters, and it cannot be empty.
+            schema:
+              &a33
+              name:
+                anonymous: ""
+              type: alias
+              constraints:
+                - name: MaxLength
+                  type: constraint
+                  length: 50
+                - name: MinLength
+                  type: constraint
+                  length: 1
+              targetSchema: *a1
+          - name: Rank
+            description: Rank of the log pattern.
+            schema: *a7
     - &a49
-      name: ""
+      name:
+        anonymous: ""
       type: array
       elementSchema:
-        name: ""
-        type: alias
-        targetSchema:
-          &a38
-          $key: Problem
-          name: ""
-          type: object
-          description: Describes a problem that is detected by correlating observations.
-          properties:
-            - name: Id
-              description: The ID of the problem.
-              schema:
-                &a81
-                name: ""
-                type: alias
-                targetSchema:
-                  &a39
-                  name: ""
-                  type: alias
-                  constraints:
-                    - name: MaxLength
-                      type: constraint
-                      length: 38
-                    - name: MinLength
-                      type: constraint
-                      length: 38
-                    - name: RegularExpression
-                      type: constraint
-                      length: p-[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}
-                  targetSchema: *a1
-            - name: Title
-              description: The name of the problem.
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: Insights
-              description: A detailed analysis of the problem using machine learning.
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a1
-            - name: Status
-              description: The status of the problem.
-              schema:
-                &a82
-                name: ""
-                type: alias
-                targetSchema:
-                  &a21
-                  name: ""
-                  type: enum
-                  elementSchema:
-                    &a13
-                    name: ""
-                    type: alias
-                    targetSchema: *a1
-                  sealed: true
-                  values:
-                    - name: ""
-                      type: constant
-                      value: IGNORE
-                      valueSchema: *a13
-                    - name: ""
-                      type: constant
-                      value: RESOLVED
-                      valueSchema: *a13
-                    - name: ""
-                      type: constant
-                      value: PENDING
-                      valueSchema: *a13
-            - name: AffectedResource
-              description: The resource affected by the problem.
-              schema:
-                name: ""
+        &a38
+        name: Problem
+        type: object
+        description: Describes a problem that is detected by correlating observations.
+        properties:
+          - name: Id
+            description: The ID of the problem.
+            schema:
+              &a39
+              name:
+                anonymous: ""
+              type: alias
+              constraints:
+                - name: MaxLength
+                  type: constraint
+                  length: 38
+                - name: MinLength
+                  type: constraint
+                  length: 38
+                - name: RegularExpression
+                  type: constraint
+                  length: p-[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}
+              targetSchema: *a1
+          - name: Title
+            description: The name of the problem.
+            schema: *a1
+          - name: Insights
+            description: A detailed analysis of the problem using machine learning.
+            schema: *a1
+          - name: Status
+            description: The status of the problem.
+            schema:
+              &a21
+              name:
+                anonymous: ""
+              type: enum
+              elementSchema:
+                &a13
+                name:
+                  anonymous: ""
                 type: alias
                 targetSchema: *a1
-            - name: StartTime
-              description: The time when the problem started, in epoch seconds.
-              schema:
-                name: ""
+              sealed: true
+              values:
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: IGNORE
+                  valueSchema: *a13
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: RESOLVED
+                  valueSchema: *a13
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: PENDING
+                  valueSchema: *a13
+          - name: AffectedResource
+            description: The resource affected by the problem.
+            schema: *a1
+          - name: StartTime
+            description: The time when the problem started, in epoch seconds.
+            schema: *a3
+          - name: EndTime
+            description: The time when the problem ended, in epoch seconds.
+            schema: *a3
+          - name: SeverityLevel
+            description: A measure of the level of impact of the problem.
+            schema:
+              &a22
+              name:
+                anonymous: ""
+              type: enum
+              elementSchema:
+                &a14
+                name:
+                  anonymous: ""
                 type: alias
-                targetSchema: *a3
-            - name: EndTime
-              description: The time when the problem ended, in epoch seconds.
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a3
-            - name: SeverityLevel
-              description: A measure of the level of impact of the problem.
-              schema:
-                &a83
-                name: ""
-                type: alias
-                targetSchema:
-                  &a22
-                  name: ""
-                  type: enum
-                  elementSchema:
-                    &a14
-                    name: ""
-                    type: alias
-                    targetSchema: *a1
-                  sealed: true
-                  values:
-                    - name: ""
-                      type: constant
-                      value: Low
-                      valueSchema: *a14
-                    - name: ""
-                      type: constant
-                      value: Medium
-                      valueSchema: *a14
-                    - name: ""
-                      type: constant
-                      value: High
-                      valueSchema: *a14
-            - name: ResourceGroupName
-              description: The name of the resource group affected by the problem.
-              schema:
-                name: ""
-                type: alias
-                targetSchema: *a15
-            - name: Feedback
-              description: Feedback provided by the user about the problem.
-              schema:
-                &a85
-                name: ""
-                type: alias
-                targetSchema:
-                  name: Feedback
-                  type: alias
-                  constraints:
-                    - name: MaximumProperties
-                      type: constraint
-                      count: 10
-                  targetSchema: *a16
+                targetSchema: *a1
+              sealed: true
+              values:
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: Low
+                  valueSchema: *a14
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: Medium
+                  valueSchema: *a14
+                - name:
+                    anonymous: ""
+                  type: constant
+                  value: High
+                  valueSchema: *a14
+          - name: ResourceGroupName
+            description: The name of the resource group affected by the problem.
+            schema: *a15
+          - name: Feedback
+            description: Feedback provided by the user about the problem.
+            schema:
+              name: Feedback
+              type: alias
+              constraints:
+                - name: MaximumProperties
+                  type: constraint
+                  count: 10
+              targetSchema: *a16
     - &a52
-      name: ""
+      name:
+        anonymous: ""
       type: array
-      elementSchema:
-        name: ""
-        type: alias
-        targetSchema: *a17
+      elementSchema: *a17
   constants:
-    - name: ""
+    - name:
+        anonymous: ""
       type: constant
       value: INSIGHTS_FEEDBACK
       valueSchema:
-        name: ""
+        name:
+          anonymous: ""
         type: alias
         targetSchema: *a1
   enums:
@@ -1010,530 +814,335 @@ schemas:
     - *a25
   objects:
     - *a26
-    - $key: CreateApplicationResponse
-      name: ""
+    - name: CreateApplicationResponse
       type: object
       properties:
         - name: ApplicationInfo
           description: Information about the application.
-          schema:
-            &a57
-            name: ""
-            type: alias
-            targetSchema: *a26
+          schema: *a26
     - *a27
-    - $key: CreateApplicationRequest
-      name: ""
+    - name: CreateApplicationRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            &a58
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: OpsCenterEnabled
           description: " When set to <code>true</code>, creates opsItems for any problems
             detected on an application. "
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a8
+          schema: *a8
         - name: CWEMonitorEnabled
           description: " Indicates whether Application Insights can listen to CloudWatch
             events for the application resources, such as <code>instance
             terminated</code>, <code>failed deployment</code>, and others. "
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a8
+          schema: *a8
         - name: OpsItemSNSTopicArn
           description: " The SNS topic provided to Application Insights that is associated
             to the created opsItem. Allows you to receive notifications for
             updates to the opsItem. "
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a28
+          schema: *a28
         - name: Tags
           description: List of tags to add to the application. tag key (<code>Key</code>)
             and an associated tag value (<code>Value</code>). The maximum length
             of a tag key is 128 characters. The maximum length of a tag value is
             256 characters.
           schema:
-            &a63
-            name: ""
+            &a50
+            name: TagList
             type: alias
-            targetSchema:
-              &a50
-              name: TagList
-              type: alias
-              constraints:
-                - name: MaximumElements
-                  type: constraint
-                  count: 200
-                - name: MinimumElements
-                  type: constraint
-                  count: 0
-              targetSchema: *a29
+            constraints:
+              - name: MaximumElements
+                type: constraint
+                count: 200
+              - name: MinimumElements
+                type: constraint
+                count: 0
+            targetSchema: *a29
       summary: CreateApplicationRequest
-    - $key: CreateComponentResponse
-      name: ""
+    - name: CreateComponentResponse
       type: object
-    - $key: CreateComponentRequest
-      name: ""
+    - name: CreateComponentRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: ComponentName
           description: The name of the component.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
+          schema: *a1
         - name: ResourceList
           description: The list of resource ARNs that belong to the component.
           required: true
-          schema:
-            &a66
-            name: ""
-            type: alias
-            targetSchema: *a30
+          schema: *a30
       summary: CreateComponentRequest
     - *a31
-    - $key: CreateLogPatternResponse
-      name: ""
+    - name: CreateLogPatternResponse
       type: object
       properties:
         - name: LogPattern
           description: The successfully created log pattern.
-          schema:
-            &a71
-            name: ""
-            type: alias
-            targetSchema: *a31
+          schema: *a31
         - name: ResourceGroupName
           description: The name of the resource group.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
-    - $key: CreateLogPatternRequest
-      name: ""
+          schema: *a15
+    - name: CreateLogPatternRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: PatternSetName
           description: The name of the log pattern set.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a12
+          schema: *a12
         - name: PatternName
           description: The name of the log pattern.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a32
+          schema: *a32
         - name: Pattern
           description: The log pattern.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a33
+          schema: *a33
         - name: Rank
           description: Rank of the log pattern.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a7
+          schema: *a7
       summary: CreateLogPatternRequest
-    - $key: DeleteApplicationResponse
-      name: ""
+    - name: DeleteApplicationResponse
       type: object
-    - $key: DeleteApplicationRequest
-      name: ""
+    - name: DeleteApplicationRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
       summary: DeleteApplicationRequest
-    - $key: DeleteComponentResponse
-      name: ""
+    - name: DeleteComponentResponse
       type: object
-    - $key: DeleteComponentRequest
-      name: ""
+    - name: DeleteComponentRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: ComponentName
           description: The name of the component.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
+          schema: *a1
       summary: DeleteComponentRequest
-    - $key: DeleteLogPatternResponse
-      name: ""
+    - name: DeleteLogPatternResponse
       type: object
-    - $key: DeleteLogPatternRequest
-      name: ""
+    - name: DeleteLogPatternRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: PatternSetName
           description: The name of the log pattern set.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a12
+          schema: *a12
         - name: PatternName
           description: The name of the log pattern.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a32
+          schema: *a32
       summary: DeleteLogPatternRequest
-    - $key: DescribeApplicationResponse
-      name: ""
+    - name: DescribeApplicationResponse
       type: object
       properties:
         - name: ApplicationInfo
           description: Information about the application.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a26
-    - $key: DescribeApplicationRequest
-      name: ""
+          schema: *a26
+    - name: DescribeApplicationRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
       summary: DescribeApplicationRequest
     - *a34
-    - $key: DescribeComponentResponse
-      name: ""
+    - name: DescribeComponentResponse
       type: object
       properties:
         - name: ApplicationComponent
-          schema:
-            &a73
-            name: ""
-            type: alias
-            targetSchema: *a34
+          schema: *a34
         - name: ResourceList
           description: The list of resource ARNs that belong to the component.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a30
-    - $key: DescribeComponentRequest
-      name: ""
+          schema: *a30
+    - name: DescribeComponentRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: ComponentName
           description: The name of the component.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
+          schema: *a1
       summary: DescribeComponentRequest
-    - $key: DescribeComponentConfigurationResponse
-      name: ""
+    - name: DescribeComponentConfigurationResponse
       type: object
       properties:
         - name: Monitor
           description: Indicates whether the application component is monitored.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a8
+          schema: *a8
         - name: Tier
           description: "The tier of the application component. Supported tiers include
             <code>DOT_NET_CORE</code>, <code>DOT_NET_WORKER</code>,
             <code>DOT_NET_WEB</code>, <code>SQL_SERVER</code>, and
             <code>DEFAULT</code> "
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a18
+          schema: *a18
         - name: ComponentConfiguration
           description: The configuration settings of the component. The value is the
             escaped JSON of the configuration.
           schema:
-            &a74
-            name: ""
+            &a35
+            name:
+              anonymous: ""
             type: alias
-            targetSchema:
-              &a35
-              name: ""
-              type: alias
-              constraints:
-                - name: MaxLength
-                  type: constraint
-                  length: 10000
-                - name: MinLength
-                  type: constraint
-                  length: 1
-              targetSchema: *a1
-    - $key: DescribeComponentConfigurationRequest
-      name: ""
+            constraints:
+              - name: MaxLength
+                type: constraint
+                length: 10000
+              - name: MinLength
+                type: constraint
+                length: 1
+            targetSchema: *a1
+    - name: DescribeComponentConfigurationRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: ComponentName
           description: The name of the component.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
+          schema: *a1
       summary: DescribeComponentConfigurationRequest
-    - $key: DescribeComponentConfigurationRecommendationResponse
-      name: ""
+    - name: DescribeComponentConfigurationRecommendationResponse
       type: object
       properties:
         - name: ComponentConfiguration
           description: The recommended configuration settings of the component. The value
             is the escaped JSON of the configuration.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a35
-    - $key: DescribeComponentConfigurationRecommendationRequest
-      name: ""
+          schema: *a35
+    - name: DescribeComponentConfigurationRecommendationRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: ComponentName
           description: The name of the component.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
+          schema: *a1
         - name: Tier
           description: The tier of the application component. Supported tiers include
             <code>DOT_NET_CORE</code>, <code>DOT_NET_WORKER</code>,
             <code>DOT_NET_WEB</code>, <code>SQL_SERVER</code>, and
             <code>DEFAULT</code>.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a18
+          schema: *a18
       summary: DescribeComponentConfigurationRecommendationRequest
-    - $key: DescribeLogPatternResponse
-      name: ""
+    - name: DescribeLogPatternResponse
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: LogPattern
           description: The successfully created log pattern.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a31
-    - $key: DescribeLogPatternRequest
-      name: ""
+          schema: *a31
+    - name: DescribeLogPatternRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: PatternSetName
           description: The name of the log pattern set.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a12
+          schema: *a12
         - name: PatternName
           description: The name of the log pattern.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a32
+          schema: *a32
       summary: DescribeLogPatternRequest
     - *a36
-    - $key: DescribeObservationResponse
-      name: ""
+    - name: DescribeObservationResponse
       type: object
       properties:
         - name: Observation
           description: Information about the observation.
-          schema:
-            &a80
-            name: ""
-            type: alias
-            targetSchema: *a36
-    - $key: DescribeObservationRequest
-      name: ""
+          schema: *a36
+    - name: DescribeObservationRequest
       type: object
       properties:
         - name: ObservationId
           description: The ID of the observation.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a37
+          schema: *a37
       summary: DescribeObservationRequest
     - *a38
-    - $key: DescribeProblemResponse
-      name: ""
+    - name: DescribeProblemResponse
       type: object
       properties:
         - name: Problem
           description: "Information about the problem. "
-          schema:
-            &a86
-            name: ""
-            type: alias
-            targetSchema: *a38
-    - $key: DescribeProblemRequest
-      name: ""
+          schema: *a38
+    - name: DescribeProblemRequest
       type: object
       properties:
         - name: ProblemId
           description: The ID of the problem.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a39
+          schema: *a39
       summary: DescribeProblemRequest
     - &a41
-      $key: RelatedObservations
-      name: ""
+      name: RelatedObservations
       type: object
       description: Describes observations related to the problem.
       properties:
         - name: ObservationList
           description: The list of observations related to the problem.
-          schema:
-            &a87
-            name: ""
-            type: alias
-            targetSchema: *a40
-    - $key: DescribeProblemObservationsResponse
-      name: ""
+          schema: *a40
+    - name: DescribeProblemObservationsResponse
       type: object
       properties:
         - name: RelatedObservations
           description: Observations related to the problem.
-          schema:
-            &a88
-            name: ""
-            type: alias
-            targetSchema: *a41
-    - $key: DescribeProblemObservationsRequest
-      name: ""
+          schema: *a41
+    - name: DescribeProblemObservationsRequest
       type: object
       properties:
         - name: ProblemId
           description: The ID of the problem.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a39
+          schema: *a39
       summary: DescribeProblemObservationsRequest
-    - $key: ListApplicationsResponse
-      name: ""
+    - name: ListApplicationsResponse
       type: object
       properties:
         - name: ApplicationInfoList
           description: The list of applications.
-          schema:
-            &a89
-            name: ""
-            type: alias
-            targetSchema: *a42
+          schema: *a42
         - name: NextToken
           description: "The token used to retrieve the next page of results. This value is
             <code>null</code> when there are no more results to return. "
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
-    - $key: ListApplicationsRequest
-      name: ""
+          schema: *a1
+    - name: ListApplicationsRequest
       type: object
       properties:
         - name: MaxResults
@@ -1541,83 +1150,54 @@ schemas:
             retrieve the remaining results, make another call with the returned
             <code>NextToken</code> value.
           schema:
-            &a90
-            name: ""
+            &a44
+            name:
+              anonymous: ""
             type: alias
-            targetSchema:
-              &a44
-              name: ""
-              type: alias
-              constraints:
-                - name: Minimum
-                  type: constraint
-                  minimum: 1
-                - name: Maximum
-                  type: constraint
-                  maximum: 40
-              targetSchema: *a7
+            constraints:
+              - name: Minimum
+                type: constraint
+                minimum: 1
+              - name: Maximum
+                type: constraint
+                maximum: 40
+            targetSchema: *a7
         - name: NextToken
           description: The token to request the next page of results.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
+          schema: *a1
       summary: ListApplicationsRequest
-    - $key: ListComponentsResponse
-      name: ""
+    - name: ListComponentsResponse
       type: object
       properties:
         - name: ApplicationComponentList
           description: The list of application components.
-          schema:
-            &a91
-            name: ""
-            type: alias
-            targetSchema: *a43
+          schema: *a43
         - name: NextToken
           description: The token to request the next page of results.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
-    - $key: ListComponentsRequest
-      name: ""
+          schema: *a1
+    - name: ListComponentsRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: MaxResults
           description: The maximum number of results to return in a single call. To
             retrieve the remaining results, make another call with the returned
             <code>NextToken</code> value.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a44
+          schema: *a44
         - name: NextToken
           description: The token to request the next page of results.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
+          schema: *a1
       summary: ListComponentsRequest
     - *a45
-    - $key: ListConfigurationHistoryResponse
-      name: ""
+    - name: ListConfigurationHistoryResponse
       type: object
       properties:
         - name: EventList
           description: " The list of configuration events and their corresponding details. "
-          schema:
-            &a95
-            name: ""
-            type: alias
-            targetSchema: *a46
+          schema: *a46
         - name: NextToken
           description: The <code>NextToken</code> value to include in a future
             <code>ListConfigurationHistory</code> request. When the results of a
@@ -1625,39 +1205,23 @@ schemas:
             <code>MaxResults</code>, this value can be used to retrieve the next
             page of results. This value is <code>null</code> when there are no
             more results to return.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
-    - $key: ListConfigurationHistoryRequest
-      name: ""
+          schema: *a1
+    - name: ListConfigurationHistoryRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: "Resource group to which the application belongs. "
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: StartTime
           description: "The start time of the event. "
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a3
+          schema: *a3
         - name: EndTime
           description: The end time of the event.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a3
+          schema: *a3
         - name: EventStatus
           description: The status of the configuration update event. Possible values
             include INFO, WARN, and ERROR.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a24
+          schema: *a24
         - name: MaxResults
           description: " The maximum number of results returned by
             <code>ListConfigurationHistory</code> in paginated output. When this
@@ -1668,10 +1232,7 @@ schemas:
             <code>ListConfigurationHistory</code> request with the returned
             <code>NextToken</code> value. If this parameter is not used, then
             <code>ListConfigurationHistory</code> returns all results. "
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a44
+          schema: *a44
         - name: NextToken
           description: The <code>NextToken</code> value returned from a previous paginated
             <code>ListConfigurationHistory</code> request where
@@ -1679,189 +1240,112 @@ schemas:
             of that parameter. Pagination continues from the end of the previous
             results that returned the <code>NextToken</code> value. This value
             is <code>null</code> when there are no more results to return.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
+          schema: *a1
       summary: ListConfigurationHistoryRequest
-    - $key: ListLogPatternSetsResponse
-      name: ""
+    - name: ListLogPatternSetsResponse
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: LogPatternSets
           description: The list of log pattern sets.
-          schema:
-            &a96
-            name: ""
-            type: alias
-            targetSchema: *a47
+          schema: *a47
         - name: NextToken
           description: "The token used to retrieve the next page of results. This value is
             <code>null</code> when there are no more results to return. "
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
-    - $key: ListLogPatternSetsRequest
-      name: ""
+          schema: *a1
+    - name: ListLogPatternSetsRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: MaxResults
           description: The maximum number of results to return in a single call. To
             retrieve the remaining results, make another call with the returned
             <code>NextToken</code> value.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a44
+          schema: *a44
         - name: NextToken
           description: The token to request the next page of results.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
+          schema: *a1
       summary: ListLogPatternSetsRequest
-    - $key: ListLogPatternsResponse
-      name: ""
+    - name: ListLogPatternsResponse
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: LogPatterns
           description: The list of log patterns.
-          schema:
-            &a97
-            name: ""
-            type: alias
-            targetSchema: *a48
+          schema: *a48
         - name: NextToken
           description: "The token used to retrieve the next page of results. This value is
             <code>null</code> when there are no more results to return. "
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
-    - $key: ListLogPatternsRequest
-      name: ""
+          schema: *a1
+    - name: ListLogPatternsRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: PatternSetName
           description: The name of the log pattern set.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a12
+          schema: *a12
         - name: MaxResults
           description: The maximum number of results to return in a single call. To
             retrieve the remaining results, make another call with the returned
             <code>NextToken</code> value.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a44
+          schema: *a44
         - name: NextToken
           description: The token to request the next page of results.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
+          schema: *a1
       summary: ListLogPatternsRequest
-    - $key: ListProblemsResponse
-      name: ""
+    - name: ListProblemsResponse
       type: object
       properties:
         - name: ProblemList
           description: "The list of problems. "
-          schema:
-            &a98
-            name: ""
-            type: alias
-            targetSchema: *a49
+          schema: *a49
         - name: NextToken
           description: "The token used to retrieve the next page of results. This value is
             <code>null</code> when there are no more results to return. "
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
-    - $key: ListProblemsRequest
-      name: ""
+          schema: *a1
+    - name: ListProblemsRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: StartTime
           description: The time when the problem was detected, in epoch seconds. If you
             don't specify a time frame for the request, problems within the past
             seven days are returned.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a3
+          schema: *a3
         - name: EndTime
           description: The time when the problem ended, in epoch seconds. If not
             specified, problems within the past seven days are returned.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a3
+          schema: *a3
         - name: MaxResults
           description: The maximum number of results to return in a single call. To
             retrieve the remaining results, make another call with the returned
             <code>NextToken</code> value.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a44
+          schema: *a44
         - name: NextToken
           description: The token to request the next page of results.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
+          schema: *a1
       summary: ListProblemsRequest
-    - $key: ListTagsForResourceResponse
-      name: ""
+    - name: ListTagsForResourceResponse
       type: object
       properties:
         - name: Tags
           description: An array that lists all the tags that are associated with the
             application. Each tag consists of a required tag key
             (<code>Key</code>) and an associated tag value (<code>Value</code>).
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a50
-    - $key: ListTagsForResourceRequest
-      name: ""
+          schema: *a50
+    - name: ListTagsForResourceRequest
       type: object
       properties:
         - name: ResourceARN
@@ -1869,62 +1353,50 @@ schemas:
             retrieve tag information for.
           required: true
           schema:
-            name: ""
+            &a51
+            name:
+              anonymous: ""
             type: alias
+            constraints:
+              - name: MaxLength
+                type: constraint
+                length: 1011
+              - name: MinLength
+                type: constraint
+                length: 1
             targetSchema:
-              &a51
-              name: ""
-              type: alias
-              constraints:
-                - name: MaxLength
-                  type: constraint
-                  length: 1011
-                - name: MinLength
-                  type: constraint
-                  length: 1
-              targetSchema: *a1
+              name:
+                anonymous: ""
+              type: string
       summary: ListTagsForResourceRequest
-    - $key: TagResourceResponse
-      name: ""
+    - name: TagResourceResponse
       type: object
-    - $key: TagResourceRequest
-      name: ""
+    - name: TagResourceRequest
       type: object
       properties:
         - name: ResourceARN
           description: The Amazon Resource Name (ARN) of the application that you want to
             add one or more tags to.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a51
+          schema: *a51
         - name: Tags
           description: A list of tags that to add to the application. A tag consists of a
             required tag key (<code>Key</code>) and an associated tag value
             (<code>Value</code>). The maximum length of a tag key is 128
             characters. The maximum length of a tag value is 256 characters.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a50
+          schema: *a50
       summary: TagResourceRequest
-    - $key: UntagResourceResponse
-      name: ""
+    - name: UntagResourceResponse
       type: object
-    - $key: UntagResourceRequest
-      name: ""
+    - name: UntagResourceRequest
       type: object
       properties:
         - name: ResourceARN
           description: The Amazon Resource Name (ARN) of the application that you want to
             remove one or more tags from.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a51
+          schema: *a51
         - name: TagKeys
           description: <p>The tags (tag keys) that you want to remove from the resource.
             When you specify a tag key, the action removes both that key and its
@@ -1933,144 +1405,92 @@ schemas:
             for each additional tag to remove, separated by an ampersand. </p>
           required: true
           schema:
-            &a100
-            name: ""
+            &a55
+            name: TagKeyList
             type: alias
-            targetSchema:
-              &a99
-              name: TagKeyList
-              type: alias
-              constraints:
-                - name: MaximumElements
-                  type: constraint
-                  count: 200
-                - name: MinimumElements
-                  type: constraint
-                  count: 0
-              targetSchema: *a52
+            constraints:
+              - name: MaximumElements
+                type: constraint
+                count: 200
+              - name: MinimumElements
+                type: constraint
+                count: 0
+            targetSchema: *a52
       summary: UntagResourceRequest
-    - $key: UpdateApplicationResponse
-      name: ""
+    - name: UpdateApplicationResponse
       type: object
       properties:
         - name: ApplicationInfo
           description: "Information about the application. "
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a26
-    - $key: UpdateApplicationRequest
-      name: ""
+          schema: *a26
+    - name: UpdateApplicationRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: OpsCenterEnabled
           description: " When set to <code>true</code>, creates opsItems for any problems
             detected on an application. "
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a8
+          schema: *a8
         - name: CWEMonitorEnabled
           description: " Indicates whether Application Insights can listen to CloudWatch
             events for the application resources, such as <code>instance
             terminated</code>, <code>failed deployment</code>, and others. "
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a8
+          schema: *a8
         - name: OpsItemSNSTopicArn
           description: " The SNS topic provided to Application Insights that is associated
             to the created opsItem. Allows you to receive notifications for
             updates to the opsItem."
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a28
+          schema: *a28
         - name: RemoveSNSTopic
           description: " Disassociates the SNS topic from the opsItem created for detected
             problems."
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a8
+          schema: *a8
       summary: UpdateApplicationRequest
-    - $key: UpdateComponentResponse
-      name: ""
+    - name: UpdateComponentResponse
       type: object
-    - $key: UpdateComponentRequest
-      name: ""
+    - name: UpdateComponentRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: ComponentName
           description: The name of the component.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
+          schema: *a1
         - name: NewComponentName
           description: The new name of the component.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
+          schema: *a1
         - name: ResourceList
           description: The list of resource ARNs that belong to the component.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a30
+          schema: *a30
       summary: UpdateComponentRequest
-    - $key: UpdateComponentConfigurationResponse
-      name: ""
+    - name: UpdateComponentConfigurationResponse
       type: object
-    - $key: UpdateComponentConfigurationRequest
-      name: ""
+    - name: UpdateComponentConfigurationRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: ComponentName
           description: The name of the component.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a1
+          schema: *a1
         - name: Monitor
           description: Indicates whether the application component is monitored.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a8
+          schema: *a8
         - name: Tier
           description: The tier of the application component. Supported tiers include
             <code>DOT_NET_WORKER</code>, <code>DOT_NET_WEB</code>,
             <code>DOT_NET_CORE</code>, <code>SQL_SERVER</code>, and
             <code>DEFAULT</code>.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a18
+          schema: *a18
         - name: ComponentConfiguration
           description: The configuration settings of the component. The value is the
             escaped JSON of the configuration. For more information about the
@@ -2082,122 +1502,52 @@ schemas:
             of the component configuration file, see <a
             href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/component-config.html">Component
             Configuration</a>.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a35
+          schema: *a35
       summary: UpdateComponentConfigurationRequest
-    - $key: UpdateLogPatternResponse
-      name: ""
+    - name: UpdateLogPatternResponse
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: LogPattern
           description: The successfully created log pattern.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a31
-    - $key: UpdateLogPatternRequest
-      name: ""
+          schema: *a31
+    - name: UpdateLogPatternRequest
       type: object
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a15
+          schema: *a15
         - name: PatternSetName
           description: The name of the log pattern set.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a12
+          schema: *a12
         - name: PatternName
           description: The name of the log pattern.
           required: true
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a32
+          schema: *a32
         - name: Pattern
           description: The log pattern.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a33
+          schema: *a33
         - name: Rank
           description: Rank of the log pattern.
-          schema:
-            name: ""
-            type: alias
-            targetSchema: *a7
+          schema: *a7
       summary: UpdateLogPatternRequest
   aliases:
     - *a15
-    - *a53
-    - *a54
     - *a28
-    - *a55
-    - *a56
-    - *a57
-    - *a58
     - *a17
-    - *a59
-    - *a60
-    - *a61
-    - *a62
+    - *a53
     - *a50
-    - *a63
-    - *a64
-    - *a65
-    - *a66
+    - *a54
     - *a12
-    - *a67
     - *a32
-    - *a68
     - *a33
-    - *a69
-    - *a70
-    - *a71
-    - *a72
-    - *a73
     - *a35
-    - *a74
     - *a37
-    - *a75
-    - *a76
-    - *a77
-    - *a78
-    - *a79
-    - *a80
+    - *a4
     - *a39
-    - *a81
-    - *a82
-    - *a83
-    - *a84
-    - *a85
-    - *a86
-    - *a87
-    - *a88
-    - *a89
     - *a44
-    - *a90
-    - *a91
-    - *a92
-    - *a93
-    - *a94
-    - *a95
-    - *a96
-    - *a97
-    - *a98
-    - *a99
-    - *a100
+    - *a55
