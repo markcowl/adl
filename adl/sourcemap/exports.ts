@@ -1,8 +1,6 @@
 import { Origin } from './proxies';
 
-//export type anonymous = { valueOf: () => string };
 export interface anonymous extends Anonymous { };
-
 
 class Anonymous {
   constructor(protected anonymous: string) {
