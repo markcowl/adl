@@ -4,7 +4,7 @@ import { Context } from './serializer';
 import { items } from '@azure-tools/linq';
 import { use } from '@azure-tools/sourcemap';
 
-export async function processServers(server: v3.Server, $: Context) {
+export async function processServer(server: v3.Server, $: Context): Promise<Connection> {
   const connection = new Connection(server.url, { description: server.description });
   const variables = use(server.variables);
 
@@ -20,6 +20,5 @@ export async function processServers(server: v3.Server, $: Context) {
     connection.variables.push(variable);
   }
 
-  $.api.http.connections.push(connection);
   return connection;
 }
