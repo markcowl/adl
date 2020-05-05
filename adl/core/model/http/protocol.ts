@@ -7,6 +7,7 @@ export class Authentication extends Element {
 }
 
 export class Connection extends Element {
+  description?: string;
   variables = new ElementArray<ConnectionVariable>();
 
   constructor(public url: string, initializer?: Partial<Connection>) {

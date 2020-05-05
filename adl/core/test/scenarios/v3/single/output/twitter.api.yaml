@@ -1,6 +1,7 @@
 http:
   connections:
-    - url: https://api.twitter.com
+    - description: Twitter API
+      url: https://api.twitter.com
 metaData:
   name: Tweets and Users
   contacts:

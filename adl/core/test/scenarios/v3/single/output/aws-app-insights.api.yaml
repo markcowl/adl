@@ -1,6 +1,7 @@
 http:
   connections:
-    - url: http://applicationinsights.{region}.amazonaws.com
+    - description: The Application Insights multi-region endpoint
+      url: http://applicationinsights.{region}.amazonaws.com
       variables:
         - name: region
           allowedValues:
@@ -25,7 +26,8 @@ http:
             - sa-east-1
           defaultValue: us-east-1
           description: The AWS region
-    - url: https://applicationinsights.{region}.amazonaws.com
+    - description: The Application Insights multi-region endpoint
+      url: https://applicationinsights.{region}.amazonaws.com
       variables:
         - name: region
           allowedValues:
@@ -50,7 +52,8 @@ http:
             - sa-east-1
           defaultValue: us-east-1
           description: The AWS region
-    - url: http://applicationinsights.{region}.amazonaws.com.cn
+    - description: The Application Insights endpoint for China (Beijing) and China (Ningxia)
+      url: http://applicationinsights.{region}.amazonaws.com.cn
       variables:
         - name: region
           allowedValues:
@@ -58,7 +61,8 @@ http:
             - cn-northwest-1
           defaultValue: cn-north-1
           description: The AWS region
-    - url: https://applicationinsights.{region}.amazonaws.com.cn
+    - description: The Application Insights endpoint for China (Beijing) and China (Ningxia)
+      url: https://applicationinsights.{region}.amazonaws.com.cn
       variables:
         - name: region
           allowedValues:

@@ -2,15 +2,19 @@ import { v3 } from '@azure-tools/openapi';
 import { Connection, ConnectionVariable } from '../../model/http/protocol';
 import { Context } from './serializer';
 import { items } from '@azure-tools/linq';
+import { use } from '@azure-tools/sourcemap';
 
 export async function processServers(server: v3.Server, $: Context) {
-  const connection = new Connection(server.url);
+  const connection = new Connection(server.url, { description: server.description });
+  const variables = use(server.variables);
 
-  for (const { key, value } of items(server.variables)) {
-    const variable = new ConnectionVariable(key, {
+  for (const name in variables) {
+    const value = use(variables[name]);
+
+    const variable = new ConnectionVariable(name, {
       description: value.description,
       defaultValue: value.default,
-      allowedValues: value.enum
+      allowedValues: use(value.enum, true)
     });
 
     connection.variables.push(variable);
