@@ -99,7 +99,7 @@ function addUnusedTo(target: any, source: any) {
         const v = Array.isArray(value) ? [] : {};
 
         addUnusedTo(v, value);
-        if (length(target[key]) !== 0) {
+        if (length(v) !== 0) {
           target[key] = v;
         }
       }
