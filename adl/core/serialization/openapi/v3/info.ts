@@ -1,16 +1,13 @@
-import { v3, vendorExtensions } from '@azure-tools/openapi';
-import { Metadata, Contact, ContactRole, License, Reference } from '../../../model/Metadata';
-import { Context } from './serializer';
-import { Element } from '../../../model/element';
-import { is } from '../../../support/visitor';
+import { v3 } from '@azure-tools/openapi';
 import { use } from '@azure-tools/sourcemap';
+import { Contact, ContactRole } from '../../../model/contact';
+import { License } from '../../../model/license';
+import { Metadata } from '../../../model/metadata';
+import { Reference } from '../../../model/Reference';
+import { is } from '../../../support/visitor';
+import { addExtensionsToAttic } from '../common';
+import { Context } from './serializer';
 
-async function addExtensionsToAttic(element: Element, input: any) {
-  for (const { key, value } of vendorExtensions(input)) {
-    element.addToAttic(key, use(value, true));
-  }
-  return element;
-}
 
 async function processContact(contact: v3.Contact, $: Context) {
   const result = new Contact(ContactRole.Author, {
@@ -56,8 +53,6 @@ export async function processInfo(info: v3.Info, $: Context): Promise<Metadata |
   // add remaining extensions to attic. 
   await addExtensionsToAttic(metadata, info);
 
-  $.api.metaData = metadata;
-
   // we handled version much earler.
   use(info.version);
 
@@ -65,18 +60,18 @@ export async function processInfo(info: v3.Info, $: Context): Promise<Metadata |
 }
 
 
-export async function processExternalDocs(externalDocs: v3.ExternalDocumentation, $: Context): Promise<Element | undefined> {
-
+export async function processExternalDocs(externalDocs: v3.ExternalDocumentation|undefined, $: Context): Promise<Reference | undefined> {
+  if( externalDocs ) {
   // external docs are just a kind of reference. 
+    const reference = new Reference('external-documentation', {
+      location: externalDocs.url,
+      description: externalDocs.description,
+    });
+    await addExtensionsToAttic(reference, externalDocs);
 
-  const reference = new Reference('external-documentation', {
-    location: externalDocs.url,
-    description: externalDocs.description,
-  });
-  await addExtensionsToAttic(reference, externalDocs);
-
-  $.api.metaData.references.push(reference);
-  return reference;
+    return reference;
+  }
+  return undefined;
 }
 
 

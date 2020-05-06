@@ -1,20 +1,21 @@
 export * from './contact';
 export * from './dictionary';
 export * from './external-docs';
+export * from './format';
+export * from './http-method';
 export * from './info';
 export * from './json-reference';
 export * from './jsontype';
 export * from './license';
+export * from './schema-extensions';
 export * from './tag';
 export * from './uri';
 export * from './vendor-extensions';
-export * from './schema-extensions';
 export * from './xml';
-export * from './format';
 
-import { JsonReference } from './json-reference';
-import { Dictionary } from './dictionary';
 import { items, values } from '@azure-tools/linq';
+import { Dictionary } from './dictionary';
+import { JsonReference } from './json-reference';
 import { VendorExtensions } from './vendor-extensions';
 
 /** asserts that the element passed in is a JsonRefernce */
@@ -26,7 +27,9 @@ export function isVendorExtension(key: string | number | symbol): boolean {
   if (typeof key === 'symbol') {
     return false;
   }
-  return `${key}`.startsWith('x-');
+  
+  // treat x-* as 'vendor extensions' but x-ms-* should be in the openapi models
+  return key.toString().startsWith('x-') && !key.toString().startsWith('x-ms');
 }
 
 export function unzip<T>(value: Dictionary<T | JsonReference<T>>) {

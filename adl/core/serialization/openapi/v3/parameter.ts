@@ -17,20 +17,15 @@ export async function processParameters(input: ItemsOf<v3.Parameter>, $: Context
   }
 
   // handle actual items next
-  for (const { key, value: parameter } of values(parameters)) {
-    await $.process(processParameter, parameter);
+  for (const { key, value } of values(parameters)) {
+    $.api.http.parameters.push( await $.process(processParameter, value) );
   }
 
   // handle references last 
-  for (const { key, value: reference } of values(references)) {
-    await $.process(processParameterReference, reference);
+  for (const { key, value} of values(references)) {
+    $.api.http.parameters.push(await $.processInline(processParameter, value) );
   }
 
-  return undefined;
-}
-
-
-async function processParameterReference(parameterReference: v3.ParameterReference, $: Context, options?: { isAnonymous?: boolean }): Promise<Parameter | undefined> {
   return undefined;
 }
 

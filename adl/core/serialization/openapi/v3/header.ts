@@ -6,9 +6,6 @@ import { Header } from '../../../model/http/header';
 import { processInline } from './schema';
 import { Context, ItemsOf } from './serializer';
 
-const { hasSchema } = v3;
-
-
 export async function processHeaders(input: ItemsOf<v3.Header>, $: Context): Promise<Element | undefined> {
   const { extensions, references, values: headers } = unzip<v3.Header>(input);
 

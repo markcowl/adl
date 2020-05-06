@@ -1,6 +1,7 @@
 import { length } from '@azure-tools/linq';
-import { common, StringFormat, v2, v3 } from '@azure-tools/openapi';
-import { valueOf } from '@azure-tools/sourcemap';
+import { common, StringFormat, v2, v3, vendorExtensions } from '@azure-tools/openapi';
+import { use, valueOf } from '@azure-tools/sourcemap';
+import { Element } from '../../model/element';
 
 
 export function isObjectSchema(schema: v3.Schema) {
@@ -33,4 +34,12 @@ export function isPrimitiveSchema(schema: v3.Schema | v2.Schema) {
 
 export function isEnumSchema(schema: v3.Schema) {
   return (schema.enum || schema['x-ms-enum']);
+}
+
+
+export async function addExtensionsToAttic(element: Element, input: any) {
+  for (const { key, value } of vendorExtensions(input)) {
+    element.addToAttic(key, use(value, true));
+  }
+  return element;
 }

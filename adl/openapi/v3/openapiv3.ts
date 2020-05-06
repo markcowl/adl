@@ -1,20 +1,25 @@
-import { VendorExtensions } from '../common/vendor-extensions';
 import { ExternalDocumentation } from '../common/external-docs';
 import { Info } from '../common/info';
-import { Paths } from './path';
-import { Server } from './server';
 import { Tag } from '../common/tag';
-import { SecurityRequirement } from './security';
+import { VendorExtensions } from '../common/vendor-extensions';
 import { Components } from './components';
+import { Paths } from './path';
+import { SecurityRequirement } from './security';
+import { Server } from './server';
 
 export type Versions = '3.0.0' | '3.0.1' | '3.1.0';
 
+
+export interface ModelExtensions {
+  /** The available paths and operations for the API. (extended) */
+  'x-ms-paths': Paths;
+}
 /** 
  * This is the root document object for the API specification 
  *  
  * @see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md
  */
-export interface Model extends VendorExtensions {
+export interface Model extends VendorExtensions, ModelExtensions {
   /** The available paths and operations for the API. */
   paths: Paths;
 
@@ -40,6 +45,7 @@ export interface Model extends VendorExtensions {
   components?: Components;
 }
 
+export * from '../common/common';
 export * from './callback';
 export * from './components';
 export * from './discriminator';
@@ -59,4 +65,4 @@ export * from './response';
 export * from './schema';
 export * from './security';
 export * from './server';
-export * from '../common/common';
+

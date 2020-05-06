@@ -1,11 +1,47 @@
-import { Element } from './element';
+import { Alias } from './alias';
+import { Element, ElementArray } from './element';
 
 export class Operation extends Element {
 
+  /** A short summary of what the operation does. */
+  summary?: string;
+
+  /** A verbose explanation of the operation behavior. Commonmark syntax can be used for rich text representation. */
+  description?: string;
+
+  /** parameters common to all the requests(overloads) for this operation */
+  parameters = new ElementArray<Parameter|Alias<Parameter>>();
+
+  /** possible requests that can be made for this operation (ie, overloads)  */
+  requests = new ElementArray<Request>();
+  
+  /** possible outputs from this operation */
+  responses = new ElementArray<Response | Alias<Response>>();
+
+
+  /**
+   * 
+   * @param initializer the object initializer for this operation
+   */
+  constructor(initializer?: Partial<Operation>) {
+    super();
+    this.initialize(initializer);
+  }
 }
 
 export class Response extends Element {
-
+  /** 
+   * indicates that this response should be considered and exception (an error)
+   */
+  isException?:  boolean;
+  /**
+   * 
+   * @param initializer the object initializer for this response
+   */
+  constructor(initializer?: Partial<Response>) {
+    super();
+    this.initialize(initializer);
+  }
 }
 
 

@@ -1,17 +1,13 @@
+import { Dictionary, JsonReference, v3, vendorExtensions } from '@azure-tools/openapi';
+import { use } from '@azure-tools/sourcemap';
 import { ApiModel } from '../../../model/api-model';
-import { Dictionary } from '@azure-tools/openapi';
-import { v3, JsonReference, vendorExtensions } from '@azure-tools/openapi';
-
 import { Host } from '../../../support/file-system';
-import { Visitor, Context as Ctx } from '../../../support/visitor';
-import { FileSystem } from '../../../support/file-system';
-import { processInfo, processExternalDocs, processTag } from './info';
+import { Context as Ctx, Visitor } from '../../../support/visitor';
 import { processComponents } from './components';
+import { processExternalDocs, processInfo, processTag } from './info';
 import { processPaths } from './path';
 import { processSecurity } from './security';
 import { processServer } from './server';
-import { use } from '@azure-tools/sourcemap';
-
 
 /** takes an openapi3 model, converts it into a ADL model, and returns that */
 export function loadOpenApi() {
@@ -46,8 +42,11 @@ async function processRoot(oai3: v3.Model, $: Context) {
     }
   }
 
-  await $.process(processInfo, oai3.info);
-  await $.process(processExternalDocs, oai3.externalDocs);
+  // openapi3 info
+  $.api.metaData = await $.process(processInfo, oai3.info) || $.api.metaData;
+  
+  // extner
+  $.api.metaData.references.push( await $.process(processExternalDocs, oai3.externalDocs) );
   await $.processArray(processTag, oai3.tags, $.api.metaData.references);
 
   // components will have to be early, since other things will $ref them 
@@ -58,6 +57,7 @@ async function processRoot(oai3: v3.Model, $: Context) {
 
   // paths second to last
   await $.process(processPaths, oai3.paths);
+  await $.process(processPaths, oai3['x-ms-paths']);
 
   // we don't need this.
   use(oai3.openapi);
