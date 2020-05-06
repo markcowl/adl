@@ -55,11 +55,15 @@
   "eslint.workingDirectories": [
     {
       "changeProcessCWD": true,
-      "directory": "./adl",
+      "directory": "./adl/core",
     },
     {
       "changeProcessCWD": true,
-      "directory": "./adl.types",
+      "directory": "./adl/cli",
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./adl/adl.types",
     }
   ],
   "git.ignoreLimitWarning": true,
