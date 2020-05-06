@@ -7,8 +7,153 @@ import { Parameter } from './parameter';
 import { Request } from './request';
 import { Response } from './response';
 
-export class Authentication extends Element {
+export enum AuthenticationType {
+  ApiKey = 'apikey',
+  Http = 'http',
+  OAuth2 = 'oauth2',
+  OpenIdConnect = 'openidconnect'
+}
 
+export enum ParameterLocation {
+  Query = 'query',
+  Header = 'header',
+  Cookie = 'cookie',
+}
+
+export type Authentication = ApiKeyAuthentication | HttpAuthentication | OAuth2Authentication | OpenIdConnectAuthentication;
+
+export abstract class AuthenticationBase extends Element {
+  /** The authentication type.  */
+  readonly abstract type: AuthenticationType;
+
+  /** A short description for the authentication. */
+  description?: string;
+
+  /** Unique identifier for this authentication in the model. */
+  readonly abstract name: string;
+}
+
+export class ApiKeyAuthentication extends AuthenticationBase {
+  readonly type = AuthenticationType.ApiKey;
+
+  /**
+   * @param name Unique identifier for this authentication in the model.
+   * @param parameterName The name of the header, query or cookie parameter to be used.
+   * @param parameterLocation The location of the API key.
+   */
+  constructor(public name: string, public parameterName: string, public parameterLocation: ParameterLocation, initializer?: Partial<ApiKeyAuthentication>) {
+    super();
+    this.initialize(initializer);
+  }
+}
+
+export class HttpAuthentication extends AuthenticationBase {
+  readonly type = AuthenticationType.Http;
+  bearerFormat?: string;
+
+  /**
+   * @param scheme The name of the HTTP Authorization scheme to be used in the Authorization header as defined in RFC7235.
+   */
+  constructor(public name: string, public scheme: string, initializer?: Partial<HttpAuthentication>) {
+    super();
+    this.initialize(initializer);
+  }
+}
+
+export class OAuth2Authentication extends AuthenticationBase {
+  readonly type = AuthenticationType.OAuth2;
+
+  constructor(public name: string, public flows: OAuth2Flows, initializer?: Partial<OAuth2Authentication>) {
+    super();
+    this.initialize(initializer);
+  }
+}
+
+export class OpenIdConnectAuthentication extends AuthenticationBase {
+  readonly type = AuthenticationType.OpenIdConnect;
+
+  /**
+   * @param openIdConnectUrl Connect URL to discover OAuth2 configuration values.
+   * */
+  constructor(public name: string, public openIdConnectUrl: string, initializer?: Partial<OpenIdConnectAuthentication>) {
+    super();
+    this.initialize(initializer);
+  }
+}
+
+export class OAuth2Flows extends Element {
+  /** Configuration for the OAuth Implicit flow */
+  implicit?: ImplicitOAuth2Flow;
+
+  /** Configuration for the OAuth Resource Owner Password flow */
+  password?: PasswordOAuth2Flow;
+
+  /** Configuration for the OAuth Client Credentials flow. Previously called application in OpenAPI 2.0. */
+  clientCredentials?: ClientCredentialsOAuth2Flow;
+
+  /** Configuration for the OAuth Authorization Code flow. Previously called accessCode in OpenAPI 2.0. */
+  authorizationCode?: AuthorizationCodeOAuth2Flow;
+
+  constructor(initializer?: Partial<OAuth2Flows>) {
+    super();
+    this.initialize(initializer);
+  }
+}
+
+export abstract class OAuth2Flow extends Element {
+  /** The URL to be used for obtaining refresh tokens. */
+  refreshUrl?: string;
+
+  /** The available scopes for the OAuth2 authentication. */
+  scopes = new ElementArray<OAuth2Scope>();
+}
+
+export class ClientCredentialsOAuth2Flow extends OAuth2Flow {
+  /**
+   * @param tokenUrl The token URL to be used for this flow.
+   */
+  constructor(public tokenUrl: string, initializer?: Partial<ClientCredentialsOAuth2Flow>) {
+    super();
+    this.initialize(initializer);
+  }
+}
+
+export class PasswordOAuth2Flow extends OAuth2Flow {
+  /**
+   * @param tokenUrl The token URL to be used for this flow.
+   */
+  constructor(public tokenUrl: string, initializer?: Partial<PasswordOAuth2Flow>) {
+    super();
+    this.initialize(initializer);
+  }
+}
+
+export class ImplicitOAuth2Flow extends OAuth2Flow {
+  /**
+   * @param authorizationUrl The authorization URL to be used for this flow. This MUST be in the form of a URL.
+   */
+  constructor(public authorizationUrl: string, initializer?: Partial<ImplicitOAuth2Flow>) {
+    super();
+    this.initialize(initializer);
+  }
+}
+
+export class AuthorizationCodeOAuth2Flow extends OAuth2Flow {
+  /**
+   * @param authorizationUrl The authorization URL to be used for this flow. This MUST be in the form of a URL.
+   * @param tokenUrl The token URL to be used for this flow.
+   */
+  constructor(public authorizationUrl: string, public tokenUrl: string, initializer?: Partial<AuthorizationCodeOAuth2Flow>) {
+    super();
+    this.initialize(initializer);
+  }
+}
+
+export class OAuth2Scope extends Element {
+  constructor(public name: string, public description: string, initializer?: Partial<OAuth2Scope>) {
+    super();
+    this.initialize(initializer);
+  }
 }
 
 export class Connection extends Element {

@@ -8,7 +8,6 @@ import { is } from '../../../support/visitor';
 import { addExtensionsToAttic } from '../common';
 import { Context } from './serializer';
 
-
 async function processContact(contact: v3.Contact, $: Context) {
   const result = new Contact(ContactRole.Author, {
     name: contact.name,

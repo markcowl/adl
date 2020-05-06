@@ -852,17 +852,3 @@ paths:
     parameters:
       - $ref: "#/components/parameters/versionHeader"
       - $ref: "#/components/parameters/responseFormat"
-components:
-  securitySchemes:
-    basicAuth:
-      description: Basic Authentication using an [API
-        key](https://www.ably.io/documentation/core-features/authentication#basic-authentication).
-      scheme: basic
-      type: http
-    bearerAuth:
-      description: Token Authentication using an [Ably
-        Token](https://www.ably.io/documentation/core-features/authentication#basic-authentication),
-        or optionally an [Ably
-        JWT](https://www.ably.io/documentation/core-features/authentication#ably-jwt-process).
-      scheme: bearer
-      type: http
