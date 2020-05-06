@@ -63,6 +63,18 @@
     },
     {
       "changeProcessCWD": true,
+      "directory": "./adl/sourcemap",
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./adl/visitor",
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./adl/openapi",
+    },
+    {
+      "changeProcessCWD": true,
       "directory": "./adl/adl.types",
     }
   ],

@@ -64,7 +64,9 @@ export class Initializer {
 }
 
 
-/**  */
+/** 
+ * Base type for all objects in the model 
+ */
 export class Element extends Initializer {
   internalData?: Dictionary<InternalData>;
   versionInfo = new ElementArray<VersionInfo>();
