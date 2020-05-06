@@ -1,6 +1,7 @@
+import { isFile } from '@azure-tools/async-io';
 import * as chalk from 'chalk';
+import { unlinkSync } from 'fs';
 import { Host, UrlFileSystem } from '../support/file-system';
-
 
 export function formatDuration(msec: number) {
   const s = (msec / 1000).toString();
@@ -27,4 +28,14 @@ export function createHost(inputRoot: string) {
   host.on('attic', (path, duration, when) => console.log(chalk.cyan(`      attic: '${path}' ${formatDuration(duration)} `)));
   host.on('processed', (path, duration, when) => console.log(chalk.cyan(`      processed: '${path}' ${formatDuration(duration)} `)));
   return host;
+}
+
+export async function clean(...files: Array<string>) {
+  await Promise.all(
+    files.map(async (each) => {
+      if (await isFile(each)) {
+        unlinkSync(each);
+      }
+    })
+  );
 }
