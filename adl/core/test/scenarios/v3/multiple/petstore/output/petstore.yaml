@@ -1,0 +1,43 @@
+http:
+  connections:
+    - url: http://petstore.swagger.io/v1
+metaData:
+  name: Swagger Petstore
+  licenses:
+    - name: MIT
+schemas:
+  primitives:
+    - &a1
+      type: int64
+      name: anonymous<unknown>
+    - &a2
+      type: string
+      name: anonymous<unknown>
+    - type: array
+      name: anonymous<unknown>
+      elementSchema: &a3
+        type: object
+        name: Pet
+        properties:
+          - name: id
+            required: true
+            schema: *a1
+          - name: name
+            required: true
+            schema: *a2
+          - name: tag
+            schema: *a2
+    - &a4
+      type: int32
+      name: anonymous<unknown>
+  objects:
+    - *a3
+    - type: object
+      name: Error
+      properties:
+        - name: code
+          required: true
+          schema: *a4
+        - name: message
+          required: true
+          schema: *a2

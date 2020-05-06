@@ -1,13 +1,13 @@
 import { isFile, writeFile } from '@azure-tools/async-io';
 import { values } from '@azure-tools/linq';
-import { v2 } from '@azure-tools/openapi';
+import { v3 } from '@azure-tools/openapi';
 import { equal, fail } from 'assert';
 import * as chalk from 'chalk';
 import { readdirSync, statSync } from 'fs';
 import { describe, it } from 'mocha';
 import { resolve } from 'path';
 import { ApiModel } from '../model/api-model';
-import { deserializeOpenAPI2 } from '../serialization/openapi/v2/serializer';
+import { deserializeOpenAPI3 } from '../serialization/openapi/v3/serializer';
 import { Stopwatch } from '../support/stopwatch';
 import { clean, createHost, formatDuration } from './common';
 import { Errors as AccumulateErrors, Errors } from './errors';
@@ -15,25 +15,26 @@ import { serialize } from './serialization';
 
 require('source-map-support').Install;
 
-const scenarios = `${__dirname}/../../test/scenarios/v2`;
+const scenarios = `${__dirname}/../../test/scenarios/v3`;
 
 async function checkAttic(api: ApiModel, errors: Errors, atticOutput: string) {
   if (api.attic) {
-    const attic = <v2.Model>api.attic.valueOf();
-
+    const attic = <v3.Model>api.attic.valueOf();
     // verify that the attic does not have things we expect to be done
+    errors.check(() => equal(attic.info, undefined, 'Should not have an info section left in attic'));
+    errors.check(() => equal(attic.openapi, undefined, 'Should not have an openapi section left in attic'));
+    errors.check(() => equal(attic.tags, undefined, 'Should not have a tags section left in attic'));
+    errors.check(() => equal(attic.externalDocs, undefined, 'Should not have an externalDocs section left in attic'));
 
-    errors.check(() => equal(attic.swagger, undefined, 'Should not have an swagger node left in attic'));
-    //errors.check(() => equal(attic.info, undefined, 'Should not have an info section left in attic'));
-    //errors.check(() => equal(attic.tags, undefined, 'Should not have a tags section left in attic'));
-    //errors.check(() => equal(attic.externalDocs, undefined, 'Should not have an externalDocs section left in attic'));
+    errors.check(() => equal(attic.components?.schemas, undefined, 'Should not have components/schemas section left in attic'));
+    errors.check(() => equal(attic.components?.parameters, undefined, 'Should not have components/parameters section left in attic'));
 
     await writeFile(atticOutput, serialize(api.attic.valueOf()));
     delete api.attic;
   }
 }
 
-describe('Load Single OAI2 files', () => {
+describe('Load Single OAI3 files', () => {
   const inputRoot = `${scenarios}/single/input`;
   const outputRoot = `${scenarios}/single/output`;
   const files = values(readdirSync(inputRoot)).where(each => statSync(`${inputRoot}/${each}`).isFile()).toArray();
@@ -42,7 +43,7 @@ describe('Load Single OAI2 files', () => {
     it(`Processes '${file}'`, async () => {
       console.log('\n');
       const host = createHost(inputRoot);
-      const api = await deserializeOpenAPI2(host, file);
+      const api = await deserializeOpenAPI3(host, file);
 
       const apiOutput = resolve(`${outputRoot}/${file.replace(/.yaml$/ig, '.api.yaml')}`);
       const atticOutput = resolve(`${outputRoot}/${file.replace(/.yaml$/ig, '.attic.yaml')}`);
@@ -62,7 +63,7 @@ describe('Load Single OAI2 files', () => {
   }
 });
 
-describe('Load Multiple OAI2 files', () => {
+describe('Load Multiple OAI3 files', () => {
   const root = `${scenarios}/multiple`;
   const folders = values(readdirSync(root)).where(each => statSync(`${root}/${each}`).isDirectory()).toArray();
 
@@ -75,10 +76,9 @@ describe('Load Multiple OAI2 files', () => {
       const host = createHost(inputRoot);
 
       const files = values(readdirSync(inputRoot)).where(each => statSync(`${inputRoot}/${each}`).isFile()).toArray();
-      const api = await deserializeOpenAPI2(host, ...files);
+      const api = await deserializeOpenAPI3(host, ...files);
       const apiOutput = resolve(`${outputRoot}/${folder}.yaml`);
       const atticOutput = resolve(`${outputRoot}/${folder}.attic.yaml`);
-
       const errors = new AccumulateErrors();
 
       await clean(apiOutput, atticOutput);
