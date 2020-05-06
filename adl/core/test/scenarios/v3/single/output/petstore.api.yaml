@@ -8,20 +8,17 @@ metaData:
 schemas:
   primitives:
     - &a1
-      name:
-        anonymous: ""
       type: int64
+      name: anonymous<unknown>
     - &a2
-      name:
-        anonymous: ""
       type: string
-    - name:
-        anonymous: ""
-      type: array
+      name: anonymous<unknown>
+    - type: array
+      name: anonymous<unknown>
       elementSchema:
         &a3
-        name: Pet
         type: object
+        name: Pet
         properties:
           - name: id
             required: true
@@ -32,13 +29,12 @@ schemas:
           - name: tag
             schema: *a2
     - &a4
-      name:
-        anonymous: ""
       type: int32
+      name: anonymous<unknown>
   objects:
     - *a3
-    - name: Error
-      type: object
+    - type: object
+      name: Error
       properties:
         - name: code
           required: true

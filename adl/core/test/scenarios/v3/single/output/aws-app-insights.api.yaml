@@ -71,48 +71,47 @@ http:
           defaultValue: cn-north-1
           description: The AWS region
   parameters:
-    - name: X-Amz-Content-Sha256
-      type: header
+    - type: header
+      name: X-Amz-Content-Sha256
       expandParameterValues: false
       renderStyle: simple
       required: false
       schema:
         &a1
-        name:
-          anonymous: ""
         type: string
-    - name: X-Amz-Date
-      type: header
+        name: anonymous<unknown>
+    - type: header
+      name: X-Amz-Date
       expandParameterValues: false
       renderStyle: simple
       required: false
       schema: *a1
-    - name: X-Amz-Algorithm
-      type: header
+    - type: header
+      name: X-Amz-Algorithm
       expandParameterValues: false
       renderStyle: simple
       required: false
       schema: *a1
-    - name: X-Amz-Credential
-      type: header
+    - type: header
+      name: X-Amz-Credential
       expandParameterValues: false
       renderStyle: simple
       required: false
       schema: *a1
-    - name: X-Amz-Security-Token
-      type: header
+    - type: header
+      name: X-Amz-Security-Token
       expandParameterValues: false
       renderStyle: simple
       required: false
       schema: *a1
-    - name: X-Amz-Signature
-      type: header
+    - type: header
+      name: X-Amz-Signature
       expandParameterValues: false
       renderStyle: simple
       required: false
       schema: *a1
-    - name: X-Amz-SignedHeaders
-      type: header
+    - type: header
+      name: X-Amz-SignedHeaders
       expandParameterValues: false
       renderStyle: simple
       required: false
@@ -171,17 +170,15 @@ schemas:
   primitives:
     - *a1
     - &a8
-      name:
-        anonymous: ""
       type: boolean
+      name: anonymous<unknown>
     - &a29
-      name:
-        anonymous: ""
       type: array
+      name: anonymous<unknown>
       elementSchema:
         &a27
-        name: Tag
         type: object
+        name: Tag
         description: "<p>An object that defines the tags associated with an application.
           A <i>tag</i> is a label that you optionally define and associate with
           an application. Tags can help you categorize and manage resources in
@@ -207,15 +204,14 @@ schemas:
             required: true
             schema:
               &a17
-              name:
-                anonymous: ""
               type: alias
+              name: anonymous<unknown>
               constraints:
-                - name: MaxLength
-                  type: constraint
+                - type: constraint
+                  name: MaxLength
                   length: 128
-                - name: MinLength
-                  type: constraint
+                - type: constraint
+                  name: MinLength
                   length: 1
               targetSchema: *a1
           - name: Value
@@ -226,107 +222,92 @@ schemas:
             required: true
             schema:
               &a53
-              name:
-                anonymous: ""
               type: alias
+              name: anonymous<unknown>
               constraints:
-                - name: MaxLength
-                  type: constraint
+                - type: constraint
+                  name: MaxLength
                   length: 256
-                - name: MinLength
-                  type: constraint
+                - type: constraint
+                  name: MinLength
                   length: 0
               targetSchema: *a1
-    - name:
-        anonymous: ""
-      type: any
+    - type: any
+      name: anonymous<unknown>
     - &a30
-      name:
-        anonymous: ""
       type: array
+      name: anonymous<unknown>
       elementSchema:
         &a54
-        name:
-          anonymous: ""
         type: alias
+        name: anonymous<unknown>
         constraints:
-          - name: MaxLength
-            type: constraint
+          - type: constraint
+            name: MaxLength
             length: 1011
-          - name: MinLength
-            type: constraint
+          - type: constraint
+            name: MinLength
             length: 1
         targetSchema: *a1
     - &a7
-      name:
-        anonymous: ""
       type: int64
+      name: anonymous<unknown>
     - &a3
-      name:
-        anonymous: ""
       type: dateTime
+      name: anonymous<unknown>
     - &a5
-      name:
-        anonymous: ""
       type: double
+      name: anonymous<unknown>
     - &a16
-      name:
-        anonymous: ""
       type: dictionary
+      name: anonymous<unknown>
       elementSchema:
         &a23
-        name:
-          anonymous: ""
         type: enum
+        name: anonymous<unknown>
         elementSchema:
           &a2
-          name:
-            anonymous: ""
           type: alias
+          name: anonymous<unknown>
           targetSchema: *a1
         sealed: true
         values:
-          - name:
-              anonymous: ""
-            type: constant
+          - type: constant
+            name: anonymous<unknown>
             value: NOT_SPECIFIED
             valueSchema: *a2
-          - name:
-              anonymous: ""
-            type: constant
+          - type: constant
+            name: anonymous<unknown>
             value: USEFUL
             valueSchema: *a2
-          - name:
-              anonymous: ""
-            type: constant
+          - type: constant
+            name: anonymous<unknown>
             value: NOT_USEFUL
             valueSchema: *a2
     - &a40
-      name:
-        anonymous: ""
       type: array
+      name: anonymous<unknown>
       elementSchema:
         &a36
-        name: Observation
         type: object
+        name: Observation
         description: Describes an anomaly or error with the application.
         properties:
           - name: Id
             description: The ID of the observation type.
             schema:
               &a37
-              name:
-                anonymous: ""
               type: alias
+              name: anonymous<unknown>
               constraints:
-                - name: MaxLength
-                  type: constraint
+                - type: constraint
+                  name: MaxLength
                   length: 38
-                - name: MinLength
-                  type: constraint
+                - type: constraint
+                  name: MinLength
                   length: 38
-                - name: RegularExpression
-                  type: constraint
+                - type: constraint
+                  name: RegularExpression
                   length: o-[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}
               targetSchema: *a1
           - name: StartTime
@@ -355,30 +336,25 @@ schemas:
             description: The log filter of the observation.
             schema:
               &a19
-              name:
-                anonymous: ""
               type: enum
+              name: anonymous<unknown>
               elementSchema:
                 &a4
-                name:
-                  anonymous: ""
                 type: alias
+                name: anonymous<unknown>
                 targetSchema: *a1
               sealed: true
               values:
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: ERROR
                   valueSchema: *a4
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: WARN
                   valueSchema: *a4
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: INFO
                   valueSchema: *a4
           - name: MetricNamespace
@@ -401,30 +377,25 @@ schemas:
             description: " The source of the CloudWatch Event. "
             schema:
               &a20
-              name:
-                anonymous: ""
               type: enum
+              name: anonymous<unknown>
               elementSchema:
                 &a6
-                name:
-                  anonymous: ""
                 type: alias
+                name: anonymous<unknown>
                 targetSchema: *a1
               sealed: true
               values:
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: EC2
                   valueSchema: *a6
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: CODE_DEPLOY
                   valueSchema: *a6
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: HEALTH
                   valueSchema: *a6
           - name: CloudWatchEventDetailType
@@ -494,31 +465,29 @@ schemas:
             description: " The type of the X-Ray node. "
             schema: *a1
     - &a42
-      name:
-        anonymous: ""
       type: array
+      name: anonymous<unknown>
       elementSchema:
         &a26
-        name: ApplicationInfo
         type: object
+        name: ApplicationInfo
         description: Describes the status of the application.
         properties:
           - name: ResourceGroupName
             description: The name of the resource group used for the application.
             schema:
               &a15
-              name:
-                anonymous: ""
               type: alias
+              name: anonymous<unknown>
               constraints:
-                - name: MaxLength
-                  type: constraint
+                - type: constraint
+                  name: MaxLength
                   length: 256
-                - name: MinLength
-                  type: constraint
+                - type: constraint
+                  name: MinLength
                   length: 1
-                - name: RegularExpression
-                  type: constraint
+                - type: constraint
+                  name: RegularExpression
                   length: "[a-zA-Z0-9\\.\\-_]*"
               targetSchema: *a1
           - name: LifeCycle
@@ -530,15 +499,14 @@ schemas:
               updates. "
             schema:
               &a28
-              name:
-                anonymous: ""
               type: alias
+              name: anonymous<unknown>
               constraints:
-                - name: MaxLength
-                  type: constraint
+                - type: constraint
+                  name: MaxLength
                   length: 300
-                - name: MinLength
-                  type: constraint
+                - type: constraint
+                  name: MinLength
                   length: 20
               targetSchema: *a1
           - name: OpsCenterEnabled
@@ -558,13 +526,12 @@ schemas:
               detected 1 Unconfigured Components”</p> </li> </ul>
             schema: *a1
     - &a43
-      name:
-        anonymous: ""
       type: array
+      name: anonymous<unknown>
       elementSchema:
         &a34
-        name: ApplicationComponent
         type: object
+        name: ApplicationComponent
         description: Describes a standalone resource or similarly grouped resources that
           the application is made up of.
         properties:
@@ -579,60 +546,52 @@ schemas:
             description: The stack tier of the application component.
             schema:
               &a18
-              name:
-                anonymous: ""
               type: enum
+              name: anonymous<unknown>
               elementSchema:
                 &a9
-                name:
-                  anonymous: ""
                 type: alias
+                name: anonymous<unknown>
                 constraints:
-                  - name: MaxLength
-                    type: constraint
+                  - type: constraint
+                    name: MaxLength
                     length: 50
-                  - name: MinLength
-                    type: constraint
+                  - type: constraint
+                    name: MinLength
                     length: 1
                 targetSchema: *a1
               sealed: true
               values:
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: DEFAULT
                   valueSchema: *a9
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: DOT_NET_CORE
                   valueSchema: *a9
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: DOT_NET_WORKER
                   valueSchema: *a9
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: DOT_NET_WEB
                   valueSchema: *a9
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: SQL_SERVER
                   valueSchema: *a9
           - name: Monitor
             description: "Indicates whether the application component is monitored. "
             schema: *a8
     - &a46
-      name:
-        anonymous: ""
       type: array
+      name: anonymous<unknown>
       elementSchema:
         &a45
-        name: ConfigurationEvent
         type: object
+        name: ConfigurationEvent
         description: " The event information. "
         properties:
           - name: MonitoredResourceARN
@@ -643,30 +602,25 @@ schemas:
               include INFO, WARN, and ERROR. "
             schema:
               &a24
-              name:
-                anonymous: ""
               type: enum
+              name: anonymous<unknown>
               elementSchema:
                 &a10
-                name:
-                  anonymous: ""
                 type: alias
+                name: anonymous<unknown>
                 targetSchema: *a1
               sealed: true
               values:
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: INFO
                   valueSchema: *a10
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: WARN
                   valueSchema: *a10
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: ERROR
                   valueSchema: *a10
           - name: EventResourceType
@@ -674,30 +628,25 @@ schemas:
               configure, for example, CLOUDWATCH_ALARM. "
             schema:
               &a25
-              name:
-                anonymous: ""
               type: enum
+              name: anonymous<unknown>
               elementSchema:
                 &a11
-                name:
-                  anonymous: ""
                 type: alias
+                name: anonymous<unknown>
                 targetSchema: *a1
               sealed: true
               values:
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: CLOUDWATCH_ALARM
                   valueSchema: *a11
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: CLOUDFORMATION
                   valueSchema: *a11
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: SSM_ASSOCIATION
                   valueSchema: *a11
           - name: EventTime
@@ -711,33 +660,30 @@ schemas:
               configure. "
             schema: *a1
     - &a47
-      name:
-        anonymous: ""
       type: array
+      name: anonymous<unknown>
       elementSchema:
         &a12
-        name:
-          anonymous: ""
         type: alias
+        name: anonymous<unknown>
         constraints:
-          - name: MaxLength
-            type: constraint
+          - type: constraint
+            name: MaxLength
             length: 30
-          - name: MinLength
-            type: constraint
+          - type: constraint
+            name: MinLength
             length: 1
-          - name: RegularExpression
-            type: constraint
+          - type: constraint
+            name: RegularExpression
             length: "[a-zA-Z0-9\\.\\-_]*"
         targetSchema: *a1
     - &a48
-      name:
-        anonymous: ""
       type: array
+      name: anonymous<unknown>
       elementSchema:
         &a31
-        name: LogPattern
         type: object
+        name: LogPattern
         description: An object that defines the log patterns that belongs to a
           <code>LogPatternSet</code>.
         properties:
@@ -754,18 +700,17 @@ schemas:
               period, dash, underscore."
             schema:
               &a32
-              name:
-                anonymous: ""
               type: alias
+              name: anonymous<unknown>
               constraints:
-                - name: MaxLength
-                  type: constraint
+                - type: constraint
+                  name: MaxLength
                   length: 50
-                - name: MinLength
-                  type: constraint
+                - type: constraint
+                  name: MinLength
                   length: 1
-                - name: RegularExpression
-                  type: constraint
+                - type: constraint
+                  name: RegularExpression
                   length: "[a-zA-Z0-9\\.\\-_]*"
               targetSchema: *a1
           - name: Pattern
@@ -773,46 +718,43 @@ schemas:
               can contains at many as 50 characters, and it cannot be empty.
             schema:
               &a33
-              name:
-                anonymous: ""
               type: alias
+              name: anonymous<unknown>
               constraints:
-                - name: MaxLength
-                  type: constraint
+                - type: constraint
+                  name: MaxLength
                   length: 50
-                - name: MinLength
-                  type: constraint
+                - type: constraint
+                  name: MinLength
                   length: 1
               targetSchema: *a1
           - name: Rank
             description: Rank of the log pattern.
             schema: *a7
     - &a49
-      name:
-        anonymous: ""
       type: array
+      name: anonymous<unknown>
       elementSchema:
         &a38
-        name: Problem
         type: object
+        name: Problem
         description: Describes a problem that is detected by correlating observations.
         properties:
           - name: Id
             description: The ID of the problem.
             schema:
               &a39
-              name:
-                anonymous: ""
               type: alias
+              name: anonymous<unknown>
               constraints:
-                - name: MaxLength
-                  type: constraint
+                - type: constraint
+                  name: MaxLength
                   length: 38
-                - name: MinLength
-                  type: constraint
+                - type: constraint
+                  name: MinLength
                   length: 38
-                - name: RegularExpression
-                  type: constraint
+                - type: constraint
+                  name: RegularExpression
                   length: p-[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}
               targetSchema: *a1
           - name: Title
@@ -825,30 +767,25 @@ schemas:
             description: The status of the problem.
             schema:
               &a21
-              name:
-                anonymous: ""
               type: enum
+              name: anonymous<unknown>
               elementSchema:
                 &a13
-                name:
-                  anonymous: ""
                 type: alias
+                name: anonymous<unknown>
                 targetSchema: *a1
               sealed: true
               values:
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: IGNORE
                   valueSchema: *a13
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: RESOLVED
                   valueSchema: *a13
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: PENDING
                   valueSchema: *a13
           - name: AffectedResource
@@ -864,30 +801,25 @@ schemas:
             description: A measure of the level of impact of the problem.
             schema:
               &a22
-              name:
-                anonymous: ""
               type: enum
+              name: anonymous<unknown>
               elementSchema:
                 &a14
-                name:
-                  anonymous: ""
                 type: alias
+                name: anonymous<unknown>
                 targetSchema: *a1
               sealed: true
               values:
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: Low
                   valueSchema: *a14
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: Medium
                   valueSchema: *a14
-                - name:
-                    anonymous: ""
-                  type: constant
+                - type: constant
+                  name: anonymous<unknown>
                   value: High
                   valueSchema: *a14
           - name: ResourceGroupName
@@ -896,27 +828,24 @@ schemas:
           - name: Feedback
             description: Feedback provided by the user about the problem.
             schema:
-              name: Feedback
               type: alias
+              name: Feedback
               constraints:
-                - name: MaximumProperties
-                  type: constraint
+                - type: constraint
+                  name: MaximumProperties
                   count: 10
               targetSchema: *a16
     - &a52
-      name:
-        anonymous: ""
       type: array
+      name: anonymous<unknown>
       elementSchema: *a17
   constants:
-    - name:
-        anonymous: ""
-      type: constant
+    - type: constant
+      name: anonymous<unknown>
       value: INSIGHTS_FEEDBACK
       valueSchema:
-        name:
-          anonymous: ""
         type: alias
+        name: anonymous<unknown>
         targetSchema: *a1
   enums:
     - *a18
@@ -929,15 +858,15 @@ schemas:
     - *a25
   objects:
     - *a26
-    - name: CreateApplicationResponse
-      type: object
+    - type: object
+      name: CreateApplicationResponse
       properties:
         - name: ApplicationInfo
           description: Information about the application.
           schema: *a26
     - *a27
-    - name: CreateApplicationRequest
-      type: object
+    - type: object
+      name: CreateApplicationRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -964,21 +893,21 @@ schemas:
             256 characters.
           schema:
             &a50
-            name: TagList
             type: alias
+            name: TagList
             constraints:
-              - name: MaximumElements
-                type: constraint
+              - type: constraint
+                name: MaximumElements
                 count: 200
-              - name: MinimumElements
-                type: constraint
+              - type: constraint
+                name: MinimumElements
                 count: 0
             targetSchema: *a29
       summary: CreateApplicationRequest
-    - name: CreateComponentResponse
-      type: object
-    - name: CreateComponentRequest
-      type: object
+    - type: object
+      name: CreateComponentResponse
+    - type: object
+      name: CreateComponentRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -994,8 +923,8 @@ schemas:
           schema: *a30
       summary: CreateComponentRequest
     - *a31
-    - name: CreateLogPatternResponse
-      type: object
+    - type: object
+      name: CreateLogPatternResponse
       properties:
         - name: LogPattern
           description: The successfully created log pattern.
@@ -1003,8 +932,8 @@ schemas:
         - name: ResourceGroupName
           description: The name of the resource group.
           schema: *a15
-    - name: CreateLogPatternRequest
-      type: object
+    - type: object
+      name: CreateLogPatternRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1027,20 +956,20 @@ schemas:
           required: true
           schema: *a7
       summary: CreateLogPatternRequest
-    - name: DeleteApplicationResponse
-      type: object
-    - name: DeleteApplicationRequest
-      type: object
+    - type: object
+      name: DeleteApplicationResponse
+    - type: object
+      name: DeleteApplicationRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
           required: true
           schema: *a15
       summary: DeleteApplicationRequest
-    - name: DeleteComponentResponse
-      type: object
-    - name: DeleteComponentRequest
-      type: object
+    - type: object
+      name: DeleteComponentResponse
+    - type: object
+      name: DeleteComponentRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1051,10 +980,10 @@ schemas:
           required: true
           schema: *a1
       summary: DeleteComponentRequest
-    - name: DeleteLogPatternResponse
-      type: object
-    - name: DeleteLogPatternRequest
-      type: object
+    - type: object
+      name: DeleteLogPatternResponse
+    - type: object
+      name: DeleteLogPatternRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1069,14 +998,14 @@ schemas:
           required: true
           schema: *a32
       summary: DeleteLogPatternRequest
-    - name: DescribeApplicationResponse
-      type: object
+    - type: object
+      name: DescribeApplicationResponse
       properties:
         - name: ApplicationInfo
           description: Information about the application.
           schema: *a26
-    - name: DescribeApplicationRequest
-      type: object
+    - type: object
+      name: DescribeApplicationRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1084,16 +1013,16 @@ schemas:
           schema: *a15
       summary: DescribeApplicationRequest
     - *a34
-    - name: DescribeComponentResponse
-      type: object
+    - type: object
+      name: DescribeComponentResponse
       properties:
         - name: ApplicationComponent
           schema: *a34
         - name: ResourceList
           description: The list of resource ARNs that belong to the component.
           schema: *a30
-    - name: DescribeComponentRequest
-      type: object
+    - type: object
+      name: DescribeComponentRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1104,8 +1033,8 @@ schemas:
           required: true
           schema: *a1
       summary: DescribeComponentRequest
-    - name: DescribeComponentConfigurationResponse
-      type: object
+    - type: object
+      name: DescribeComponentConfigurationResponse
       properties:
         - name: Monitor
           description: Indicates whether the application component is monitored.
@@ -1121,19 +1050,18 @@ schemas:
             escaped JSON of the configuration.
           schema:
             &a35
-            name:
-              anonymous: ""
             type: alias
+            name: anonymous<unknown>
             constraints:
-              - name: MaxLength
-                type: constraint
+              - type: constraint
+                name: MaxLength
                 length: 10000
-              - name: MinLength
-                type: constraint
+              - type: constraint
+                name: MinLength
                 length: 1
             targetSchema: *a1
-    - name: DescribeComponentConfigurationRequest
-      type: object
+    - type: object
+      name: DescribeComponentConfigurationRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1144,15 +1072,15 @@ schemas:
           required: true
           schema: *a1
       summary: DescribeComponentConfigurationRequest
-    - name: DescribeComponentConfigurationRecommendationResponse
-      type: object
+    - type: object
+      name: DescribeComponentConfigurationRecommendationResponse
       properties:
         - name: ComponentConfiguration
           description: The recommended configuration settings of the component. The value
             is the escaped JSON of the configuration.
           schema: *a35
-    - name: DescribeComponentConfigurationRecommendationRequest
-      type: object
+    - type: object
+      name: DescribeComponentConfigurationRecommendationRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1170,8 +1098,8 @@ schemas:
           required: true
           schema: *a18
       summary: DescribeComponentConfigurationRecommendationRequest
-    - name: DescribeLogPatternResponse
-      type: object
+    - type: object
+      name: DescribeLogPatternResponse
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1179,8 +1107,8 @@ schemas:
         - name: LogPattern
           description: The successfully created log pattern.
           schema: *a31
-    - name: DescribeLogPatternRequest
-      type: object
+    - type: object
+      name: DescribeLogPatternRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1196,14 +1124,14 @@ schemas:
           schema: *a32
       summary: DescribeLogPatternRequest
     - *a36
-    - name: DescribeObservationResponse
-      type: object
+    - type: object
+      name: DescribeObservationResponse
       properties:
         - name: Observation
           description: Information about the observation.
           schema: *a36
-    - name: DescribeObservationRequest
-      type: object
+    - type: object
+      name: DescribeObservationRequest
       properties:
         - name: ObservationId
           description: The ID of the observation.
@@ -1211,14 +1139,14 @@ schemas:
           schema: *a37
       summary: DescribeObservationRequest
     - *a38
-    - name: DescribeProblemResponse
-      type: object
+    - type: object
+      name: DescribeProblemResponse
       properties:
         - name: Problem
           description: "Information about the problem. "
           schema: *a38
-    - name: DescribeProblemRequest
-      type: object
+    - type: object
+      name: DescribeProblemRequest
       properties:
         - name: ProblemId
           description: The ID of the problem.
@@ -1226,29 +1154,29 @@ schemas:
           schema: *a39
       summary: DescribeProblemRequest
     - &a41
-      name: RelatedObservations
       type: object
+      name: RelatedObservations
       description: Describes observations related to the problem.
       properties:
         - name: ObservationList
           description: The list of observations related to the problem.
           schema: *a40
-    - name: DescribeProblemObservationsResponse
-      type: object
+    - type: object
+      name: DescribeProblemObservationsResponse
       properties:
         - name: RelatedObservations
           description: Observations related to the problem.
           schema: *a41
-    - name: DescribeProblemObservationsRequest
-      type: object
+    - type: object
+      name: DescribeProblemObservationsRequest
       properties:
         - name: ProblemId
           description: The ID of the problem.
           required: true
           schema: *a39
       summary: DescribeProblemObservationsRequest
-    - name: ListApplicationsResponse
-      type: object
+    - type: object
+      name: ListApplicationsResponse
       properties:
         - name: ApplicationInfoList
           description: The list of applications.
@@ -1257,8 +1185,8 @@ schemas:
           description: "The token used to retrieve the next page of results. This value is
             <code>null</code> when there are no more results to return. "
           schema: *a1
-    - name: ListApplicationsRequest
-      type: object
+    - type: object
+      name: ListApplicationsRequest
       properties:
         - name: MaxResults
           description: The maximum number of results to return in a single call. To
@@ -1266,23 +1194,22 @@ schemas:
             <code>NextToken</code> value.
           schema:
             &a44
-            name:
-              anonymous: ""
             type: alias
+            name: anonymous<unknown>
             constraints:
-              - name: Minimum
-                type: constraint
+              - type: constraint
+                name: Minimum
                 minimum: 1
-              - name: Maximum
-                type: constraint
+              - type: constraint
+                name: Maximum
                 maximum: 40
             targetSchema: *a7
         - name: NextToken
           description: The token to request the next page of results.
           schema: *a1
       summary: ListApplicationsRequest
-    - name: ListComponentsResponse
-      type: object
+    - type: object
+      name: ListComponentsResponse
       properties:
         - name: ApplicationComponentList
           description: The list of application components.
@@ -1290,8 +1217,8 @@ schemas:
         - name: NextToken
           description: The token to request the next page of results.
           schema: *a1
-    - name: ListComponentsRequest
-      type: object
+    - type: object
+      name: ListComponentsRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1307,8 +1234,8 @@ schemas:
           schema: *a1
       summary: ListComponentsRequest
     - *a45
-    - name: ListConfigurationHistoryResponse
-      type: object
+    - type: object
+      name: ListConfigurationHistoryResponse
       properties:
         - name: EventList
           description: " The list of configuration events and their corresponding details. "
@@ -1321,8 +1248,8 @@ schemas:
             page of results. This value is <code>null</code> when there are no
             more results to return.
           schema: *a1
-    - name: ListConfigurationHistoryRequest
-      type: object
+    - type: object
+      name: ListConfigurationHistoryRequest
       properties:
         - name: ResourceGroupName
           description: "Resource group to which the application belongs. "
@@ -1357,8 +1284,8 @@ schemas:
             is <code>null</code> when there are no more results to return.
           schema: *a1
       summary: ListConfigurationHistoryRequest
-    - name: ListLogPatternSetsResponse
-      type: object
+    - type: object
+      name: ListLogPatternSetsResponse
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1370,8 +1297,8 @@ schemas:
           description: "The token used to retrieve the next page of results. This value is
             <code>null</code> when there are no more results to return. "
           schema: *a1
-    - name: ListLogPatternSetsRequest
-      type: object
+    - type: object
+      name: ListLogPatternSetsRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1386,8 +1313,8 @@ schemas:
           description: The token to request the next page of results.
           schema: *a1
       summary: ListLogPatternSetsRequest
-    - name: ListLogPatternsResponse
-      type: object
+    - type: object
+      name: ListLogPatternsResponse
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1399,8 +1326,8 @@ schemas:
           description: "The token used to retrieve the next page of results. This value is
             <code>null</code> when there are no more results to return. "
           schema: *a1
-    - name: ListLogPatternsRequest
-      type: object
+    - type: object
+      name: ListLogPatternsRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1418,8 +1345,8 @@ schemas:
           description: The token to request the next page of results.
           schema: *a1
       summary: ListLogPatternsRequest
-    - name: ListProblemsResponse
-      type: object
+    - type: object
+      name: ListProblemsResponse
       properties:
         - name: ProblemList
           description: "The list of problems. "
@@ -1428,8 +1355,8 @@ schemas:
           description: "The token used to retrieve the next page of results. This value is
             <code>null</code> when there are no more results to return. "
           schema: *a1
-    - name: ListProblemsRequest
-      type: object
+    - type: object
+      name: ListProblemsRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1452,16 +1379,16 @@ schemas:
           description: The token to request the next page of results.
           schema: *a1
       summary: ListProblemsRequest
-    - name: ListTagsForResourceResponse
-      type: object
+    - type: object
+      name: ListTagsForResourceResponse
       properties:
         - name: Tags
           description: An array that lists all the tags that are associated with the
             application. Each tag consists of a required tag key
             (<code>Key</code>) and an associated tag value (<code>Value</code>).
           schema: *a50
-    - name: ListTagsForResourceRequest
-      type: object
+    - type: object
+      name: ListTagsForResourceRequest
       properties:
         - name: ResourceARN
           description: The Amazon Resource Name (ARN) of the application that you want to
@@ -1469,25 +1396,23 @@ schemas:
           required: true
           schema:
             &a51
-            name:
-              anonymous: ""
             type: alias
+            name: anonymous<unknown>
             constraints:
-              - name: MaxLength
-                type: constraint
+              - type: constraint
+                name: MaxLength
                 length: 1011
-              - name: MinLength
-                type: constraint
+              - type: constraint
+                name: MinLength
                 length: 1
             targetSchema:
-              name:
-                anonymous: ""
               type: string
+              name: anonymous<unknown>
       summary: ListTagsForResourceRequest
-    - name: TagResourceResponse
-      type: object
-    - name: TagResourceRequest
-      type: object
+    - type: object
+      name: TagResourceResponse
+    - type: object
+      name: TagResourceRequest
       properties:
         - name: ResourceARN
           description: The Amazon Resource Name (ARN) of the application that you want to
@@ -1502,10 +1427,10 @@ schemas:
           required: true
           schema: *a50
       summary: TagResourceRequest
-    - name: UntagResourceResponse
-      type: object
-    - name: UntagResourceRequest
-      type: object
+    - type: object
+      name: UntagResourceResponse
+    - type: object
+      name: UntagResourceRequest
       properties:
         - name: ResourceARN
           description: The Amazon Resource Name (ARN) of the application that you want to
@@ -1521,25 +1446,25 @@ schemas:
           required: true
           schema:
             &a55
-            name: TagKeyList
             type: alias
+            name: TagKeyList
             constraints:
-              - name: MaximumElements
-                type: constraint
+              - type: constraint
+                name: MaximumElements
                 count: 200
-              - name: MinimumElements
-                type: constraint
+              - type: constraint
+                name: MinimumElements
                 count: 0
             targetSchema: *a52
       summary: UntagResourceRequest
-    - name: UpdateApplicationResponse
-      type: object
+    - type: object
+      name: UpdateApplicationResponse
       properties:
         - name: ApplicationInfo
           description: "Information about the application. "
           schema: *a26
-    - name: UpdateApplicationRequest
-      type: object
+    - type: object
+      name: UpdateApplicationRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1564,10 +1489,10 @@ schemas:
             problems."
           schema: *a8
       summary: UpdateApplicationRequest
-    - name: UpdateComponentResponse
-      type: object
-    - name: UpdateComponentRequest
-      type: object
+    - type: object
+      name: UpdateComponentResponse
+    - type: object
+      name: UpdateComponentRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1584,10 +1509,10 @@ schemas:
           description: The list of resource ARNs that belong to the component.
           schema: *a30
       summary: UpdateComponentRequest
-    - name: UpdateComponentConfigurationResponse
-      type: object
-    - name: UpdateComponentConfigurationRequest
-      type: object
+    - type: object
+      name: UpdateComponentConfigurationResponse
+    - type: object
+      name: UpdateComponentConfigurationRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1619,8 +1544,8 @@ schemas:
             Configuration</a>.
           schema: *a35
       summary: UpdateComponentConfigurationRequest
-    - name: UpdateLogPatternResponse
-      type: object
+    - type: object
+      name: UpdateLogPatternResponse
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.
@@ -1628,8 +1553,8 @@ schemas:
         - name: LogPattern
           description: The successfully created log pattern.
           schema: *a31
-    - name: UpdateLogPatternRequest
-      type: object
+    - type: object
+      name: UpdateLogPatternRequest
       properties:
         - name: ResourceGroupName
           description: The name of the resource group.

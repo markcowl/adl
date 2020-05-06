@@ -5,6 +5,12 @@ export interface anonymous extends Anonymous { }
 
 class Anonymous {
   constructor(protected anonymous: string) {
+    if (!anonymous) {
+      this.anonymous = 'unknown';
+    }
+  }
+  get name() {
+    return `anonymous<${this.anonymous}>`;
   }
 }
 export const anonymous = (instance: any) => new Anonymous(instance);
