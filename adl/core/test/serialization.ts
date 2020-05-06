@@ -113,5 +113,6 @@ export const elementTag = <Schema.CustomTag>{
 };
 
 export function serialize(instance: any) {
-  return stringify(instance, { customTags: [elementTag] });
+  return stringify(instance, { customTags: [elementTag] }).
+    replace(/:$\s*(&a\d*)/gm, ': $1'); // put anchor on declaration line. 
 }

@@ -15,8 +15,7 @@ schemas:
       name: anonymous<unknown>
     - type: array
       name: anonymous<unknown>
-      elementSchema:
-        &a3
+      elementSchema: &a3
         type: object
         name: Pet
         properties:

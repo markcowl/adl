@@ -7,21 +7,18 @@ http:
       description: Data format for the response.
       expandParameterValues: true
       renderStyle: form
-      schema:
-        &a3
+      schema: &a3
         type: constant
         name: anonymous<unknown>
         value: atom
-        valueSchema:
-          &a4
+        valueSchema: &a4
           type: alias
           name: anonymous<unknown>
           defaults:
             - type: server-default
               name: anonymous<unknown>
               value: atom
-          targetSchema:
-            &a1
+          targetSchema: &a1
             type: string
             name: anonymous<unknown>
     - type: query
@@ -49,16 +46,14 @@ http:
       description: Returns response with indentations and line breaks.
       expandParameterValues: true
       renderStyle: form
-      schema:
-        &a5
+      schema: &a5
         type: alias
         name: anonymous<unknown>
         defaults:
           - type: server-default
             name: anonymous<unknown>
             value: false
-        targetSchema:
-          &a2
+        targetSchema: &a2
           type: boolean
           name: anonymous<unknown>
     - type: query

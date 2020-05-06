@@ -76,8 +76,7 @@ http:
       expandParameterValues: false
       renderStyle: simple
       required: false
-      schema:
-        &a1
+      schema: &a1
         type: string
         name: anonymous<unknown>
     - type: header
@@ -175,8 +174,7 @@ schemas:
     - &a29
       type: array
       name: anonymous<unknown>
-      elementSchema:
-        &a27
+      elementSchema: &a27
         type: object
         name: Tag
         description: "<p>An object that defines the tags associated with an application.
@@ -202,8 +200,7 @@ schemas:
             description: One part of a key-value pair that defines a tag. The maximum length
               of a tag key is 128 characters. The minimum length is 1 character.
             required: true
-            schema:
-              &a17
+            schema: &a17
               type: alias
               name: anonymous<unknown>
               constraints:
@@ -220,8 +217,7 @@ schemas:
               length is 0 characters. If you don't want an application to have a
               specific tag value, don't specify a value for this parameter.
             required: true
-            schema:
-              &a53
+            schema: &a53
               type: alias
               name: anonymous<unknown>
               constraints:
@@ -237,8 +233,7 @@ schemas:
     - &a30
       type: array
       name: anonymous<unknown>
-      elementSchema:
-        &a54
+      elementSchema: &a54
         type: alias
         name: anonymous<unknown>
         constraints:
@@ -261,12 +256,10 @@ schemas:
     - &a16
       type: dictionary
       name: anonymous<unknown>
-      elementSchema:
-        &a23
+      elementSchema: &a23
         type: enum
         name: anonymous<unknown>
-        elementSchema:
-          &a2
+        elementSchema: &a2
           type: alias
           name: anonymous<unknown>
           targetSchema: *a1
@@ -287,16 +280,14 @@ schemas:
     - &a40
       type: array
       name: anonymous<unknown>
-      elementSchema:
-        &a36
+      elementSchema: &a36
         type: object
         name: Observation
         description: Describes an anomaly or error with the application.
         properties:
           - name: Id
             description: The ID of the observation type.
-            schema:
-              &a37
+            schema: &a37
               type: alias
               name: anonymous<unknown>
               constraints:
@@ -334,12 +325,10 @@ schemas:
             schema: *a1
           - name: LogFilter
             description: The log filter of the observation.
-            schema:
-              &a19
+            schema: &a19
               type: enum
               name: anonymous<unknown>
-              elementSchema:
-                &a4
+              elementSchema: &a4
                 type: alias
                 name: anonymous<unknown>
                 targetSchema: *a1
@@ -375,12 +364,10 @@ schemas:
             schema: *a1
           - name: CloudWatchEventSource
             description: " The source of the CloudWatch Event. "
-            schema:
-              &a20
+            schema: &a20
               type: enum
               name: anonymous<unknown>
-              elementSchema:
-                &a6
+              elementSchema: &a6
                 type: alias
                 name: anonymous<unknown>
                 targetSchema: *a1
@@ -467,16 +454,14 @@ schemas:
     - &a42
       type: array
       name: anonymous<unknown>
-      elementSchema:
-        &a26
+      elementSchema: &a26
         type: object
         name: ApplicationInfo
         description: Describes the status of the application.
         properties:
           - name: ResourceGroupName
             description: The name of the resource group used for the application.
-            schema:
-              &a15
+            schema: &a15
               type: alias
               name: anonymous<unknown>
               constraints:
@@ -497,8 +482,7 @@ schemas:
             description: " The SNS topic provided to Application Insights that is associated
               to the created opsItems to receive SNS notifications for opsItem
               updates. "
-            schema:
-              &a28
+            schema: &a28
               type: alias
               name: anonymous<unknown>
               constraints:
@@ -528,8 +512,7 @@ schemas:
     - &a43
       type: array
       name: anonymous<unknown>
-      elementSchema:
-        &a34
+      elementSchema: &a34
         type: object
         name: ApplicationComponent
         description: Describes a standalone resource or similarly grouped resources that
@@ -544,12 +527,10 @@ schemas:
             schema: *a1
           - name: Tier
             description: The stack tier of the application component.
-            schema:
-              &a18
+            schema: &a18
               type: enum
               name: anonymous<unknown>
-              elementSchema:
-                &a9
+              elementSchema: &a9
                 type: alias
                 name: anonymous<unknown>
                 constraints:
@@ -588,8 +569,7 @@ schemas:
     - &a46
       type: array
       name: anonymous<unknown>
-      elementSchema:
-        &a45
+      elementSchema: &a45
         type: object
         name: ConfigurationEvent
         description: " The event information. "
@@ -600,12 +580,10 @@ schemas:
           - name: EventStatus
             description: " The status of the configuration update event. Possible values
               include INFO, WARN, and ERROR. "
-            schema:
-              &a24
+            schema: &a24
               type: enum
               name: anonymous<unknown>
-              elementSchema:
-                &a10
+              elementSchema: &a10
                 type: alias
                 name: anonymous<unknown>
                 targetSchema: *a1
@@ -626,12 +604,10 @@ schemas:
           - name: EventResourceType
             description: " The resource type that Application Insights attempted to
               configure, for example, CLOUDWATCH_ALARM. "
-            schema:
-              &a25
+            schema: &a25
               type: enum
               name: anonymous<unknown>
-              elementSchema:
-                &a11
+              elementSchema: &a11
                 type: alias
                 name: anonymous<unknown>
                 targetSchema: *a1
@@ -662,8 +638,7 @@ schemas:
     - &a47
       type: array
       name: anonymous<unknown>
-      elementSchema:
-        &a12
+      elementSchema: &a12
         type: alias
         name: anonymous<unknown>
         constraints:
@@ -680,8 +655,7 @@ schemas:
     - &a48
       type: array
       name: anonymous<unknown>
-      elementSchema:
-        &a31
+      elementSchema: &a31
         type: object
         name: LogPattern
         description: An object that defines the log patterns that belongs to a
@@ -698,8 +672,7 @@ schemas:
               many as 50 characters, and it cannot be empty. The characters can
               be Unicode letters, digits or one of the following symbols:
               period, dash, underscore."
-            schema:
-              &a32
+            schema: &a32
               type: alias
               name: anonymous<unknown>
               constraints:
@@ -716,8 +689,7 @@ schemas:
           - name: Pattern
             description: A regular expression that defines the log pattern. A log pattern
               can contains at many as 50 characters, and it cannot be empty.
-            schema:
-              &a33
+            schema: &a33
               type: alias
               name: anonymous<unknown>
               constraints:
@@ -734,16 +706,14 @@ schemas:
     - &a49
       type: array
       name: anonymous<unknown>
-      elementSchema:
-        &a38
+      elementSchema: &a38
         type: object
         name: Problem
         description: Describes a problem that is detected by correlating observations.
         properties:
           - name: Id
             description: The ID of the problem.
-            schema:
-              &a39
+            schema: &a39
               type: alias
               name: anonymous<unknown>
               constraints:
@@ -765,12 +735,10 @@ schemas:
             schema: *a1
           - name: Status
             description: The status of the problem.
-            schema:
-              &a21
+            schema: &a21
               type: enum
               name: anonymous<unknown>
-              elementSchema:
-                &a13
+              elementSchema: &a13
                 type: alias
                 name: anonymous<unknown>
                 targetSchema: *a1
@@ -799,12 +767,10 @@ schemas:
             schema: *a3
           - name: SeverityLevel
             description: A measure of the level of impact of the problem.
-            schema:
-              &a22
+            schema: &a22
               type: enum
               name: anonymous<unknown>
-              elementSchema:
-                &a14
+              elementSchema: &a14
                 type: alias
                 name: anonymous<unknown>
                 targetSchema: *a1
@@ -891,8 +857,7 @@ schemas:
             and an associated tag value (<code>Value</code>). The maximum length
             of a tag key is 128 characters. The maximum length of a tag value is
             256 characters.
-          schema:
-            &a50
+          schema: &a50
             type: alias
             name: TagList
             constraints:
@@ -1048,8 +1013,7 @@ schemas:
         - name: ComponentConfiguration
           description: The configuration settings of the component. The value is the
             escaped JSON of the configuration.
-          schema:
-            &a35
+          schema: &a35
             type: alias
             name: anonymous<unknown>
             constraints:
@@ -1192,8 +1156,7 @@ schemas:
           description: The maximum number of results to return in a single call. To
             retrieve the remaining results, make another call with the returned
             <code>NextToken</code> value.
-          schema:
-            &a44
+          schema: &a44
             type: alias
             name: anonymous<unknown>
             constraints:
@@ -1394,8 +1357,7 @@ schemas:
           description: The Amazon Resource Name (ARN) of the application that you want to
             retrieve tag information for.
           required: true
-          schema:
-            &a51
+          schema: &a51
             type: alias
             name: anonymous<unknown>
             constraints:
@@ -1444,8 +1406,7 @@ schemas:
             application, append the <code>TagKeys</code> parameter and argument
             for each additional tag to remove, separated by an ampersand. </p>
           required: true
-          schema:
-            &a55
+          schema: &a55
             type: alias
             name: TagKeyList
             constraints:
