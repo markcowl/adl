@@ -1,4 +1,12 @@
 http:
+  authentications:
+    - type: apikey
+      name: hmac
+      description: Amazon Signature authorization v4
+      parameterLocation: header
+      parameterName: Authorization
+      attic:
+        x-amazon-apigateway-authtype: awsSigv4
   connections:
     - description: The Application Insights multi-region endpoint
       url: http://applicationinsights.{region}.amazonaws.com

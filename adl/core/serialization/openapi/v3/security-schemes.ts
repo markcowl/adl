@@ -1,7 +1,174 @@
+import { items, values } from '@azure-tools/linq';
+import { unzip, v3 } from '@azure-tools/openapi';
+import { nameOf, use, valueOf } from '@azure-tools/sourcemap';
 import { Element } from '../../../model/element';
-import { ItemsOf, Context } from './serializer';
-import { v3 } from '@azure-tools/openapi';
+import { ApiKeyAuthentication, Authentication, AuthorizationCodeOAuth2Flow, ClientCredentialsOAuth2Flow, HttpAuthentication, ImplicitOAuth2Flow, OAuth2Authentication, OAuth2Flow, OAuth2Flows, OAuth2Scope, OpenIdConnectAuthentication, ParameterLocation, PasswordOAuth2Flow } from '../../../model/http/protocol';
+import { addExtensionsToAttic } from './info';
+import { Context, ItemsOf } from './serializer';
 
-export async function processSecuritySchemes(securitySchemes: ItemsOf<v3.SecurityScheme>, $: Context): Promise<Element | undefined> {
+export async function processSecuritySchemes(value: ItemsOf<v3.SecurityScheme>, $: Context): Promise<Element | undefined> {
+  const { extensions, references, values: securitySchemes } = unzip<v3.SecurityScheme>(value);
+
+  // handle extensions first
+  for (const { key, value: extension } of values(extensions)) {
+    // switch block to handle specific vendor extension?
+    // unknown ones need to get attached to something.
+  }
+
+  // handle actual items next
+  for (const { key, value: securityScheme } of values(securitySchemes)) {
+    await $.process(processSecurityScheme, securityScheme);
+  }
+
   return undefined;
 }
+
+export async function processSecurityScheme(scheme: v3.SecurityScheme, $: Context): Promise<Authentication | undefined> {
+  const result = authentication(scheme, $);
+
+  if (result) {
+    await addExtensionsToAttic(result, scheme);
+  }
+
+  return result;
+}
+
+function authentication(scheme: v3.SecurityScheme, $: Context) {
+  switch (valueOf(use(scheme.type))) {
+    case v3.SecurityType.ApiKey:
+      return apiKeyAuthentication(<v3.ApiKeySecurityScheme>scheme, $);
+
+    case v3.SecurityType.Http:
+      return httpAuthentication(<v3.HttpSecurityScheme>scheme, $);
+
+    case v3.SecurityType.OAuth2:
+      return oauth2Authentication(<v3.OAuth2SecurityScheme>scheme, $);
+
+    case v3.SecurityType.OpenIdConnect:
+      return openIdConnectAuthentication(<v3.OpenIdConnectSecurityScheme>scheme, $);
+  }
+
+  $.error(`unknown security scheme type '${scheme.type}'`, scheme);
+  return undefined;
+}
+
+function apiKeyAuthentication(scheme: v3.ApiKeySecurityScheme, $: Context) {
+  let location: ParameterLocation;
+
+  switch (valueOf(use(scheme.in))) {
+    case v3.ParameterLocation.Cookie:
+      location = ParameterLocation.Cookie;
+      break;
+    case v3.ParameterLocation.Header:
+      location = ParameterLocation.Header;
+      break;
+    case v3.ParameterLocation.Query:
+      location = ParameterLocation.Query;
+      break;
+
+    default:
+      $.error(`unknown apikey parameter location: '${scheme.in}'`, scheme);
+      return undefined;
+  }
+
+  const result = new ApiKeyAuthentication(nameOf(scheme), scheme.name, location, {
+    description: scheme.description
+  });
+
+  $.api.http.authentications.push(result);
+  return result;
+}
+
+function httpAuthentication(scheme: v3.HttpSecurityScheme, $: Context) {
+  const result = new HttpAuthentication(nameOf(scheme), scheme.scheme, {
+    bearerFormat: scheme.bearerFormat,
+    description: scheme.description,
+  });
+
+  $.api.http.authentications.push(result);
+  return result;
+}
+
+function oauth2Authentication(scheme: v3.OAuth2SecurityScheme, $: Context) {
+  const flows = new OAuth2Flows({
+    implicit: implicitFlow(scheme.flows.implicit),
+    password: passwordFlow(scheme.flows.password),
+    clientCredentials: clientCredentialsFlow(scheme.flows.clientCredentials),
+    authorizationCode: authorizationCodeFlow(scheme.flows.authorizationCode)
+  });
+
+  const result = new OAuth2Authentication(nameOf(scheme), flows, {
+    description: scheme.description
+  });
+
+  $.api.http.authentications.push(result);
+  return result;
+}
+
+function openIdConnectAuthentication(scheme: v3.OpenIdConnectSecurityScheme, $: Context) {
+  const result = new OpenIdConnectAuthentication(nameOf(scheme), scheme.openIdConnectUrl, {
+    description: scheme.description
+  });
+
+  $.api.http.authentications.push(result);
+  return result;
+}
+
+function implicitFlow(flow?: v3.ImplicitOAuthFlow) {
+  if (!flow) {
+    return undefined;
+  }
+
+  const result = new ImplicitOAuth2Flow(flow.authorizationUrl, {
+    refreshUrl: flow.refreshUrl
+  });
+
+  addScopes(result, flow.scopes);
+  return result;
+}
+
+function passwordFlow(flow?: v3.PasswordOAuthFlow) {
+  if (!flow) {
+    return undefined;
+  }
+
+  const result = new PasswordOAuth2Flow(flow.tokenUrl, {
+    refreshUrl: flow.refreshUrl
+  });
+
+  addScopes(result, flow.scopes);
+  return result;
+}
+
+function clientCredentialsFlow(flow?: v3.ClientCredentialsFlow) {
+  if (!flow) {
+    return undefined;
+  }
+
+  const result = new ClientCredentialsOAuth2Flow(flow.tokenUrl, {
+    refreshUrl: flow.refreshUrl
+  });
+
+  addScopes(result, flow.scopes);
+  return result;
+}
+
+function authorizationCodeFlow(flow?: v3.AuthorizationCodeOAuthFlow) {
+  if (!flow) {
+    return undefined;
+  }
+
+  const result = new AuthorizationCodeOAuth2Flow(flow.authorizationUrl, flow.tokenUrl, {
+    refreshUrl: flow.refreshUrl
+  });
+
+  addScopes(result, flow.scopes);
+  return result;
+}
+
+function addScopes(flow: OAuth2Flow, scopes: v3.Dictionary<string>) {
+  for (const { key: name, value: description } of items(scopes)) {
+    flow.scopes.push(new OAuth2Scope(name, description));
+  }
+}
+

@@ -5,7 +5,7 @@ import { Element } from '../../../model/element';
 import { is } from '../../../support/visitor';
 import { use } from '@azure-tools/sourcemap';
 
-async function addExtensionsToAttic(element: Element, input: any) {
+export async function addExtensionsToAttic(element: Element, input: any) {
   for (const { key, value } of vendorExtensions(input)) {
     element.addToAttic(key, use(value, true));
   }
