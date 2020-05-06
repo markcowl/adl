@@ -3,6 +3,7 @@ import { unzip, v3 } from '@azure-tools/openapi';
 import { nameOf, use, valueOf } from '@azure-tools/sourcemap';
 import { Element } from '../../../model/element';
 import { ApiKeyAuthentication, Authentication, AuthorizationCodeOAuth2Flow, ClientCredentialsOAuth2Flow, HttpAuthentication, ImplicitOAuth2Flow, OAuth2Authentication, OAuth2Flow, OAuth2Flows, OAuth2Scope, OpenIdConnectAuthentication, ParameterLocation, PasswordOAuth2Flow } from '../../../model/http/protocol';
+import { addExtensionsToAttic } from './info';
 import { Context, ItemsOf } from './serializer';
 
 export async function processSecuritySchemes(value: ItemsOf<v3.SecurityScheme>, $: Context): Promise<Element | undefined> {
@@ -19,15 +20,20 @@ export async function processSecuritySchemes(value: ItemsOf<v3.SecurityScheme>, 
     await $.process(processSecurityScheme, securityScheme);
   }
 
-  // handle references last 
-  for (const { key, value: reference } of values(references)) {
-    // REVIEW
-  }
-
   return undefined;
 }
 
 export async function processSecurityScheme(scheme: v3.SecurityScheme, $: Context): Promise<Authentication | undefined> {
+  const result = authentication(scheme, $);
+
+  if (result) {
+    await addExtensionsToAttic(result, scheme);
+  }
+
+  return result;
+}
+
+function authentication(scheme: v3.SecurityScheme, $: Context) {
   switch (valueOf(use(scheme.type))) {
     case v3.SecurityType.ApiKey:
       return apiKeyAuthentication(<v3.ApiKeySecurityScheme>scheme, $);
