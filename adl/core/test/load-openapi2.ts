@@ -7,64 +7,35 @@ import { readdirSync, statSync, unlinkSync } from 'fs';
 import { describe, it } from 'mocha';
 import { resolve } from 'path';
 import { deserializeOpenAPI2 } from '../serialization/openapi/v2/serializer';
-import { Host, UrlFileSystem } from '../support/file-system';
 import { Stopwatch } from '../support/stopwatch';
+import { createHost, formatDuration } from './common';
 import { Errors as AccumulateErrors } from './errors';
 import { serialize } from './serialization';
 
 require('source-map-support').Install;
 
-const $scenarios = `${__dirname}/../../test/scenarios/v2/single/input`;
-function formatDuration(msec: number) {
-  const s = (msec / 1000).toString();
-  if (msec < 250) {
-    return chalk.green(`${s}s`);
-  }
-  if (msec < 750) {
-    return chalk.yellow(`${s}s`);
-  }
-
-  if (msec < 60000) {
-    return chalk.red(`${(Math.floor(msec / 1000) % 60)}.${msec % 1000}s`);
-  }
-
-  return chalk.red(`${Math.floor(msec / 60000)}:${(Math.floor(msec / 1000) % 60).toString().padStart(2, '0')}.${msec % 1000}m`);
-}
+const scenarios = `${__dirname}/../../test/scenarios/v2`;
 
 describe('Load Single OAI2 files', () => {
-  const files = values(readdirSync($scenarios)).where(each => statSync(`${$scenarios}/${each}`).isFile() && !each.endsWith('.api.yaml')).toArray();
-  let host: Host;
-
-  before('create testing filesystem', async () => {
-    host = new Host(new UrlFileSystem(`${$scenarios}/`));
-
-
-    host.on('warning', (msg, node, when) => console.log(chalk.yellowBright(`      ${msg}`)));
-    host.on('error', (msg, node, when) => console.log(chalk.redBright(`      ${msg}`)));
-    host.on('loaded', (path, duration, when) => console.log(chalk.cyan(`      loaded: '${path}' ${formatDuration(duration)} `)));
-    host.on('parsed', (path, duration, when) => console.log(chalk.cyan(`      parsed: '${path}' ${formatDuration(duration)} `)));
-    host.on('attic', (path, duration, when) => console.log(chalk.cyan(`      attic: '${path}' ${formatDuration(duration)} `)));
-    host.on('processed', (path, duration, when) => console.log(chalk.cyan(`      processed: '${path}' ${formatDuration(duration)} `)));
-
-  });
+  const inputRoot = `${scenarios}/single/input`;
+  const outputRoot = `${scenarios}/single/output`;
+  const files = values(readdirSync(inputRoot)).where(each => statSync(`${inputRoot}/${each}`).isFile()).toArray();
 
   for (const file of files) {
     it(`Processes '${file}'`, async () => {
-      console.log(chalk.gray(`\n      starting ${file}`));
-      const stopwatch = new Stopwatch();
-
+      const host = createHost(inputRoot);
       const api = await deserializeOpenAPI2(host, file);
-      const outputPath = resolve(`${$scenarios}/../output/${file.replace(/.yaml$/ig, '.api.yaml')}`);
-      const atticPath = resolve(`${$scenarios}/../output/${file.replace(/.yaml$/ig, '.attic.yaml')}`);
 
+      const apiOutput = resolve(`${outputRoot}/${file.replace(/.yaml$/ig, '.api.yaml')}`);
+      const atticOutput = resolve(`${outputRoot}/${file.replace(/.yaml$/ig, '.attic.yaml')}`);
       const errors = new AccumulateErrors();
 
-      if (await isFile(outputPath)) {
-        unlinkSync(outputPath);
+      if (await isFile(apiOutput)) {
+        unlinkSync(apiOutput);
       }
 
-      if (await isFile(outputPath)) {
-        unlinkSync(atticPath);
+      if (await isFile(apiOutput)) {
+        unlinkSync(atticOutput);
       }
 
       if (api.attic) {
@@ -77,13 +48,66 @@ describe('Load Single OAI2 files', () => {
         //errors.check(() => equal(attic.tags, undefined, 'Should not have a tags section left in attic'));
         //errors.check(() => equal(attic.externalDocs, undefined, 'Should not have an externalDocs section left in attic'));
 
-        await writeFile(atticPath, serialize(api.attic.valueOf()));
+        await writeFile(atticOutput, serialize(api.attic.valueOf()));
         delete api.attic;
       }
-      stopwatch.time;
-      await writeFile(outputPath, serialize(api.valueOf()));
+
+      const stopwatch = new Stopwatch();
+      await writeFile(apiOutput, serialize(api.valueOf()));
       console.log(chalk.cyan(`      serialize: '${file}' ${formatDuration(stopwatch.time)} `));
-      equal(await isFile(outputPath), true, `Should write file ${outputPath} `);
+      equal(await isFile(apiOutput), true, `Should write file ${apiOutput} `);
+      if (errors.count > 0) {
+        fail(`Should not report errors: \n      ${errors.summary}\n`);
+      }
+    });
+  }
+
+});
+
+describe('Load Multiple OAI2 files', () => {
+  const root = `${scenarios}/multiple`;
+  const folders = values(readdirSync(root)).where(each => statSync(`${root}/${each}`).isDirectory()).toArray();
+
+  for (const folder of folders) {
+    const inputRoot = resolve(root, folder, 'input');
+    const outputRoot = resolve(`${inputRoot}/../output/`);
+
+    it(`Processes '${inputRoot}'`, async () => {
+      const host = createHost(inputRoot);
+
+      const files = values(readdirSync(inputRoot)).where(each => statSync(`${inputRoot}/${each}`).isFile()).toArray();
+      const api = await deserializeOpenAPI2(host, ...files);
+      const apiOutput = resolve(`${outputRoot}/${folder}.yaml`);
+      const atticOutput = resolve(`${outputRoot}/${folder}.attic.yaml`);
+
+      const errors = new AccumulateErrors();
+
+      if (await isFile(apiOutput)) {
+        unlinkSync(apiOutput);
+      }
+
+      if (await isFile(apiOutput)) {
+        unlinkSync(atticOutput);
+      }
+
+      if (api.attic) {
+        const attic = <v2.Model>api.attic.valueOf();
+
+        // verify that the attic does not have things we expect to be done
+
+        errors.check(() => equal(attic.swagger, undefined, 'Should not have an swagger node left in attic'));
+        //errors.check(() => equal(attic.info, undefined, 'Should not have an info section left in attic'));
+        //errors.check(() => equal(attic.tags, undefined, 'Should not have a tags section left in attic'));
+        //errors.check(() => equal(attic.externalDocs, undefined, 'Should not have an externalDocs section left in attic'));
+
+        await writeFile(atticOutput, serialize(api.attic.valueOf()));
+        delete api.attic;
+      }
+
+      const stopwatch = new Stopwatch();
+      await writeFile(apiOutput, serialize(api.valueOf()));
+      console.log(chalk.cyan(`      serialize: '${folder}' ${formatDuration(stopwatch.time)} `));
+      equal(await isFile(apiOutput), true, `Should write file ${apiOutput} `);
       if (errors.count > 0) {
         fail(`Should not report errors: \n      ${errors.summary}\n`);
       }

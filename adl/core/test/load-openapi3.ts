@@ -7,10 +7,10 @@ import { readdirSync, statSync, unlinkSync } from 'fs';
 import { describe, it } from 'mocha';
 import { resolve } from 'path';
 import { deserializeOpenAPI3 } from '../serialization/openapi/v3/serializer';
-import { FileSystem, UrlFileSystem, Host } from '../support/file-system';
-import { serialize } from './serialization';
-import { Errors as AccumulateErrors } from './errors';
+import { Host, UrlFileSystem } from '../support/file-system';
 import { Stopwatch } from '../support/stopwatch';
+import { Errors as AccumulateErrors } from './errors';
+import { serialize } from './serialization';
 
 require('source-map-support').Install;
 
