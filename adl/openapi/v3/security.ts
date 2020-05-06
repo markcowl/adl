@@ -18,7 +18,7 @@ export enum SecurityType {
   ApiKey = 'apiKey',
   Http = 'http',
   OAuth2 = 'oauth2',
-  OpenIDConnect = 'openIdConnect'
+  OpenIdConnect = 'openIdConnect'
 }
 
 export type SecurityScheme = ApiKeySecurityScheme | OAuth2SecurityScheme | OpenIdConnectSecurityScheme | HttpSecurityScheme;
@@ -133,7 +133,7 @@ export interface AuthorizationCodeOAuthFlow extends OAuth2Flow {
 /** OpenIdConnect SecurityScheme */
 export interface OpenIdConnectSecurityScheme extends SecuritySchemeBase {
   /** OpenID Connect */
-  type: SecurityType.OpenIDConnect;
+  type: SecurityType.OpenIdConnect;
 
   /** OpenId Connect URL to discover OAuth2 configuration values. This MUST be in the form of a URL. */
   openIdConnectUrl: Url;

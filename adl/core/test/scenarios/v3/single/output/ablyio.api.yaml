@@ -1,4 +1,17 @@
 http:
+  authentications:
+    - type: http
+      name: basicAuth
+      description: Basic Authentication using an [API
+        key](https://www.ably.io/documentation/core-features/authentication#basic-authentication).
+      scheme: basic
+    - type: http
+      name: bearerAuth
+      description: Token Authentication using an [Ably
+        Token](https://www.ably.io/documentation/core-features/authentication#basic-authentication),
+        or optionally an [Ably
+        JWT](https://www.ably.io/documentation/core-features/authentication#ably-jwt-process).
+      scheme: bearer
   connections:
     - url: https://rest.ably.io
   headers:

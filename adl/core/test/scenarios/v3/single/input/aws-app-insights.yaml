@@ -1635,7 +1635,8 @@ components:
       name: Authorization
       in: header
       description: Amazon Signature authorization v4
-      x-amazon-apigateway-authtype: awsSigv4
+      #REVIEW
+      #x-amazon-apigateway-authtype: awsSigv4
   schemas:
     CreateApplicationResponse:
       type: object

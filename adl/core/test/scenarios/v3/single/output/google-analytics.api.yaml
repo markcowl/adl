@@ -1,4 +1,28 @@
 http:
+  authentications:
+    - type: oauth2
+      name: Oauth2
+      description: Oauth 2.0 implicit authentication
+      flows:
+        implicit:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          scopes:
+            - name: https://www.googleapis.com/auth/analytics
+              description: View and manage your Google Analytics data
+            - name: https://www.googleapis.com/auth/analytics.readonly
+              description: View your Google Analytics data
+    - type: oauth2
+      name: Oauth2c
+      description: Oauth 2.0 accessCode authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          scopes:
+            - name: https://www.googleapis.com/auth/analytics
+              description: View and manage your Google Analytics data
+            - name: https://www.googleapis.com/auth/analytics.readonly
+              description: View your Google Analytics data
+          tokenUrl: https://accounts.google.com/o/oauth2/token
   connections:
     - url: https://www.googleapis.com/analytics/v2.4
   parameters:
