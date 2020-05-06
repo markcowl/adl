@@ -4,7 +4,6 @@
  - `npm install -g @microsoft/rush` -- rush.js is used by this repository
 
 ## Local install
- - `npm install` - local install of typescript and eslint for the project
  - `rush update` - install modules packages
 
 ## Building code
