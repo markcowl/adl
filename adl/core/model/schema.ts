@@ -219,7 +219,6 @@ export class XorSchema extends Schema {
 }
 
 
-
 export class Default extends Schema {
   constructor(public name: SchemaName, initializer?: Partial<Default>) {
     super('default');
