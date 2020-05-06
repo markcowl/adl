@@ -3,7 +3,6 @@ import { common, StringFormat, v2, v3 } from '@azure-tools/openapi';
 import { valueOf } from '@azure-tools/sourcemap';
 
 
-
 export function isObjectSchema(schema: v3.Schema) {
   return schema.type == common.JsonType.Object ||
     length(schema.properties) > 0 ||
@@ -21,7 +20,7 @@ export function isPrimitiveSchema(schema: v3.Schema | v2.Schema) {
       if (schema.format == StringFormat.File) {
         return false;
       }
-
+      // fallthrough
     case common.JsonType.Number:
     case common.JsonType.Integer:
     case common.JsonType.Boolean:

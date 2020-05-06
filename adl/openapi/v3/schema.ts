@@ -8,7 +8,6 @@ import { SchemaExtensions } from '../common/schema-extensions';
 import { VendorExtensions } from '../common/vendor-extensions';
 
 
-
 /**
  * The Schema Object allows the definition of input and output data types. These types can be objects, but also primitives and arrays. This object is an extended subset of the JSON Schema Specification Wright Draft 00.
  * 
@@ -213,8 +212,6 @@ export interface Schema extends VendorExtensions, SchemaExtensions {
 
   /** Adds support for polymorphism. The discriminator is an object name that is used to differentiate between other schemas which may satisfy the payload description  */
   discriminator: Discriminator;
-
-
 
 
   /** Additional external documentation for this schema. */

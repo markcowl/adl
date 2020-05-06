@@ -67,7 +67,7 @@ export async function processSchemaReference(ref: JsonReference<v3.Schema>, $: C
 
 const arrayProperties = <Array<keyof v3.Schema>>['maxItems', 'minItems', 'uniqueItems'];
 const numberProperties = <Array<keyof v3.Schema>>['multipleOf', 'maximum', 'exclusiveMaximum', 'minimum', 'exclusiveMinimum',];
-const stringProperties = <Array<keyof v3.Schema>>["maxLength", "minLength", "pattern",];
+const stringProperties = <Array<keyof v3.Schema>>['maxLength', 'minLength', 'pattern',];
 const objectProperties = <Array<keyof v3.Schema>>['properties', 'discriminator', 'additionalProperties', 'minProperties', 'maxProperties'];
 const notPrimitiveProperties = <Array<keyof v3.Schema>>[...stringProperties, ...objectProperties, ...arrayProperties, ...numberProperties];
 const notObject = [...arrayProperties, ...numberProperties, ...stringProperties];
@@ -76,7 +76,7 @@ function commonProperties(schema: v3.Schema) {
   return {
     description: schema.description,
     summary: schema.title,
-  }
+  };
 }
 
 export async function processInline(schema: v3.Schema | v3.SchemaReference | undefined, $: Context, options?: Options) {
@@ -100,7 +100,7 @@ export async function processAnyOf(schema: v3.Schema, $: Context, options?: Opti
     return $.error(`Schema of type '${schema.type}' may not be in an anyOf`, schema);
   }
   if (isEnumSchema(schema)) {
-    return $.error(`Enum schema may not be in an anyOf`, schema);
+    return $.error('Enum schema may not be in an anyOf', schema);
   }
   if ($.forbiddenProperties(schema, ...notObject)) {
     return undefined;
@@ -123,20 +123,21 @@ export async function processAnyOf(schema: v3.Schema, $: Context, options?: Opti
     combineWith.push(oneOf);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const schemas = (await Promise.all(values(use(schema.anyOf)).select(each => processInline(each, $)).toArray())).map(each => each!);
 
   // if this is combined with anything
   if (combineWith.length > 0) {
-    const anon = new AnyOfSchema(anonymous(schemaName), schemas)
+    const anon = new AnyOfSchema(anonymous(schemaName), schemas);
     $.api.schemas.combinations.push(anon);
 
-    const result = new AndSchema(schemaName, [anon, ...combineWith], commonProperties(schema))
+    const result = new AndSchema(schemaName, [anon, ...combineWith], commonProperties(schema));
     $.api.schemas.combinations.push(result);
 
     return result;
   }
 
-  const result = new AnyOfSchema(schemaName, schemas, commonProperties(schema))
+  const result = new AnyOfSchema(schemaName, schemas, commonProperties(schema));
   $.api.schemas.combinations.push(result);
   return result;
 }
@@ -157,7 +158,7 @@ export async function processOneOf(schema: v3.Schema, $: Context, options?: Opti
     return $.error(`Schema of type '${schema.type}' may not be in an oneOf`, schema);
   }
   if (isEnumSchema(schema)) {
-    return $.error(`Enum schema may not be in an oneOf`, schema);
+    return $.error('Enum schema may not be in an oneOf', schema);
   }
   if ($.forbiddenProperties(schema, ...notObject)) {
     return undefined;
@@ -167,6 +168,7 @@ export async function processOneOf(schema: v3.Schema, $: Context, options?: Opti
 
   const objectSchema = options?.justTargetType ? undefined : await (isObjectSchema(schema) ? processObjectSchema(schema, $, { isAnonymous: true, justTargetType: true }) : undefined);
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const schemas = (await Promise.all(values(use(schema.oneOf)).select(each => processInline(each, $)).toArray())).map(each => each!);
 
   if (objectSchema) {
@@ -198,7 +200,7 @@ export async function processSchema(schema: v3.Schema, $: Context, options?: { i
 
 
     if (length(schema.anyOf) > 0) {
-      return processAnyOf(schema, $, options)
+      return processAnyOf(schema, $, options);
     }
 
     if (length(schema.oneOf) > 0) {
@@ -207,7 +209,7 @@ export async function processSchema(schema: v3.Schema, $: Context, options?: { i
         // to somehow make it work?
 
       }
-      return processOneOf(schema, $, options)
+      return processOneOf(schema, $, options);
     }
 
     if (length(schema.allOf) > 0) {
@@ -221,7 +223,7 @@ export async function processSchema(schema: v3.Schema, $: Context, options?: { i
         }
       }
       // process schemas with allOf as objects 
-      return processObjectSchema(schema, $, options)
+      return processObjectSchema(schema, $, options);
     }
 
     switch (schema.type?.valueOf()) {
@@ -374,7 +376,7 @@ export async function processByteArraySchema(schema: v3.Schema, $: Context): Pro
 function addAliasWithDefault(schema: v3.Schema, resultSchema: Schema, $: Context) {
   if (schema.default) {
     const alias = new Alias(resultSchema, commonProperties(schema));
-    alias.defaults.push(new ServerDefaultValue(schema.default))
+    alias.defaults.push(new ServerDefaultValue(schema.default));
     $.api.schemas.aliases.push(alias);
     return alias;
   }
@@ -554,7 +556,6 @@ export async function processArraySchema(schema: v3.Schema, $: Context, options?
   const common = (!options?.isAnonymous && !options?.isParameter && !options?.isProperty) ? commonProperties(schema) : {};
 
 
-
   const elementSchema = await processInline(schema.items, $) || $.api.schemas.Any;
 
   if ($.forbiddenProperties(schema, ...stringProperties, ...numberProperties)) {
@@ -638,6 +639,7 @@ export async function processAdditionalProperties(schema: v3.Schema, $: Context,
 
 
 export async function processObjectSchema(schema: v3.Schema, $: Context, options?: Options): Promise<Schema | undefined> {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const schemas = (await Promise.all(values(use(schema.allOf)).select(each => processInline(each, $)).toArray())).map(each => each!);
 
   if (schema.additionalProperties && length(schema.properties) === 0 && schemas.length === 0) {
@@ -677,7 +679,7 @@ export async function processObjectSchema(schema: v3.Schema, $: Context, options
 
   if (!isUsed(schema.required)) {
     for (const each of unusedMembers(schema.required)) {
-      $.error(`Schema '${nameOf(schema)}' has required for property named '${(<any>schema.required)[each]}' `, schema)
+      $.error(`Schema '${nameOf(schema)}' has required for property named '${(<any>schema.required)[each]}' `, schema);
     }
     throw new Error('fatal error');
   }

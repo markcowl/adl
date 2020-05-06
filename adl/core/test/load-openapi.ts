@@ -84,7 +84,7 @@ describe('Load Single OAI3 files', () => {
       }
       stopwatch.time;
       await writeFile(outputPath, serialize(api.valueOf()));
-      console.log(chalk.cyan(`      serialize: '${file}' ${formatDuration(stopwatch.time)} `))
+      console.log(chalk.cyan(`      serialize: '${file}' ${formatDuration(stopwatch.time)} `));
       equal(await isFile(outputPath), true, `Should write file ${outputPath} `);
       if (errors.count > 0) {
         fail(`Should not report errors: \n      ${errors.summary}\n`);

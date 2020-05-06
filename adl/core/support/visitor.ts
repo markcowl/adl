@@ -81,7 +81,7 @@ function addUnusedTo(target: any, source: any) {
           }
         }
         else {
-          target.push(valueOf(raw))
+          target.push(valueOf(raw));
         }
       }
     }
@@ -230,7 +230,7 @@ export class Context<TSourceModel extends OAIModel> {
         result = true;
       }
     }
-    return result
+    return result;
   }
 
   get api() {

@@ -10,7 +10,6 @@ import { use, valueOf } from '@azure-tools/sourcemap';
 const { hasSchema } = v3;
 
 
-
 export async function processParameters(input: ItemsOf<v3.Parameter>, $: Context): Promise<Element | undefined> {
   const { extensions, references, values: parameters } = unzip<v3.Parameter>(input);
 
@@ -48,7 +47,7 @@ export async function processParameter(parameter: v3.Parameter, $: Context, opti
       return processCookieParameter(<v3.CookieParameter>parameter, $, options);
 
     case v3.ParameterLocation.Query:
-      return processQueryParameter(<v3.QueryParameter>parameter, $, options)
+      return processQueryParameter(<v3.QueryParameter>parameter, $, options);
 
     case v3.ParameterLocation.Header:
       return processHeaderParameter(<v3.HeaderParameter>parameter, $, options);
@@ -63,10 +62,10 @@ export async function processPathParameter(parameter: v3.PathParameter, $: Conte
   const schema = await processInline(parameter.schema, $) || $.api.schemas.Any;
   const result = new PathParameter(parameter.name, schema,
     parameter.explode === undefined ? false : parameter.explode, {
-    description: parameter.description,
-    required: parameter.required,
-    renderStyle: <any><unknown>parameter.style || RenderStyle.Simple
-  })
+      description: parameter.description,
+      required: parameter.required,
+      renderStyle: <any><unknown>parameter.style || RenderStyle.Simple
+    });
   result.addToAttic('example', parameter.example);
 
   $.api.http.parameters.push(result);
@@ -77,9 +76,9 @@ export async function processCookieParameter(parameter: v3.CookieParameter, $: C
   const schema = await processInline(parameter.schema, $) || $.api.schemas.Any;
   const result = new CookieParameter(parameter.name, schema,
     parameter.explode === undefined ? true : parameter.explode, {
-    description: parameter.description,
-    required: parameter.required
-  })
+      description: parameter.description,
+      required: parameter.required
+    });
   result.addToAttic('example', parameter.example);
 
   $.api.http.parameters.push(result);
@@ -90,13 +89,13 @@ export async function processQueryParameter(parameter: v3.QueryParameter, $: Con
   const renderStyle = <any><unknown>parameter.style || RenderStyle.Form;
   const result = new QueryParameter(parameter.name, schema,
     parameter.explode === undefined ? renderStyle === RenderStyle.Form ? true : false : parameter.explode, {
-    description: parameter.description,
-    required: parameter.required,
-    renderStyle,
-    allowEmptyValue: parameter.allowEmptyValue,
-    allowReserved: parameter.allowReserved,
+      description: parameter.description,
+      required: parameter.required,
+      renderStyle,
+      allowEmptyValue: parameter.allowEmptyValue,
+      allowReserved: parameter.allowReserved,
 
-  });
+    });
   result.addToAttic('example', parameter.example);
   $.api.http.parameters.push(result);
   return result;
@@ -105,10 +104,10 @@ export async function processHeaderParameter(parameter: v3.HeaderParameter, $: C
   const schema = await processInline(parameter.schema, $) || $.api.schemas.Any;
   const result = new HeaderParameter(parameter.name, schema,
     parameter.explode === undefined ? false : parameter.explode, {
-    description: parameter.description,
-    required: parameter.required,
-    renderStyle: <any><unknown>parameter.style || RenderStyle.Simple
-  })
+      description: parameter.description,
+      required: parameter.required,
+      renderStyle: <any><unknown>parameter.style || RenderStyle.Simple
+    });
   result.addToAttic('example', parameter.example);
 
   $.api.http.parameters.push(result);

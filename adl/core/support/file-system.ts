@@ -22,7 +22,7 @@ export class Host extends EventEmitter<Events> {
   }
 
   error(message: string, offendingNode: any) {
-    this.emit('error', message, offendingNode, this.stopwatch.total)
+    this.emit('error', message, offendingNode, this.stopwatch.total);
   }
 
   loaded(path: string, duration: number): void {
