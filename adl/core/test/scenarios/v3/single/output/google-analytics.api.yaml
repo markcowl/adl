@@ -13,7 +13,8 @@ http:
         value: atom
         valueSchema: &a4
           type: alias
-          name: anonymous<unknown>
+          name: anonymous<string>
+          aliasType: schema
           defaults:
             - type: server-default
               name: anonymous<unknown>
@@ -48,7 +49,8 @@ http:
       renderStyle: form
       schema: &a5
         type: alias
-        name: anonymous<unknown>
+        name: anonymous<?>
+        aliasType: schema
         defaults:
           - type: server-default
             name: anonymous<unknown>

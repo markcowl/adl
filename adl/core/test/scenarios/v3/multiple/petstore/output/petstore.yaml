@@ -13,7 +13,8 @@ schemas:
     - &a2
       type: string
       name: anonymous<unknown>
-    - type: array
+    - &a5
+      type: array
       name: anonymous<unknown>
       elementSchema: &a3
         type: object
@@ -41,3 +42,8 @@ schemas:
         - name: message
           required: true
           schema: *a2
+  aliases:
+    - type: alias
+      name: Pets
+      aliasType: schema
+      targetSchema: *a5

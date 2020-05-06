@@ -853,26 +853,6 @@ paths:
       - $ref: "#/components/parameters/versionHeader"
       - $ref: "#/components/parameters/responseFormat"
 components:
-  responses:
-    Error:
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
-        application/x-msgpack:
-          schema:
-            $ref: "#/components/schemas/Error"
-        text/html:
-          schema:
-            $ref: "#/components/schemas/Error"
-      description: Error
-      headers:
-        x-ably-errorcode:
-          $ref: "#/components/headers/ErrorCode"
-        x-ably-errormessage:
-          $ref: "#/components/headers/ErrorMessage"
-        x-ably-serverid:
-          $ref: "#/components/headers/ServerId"
   securitySchemes:
     basicAuth:
       description: Basic Authentication using an [API

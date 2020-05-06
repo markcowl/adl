@@ -202,7 +202,8 @@ schemas:
             required: true
             schema: &a17
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               constraints:
                 - type: constraint
                   name: MaxLength
@@ -217,9 +218,10 @@ schemas:
               length is 0 characters. If you don't want an application to have a
               specific tag value, don't specify a value for this parameter.
             required: true
-            schema: &a53
+            schema: &a54
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               constraints:
                 - type: constraint
                   name: MaxLength
@@ -233,9 +235,10 @@ schemas:
     - &a30
       type: array
       name: anonymous<unknown>
-      elementSchema: &a54
+      elementSchema: &a55
         type: alias
-        name: anonymous<unknown>
+        name: anonymous<string>
+        aliasType: schema
         constraints:
           - type: constraint
             name: MaxLength
@@ -261,7 +264,8 @@ schemas:
         name: anonymous<unknown>
         elementSchema: &a2
           type: alias
-          name: anonymous<unknown>
+          name: anonymous<string>
+          aliasType: schema
           targetSchema: *a1
         sealed: true
         values:
@@ -277,19 +281,20 @@ schemas:
             name: anonymous<unknown>
             value: NOT_USEFUL
             valueSchema: *a2
-    - &a40
+    - &a41
       type: array
       name: anonymous<unknown>
-      elementSchema: &a36
+      elementSchema: &a37
         type: object
         name: Observation
         description: Describes an anomaly or error with the application.
         properties:
           - name: Id
             description: The ID of the observation type.
-            schema: &a37
+            schema: &a38
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               constraints:
                 - type: constraint
                   name: MaxLength
@@ -330,7 +335,8 @@ schemas:
               name: anonymous<unknown>
               elementSchema: &a4
                 type: alias
-                name: anonymous<unknown>
+                name: anonymous<string>
+                aliasType: schema
                 targetSchema: *a1
               sealed: true
               values:
@@ -369,7 +375,8 @@ schemas:
               name: anonymous<unknown>
               elementSchema: &a6
                 type: alias
-                name: anonymous<unknown>
+                name: anonymous<string>
+                aliasType: schema
                 targetSchema: *a1
               sealed: true
               values:
@@ -451,7 +458,7 @@ schemas:
           - name: XRayNodeType
             description: " The type of the X-Ray node. "
             schema: *a1
-    - &a42
+    - &a43
       type: array
       name: anonymous<unknown>
       elementSchema: &a26
@@ -463,7 +470,8 @@ schemas:
             description: The name of the resource group used for the application.
             schema: &a15
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               constraints:
                 - type: constraint
                   name: MaxLength
@@ -484,7 +492,8 @@ schemas:
               updates. "
             schema: &a28
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               constraints:
                 - type: constraint
                   name: MaxLength
@@ -509,7 +518,7 @@ schemas:
               Errors, 3 Warnings”</p> </li> <li> <p>“Configuring application,
               detected 1 Unconfigured Components”</p> </li> </ul>
             schema: *a1
-    - &a43
+    - &a44
       type: array
       name: anonymous<unknown>
       elementSchema: &a34
@@ -532,7 +541,8 @@ schemas:
               name: anonymous<unknown>
               elementSchema: &a9
                 type: alias
-                name: anonymous<unknown>
+                name: anonymous<string>
+                aliasType: schema
                 constraints:
                   - type: constraint
                     name: MaxLength
@@ -566,10 +576,10 @@ schemas:
           - name: Monitor
             description: "Indicates whether the application component is monitored. "
             schema: *a8
-    - &a46
+    - &a47
       type: array
       name: anonymous<unknown>
-      elementSchema: &a45
+      elementSchema: &a46
         type: object
         name: ConfigurationEvent
         description: " The event information. "
@@ -585,7 +595,8 @@ schemas:
               name: anonymous<unknown>
               elementSchema: &a10
                 type: alias
-                name: anonymous<unknown>
+                name: anonymous<string>
+                aliasType: schema
                 targetSchema: *a1
               sealed: true
               values:
@@ -609,7 +620,8 @@ schemas:
               name: anonymous<unknown>
               elementSchema: &a11
                 type: alias
-                name: anonymous<unknown>
+                name: anonymous<string>
+                aliasType: schema
                 targetSchema: *a1
               sealed: true
               values:
@@ -635,12 +647,13 @@ schemas:
             description: " The name of the resource Application Insights attempted to
               configure. "
             schema: *a1
-    - &a47
+    - &a48
       type: array
       name: anonymous<unknown>
       elementSchema: &a12
         type: alias
-        name: anonymous<unknown>
+        name: anonymous<string>
+        aliasType: schema
         constraints:
           - type: constraint
             name: MaxLength
@@ -652,7 +665,7 @@ schemas:
             name: RegularExpression
             length: "[a-zA-Z0-9\\.\\-_]*"
         targetSchema: *a1
-    - &a48
+    - &a49
       type: array
       name: anonymous<unknown>
       elementSchema: &a31
@@ -674,7 +687,8 @@ schemas:
               period, dash, underscore."
             schema: &a32
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               constraints:
                 - type: constraint
                   name: MaxLength
@@ -691,7 +705,8 @@ schemas:
               can contains at many as 50 characters, and it cannot be empty.
             schema: &a33
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               constraints:
                 - type: constraint
                   name: MaxLength
@@ -703,19 +718,20 @@ schemas:
           - name: Rank
             description: Rank of the log pattern.
             schema: *a7
-    - &a49
+    - &a50
       type: array
       name: anonymous<unknown>
-      elementSchema: &a38
+      elementSchema: &a39
         type: object
         name: Problem
         description: Describes a problem that is detected by correlating observations.
         properties:
           - name: Id
             description: The ID of the problem.
-            schema: &a39
+            schema: &a40
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               constraints:
                 - type: constraint
                   name: MaxLength
@@ -740,7 +756,8 @@ schemas:
               name: anonymous<unknown>
               elementSchema: &a13
                 type: alias
-                name: anonymous<unknown>
+                name: anonymous<string>
+                aliasType: schema
                 targetSchema: *a1
               sealed: true
               values:
@@ -772,7 +789,8 @@ schemas:
               name: anonymous<unknown>
               elementSchema: &a14
                 type: alias
-                name: anonymous<unknown>
+                name: anonymous<string>
+                aliasType: schema
                 targetSchema: *a1
               sealed: true
               values:
@@ -796,12 +814,13 @@ schemas:
             schema:
               type: alias
               name: Feedback
+              aliasType: schema
               constraints:
                 - type: constraint
                   name: MaximumProperties
                   count: 10
               targetSchema: *a16
-    - &a52
+    - &a53
       type: array
       name: anonymous<unknown>
       elementSchema: *a17
@@ -811,7 +830,8 @@ schemas:
       value: INSIGHTS_FEEDBACK
       valueSchema:
         type: alias
-        name: anonymous<unknown>
+        name: anonymous<string>
+        aliasType: schema
         targetSchema: *a1
   enums:
     - *a18
@@ -857,9 +877,10 @@ schemas:
             and an associated tag value (<code>Value</code>). The maximum length
             of a tag key is 128 characters. The maximum length of a tag value is
             256 characters.
-          schema: &a50
+          schema: &a51
             type: alias
             name: TagList
+            aliasType: schema
             constraints:
               - type: constraint
                 name: MaximumElements
@@ -885,7 +906,11 @@ schemas:
         - name: ResourceList
           description: The list of resource ARNs that belong to the component.
           required: true
-          schema: *a30
+          schema: &a35
+            type: alias
+            name: ResourceList
+            aliasType: schema
+            targetSchema: *a30
       summary: CreateComponentRequest
     - *a31
     - type: object
@@ -985,7 +1010,7 @@ schemas:
           schema: *a34
         - name: ResourceList
           description: The list of resource ARNs that belong to the component.
-          schema: *a30
+          schema: *a35
     - type: object
       name: DescribeComponentRequest
       properties:
@@ -1013,9 +1038,10 @@ schemas:
         - name: ComponentConfiguration
           description: The configuration settings of the component. The value is the
             escaped JSON of the configuration.
-          schema: &a35
+          schema: &a36
             type: alias
-            name: anonymous<unknown>
+            name: anonymous<string>
+            aliasType: schema
             constraints:
               - type: constraint
                 name: MaxLength
@@ -1042,7 +1068,7 @@ schemas:
         - name: ComponentConfiguration
           description: The recommended configuration settings of the component. The value
             is the escaped JSON of the configuration.
-          schema: *a35
+          schema: *a36
     - type: object
       name: DescribeComponentConfigurationRecommendationRequest
       properties:
@@ -1087,64 +1113,72 @@ schemas:
           required: true
           schema: *a32
       summary: DescribeLogPatternRequest
-    - *a36
+    - *a37
     - type: object
       name: DescribeObservationResponse
       properties:
         - name: Observation
           description: Information about the observation.
-          schema: *a36
+          schema: *a37
     - type: object
       name: DescribeObservationRequest
       properties:
         - name: ObservationId
           description: The ID of the observation.
           required: true
-          schema: *a37
+          schema: *a38
       summary: DescribeObservationRequest
-    - *a38
+    - *a39
     - type: object
       name: DescribeProblemResponse
       properties:
         - name: Problem
           description: "Information about the problem. "
-          schema: *a38
+          schema: *a39
     - type: object
       name: DescribeProblemRequest
       properties:
         - name: ProblemId
           description: The ID of the problem.
           required: true
-          schema: *a39
+          schema: *a40
       summary: DescribeProblemRequest
-    - &a41
+    - &a42
       type: object
       name: RelatedObservations
       description: Describes observations related to the problem.
       properties:
         - name: ObservationList
           description: The list of observations related to the problem.
-          schema: *a40
+          schema: &a56
+            type: alias
+            name: ObservationList
+            aliasType: schema
+            targetSchema: *a41
     - type: object
       name: DescribeProblemObservationsResponse
       properties:
         - name: RelatedObservations
           description: Observations related to the problem.
-          schema: *a41
+          schema: *a42
     - type: object
       name: DescribeProblemObservationsRequest
       properties:
         - name: ProblemId
           description: The ID of the problem.
           required: true
-          schema: *a39
+          schema: *a40
       summary: DescribeProblemObservationsRequest
     - type: object
       name: ListApplicationsResponse
       properties:
         - name: ApplicationInfoList
           description: The list of applications.
-          schema: *a42
+          schema: &a57
+            type: alias
+            name: ApplicationInfoList
+            aliasType: schema
+            targetSchema: *a43
         - name: NextToken
           description: "The token used to retrieve the next page of results. This value is
             <code>null</code> when there are no more results to return. "
@@ -1156,9 +1190,10 @@ schemas:
           description: The maximum number of results to return in a single call. To
             retrieve the remaining results, make another call with the returned
             <code>NextToken</code> value.
-          schema: &a44
+          schema: &a45
             type: alias
-            name: anonymous<unknown>
+            name: anonymous<number>
+            aliasType: schema
             constraints:
               - type: constraint
                 name: Minimum
@@ -1176,7 +1211,11 @@ schemas:
       properties:
         - name: ApplicationComponentList
           description: The list of application components.
-          schema: *a43
+          schema: &a58
+            type: alias
+            name: ApplicationComponentList
+            aliasType: schema
+            targetSchema: *a44
         - name: NextToken
           description: The token to request the next page of results.
           schema: *a1
@@ -1191,18 +1230,22 @@ schemas:
           description: The maximum number of results to return in a single call. To
             retrieve the remaining results, make another call with the returned
             <code>NextToken</code> value.
-          schema: *a44
+          schema: *a45
         - name: NextToken
           description: The token to request the next page of results.
           schema: *a1
       summary: ListComponentsRequest
-    - *a45
+    - *a46
     - type: object
       name: ListConfigurationHistoryResponse
       properties:
         - name: EventList
           description: " The list of configuration events and their corresponding details. "
-          schema: *a46
+          schema: &a59
+            type: alias
+            name: ConfigurationEventList
+            aliasType: schema
+            targetSchema: *a47
         - name: NextToken
           description: The <code>NextToken</code> value to include in a future
             <code>ListConfigurationHistory</code> request. When the results of a
@@ -1237,7 +1280,7 @@ schemas:
             <code>ListConfigurationHistory</code> request with the returned
             <code>NextToken</code> value. If this parameter is not used, then
             <code>ListConfigurationHistory</code> returns all results. "
-          schema: *a44
+          schema: *a45
         - name: NextToken
           description: The <code>NextToken</code> value returned from a previous paginated
             <code>ListConfigurationHistory</code> request where
@@ -1255,7 +1298,11 @@ schemas:
           schema: *a15
         - name: LogPatternSets
           description: The list of log pattern sets.
-          schema: *a47
+          schema: &a60
+            type: alias
+            name: LogPatternSetList
+            aliasType: schema
+            targetSchema: *a48
         - name: NextToken
           description: "The token used to retrieve the next page of results. This value is
             <code>null</code> when there are no more results to return. "
@@ -1271,7 +1318,7 @@ schemas:
           description: The maximum number of results to return in a single call. To
             retrieve the remaining results, make another call with the returned
             <code>NextToken</code> value.
-          schema: *a44
+          schema: *a45
         - name: NextToken
           description: The token to request the next page of results.
           schema: *a1
@@ -1284,7 +1331,11 @@ schemas:
           schema: *a15
         - name: LogPatterns
           description: The list of log patterns.
-          schema: *a48
+          schema: &a61
+            type: alias
+            name: LogPatternList
+            aliasType: schema
+            targetSchema: *a49
         - name: NextToken
           description: "The token used to retrieve the next page of results. This value is
             <code>null</code> when there are no more results to return. "
@@ -1303,7 +1354,7 @@ schemas:
           description: The maximum number of results to return in a single call. To
             retrieve the remaining results, make another call with the returned
             <code>NextToken</code> value.
-          schema: *a44
+          schema: *a45
         - name: NextToken
           description: The token to request the next page of results.
           schema: *a1
@@ -1313,7 +1364,11 @@ schemas:
       properties:
         - name: ProblemList
           description: "The list of problems. "
-          schema: *a49
+          schema: &a62
+            type: alias
+            name: ProblemList
+            aliasType: schema
+            targetSchema: *a50
         - name: NextToken
           description: "The token used to retrieve the next page of results. This value is
             <code>null</code> when there are no more results to return. "
@@ -1337,7 +1392,7 @@ schemas:
           description: The maximum number of results to return in a single call. To
             retrieve the remaining results, make another call with the returned
             <code>NextToken</code> value.
-          schema: *a44
+          schema: *a45
         - name: NextToken
           description: The token to request the next page of results.
           schema: *a1
@@ -1349,7 +1404,7 @@ schemas:
           description: An array that lists all the tags that are associated with the
             application. Each tag consists of a required tag key
             (<code>Key</code>) and an associated tag value (<code>Value</code>).
-          schema: *a50
+          schema: *a51
     - type: object
       name: ListTagsForResourceRequest
       properties:
@@ -1357,9 +1412,10 @@ schemas:
           description: The Amazon Resource Name (ARN) of the application that you want to
             retrieve tag information for.
           required: true
-          schema: &a51
+          schema: &a52
             type: alias
-            name: anonymous<unknown>
+            name: anonymous<string>
+            aliasType: schema
             constraints:
               - type: constraint
                 name: MaxLength
@@ -1367,9 +1423,7 @@ schemas:
               - type: constraint
                 name: MinLength
                 length: 1
-            targetSchema:
-              type: string
-              name: anonymous<unknown>
+            targetSchema: *a1
       summary: ListTagsForResourceRequest
     - type: object
       name: TagResourceResponse
@@ -1380,14 +1434,14 @@ schemas:
           description: The Amazon Resource Name (ARN) of the application that you want to
             add one or more tags to.
           required: true
-          schema: *a51
+          schema: *a52
         - name: Tags
           description: A list of tags that to add to the application. A tag consists of a
             required tag key (<code>Key</code>) and an associated tag value
             (<code>Value</code>). The maximum length of a tag key is 128
             characters. The maximum length of a tag value is 256 characters.
           required: true
-          schema: *a50
+          schema: *a51
       summary: TagResourceRequest
     - type: object
       name: UntagResourceResponse
@@ -1398,7 +1452,7 @@ schemas:
           description: The Amazon Resource Name (ARN) of the application that you want to
             remove one or more tags from.
           required: true
-          schema: *a51
+          schema: *a52
         - name: TagKeys
           description: <p>The tags (tag keys) that you want to remove from the resource.
             When you specify a tag key, the action removes both that key and its
@@ -1406,9 +1460,10 @@ schemas:
             application, append the <code>TagKeys</code> parameter and argument
             for each additional tag to remove, separated by an ampersand. </p>
           required: true
-          schema: &a55
+          schema: &a63
             type: alias
             name: TagKeyList
+            aliasType: schema
             constraints:
               - type: constraint
                 name: MaximumElements
@@ -1416,7 +1471,7 @@ schemas:
               - type: constraint
                 name: MinimumElements
                 count: 0
-            targetSchema: *a52
+            targetSchema: *a53
       summary: UntagResourceRequest
     - type: object
       name: UpdateApplicationResponse
@@ -1468,7 +1523,7 @@ schemas:
           schema: *a1
         - name: ResourceList
           description: The list of resource ARNs that belong to the component.
-          schema: *a30
+          schema: *a35
       summary: UpdateComponentRequest
     - type: object
       name: UpdateComponentConfigurationResponse
@@ -1503,7 +1558,7 @@ schemas:
             of the component configuration file, see <a
             href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/component-config.html">Component
             Configuration</a>.
-          schema: *a35
+          schema: *a36
       summary: UpdateComponentConfigurationRequest
     - type: object
       name: UpdateLogPatternResponse
@@ -1540,15 +1595,23 @@ schemas:
     - *a15
     - *a28
     - *a17
-    - *a53
-    - *a50
     - *a54
+    - *a51
+    - *a55
+    - *a35
     - *a12
     - *a32
     - *a33
-    - *a35
-    - *a37
+    - *a36
+    - *a38
     - *a4
-    - *a39
-    - *a44
-    - *a55
+    - *a40
+    - *a56
+    - *a57
+    - *a45
+    - *a58
+    - *a59
+    - *a60
+    - *a61
+    - *a62
+    - *a63

@@ -1,16 +1,20 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
 import { items, keys, length, values } from '@azure-tools/linq';
-import { Dictionary, Info, isReference, JsonReference } from '@azure-tools/openapi';
-import { getSourceFile, isUsed, Path, refTo, TrackedSource, TrackedTarget, Tracker, use, using, valueOf, isAnonymous } from '@azure-tools/sourcemap';
+import { common, Dictionary, Info, isReference, JsonReference } from '@azure-tools/openapi';
+import { anonymous, getSourceFile, isAnonymous, isUsed, nameOf, Path, refTo, TrackedSource, TrackedTarget, Tracker, use, using, valueOf } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
 import { parse } from 'yaml';
+import { Alias } from '../model/alias';
 import { ApiModel } from '../model/api-model';
 import { Element, ElementArray } from '../model/element';
 import { VersionInfo } from '../model/version-info';
 import { Host } from './file-system';
 import { Stopwatch } from './stopwatch';
 
+export interface Options {
+  isAnonymous?: boolean;
+}
 
 export interface OAIModel {
   info: Info;
@@ -196,7 +200,7 @@ export class Visitor<TSourceModel extends OAIModel> {
   }
 }
 
-type fnAction<TSourceModel extends OAIModel, TInput, TOutput, TOptions = {}> =
+export type fnAction<TSourceModel extends OAIModel, TInput, TOutput, TOptions = {}> =
   (value: NonNullable<TInput>, context: Context<TSourceModel>, options?: TOptions) => Promise<TOutput | undefined>;
 
 export class Context<TSourceModel extends OAIModel> {
@@ -248,7 +252,7 @@ export class Context<TSourceModel extends OAIModel> {
     return TrackedTarget.track(output);
   }
 
-  async process<TInput, TOutput extends Element, TOptions = {}>(action: fnAction<TSourceModel, TInput, TOutput, TOptions>, value: TInput | NonNullable<TInput>, options?: TOptions): Promise<TOutput | undefined> {
+  async process<TInput, TOutput extends Element, TOptions extends Options = {}>(action: fnAction<TSourceModel, TInput, TOutput, TOptions>, value: TInput | NonNullable<TInput>, options?: TOptions): Promise<TOutput | undefined> {
 
     if (value !== undefined && value !== null) {
 
@@ -310,11 +314,44 @@ export class Context<TSourceModel extends OAIModel> {
     };
   }
 
-  async processRefTarget<Tin, Tout extends Element, TOptions = {}>(ref: JsonReference<Tin>, action: fnAction<TSourceModel, Tin, Tout>, options?: TOptions): Promise<Tout> {
+  async processRefTarget<Tin, Tout extends Element, TOptions extends Options = {}>(ref: JsonReference<Tin>, action: fnAction<TSourceModel, Tin, Tout>, options?: TOptions): Promise<Tout> {
     const { $ref, file, path } = this.normalizeReference(ref.$ref);
     use(ref.$ref);
     return <Tout>this.visitor.$refs.get($ref) || <Tout>await this.visitor.processRef(file, path, action);
   }
+  async processInline<TIn, TOut extends Element, TOptions extends Options = {}>(action: fnAction<TSourceModel, TIn, TOut>, value: TIn | common.JsonReference<TIn> | undefined, options?: TOptions): Promise<TOut | Alias<TOut> | undefined>{
+    if (value !== undefined) {
+      if (isReference(value)) {
+        const name = options?.isAnonymous ? anonymous(action.name) : nameOf(value);
+
+        const { $ref, file, path } = this.normalizeReference(value.$ref);
+        use(value.$ref);
+        const target = 
+          // already processed?
+          <TOut>this.visitor.$refs.get($ref) || 
+          
+          // or processing it right now.
+          <TOut>await this.visitor.processRef(file, path, action );
+
+        // anonymous her 
+        if (options?.isAnonymous) {
+        // this is a direct link to the target 
+        // so we return it as-is
+          return target;
+        }
+
+        // this is a named reference to the target.
+        // (ie, if a /component/* is a ref to another component, it gets a name)
+        // we can produce an alias to that target
+        return new Alias(action.name, name, target);
+      }
+      // if we came to processInline, then that means 
+      // by defintion, we are processing an anonymous element.
+      return await this.process(action, <TIn>value, { ...options, isAnonymous: true });
+    }
+    return undefined;
+  }
+
   async processPossibleReference<TInput, TOutput extends Element, TOptions = {}>(
     refAction: fnAction<TSourceModel, JsonReference<TInput>, TOutput>,
     action: fnAction<TSourceModel, TInput, TOutput>,

@@ -12,6 +12,7 @@ http:
       schema: &a208
         type: alias
         name: schema
+        aliasType: schema
         constraints:
           - type: constraint
             name: MinimumElements
@@ -28,7 +29,8 @@ http:
             name: anonymous<unknown>
             elementSchema: &a1
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               targetSchema: &a2
                 type: string
                 name: anonymous<unknown>
@@ -73,6 +75,7 @@ http:
       schema: &a209
         type: alias
         name: schema
+        aliasType: schema
         constraints:
           - type: constraint
             name: MinimumElements
@@ -89,7 +92,8 @@ http:
             name: anonymous<unknown>
             elementSchema: &a3
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               targetSchema: *a2
             sealed: true
             values:
@@ -136,6 +140,7 @@ http:
       schema: &a210
         type: alias
         name: schema
+        aliasType: schema
         constraints:
           - type: constraint
             name: MinimumElements
@@ -152,7 +157,8 @@ http:
             name: anonymous<unknown>
             elementSchema: &a4
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               targetSchema: *a2
             sealed: true
             values:
@@ -186,6 +192,7 @@ http:
       schema: &a211
         type: alias
         name: schema
+        aliasType: schema
         constraints:
           - type: constraint
             name: MinimumElements
@@ -203,7 +210,8 @@ http:
             name: anonymous<unknown>
             elementSchema: &a5
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               targetSchema: *a2
             sealed: true
             values:
@@ -250,6 +258,7 @@ http:
       schema: &a212
         type: alias
         name: schema
+        aliasType: schema
         constraints:
           - type: constraint
             name: MinimumElements
@@ -266,7 +275,8 @@ http:
             name: anonymous<unknown>
             elementSchema: &a6
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               targetSchema: *a2
             sealed: true
             values:
@@ -340,6 +350,7 @@ http:
       schema: &a213
         type: alias
         name: schema
+        aliasType: schema
         constraints:
           - type: constraint
             name: MinimumElements
@@ -358,7 +369,8 @@ http:
             value: pinned_tweet_id
             valueSchema:
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               targetSchema: *a2
         attic:
           example: pinned_tweet_id
@@ -371,6 +383,7 @@ http:
       schema: &a214
         type: alias
         name: schema
+        aliasType: schema
         constraints:
           - type: constraint
             name: MinimumElements
@@ -387,7 +400,8 @@ http:
             name: anonymous<unknown>
             elementSchema: &a7
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               targetSchema: *a2
             sealed: true
             values:
@@ -449,6 +463,11 @@ http:
                 valueSchema: *a7
         attic:
           example: created_at
+  responses:
+    - name: HttpErrorResponse
+      description: The request has failed.
+      payloads:
+        - {}
 metaData:
   name: Tweets and Users
   contacts:
@@ -523,7 +542,8 @@ schemas:
                   - name: height
                     schema: &a22
                       type: alias
-                      name: anonymous<unknown>
+                      name: anonymous<number>
+                      aliasType: schema
                       constraints:
                         - type: constraint
                           name: Minimum
@@ -533,7 +553,8 @@ schemas:
                   - name: media_key
                     schema: &a19
                       type: alias
-                      name: anonymous<unknown>
+                      name: anonymous<string>
+                      aliasType: schema
                       constraints:
                         - type: constraint
                           name: RegularExpression
@@ -543,7 +564,8 @@ schemas:
                   - name: width
                     schema: &a23
                       type: alias
-                      name: anonymous<unknown>
+                      name: anonymous<number>
+                      aliasType: schema
                       constraints:
                         - type: constraint
                           name: Minimum
@@ -558,7 +580,8 @@ schemas:
                   value: photo
                   valueSchema:
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
               - name: url
                 schema: *a2
@@ -579,7 +602,8 @@ schemas:
                   value: video
                   valueSchema:
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
           - &a96
             type: object
@@ -596,14 +620,16 @@ schemas:
                   value: animated_gif
                   valueSchema: &a144
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
     - &a11
       type: array
       name: anonymous<unknown>
       elementSchema: &a14
         type: alias
-        name: anonymous<unknown>
+        name: anonymous<string>
+        aliasType: schema
         description: The identifier for this place
         targetSchema: *a2
     - &a10
@@ -614,7 +640,8 @@ schemas:
       name: anonymous<unknown>
       elementSchema: &a155
         type: alias
-        name: anonymous<unknown>
+        name: anonymous<number>
+        aliasType: schema
         constraints:
           - type: constraint
             name: Minimum
@@ -638,6 +665,7 @@ schemas:
             schema: &a154
               type: alias
               name: contained_within
+              aliasType: schema
               constraints:
                 - type: constraint
                   name: MinimumElements
@@ -648,7 +676,8 @@ schemas:
           - name: country_code
             schema: &a27
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               constraints:
                 - type: constraint
                   name: RegularExpression
@@ -667,6 +696,7 @@ schemas:
                   schema: &a156
                     type: alias
                     name: bbox
+                    aliasType: schema
                     constraints:
                       - type: constraint
                         name: MaximumElements
@@ -688,6 +718,7 @@ schemas:
                         schema: &a157
                           type: alias
                           name: Position
+                          aliasType: schema
                           constraints:
                             - type: constraint
                               name: MaximumElements
@@ -707,7 +738,8 @@ schemas:
                           value: Point
                           valueSchema:
                             type: alias
-                            name: anonymous<unknown>
+                            name: anonymous<string>
+                            aliasType: schema
                             targetSchema: *a2
                 - name: properties
                   required: true
@@ -722,7 +754,8 @@ schemas:
                     value: Feature
                     valueSchema:
                       type: alias
-                      name: anonymous<unknown>
+                      name: anonymous<string>
+                      aliasType: schema
                       targetSchema: *a2
           - name: id
             required: true
@@ -731,7 +764,8 @@ schemas:
             description: The human readable name of this place.
             schema: &a158
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               description: The human readable name of this place.
               targetSchema: *a2
           - name: place_type
@@ -740,7 +774,8 @@ schemas:
               name: anonymous<unknown>
               elementSchema: &a15
                 type: alias
-                name: anonymous<unknown>
+                name: anonymous<string>
+                aliasType: schema
                 targetSchema: *a2
               sealed: true
               values:
@@ -784,7 +819,8 @@ schemas:
             required: true
             schema: &a160
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               description: The text of a poll choice.
               targetSchema: *a2
           - name: position
@@ -792,7 +828,8 @@ schemas:
             required: true
             schema: &a161
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<number>
+              aliasType: schema
               description: Position of this choice in the poll.
               targetSchema: *a8
           - name: votes
@@ -800,7 +837,8 @@ schemas:
             required: true
             schema: &a162
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<number>
+              aliasType: schema
               description: Number of users who voted for this choice.
               targetSchema: *a8
     - &a131
@@ -819,7 +857,8 @@ schemas:
             required: true
             schema: &a20
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               constraints:
                 - type: constraint
                   name: RegularExpression
@@ -831,6 +870,7 @@ schemas:
             schema: &a163
               type: alias
               name: options
+              aliasType: schema
               constraints:
                 - type: constraint
                   name: MaximumElements
@@ -845,7 +885,8 @@ schemas:
               name: anonymous<unknown>
               elementSchema: &a18
                 type: alias
-                name: anonymous<unknown>
+                name: anonymous<string>
+                aliasType: schema
                 targetSchema: *a2
               sealed: true
               values:
@@ -884,7 +925,8 @@ schemas:
                   description: Description of the context annotation domain.
                   schema: &a147
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     description: Description of the context annotation domain.
                     targetSchema: *a2
                 - name: id
@@ -892,7 +934,8 @@ schemas:
                   required: true
                   schema: &a148
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     constraints:
                       - type: constraint
                         name: RegularExpression
@@ -903,7 +946,8 @@ schemas:
                   description: Name of the context annotation domain.
                   schema: &a149
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     description: Name of the context annotation domain.
                     targetSchema: *a2
           - name: entity
@@ -917,7 +961,8 @@ schemas:
                   description: Description of the context annotation entity.
                   schema: &a150
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     description: Description of the context annotation entity.
                     targetSchema: *a2
                 - name: id
@@ -925,7 +970,8 @@ schemas:
                   required: true
                   schema: &a151
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     constraints:
                       - type: constraint
                         name: RegularExpression
@@ -936,7 +982,8 @@ schemas:
                   description: Name of the context annotation entity.
                   schema: &a152
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     description: Name of the context annotation entity.
                     targetSchema: *a2
     - &a31
@@ -958,7 +1005,8 @@ schemas:
                 required: true
                 schema: &a145
                   type: alias
-                  name: anonymous<unknown>
+                  name: anonymous<number>
+                  aliasType: schema
                   constraints:
                     - type: constraint
                       name: Minimum
@@ -970,7 +1018,8 @@ schemas:
                 required: true
                 schema: &a146
                   type: alias
-                  name: anonymous<unknown>
+                  name: anonymous<number>
+                  aliasType: schema
                   constraints:
                     - type: constraint
                       name: Minimum
@@ -1005,7 +1054,8 @@ schemas:
                 required: true
                 schema: &a169
                   type: alias
-                  name: anonymous<unknown>
+                  name: anonymous<string>
+                  aliasType: schema
                   description: The text of the Hashtag
                   targetSchema: *a2
     - &a33
@@ -1026,7 +1076,8 @@ schemas:
                 required: true
                 schema: &a44
                   type: alias
-                  name: anonymous<unknown>
+                  name: anonymous<string>
+                  aliasType: schema
                   constraints:
                     - type: constraint
                       name: RegularExpression
@@ -1046,7 +1097,8 @@ schemas:
           - name: url
             schema: &a24
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               description: A validly formatted URL.
               targetSchema: *a2
               attic:
@@ -1072,14 +1124,16 @@ schemas:
                 description: Description of the URL landing page.
                 schema: &a172
                   type: alias
-                  name: anonymous<unknown>
+                  name: anonymous<string>
+                  aliasType: schema
                   description: Description of the URL landing page.
                   targetSchema: *a2
               - name: display_url
                 description: The URL as displayed in the Twitter client.
                 schema: &a173
                   type: alias
-                  name: anonymous<unknown>
+                  name: anonymous<string>
+                  aliasType: schema
                   description: The URL as displayed in the Twitter client.
                   targetSchema: *a2
               - name: expanded_url
@@ -1088,6 +1142,7 @@ schemas:
                 schema: &a174
                   type: alias
                   name: images
+                  aliasType: schema
                   constraints:
                     - type: constraint
                       name: MinimumElements
@@ -1096,7 +1151,8 @@ schemas:
               - name: status
                 schema: &a175
                   type: alias
-                  name: anonymous<unknown>
+                  name: anonymous<number>
+                  aliasType: schema
                   constraints:
                     - type: constraint
                       name: Minimum
@@ -1110,14 +1166,16 @@ schemas:
                 description: Title of the page the URL points to.
                 schema: &a176
                   type: alias
-                  name: anonymous<unknown>
+                  name: anonymous<string>
+                  aliasType: schema
                   description: Title of the page the URL points to.
                   targetSchema: *a2
               - name: unwound_url
                 description: Fully resolved url
                 schema: &a177
                   type: alias
-                  name: anonymous<unknown>
+                  name: anonymous<string>
+                  aliasType: schema
                   description: Fully resolved url
                   targetSchema: *a2
               - name: url
@@ -1137,7 +1195,8 @@ schemas:
             required: true
             schema: &a36
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               constraints:
                 - type: constraint
                   name: RegularExpression
@@ -1155,7 +1214,8 @@ schemas:
               name: anonymous<unknown>
               elementSchema: &a26
                 type: alias
-                name: anonymous<unknown>
+                name: anonymous<string>
+                aliasType: schema
                 targetSchema: *a2
               sealed: true
               values:
@@ -1195,6 +1255,7 @@ schemas:
                   schema: &a165
                     type: alias
                     name: media_keys
+                    aliasType: schema
                     constraints:
                       - type: constraint
                         name: MinimumElements
@@ -1207,6 +1268,7 @@ schemas:
                   schema: &a166
                     type: alias
                     name: poll_ids
+                    aliasType: schema
                     constraints:
                       - type: constraint
                         name: MinimumElements
@@ -1216,7 +1278,8 @@ schemas:
           - name: author_id
             schema: &a37
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               constraints:
                 - type: constraint
                   name: RegularExpression
@@ -1231,6 +1294,7 @@ schemas:
             schema: &a167
               type: alias
               name: context_annotations
+              aliasType: schema
               constraints:
                 - type: constraint
                   name: MinimumElements
@@ -1248,6 +1312,7 @@ schemas:
                   schema: &a168
                     type: alias
                     name: cashtags
+                    aliasType: schema
                     constraints:
                       - type: constraint
                         name: MinimumElements
@@ -1257,6 +1322,7 @@ schemas:
                   schema: &a170
                     type: alias
                     name: hashtags
+                    aliasType: schema
                     constraints:
                       - type: constraint
                         name: MinimumElements
@@ -1266,6 +1332,7 @@ schemas:
                   schema: &a171
                     type: alias
                     name: mentions
+                    aliasType: schema
                     constraints:
                       - type: constraint
                         name: MinimumElements
@@ -1275,6 +1342,7 @@ schemas:
                   schema: &a178
                     type: alias
                     name: urls
+                    aliasType: schema
                     constraints:
                       - type: constraint
                         name: MinimumElements
@@ -1301,7 +1369,8 @@ schemas:
               language tag.
             schema: &a179
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               description: Language of the Tweet, if detected by Twitter. Returned as a BCP47
                 language tag.
               targetSchema: *a2
@@ -1321,14 +1390,16 @@ schemas:
                   required: true
                   schema: &a180
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<number>
+                    aliasType: schema
                     description: Number of times this Tweet has been liked.
                     targetSchema: *a8
                 - name: quote_count
                   description: Number of times this Tweet has been quoted.
                   schema: &a181
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<number>
+                    aliasType: schema
                     description: Number of times this Tweet has been quoted.
                     targetSchema: *a8
                 - name: reply_count
@@ -1336,7 +1407,8 @@ schemas:
                   required: true
                   schema: &a182
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<number>
+                    aliasType: schema
                     description: Number of times this Tweet has been replied to.
                     targetSchema: *a8
                 - name: retweet_count
@@ -1344,7 +1416,8 @@ schemas:
                   required: true
                   schema: &a183
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<number>
+                    aliasType: schema
                     description: Number of times this Tweet has been Retweeted.
                     targetSchema: *a8
           - name: referenced_tweets
@@ -1354,6 +1427,7 @@ schemas:
             schema: &a184
               type: alias
               name: referenced_tweets
+              aliasType: schema
               constraints:
                 - type: constraint
                   name: MinimumElements
@@ -1366,7 +1440,8 @@ schemas:
             description: The name of the app the user Tweeted from.
             schema: &a185
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               description: The name of the app the user Tweeted from.
               targetSchema: *a2
           - name: text
@@ -1374,7 +1449,8 @@ schemas:
             required: true
             schema: &a186
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               description: The content of the Tweet.
               targetSchema: *a2
           - name: withheld
@@ -1395,6 +1471,7 @@ schemas:
                   schema: &a187
                     type: alias
                     name: country_codes
+                    aliasType: schema
                     constraints:
                       - type: constraint
                         name: MinimumElements
@@ -1412,7 +1489,8 @@ schemas:
                     name: anonymous<unknown>
                     elementSchema: &a41
                       type: alias
-                      name: anonymous<unknown>
+                      name: anonymous<string>
+                      aliasType: schema
                       description: Indicates whether the content being withheld is the `tweet` or a
                         `user`.
                       targetSchema: *a2
@@ -1448,7 +1526,8 @@ schemas:
               the user provided one.
             schema: &a189
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               description: The text of this user's profile description (also known as bio), if
                 the user provided one.
               targetSchema: *a2
@@ -1474,6 +1553,7 @@ schemas:
                         schema:
                           type: alias
                           name: urls
+                          aliasType: schema
                           constraints:
                             - type: constraint
                               name: MinimumElements
@@ -1492,7 +1572,8 @@ schemas:
               with location queries.
             schema: &a190
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               description: The location specified in the user's profile, if the user provided
                 one. As this is a freeform value, it may not indicate a valid
                 location, but it may be fuzzily evaluated when performing
@@ -1503,7 +1584,8 @@ schemas:
             required: true
             schema: &a191
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               description: The friendly name of this user, as shown on their profile.
               targetSchema: *a2
           - name: pinned_tweet_id
@@ -1512,7 +1594,8 @@ schemas:
             description: The URL to the profile image for this user.
             schema: &a192
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               description: The URL to the profile image for this user.
               targetSchema: *a2
           - name: protected
@@ -1531,7 +1614,8 @@ schemas:
                   required: true
                   schema: &a193
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<number>
+                    aliasType: schema
                     description: Number of users who are following this user.
                     targetSchema: *a8
                 - name: following_count
@@ -1539,7 +1623,8 @@ schemas:
                   required: true
                   schema: &a194
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<number>
+                    aliasType: schema
                     description: Number of users this user is following.
                     targetSchema: *a8
                 - name: listed_count
@@ -1547,7 +1632,8 @@ schemas:
                   required: true
                   schema: &a195
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<number>
+                    aliasType: schema
                     description: The number of lists that include this user.
                     targetSchema: *a8
                 - name: tweet_count
@@ -1555,14 +1641,16 @@ schemas:
                   required: true
                   schema: &a196
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<number>
+                    aliasType: schema
                     description: The number of Tweets (including Retweets) posted by this user.
                     targetSchema: *a8
           - name: url
             description: The URL specified in the user's profile.
             schema: &a197
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<string>
+              aliasType: schema
               description: The URL specified in the user's profile.
               targetSchema: *a2
           - name: username
@@ -1584,6 +1672,7 @@ schemas:
                   schema:
                     type: alias
                     name: country_codes
+                    aliasType: schema
                     constraints:
                       - type: constraint
                         name: MinimumElements
@@ -1604,7 +1693,8 @@ schemas:
                     value: user
                     valueSchema: &a198
                       type: alias
-                      name: anonymous<unknown>
+                      name: anonymous<string>
+                      aliasType: schema
                       description: Indicates that the content being withheld is a `user`.
                       targetSchema: *a2
         attic:
@@ -1635,6 +1725,7 @@ schemas:
             schema:
               type: alias
               name: anonymous<dictionary>
+              aliasType: schema
               targetSchema: *a46
     - &a51
       type: any
@@ -1678,7 +1769,8 @@ schemas:
                   value: about:blank
                   valueSchema:
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
           - &a136
             type: object
@@ -1696,7 +1788,8 @@ schemas:
                   value: https://api.twitter.com/labs/2/problems/invalid-request
                   valueSchema:
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
           - &a99
             type: object
@@ -1712,7 +1805,8 @@ schemas:
                   name: anonymous<unknown>
                   elementSchema: &a49
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
                   sealed: true
                   values:
@@ -1733,7 +1827,8 @@ schemas:
                   value: https://api.twitter.com/labs/2/problems/client-forbidden
                   valueSchema:
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
           - &a139
             type: object
@@ -1747,7 +1842,8 @@ schemas:
                 required: true
                 schema: &a200
                   type: alias
-                  name: anonymous<unknown>
+                  name: anonymous<string>
+                  aliasType: schema
                   constraints:
                     - type: constraint
                       name: MinLength
@@ -1760,7 +1856,8 @@ schemas:
                   name: anonymous<unknown>
                   elementSchema: &a50
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
                   sealed: true
                   values:
@@ -1779,7 +1876,8 @@ schemas:
                   value: https://api.twitter.com/labs/2/problems/resource-not-found
                   valueSchema:
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
               - name: value
                 description: Value will match the schema of the field.
@@ -1804,7 +1902,8 @@ schemas:
                   value: tweet
                   valueSchema:
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
               - name: section
                 required: true
@@ -1813,7 +1912,8 @@ schemas:
                   name: anonymous<unknown>
                   elementSchema: &a52
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
                   sealed: true
                   values:
@@ -1832,7 +1932,8 @@ schemas:
                   value: https://api.twitter.com/labs/2/problems/not-authorized-for-resource
                   valueSchema:
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
           - &a103
             type: object
@@ -1853,7 +1954,8 @@ schemas:
                   value: tweet
                   valueSchema:
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
               - name: section
                 required: true
@@ -1862,7 +1964,8 @@ schemas:
                   name: anonymous<unknown>
                   elementSchema: &a53
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
                   sealed: true
                   values:
@@ -1881,7 +1984,8 @@ schemas:
                   value: https://api.twitter.com/labs/2/problems/disallowed-resource
                   valueSchema:
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
           - &a137
             type: object
@@ -1898,7 +2002,8 @@ schemas:
                   value: https://api.twitter.com/labs/2/problems/unsupported-authentication
                   valueSchema:
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
           - &a138
             type: object
@@ -1913,7 +2018,8 @@ schemas:
                   name: anonymous<unknown>
                   elementSchema: &a54
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
                   sealed: true
                   values:
@@ -1931,7 +2037,8 @@ schemas:
                   name: anonymous<unknown>
                   elementSchema: &a55
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
                   sealed: true
                   values:
@@ -1950,7 +2057,8 @@ schemas:
                   value: https://api.twitter.com/labs/2/problems/usage-capped
                   valueSchema:
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<string>
+                    aliasType: schema
                     targetSchema: *a2
     - *a56
     - *a57
@@ -2051,6 +2159,7 @@ schemas:
           schema: &a153
             type: alias
             name: media
+            aliasType: schema
             constraints:
               - type: constraint
                 name: MinimumElements
@@ -2060,6 +2169,7 @@ schemas:
           schema: &a159
             type: alias
             name: places
+            aliasType: schema
             constraints:
               - type: constraint
                 name: MinimumElements
@@ -2069,6 +2179,7 @@ schemas:
           schema: &a164
             type: alias
             name: polls
+            aliasType: schema
             constraints:
               - type: constraint
                 name: MinimumElements
@@ -2078,6 +2189,7 @@ schemas:
           schema: &a188
             type: alias
             name: tweets
+            aliasType: schema
             constraints:
               - type: constraint
                 name: MinimumElements
@@ -2087,6 +2199,7 @@ schemas:
           schema: &a199
             type: alias
             name: users
+            aliasType: schema
             constraints:
               - type: constraint
                 name: MinimumElements
@@ -2108,6 +2221,7 @@ schemas:
           schema: &a201
             type: alias
             name: errors
+            aliasType: schema
             constraints:
               - type: constraint
                 name: MinimumElements
@@ -2124,6 +2238,7 @@ schemas:
           schema:
             type: alias
             name: errors
+            aliasType: schema
             constraints:
               - type: constraint
                 name: MinimumElements
@@ -2141,6 +2256,7 @@ schemas:
           schema: &a202
             type: alias
             name: data
+            aliasType: schema
             constraints:
               - type: constraint
                 name: MinimumElements
@@ -2153,6 +2269,7 @@ schemas:
           schema:
             type: alias
             name: errors
+            aliasType: schema
             constraints:
               - type: constraint
                 name: MinimumElements
@@ -2171,7 +2288,8 @@ schemas:
           description: Most recent Tweet Id returned by search query
           schema: &a203
             type: alias
-            name: anonymous<unknown>
+            name: anonymous<string>
+            aliasType: schema
             constraints:
               - type: constraint
                 name: RegularExpression
@@ -2183,7 +2301,8 @@ schemas:
             it to the next_token parameter.
           schema: &a204
             type: alias
-            name: anonymous<unknown>
+            name: anonymous<string>
+            aliasType: schema
             description: This value is used to get the next 'page' of results by providing
               it to the next_token parameter.
             targetSchema: *a2
@@ -2191,7 +2310,8 @@ schemas:
           description: Oldest Tweet Id returned by search query
           schema: &a205
             type: alias
-            name: anonymous<unknown>
+            name: anonymous<string>
+            aliasType: schema
             constraints:
               - type: constraint
                 name: RegularExpression
@@ -2202,7 +2322,8 @@ schemas:
           description: Number of search query results
           schema: &a206
             type: alias
-            name: anonymous<unknown>
+            name: anonymous<number>
+            aliasType: schema
             description: Number of search query results
             targetSchema: *a104
     - type: object
@@ -2212,6 +2333,7 @@ schemas:
           schema:
             type: alias
             name: data
+            aliasType: schema
             constraints:
               - type: constraint
                 name: MinimumElements
@@ -2224,6 +2346,7 @@ schemas:
           schema:
             type: alias
             name: errors
+            aliasType: schema
             constraints:
               - type: constraint
                 name: MinimumElements
@@ -2243,6 +2366,7 @@ schemas:
           schema: &a207
             type: alias
             name: data
+            aliasType: schema
             constraints:
               - type: constraint
                 name: MinimumElements
@@ -2255,6 +2379,7 @@ schemas:
           schema:
             type: alias
             name: errors
+            aliasType: schema
             constraints:
               - type: constraint
                 name: MinimumElements

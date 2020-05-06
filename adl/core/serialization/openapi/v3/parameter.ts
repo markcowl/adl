@@ -1,13 +1,10 @@
 import { values } from '@azure-tools/linq';
-import { unzip, v3, isReference } from '@azure-tools/openapi';
-import { Element } from '../../../model/element';
-import { Context, ItemsOf } from './serializer';
-import { Parameter, PathParameter, CookieParameter, RenderStyle, QueryParameter, HeaderParameter } from '../../../model/http/protocol';
-import { processInline } from './schema';
-
+import { unzip, v3 } from '@azure-tools/openapi';
 import { use, valueOf } from '@azure-tools/sourcemap';
-
-const { hasSchema } = v3;
+import { Element } from '../../../model/element';
+import { CookieParameter, HeaderParameter, Parameter, PathParameter, QueryParameter, RenderStyle } from '../../../model/http/parameter';
+import { processInline } from './schema';
+import { Context, ItemsOf } from './serializer';
 
 
 export async function processParameters(input: ItemsOf<v3.Parameter>, $: Context): Promise<Element | undefined> {
@@ -78,12 +75,14 @@ export async function processCookieParameter(parameter: v3.CookieParameter, $: C
     parameter.explode === undefined ? true : parameter.explode, {
       description: parameter.description,
       required: parameter.required
-    });
+    }
+  );
   result.addToAttic('example', parameter.example);
 
   $.api.http.parameters.push(result);
   return result;
 }
+
 export async function processQueryParameter(parameter: v3.QueryParameter, $: Context, options?: { isAnonymous?: boolean }): Promise<Parameter | undefined> {
   const schema = await processInline(parameter.schema, $) || $.api.schemas.Any;
   const renderStyle = <any><unknown>parameter.style || RenderStyle.Form;

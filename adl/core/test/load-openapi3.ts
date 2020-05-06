@@ -28,6 +28,11 @@ async function checkAttic(api: ApiModel, errors: Errors, atticOutput: string) {
 
     errors.check(() => equal(attic.components?.schemas, undefined, 'Should not have components/schemas section left in attic'));
     errors.check(() => equal(attic.components?.parameters, undefined, 'Should not have components/parameters section left in attic'));
+    errors.check(() => equal(attic.components?.requestBodies, undefined, 'Should not have components/requestBodies section left in attic'));
+    errors.check(() => equal(attic.components?.headers, undefined, 'Should not have components/headers section left in attic'));
+    errors.check(() => equal(attic.components?.responses, undefined, 'Should not have components/responses section left in attic'));
+    
+    errors.check(() => equal(attic.components, undefined, 'Should not have components section left in attic'));
 
     await writeFile(atticOutput, serialize(api.attic.valueOf()));
     delete api.attic;

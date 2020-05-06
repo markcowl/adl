@@ -1,7 +1,6 @@
 import { Element } from '../element';
 import { Schema } from '../schema';
 
-
 export class Header extends Element {
   // the header name in container. might not be unique in parent? 
   name!: string;

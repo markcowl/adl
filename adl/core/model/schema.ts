@@ -1,5 +1,5 @@
-import { Element, ElementArray } from './element';
 import { anonymous } from '@azure-tools/sourcemap';
+import { Element, ElementArray } from './element';
 
 export class Schema extends Element {
   anonymous?: boolean;
@@ -235,10 +235,11 @@ export class ServerDefaultValue extends Schema {
 
 
 export class Alias extends Schema {
+  aliasType = 'schema';
   constraints = new ElementArray<Constraint>();
   defaults = new ElementArray<Default>();
   // 
-  constructor(public targetSchema: Schema, initializer?: Partial<Alias>) {
+  constructor(public name: SchemaName, public targetSchema: Schema, initializer?: Partial<Alias>) {
     super('alias');
     this.initialize(initializer);
   }

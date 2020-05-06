@@ -1,13 +1,10 @@
-import { v3, isVendorExtension, JsonReference, VendorExtensions, ExternalDocumentation, vendorExtensions, unzip, Tag } from '@azure-tools/openapi';
-import { Header } from '../../../model/http/header';
-
-import { isReference } from '@azure-tools/openapi';
-import { Context, ItemsOf } from './serializer';
-import { values, items, length } from '@azure-tools/linq';
-
+import { values } from '@azure-tools/linq';
+import { unzip, v3 } from '@azure-tools/openapi';
+import { anonymous, nameOf, refTo, use } from '@azure-tools/sourcemap';
 import { Element } from '../../../model/element';
-import { processSchemaReference, processSchema } from './schema';
-import { anonymous, use, using, nameOf, refTo } from '@azure-tools/sourcemap';
+import { Header } from '../../../model/http/header';
+import { processInline } from './schema';
+import { Context, ItemsOf } from './serializer';
 
 const { hasSchema } = v3;
 
@@ -31,46 +28,33 @@ export async function processHeaders(input: ItemsOf<v3.Header>, $: Context): Pro
   }
 
   // handle actual items next
-  for (const { key, value: header } of values(headers)) {
-    await $.process(processHeader, header);
+  for (const { key, value } of values(headers)) {
+    await $.process(header, value);
   }
 
   // handle references last 
-  for (const { key, value: reference } of values(references)) {
-    await $.process(processHeaderReference, reference);
+  for (const { key, value } of values(references)) {
+    await $.processInline(header, value, {});
   }
 
   return undefined;
 }
 
-async function processHeaderReference(headerReference: v3.HeaderReference, $: Context, options?: { isAnonymous?: boolean }): Promise<Header | undefined> {
-  return undefined;
-}
-
-export async function processHeader(header: v3.Header, $: Context, options?: { isAnonymous?: boolean }): Promise<Header | undefined> {
+export async function header(header: v3.Header, $: Context, options?: { isAnonymous?: boolean }): Promise<Header | undefined> {
   const { api, visitor } = $;
-  const key = options?.isAnonymous ? anonymous('header') : nameOf(header);
-
+  const name = options?.isAnonymous ? anonymous('header') : nameOf(header);
 
   // these are in the OAI schema, but should not be in headers - freakout if they are used
   use(header.explode) && $.error('header definitions must not contain property \'explode\'', header.explode);
   use(header.required) && $.warn('header definitions should not contain property \'required\'', header.required);
 
   // get the schema for the header 
-  const schema = hasSchema(header) ?
-    isReference(header.schema) ?
-      // they have used a $ref to a schema - resolve that.
-      // await process(processReference, header.schema)
-      await $.process(processSchemaReference, header.schema, { isAnonymous: true }) :
-      // an inlined schema --process that first
-      await $.process(processSchema, header.schema, { isAnonymous: true }) :
-    // nope, no schema.
-    undefined;
+  const schema = await processInline(header.schema,$,{isAnonymous: true}); 
 
   // create the http header object and track it. 
   const httpHeader = new Header({
     // maintain the key
-    name: key.toString(),
+    name: name.toString(),
     // use the schema
     schema,
     // set a specific value 

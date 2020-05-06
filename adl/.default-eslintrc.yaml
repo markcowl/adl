@@ -41,6 +41,9 @@ rules:
   - warn
   - 2
   - SwitchCase : 1
+    ObjectExpression: first
+   
+    
   "@typescript-eslint/indent":
   - 0
   - 2

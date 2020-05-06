@@ -1,16 +1,13 @@
 import { v3 } from '@azure-tools/openapi';
-import { Context } from './serializer';
 import { Element } from '../../../model/element';
-
-import { processSchemas } from './schema';
-import { processCallbacks } from './callback';
-import { processExamples } from './example';
-import { processLinks } from './link';
+import { processHeaders } from './header';
 import { processParameters } from './parameter';
 import { processRequestBodies } from './request-body';
 import { processResponses } from './response';
+import { processSchemas } from './schema';
 import { processSecuritySchemes } from './security-schemes';
-import { processHeaders } from './header';
+import { Context } from './serializer';
+
 const { vendorExtensions } = v3;
 
 export async function processComponents(components: v3.Components, $: Context): Promise<Element | undefined> {
@@ -30,10 +27,10 @@ export async function processComponents(components: v3.Components, $: Context): 
 
   await $.process(processSecuritySchemes, components.securitySchemes);
 
-  await $.process(processExamples, components.examples); // send to attic 
-
-  await $.process(processCallbacks, components.callbacks);  // ok skip
-  await $.process(processLinks, components.links); // ok skip
+  // await $.process(processExamples, components.examples); // send to attic 
+  
+  // await $.process(processCallbacks, components.callbacks);  // ok skip
+  // await $.process(processLinks, components.links); // ok skip
 
 
   return undefined;
