@@ -64,9 +64,6 @@ function commonProperties(schema: v3.Schema) {
   };
 }
 
-//export async function processInline(schema: v3.Schema | v3.SchemaReference | undefined, $: Context, options?: Options) {
-//  return schema ? $.processPossibleReference(processSchemaReference, processSchema, use(schema), { ...options, isAnonymous: true }) : undefined;
-// }
 export async function processInline(schema: v3.Schema | v3.SchemaReference | undefined, $: Context, options?: Options): Promise<Schema|undefined> {
   if( schema ) {
     const result =await $.processInline(processSchema, schema, options);

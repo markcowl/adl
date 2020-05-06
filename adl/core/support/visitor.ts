@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
 import { items, keys, length, values } from '@azure-tools/linq';
-import { common, Dictionary, Info, isReference, JsonReference } from '@azure-tools/openapi';
+import { common, Dictionary, Info, isReference } from '@azure-tools/openapi';
 import { anonymous, getSourceFile, isAnonymous, isUsed, nameOf, Path, refTo, TrackedSource, TrackedTarget, Tracker, use, using, valueOf } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
 import { parse } from 'yaml';
@@ -314,11 +314,6 @@ export class Context<TSourceModel extends OAIModel> {
     };
   }
 
-  async processRefTarget<Tin, Tout extends Element, TOptions extends Options = {}>(ref: JsonReference<Tin>, action: fnAction<TSourceModel, Tin, Tout>, options?: TOptions): Promise<Tout> {
-    const { $ref, file, path } = this.normalizeReference(ref.$ref);
-    use(ref.$ref);
-    return <Tout>this.visitor.$refs.get($ref) || <Tout>await this.visitor.processRef(file, path, action);
-  }
   async processInline<TIn, TOut extends Element, TOptions extends Options = {}>(action: fnAction<TSourceModel, TIn, TOut>, value: TIn | common.JsonReference<TIn> | undefined, options?: TOptions): Promise<TOut | Alias<TOut> | undefined>{
     if (value !== undefined) {
       if (isReference(value)) {
@@ -350,22 +345,6 @@ export class Context<TSourceModel extends OAIModel> {
       return await this.process(action, <TIn>value, { ...options, isAnonymous: true });
     }
     return undefined;
-  }
-
-  async processPossibleReference<TInput, TOutput extends Element, TOptions = {}>(
-    refAction: fnAction<TSourceModel, JsonReference<TInput>, TOutput>,
-    action: fnAction<TSourceModel, TInput, TOutput>,
-    value?: TInput | JsonReference<TInput> | NonNullable<TInput>, options?: TOptions): Promise<TOutput | undefined> {
-
-    if (value !== undefined) {
-      return (isReference(value) ?
-        // they have used a $ref to a schema - resolve that.
-        await this.process(refAction, value, options) :
-        // an inlined schema --process that first
-        await this.process(action, <TInput>value, { ...options, isAnonymous: true }));
-    }
-    return undefined;
-
   }
 }
 
