@@ -74,10 +74,8 @@ export class Metadata extends Element {
   /** a collection of reference information regarding the API  */
   references = new ElementArray<Reference>();
 
-
   constructor(public name: string, initializer?: Partial<Metadata>) {
     super();
     this.initialize(initializer);
   }
-
 }

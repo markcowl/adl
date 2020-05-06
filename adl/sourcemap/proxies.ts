@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
 import { Path, Tracker } from './exports';
 import { items, values } from '@azure-tools/linq';
 
-/* eslint-disable */
+
+// eslint-disable-next-line no-prototype-builtins
 if (!Array.prototype.hasOwnProperty('last')) {
   Object.defineProperty(Array.prototype, 'last', {
     get() {
@@ -45,7 +45,7 @@ export function use<T>(value: T, recursive = false): T {
 
     if (recursive && typeof valueOf(value) === 'object') {
       for (const each of values(<any>value)) {
-        use(each, true)
+        use(each, true);
       }
     }
   }
@@ -290,7 +290,7 @@ export class TrackedSource<T extends Object, instanceType> {
 
       case 'string':
       case 'boolean':
-      case 'number':
+      case 'number': {
         // primitives.
         // track the child in the tracked children
         // so that the object is consistent
@@ -299,11 +299,12 @@ export class TrackedSource<T extends Object, instanceType> {
           tc[property] = TrackedSource.track(new Object(value), value, { ...this.origin, path: location }, this);
         }
         return tc[property];
+      }
 
       case 'object':
         return TrackedSource.track(value, value, { ...this.origin, path: location }, this);
     }
-    throw new Error('Should not get to here. ')
+    throw new Error('Should not get to here. ');
   }
 }
 
@@ -332,7 +333,6 @@ export class TrackedTarget<T extends Object> {
       case SpecialProperties.ActualValue:
       case SpecialProperties.Tracker:
       case SpecialProperties.Destination:
-      case SpecialProperties.OnAdd:
         return true;
     }
     return property in actual;
@@ -347,7 +347,7 @@ export class TrackedTarget<T extends Object> {
       // if the tracker is set, then we have a path all the way from the root of the target model 
       // to the location that this property is being set.
       if (this.origin) {
-        tracker.add(pathInTarget, this.origin)
+        tracker.add(pathInTarget, this.origin);
       }
 
       // we should recursively call onAdd on the children from here
@@ -509,3 +509,4 @@ export class TrackedTarget<T extends Object> {
     return true;
   }
 }
+

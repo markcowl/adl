@@ -1,12 +1,13 @@
 import { keys } from '@azure-tools/linq';
+import { isAnonymous } from '@azure-tools/sourcemap';
 import { AST, CST, Document, stringify } from 'yaml';
 import { Schema, YAMLMap } from 'yaml/types';
 import { parseMap } from 'yaml/util';
 import { Element } from '../model/element';
 
 const propertyPriority = [
-  'name',
   'type',
+  'name',
 
   'primitives',
 ];
@@ -72,9 +73,14 @@ export const elementTag = <Schema.CustomTag>{
 
     for (const key of keys(value).toArray().sort(sortWithPriorty)) {
 
-      const v = value[<any>key];
-      if (v === undefined || v === null || typeof v === 'function') {
+      let v = value[<any>key];
+      // don't serialize undefined/null/''/functions
+      if (v === undefined || v === null || typeof v === 'function' || v === '') {
         continue;
+      }
+
+      if (isAnonymous(v)) {
+        v = v.name;
       }
 
       switch (key) {
@@ -107,5 +113,6 @@ export const elementTag = <Schema.CustomTag>{
 };
 
 export function serialize(instance: any) {
-  return stringify(instance, { customTags: [elementTag] });
+  return stringify(instance, { customTags: [elementTag] }).
+    replace(/:$\s*(&a\d*)/gm, ': $1'); // put anchor on declaration line. 
 }

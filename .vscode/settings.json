@@ -55,20 +55,32 @@
   "eslint.workingDirectories": [
     {
       "changeProcessCWD": true,
-      "directory": "./adl",
+      "directory": "./adl/core",
     },
     {
       "changeProcessCWD": true,
-      "directory": "./adl.types",
+      "directory": "./adl/cli",
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./adl/sourcemap",
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./adl/visitor",
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./adl/openapi",
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./adl/adl.types",
     }
   ],
   "git.ignoreLimitWarning": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-  "[typescriptreact]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": false
-    }
+    "source.fixAll.eslint": true,
+    "source.organizeImports": true
   },
 }
