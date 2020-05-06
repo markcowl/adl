@@ -1,6 +1,7 @@
 import { Origin } from './proxies';
 
-export interface anonymous extends Anonymous { };
+// eslint-disable-next-line @typescript-eslint/class-name-casing
+export interface anonymous extends Anonymous { }
 
 class Anonymous {
   constructor(protected anonymous: string) {

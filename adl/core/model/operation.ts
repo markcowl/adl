@@ -9,7 +9,6 @@ export class Response extends Element {
 }
 
 
-
 export class Parameter extends Element {
   /**
    * extended description of the schema
