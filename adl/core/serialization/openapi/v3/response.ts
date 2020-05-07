@@ -23,7 +23,6 @@ export async function *response(response: v3.Response, $: Context, options?: { i
       }
     }
     return yield addExtensionsToAttic( result, response);
-    
   }
   
   for (const { key: mediaType, value: type } of items(response.content)) {
@@ -40,6 +39,8 @@ export async function *response(response: v3.Response, $: Context, options?: { i
       
     // example data we can figure out later.
     result.addToAttic('example', type.example);
+    // example data we can figure out later.
+    result.addToAttic('examples', (<any>type).examples);
 
     // encoding information not necessary yet... 
     result.addToAttic('encoding', type.encoding);

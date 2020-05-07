@@ -48,6 +48,8 @@ export async function *operation(path: string, operation: v3.Operation, shared: 
     tags: [...operation.tags || []]
   });
 
+  $.addVersionInfo(result,operation);
+
   // OAI3 parameters are all in the operation
   for( const p of values(shared.parameters).concat(values(operation.parameters)) ) {
     // create each parameter in the operation 

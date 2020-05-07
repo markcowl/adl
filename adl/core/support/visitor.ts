@@ -317,8 +317,18 @@ export class Context<TSourceModel extends OAIModel> {
     }
   }
 
-  addVersionInfo( value: any, result: any ) {
+  addVersionInfo( result: any, value: any ) {
     // 
+    if (result.versionInfo.length === 0) {
+      // only add this if we haven't added it before
+      // when a result is returned up the chain more than once
+      result.versionInfo.push(new VersionInfo({
+        // deprecated isn't on everything, but this is safe when it's not there
+        deprecated: use((<any>value).deprecated) ? this.apiVersion : undefined,
+        added: this.apiVersion,
+      }));
+      result.addInternalData(this.visitor.inputType, { preferredFile: getSourceFile(value) });
+    }
   }
 
   async *processInline<TIn, TOut extends Element, TOptions extends Options = Options>(action: fnAction<TSourceModel, TIn, TOut,TOptions>, value: TIn | common.JsonReference<TIn> | undefined, options?: TOptions): AsyncGenerator<TOut|Alias<TOut>> {

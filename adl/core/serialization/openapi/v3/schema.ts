@@ -369,6 +369,7 @@ function addAliasWithDefault(schema: v3.Schema, resultSchema: Schema, $: Context
     const alias = new Alias(anonymous('?'),resultSchema, commonProperties(schema));
     alias.defaults.push(new ServerDefaultValue(schema.default));
     $.api.schemas.aliases.push(alias);
+    use( schema.default, true);
     return alias;
   }
   return resultSchema;
@@ -567,6 +568,7 @@ export async function *processArraySchema(schema: v3.Schema, $: Context, options
 
   if (schema.default) {
     alias.defaults.push(new ServerDefaultValue(schema.default));
+    use(schema.default, true); // default can be more than a primitive value
   }
 
   if (schema.maxItems !== undefined) {
@@ -578,7 +580,7 @@ export async function *processArraySchema(schema: v3.Schema, $: Context, options
   if (schema.uniqueItems !== undefined) {
     alias.constraints.push(new UniqueElementsConstraint(schema.uniqueItems));
   }
-
+  
   $.api.schemas.aliases.push(alias);
 
   return yield alias;
