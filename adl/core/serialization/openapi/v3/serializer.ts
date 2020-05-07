@@ -44,21 +44,21 @@ async function processRoot(oai3: v3.Model, $: Context) {
   }
 
   // openapi3 info
-  $.api.metaData = await firstOrDefault( $.process2(processInfo, oai3.info)) || $.api.metaData;
+  $.api.metaData = await firstOrDefault( $.process(processInfo, oai3.info)) || $.api.metaData;
   
   // extnernal docs are just a kind of reference
-  for await (const reference of $.process2(processExternalDocs, oai3.externalDocs)) {
+  for await (const reference of $.process(processExternalDocs, oai3.externalDocs)) {
     $.api.metaData.references.push(reference);
   }
   
-  for await( const reference of  $.processArray2(processTag, oai3.tags) ) {
+  for await( const reference of  $.processArray(processTag, oai3.tags) ) {
     $.api.metaData.references.push(reference);
   }
 
   // components will have to be early, since other things will $ref them 
-  await consume($.process2(processComponents, oai3.components));
+  await consume($.process(processComponents, oai3.components));
 
-  for await( const server of $.processArray2(processServer, oai3.servers)  ) {
+  for await( const server of $.processArray(processServer, oai3.servers)  ) {
     $.api.http.connections.push( server);
   }
   

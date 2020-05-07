@@ -1,5 +1,5 @@
 import { anonymous } from '@azure-tools/sourcemap';
-import { Element, ElementArray } from './element';
+import { Element } from './element';
 import { Identity } from './name';
 
 export class Schema extends Element {
@@ -66,7 +66,7 @@ export class Property extends Element {
 
 export class ObjectSchema extends Schema {
   /** the collection of properties that are in this object */
-  properties = new ElementArray<Property>();
+  properties = new Array<Property>();
 
   /**  maximum number of properties permitted */
   maxProperties?: number;
@@ -75,7 +75,7 @@ export class ObjectSchema extends Schema {
   minProperties?: number;
 
   /** schemas that this object extends */
-  extends = new ElementArray<Schema>();
+  extends = new Array<Schema>();
 
   constructor(public name: string, initializer?: Partial<ObjectSchema>) {
     super('object');
@@ -91,7 +91,7 @@ export class Constant extends Schema {
 }
 
 export class Enum extends Schema {
-  values = new ElementArray<Constant>();
+  values = new Array<Constant>();
   sealed = true;
 
   constructor(public elementSchema: Schema, initializer?: Partial<Enum>) {
@@ -235,8 +235,8 @@ export class ServerDefaultValue extends Schema {
 
 export class Alias extends Schema {
   aliasType = 'schema';
-  constraints = new ElementArray<Constraint>();
-  defaults = new ElementArray<Default>();
+  constraints = new Array<Constraint>();
+  defaults = new Array<Default>();
   // 
   constructor(public name: Identity, public targetSchema: Schema, initializer?: Partial<Alias>) {
     super('alias');
@@ -482,12 +482,12 @@ export class Schemas extends Element {
     return this.#file || (this.addPrimitive(this.#file = new FilePrimitive()));
   }
 
-  objects = new ElementArray<ObjectSchema>();
-  combinations = new ElementArray<AndSchema | XorSchema | AnyOfSchema>();
-  constants = new ElementArray<Constant>();
-  enums = new ElementArray<Enum>();
-  constraints = new ElementArray<Constraint>();
-  defaults = new ElementArray<Default>();
-  aliases = new ElementArray<Alias>();
-  primitives = new ElementArray<Primitive>();
+  objects = new Array<ObjectSchema>();
+  combinations = new Array<AndSchema | XorSchema | AnyOfSchema>();
+  constants = new Array<Constant>();
+  enums = new Array<Enum>();
+  constraints = new Array<Constraint>();
+  defaults = new Array<Default>();
+  aliases = new Array<Alias>();
+  primitives = new Array<Primitive>();
 }

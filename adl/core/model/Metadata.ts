@@ -1,5 +1,5 @@
 import { Contact } from './contact';
-import { Element, ElementArray } from './element';
+import { Element } from './element';
 import { License } from './license';
 import { Reference } from './Reference';
 
@@ -16,13 +16,13 @@ export class Metadata extends Element {
   termsOfService?: string;
 
   /** a collection of contacts responsible for the API  */
-  contacts = new ElementArray<Contact>();
+  contacts = new Array<Contact>();
 
   /** a collection of contacts responsible for the API  */
-  licenses = new ElementArray<License>();
+  licenses = new Array<License>();
 
   /** a collection of reference information regarding the API  */
-  references = new ElementArray<Reference>();
+  references = new Array<Reference>();
 
   constructor(public name: string, initializer?: Partial<Metadata>) {
     super();

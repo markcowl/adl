@@ -1,5 +1,5 @@
 import { Alias } from '../alias';
-import { Element, ElementArray } from '../element';
+import { Element } from '../element';
 import { Header } from './header';
 import { Operation } from './operation';
 import { Parameter } from './parameter';
@@ -104,7 +104,7 @@ export abstract class OAuth2Flow extends Element {
   refreshUrl?: string;
 
   /** The available scopes for the OAuth2 authentication. */
-  scopes = new ElementArray<OAuth2Scope>();
+  scopes = new Array<OAuth2Scope>();
 }
 
 export class ClientCredentialsOAuth2Flow extends OAuth2Flow {
@@ -157,7 +157,7 @@ export class OAuth2Scope extends Element {
 
 export class Connection extends Element {
   description?: string;
-  variables = new ElementArray<ConnectionVariable>();
+  variables = new Array<ConnectionVariable>();
 
   constructor(public url: string, initializer?: Partial<Connection>) {
     super();
@@ -189,11 +189,11 @@ export class ConnectionVariable extends Element {
 }
 
 export class HttpProtocol extends Element {
-  headers = new ElementArray<Header|Alias<Header>>();
-  authentications = new ElementArray<Authentication|Alias<Authentication>>();
-  connections = new ElementArray<Connection | Alias<Authentication>>();
-  operations = new ElementArray<Operation|Alias<Operation>>();
-  requests = new ElementArray<Request | Alias<Request>>();
-  responses = new ElementArray<Response| Alias<Response>>();
-  parameters = new ElementArray<Parameter|Alias<Parameter>>();
+  headers = new Array<Header|Alias<Header>>();
+  authentications = new Array<Authentication|Alias<Authentication>>();
+  connections = new Array<Connection | Alias<Authentication>>();
+  operations = new Array<Operation|Alias<Operation>>();
+  requests = new Array<Request | Alias<Request>>();
+  responses = new Array<Response| Alias<Response>>();
+  parameters = new Array<Parameter|Alias<Parameter>>();
 }

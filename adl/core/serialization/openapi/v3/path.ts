@@ -52,14 +52,14 @@ export async function *operation(path: string, operation: v3.Operation, shared: 
   for( const p of values(shared.parameters).concat(values(operation.parameters)) ) {
     // create each parameter in the operation 
     if( p) {
-      for await (const each of $.processInline2(parameter, p)) {
+      for await (const each of $.processInline(parameter, p)) {
         result.parameters.push(each);
       }
     }
   }
 
   // request body
-  for await ( const request of $.processInline2(requestBody, operation.requestBody, {isAnonymous: true}) ) {
+  for await ( const request of $.processInline(requestBody, operation.requestBody, {isAnonymous: true}) ) {
     // each request body.
     result.requests.push( request);
   }

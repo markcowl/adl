@@ -18,7 +18,7 @@ export async function *response(response: v3.Response, $: Context, options?: { i
     });
 
     for (const value of values(response.headers)) {
-      for await (const h of $.processInline2(header, value)) {
+      for await (const h of $.processInline(header, value)) {
         result.headers.push(h);
       }
     }
@@ -33,7 +33,7 @@ export async function *response(response: v3.Response, $: Context, options?: { i
     });
 
     for (const value of values(response.headers)) {
-      for await (const h of $.processInline2(header, value)) {
+      for await (const h of $.processInline(header, value)) {
         result.headers.push(h);
       }
     }

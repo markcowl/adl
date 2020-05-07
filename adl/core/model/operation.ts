@@ -1,5 +1,5 @@
 import { Alias } from './alias';
-import { Element, ElementArray } from './element';
+import { Element } from './element';
 import { Schema } from './schema';
 
 export class Operation extends Element {
@@ -11,13 +11,13 @@ export class Operation extends Element {
   description?: string;
 
   /** parameters common to all the requests(overloads) for this operation */
-  parameters = new ElementArray<Parameter|Alias<Parameter>>();
+  parameters = new Array<Parameter|Alias<Parameter>>();
 
   /** possible requests that can be made for this operation (ie, overloads)  */
-  requests = new ElementArray<Request>();
+  requests = new Array<Request>();
   
   /** possible outputs from this operation */
-  responses = new ElementArray<Response | Alias<Response>>();
+  responses = new Array<Response | Alias<Response>>();
 
 
   /**

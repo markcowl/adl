@@ -41,7 +41,7 @@ export async function *processInfo(info: v3.Info, $: Context): AsyncGenerator<Me
 
   // add the author contact
   if (is(info.contact)) {
-    for await (const c of $.process2(processContact, info.contact)) {
+    for await (const c of $.process(processContact, info.contact)) {
       metadata.contacts.push(c)  ;
     }
     //metadata.contacts.push(await $.process2(processContact, info.contact));
@@ -49,7 +49,7 @@ export async function *processInfo(info: v3.Info, $: Context): AsyncGenerator<Me
 
   // add license
   if (is(info.license)) {
-    for await (const l of $.process2(processLicense, info.license) ) {
+    for await (const l of $.process(processLicense, info.license) ) {
       metadata.licenses.push(l);
     }
     //metadata.licenses.push(await $.process(processLicense, info.license));

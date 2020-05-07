@@ -1,5 +1,4 @@
 import { Alias } from '../alias';
-import { ElementArray } from '../element';
 import * as base from '../operation';
 import { Reference } from '../Reference';
 import { Parameter } from './parameter';
@@ -14,16 +13,16 @@ export class Operation extends base.Operation {
   id?: string;
 
   /** parameters common to all the requests(overloads) for this operation */
-  parameters = new ElementArray<Parameter|Alias<Parameter>>();
+  parameters = new Array<Parameter|Alias<Parameter>>();
 
   /** possible requests that can be made for this operation (ie, overloads)  */
-  requests = new ElementArray<Request|Alias<Request>>();
+  requests = new Array<Request|Alias<Request>>();
 
   /** non-error outputs from this operation */
-  responses = new ElementArray<Response | Alias<Response>>();
+  responses = new Array<Response | Alias<Response>>();
 
   /** a collection of reference information regarding the operation  */
-  references = new ElementArray<Reference>();
+  references = new Array<Reference>();
 
   /**
   * 

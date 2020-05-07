@@ -1,5 +1,4 @@
 import { Alias } from '../alias';
-import { ElementArray } from '../element';
 import { Identity } from '../name';
 import * as base from '../operation';
 //import { Payload } from './body';
@@ -12,7 +11,7 @@ export class Response extends base.Response {
    */
   description?: string;
 
-  headers = new ElementArray<Header|Alias<Header>>();
+  headers = new Array<Header|Alias<Header>>();
 
   /**
    * 

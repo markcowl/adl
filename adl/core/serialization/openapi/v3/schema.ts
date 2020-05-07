@@ -56,7 +56,7 @@ function commonProperties(schema: v3.Schema) {
 
 export async function *processInline(schema: v3.Schema | v3.SchemaReference | undefined, $: Context, options?: Options): AsyncGenerator<Schema> {
   if( schema ) {
-    for await (const result of $.processInline2(processSchema, schema, options) ) {
+    for await (const result of $.processInline(processSchema, schema, options) ) {
       if( result ) {
         if( options?.isAnonymous ) {
         // if this was anonymous, we just want back the target object 
@@ -70,7 +70,7 @@ export async function *processInline(schema: v3.Schema | v3.SchemaReference | un
 
 async function *getSchemas(schemas: Array<v3.Schema|v3.SchemaReference>|undefined, $: Context): AsyncGenerator<Schema>{
   for( const each of values(use(schemas))) {
-    for await( const schema of $.processInline2(processSchema,each, {isAnonymous:true})) {
+    for await( const schema of $.processInline(processSchema,each, {isAnonymous:true})) {
       yield schema instanceof A ? schema.target : schema;
     }
   }

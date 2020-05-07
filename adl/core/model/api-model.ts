@@ -1,5 +1,5 @@
 import { Dictionary } from '@azure-tools/linq';
-import { Element, ElementArray } from './element';
+import { Element } from './element';
 import { SerializationResult } from './format';
 import { HttpProtocol } from './http/protocol';
 import { InternalData } from './internal-data';
@@ -34,7 +34,7 @@ export class ApiModel extends Element {
 
   metaData = new Metadata('');
 
-  resources = new ElementArray<Resource>();
+  resources = new Array<Resource>();
 
   schemas = new Schemas();
 

@@ -21,7 +21,7 @@ export async function *processComponents(components: v3.Components, $: Context):
   }
 
   // definitely, schemas first, since so much will $ref them
-  await consume($.process2(processSchemas, components.schemas));
+  await consume($.process(processSchemas, components.schemas));
   
   // if there are vendor extensions in the dictionary, they should be handled like this:
   // for (const { key, value: extension } of vendorExtensions(components.headers)) {
