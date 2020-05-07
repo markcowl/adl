@@ -3,7 +3,8 @@ import { IntegerFormat, NumberFormat, StringFormat, unzip, v3, XMSEnumValue } fr
 import { anonymous, isUsed, nameOf, unusedMembers, use, using } from '@azure-tools/sourcemap';
 import { Alias as A } from '../../../model/alias';
 import { Element } from '../../../model/element';
-import { Alias, AndSchema, AnyOfSchema, ArraySchema, Constant, DictionarySchema, Enum, ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ObjectSchema, Property, RegularExpressionConstraint, Schema, SchemaName, ServerDefaultValue, UniqueElementsConstraint, XorSchema } from '../../../model/schema';
+import { Identity } from '../../../model/name';
+import { Alias, AndSchema, AnyOfSchema, ArraySchema, Constant, DictionarySchema, Enum, ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ObjectSchema, Property, RegularExpressionConstraint, Schema, ServerDefaultValue, UniqueElementsConstraint, XorSchema } from '../../../model/schema';
 import { isEnumSchema, isObjectSchema, isPrimitiveSchema } from '../common';
 import { Context, ItemsOf } from './serializer';
 
@@ -545,7 +546,7 @@ function constrainNumericSchema(schema: v3.Schema, $: Context, target: Schema): 
 
 
 export async function processArraySchema(schema: v3.Schema, $: Context, options?: Options): Promise<Schema | undefined> {
-  const schemaName = <SchemaName>(options?.isAnonymous ? anonymous('array') : nameOf(schema));
+  const schemaName = <Identity>(options?.isAnonymous ? anonymous('array') : nameOf(schema));
   // if this isn't anonymous or a property or parameter, things like descriptions belong to this declaration
   const common = (!options?.isAnonymous && !options?.isParameter && !options?.isProperty) ? commonProperties(schema) : {};
 

@@ -1,12 +1,13 @@
 import { anonymous } from '@azure-tools/sourcemap';
 import { Element, ElementArray } from './element';
+import { Identity } from './name';
 
 export class Schema extends Element {
   anonymous?: boolean;
   /** 
    * name of this schema - may be an alias or an actual string name 
    */
-  name: SchemaName;
+  name: Identity;
 
   /**
    * short description of the schema
@@ -82,8 +83,6 @@ export class ObjectSchema extends Schema {
   }
 }
 
-export type SchemaName = string | anonymous;
-
 export class Constant extends Schema {
   constructor(public valueSchema: Schema, public value: any, initializer?: Partial<Constant>) {
     super('constant');
@@ -102,7 +101,7 @@ export class Enum extends Schema {
 }
 
 export class Constraint extends Schema {
-  constructor(public name: SchemaName, initializer?: Partial<Constraint>) {
+  constructor(public name: Identity, initializer?: Partial<Constraint>) {
     super('constraint');
     this.initialize(initializer);
   }
@@ -198,21 +197,21 @@ export class MaximumPropertiesConstraint extends Constraint {
 }
 
 export class AnyOfSchema extends Schema {
-  constructor(public name: SchemaName, public oneOrMoreOf: Array<Schema>, initializer?: Partial<AnyOfSchema>) {
+  constructor(public name: Identity, public oneOrMoreOf: Array<Schema>, initializer?: Partial<AnyOfSchema>) {
     super('AnyOf');
     this.initialize(initializer);
   }
 }
 
 export class AndSchema extends Schema {
-  constructor(public name: SchemaName, public allOf: Array<Schema>, initializer?: Partial<AndSchema>) {
+  constructor(public name: Identity, public allOf: Array<Schema>, initializer?: Partial<AndSchema>) {
     super('And');
     this.initialize(initializer);
   }
 }
 
 export class XorSchema extends Schema {
-  constructor(public name: SchemaName, public oneOf: Array<Schema>, initializer?: Partial<XorSchema>) {
+  constructor(public name: Identity, public oneOf: Array<Schema>, initializer?: Partial<XorSchema>) {
     super('Xor');
     this.initialize(initializer);
   }
@@ -220,7 +219,7 @@ export class XorSchema extends Schema {
 
 
 export class Default extends Schema {
-  constructor(public name: SchemaName, initializer?: Partial<Default>) {
+  constructor(public name: Identity, initializer?: Partial<Default>) {
     super('default');
     this.initialize(initializer);
   }
@@ -239,7 +238,7 @@ export class Alias extends Schema {
   constraints = new ElementArray<Constraint>();
   defaults = new ElementArray<Default>();
   // 
-  constructor(public name: SchemaName, public targetSchema: Schema, initializer?: Partial<Alias>) {
+  constructor(public name: Identity, public targetSchema: Schema, initializer?: Partial<Alias>) {
     super('alias');
     this.initialize(initializer);
   }

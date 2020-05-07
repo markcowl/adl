@@ -6,6 +6,7 @@ import { Operation } from '../../../model/http/operation';
 import { addExtensionsToAttic } from '../common';
 import { processExternalDocs } from './info';
 import { processParameter } from './parameter';
+import { requestBody } from './request-body';
 import { Context, ItemsOf } from './serializer';
 
 export async function processPaths(input: ItemsOf<v3.PathItem>, $: Context): Promise<Element | undefined> {
@@ -60,7 +61,7 @@ export async function operation(path: string, operation: v3.Operation, shared: v
     tags: operation?.tags
   });
 
-  // parameters 
+  // OAI3 parameters are all in the operation
   for( const parameter of values(shared.parameters).concat(values(operation.parameters)) ) {
     // create each parameter in the operation 
     if( parameter) {
@@ -68,7 +69,14 @@ export async function operation(path: string, operation: v3.Operation, shared: v
     }
   }
 
+  // request body
+  for await ( const request of $.processInline2(requestBody, operation.requestBody, {isAnonymous: true}) ) {
+    // each request body.
+    result.requests.push( request);
+  }
+  
   // pick up external docs
   result.references.push(await processExternalDocs(operation.externalDocs,$));
-  return undefined; 
+  
+  return result;
 }

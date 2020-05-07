@@ -1,11 +1,9 @@
-import { anonymous } from '@azure-tools/sourcemap';
 import { Alias } from '../alias';
 import { ElementArray } from '../element';
+import { Identity } from '../name';
 import * as base from '../operation';
-import { Payload } from './body';
+//import { Payload } from './body';
 import { Header } from './header';
-
-export type ResponseName = string | anonymous;
 
 export class Response extends base.Response {
   /**
@@ -16,8 +14,8 @@ export class Response extends base.Response {
 
   headers = new ElementArray<Header|Alias<Header>>();
 
-  payloads = new ElementArray<Payload>();
-  constructor(public name: ResponseName, initializer?: Partial<Response> ) {
+  // payloads = new ElementArray<Payload>();
+  constructor(public name: Identity, initializer?: Partial<Response> ) {
     super();
     this.initialize(initializer);
   }

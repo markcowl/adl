@@ -337,3 +337,13 @@ paths:
       summary: Return details for the specified users
       tags:
         - Users
+components:
+  responses:
+    HttpErrorResponse:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"

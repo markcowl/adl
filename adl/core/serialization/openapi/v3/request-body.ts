@@ -1,9 +1,9 @@
-import { values } from '@azure-tools/linq';
+import { items, values } from '@azure-tools/linq';
 import { unzip, v3 } from '@azure-tools/openapi';
 import { anonymous, nameOf } from '@azure-tools/sourcemap';
 import { Element } from '../../../model/element';
-import { Body } from '../../../model/http/body';
-import { processPayload } from './process-payload';
+import { Request } from '../../../model/http/request';
+import { processInline } from './schema';
 import { Context, ItemsOf } from './serializer';
 
 
@@ -18,28 +18,45 @@ export async function processRequestBodies(input: ItemsOf<v3.RequestBody>, $: Co
 
   // handle actual items next
   for (const { key, value } of values(requestBodies)) {
-    $.api.http.bodies.push(await $.process(requestBody,value));
+    for await (const each of $.process2(requestBody, value)) {
+      $.api.http.requests.push(each);
+    }
+    
   }
 
   // handle references last 
   for (const { key, value } of values(references)) {
-    $.api.http.bodies.push(await $.processInline(requestBody, value));
+    for await (const each of $.processInline2(requestBody, value)) {
+      $.api.http.requests.push(each);  
+    }
   }
 
   return undefined;
 }
 
-export async function requestBody(requestBody: v3.RequestBody, $: Context, options?: { isAnonymous?: boolean }): Promise<Body | undefined> {
+export async function *requestBody(requestBody: v3.RequestBody, $: Context, options?: { isAnonymous?: boolean }): AsyncGenerator<Request> {
+  // a single request body gets turned into multiple requests with the same name 
+  // (since we only want very weak binding between the requests, that's the job of the actual operation. )
+
   const bodyName = options?.isAnonymous ? anonymous('requestBody') : nameOf(requestBody);
   
-  const result = new Body(bodyName, {
-    description: requestBody.description,
-    required: requestBody.required,
-  });
-  
-  for( const value of values(requestBody.content))  {
-    result.payloads.push( await $.process( processPayload, value) ); 
+
+  for( const {key:mediaType, value:type} of items(requestBody.content))  {
+    const schema = await processInline(type.schema, $) || $.api.schemas.Any;
+    
+    const request = new Request(bodyName,mediaType,schema, {
+      description: requestBody.description,
+      required: requestBody.required,
+    });
+
+    // example data we can figure out later.
+    request.addToAttic('example', type.example);
+
+    // encoding information not necessary yet... 
+    request.addToAttic('encoding', type.encoding);
+    
+    yield request;
   }
-  return result;
+  
 }
 

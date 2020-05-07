@@ -32,7 +32,7 @@ http:
         5988](https://tools.ietf.org/html/rfc5988#section-5). This will
         potentially include a link with relation type `next`, `first`, and
         `current`, where appropiate.
-      schema: &a90
+      schema: &a92
         type: alias
         name: anonymous<string>
         aliasType: schema
@@ -98,7 +98,7 @@ http:
       name: end
       expandParameterValues: true
       renderStyle: form
-      schema: &a91
+      schema: &a93
         type: alias
         name: anonymous<string>
         aliasType: schema
@@ -113,7 +113,7 @@ http:
       name: limit
       expandParameterValues: true
       renderStyle: form
-      schema: &a92
+      schema: &a94
         type: alias
         name: anonymous<number>
         aliasType: schema
@@ -188,15 +188,16 @@ http:
       headers:
         - name: x-ably-errorcode
           aliasType: header
-          target: *a14
+          target:
+            - *a14
         - name: x-ably-errormessage
           aliasType: header
-          target: *a15
+          target:
+            - *a15
         - name: x-ably-serverid
           aliasType: header
-          target: *a16
-      payloads:
-        - {}
+          target:
+            - *a16
 metaData:
   name: Ably
   contacts:
@@ -333,7 +334,7 @@ schemas:
           name: anonymous<unknown>
           value: Failed
           valueSchema: *a20
-    - &a39
+    - &a40
       type: enum
       name: anonymous<unknown>
       elementSchema: &a21
@@ -377,7 +378,7 @@ schemas:
         - name: presenceConnections
           description: The number of connections that are authorised to enter members into
             the presence channel.
-          schema: &a45
+          schema: &a47
             type: alias
             name: anonymous<number>
             aliasType: schema
@@ -386,7 +387,7 @@ schemas:
             targetSchema: *a7
         - name: presenceMembers
           description: The number of members currently entered into the presence channel.
-          schema: &a46
+          schema: &a48
             type: alias
             name: anonymous<number>
             aliasType: schema
@@ -395,7 +396,7 @@ schemas:
         - name: presenceSubscribers
           description: The number of connections that are authorised to subscribe to
             presence messages.
-          schema: &a47
+          schema: &a49
             type: alias
             name: anonymous<number>
             aliasType: schema
@@ -405,7 +406,7 @@ schemas:
         - name: publishers
           description: The number of connections attached to the channel that are
             authorised to publish.
-          schema: &a48
+          schema: &a50
             type: alias
             name: anonymous<number>
             aliasType: schema
@@ -415,7 +416,7 @@ schemas:
         - name: subscribers
           description: The number of connections attached that are authorised to subscribe
             to messages.
-          schema: &a49
+          schema: &a51
             type: alias
             name: anonymous<number>
             aliasType: schema
@@ -442,7 +443,7 @@ schemas:
         - name: channelId
           description: The required name of the channel including any qualifier, if any.
           required: true
-          schema: &a43
+          schema: &a45
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -456,7 +457,7 @@ schemas:
         - name: region
           description: In events relating to the activity of a channel in a specific
             region, this optionally identifies the region.
-          schema: &a44
+          schema: &a46
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -478,7 +479,7 @@ schemas:
       properties:
         - name: clientId
           description: Client ID of recipient
-          schema: &a53
+          schema: &a55
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -496,7 +497,7 @@ schemas:
           writeonly: true
         - name: deviceToken
           description: when using APNs, specifies the required device token.
-          schema: &a54
+          schema: &a56
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -504,7 +505,7 @@ schemas:
             targetSchema: *a1
         - name: registrationToken
           description: when using GCM or FCM, specifies the required registration token.
-          schema: &a55
+          schema: &a57
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -518,7 +519,7 @@ schemas:
       properties:
         - name: clientId
           description: Optional trusted client identifier for the device.
-          schema: &a50
+          schema: &a52
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -526,7 +527,7 @@ schemas:
             targetSchema: *a1
         - name: deviceSecret
           description: Secret value for the device.
-          schema: &a51
+          schema: &a53
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -537,7 +538,7 @@ schemas:
           schema: *a28
         - name: id
           description: Unique identifier for the device generated by the device itself.
-          schema: &a52
+          schema: &a54
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -563,7 +564,7 @@ schemas:
       properties:
         - name: code
           description: Error code.
-          schema: &a56
+          schema: &a58
             type: alias
             name: anonymous<number>
             aliasType: schema
@@ -571,7 +572,7 @@ schemas:
             targetSchema: *a7
         - name: href
           description: Link to help with error.
-          schema: &a57
+          schema: &a59
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -579,7 +580,7 @@ schemas:
             targetSchema: *a1
         - name: message
           description: Message explaining the error's cause.
-          schema: &a58
+          schema: &a60
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -587,7 +588,7 @@ schemas:
             targetSchema: *a1
         - name: serverId
           description: Server ID with which error was encountered.
-          schema: &a59
+          schema: &a61
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -595,7 +596,7 @@ schemas:
             targetSchema: *a1
         - name: statusCode
           description: Status error code.
-          schema: &a60
+          schema: &a62
             type: alias
             name: anonymous<number>
             aliasType: schema
@@ -607,7 +608,7 @@ schemas:
       properties:
         - name: body
           description: Text below title on the expanded notification.
-          schema: &a61
+          schema: &a63
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -615,7 +616,7 @@ schemas:
             targetSchema: *a1
         - name: collapseKey
           description: Platform-specific, used to group notifications together.
-          schema: &a62
+          schema: &a64
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -623,7 +624,7 @@ schemas:
             targetSchema: *a1
         - name: icon
           description: Platform-specific icon for the notification.
-          schema: &a63
+          schema: &a65
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -631,7 +632,7 @@ schemas:
             targetSchema: *a1
         - name: sound
           description: Platform-specific sound for the notification.
-          schema: &a64
+          schema: &a66
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -639,13 +640,13 @@ schemas:
             targetSchema: *a1
         - name: title
           description: Title to display at the notification.
-          schema: &a65
+          schema: &a67
             type: alias
             name: anonymous<string>
             aliasType: schema
             description: Title to display at the notification.
             targetSchema: *a1
-    - &a34
+    - &a35
       type: object
       name: anonymous<object>
       description: Extends and overrides generic values when delivering via APNs. [See
@@ -653,7 +654,7 @@ schemas:
       properties:
         - name: notification
           schema: *a33
-    - &a35
+    - &a36
       type: object
       name: anonymous<object>
       description: Extends and overrides generic values when delivering via GCM/FCM.
@@ -661,27 +662,28 @@ schemas:
         examples](https://www.ably.io/documentation/general/push/publish#payload-structure)
       properties:
         - name: notification
-          schema: *a33
-    - &a36
+          schema: &a34
+            - *a33
+    - &a37
       type: object
       name: anonymous<object>
       description: Extends and overrides generic values when delivering via web. [See
         examples](https://www.ably.io/documentation/general/push/publish#payload-structure)
       properties:
         - name: notification
-          schema: *a33
-    - &a37
+          schema: *a34
+    - &a38
       type: object
       name: Push
       properties:
         - name: apns
           description: Extends and overrides generic values when delivering via APNs. [See
             examples](https://www.ably.io/documentation/general/push/publish#payload-structure)
-          schema: *a34
+          schema: *a35
         - name: data
           description: Arbitrary [key-value string-to-string
             payload](https://www.ably.io/documentation/general/push/publish#channel-broadcast-example).
-          schema: &a66
+          schema: &a68
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -692,14 +694,14 @@ schemas:
           description: Extends and overrides generic values when delivering via GCM/FCM.
             [See
             examples](https://www.ably.io/documentation/general/push/publish#payload-structure)
-          schema: *a35
+          schema: *a36
         - name: notification
-          schema: *a33
+          schema: *a34
         - name: web
           description: Extends and overrides generic values when delivering via web. [See
             examples](https://www.ably.io/documentation/general/push/publish#payload-structure)
-          schema: *a36
-    - &a38
+          schema: *a37
+    - &a39
       type: object
       name: Extras
       description: Extras object. Currently only allows for
@@ -707,7 +709,7 @@ schemas:
         extra.
       properties:
         - name: push
-          schema: *a37
+          schema: *a38
     - type: object
       name: Message
       description: Message object.
@@ -716,7 +718,7 @@ schemas:
           description: The [client
             ID](https://www.ably.io/documentation/core-features/authentication#identified-clients)
             of the publisher of this message.
-          schema: &a67
+          schema: &a69
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -726,7 +728,7 @@ schemas:
             targetSchema: *a1
         - name: connectionId
           description: The connection ID of the publisher of this message.
-          schema: &a68
+          schema: &a70
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -734,7 +736,7 @@ schemas:
             targetSchema: *a1
         - name: data
           description: The string encoded payload, with the encoding specified below.
-          schema: &a69
+          schema: &a71
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -745,7 +747,7 @@ schemas:
             automatically decoded client-side using this value. However, if the
             message encoding cannot be processed, this attribute will contain
             the remaining transformations not applied to the data payload.
-          schema: &a70
+          schema: &a72
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -756,12 +758,13 @@ schemas:
               payload.
             targetSchema: *a1
         - name: extras
-          schema: *a38
+          schema: &a41
+            - *a39
         - name: id
           description: A Unique ID that can be specified by the publisher for [idempotent
             publishing](https://www.ably.io/documentation/rest/messages#idempotent).
           readonly: true
-          schema: &a71
+          schema: &a73
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -770,7 +773,7 @@ schemas:
             targetSchema: *a1
         - name: name
           description: The event name, if provided.
-          schema: &a72
+          schema: &a74
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -780,7 +783,7 @@ schemas:
           description: Timestamp when the message was received by the Ably, as
             milliseconds since the epoch.
           readonly: true
-          schema: &a73
+          schema: &a75
             type: alias
             name: anonymous<number>
             aliasType: schema
@@ -793,10 +796,10 @@ schemas:
         - name: action
           description: The event signified by a PresenceMessage.
           readonly: true
-          schema: *a39
+          schema: *a40
         - name: clientId
           description: The client ID of the publisher of this presence update.
-          schema: &a74
+          schema: &a76
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -804,7 +807,7 @@ schemas:
             targetSchema: *a1
         - name: connectionId
           description: The connection ID of the publisher of this presence update.
-          schema: &a75
+          schema: &a77
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -812,7 +815,7 @@ schemas:
             targetSchema: *a1
         - name: data
           description: The presence update payload, if provided.
-          schema: &a76
+          schema: &a78
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -824,7 +827,7 @@ schemas:
             However, if the message encoding cannot be processed, this attribute
             will contain the remaining transformations not applied to the data
             payload.
-          schema: &a77
+          schema: &a79
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -835,11 +838,11 @@ schemas:
               to the data payload.
             targetSchema: *a1
         - name: extras
-          schema: *a38
+          schema: *a41
         - name: id
           description: Unique ID assigned by Ably to this presence update.
           readonly: true
-          schema: &a78
+          schema: &a80
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -849,14 +852,14 @@ schemas:
           description: Timestamp when the presence update was received by Ably, as
             milliseconds since the epoch.
           readonly: true
-          schema: &a79
+          schema: &a81
             type: alias
             name: anonymous<number>
             aliasType: schema
             description: Timestamp when the presence update was received by Ably, as
               milliseconds since the epoch.
             targetSchema: *a7
-    - &a40
+    - &a42
       type: object
       name: anonymous<object>
       description: The
@@ -869,7 +872,7 @@ schemas:
           channel1:
             - publish
             - subscribe
-    - &a42
+    - &a44
       type: object
       name: anonymous<object>
       properties:
@@ -877,14 +880,14 @@ schemas:
           description: A signature, generated as an HMAC of each of the above components,
             using the key secret value.
           required: true
-          schema: &a80
+          schema: &a82
             type: alias
             name: anonymous<string>
             aliasType: schema
             description: A signature, generated as an HMAC of each of the above components,
               using the key secret value.
             targetSchema: *a1
-    - &a41
+    - &a43
       type: object
       name: TokenRequest
       properties:
@@ -895,13 +898,13 @@ schemas:
             operations) which should be a subset of the set of capabilities
             associated with the key specified in keyName.
           required: true
-          schema: *a40
+          schema: *a42
         - name: clientId
           description: The [client
             ID](https://www.ably.io/documentation/core-features/authentication#identified-clients)
             to be assosciated with the token. Can be set to * to allow for any
             client ID to be used.
-          schema: &a81
+          schema: &a83
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -914,7 +917,7 @@ schemas:
           description: Name of the key used for the TokenRequest. The keyName comprises of
             the app ID and key ID on an API Key.
           required: true
-          schema: &a82
+          schema: &a84
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -927,7 +930,7 @@ schemas:
           description: An unquoted, un-escaped random string of at least 16 characters.
             Used to ensure the Ably TokenRequest cannot be reused.
           required: true
-          schema: &a83
+          schema: &a85
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -937,7 +940,7 @@ schemas:
         - name: timestamp
           description: Time of creation of the Ably TokenRequest.
           required: true
-          schema: &a84
+          schema: &a86
             type: alias
             name: anonymous<number>
             aliasType: schema
@@ -946,14 +949,14 @@ schemas:
     - type: object
       name: SignedTokenRequest
       extends:
-        - *a41
-        - *a42
+        - *a43
+        - *a44
     - type: object
       name: TokenDetails
       properties:
         - name: capability
           description: Regular expression representation of the capabilities of the token.
-          schema: &a85
+          schema: &a87
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -961,7 +964,7 @@ schemas:
             targetSchema: *a1
         - name: expires
           description: Timestamp of token expiration.
-          schema: &a86
+          schema: &a88
             type: alias
             name: anonymous<number>
             aliasType: schema
@@ -969,7 +972,7 @@ schemas:
             targetSchema: *a7
         - name: issued
           description: Timestamp of token creation.
-          schema: &a87
+          schema: &a89
             type: alias
             name: anonymous<number>
             aliasType: schema
@@ -977,7 +980,7 @@ schemas:
             targetSchema: *a7
         - name: keyName
           description: Name of the key used to create the token
-          schema: &a88
+          schema: &a90
             type: alias
             name: anonymous<string>
             aliasType: schema
@@ -985,15 +988,13 @@ schemas:
             targetSchema: *a1
         - name: token
           description: The Ably Token.
-          schema: &a89
+          schema: &a91
             type: alias
             name: anonymous<string>
             aliasType: schema
             description: The Ably Token.
             targetSchema: *a1
   aliases:
-    - *a43
-    - *a44
     - *a45
     - *a46
     - *a47
@@ -1001,16 +1002,16 @@ schemas:
     - *a49
     - *a50
     - *a51
-    - *a17
     - *a52
-    - *a18
     - *a53
+    - *a17
     - *a54
+    - *a18
     - *a55
-    - *a19
-    - *a20
     - *a56
     - *a57
+    - *a19
+    - *a20
     - *a58
     - *a59
     - *a60
@@ -1027,9 +1028,9 @@ schemas:
     - *a71
     - *a72
     - *a73
-    - *a21
     - *a74
     - *a75
+    - *a21
     - *a76
     - *a77
     - *a78
@@ -1045,7 +1046,9 @@ schemas:
     - *a88
     - *a89
     - *a90
-    - *a4
     - *a91
     - *a92
+    - *a4
+    - *a93
+    - *a94
     - *a11

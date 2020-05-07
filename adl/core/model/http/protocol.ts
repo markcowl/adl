@@ -1,6 +1,5 @@
 import { Alias } from '../alias';
 import { Element, ElementArray } from '../element';
-import { Body } from './body';
 import { Header } from './header';
 import { Operation } from './operation';
 import { Parameter } from './parameter';
@@ -196,6 +195,5 @@ export class HttpProtocol extends Element {
   operations = new ElementArray<Operation>();
   requests = new ElementArray<Request | Alias<Request>>();
   responses = new ElementArray<Response| Alias<Response>>();
-  bodies = new ElementArray<Body|Alias<Body>>();
   parameters = new ElementArray<Parameter|Alias<Parameter>>();
 }

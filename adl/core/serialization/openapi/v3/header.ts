@@ -62,7 +62,7 @@ export async function header(header: v3.Header, $: Context, options?: { isAnonym
 
   // best practice - put this into the $refs collection early 
   if (!options?.isAnonymous) {
-    visitor.$refs.set(refTo(header), httpHeader);
+    visitor.$refs.set(refTo(header), [httpHeader]);
   }
 
   // preserve data that we're not using

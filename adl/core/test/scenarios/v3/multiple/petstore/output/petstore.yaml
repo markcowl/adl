@@ -16,18 +16,19 @@ schemas:
     - &a5
       type: array
       name: anonymous<unknown>
-      elementSchema: &a3
-        type: object
-        name: Pet
-        properties:
-          - name: id
-            required: true
-            schema: *a1
-          - name: name
-            required: true
-            schema: *a2
-          - name: tag
-            schema: *a2
+      elementSchema:
+        - &a3
+          type: object
+          name: Pet
+          properties:
+            - name: id
+              required: true
+              schema: *a1
+            - name: name
+              required: true
+              schema: *a2
+            - name: tag
+              schema: *a2
     - &a4
       type: int32
       name: anonymous<unknown>

@@ -17,7 +17,7 @@ export class Operation extends base.Operation {
   parameters = new ElementArray<Parameter|Alias<Parameter>>();
 
   /** possible requests that can be made for this operation (ie, overloads)  */
-  requests = new ElementArray<Request>();
+  requests = new ElementArray<Request|Alias<Request>>();
 
   /** non-error outputs from this operation */
   responses = new ElementArray<Response | Alias<Response>>();

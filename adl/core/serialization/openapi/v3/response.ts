@@ -4,7 +4,7 @@ import { anonymous, nameOf } from '@azure-tools/sourcemap';
 import { Element } from '../../../model/element';
 import { Response } from '../../../model/http/response';
 import { header } from './header';
-import { processPayload } from './process-payload';
+// import { processPayload } from './process-payload';
 import { Context, ItemsOf } from './serializer';
 
 export async function processResponses(input: ItemsOf<v3.Response>, $: Context): Promise<Element | undefined> {
@@ -39,7 +39,7 @@ export async function response(response: v3.Response, $: Context, options?: { is
     result.headers.push(h); 
   }
   for (const value of values(response.content)) {
-    result.payloads.push(await $.process(processPayload, value));
+    // result.payloads.push(await $.process(processPayload, value));
   }
   $.api.http.responses.push(result);
   return result;
