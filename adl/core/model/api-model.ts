@@ -1,12 +1,12 @@
 import { Dictionary } from '@azure-tools/linq';
-
+import { Element } from './element';
 import { SerializationResult } from './format';
-import { Metadata } from './Metadata';
-import { Element, ElementArray } from './element';
-import { InternalData } from './internal-data';
 import { HttpProtocol } from './http/protocol';
+import { InternalData } from './internal-data';
+import { Metadata } from './metadata';
 import { Resource } from './resource';
 import { Schemas } from './schema';
+
 
 export interface FileInfo {
   filename: string;
@@ -34,7 +34,7 @@ export class ApiModel extends Element {
 
   metaData = new Metadata('');
 
-  resources = new ElementArray<Resource>();
+  resources = new Array<Resource>();
 
   schemas = new Schemas();
 

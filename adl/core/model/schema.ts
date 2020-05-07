@@ -1,12 +1,13 @@
-import { Element, ElementArray } from './element';
 import { anonymous } from '@azure-tools/sourcemap';
+import { Element } from './element';
+import { Identity } from './name';
 
 export class Schema extends Element {
   anonymous?: boolean;
   /** 
    * name of this schema - may be an alias or an actual string name 
    */
-  name: SchemaName;
+  name: Identity;
 
   /**
    * short description of the schema
@@ -65,7 +66,7 @@ export class Property extends Element {
 
 export class ObjectSchema extends Schema {
   /** the collection of properties that are in this object */
-  properties = new ElementArray<Property>();
+  properties = new Array<Property>();
 
   /**  maximum number of properties permitted */
   maxProperties?: number;
@@ -74,15 +75,13 @@ export class ObjectSchema extends Schema {
   minProperties?: number;
 
   /** schemas that this object extends */
-  extends = new ElementArray<Schema>();
+  extends = new Array<Schema>();
 
   constructor(public name: string, initializer?: Partial<ObjectSchema>) {
     super('object');
     this.initialize(initializer);
   }
 }
-
-export type SchemaName = string | anonymous;
 
 export class Constant extends Schema {
   constructor(public valueSchema: Schema, public value: any, initializer?: Partial<Constant>) {
@@ -92,7 +91,7 @@ export class Constant extends Schema {
 }
 
 export class Enum extends Schema {
-  values = new ElementArray<Constant>();
+  values = new Array<Constant>();
   sealed = true;
 
   constructor(public elementSchema: Schema, initializer?: Partial<Enum>) {
@@ -102,7 +101,7 @@ export class Enum extends Schema {
 }
 
 export class Constraint extends Schema {
-  constructor(public name: SchemaName, initializer?: Partial<Constraint>) {
+  constructor(public name: Identity, initializer?: Partial<Constraint>) {
     super('constraint');
     this.initialize(initializer);
   }
@@ -198,21 +197,21 @@ export class MaximumPropertiesConstraint extends Constraint {
 }
 
 export class AnyOfSchema extends Schema {
-  constructor(public name: SchemaName, public oneOrMoreOf: Array<Schema>, initializer?: Partial<AnyOfSchema>) {
+  constructor(public name: Identity, public oneOrMoreOf: Array<Schema>, initializer?: Partial<AnyOfSchema>) {
     super('AnyOf');
     this.initialize(initializer);
   }
 }
 
 export class AndSchema extends Schema {
-  constructor(public name: SchemaName, public allOf: Array<Schema>, initializer?: Partial<AndSchema>) {
+  constructor(public name: Identity, public allOf: Array<Schema>, initializer?: Partial<AndSchema>) {
     super('And');
     this.initialize(initializer);
   }
 }
 
 export class XorSchema extends Schema {
-  constructor(public name: SchemaName, public oneOf: Array<Schema>, initializer?: Partial<XorSchema>) {
+  constructor(public name: Identity, public oneOf: Array<Schema>, initializer?: Partial<XorSchema>) {
     super('Xor');
     this.initialize(initializer);
   }
@@ -220,7 +219,7 @@ export class XorSchema extends Schema {
 
 
 export class Default extends Schema {
-  constructor(public name: SchemaName, initializer?: Partial<Default>) {
+  constructor(public name: Identity, initializer?: Partial<Default>) {
     super('default');
     this.initialize(initializer);
   }
@@ -235,10 +234,11 @@ export class ServerDefaultValue extends Schema {
 
 
 export class Alias extends Schema {
-  constraints = new ElementArray<Constraint>();
-  defaults = new ElementArray<Default>();
+  aliasType = 'schema';
+  constraints = new Array<Constraint>();
+  defaults = new Array<Default>();
   // 
-  constructor(public targetSchema: Schema, initializer?: Partial<Alias>) {
+  constructor(public name: Identity, public targetSchema: Schema, initializer?: Partial<Alias>) {
     super('alias');
     this.initialize(initializer);
   }
@@ -482,12 +482,12 @@ export class Schemas extends Element {
     return this.#file || (this.addPrimitive(this.#file = new FilePrimitive()));
   }
 
-  objects = new ElementArray<ObjectSchema>();
-  combinations = new ElementArray<AndSchema | XorSchema | AnyOfSchema>();
-  constants = new ElementArray<Constant>();
-  enums = new ElementArray<Enum>();
-  constraints = new ElementArray<Constraint>();
-  defaults = new ElementArray<Default>();
-  aliases = new ElementArray<Alias>();
-  primitives = new ElementArray<Primitive>();
+  objects = new Array<ObjectSchema>();
+  combinations = new Array<AndSchema | XorSchema | AnyOfSchema>();
+  constants = new Array<Constant>();
+  enums = new Array<Enum>();
+  constraints = new Array<Constraint>();
+  defaults = new Array<Default>();
+  aliases = new Array<Alias>();
+  primitives = new Array<Primitive>();
 }

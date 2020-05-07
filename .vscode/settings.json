@@ -28,7 +28,7 @@
     "editor.detectIndentation": false
   },
   "[typescript]": {
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": false,
     "editor.formatOnPaste": true,
     "editor.tabSize": 2,
     "editor.detectIndentation": false

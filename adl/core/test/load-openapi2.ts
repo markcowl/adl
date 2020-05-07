@@ -70,7 +70,7 @@ describe('Load Multiple OAI2 files', () => {
     const inputRoot = resolve(root, folder, 'input');
     const outputRoot = resolve(`${inputRoot}/../output/`);
 
-    it(`Processes '${inputRoot}'`, async () => {
+    it(`Processes folder '${folder}'`, async () => {
       console.log('\n');
       const host = createHost(inputRoot);
 

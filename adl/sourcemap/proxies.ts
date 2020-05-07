@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { Path, Tracker } from './exports';
 import { items, values } from '@azure-tools/linq';
+import { Path, Tracker } from './exports';
 
 
 // eslint-disable-next-line no-prototype-builtins
@@ -211,7 +211,7 @@ export class TrackedSource<T extends Object, instanceType> {
         } else {
           // if we have children, the final state of isUsed is dependent on all them being used.
           // this check only happens if we set an object to used and 
-          this.isUsed = values(<any>this.proxy).all(each => (<any>each)[SpecialProperties.IsUsed]);
+          this.isUsed = values(<any>this.proxy).all(each =>isUsed(each));
         }
 
         // if the parent has been marked as used (ie, 'false')

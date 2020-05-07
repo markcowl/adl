@@ -1,43 +1,129 @@
 http:
   connections:
     - url: http://petstore.swagger.io/v1
+  operations:
+    - id: listPets
+      parameters:
+        - type: query
+          name: limit
+          description: How many items to return at one time (max 100)
+          expandParameterValues: true
+          renderStyle: form
+          required: false
+          schema: &a2
+            type: int32
+            name: anonymous<unknown>
+      responses:
+        - name: "200"
+          description: A paged array of pets
+          headers:
+            - name: "[object Object]"
+              description: A link to the next page of responses
+              schema: &a1
+                type: string
+                name: anonymous<unknown>
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a7
+              type: alias
+              name: Pets
+              aliasType: schema
+              targetSchema: &a6
+                type: array
+                name: anonymous<unknown>
+                elementSchema: &a4
+                  type: object
+                  name: Pet
+                  properties:
+                    - name: id
+                      required: true
+                      schema: &a5
+                        type: int64
+                        name: anonymous<unknown>
+                    - name: name
+                      required: true
+                      schema: *a1
+                    - name: tag
+                      schema: *a1
+        - name: default
+          description: unexpected error
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a3
+              type: object
+              name: Error
+              properties:
+                - name: code
+                  required: true
+                  schema: *a2
+                - name: message
+                  required: true
+                  schema: *a1
+      summary: List all pets
+      tags:
+        - pets
+    - id: createPets
+      responses:
+        - name: "201"
+          description: Null response
+        - name: default
+          description: unexpected error
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a3
+      summary: Create a pet
+      tags:
+        - pets
+    - id: showPetById
+      parameters:
+        - type: path
+          name: petId
+          description: The id of the pet to retrieve
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema: *a1
+      responses:
+        - name: "200"
+          description: Expected response to a valid request
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a4
+        - name: default
+          description: unexpected error
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a3
+      summary: Info for a specific pet
+      tags:
+        - pets
 metaData:
   name: Swagger Petstore
   licenses:
     - name: MIT
 schemas:
   primitives:
-    - &a1
-      type: int64
-      name: anonymous<unknown>
-    - &a2
-      type: string
-      name: anonymous<unknown>
-    - type: array
-      name: anonymous<unknown>
-      elementSchema: &a3
-        type: object
-        name: Pet
-        properties:
-          - name: id
-            required: true
-            schema: *a1
-          - name: name
-            required: true
-            schema: *a2
-          - name: tag
-            schema: *a2
-    - &a4
-      type: int32
-      name: anonymous<unknown>
+    - *a5
+    - *a1
+    - *a6
+    - *a2
   objects:
+    - *a4
     - *a3
-    - type: object
-      name: Error
-      properties:
-        - name: code
-          required: true
-          schema: *a4
-        - name: message
-          required: true
-          schema: *a2
+  aliases:
+    - *a7

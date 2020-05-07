@@ -1,19 +1,19 @@
 import { v3 } from '@azure-tools/openapi';
-import { Context } from './serializer';
 import { Element } from '../../../model/element';
-
+import { consume } from '../common';
+import { header } from './header';
+import { parameter } from './parameter';
+import { requestBody } from './request-body';
+import { response } from './response';
 import { processSchemas } from './schema';
-import { processCallbacks } from './callback';
-import { processExamples } from './example';
-import { processLinks } from './link';
-import { processParameters } from './parameter';
-import { processRequestBodies } from './request-body';
-import { processResponses } from './response';
-import { processSecuritySchemes } from './security-schemes';
-import { processHeaders } from './header';
+import { securityScheme } from './security-schemes';
+import { Context } from './serializer';
+
 const { vendorExtensions } = v3;
 
-export async function processComponents(components: v3.Components, $: Context): Promise<Element | undefined> {
+
+// eslint-disable-next-line require-yield
+export async function *processComponents(components: v3.Components, $: Context): AsyncGenerator<Element> {
 
   for (const { key, value: extension } of vendorExtensions(components)) {
     // switch(key)
@@ -21,19 +21,36 @@ export async function processComponents(components: v3.Components, $: Context): 
   }
 
   // definitely, schemas first, since so much will $ref them
-  await $.process(processSchemas, components.schemas);
-  await $.process(processHeaders, components.headers);
+  await consume($.process(processSchemas, components.schemas));
+  
+  // if there are vendor extensions in the dictionary, they should be handled like this:
+  // for (const { key, value: extension } of vendorExtensions(components.headers)) {
+  // ... do something ...
+  // }
+  for await( const h  of $.processDictionary(header, components.headers) ) {
+    $.api.http.headers.push(h);
+  } 
 
-  await $.process(processParameters, components.parameters);
-  await $.process(processRequestBodies, components.requestBodies);
-  await $.process(processResponses, components.responses);
+  for await (const p of $.processDictionary(parameter, components.parameters)) {
+    $.api.http.parameters.push(p);
+  }
+  
+  for await( const request of $.processDictionary(requestBody, components.requestBodies)) {
+    $.api.http.requests.push( request);
+  }
+  
+  for await (const rsp of $.processDictionary(response, components.responses)) {
+    $.api.http.responses.push(rsp);
+  }
+  
+  for await (const auth of $.processDictionary(securityScheme, components.securitySchemes)) {
+    $.api.http.authentications.push(auth);
+  }
+  
 
-  await $.process(processSecuritySchemes, components.securitySchemes);
-
-  await $.process(processExamples, components.examples); // send to attic 
-
-  await $.process(processCallbacks, components.callbacks);  // ok skip
-  await $.process(processLinks, components.links); // ok skip
+  // await $.process(processExamples, components.examples); // send to attic 
+  // await $.process(processCallbacks, components.callbacks);  // ok skip
+  // await $.process(processLinks, components.links); // ok skip
 
 
   return undefined;

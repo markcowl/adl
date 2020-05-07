@@ -1,17 +1,14 @@
-import { ApiModel } from '../../../model/api-model';
-import { Dictionary } from '@azure-tools/openapi';
-import { v3, JsonReference, vendorExtensions } from '@azure-tools/openapi';
-
-import { Host } from '../../../support/file-system';
-import { Visitor, Context as Ctx } from '../../../support/visitor';
-import { FileSystem } from '../../../support/file-system';
-import { processInfo, processExternalDocs, processTag } from './info';
-import { processComponents } from './components';
-import { processPaths } from './path';
-import { processSecurity } from './security';
-import { processServer } from './server';
+import { Dictionary, JsonReference, v3, vendorExtensions } from '@azure-tools/openapi';
 import { use } from '@azure-tools/sourcemap';
-
+import { ApiModel } from '../../../model/api-model';
+import { Host } from '../../../support/file-system';
+import { Context as Ctx, Visitor } from '../../../support/visitor';
+import { consume } from '../common';
+import { processComponents } from './components';
+import { processExternalDocs, processInfo, processTag } from './info';
+import { path } from './path';
+import { firstOrDefault } from './schema';
+import { processServer } from './server';
 
 /** takes an openapi3 model, converts it into a ADL model, and returns that */
 export function loadOpenApi() {
@@ -46,19 +43,35 @@ async function processRoot(oai3: v3.Model, $: Context) {
     }
   }
 
-  await $.process(processInfo, oai3.info);
-  await $.process(processExternalDocs, oai3.externalDocs);
-  await $.processArray(processTag, oai3.tags, $.api.metaData.references);
+  // openapi3 info
+  $.api.metaData = await firstOrDefault( $.process(processInfo, oai3.info)) || $.api.metaData;
+  
+  // extnernal docs are just a kind of reference
+  for await (const reference of $.process(processExternalDocs, oai3.externalDocs)) {
+    $.api.metaData.references.push(reference);
+  }
+  
+  for await( const reference of  $.processArray(processTag, oai3.tags) ) {
+    $.api.metaData.references.push(reference);
+  }
 
   // components will have to be early, since other things will $ref them 
-  await $.process(processComponents, oai3.components);
+  await consume($.process(processComponents, oai3.components));
 
-  await $.processArray(processServer, oai3.servers, $.api.http.connections);
-  await $.process(processSecurity, oai3.security);
+  for await( const server of $.processArray(processServer, oai3.servers)  ) {
+    $.api.http.connections.push( server);
+  }
+  
+  // await $.process(processSecurity, oai3.security);
 
   // paths second to last
-  await $.process(processPaths, oai3.paths);
-
+  for await ( const operation of $.processDictionary(path, oai3.paths) ) {
+    $.api.http.operations.push( operation);
+  }
+  for await (const operation of $.processDictionary(path, oai3['x-ms-paths'])) {
+    $.api.http.operations.push(operation);
+  }
+  
   // we don't need this.
   use(oai3.openapi);
 
