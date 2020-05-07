@@ -2,9 +2,9 @@ import { items, length, values } from '@azure-tools/linq';
 import { v3 } from '@azure-tools/openapi';
 import { anonymous, nameOf } from '@azure-tools/sourcemap';
 import { Response } from '../../../model/http/response';
-import { addExtensionsToAttic } from '../common';
+import { addExtensionsToAttic, firstOrDefault } from '../common';
 import { header } from './header';
-import { firstOrDefault, processInline } from './schema';
+import { processInline } from './schema';
 // import { processPayload } from './process-payload';
 import { Context } from './serializer';
 

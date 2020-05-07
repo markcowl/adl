@@ -4,7 +4,7 @@ import { nameOf } from '@azure-tools/sourcemap';
 import { Element } from '../../../model/element';
 import { Operation } from '../../../model/http/operation';
 import { addExtensionsToAttic } from '../common';
-import { processExternalDocs } from './info';
+import { processExternalDocs } from '../common/info';
 import { parameter } from './parameter';
 import { requestBody } from './request-body';
 import { response } from './response';

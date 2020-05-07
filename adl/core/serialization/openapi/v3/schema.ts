@@ -4,7 +4,7 @@ import { anonymous, isUsed, nameOf, unusedMembers, use, using } from '@azure-too
 import { Alias as A } from '../../../model/alias';
 import { Identity } from '../../../model/name';
 import { Alias, AndSchema, AnyOfSchema, ArraySchema, Constant, DictionarySchema, Enum, ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ObjectSchema, Property, RegularExpressionConstraint, Schema, ServerDefaultValue, UniqueElementsConstraint, XorSchema } from '../../../model/schema';
-import { isEnumSchema, isObjectSchema, isPrimitiveSchema, toArray } from '../common';
+import { firstOrDefault, isEnumSchema, isObjectSchema, isPrimitiveSchema, toArray } from '../common';
 import { Context, ItemsOf } from './serializer';
 
 export async function *processSchemas(value: ItemsOf<v3.Schema>, $: Context)  {
@@ -694,17 +694,6 @@ export async function *processFileSchema(schema: v3.Schema, $: Context): AsyncGe
   return yield $.api.schemas.File;
 }
 
-export async function firstOrDefault<T>(generator: AsyncGenerator<T>): Promise<T|undefined>  {
-  let result: T|undefined;
-  for await ( const each of generator ) {
-    if( result === undefined) {
-      result = each;
-      continue;
-    }
-    throw new Error('Expecting only a single item');
-  }
-  return result ;
-}
 
 export async function *processEnumSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   const schemaEnum = use(schema.enum) ?? [];
