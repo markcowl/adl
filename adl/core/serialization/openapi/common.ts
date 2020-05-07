@@ -3,6 +3,20 @@ import { common, StringFormat, v2, v3, vendorExtensions } from '@azure-tools/ope
 import { use, valueOf } from '@azure-tools/sourcemap';
 import { Element } from '../../model/element';
 
+export async function toArray<T>(g: AsyncGenerator<T>) {
+  const result = new Array<T>();
+  for await (const each of g) {
+    result.push(each);
+  }
+  return result;
+}
+
+export async function consume<T>(g: AsyncGenerator<T>) {
+  for await (const each of g) {
+    // just consume it.
+  }
+}
+
 
 export function isObjectSchema(schema: v3.Schema) {
   return schema.type == common.JsonType.Object ||
@@ -37,7 +51,7 @@ export function isEnumSchema(schema: v3.Schema) {
 }
 
 
-export async function addExtensionsToAttic(element: Element, input: any) {
+export function addExtensionsToAttic<T extends Element>(element: T, input: any) {
   for (const { key, value } of vendorExtensions(input)) {
     element.addToAttic(key, use(value, true));
   }

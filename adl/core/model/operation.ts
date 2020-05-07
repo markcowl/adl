@@ -1,5 +1,6 @@
 import { Alias } from './alias';
 import { Element, ElementArray } from './element';
+import { Schema } from './schema';
 
 export class Operation extends Element {
 
@@ -34,6 +35,9 @@ export class Response extends Element {
    * indicates that this response should be considered and exception (an error)
    */
   isException?:  boolean;
+
+  /** schema for the response content */
+  schema?: Schema;
   /**
    * 
    * @param initializer the object initializer for this response

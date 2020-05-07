@@ -1,5 +1,5 @@
 import { Dictionary, items } from '@azure-tools/linq';
-import { TrackedTarget } from '@azure-tools/sourcemap';
+import { TrackedTarget, use } from '@azure-tools/sourcemap';
 import { InternalData } from './internal-data';
 import { VersionInfo } from './version-info';
 
@@ -13,6 +13,9 @@ function clean(this: any, key: string, value: any): any {
 }
 
 export class ElementArray<T> extends Array<T> {
+  
+} 
+export class Element_Array<T> extends Array<T> {
   #set = new Set<string>();
   private uniq(value: T) {
     const vv = JSON.stringify(value, clean, 2);
@@ -26,9 +29,9 @@ export class ElementArray<T> extends Array<T> {
     for (const value of values) {
       if (value !== undefined) {
         // todo: fix temporary means to stop duplicates
-        if ((<any>this.valueOf()).uniq(value)) {
-          super.push(value);
-        }
+        //if ((<any>this.valueOf()).uniq(value)) {
+        super.push(value);
+        //}
       }
     }
     return this.length;
@@ -78,6 +81,7 @@ export class Element extends Initializer {
   }
 
   addToAttic(name: string, value: any) {
+    use(value, true);
     if (value) {
       this.attic = this.attic || {};
       this.attic[name] = value.valueOf();

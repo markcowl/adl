@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
 import { items, keys, length, values } from '@azure-tools/linq';
-import { common, Dictionary, Info, isReference } from '@azure-tools/openapi';
+import { common, Dictionary, Info, isReference, isVendorExtension, JsonReference } from '@azure-tools/openapi';
 import { anonymous, getSourceFile, isAnonymous, isUsed, nameOf, Path, refTo, TrackedSource, TrackedTarget, Tracker, use, using, valueOf } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
 import { parse } from 'yaml';
@@ -155,13 +155,13 @@ export class Visitor<TSourceModel extends OAIModel> {
     return new Context(sourceModel, sourceFile, this);
   }
 
-  async process<TOutput>(action: fnAction<TSourceModel, TSourceModel, TOutput>) {
+  async process<TOutput, TOptions extends Options = Options>(action: fnAction<TSourceModel, TSourceModel, TOutput, TOptions>) {
 
     for (const { value } of items(this.sourceFiles)) {
       const ctx = await value;
       const watch = new Stopwatch();
 
-      await action(<NonNullable<TSourceModel>>ctx.sourceModel, ctx, false);
+      await action(<NonNullable<TSourceModel>>ctx.sourceModel, ctx);
       this.host.processed(ctx.sourceFile, watch.time);
 
       this.api.attic = this.api.attic || {};
@@ -217,10 +217,10 @@ export class Visitor<TSourceModel extends OAIModel> {
   }
 }
 
-export type fnAction<TSourceModel extends OAIModel, TInput, TOutput, TOptions = {}> =
+export type fnAction<TSourceModel extends OAIModel, TInput, TOutput, TOptions extends Options> =
   (value: NonNullable<TInput>, context: Context<TSourceModel>, options?: TOptions) => Promise<TOutput | undefined>;
 
-export type fnAction2<TSourceModel extends OAIModel, TInput, TOutput, TOptions = {}> =
+export type fnAction2<TSourceModel extends OAIModel, TInput, TOutput, TOptions extends Options> =
   (value: NonNullable<TInput>, context: Context<TSourceModel>, options?: TOptions) => AsyncGenerator<TOutput>;
 
 
@@ -263,25 +263,36 @@ export class Context<TSourceModel extends OAIModel> {
     return this.visitor.api;
   }
 
-  async processArray<TInput, TOutput extends Element, TOptions = {}>(action: fnAction<TSourceModel, TInput, TOutput, TOptions>, value: Array<TInput> | undefined, output: ElementArray<TOutput>, options?: TOptions): Promise<ElementArray<TOutput> | undefined> {
+  async processArray<TInput, TOutput extends Element, TOptions>(action: fnAction<TSourceModel, TInput, TOutput, TOptions>, value: Array<TInput> | undefined, output: ElementArray<TOutput>, options?: TOptions): Promise<ElementArray<TOutput> | undefined> {
     if (value) {
       for (const each of value) {
-        output.push(await this.process(action, each));
+        //output.push(await this.process(action, each));
       }
       use(value);
     }
     return TrackedTarget.track(output);
   }
 
-  async *process2<TInput, TOutput extends Element, TOptions extends Options = {}>(action: fnAction2<TSourceModel, TInput, TOutput, TOptions>, value: TInput | NonNullable<TInput>, options?: TOptions): AsyncGenerator<TOutput> {
+  async *processArray2<TInput, TOutput extends Element, TOptions extends Options>(action: fnAction2<TSourceModel, TInput, TOutput, TOptions>, value: Array<TInput> | undefined, options?: TOptions): AsyncGenerator<TOutput> {
+    if (value) {
+      for (const each of value) {
+        use(value);
+        yield *this.process2(action, each);
+      }
+    }
+  }
+
+  async *process2<TInput, TOutput extends Element, TOptions extends Options = Options>(action: fnAction2<TSourceModel, TInput, TOutput, TOptions>, value: TInput | NonNullable<TInput>, options?: TOptions): AsyncGenerator<TOutput> {
     if (value !== undefined && value !== null) {
 
       // see if we've processed this node before.
       // todo: hmmm. $refs can only return a single value? This may need rethinking...
       const ref = refTo(value);
-      const refResult = <TOutput | undefined>this.visitor.$refs.get(ref);
+      const refResult = this.visitor.$refs.get(ref);
       if (refResult) {
-        yield refResult;
+        for( const each of refResult) {
+          yield each;
+        }
         return;
       }
 
@@ -299,13 +310,16 @@ export class Context<TSourceModel extends OAIModel> {
           // track it so we don't redo it if asked for it again later.
           this.visitor.$refs.set(ref, results);
           results.push(result);
-
-          result.versionInfo.push(new VersionInfo({
+          if( result.versionInfo.length === 0 ) {
+            // only add this if we haven't added it before
+            // when a result is returned up the chain more than once
+            result.versionInfo.push(new VersionInfo({
             // deprecated isn't on everything, but this is safe when it's not there
-            deprecated: using((<any>value).deprecated, this.apiVersion),
-            added: this.apiVersion,
-          }));
-          result.addInternalData(this.visitor.inputType, { preferredFile: getSourceFile(value) });
+              deprecated: use((<any>value).deprecated) ?  this.apiVersion: undefined,
+              added: this.apiVersion,
+            }));
+            result.addInternalData(this.visitor.inputType, { preferredFile: getSourceFile(value) });
+          }
 
           yield result;
         }
@@ -313,7 +327,11 @@ export class Context<TSourceModel extends OAIModel> {
     }
   }
 
-  async *processInline2<TIn, TOut extends Element, TOptions extends Options = {}>(action: fnAction2<TSourceModel, TIn, TOut>, value: TIn | common.JsonReference<TIn> | undefined, options?: TOptions): AsyncGenerator<TOut|Alias<TOut>> {
+  addVersionInfo( value: any, result: any ) {
+
+  }
+
+  async *processInline2<TIn, TOut extends Element, TOptions extends Options = Options>(action: fnAction2<TSourceModel, TIn, TOut,TOptions>, value: TIn | common.JsonReference<TIn> | undefined, options?: TOptions): AsyncGenerator<TOut|Alias<TOut>> {
     if (value !== undefined) {
       if (isReference(value)) {
         const name = options?.isAnonymous ? anonymous(action.name) : nameOf(value);
@@ -339,14 +357,24 @@ export class Context<TSourceModel extends OAIModel> {
           // otherwise it's got a name, so we're creating an alias to the actual target 
           yield options?.isAnonymous ? target : new Alias(action.name, name, target);
         }
+        return;
       }
       // if we came to processInline, then that means 
       // by defintion, we are processing an anonymous element.
-      yield * await this.process2(action, <TIn>value, { ...options, isAnonymous: true });
+      yield * await this.process2(action, <TIn>value, <TOptions>{ ...options, isAnonymous: true });
     }
   }
 
-  async process<TInput, TOutput extends Element, TOptions extends Options = {}>(action: fnAction<TSourceModel, TInput, TOutput, TOptions>, value: TInput | NonNullable<TInput>, options?: TOptions): Promise<TOutput | undefined> {
+  async *processDictionary<TInput, TOutput extends Element, TOptions extends Options>(action: fnAction2<TSourceModel, TInput, TOutput, TOptions>, dictionary: Dictionary<TInput | JsonReference<TInput>>|undefined, options?: TOptions ): AsyncGenerator<TOutput|Alias<TOutput>>{
+    for (const {key,value} of items(dictionary)) {
+      if( isVendorExtension(key)) {
+        continue;
+      } 
+      yield* isReference(value) ? this.processInline2<TInput,TOutput,TOptions>(action, value, options) : this.process2(action, value, options);
+    }
+  }
+
+  async process<TInput, TOutput extends Element, TOptions extends Options>(action: fnAction<TSourceModel, TInput, TOutput, TOptions>, value: TInput | NonNullable<TInput>, options?: TOptions): Promise<TOutput | undefined> {
 
     if (value !== undefined && value !== null) {
 
@@ -408,7 +436,7 @@ export class Context<TSourceModel extends OAIModel> {
     };
   }
 
-  async processInline<TIn, TOut extends Element, TOptions extends Options = {}>(action: fnAction<TSourceModel, TIn, TOut>, value: TIn | common.JsonReference<TIn> | undefined, options?: TOptions): Promise<TOut | Alias<TOut> | undefined>{
+  async processInline<TIn, TOut extends Element, TOptions extends Options>(action: fnAction<TSourceModel, TIn, TOut, TOptions>, value: TIn | common.JsonReference<TIn> | undefined, options?: TOptions): Promise<TOut | Alias<TOut> | undefined>{
     if (value !== undefined) {
       if (isReference(value)) {
         const name = options?.isAnonymous ? anonymous(action.name) : nameOf(value);
@@ -436,7 +464,7 @@ export class Context<TSourceModel extends OAIModel> {
       }
       // if we came to processInline, then that means 
       // by defintion, we are processing an anonymous element.
-      return await this.process(action, <TIn>value, { ...options, isAnonymous: true });
+      return await this.process(action, <TIn>value, <TOptions>{ ...options, isAnonymous: true });
     }
     return undefined;
   }

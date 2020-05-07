@@ -14,8 +14,13 @@ export class Response extends base.Response {
 
   headers = new ElementArray<Header|Alias<Header>>();
 
-  // payloads = new ElementArray<Payload>();
-  constructor(public name: Identity, initializer?: Partial<Response> ) {
+  /**
+   * 
+   * @param name the name of this response
+   * @param mediaType the IANA media response that this maps to.
+   * @param initializer object initializer for the response.
+   */
+  constructor(public name: Identity,public mediaType: string, initializer?: Partial<Response> ) {
     super();
     this.initialize(initializer);
   }

@@ -1,16 +1,13 @@
-import { values } from '@azure-tools/linq';
-import { unzip, v3 } from '@azure-tools/openapi';
+import { v3, vendorExtensions } from '@azure-tools/openapi';
 import { anonymous, nameOf, refTo, use } from '@azure-tools/sourcemap';
-import { Element } from '../../../model/element';
+import { Alias } from '../../../model/alias';
 import { Header } from '../../../model/http/header';
-import { processInline } from './schema';
+import { firstOrDefault, processInline } from './schema';
 import { Context, ItemsOf } from './serializer';
 
-export async function processHeaders(input: ItemsOf<v3.Header>, $: Context): Promise<Element | undefined> {
-  const { extensions, references, values: headers } = unzip<v3.Header>(input);
-
+export async function *processHeaders(input: ItemsOf<v3.Header>, $: Context): AsyncGenerator<Header|Alias<Header>> {
   // handle extensions first
-  for (const { key, value: extension } of values(extensions)) {
+  for (const { key, value: extension } of vendorExtensions(input)) {
     // switch block to handle specific vendor extension?
     // unknown ones need to get attached to something.
 
@@ -24,20 +21,10 @@ export async function processHeaders(input: ItemsOf<v3.Header>, $: Context): Pro
     }
   }
 
-  // handle actual items next
-  for (const { key, value } of values(headers)) {
-    await $.process(header, value);
-  }
-
-  // handle references last 
-  for (const { key, value } of values(references)) {
-    await $.processInline(header, value, {});
-  }
-
-  return undefined;
+  yield * $.processDictionary(header, input);
 }
 
-export async function header(header: v3.Header, $: Context, options?: { isAnonymous?: boolean }): Promise<Header | undefined> {
+export async function *header(header: v3.Header, $: Context, options?: { isAnonymous?: boolean }): AsyncGenerator<Header> {
   const { api, visitor } = $;
   const name = options?.isAnonymous ? anonymous('header') : nameOf(header);
 
@@ -46,7 +33,7 @@ export async function header(header: v3.Header, $: Context, options?: { isAnonym
   use(header.required) && $.warn('header definitions should not contain property \'required\'', header.required);
 
   // get the schema for the header 
-  const schema = await processInline(header.schema,$,{isAnonymous: true}); 
+  const schema = await firstOrDefault( processInline(header.schema,$,{isAnonymous: true})); 
 
   // create the http header object and track it. 
   const httpHeader = new Header({
@@ -68,7 +55,5 @@ export async function header(header: v3.Header, $: Context, options?: { isAnonym
   // preserve data that we're not using
   httpHeader.addToAttic('example', use(header.example));
 
-  // add it to the model and return the header to the caller.
-  api.http.headers.push(httpHeader);
-  return httpHeader;
+  yield httpHeader;
 }

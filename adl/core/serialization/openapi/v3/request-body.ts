@@ -1,38 +1,9 @@
-import { items, values } from '@azure-tools/linq';
-import { unzip, v3 } from '@azure-tools/openapi';
+import { items } from '@azure-tools/linq';
+import { v3 } from '@azure-tools/openapi';
 import { anonymous, nameOf } from '@azure-tools/sourcemap';
-import { Element } from '../../../model/element';
 import { Request } from '../../../model/http/request';
-import { processInline } from './schema';
-import { Context, ItemsOf } from './serializer';
-
-
-export async function processRequestBodies(input: ItemsOf<v3.RequestBody>, $: Context): Promise<Element | undefined> {
-  const { extensions, references, values: requestBodies } = unzip<v3.RequestBody>(input);
-
-  // handle extensions first
-  for (const { key, value: extension } of values(extensions)) {
-    // switch block to handle specific vendor extension?
-    // unknown ones need to get attached to something.
-  }
-
-  // handle actual items next
-  for (const { key, value } of values(requestBodies)) {
-    for await (const each of $.process2(requestBody, value)) {
-      $.api.http.requests.push(each);
-    }
-    
-  }
-
-  // handle references last 
-  for (const { key, value } of values(references)) {
-    for await (const each of $.processInline2(requestBody, value)) {
-      $.api.http.requests.push(each);  
-    }
-  }
-
-  return undefined;
-}
+import { firstOrDefault, processInline } from './schema';
+import { Context } from './serializer';
 
 export async function *requestBody(requestBody: v3.RequestBody, $: Context, options?: { isAnonymous?: boolean }): AsyncGenerator<Request> {
   // a single request body gets turned into multiple requests with the same name 
@@ -42,7 +13,7 @@ export async function *requestBody(requestBody: v3.RequestBody, $: Context, opti
   
 
   for( const {key:mediaType, value:type} of items(requestBody.content))  {
-    const schema = await processInline(type.schema, $) || $.api.schemas.Any;
+    const schema = await firstOrDefault( processInline(type.schema, $)) || $.api.schemas.Any;
     
     const request = new Request(bodyName,mediaType,schema, {
       description: requestBody.description,
@@ -57,6 +28,5 @@ export async function *requestBody(requestBody: v3.RequestBody, $: Context, opti
     
     yield request;
   }
-  
 }
 

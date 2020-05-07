@@ -190,9 +190,9 @@ export class ConnectionVariable extends Element {
 
 export class HttpProtocol extends Element {
   headers = new ElementArray<Header|Alias<Header>>();
-  authentications = new ElementArray<Authentication>();
-  connections = new ElementArray<Connection>();
-  operations = new ElementArray<Operation>();
+  authentications = new ElementArray<Authentication|Alias<Authentication>>();
+  connections = new ElementArray<Connection | Alias<Authentication>>();
+  operations = new ElementArray<Operation|Alias<Operation>>();
   requests = new ElementArray<Request | Alias<Request>>();
   responses = new ElementArray<Response| Alias<Response>>();
   parameters = new ElementArray<Parameter|Alias<Parameter>>();

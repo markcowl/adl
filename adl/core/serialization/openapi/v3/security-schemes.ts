@@ -1,58 +1,29 @@
-import { items, values } from '@azure-tools/linq';
-import { unzip, v3 } from '@azure-tools/openapi';
+import { items } from '@azure-tools/linq';
+import { v3 } from '@azure-tools/openapi';
 import { nameOf, use, valueOf } from '@azure-tools/sourcemap';
-import { Element } from '../../../model/element';
-import { ApiKeyAuthentication, Authentication, AuthorizationCodeOAuth2Flow, ClientCredentialsOAuth2Flow, HttpAuthentication, ImplicitOAuth2Flow, OAuth2Authentication, OAuth2Flow, OAuth2Flows, OAuth2Scope, OpenIdConnectAuthentication, ParameterLocation, PasswordOAuth2Flow } from '../../../model/http/protocol';
+import { ApiKeyAuthentication, AuthorizationCodeOAuth2Flow, ClientCredentialsOAuth2Flow, HttpAuthentication, ImplicitOAuth2Flow, OAuth2Authentication, OAuth2Flow, OAuth2Flows, OAuth2Scope, OpenIdConnectAuthentication, ParameterLocation, PasswordOAuth2Flow } from '../../../model/http/protocol';
 import { addExtensionsToAttic } from '../common';
-import { Context, ItemsOf } from './serializer';
+import { Context } from './serializer';
 
-export async function processSecuritySchemes(value: ItemsOf<v3.SecurityScheme>, $: Context): Promise<Element | undefined> {
-  const { extensions, references, values: securitySchemes } = unzip<v3.SecurityScheme>(value);
-
-  // handle extensions first
-  for (const { key, value: extension } of values(extensions)) {
-    // switch block to handle specific vendor extension?
-    // unknown ones need to get attached to something.
-  }
-
-  // handle actual items next
-  for (const { key, value: securityScheme } of values(securitySchemes)) {
-    await $.process(processSecurityScheme, securityScheme);
-  }
-
-  return undefined;
-}
-
-export async function processSecurityScheme(scheme: v3.SecurityScheme, $: Context): Promise<Authentication | undefined> {
-  const result = authentication(scheme, $);
-
-  if (result) {
-    await addExtensionsToAttic(result, scheme);
-  }
-
-  return result;
-}
-
-function authentication(scheme: v3.SecurityScheme, $: Context) {
+export async function* securityScheme(scheme: v3.SecurityScheme, $: Context) {
   switch (valueOf(use(scheme.type))) {
     case v3.SecurityType.ApiKey:
-      return apiKeyAuthentication(<v3.ApiKeySecurityScheme>scheme, $);
+      return yield *apiKeyAuthentication(<v3.ApiKeySecurityScheme>scheme, $);
 
     case v3.SecurityType.Http:
-      return httpAuthentication(<v3.HttpSecurityScheme>scheme, $);
+      return yield *httpAuthentication(<v3.HttpSecurityScheme>scheme, $);
 
     case v3.SecurityType.OAuth2:
-      return oauth2Authentication(<v3.OAuth2SecurityScheme>scheme, $);
+      return yield *oauth2Authentication(<v3.OAuth2SecurityScheme>scheme, $);
 
     case v3.SecurityType.OpenIdConnect:
-      return openIdConnectAuthentication(<v3.OpenIdConnectSecurityScheme>scheme, $);
+      return yield *openIdConnectAuthentication(<v3.OpenIdConnectSecurityScheme>scheme, $);
   }
 
   $.error(`unknown security scheme type '${scheme.type}'`, scheme);
-  return undefined;
 }
 
-function apiKeyAuthentication(scheme: v3.ApiKeySecurityScheme, $: Context) {
+function *apiKeyAuthentication(scheme: v3.ApiKeySecurityScheme, $: Context) {
   let location: ParameterLocation;
 
   switch (valueOf(use(scheme.in))) {
@@ -68,28 +39,22 @@ function apiKeyAuthentication(scheme: v3.ApiKeySecurityScheme, $: Context) {
 
     default:
       $.error(`unknown apikey parameter location: '${scheme.in}'`, scheme);
-      return undefined;
+      return;
   }
 
-  const result = new ApiKeyAuthentication(nameOf(scheme), scheme.name, location, {
+  yield addExtensionsToAttic(new ApiKeyAuthentication(nameOf(scheme), scheme.name, location, {
     description: scheme.description
-  });
-
-  $.api.http.authentications.push(result);
-  return result;
+  }), scheme);
 }
 
-function httpAuthentication(scheme: v3.HttpSecurityScheme, $: Context) {
-  const result = new HttpAuthentication(nameOf(scheme), scheme.scheme, {
+function *httpAuthentication(scheme: v3.HttpSecurityScheme, $: Context) {
+  yield addExtensionsToAttic( new HttpAuthentication(nameOf(scheme), scheme.scheme, {
     bearerFormat: scheme.bearerFormat,
     description: scheme.description,
-  });
-
-  $.api.http.authentications.push(result);
-  return result;
+  }), scheme);
 }
 
-function oauth2Authentication(scheme: v3.OAuth2SecurityScheme, $: Context) {
+function *oauth2Authentication(scheme: v3.OAuth2SecurityScheme, $: Context) {
   const flows = new OAuth2Flows({
     implicit: implicitFlow(scheme.flows.implicit),
     password: passwordFlow(scheme.flows.password),
@@ -97,21 +62,15 @@ function oauth2Authentication(scheme: v3.OAuth2SecurityScheme, $: Context) {
     authorizationCode: authorizationCodeFlow(scheme.flows.authorizationCode)
   });
 
-  const result = new OAuth2Authentication(nameOf(scheme), flows, {
+  yield addExtensionsToAttic(new OAuth2Authentication(nameOf(scheme), flows, {
     description: scheme.description
-  });
-
-  $.api.http.authentications.push(result);
-  return result;
+  }),scheme);
 }
 
-function openIdConnectAuthentication(scheme: v3.OpenIdConnectSecurityScheme, $: Context) {
-  const result = new OpenIdConnectAuthentication(nameOf(scheme), scheme.openIdConnectUrl, {
+function *openIdConnectAuthentication(scheme: v3.OpenIdConnectSecurityScheme, $: Context) {
+  yield addExtensionsToAttic(new OpenIdConnectAuthentication(nameOf(scheme), scheme.openIdConnectUrl, {
     description: scheme.description
-  });
-
-  $.api.http.authentications.push(result);
-  return result;
+  }), scheme);
 }
 
 function implicitFlow(flow?: v3.ImplicitOAuthFlow) {

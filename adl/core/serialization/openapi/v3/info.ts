@@ -8,7 +8,7 @@ import { is } from '../../../support/visitor';
 import { addExtensionsToAttic } from '../common';
 import { Context } from './serializer';
 
-async function processContact(contact: v3.Contact, $: Context) {
+async function *processContact(contact: v3.Contact, $: Context) {
   const result = new Contact(ContactRole.Author, {
     name: contact.name,
     email: contact.email,
@@ -18,20 +18,20 @@ async function processContact(contact: v3.Contact, $: Context) {
   // add remaining extensions to attic. 
   await addExtensionsToAttic(result, contact);
 
-  return result;
+  yield result;
 }
 
-async function processLicense(license: v3.License, $: Context) {
+async function *processLicense(license: v3.License, $: Context) {
   const result = new License(license.name, {
     url: license.url
   });
   // add remaining extensions to attic. 
   await addExtensionsToAttic(result, license);
 
-  return result;
+  yield result;
 }
 
-export async function processInfo(info: v3.Info, $: Context): Promise<Metadata | undefined> {
+export async function *processInfo(info: v3.Info, $: Context): AsyncGenerator<Metadata> {
 
   // create the metadata 
   const metadata = new Metadata(info.title, {
@@ -41,12 +41,18 @@ export async function processInfo(info: v3.Info, $: Context): Promise<Metadata |
 
   // add the author contact
   if (is(info.contact)) {
-    metadata.contacts.push(await $.process(processContact, info.contact));
+    for await (const c of $.process2(processContact, info.contact)) {
+      metadata.contacts.push(c)  ;
+    }
+    //metadata.contacts.push(await $.process2(processContact, info.contact));
   }
 
   // add license
   if (is(info.license)) {
-    metadata.licenses.push(await $.process(processLicense, info.license));
+    for await (const l of $.process2(processLicense, info.license) ) {
+      metadata.licenses.push(l);
+    }
+    //metadata.licenses.push(await $.process(processLicense, info.license));
   }
 
   // add remaining extensions to attic. 
@@ -55,11 +61,11 @@ export async function processInfo(info: v3.Info, $: Context): Promise<Metadata |
   // we handled version much earler.
   use(info.version);
 
-  return metadata;
+  yield metadata;
 }
 
 
-export async function processExternalDocs(externalDocs: v3.ExternalDocumentation|undefined, $: Context): Promise<Reference | undefined> {
+export async function *processExternalDocs(externalDocs: v3.ExternalDocumentation|undefined, $: Context): AsyncGenerator<Reference> {
   if( externalDocs ) {
   // external docs are just a kind of reference. 
     const reference = new Reference('external-documentation', {
@@ -68,13 +74,12 @@ export async function processExternalDocs(externalDocs: v3.ExternalDocumentation
     });
     await addExtensionsToAttic(reference, externalDocs);
 
-    return reference;
+    yield reference;
   }
-  return undefined;
 }
 
 
-export async function processTag(tag: v3.Tag, $: Context): Promise<Reference> {
+export async function *processTag(tag: v3.Tag, $: Context): AsyncGenerator<Reference> {
   const reference = new Reference(tag.name, {
     summary: tag.description,
     location: tag.externalDocs ? tag.externalDocs.url : undefined,
@@ -84,5 +89,5 @@ export async function processTag(tag: v3.Tag, $: Context): Promise<Reference> {
 
   await addExtensionsToAttic(reference, tag);
 
-  return reference;
+  yield reference;
 }

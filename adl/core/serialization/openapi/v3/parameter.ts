@@ -1,57 +1,31 @@
-import { values } from '@azure-tools/linq';
-import { unzip, v3 } from '@azure-tools/openapi';
+import { v3 } from '@azure-tools/openapi';
 import { use, valueOf } from '@azure-tools/sourcemap';
-import { Element } from '../../../model/element';
-import { CookieParameter, HeaderParameter, Parameter, PathParameter, QueryParameter, RenderStyle } from '../../../model/http/parameter';
-import { processInline } from './schema';
-import { Context, ItemsOf } from './serializer';
+import { CookieParameter, HeaderParameter, PathParameter, QueryParameter, RenderStyle } from '../../../model/http/parameter';
+import { firstOrDefault, processInline } from './schema';
+import { Context } from './serializer';
 
-
-export async function processParameters(input: ItemsOf<v3.Parameter>, $: Context): Promise<Element | undefined> {
-  const { extensions, references, values: parameters } = unzip<v3.Parameter>(input);
-
-  // handle extensions first
-  for (const { key, value: extension } of values(extensions)) {
-    // switch block to handle specific vendor extension?
-    // unknown ones need to get attached to something.
-  }
-
-  // handle actual items next
-  for (const { key, value } of values(parameters)) {
-    $.api.http.parameters.push( await $.process(processParameter, value) );
-  }
-
-  // handle references last 
-  for (const { key, value} of values(references)) {
-    $.api.http.parameters.push(await $.processInline(processParameter, value) );
-  }
-
-  return undefined;
-}
-
-export async function processParameter(parameter: v3.Parameter, $: Context, options?: { isAnonymous?: boolean }): Promise<Parameter | undefined> {
+export async function *parameter(parameter: v3.Parameter, $: Context, options?: { isAnonymous?: boolean }) {
 
   switch (valueOf(use(parameter.in))) {
     case v3.ParameterLocation.Path:
-      return processPathParameter(<v3.PathParameter>parameter, $, options);
+      return yield* processPathParameter(<v3.PathParameter>parameter, $, options);
 
     case v3.ParameterLocation.Cookie:
-      return processCookieParameter(<v3.CookieParameter>parameter, $, options);
+      return yield *processCookieParameter(<v3.CookieParameter>parameter, $, options);
 
     case v3.ParameterLocation.Query:
-      return processQueryParameter(<v3.QueryParameter>parameter, $, options);
+      return yield *processQueryParameter(<v3.QueryParameter>parameter, $, options);
 
     case v3.ParameterLocation.Header:
-      return processHeaderParameter(<v3.HeaderParameter>parameter, $, options);
+      return yield *processHeaderParameter(<v3.HeaderParameter>parameter, $, options);
   }
-  $.error(`unknown parameter location '${parameter.in}'`, parameter);
-
-  return undefined;
+  throw $.error(`unknown parameter location '${parameter.in}'`, parameter);
+ 
 }
 
 
-export async function processPathParameter(parameter: v3.PathParameter, $: Context, options?: { isAnonymous?: boolean }): Promise<Parameter | undefined> {
-  const schema = await processInline(parameter.schema, $) || $.api.schemas.Any;
+export async function *processPathParameter(parameter: v3.PathParameter, $: Context, options?: { isAnonymous?: boolean })  {
+  const schema = await firstOrDefault( processInline(parameter.schema, $)) || $.api.schemas.Any;
   const result = new PathParameter(parameter.name, schema,
     parameter.explode === undefined ? false : parameter.explode, {
       description: parameter.description,
@@ -60,12 +34,11 @@ export async function processPathParameter(parameter: v3.PathParameter, $: Conte
     });
   result.addToAttic('example', parameter.example);
 
-  $.api.http.parameters.push(result);
-  return result;
+  yield result;
 }
 
-export async function processCookieParameter(parameter: v3.CookieParameter, $: Context, options?: { isAnonymous?: boolean }): Promise<Parameter | undefined> {
-  const schema = await processInline(parameter.schema, $) || $.api.schemas.Any;
+export async function *processCookieParameter(parameter: v3.CookieParameter, $: Context, options?: { isAnonymous?: boolean })  {
+  const schema = await firstOrDefault( processInline(parameter.schema, $)) || $.api.schemas.Any;
   const result = new CookieParameter(parameter.name, schema,
     parameter.explode === undefined ? true : parameter.explode, {
       description: parameter.description,
@@ -74,12 +47,11 @@ export async function processCookieParameter(parameter: v3.CookieParameter, $: C
   );
   result.addToAttic('example', parameter.example);
 
-  $.api.http.parameters.push(result);
-  return result;
+  yield result;
 }
 
-export async function processQueryParameter(parameter: v3.QueryParameter, $: Context, options?: { isAnonymous?: boolean }): Promise<Parameter | undefined> {
-  const schema = await processInline(parameter.schema, $) || $.api.schemas.Any;
+export async function *processQueryParameter(parameter: v3.QueryParameter, $: Context, options?: { isAnonymous?: boolean }) {
+  const schema = await firstOrDefault( processInline(parameter.schema, $)) || $.api.schemas.Any;
   const renderStyle = <any><unknown>parameter.style || RenderStyle.Form;
   const result = new QueryParameter(parameter.name, schema,
     parameter.explode === undefined ? renderStyle === RenderStyle.Form ? true : false : parameter.explode, {
@@ -91,11 +63,10 @@ export async function processQueryParameter(parameter: v3.QueryParameter, $: Con
 
     });
   result.addToAttic('example', parameter.example);
-  $.api.http.parameters.push(result);
-  return result;
+  yield result;
 }
-export async function processHeaderParameter(parameter: v3.HeaderParameter, $: Context, options?: { isAnonymous?: boolean }): Promise<Parameter | undefined> {
-  const schema = await processInline(parameter.schema, $) || $.api.schemas.Any;
+export async function *processHeaderParameter(parameter: v3.HeaderParameter, $: Context, options?: { isAnonymous?: boolean }) {
+  const schema = await firstOrDefault( processInline(parameter.schema, $)) || $.api.schemas.Any;
   const result = new HeaderParameter(parameter.name, schema,
     parameter.explode === undefined ? false : parameter.explode, {
       description: parameter.description,
@@ -104,6 +75,5 @@ export async function processHeaderParameter(parameter: v3.HeaderParameter, $: C
     });
   result.addToAttic('example', parameter.example);
 
-  $.api.http.parameters.push(result);
-  return result;
+  yield result;
 }
