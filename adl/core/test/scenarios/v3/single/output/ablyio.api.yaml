@@ -2470,6 +2470,8 @@ http:
       summary: Get the service time
       tags:
         - Stats
+      attic:
+        security: []
   parameters:
     - *a17
     - *a35

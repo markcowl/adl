@@ -197,6 +197,16 @@ http:
           description: Successful response
       tags:
         - data
+      attic:
+        security:
+          - Oauth2:
+              - https://www.googleapis.com/auth/analytics
+            Oauth2c:
+              - https://www.googleapis.com/auth/analytics
+          - Oauth2:
+              - https://www.googleapis.com/auth/analytics.readonly
+            Oauth2c:
+              - https://www.googleapis.com/auth/analytics.readonly
     - description: Lists all accounts to which the user has access.
       id: analytics.management.accounts.list
       parameters:
@@ -247,6 +257,16 @@ http:
           description: Successful response
       tags:
         - management
+      attic:
+        security:
+          - Oauth2:
+              - https://www.googleapis.com/auth/analytics
+            Oauth2c:
+              - https://www.googleapis.com/auth/analytics
+          - Oauth2:
+              - https://www.googleapis.com/auth/analytics.readonly
+            Oauth2c:
+              - https://www.googleapis.com/auth/analytics.readonly
     - description: Lists web properties to which the user has access.
       id: analytics.management.webproperties.list
       parameters:
@@ -306,6 +326,16 @@ http:
           description: Successful response
       tags:
         - management
+      attic:
+        security:
+          - Oauth2:
+              - https://www.googleapis.com/auth/analytics
+            Oauth2c:
+              - https://www.googleapis.com/auth/analytics
+          - Oauth2:
+              - https://www.googleapis.com/auth/analytics.readonly
+            Oauth2c:
+              - https://www.googleapis.com/auth/analytics.readonly
     - description: Lists views (profiles) to which the user has access.
       id: analytics.management.profiles.list
       parameters:
@@ -374,6 +404,16 @@ http:
           description: Successful response
       tags:
         - management
+      attic:
+        security:
+          - Oauth2:
+              - https://www.googleapis.com/auth/analytics
+            Oauth2c:
+              - https://www.googleapis.com/auth/analytics
+          - Oauth2:
+              - https://www.googleapis.com/auth/analytics.readonly
+            Oauth2c:
+              - https://www.googleapis.com/auth/analytics.readonly
     - description: Lists goals to which the user has access.
       id: analytics.management.goals.list
       parameters:
@@ -451,6 +491,16 @@ http:
           description: Successful response
       tags:
         - management
+      attic:
+        security:
+          - Oauth2:
+              - https://www.googleapis.com/auth/analytics
+            Oauth2c:
+              - https://www.googleapis.com/auth/analytics
+          - Oauth2:
+              - https://www.googleapis.com/auth/analytics.readonly
+            Oauth2c:
+              - https://www.googleapis.com/auth/analytics.readonly
     - description: Lists advanced segments to which the user has access.
       id: analytics.management.segments.list
       parameters:
@@ -502,6 +552,16 @@ http:
           description: Successful response
       tags:
         - management
+      attic:
+        security:
+          - Oauth2:
+              - https://www.googleapis.com/auth/analytics
+            Oauth2c:
+              - https://www.googleapis.com/auth/analytics
+          - Oauth2:
+              - https://www.googleapis.com/auth/analytics.readonly
+            Oauth2c:
+              - https://www.googleapis.com/auth/analytics.readonly
   parameters:
     - *a3
     - *a4

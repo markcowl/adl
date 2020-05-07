@@ -48,6 +48,9 @@ export async function *operation(path: string, operation: v3.Operation, shared: 
     tags: [...operation.tags || []]
   });
 
+  // push to the attic for now
+  result.addToAttic('security', operation.security);
+
   $.addVersionInfo(result,operation);
 
   // OAI3 parameters are all in the operation
