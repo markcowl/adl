@@ -2,8 +2,6 @@ schemes:
   - https
 host: api.github.com
 basePath: /
-externalDocs:
-  url: https://developer.github.com/v3/
 consumes:
   - application/json
 produces:
