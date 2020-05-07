@@ -17,6 +17,17 @@ export async function consume<T>(g: AsyncGenerator<T>) {
   }
 }
 
+export async function firstOrDefault<T>(generator: AsyncGenerator<T>): Promise<T | undefined> {
+  let result: T | undefined;
+  for await (const each of generator) {
+    if (result === undefined) {
+      result = each;
+      continue;
+    }
+    throw new Error('Expecting only a single item');
+  }
+  return result;
+}
 
 export function isObjectSchema(schema: v3.Schema) {
   return schema.type == common.JsonType.Object ||

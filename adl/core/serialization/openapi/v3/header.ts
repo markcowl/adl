@@ -2,7 +2,8 @@ import { v3, vendorExtensions } from '@azure-tools/openapi';
 import { anonymous, nameOf, refTo, use } from '@azure-tools/sourcemap';
 import { Alias } from '../../../model/alias';
 import { Header } from '../../../model/http/header';
-import { firstOrDefault, processInline } from './schema';
+import { firstOrDefault } from '../common';
+import { processInline } from './schema';
 import { Context, ItemsOf } from './serializer';
 
 export async function *processHeaders(input: ItemsOf<v3.Header>, $: Context): AsyncGenerator<Header|Alias<Header>> {

@@ -2,7 +2,8 @@ import { items } from '@azure-tools/linq';
 import { v3 } from '@azure-tools/openapi';
 import { anonymous, nameOf } from '@azure-tools/sourcemap';
 import { Request } from '../../../model/http/request';
-import { firstOrDefault, processInline } from './schema';
+import { firstOrDefault } from '../common';
+import { processInline } from './schema';
 import { Context } from './serializer';
 
 export async function *requestBody(requestBody: v3.RequestBody, $: Context, options?: { isAnonymous?: boolean }): AsyncGenerator<Request> {
