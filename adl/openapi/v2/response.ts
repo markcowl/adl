@@ -1,10 +1,11 @@
 import { Dictionary } from '../common/dictionary';
-import { Header } from './header';
-import { Example } from './example';
-import { Schema } from './schema';
-import { HttpStatus } from './http-status';
-import { VendorExtensions } from '../common/vendor-extensions';
 import { JsonReference } from '../common/json-reference';
+import { VendorExtensions } from '../v3/openapiv3';
+import { Example } from './example';
+import { Header } from './header';
+import { HttpStatus } from './http-status';
+import { Schema } from './schema';
+
 
 /** 
  * Describes a single response from an API Operation. 

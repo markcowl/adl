@@ -1,15 +1,16 @@
-import { VendorExtensions } from '../common/vendor-extensions';
 import { Dictionary } from '../common/dictionary';
-import { Schema, SchemaReference } from './schema';
-import { Response, ResponseReference } from './response';
-import { ParameterReference, CookieParameter, HeaderParameter, PathParameter, QueryParameter } from './parameters';
-import { Example } from './example';
 import { JsonReference } from '../common/json-reference';
-import { RequestBody } from './request-body';
-import { Link } from './link';
+import { VendorExtensions } from '../common/vendor-extensions';
 import { Callback } from './callback';
+import { Example } from './example';
+import { Header, HeaderReference } from './header';
+import { Link } from './link';
+import { CookieParameter, HeaderParameter, ParameterReference, PathParameter, QueryParameter } from './parameters';
+import { RequestBody } from './request-body';
+import { Response, ResponseReference } from './response';
+import { Schema, SchemaReference } from './schema';
 import { SecurityScheme } from './security';
-import { HeaderReference, Header } from './header';
+
 
 /**
  * Holds a set of reusable objects for different aspects of the OAS. All objects defined within the components object will have no effect on the API unless they are explicitly referenced from properties outside the components object.

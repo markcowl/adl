@@ -1,7 +1,8 @@
 import { Dictionary } from '../common/dictionary';
+import { Url } from '../common/uri';
 import { VendorExtensions } from '../common/vendor-extensions';
 import { ParameterLocation } from './parameter-location';
-import { Url } from '../common/uri';
+
 
 /**
  * Lists the required security schemes to execute this operation. The name used for each property MUST correspond to a security scheme declared in the Security Schemes under the Components Object.

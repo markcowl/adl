@@ -1,8 +1,9 @@
-import { VendorExtensions } from '../common/vendor-extensions';
-import { Schema, SchemaReference } from './schema';
-import { ExampleOrExamples } from './example';
 import { Dictionary } from '../common/dictionary';
+import { VendorExtensions } from '../common/vendor-extensions';
 import { Encoding } from './encoding';
+import { ExampleOrExamples } from './example';
+import { Schema, SchemaReference } from './schema';
+
 
 /**
  * Each Media Type Object provides schema and examples for the media type identified by its key.

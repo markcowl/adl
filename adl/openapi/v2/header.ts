@@ -1,6 +1,7 @@
 import { JsonType } from '../common/jsontype';
 import { SchemaBase } from './schema';
 
+
 /** 
  * Represents a header declaration  
  * 

@@ -1,11 +1,10 @@
-import { Schemes } from './schemes';
-import { VendorExtensions } from '../common/vendor-extensions';
-
-import { Responses } from './response';
-
 import { ExternalDocumentation } from '../common/external-docs';
-import { BodyParameter, FormDataParameter, QueryParameter, PathParameter, HeaderParameter, ParameterReference } from './parameters';
+import { VendorExtensions } from '../common/vendor-extensions';
+import { BodyParameter, FormDataParameter, HeaderParameter, ParameterReference, PathParameter, QueryParameter } from './parameters';
+import { Responses } from './response';
+import { Schemes } from './schemes';
 import { SecurityScheme } from './security';
+
 
 /**
  * Describes a single API operation on a path.

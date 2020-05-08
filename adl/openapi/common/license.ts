@@ -1,5 +1,6 @@
 import { VendorExtensions } from './vendor-extensions';
 
+
 /** License information for the exposed API. */
 export interface License extends VendorExtensions {
 

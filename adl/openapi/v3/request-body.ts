@@ -1,6 +1,7 @@
-import { VendorExtensions } from '../common/vendor-extensions';
 import { Dictionary } from '../common/dictionary';
+import { VendorExtensions } from '../common/vendor-extensions';
 import { MediaType } from './media-type';
+
 
 /** 
  * Describes a single request body. 

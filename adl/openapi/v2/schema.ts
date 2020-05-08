@@ -1,10 +1,12 @@
-import { XML } from '../common/xml';
 import { Dictionary } from '../common/dictionary';
 import { ExternalDocumentation } from '../common/external-docs';
 import { JsonReference } from '../common/json-reference';
 import { JsonType } from '../common/jsontype';
 import { VendorExtensions } from '../common/vendor-extensions';
+import { XML } from '../common/xml';
 import { SchemaExtensions } from '../v3/openapiv3';
+
+
 /**
  * The Schema Object allows the definition of input and output data types. These types can be objects, but also primitives and arrays.
  * This object is based on the JSON Schema Specification Draft 4 and uses a predefined subset of it.

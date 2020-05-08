@@ -1,6 +1,7 @@
-import { VendorExtensions } from '../common/vendor-extensions';
 import { Dictionary } from '../common/dictionary';
 import { Url } from '../common/uri';
+import { VendorExtensions } from '../common/vendor-extensions';
+
 
 /** 
  * An object representing a Server Variable for server URL template substitution 

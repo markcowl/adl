@@ -6,7 +6,7 @@ import { firstOrDefault } from '../common';
 import { processInline } from './schema';
 import { Context, ItemsOf } from './serializer';
 
-export async function *processHeaders(input: ItemsOf<v3.Header>, $: Context): AsyncGenerator<Header|Alias<Header>> {
+export async function* processHeaders(input: ItemsOf<v3.Header>, $: Context): AsyncGenerator<Header | Alias<Header>> {
   // handle extensions first
   for (const [key, extension] of vendorExtensions(input)) {
     // switch block to handle specific vendor extension?
@@ -22,10 +22,10 @@ export async function *processHeaders(input: ItemsOf<v3.Header>, $: Context): As
     }
   }
 
-  yield * $.processDictionary(header, input);
+  yield* $.processDictionary(header, input);
 }
 
-export async function *header(header: v3.Header, $: Context, options?: { isAnonymous?: boolean }): AsyncGenerator<Header> {
+export async function* header(header: v3.Header, $: Context, options?: { isAnonymous?: boolean }): AsyncGenerator<Header> {
   const { api, visitor } = $;
   const name = options?.isAnonymous ? anonymous('header') : nameOf(header);
 
@@ -34,7 +34,7 @@ export async function *header(header: v3.Header, $: Context, options?: { isAnony
   use(header.required) && $.warn('header definitions should not contain property \'required\'', header.required);
 
   // get the schema for the header 
-  const schema = await firstOrDefault( processInline(header.schema,$,{isAnonymous: true})); 
+  const schema = await firstOrDefault(processInline(header.schema, $, { isAnonymous: true }));
 
   // create the http header object and track it. 
   const httpHeader = new Header({

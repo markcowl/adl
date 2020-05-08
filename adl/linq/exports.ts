@@ -3,9 +3,10 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-export * from './new-linq';
-export * from './freeze';
-export * from './visitor';
 export * from './common';
 export * from './factory';
+export * from './freeze';
+export * from './new-linq';
 export * from './sort';
+export * from './visitor';
+

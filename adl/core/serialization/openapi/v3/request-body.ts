@@ -6,17 +6,17 @@ import { firstOrDefault } from '../common';
 import { processInline } from './schema';
 import { Context } from './serializer';
 
-export async function *requestBody(requestBody: v3.RequestBody, $: Context, options?: { isAnonymous?: boolean }): AsyncGenerator<Request> {
+export async function* requestBody(requestBody: v3.RequestBody, $: Context, options?: { isAnonymous?: boolean }): AsyncGenerator<Request> {
   // a single request body gets turned into multiple requests with the same name 
   // (since we only want very weak binding between the requests, that's the job of the actual operation. )
 
   const bodyName = options?.isAnonymous ? anonymous('requestBody') : nameOf(requestBody);
-  
 
-  for( const [mediaType,type] of items(requestBody.content))  {
-    const schema = await firstOrDefault( processInline(type.schema, $)) || $.api.schemas.Any;
-    
-    const request = new Request(bodyName,mediaType,schema, {
+
+  for (const [mediaType, type] of items(requestBody.content)) {
+    const schema = await firstOrDefault(processInline(type.schema, $)) || $.api.schemas.Any;
+
+    const request = new Request(bodyName, mediaType, schema, {
       description: requestBody.description,
       required: requestBody.required,
     });
@@ -27,7 +27,7 @@ export async function *requestBody(requestBody: v3.RequestBody, $: Context, opti
 
     // encoding information not necessary yet... 
     request.addToAttic('encoding', type.encoding);
-    
+
     yield request;
   }
 }

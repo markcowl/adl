@@ -1,7 +1,6 @@
 import { Alias } from '../alias';
 import { Identity } from '../name';
 import * as base from '../operation';
-//import { Payload } from './body';
 import { Header } from './header';
 
 export class Response extends base.Response {

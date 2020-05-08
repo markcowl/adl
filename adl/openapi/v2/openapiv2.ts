@@ -1,14 +1,15 @@
-import { Schemes } from './schemes';
+import { Dictionary } from '../common/dictionary';
+import { ExternalDocumentation } from '../common/external-docs';
+import { Info } from '../common/info';
+import { Tag } from '../common/tag';
 import { VendorExtensions } from '../common/vendor-extensions';
 import { Definitions } from './definitions';
+import { Parameters } from './parameters';
 import { Paths } from './path';
 import { Responses } from './response';
-import { Parameters } from './parameters';
-import { Info } from '../common/info';
-import { ExternalDocumentation } from '../common/external-docs';
-import { Tag } from '../common/tag';
+import { Schemes } from './schemes';
 import { SecurityScheme } from './security';
-import { Dictionary } from '../common/dictionary';
+
 
 /** 
  * This is the root document object for the API specification 
@@ -61,13 +62,23 @@ export interface Model extends VendorExtensions {
   /** A list of tags used by the specification with additional metadata. The order of the tags can be used to reflect on their order by the parsing tools. Not all tags that are used by the Operation Object must be declared. The tags that are not declared may be organized randomly or based on the tools' logic. Each tag name in the list MUST be unique. */
   tags?: Array<Tag>;
 }
+export * from '../common/contact';
+export * from '../common/dictionary';
+export * from '../common/external-docs';
+export * from '../common/http-method';
+export * from '../common/info';
+export * from '../common/json-reference';
+export * from '../common/jsontype';
+export * from '../common/license';
+export * from '../common/tag';
+export * from '../common/uri';
+export * from '../common/vendor-extensions';
+export * from '../common/xml';
 export * from './collection-format';
 export * from './definitions';
 export * from './example';
 export * from './header';
-export * from '../common/http-method';
 export * from './http-status';
-
 export * from './operation';
 export * from './parameter-location';
 export * from './parameters';
@@ -77,14 +88,3 @@ export * from './schema';
 export * from './schemes';
 export * from './security';
 
-export * from '../common/contact';
-export * from '../common/dictionary';
-export * from '../common/external-docs';
-export * from '../common/info';
-export * from '../common/json-reference';
-export * from '../common/jsontype';
-export * from '../common/license';
-export * from '../common/tag';
-export * from '../common/uri';
-export * from '../common/vendor-extensions';
-export * from '../common/xml';

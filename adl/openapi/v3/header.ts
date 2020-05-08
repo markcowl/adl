@@ -1,5 +1,6 @@
-import { ParameterBase } from './parameters';
 import { JsonReference } from '../common/json-reference';
+import { ParameterBase } from './parameters';
+
 
 /**
  * The Header Object follows the structure of the Parameter Object with the following changes:

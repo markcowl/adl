@@ -1,10 +1,11 @@
-import { HttpStatus } from './http-status';
+import { Dictionary } from '../common/dictionary';
 import { JsonReference } from '../common/json-reference';
 import { VendorExtensions } from '../common/vendor-extensions';
 import { Header, HeaderReference } from './header';
-import { Dictionary } from '../common/dictionary';
-import { MediaType } from './media-type';
+import { HttpStatus } from './http-status';
 import { Link } from './link';
+import { MediaType } from './media-type';
+
 
 /**
  * Describes a single response from an API Operation, including design-time, static links to operations based on the response.

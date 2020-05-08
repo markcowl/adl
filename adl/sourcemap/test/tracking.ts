@@ -1,7 +1,6 @@
 import { describe, it } from 'mocha';
-import { Origin, TrackedSource, TrackedTarget } from '../proxies';
 import { Path } from '../exports';
-import { tmpdir } from 'os';
+import { Origin, TrackedSource, TrackedTarget } from '../proxies';
 require('source-map-support').install();
 
 const src = {

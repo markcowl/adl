@@ -1,8 +1,8 @@
 import { CreateFolderUri, ReadUri, ResolveUri } from '@azure-tools/uri';
-import { resolve, relative } from 'path';
 import { EventEmitter } from 'ee-ts';
-import * as fs from 'fs';
+import { relative, resolve } from 'path';
 import { Stopwatch } from './stopwatch';
+
 
 export type MessageEvent = (message: string, offendingNode: any) => void;
 

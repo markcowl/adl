@@ -1,6 +1,7 @@
 import { JsonReferenceMap } from '../common/json-reference';
 import { Schema } from './schema';
 
+
 /** 
  * The discriminator is a specific object in a schema which is used to inform the consumer of the specification of an alternative schema based on the value associated with it. 
  * 

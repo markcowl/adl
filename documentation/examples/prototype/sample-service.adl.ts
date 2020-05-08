@@ -2,6 +2,7 @@ import { FirstProperties } from './schemas/firstProperties.adl';
 import { SecondProperties } from './schemas/secondProperties.adl';
 import { ThirdProperties } from './schemas/thirdProperties.adl';
 
+
 /**
  * Resources for SampleService
  * 
