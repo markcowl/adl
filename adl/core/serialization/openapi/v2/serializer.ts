@@ -5,7 +5,8 @@ import { Host } from '../../../support/file-system';
 import { Context as Ctx, Visitor } from '../../../support/visitor';
 import { firstOrDefault } from '../common';
 import { processExternalDocs, processInfo, processTag } from '../common/info';
-import { processServers } from '../v2/server';
+import { securityScheme } from './security-schemes';
+import { processServers } from './server';
 
 // node types that are objects
 export type Context = Ctx<v2.Model>;
@@ -47,6 +48,10 @@ async function processRoot(oai2: v2.Model, $: Context) {
 
   for await (const server of $.process(processServers, oai2)) {
     $.api.http.connections.push(server);
+  }
+
+  for await (const authentication of $.processDictionary(securityScheme, oai2.securityDefinitions)) {
+    $.api.http.authentications.push(authentication);
   }
 
   // we don't need this.
