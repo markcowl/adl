@@ -1,5 +1,6 @@
 import { Dictionary } from '../common/dictionary';
 import { JsonReference } from '../common/json-reference';
+import { VendorExtensions } from '../v3/openapiv3';
 import { Example } from './example';
 import { Header } from './header';
 import { HttpStatus } from './http-status';
