@@ -76,6 +76,10 @@
     {
       "changeProcessCWD": true,
       "directory": "./adl/adl.types",
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./adl/linq",
     }
   ],
   "git.ignoreLimitWarning": true,
@@ -83,4 +87,5 @@
     "source.fixAll.eslint": true,
     "source.organizeImports": true
   },
+  "eslint.format.enable": true,
 }

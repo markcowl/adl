@@ -31,7 +31,7 @@ async function processRoot(oai3: v3.Model, $: Context) {
 
   const extensions = vendorExtensions(oai3);
 
-  for (const { key } of extensions) {
+  for (const [ key ] of extensions) {
     switch (key) {
       case 'x-ms-metadata':
 
