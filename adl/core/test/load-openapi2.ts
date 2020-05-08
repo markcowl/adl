@@ -27,7 +27,10 @@ async function checkAttic(api: ApiModel, errors: Errors, atticOutput: string) {
     errors.check(() => equal(attic.info, undefined, 'Should not have an info section left in attic'));
     errors.check(() => equal(attic.tags, undefined, 'Should not have a tags section left in attic'));
     errors.check(() => equal(attic.externalDocs, undefined, 'Should not have an externalDocs section left in attic'));
-
+    errors.check(() => equal(attic.schemes, undefined, 'Should not have schemes section left in attic'));
+    errors.check(() => equal(attic.host, undefined, 'Should not have host left in attic'));
+    errors.check(() => equal(attic.basePath, undefined, 'Should not have basePath left in attic'));
+    
     await writeFile(atticOutput, serialize(api.attic.valueOf()));
     delete api.attic;
   }

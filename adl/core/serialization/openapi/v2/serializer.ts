@@ -5,6 +5,7 @@ import { Host } from '../../../support/file-system';
 import { Context as Ctx, Visitor } from '../../../support/visitor';
 import { firstOrDefault } from '../common';
 import { processExternalDocs, processInfo, processTag } from '../common/info';
+import { processServers } from '../v2/server';
 
 // node types that are objects
 export type Context = Ctx<v2.Model>;
@@ -42,6 +43,10 @@ async function processRoot(oai2: v2.Model, $: Context) {
 
   for await (const reference of $.processArray(processTag, oai2.tags)) {
     $.api.metaData.references.push(reference);
+  }
+
+  for await (const server of $.process(processServers, oai2)) {
+    $.api.http.connections.push(server);
   }
 
   // we don't need this.

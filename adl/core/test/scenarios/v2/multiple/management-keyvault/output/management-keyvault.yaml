@@ -1,4 +1,8 @@
-http: {}
+http:
+  connections:
+    - url: https://management.azure.com/
+    - url: https://management.azure.com/
+    - url: https://management.azure.com/
 metaData:
   name: KeyVaultManagementClient
   description: The Azure management API provides a RESTful set of web services

@@ -1,4 +1,6 @@
-http: {}
+http:
+  connections:
+    - url: https://api.github.com/
 metaData:
   name: GitHub
   description: >

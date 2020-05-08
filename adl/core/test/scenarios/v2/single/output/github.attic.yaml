@@ -1,7 +1,3 @@
-schemes:
-  - https
-host: api.github.com
-basePath: /
 consumes:
   - application/json
 produces:
