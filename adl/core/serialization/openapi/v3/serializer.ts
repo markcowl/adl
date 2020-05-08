@@ -31,7 +31,7 @@ async function processRoot(oai3: v3.Model, $: Context) {
 
   const extensions = vendorExtensions(oai3);
 
-  for (const [ key ] of extensions) {
+  for (const [key] of extensions) {
     switch (key) {
       case 'x-ms-metadata':
 
@@ -43,34 +43,34 @@ async function processRoot(oai3: v3.Model, $: Context) {
   }
 
   // openapi3 info
-  $.api.metaData = await firstOrDefault( $.process(processInfo, oai3.info)) || $.api.metaData;
-  
+  $.api.metaData = await firstOrDefault($.process(processInfo, oai3.info)) || $.api.metaData;
+
   // external docs are just a kind of reference
   for await (const reference of $.process(processExternalDocs, oai3.externalDocs)) {
     $.api.metaData.references.push(reference);
   }
-  
-  for await( const reference of  $.processArray(processTag, oai3.tags) ) {
+
+  for await (const reference of $.processArray(processTag, oai3.tags)) {
     $.api.metaData.references.push(reference);
   }
 
   // components will have to be early, since other things will $ref them 
   await consume($.process(processComponents, oai3.components));
 
-  for await( const server of $.processArray(processServer, oai3.servers)  ) {
-    $.api.http.connections.push( server);
+  for await (const server of $.processArray(processServer, oai3.servers)) {
+    $.api.http.connections.push(server);
   }
-  
+
   // await $.process(processSecurity, oai3.security);
 
   // paths second to last
-  for await ( const operation of $.processDictionary(path, oai3.paths) ) {
-    $.api.http.operations.push( operation);
+  for await (const operation of $.processDictionary(path, oai3.paths)) {
+    $.api.http.operations.push(operation);
   }
   for await (const operation of $.processDictionary(path, oai3['x-ms-paths'])) {
     $.api.http.operations.push(operation);
   }
-  
+
   // we don't need this.
   use(oai3.openapi);
 

@@ -1,11 +1,11 @@
+import { Dictionary } from '../common/dictionary';
+import { ExternalDocumentation } from '../common/external-docs';
 import { JsonReference } from '../common/json-reference';
 import { JsonType } from '../common/jsontype';
-import { Dictionary } from '../common/dictionary';
-import { Discriminator } from './discriminator';
-import { XML } from '../common/xml';
-import { ExternalDocumentation } from '../common/external-docs';
 import { SchemaExtensions } from '../common/schema-extensions';
 import { VendorExtensions } from '../common/vendor-extensions';
+import { XML } from '../common/xml';
+import { Discriminator } from './discriminator';
 
 
 /**

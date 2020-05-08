@@ -1,5 +1,5 @@
-import { Project, InterfaceDeclaration } from 'ts-morph';
-import { relative, dirname } from 'path';
+import { dirname, relative } from 'path';
+import { InterfaceDeclaration, Project } from 'ts-morph';
 
 function flatten<T>(arr: Array<Array<T>>): Array<T> {
   return (<any>arr).reduce(function (flat: any, toFlatten: any) {

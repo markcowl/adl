@@ -7,6 +7,7 @@ import { Alias, AndSchema, AnyOfSchema, ArraySchema, Constant, DictionarySchema,
 import { firstOrDefault, isEnumSchema, isObjectSchema, isPrimitiveSchema, push, toArray } from '../common';
 import { Context } from './serializer';
 
+
 /** Schema processing options */
 type Options = Partial<{
   /** this is an inline-declared anonymous schema; the name is not intended to be used as the final name */
@@ -41,30 +42,30 @@ function commonProperties(schema: v3.Schema) {
   };
 }
 
-export async function *processInline(schema: v3.Schema | v3.SchemaReference | undefined, $: Context, options?: Options): AsyncGenerator<Schema> {
-  if( schema ) {
-    for await (const result of $.processInline(processSchema, schema, options) ) {
-      if( result ) {
-        if( options?.isAnonymous ) {
-        // if this was anonymous, we just want back the target object 
+export async function* processInline(schema: v3.Schema | v3.SchemaReference | undefined, $: Context, options?: Options): AsyncGenerator<Schema> {
+  if (schema) {
+    for await (const result of $.processInline(processSchema, schema, options)) {
+      if (result) {
+        if (options?.isAnonymous) {
+          // if this was anonymous, we just want back the target object 
           yield result instanceof GenericAlias ? result.target : result;
         } else {
-          yield result instanceof GenericAlias ? new Alias(result.name, result.target,commonProperties(<any>schema)) : result;
+          yield result instanceof GenericAlias ? new Alias(result.name, result.target, commonProperties(<any>schema)) : result;
         }
       }
     }
   }
 }
 
-async function *getSchemas(schemas: Array<v3.Schema|v3.SchemaReference>|undefined, $: Context): AsyncGenerator<Schema>{
-  for(const each of values(use(schemas))) {
-    for await( const schema of $.processInline(processSchema,each, {isAnonymous:true})) {
+async function* getSchemas(schemas: Array<v3.Schema | v3.SchemaReference> | undefined, $: Context): AsyncGenerator<Schema> {
+  for (const each of values(use(schemas))) {
+    for await (const schema of $.processInline(processSchema, each, { isAnonymous: true })) {
       yield schema instanceof GenericAlias ? schema.target : schema;
     }
   }
 }
 
-export async function *processAnyOf(schema: v3.Schema, $: Context, options?: Options): AsyncGenerator<Schema> {
+export async function* processAnyOf(schema: v3.Schema, $: Context, options?: Options): AsyncGenerator<Schema> {
   // anyof[A,B,C] literally means [A] or [B] or [C] or [A & B] or [A & C] or [B & C] or [A & B & C]
   // NOTE: "An instance validates successfully against this keyword if it validates successfully against at least one schema defined by this keyword's value."
   //
@@ -101,7 +102,7 @@ export async function *processAnyOf(schema: v3.Schema, $: Context, options?: Opt
     combineWith.push(oneOf);
   }
 
-  const schemas = getSchemas(  schema.anyOf, $);
+  const schemas = getSchemas(schema.anyOf, $);
 
   // if this is combined with anything
   if (combineWith.length > 0) {
@@ -115,7 +116,7 @@ export async function *processAnyOf(schema: v3.Schema, $: Context, options?: Opt
 }
 
 
-export async function *processOneOf(schema: v3.Schema, $: Context, options?: Options): AsyncGenerator<Schema> {
+export async function* processOneOf(schema: v3.Schema, $: Context, options?: Options): AsyncGenerator<Schema> {
   // oneof[A,B,C] literally means [A] or [B] or [C]
   //
   // oneOf Car, Cat
@@ -151,9 +152,9 @@ export async function *processOneOf(schema: v3.Schema, $: Context, options?: Opt
 }
 
 // eslint-disable-next-line require-yield
-export async function *processSillyRef(schema: v3.Schema, $: Context, options?: { isAnonymous?: boolean; forUnderlyingEnumType?: boolean }): AsyncGenerator<Schema> {
+export async function* processSillyRef(schema: v3.Schema, $: Context, options?: { isAnonymous?: boolean; forUnderlyingEnumType?: boolean }): AsyncGenerator<Schema> {
   throw new Error('TODO: process silly references');
-  
+
 }
 
 export async function* processSchema(schema: v3.Schema, $: Context, options?: { isAnonymous?: boolean; forUnderlyingEnumType?: boolean }): AsyncGenerator<Schema> {
@@ -173,20 +174,20 @@ export async function* processSchema(schema: v3.Schema, $: Context, options?: { 
 
     if (length(schema.oneOf) > 0) {
       if (schema.discriminator) {
-      // are they using this as a parent schema and then trying to use bootstrap levitation 
-      // to somehow make it work?
+        // are they using this as a parent schema and then trying to use bootstrap levitation 
+        // to somehow make it work?
 
       }
       return processOneOf(schema, $, options);
     }
 
     if (length(schema.allOf) > 0) {
-    // this could be composition
-    // 
-    // or a back-door way to $ref 
+      // this could be composition
+      //  
+      // or a back-door way to $ref 
       if (length(schema.allOf) === 1) {
         if (!schema.properties) {
-        // no properties, but inheritance,
+          // no properties, but inheritance,
           return processSillyRef(schema, $, options);
         }
       }
@@ -217,33 +218,33 @@ export async function* processSchema(schema: v3.Schema, $: Context, options?: { 
         return processObjectSchema(schema, $, options);
 
       case undefined:
-      // dig deeper to figure out what this should be.
+        // dig deeper to figure out what this should be.
 
         // first, let's see if we can tell by format:
         switch (schema.format?.valueOf()) {
-        // is it some kind of binary response?
+          // is it some kind of binary response?
           case StringFormat.Binary:
           case StringFormat.File:
             return processFileSchema(schema, $);
         }
 
         if (isObjectSchema(schema)) {
-        // talk about properties or discriminator, pretty much mean object
+          // talk about properties or discriminator, pretty much mean object
           return processObjectSchema(schema, $, options);
         }
 
         if (schema.items || schema.maxItems !== undefined || schema.uniqueItems) {
-        // these only apply to arrays
+          // these only apply to arrays
           return processArraySchema(schema, $);
         }
 
         if (schema.pattern || schema.maxLength !== undefined || schema.minLength !== undefined) {
-        // these only apply to strings
+          // these only apply to strings
           return processStringSchema(schema, $);
         }
 
         if (schema.minimum !== undefined || schema.maximum !== undefined || schema.exclusiveMaximum !== undefined || schema.exclusiveMinimum !== undefined || schema.multipleOf !== undefined) {
-        // these only apply to numbers
+          // these only apply to numbers
           return processNumberSchema(schema, $);
         }
         break;
@@ -260,42 +261,42 @@ export async function* processSchema(schema: v3.Schema, $: Context, options?: { 
   }
 }
 
-export async function *processStringSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processStringSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   use(schema.format);
   switch (schema.format?.valueOf()) {
     case StringFormat.Base64Url:
     case StringFormat.Byte:
     case StringFormat.Binary:
-      return yield *processByteArraySchema(schema, $);
+      return yield* processByteArraySchema(schema, $);
 
     case StringFormat.Char:
-      return yield * processCharSchema(schema, $);
+      return yield* processCharSchema(schema, $);
 
     case StringFormat.Date:
-      return yield *processDateSchema(schema, $);
+      return yield* processDateSchema(schema, $);
 
     case StringFormat.Time:
-      return yield * processTimeSchema(schema, $);
+      return yield* processTimeSchema(schema, $);
 
     case StringFormat.DateTime:
     case StringFormat.DateTimeRfc1123:
-      return yield * processDateTimeSchema(schema, $);
+      return yield* processDateTimeSchema(schema, $);
 
     case StringFormat.Duration:
-      return yield * processDurationSchema(schema, $);
+      return yield* processDurationSchema(schema, $);
 
     case StringFormat.Uuid:
-      return yield * processUuidSchema(schema, $);
+      return yield* processUuidSchema(schema, $);
 
     case StringFormat.Url:
     case StringFormat.Uri:
-      return yield * processUriSchema(schema, $);
+      return yield* processUriSchema(schema, $);
 
     case StringFormat.Password:
-      return yield * processPasswordSchema(schema, $);
+      return yield* processPasswordSchema(schema, $);
 
     case StringFormat.OData:
-      return yield * processOdataSchema(schema, $);
+      return yield* processOdataSchema(schema, $);
   }
 
   if ($.forbiddenProperties(schema, ...objectProperties, ...arrayProperties, ...numberProperties)) {
@@ -309,8 +310,8 @@ export async function *processStringSchema(schema: v3.Schema, $: Context): Async
   }
 
   // otherwise, we have to get the standard string and make an alias for it with the adornments. 
-  const alias = new Alias(anonymous('string'),$.api.schemas.String, commonProperties(schema));
-  
+  const alias = new Alias(anonymous('string'), $.api.schemas.String, commonProperties(schema));
+
   if (schema.default) {
     alias.defaults.push(new ServerDefaultValue(schema.default));
   }
@@ -330,7 +331,7 @@ export async function *processStringSchema(schema: v3.Schema, $: Context): Async
   yield alias;
 }
 
-export async function *processByteArraySchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processByteArraySchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   if ($.forbiddenProperties(schema, ...stringProperties, ...objectProperties, ...numberProperties)) {
     return;
   }
@@ -339,18 +340,18 @@ export async function *processByteArraySchema(schema: v3.Schema, $: Context): As
 }
 
 function addAliasWithDefault(schema: v3.Schema, resultSchema: Schema, $: Context) {
-  if (schema.default || schema.description || schema.title || schema.nullable ) {
-    const alias = new Alias(anonymous(resultSchema.name),resultSchema, commonProperties(schema));
-    if( schema.default) {
+  if (schema.default || schema.description || schema.title || schema.nullable) {
+    const alias = new Alias(anonymous(resultSchema.name), resultSchema, commonProperties(schema));
+    if (schema.default) {
       alias.defaults.push(new ServerDefaultValue(schema.default));
     }
-    use( schema.default, true);
+    use(schema.default, true);
     return alias;
   }
   return resultSchema;
 }
 
-export async function *processCharSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processCharSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return;
   }
@@ -358,7 +359,7 @@ export async function *processCharSchema(schema: v3.Schema, $: Context): AsyncGe
   return yield addAliasWithDefault(schema, $.api.schemas.Char, $);
 }
 
-export async function *processDateSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processDateSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return;
   }
@@ -366,7 +367,7 @@ export async function *processDateSchema(schema: v3.Schema, $: Context): AsyncGe
   return yield addAliasWithDefault(schema, $.api.schemas.Date, $);
 }
 
-export async function *processTimeSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processTimeSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return;
   }
@@ -374,7 +375,7 @@ export async function *processTimeSchema(schema: v3.Schema, $: Context): AsyncGe
   return yield addAliasWithDefault(schema, $.api.schemas.Time, $);
 }
 
-export async function *processDateTimeSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processDateTimeSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return;
   }
@@ -382,7 +383,7 @@ export async function *processDateTimeSchema(schema: v3.Schema, $: Context): Asy
   return yield addAliasWithDefault(schema, $.api.schemas.DateTime, $);
 }
 
-export async function *processDurationSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processDurationSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return;
   }
@@ -390,7 +391,7 @@ export async function *processDurationSchema(schema: v3.Schema, $: Context): Asy
   return yield addAliasWithDefault(schema, $.api.schemas.Duration, $);
 }
 
-export async function *processUuidSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processUuidSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return;
   }
@@ -398,16 +399,16 @@ export async function *processUuidSchema(schema: v3.Schema, $: Context): AsyncGe
   return yield addAliasWithDefault(schema, $.api.schemas.Uuid, $);
 }
 
-export async function *processUriSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processUriSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
-    return ;
+    return;
   }
   use(schema.example);
 
   return yield addAliasWithDefault(schema, $.api.schemas.Uri, $);
 }
 
-export async function *processPasswordSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processPasswordSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return;
   }
@@ -415,7 +416,7 @@ export async function *processPasswordSchema(schema: v3.Schema, $: Context): Asy
   return yield addAliasWithDefault(schema, $.api.schemas.Password, $);
 }
 
-export async function *processOdataSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processOdataSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return;
   }
@@ -423,7 +424,7 @@ export async function *processOdataSchema(schema: v3.Schema, $: Context): AsyncG
   return yield addAliasWithDefault(schema, $.api.schemas.OData, $);
 }
 
-export async function *processBooleanSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processBooleanSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   if ($.forbiddenProperties(schema, ...notPrimitiveProperties)) {
     return;
   }
@@ -431,7 +432,7 @@ export async function *processBooleanSchema(schema: v3.Schema, $: Context): Asyn
   return yield addAliasWithDefault(schema, $.api.schemas.Boolean, $);
 }
 
-export async function *processIntegerSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processIntegerSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   if ($.forbiddenProperties(schema, ...stringProperties, ...objectProperties, ...arrayProperties)) {
     return;
   }
@@ -457,7 +458,7 @@ export async function *processIntegerSchema(schema: v3.Schema, $: Context): Asyn
   yield constrainNumericSchema(schema, $, result);
 }
 
-export async function *processNumberSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processNumberSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   const format = use(schema.format);
 
   if ($.forbiddenProperties(schema, ...stringProperties, ...objectProperties, ...arrayProperties)) {
@@ -490,7 +491,7 @@ function constrainNumericSchema(schema: v3.Schema, $: Context, target: Schema): 
   }
 
   // gonna need an alias
-  const alias = new Alias(anonymous('number'),target, commonProperties(schema));
+  const alias = new Alias(anonymous('number'), target, commonProperties(schema));
 
   if (schema.default) {
     alias.defaults.push(new ServerDefaultValue(schema.default));
@@ -516,25 +517,25 @@ function constrainNumericSchema(schema: v3.Schema, $: Context, target: Schema): 
 }
 
 
-export async function *processArraySchema(schema: v3.Schema, $: Context, options?: Options): AsyncGenerator<Schema> {
+export async function* processArraySchema(schema: v3.Schema, $: Context, options?: Options): AsyncGenerator<Schema> {
   const schemaName = <Identity>(options?.isAnonymous ? anonymous('array') : nameOf(schema));
   // if this isn't anonymous or a property or parameter, things like descriptions belong to this declaration
   const common = (!options?.isAnonymous && !options?.isParameter && !options?.isProperty) ? commonProperties(schema) : {};
 
 
-  const elementSchema = await firstOrDefault( processInline(schema.items, $, { isAnonymous: true})) || $.api.schemas.Any;
+  const elementSchema = await firstOrDefault(processInline(schema.items, $, { isAnonymous: true })) || $.api.schemas.Any;
 
   if ($.forbiddenProperties(schema, ...stringProperties, ...numberProperties)) {
     return undefined;
   }
 
   const result = new ArraySchema(elementSchema);
-  
+
   if (length(unusedMembers(schema)) === 0) {
     return yield result;
   }
 
-  const alias = new Alias(anonymous('array'),result, {
+  const alias = new Alias(anonymous('array'), result, {
     name: schemaName,
     ...common
   });
@@ -557,7 +558,7 @@ export async function *processArraySchema(schema: v3.Schema, $: Context, options
   return yield alias;
 }
 
-export async function *processAdditionalProperties(schema: v3.Schema, $: Context, options?: Options): AsyncGenerator<Schema> {
+export async function* processAdditionalProperties(schema: v3.Schema, $: Context, options?: Options): AsyncGenerator<Schema> {
   if (!schema.additionalProperties) {
     throw new Error('should not get here.');
   }
@@ -567,11 +568,11 @@ export async function *processAdditionalProperties(schema: v3.Schema, $: Context
   const common = schema.properties ? {} : commonProperties(schema);
 
   // true means type == any
-  const dictionaryType = schema.additionalProperties != true ? await firstOrDefault( processInline(schema.additionalProperties, $, { isAnonymous: true })) || $.api.schemas.Any : $.api.schemas.Any;
+  const dictionaryType = schema.additionalProperties != true ? await firstOrDefault(processInline(schema.additionalProperties, $, { isAnonymous: true })) || $.api.schemas.Any : $.api.schemas.Any;
 
   if (length(common) > 0 || schema.maxProperties !== undefined || schema.minProperties !== undefined) {
     const result = new DictionarySchema(dictionaryType);
-    
+
     const alias = new Alias(anonymous('dictionary'), result, {
       name: schemaName,
       ...common
@@ -595,17 +596,17 @@ export async function *processAdditionalProperties(schema: v3.Schema, $: Context
     name: schemaName,
     ...common
   });
-  
+
   yield result;
 }
 
 
-export async function *processObjectSchema(schema: v3.Schema, $: Context, options?: Options): AsyncGenerator<Schema> {
+export async function* processObjectSchema(schema: v3.Schema, $: Context, options?: Options): AsyncGenerator<Schema> {
 
   if (schema.additionalProperties && length(schema.properties) === 0 && length(schema.allOf) === 0) {
     // if it has no actual properties of it's own, but it has additionalProperties, return just the dictionary
     // as the type.
-    return yield *await processAdditionalProperties(schema, $, options);
+    return yield* await processAdditionalProperties(schema, $, options);
   }
   const schemaName = options?.isAnonymous ? anonymous('object') : nameOf(schema);
 
@@ -615,16 +616,16 @@ export async function *processObjectSchema(schema: v3.Schema, $: Context, option
   result.addToAttic('example', (<any>schema).example);
 
   const schemas = getSchemas(schema.allOf, $);
-  await push( result.extends, schemas);
-  
+  await push(result.extends, schemas);
+
   // yeild this as soon as possible in case we recurse.
   yield result;
-  
+
   // process the properties
   for (const [propertyName, property] of items(use(schema.properties))) {
     // process schema/reference inline
-    const propSchema = await firstOrDefault( processInline(property, $, { isAnonymous: true }))|| $.api.schemas.Any;
-    
+    const propSchema = await firstOrDefault(processInline(property, $, { isAnonymous: true })) || $.api.schemas.Any;
+
     // grabs the 'required' value for the property
     let required = undefined;
 
@@ -638,10 +639,10 @@ export async function *processObjectSchema(schema: v3.Schema, $: Context, option
       description: property.description,
       writeonly: property.writeOnly,
       readonly: property.readOnly,
-      
+
     });
     p.addToAttic('example', (<any>property).example);
-    $.addVersionInfo(p,property);
+    $.addVersionInfo(p, property);
     result.properties.push(p);
   }
   use(schema.required);
@@ -656,23 +657,23 @@ export async function *processObjectSchema(schema: v3.Schema, $: Context, option
   if (schema.additionalProperties) {
     // if additionalProperties is specified, then the type should
     // be extending the dictionary of <type> 
-    for await (const ds of processAdditionalProperties(schema, $, { isAnonymous: true })  ) {
+    for await (const ds of processAdditionalProperties(schema, $, { isAnonymous: true })) {
       result.extends.push(await ds);
     }
   }
 }
 
-export async function *processFileSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processFileSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   return yield $.api.schemas.File;
 }
 
-export async function *processEnumSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processEnumSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   const schemaEnum = use(schema.enum) ?? [];
   const xmsEnum = use(schema['x-ms-enum']) ?? {};
   const values: Array<XMSEnumValue> = xmsEnum.values ?? schemaEnum.map(v => ({ value: v }));
 
   // not using $.process here because we need to process a node that is already marked
-  const type = await firstOrDefault(processSchema(schema, $, { forUnderlyingEnumType: true }))|| $.api.schemas.Any;
+  const type = await firstOrDefault(processSchema(schema, $, { forUnderlyingEnumType: true })) || $.api.schemas.Any;
 
   const result = new Enum(type, {
     name: xmsEnum.name || nameOf(schema)
@@ -694,9 +695,9 @@ export async function *processEnumSchema(schema: v3.Schema, $: Context): AsyncGe
   }
 
   // yield the value as soon as possible so that if we start to recurse it's already in the cache.
-  yield result; 
+  yield result;
 }
 
-export async function *processAnySchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processAnySchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
   return yield $.api.schemas.Any;
 }

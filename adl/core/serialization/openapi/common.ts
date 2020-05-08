@@ -63,7 +63,7 @@ export function isPrimitiveSchema(schema: v3.Schema | v2.Schema) {
 
   return false;
 }
-
+ 
 export function isEnumSchema(schema: v3.Schema) {
   return (schema.enum || schema['x-ms-enum']);
 }

@@ -1,5 +1,6 @@
 import { VendorExtensions } from './vendor-extensions';
 
+
 /** Contact information for the exposed API.  */
 export interface Contact extends VendorExtensions {
   /** The identifying name of the contact person/organization. */

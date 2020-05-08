@@ -7,6 +7,7 @@ import { Paths } from './path';
 import { SecurityRequirement } from './security';
 import { Server } from './server';
 
+
 export type Versions = '3.0.0' | '3.0.1' | '3.1.0';
 
 

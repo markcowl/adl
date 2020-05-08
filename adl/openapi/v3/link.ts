@@ -1,7 +1,8 @@
-import { JsonPointer } from '../common/json-reference';
 import { Dictionary } from '../common/dictionary';
+import { JsonPointer } from '../common/json-reference';
 import { VendorExtensions } from '../common/vendor-extensions';
 import { Server } from './server';
+
 
 /**
  * Runtime expressions allow defining values based on information that will only be available within the HTTP message in an actual API call. This mechanism is used by Link Objects and Callback Objects.

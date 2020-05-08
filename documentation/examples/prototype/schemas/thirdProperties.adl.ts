@@ -1,4 +1,5 @@
 import { Color } from '../enums/color.adl';
+;
 
 /**
  * Third Resource Properties

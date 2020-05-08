@@ -1,9 +1,10 @@
-import { ParameterLocation } from './parameter-location';
-import { ExampleOrExamples } from './example';
-import { Schema, SchemaReference } from './schema';
-import { MediaType } from './media-type';
 import { JsonReference } from '../common/json-reference';
+import { ExampleOrExamples } from './example';
+import { MediaType } from './media-type';
 import { Dictionary } from './openapiv3';
+import { ParameterLocation } from './parameter-location';
+import { Schema, SchemaReference } from './schema';
+
 
 export interface HasSchema {
   /** The schema defining the type used for the parameter. */

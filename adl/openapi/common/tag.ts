@@ -1,5 +1,6 @@
-import { VendorExtensions } from './vendor-extensions';
 import { ExternalDocumentation } from './external-docs';
+import { VendorExtensions } from './vendor-extensions';
+
 
 /** 
  * Allows adding meta data to a single tag that is used by the Operation Object. It is not mandatory to have a Tag Object per tag used there. 

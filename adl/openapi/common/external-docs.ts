@@ -1,5 +1,6 @@
-import { VendorExtensions } from './vendor-extensions';
 import { Url } from './uri';
+import { VendorExtensions } from './vendor-extensions';
+
 
 /**  Allows referencing an external resource for extended documentation. */
 export interface ExternalDocumentation extends VendorExtensions {

@@ -1,6 +1,7 @@
 import { JsonReference } from '../common/json-reference';
-import { VendorExtensions } from '../common/vendor-extensions';
 import { Url } from '../common/uri';
+import { VendorExtensions } from '../common/vendor-extensions';
+
 
 export interface EmbeddedExample {
   /** Embedded literal example. The value field and externalValue field are mutually exclusive. To represent examples of media types that cannot naturally represented in JSON or YAML, use a string value to contain the example, escaping where necessary. */

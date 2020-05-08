@@ -1,9 +1,8 @@
 import { HttpMethod } from '../common/http-method';
-
-import { Operation } from './operation';
-import { VendorExtensions } from '../common/vendor-extensions';
 import { JsonReference } from '../common/json-reference';
-import { BodyParameter, FormDataParameter, QueryParameter, PathParameter, HeaderParameter, ParameterReference } from './parameters';
+import { VendorExtensions } from '../common/vendor-extensions';
+import { Operation } from './operation';
+import { BodyParameter, FormDataParameter, HeaderParameter, ParameterReference, PathParameter, QueryParameter } from './parameters';
 
 
 export interface ParametersWithExtensions extends VendorExtensions {

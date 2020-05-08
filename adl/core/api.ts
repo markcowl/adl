@@ -1,7 +1,5 @@
 /** Interface for manipulating an API Description */
 import { ApiModel } from './model/api-model';
-import { Path } from '@azure-tools/sourcemap';
-import { Visitor } from './support/visitor';
 
 /** load an API from a set of source files or folders */
 async function loadApi(...inputs: Array<string>): Promise<ApiModel> {

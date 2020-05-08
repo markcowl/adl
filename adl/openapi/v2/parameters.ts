@@ -1,8 +1,9 @@
-import { JsonType } from '../common/jsontype';
-import { ParameterLocation } from './parameter-location';
-import { CollectionFormat } from './collection-format';
-import { SchemaBase, SchemaReference, Schema } from './schema';
 import { JsonReference } from '../common/json-reference';
+import { JsonType } from '../common/jsontype';
+import { CollectionFormat } from './collection-format';
+import { ParameterLocation } from './parameter-location';
+import { Schema, SchemaBase, SchemaReference } from './schema';
+
 
 /** 
  * Describes a single operation parameter. 

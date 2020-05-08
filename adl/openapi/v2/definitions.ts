@@ -1,5 +1,6 @@
 import { Schema } from './schema';
 
+
 /**
  * An object to hold data types that can be consumed and produced by operations. These data types can be primitives, arrays or models.
  *

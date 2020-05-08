@@ -2,6 +2,7 @@ import { Dictionary } from '../common/dictionary';
 import { Url } from '../common/uri';
 import { VendorExtensions } from '../common/vendor-extensions';
 
+
 /**
  * Allows the definition of a security scheme that can be used by the operations. Supported schemes are basic authentication, an API key (either as a header or as a query parameter) and OAuth2's common flows (implicit, password, application and access code).
  *

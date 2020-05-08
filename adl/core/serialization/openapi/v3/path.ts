@@ -12,7 +12,7 @@ import { Context, ItemsOf } from './serializer';
 
 export async function* processPaths(input: ItemsOf<v3.PathItem>, $: Context): AsyncGenerator<Element> {
   // handle extensions first
-  for (const [ key, value] of vendorExtensions(input)) {
+  for (const [key, value] of vendorExtensions(input)) {
     // switch block to handle specific vendor extension?
     // unknown ones need to get attached to something.
 
@@ -58,9 +58,9 @@ export async function* operation(path: string, operation: v3.Operation, shared: 
   // OAI3 parameters are all in the operation
   for (const p of values(shared.parameters)) {
     // create each parameter in the operation 
-    await push( result.parameters, $.processInline(parameter, p));
+    await push(result.parameters, $.processInline(parameter, p));
   }
-  
+
   for (const p of values(operation.parameters)) {
     // create each parameter in the operation 
     await push(result.parameters, $.processInline(parameter, p));

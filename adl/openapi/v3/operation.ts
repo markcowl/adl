@@ -1,14 +1,14 @@
-import { ExternalDocumentation } from '../common/external-docs';
-import { VendorExtensions } from '../common/vendor-extensions';
-import { QueryParameter, PathParameter, HeaderParameter, CookieParameter } from './parameters';
-import { ParameterReference } from './parameters';
-import { JsonReference } from '../common/json-reference';
 import { Dictionary } from '../common/dictionary';
+import { ExternalDocumentation } from '../common/external-docs';
+import { JsonReference } from '../common/json-reference';
+import { VendorExtensions } from '../common/vendor-extensions';
+import { Callback } from './callback';
+import { CookieParameter, HeaderParameter, ParameterReference, PathParameter, QueryParameter } from './parameters';
 import { RequestBody } from './request-body';
 import { Responses } from './response';
-import { Callback } from './callback';
-import { Server } from './server';
 import { SecurityRequirement } from './security';
+import { Server } from './server';
+
 
 /** 
  * Describes a single API operation on a path. 

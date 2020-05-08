@@ -1,5 +1,3 @@
-import { vendorExtensions } from './common';
-
 /** 
  * The field name MUST begin with x-, for example, x-internal-id. The value can be null, a primitive, an array or an object. 
  * 

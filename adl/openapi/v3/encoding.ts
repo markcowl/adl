@@ -1,7 +1,8 @@
-import { VendorExtensions } from '../common/vendor-extensions';
 import { Dictionary } from '../common/dictionary';
-import { QueryStyle } from './parameters';
+import { VendorExtensions } from '../common/vendor-extensions';
 import { Header, HeaderReference } from './header';
+import { QueryStyle } from './parameters';
+
 
 /**
  * A single encoding definition applied to a single schema property.

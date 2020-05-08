@@ -36,7 +36,7 @@ export async function* response(response: v3.Response, $: Context, options?: { i
         result.headers.push(h);
       }
     }
-
+ 
     // example data we can figure out later.
     result.addToAttic('example', type.example);
     // example data we can figure out later.
