@@ -13,7 +13,7 @@ export async function *requestBody(requestBody: v3.RequestBody, $: Context, opti
   const bodyName = options?.isAnonymous ? anonymous('requestBody') : nameOf(requestBody);
   
 
-  for( const {key:mediaType, value:type} of items(requestBody.content))  {
+  for( const [mediaType,type] of items(requestBody.content))  {
     const schema = await firstOrDefault( processInline(type.schema, $)) || $.api.schemas.Any;
     
     const request = new Request(bodyName,mediaType,schema, {
@@ -23,6 +23,7 @@ export async function *requestBody(requestBody: v3.RequestBody, $: Context, opti
 
     // example data we can figure out later.
     request.addToAttic('example', type.example);
+    request.addToAttic('examples', (<any>type).examples);
 
     // encoding information not necessary yet... 
     request.addToAttic('encoding', type.encoding);

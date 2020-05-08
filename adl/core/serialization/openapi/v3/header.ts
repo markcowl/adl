@@ -8,7 +8,7 @@ import { Context, ItemsOf } from './serializer';
 
 export async function *processHeaders(input: ItemsOf<v3.Header>, $: Context): AsyncGenerator<Header|Alias<Header>> {
   // handle extensions first
-  for (const { key, value: extension } of vendorExtensions(input)) {
+  for (const [key, extension] of vendorExtensions(input)) {
     // switch block to handle specific vendor extension?
     // unknown ones need to get attached to something.
 
