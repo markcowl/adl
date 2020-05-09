@@ -25,10 +25,14 @@ export class Operation extends base.Operation {
   /** a collection of reference information regarding the operation  */
   references = new Array<Reference>();
 
-  /** authentication requirements */
+  /**
+   * Authentication requirements for this operation, which override those specified globally.
+   *
+   * Only one of the elements in the array needs to be satisfied to authorize a request.
+   */
   authenticationRequirements = new Array<AuthenticationRequirement>();
 
-  /** connections */
+  /** Connections for this operation, which override those specified globally. */
   connections = new Array<Connection>();
 
   /**

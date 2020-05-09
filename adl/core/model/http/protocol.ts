@@ -20,6 +20,7 @@ export enum ParameterLocation {
 }
 
 export class AuthenticationRequirement extends Element {
+  /** List of authentications that must all be satisfied. */
   authentications = new Array<AuthenticationReference>();
 }
 
@@ -205,7 +206,14 @@ export class ConnectionVariable extends Element {
 export class HttpProtocol extends Element {
   headers = new Array<Header|Alias<Header>>();
   authentications = new Array<Authentication|Alias<Authentication>>();
+
+  /**
+   * Global authentication requirements, which may be overridden by individual operations.
+   * Only one of the elements in the array needs to be satisfied to authorize a request.
+   */
   authenticationRequirements = new Array<AuthenticationRequirement|Alias<AuthenticationRequirement>>();
+
+  /** Global connections, which may be overridden by individual operations. */
   connections = new Array<Connection | Alias<Connection>>();
   operations = new Array<Operation|Alias<Operation>>();
   requests = new Array<Request | Alias<Request>>();
