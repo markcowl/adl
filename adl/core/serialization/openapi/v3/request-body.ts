@@ -2,7 +2,7 @@ import { items } from '@azure-tools/linq';
 import { v3 } from '@azure-tools/openapi';
 import { anonymous, nameOf } from '@azure-tools/sourcemap';
 import { Request } from '../../../model/http/request';
-import { firstOrDefault } from '../common';
+import { singleOrDefault } from '../common';
 import { processInline } from './schema';
 import { Context } from './serializer';
 
@@ -14,7 +14,7 @@ export async function* requestBody(requestBody: v3.RequestBody, $: Context, opti
 
 
   for (const [mediaType, type] of items(requestBody.content)) {
-    const schema = await firstOrDefault(processInline(type.schema, $)) || $.api.schemas.Any;
+    const schema = await singleOrDefault(processInline(type.schema, $)) || $.api.schemas.Any;
 
     const request = new Request(bodyName, mediaType, schema, {
       description: requestBody.description,

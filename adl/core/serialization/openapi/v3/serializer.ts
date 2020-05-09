@@ -3,7 +3,7 @@ import { use } from '@azure-tools/sourcemap';
 import { ApiModel } from '../../../model/api-model';
 import { Host } from '../../../support/file-system';
 import { Context as Ctx, Visitor } from '../../../support/visitor';
-import { consume, firstOrDefault } from '../common';
+import { consume, singleOrDefault } from '../common';
 import { processExternalDocs, processInfo, processTag } from '../common/info';
 import { processComponents } from './components';
 import { path } from './path';
@@ -43,7 +43,7 @@ async function processRoot(oai3: v3.Model, $: Context) {
   }
 
   // openapi3 info
-  $.api.metaData = await firstOrDefault($.process(processInfo, oai3.info)) || $.api.metaData;
+  $.api.metaData = await singleOrDefault($.process(processInfo, oai3.info)) || $.api.metaData;
 
   // external docs are just a kind of reference
   for await (const reference of $.process(processExternalDocs, oai3.externalDocs)) {
