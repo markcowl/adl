@@ -8,6 +8,7 @@ import { processExternalDocs } from '../common/info';
 import { parameter } from './parameter';
 import { requestBody } from './request-body';
 import { response } from './response';
+import { authenticationRequirement } from './security';
 import { Context, ItemsOf } from './serializer';
 
 export async function* processPaths(input: ItemsOf<v3.PathItem>, $: Context): AsyncGenerator<Element> {
@@ -47,9 +48,12 @@ export async function* operation(path: string, operation: v3.Operation, shared: 
     id: operation.operationId,
     tags: [...operation.tags || []]
   });
+  
+  for await (const requirement of $.processArray(authenticationRequirement, operation.security)) {
+    result.authenticationRequirements.push(requirement);
+  }
 
   // push to the attic for now
-  result.addToAttic('security', operation.security);
   result.addToAttic('servers', operation.servers);
 
   // since we're not going thru $.process

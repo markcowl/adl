@@ -19,6 +19,20 @@ export enum ParameterLocation {
   Cookie = 'cookie',
 }
 
+export class AuthenticationRequirement extends Element {
+  authentications = new Array<AuthenticationReference>();
+}
+
+export class AuthenticationReference extends Element {
+  /** The scopes of the authentication being referenced. Can only be non-empty if the referenced authentication is OAuth2. */
+  scopes = new Array<string>();
+
+  constructor(public authentication: Authentication | Alias<Authentication>, initializer?: Partial<AuthenticationRequirement>) {
+    super();
+    this.initialize(initializer);
+  }
+}
+
 export type Authentication = ApiKeyAuthentication | HttpAuthentication | OAuth2Authentication | OpenIdConnectAuthentication;
 
 export abstract class AuthenticationBase extends Element {
@@ -191,7 +205,8 @@ export class ConnectionVariable extends Element {
 export class HttpProtocol extends Element {
   headers = new Array<Header|Alias<Header>>();
   authentications = new Array<Authentication|Alias<Authentication>>();
-  connections = new Array<Connection | Alias<Authentication>>();
+  authenticationRequirements = new Array<AuthenticationRequirement|Alias<AuthenticationRequirement>>();
+  connections = new Array<Connection | Alias<Connection>>();
   operations = new Array<Operation|Alias<Operation>>();
   requests = new Array<Request | Alias<Request>>();
   responses = new Array<Response| Alias<Response>>();

@@ -2,6 +2,7 @@ import { Alias } from '../alias';
 import * as base from '../operation';
 import { Reference } from '../Reference';
 import { Parameter } from './parameter';
+import { AuthenticationRequirement } from './protocol';
 import { Request } from './request';
 import { Response } from './response';
 
@@ -23,6 +24,9 @@ export class Operation extends base.Operation {
 
   /** a collection of reference information regarding the operation  */
   references = new Array<Reference>();
+
+  /** authentication requirements */
+  authenticationRequirements = new Array<AuthenticationRequirement>();
 
   /**
   * 

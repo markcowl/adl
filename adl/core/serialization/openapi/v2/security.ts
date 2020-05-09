@@ -1,11 +1,32 @@
 import { items } from '@azure-tools/linq';
-import { v2 } from '@azure-tools/openapi';
-import { nameOf, use, valueOf } from '@azure-tools/sourcemap';
-import { ApiKeyAuthentication, AuthorizationCodeOAuth2Flow, ClientCredentialsOAuth2Flow, HttpAuthentication, ImplicitOAuth2Flow, OAuth2Authentication, OAuth2Flow, OAuth2Flows, OAuth2Scope, ParameterLocation, PasswordOAuth2Flow } from '../../../model/http/protocol';
-import { addExtensionsToAttic } from '../common';
+import { JsonReference, v2 } from '@azure-tools/openapi';
+import { getSourceFile, nameOf, use, valueOf } from '@azure-tools/sourcemap';
+import { ApiKeyAuthentication, AuthenticationReference, AuthenticationRequirement, AuthorizationCodeOAuth2Flow, ClientCredentialsOAuth2Flow, HttpAuthentication, ImplicitOAuth2Flow, OAuth2Authentication, OAuth2Flow, OAuth2Flows, OAuth2Scope, ParameterLocation, PasswordOAuth2Flow } from '../../../model/http/protocol';
+import { addExtensionsToAttic, single } from '../common';
 import { Context } from './serializer';
 
-export async function* securityScheme(scheme: v2.SecurityScheme, $: Context) {
+export async function* authenticationRequirement(securityRequirement: v2.SecurityRequirement, $: Context): AsyncGenerator<AuthenticationRequirement> {
+  const result = new AuthenticationRequirement();
+
+  for (const [name, scopes] of items(securityRequirement)) {
+    // security requirements reference security schemes, but not with a $ref, so synthesize one.
+    const ref: JsonReference<v2.SecurityScheme> = {
+      $ref: `${getSourceFile(securityRequirement)?.filename}#/securityDefinitions/${name}`,
+    };
+
+    const auth = await single($.processInline(authentication, ref));
+    const authRef = new AuthenticationReference(auth);
+    for (const scope of use(scopes)) {
+      authRef.scopes.push(use(scope));
+    }
+
+    result.authentications.push(authRef);
+  }
+
+  yield result;
+}
+
+export async function* authentication(scheme: v2.SecurityScheme, $: Context) {
   switch (valueOf(use(scheme.type))) {
     case 'apiKey':
       return yield *apiKeyAuthentication(<v2.ApiKeySecurityScheme>scheme, $);
@@ -15,7 +36,7 @@ export async function* securityScheme(scheme: v2.SecurityScheme, $: Context) {
       return yield *oauth2Authentication(<v2.OAuthSecurityBase>scheme, $);
   }
 
-  $.error(`unknown security definition type '${scheme.type}'`, scheme);
+  $.error(`unknown security scheme type '${scheme.type}'`, scheme);
 }
 
 function *apiKeyAuthentication(scheme: v2.ApiKeySecurityScheme, $: Context) {
