@@ -7,7 +7,7 @@ import { parameter } from './parameter';
 import { requestBody } from './request-body';
 import { response } from './response';
 import { processSchema } from './schema';
-import { securityScheme } from './security-schemes';
+import { securityScheme } from './security';
 import { Context } from './serializer';
 
 const { vendorExtensions } = v3;

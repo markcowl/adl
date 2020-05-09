@@ -5,7 +5,7 @@ import { Host } from '../../../support/file-system';
 import { Context as Ctx, Visitor } from '../../../support/visitor';
 import { singleOrDefault } from '../common';
 import { processExternalDocs, processInfo, processTag } from '../common/info';
-import { securityScheme } from './security-schemes';
+import { securityScheme } from './security';
 import { processServers } from './server';
 
 // node types that are objects
