@@ -4,7 +4,7 @@ import { anonymous, isUsed, nameOf, unusedMembers, use, using } from '@azure-too
 import { Alias as GenericAlias } from '../../../model/alias';
 import { Identity } from '../../../model/name';
 import { Alias, ArraySchema, Constant, DictionarySchema, Enum, ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ObjectSchema, Property, ReadOnlyConstraint, RegularExpressionConstraint, Schema, ServerDefaultValue, UniqueElementsConstraint } from '../../../model/schema';
-import { firstOrDefault, isEnumSchema, isObjectSchema, push } from '../common';
+import { isEnumSchema, isObjectSchema, push, singleOrDefault } from '../common';
 import { arrayProperties, commonProperties, numberProperties, objectProperties, processAnySchema, processBooleanSchema, processByteArraySchema, processCharSchema, processDateSchema, processDateTimeSchema, processDurationSchema, processFileSchema, processOdataSchema, processPasswordSchema, processTimeSchema, processUriSchema, processUuidSchema, stringProperties } from '../common/schema';
 import { Context } from './serializer';
 
@@ -328,7 +328,7 @@ export async function* processArraySchema(schema: v2.Schema, $: Context, options
   const common = (!options?.isAnonymous && !options?.isParameter && !options?.isProperty) ? commonProperties(schema) : {};
 
 
-  const elementSchema = await firstOrDefault(processInline(schema.items, $, { isAnonymous: true })) || $.api.schemas.Any;
+  const elementSchema = await singleOrDefault(processInline(schema.items, $, { isAnonymous: true })) || $.api.schemas.Any;
 
   if ($.forbiddenProperties(schema, ...stringProperties, ...numberProperties)) {
     return undefined;
@@ -380,7 +380,7 @@ export async function* processAdditionalProperties(schema: v2.Schema, $: Context
   const common = schema.properties ? {} : commonProperties(schema);
 
   // true means type == any
-  const dictionaryType = schema.additionalProperties != true ? await firstOrDefault(processInline(schema.additionalProperties, $, { isAnonymous: true })) || $.api.schemas.Any : $.api.schemas.Any;
+  const dictionaryType = schema.additionalProperties != true ? await singleOrDefault(processInline(schema.additionalProperties, $, { isAnonymous: true })) || $.api.schemas.Any : $.api.schemas.Any;
 
   if (length(common) > 0 || schema.maxProperties !== undefined || schema.minProperties !== undefined) {
     const result = new DictionarySchema(dictionaryType);
@@ -448,7 +448,7 @@ export async function* processObjectSchema(schema: v2.Schema, $: Context, option
   // process the properties
   for (const [propertyName, property] of items(use(schema.properties))) {
     // process schema/reference inline
-    const propSchema = await firstOrDefault(processInline(property, $, { isAnonymous: true })) || $.api.schemas.Any;
+    const propSchema = await singleOrDefault(processInline(property, $, { isAnonymous: true })) || $.api.schemas.Any;
 
     // grabs the 'required' value for the property
     let required = undefined;
@@ -496,7 +496,7 @@ export async function* processEnumSchema(schema: v2.Schema, $: Context): AsyncGe
   const values: Array<XMSEnumValue> = xmsEnum.values ?? schemaEnum.map(v => ({ value: v }));
 
   // not using $.process here because we need to process a node that is already marked
-  const type = await firstOrDefault(processSchema(schema, $, { forUnderlyingEnumType: true })) || $.api.schemas.Any;
+  const type = await singleOrDefault(processSchema(schema, $, { forUnderlyingEnumType: true })) || $.api.schemas.Any;
 
   const result = new Enum(type, {
     name: xmsEnum.name || nameOf(schema),

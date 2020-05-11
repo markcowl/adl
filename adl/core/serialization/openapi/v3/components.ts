@@ -7,7 +7,7 @@ import { parameter } from './parameter';
 import { requestBody } from './request-body';
 import { response } from './response';
 import { processSchema } from './schema';
-import { securityScheme } from './security-schemes';
+import { authentication } from './security';
 import { Context } from './serializer';
 
 const { vendorExtensions } = v3;
@@ -75,7 +75,7 @@ export async function* processComponents(components: v3.Components, $: Context):
     $.api.http.responses.push(rsp);
   }
 
-  for await (const auth of $.processDictionary(securityScheme, components.securitySchemes)) {
+  for await (const auth of $.processDictionary(authentication, components.securitySchemes)) {
     $.api.http.authentications.push(auth);
   }
 

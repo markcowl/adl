@@ -2,7 +2,7 @@ import { values } from '@azure-tools/linq';
 import { v2 } from '@azure-tools/openapi';
 import { anonymous, nameOf, use } from '@azure-tools/sourcemap';
 import { Request } from '../../../model/http/request';
-import { firstOrDefault } from '../common';
+import { singleOrDefault } from '../common';
 import { processInline } from './schema';
 import { Context } from './serializer';
 
@@ -17,7 +17,7 @@ export async function* requestBody(body: v2.BodyParameter, $: Context, options?:
   use(body.in);
   
   for (const mediaType of values(consumes)) {
-    const schema = await firstOrDefault(processInline(<v2.Schema>body.schema, $)) || $.api.schemas.Any;
+    const schema = await singleOrDefault(processInline(<v2.Schema>body.schema, $)) || $.api.schemas.Any;
     const request = new Request(bodyName, mediaType, schema, {
       description: body.description,
       required: body.required,
