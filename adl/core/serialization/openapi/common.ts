@@ -44,9 +44,9 @@ export async function single<T>(generator: AsyncGenerator<T>): Promise<T> {
   return result;
 }
 
-export function isObjectSchema(schema: v3.Schema) {
+export function isObjectSchema(schema: v3.Schema| v2.Schema) {
   return schema.type == common.JsonType.Object ||
-    length(schema.properties) > 0 ||
+    length(<any>schema.properties) > 0 ||
     schema.discriminator ||
     (<any>schema)['x-ms-discriminator-value'] ||
     schema.additionalProperties !== undefined ||
@@ -72,7 +72,7 @@ export function isPrimitiveSchema(schema: v3.Schema | v2.Schema) {
   return false;
 }
  
-export function isEnumSchema(schema: v3.Schema) {
+export function isEnumSchema(schema: v3.Schema | v2.Schema) {
   return (schema.enum || schema['x-ms-enum']);
 }
 

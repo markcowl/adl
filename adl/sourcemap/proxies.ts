@@ -337,7 +337,11 @@ export class TrackedTarget<T extends Object> {
     return property in actual;
   }
 
-  onAdd(tracker: Tracker, pathInTarget: Path) {
+  onAdd(tracker: Tracker, pathInTarget: Path, cache = new WeakSet()) {
+    if( cache.has(this.proxy)) {
+      return;
+    }
+    cache.add(this.proxy);
     // if the tracker for this object is already set, we've 
     // already met the parents and don't need to do it all again
     // (if children get added after, they'll be told to do it then)
@@ -372,7 +376,7 @@ export class TrackedTarget<T extends Object> {
           if (typeof <any>value === 'object') {
             // value could be a TrackedSource or a TrackedTarget (or have $onAdd)
             if ((<any>value).$onAdd) {
-              (<any>value).$onAdd(tracker, [...pathInTarget, key]);
+              (<any>value).$onAdd(tracker, [...pathInTarget, key], cache);
             }
           }
         }

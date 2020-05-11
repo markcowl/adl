@@ -15669,7 +15669,7 @@ definitions:
   organization:
     allOf:
       - $ref: '#/definitions/actor'
-      - description: A GitHub organization
+      # - description: A GitHub organization
     type: object
   organizationAsTeamMember:
     properties:
@@ -16498,7 +16498,9 @@ definitions:
       parent:
         allOf:
           - $ref: '#/definitions/repo'
-          - description: Is present when the repo is a fork. Parent is the repo this repo was forked from.
+          # - description: Is present when the repo is a fork. Parent is the repo this repo was forked from.
+          # HUH? Why are they doing an all of with a lone description?
+          # if They want to have the description of this type be that, they should set the description of this type. 
       private:
         type: boolean
       pushed_at:
@@ -16509,7 +16511,7 @@ definitions:
       source:
         allOf:
           - $ref: '#/definitions/repo'
-          - description: Is present when the repo is a fork. Source is the ultimate source for the network.
+          # - description: Is present when the repo is a fork. Source is the ultimate source for the network.
       ssh_url:
         type: string
       svn_url:
@@ -17133,7 +17135,7 @@ definitions:
   user:
     allOf:
       - $ref: '#/definitions/actor'
-      - description: A GitHub user
+      # - description: A GitHub user
     type: object
   user-emails:
     items:

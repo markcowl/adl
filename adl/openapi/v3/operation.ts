@@ -3,6 +3,7 @@ import { ExternalDocumentation } from '../common/external-docs';
 import { JsonReference } from '../common/json-reference';
 import { VendorExtensions } from '../common/vendor-extensions';
 import { Callback } from './callback';
+import { XMSExamples, XMSLongRunningOperation, XMSOData, XMSPageable, XMSRequestId } from './openapiv3';
 import { CookieParameter, HeaderParameter, ParameterReference, PathParameter, QueryParameter } from './parameters';
 import { RequestBody } from './request-body';
 import { Responses } from './response';
@@ -15,7 +16,7 @@ import { Server } from './server';
  * 
  * @see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#operationObject
  */
-export interface Operation extends VendorExtensions {
+export interface Operation extends VendorExtensions, XMSLongRunningOperation, XMSPageable, XMSRequestId, XMSOData, XMSExamples {
   /** A list of tags for API documentation control. Tags can be used for logical grouping of operations by resources or any other qualifier. */
   tags?: Array<string>;
 

@@ -1,29 +1,9 @@
-import { v3, vendorExtensions } from '@azure-tools/openapi';
+import { v3 } from '@azure-tools/openapi';
 import { anonymous, nameOf, refTo, use } from '@azure-tools/sourcemap';
-import { Alias } from '../../../model/alias';
 import { Header } from '../../../model/http/header';
 import { singleOrDefault } from '../common';
 import { processInline } from './schema';
-import { Context, ItemsOf } from './serializer';
-
-export async function* processHeaders(input: ItemsOf<v3.Header>, $: Context): AsyncGenerator<Header | Alias<Header>> {
-  // handle extensions first
-  for (const [key, extension] of vendorExtensions(input)) {
-    // switch block to handle specific vendor extension?
-    // unknown ones need to get attached to something.
-
-    switch (key) {
-
-      case 'x-whatever':
-        // do something with the extension
-        // make sure it gets deleted
-        // delete value[key];
-        break;
-    }
-  }
-
-  yield* $.processDictionary(header, input);
-}
+import { Context } from './serializer';
 
 export async function* header(header: v3.Header, $: Context, options?: { isAnonymous?: boolean }): AsyncGenerator<Header> {
   const { api, visitor } = $;

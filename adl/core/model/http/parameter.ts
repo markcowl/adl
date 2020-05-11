@@ -31,7 +31,11 @@ export class Parameter extends base.Parameter {
  */
   renderStyle?: RenderStyle;
 
-
+  /** 
+   * the desired generated location when generating code.
+   */
+  generatedLocation?: 'client'|'method';
+  
   /**
    * 
    * @param type sub-type of the parameter 
@@ -39,7 +43,7 @@ export class Parameter extends base.Parameter {
    * @param schema the type for the parameter
    * @param initializer an object initializer
    */
-  constructor(public type: string, public name: string, public schema: Schema, initializer?: Partial<Parameter>) {
+  constructor(public type: string, name: string, public schema: Schema, initializer?: Partial<Parameter>) {
     super(name);
     this.initialize(initializer);
   }
@@ -91,6 +95,31 @@ export class QueryParameter extends Parameter {
     */
   constructor(name: string, schema: Schema, public expandParameterValues: boolean, initializer?: Partial<QueryParameter>) {
     super('query', name, schema, {
+      renderStyle: RenderStyle.Simple
+    });
+    this.initialize(initializer);
+  }
+}
+
+
+export class FormDataParameter extends Parameter {
+  /** 
+  * the styling to use when rendering the parameter into the HTTP request
+  */
+  renderStyle?: RenderStyle.Form | RenderStyle.PipeDelimited | RenderStyle.SpaceDelimited | RenderStyle.DeepObject;
+
+  /** Determines whether the parameter value SHOULD allow reserved characters, as defined by RFC3986 :/?#[]@!$&'()*+,;= to be included without percent-encoding. This property only applies to parameters with an in value of query. The default value is false. */
+  allowReserved?: boolean;
+
+  /**
+    * 
+    * @param name the name of this parameter
+    * @param schema the type for the parameter
+    * @param expandParameterValues 	When this is true, parameter values of type array or object generate separate parameters for each value of the array or key-value pair of the map.
+    * @param initializer an object initializer
+    */
+  constructor(name: string, schema: Schema, public expandParameterValues: boolean, initializer?: Partial<QueryParameter>) {
+    super('formdata', name, schema, {
       renderStyle: RenderStyle.Simple
     });
     this.initialize(initializer);

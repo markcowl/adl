@@ -1,6 +1,7 @@
 import { Dictionary } from '../common/dictionary';
 import { ExternalDocumentation } from '../common/external-docs';
 import { Info } from '../common/info';
+import { XMSParameterizedHost } from '../common/schema-extensions';
 import { Tag } from '../common/tag';
 import { VendorExtensions } from '../common/vendor-extensions';
 import { Definitions } from './definitions';
@@ -11,12 +12,17 @@ import { Schemes } from './schemes';
 import { SecurityRequirement, SecurityScheme } from './security';
 
 
+export interface XMSPaths {
+  /** The available paths and operations for the API. (extended) */
+  'x-ms-paths': Paths;
+}
+
 /** 
  * This is the root document object for the API specification 
  * 
  * @see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md
  */
-export interface Model extends VendorExtensions {
+export interface Model extends VendorExtensions, XMSPaths, XMSParameterizedHost {
   /** Specifies the Swagger Specification version being used. It can be used by the Swagger UI and other clients to interpret the API listing. The value MUST be "2.0". */
   swagger: '2.0';
 

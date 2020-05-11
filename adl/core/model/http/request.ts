@@ -8,6 +8,9 @@ export class Request extends base.Request {
  */
   description?: string;
 
+  /** a name for the request (body parameter) */
+  name?: string;
+
   /**
    * if set, indicates the request body must be included.
    */

@@ -64,6 +64,11 @@ export class Property extends Element {
    */
   description?: string;
 
+  /**
+   * the desired name when generating code.
+   */
+  clientName?: string;
+
   constructor(public name: string, public schema: Schema, initializer?: Partial<Property>) {
     super();
     this.initialize(initializer);
@@ -82,6 +87,11 @@ export class ObjectSchema extends Schema {
 
   /** schemas that this object extends */
   extends = new Array<Schema>();
+
+  /*
+   * the desired name when generating code
+   */
+  clientName?: string;
 
   constructor(public name: string, initializer?: Partial<ObjectSchema>) {
     super('object');
@@ -142,6 +152,14 @@ export class ExclusiveMaximumConstraint extends Constraint {
 export class MultipleOfConstraint extends Constraint {
   constructor(public multipleOf: number, initializer?: Partial<MultipleOfConstraint>) {
     super('MultipleOf');
+    this.initialize(initializer);
+  }
+}
+
+
+export class ReadOnlyConstraint extends Constraint {
+  constructor(public readOnly: boolean, initializer?: Partial<MaxLengthConstraint>) {
+    super('ReadOnly');
     this.initialize(initializer);
   }
 }
@@ -334,6 +352,14 @@ export class TimePrimitive extends Primitive {
   }
 }
 
+
+export class UnixTimePrimitive extends Primitive {
+  constructor(initializer?: Partial<UnixTimePrimitive>) {
+    super('unixtime');
+    this.initialize(initializer);
+  }
+}
+
 export class DateTimePrimitive extends Primitive {
   constructor(initializer?: Partial<DateTimePrimitive>) {
     super('dateTime');
@@ -422,6 +448,7 @@ export class Schemas extends Element {
   #byteArray?: ByteArrayPrimitive;
   #date?: DatePrimitive;
   #time?: TimePrimitive;
+  #unixtime?: UnixTimePrimitive;
   #dateTime?: DateTimePrimitive;
   #duration?: DurationPrimitive;
   #uuid?: UuidPrimitive;
@@ -465,6 +492,9 @@ export class Schemas extends Element {
   }
   get Time(): TimePrimitive {
     return this.#time || (this.addPrimitive(this.#time = new TimePrimitive()));
+  }
+  get UnixTime(): TimePrimitive {
+    return this.#unixtime || (this.addPrimitive(this.#unixtime = new UnixTimePrimitive()));
   }
   get DateTime(): DateTimePrimitive {
     return this.#dateTime || (this.addPrimitive(this.#dateTime = new DateTimePrimitive()));

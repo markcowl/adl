@@ -1,7 +1,6 @@
 import { values } from '@azure-tools/linq';
-import { common, v3, vendorExtensions } from '@azure-tools/openapi';
+import { common, v3 } from '@azure-tools/openapi';
 import { nameOf } from '@azure-tools/sourcemap';
-import { Element } from '../../../model/element';
 import { Operation } from '../../../model/http/operation';
 import { addExtensionsToAttic, push } from '../common';
 import { processExternalDocs } from '../common/info';
@@ -9,28 +8,8 @@ import { parameter } from './parameter';
 import { requestBody } from './request-body';
 import { response } from './response';
 import { authenticationRequirement } from './security';
-import { Context, ItemsOf } from './serializer';
+import { Context } from './serializer';
 import { processServer } from './server';
-
-export async function* processPaths(input: ItemsOf<v3.PathItem>, $: Context): AsyncGenerator<Element> {
-  // handle extensions first
-  for (const [key, value] of vendorExtensions(input)) {
-    // switch block to handle specific vendor extension?
-    // unknown ones need to get attached to something.
-
-    switch (key) {
-
-      case 'x-whatever':
-        // do something with the extension
-        // make sure it gets deleted
-        // delete value[key];
-        break;
-    }
-  }
-  yield* $.processDictionary(path, input);
-
-}
-
 
 export async function* path(pathItem: v3.PathItem, $: Context, options?: { isAnonymous?: boolean }): AsyncGenerator<Operation> {
   const path = nameOf(pathItem);
