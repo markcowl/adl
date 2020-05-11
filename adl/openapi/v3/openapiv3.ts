@@ -11,7 +11,7 @@ import { Server } from './server';
 export type Versions = '3.0.0' | '3.0.1' | '3.1.0';
 
 
-export interface ModelExtensions {
+export interface XMSPaths {
   /** The available paths and operations for the API. (extended) */
   'x-ms-paths': Paths;
 }
@@ -20,7 +20,7 @@ export interface ModelExtensions {
  *  
  * @see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md
  */
-export interface Model extends VendorExtensions, ModelExtensions {
+export interface Model extends VendorExtensions, XMSPaths {
   /** The available paths and operations for the API. */
   paths: Paths;
 

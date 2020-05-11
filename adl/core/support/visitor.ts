@@ -216,6 +216,19 @@ export class Visitor<TSourceModel extends OAIModel> {
     }
     throw new Error(`Unable to process Ref ${sourceFile}#/${path}`);
   }
+
+  async resolveReference(sourceFile: string, path: Path): Promise<any> {
+    let targetContext = await this.sourceFiles.get(sourceFile);
+    if (!targetContext) {
+      // the file we're looking for isn't there
+      // let's add it to the list as a secondary file
+      const t = this.loadInput(sourceFile);
+      this.sourceFiles.set(sourceFile, t);
+      targetContext = await t;
+    }
+    const node = this.findNode(path, targetContext.sourceModel);
+    return node || fail(`Unable to process Ref ${sourceFile}#/${path}`);
+  }
 }
 
 export type fnActionOnRoot<TSourceModel extends OAIModel, TInput, TOutput, TOptions extends Options> =
@@ -330,6 +343,11 @@ export class Context<TSourceModel extends OAIModel> {
       }));
       result.addInternalData(this.visitor.inputType, { preferredFile: getSourceFile(value) });
     }
+  }
+
+  async resolveReference(reference: string)  {
+    const {file, path } = this.normalizeReference(reference); 
+    return this.visitor.resolveReference(file,path);
   }
 
   async *processInline<TIn, TOut extends Element, TOptions extends Options = Options>(action: fnAction<TSourceModel, TIn, TOut, TOptions>, value: TIn | common.JsonReference<TIn> | undefined, options?: TOptions): AsyncGenerator<TOut | Alias<TOut>> {

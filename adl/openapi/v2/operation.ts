@@ -1,5 +1,6 @@
 import { ExternalDocumentation } from '../common/external-docs';
 import { VendorExtensions } from '../common/vendor-extensions';
+import { XMSExamples, XMSLongRunningOperation, XMSOData, XMSPageable, XMSRequestId } from '../v3/openapiv3';
 import { BodyParameter, FormDataParameter, HeaderParameter, ParameterReference, PathParameter, QueryParameter } from './parameters';
 import { Responses } from './response';
 import { Schemes } from './schemes';
@@ -11,7 +12,7 @@ import { SecurityScheme } from './security';
  * 
  * @see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#header-object
  */
-export interface Operation extends VendorExtensions {
+export interface Operation extends VendorExtensions, XMSLongRunningOperation, XMSPageable,XMSRequestId, XMSOData, XMSExamples  {
   /** The list of possible responses as they are returned from executing this operation. */
   responses: Responses;
 

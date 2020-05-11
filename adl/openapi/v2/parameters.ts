@@ -1,5 +1,6 @@
 import { JsonReference } from '../common/json-reference';
 import { JsonType } from '../common/jsontype';
+import { XMSClientFlatten, XMSClientName, XMSParameterGrouping, XMSParameterLocation, XMSSkipUrlEncoding } from '../v3/openapiv3';
 import { CollectionFormat } from './collection-format';
 import { ParameterLocation } from './parameter-location';
 import { Schema, SchemaBase, SchemaReference } from './schema';
@@ -10,7 +11,7 @@ import { Schema, SchemaBase, SchemaReference } from './schema';
  * 
  * @see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#parameter-object
 */
-export interface Parameter {
+export interface Parameter extends XMSSkipUrlEncoding, XMSParameterGrouping, XMSParameterLocation, XMSClientFlatten,XMSClientName {
   /** 
    * The name of the parameter. Parameter names are case sensitive. 
    * If in is "path", the name field MUST correspond to the associated path segment from the path field in the Paths Object. 

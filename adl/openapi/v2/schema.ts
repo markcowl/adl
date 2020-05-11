@@ -2,10 +2,9 @@ import { Dictionary } from '../common/dictionary';
 import { ExternalDocumentation } from '../common/external-docs';
 import { JsonReference } from '../common/json-reference';
 import { JsonType } from '../common/jsontype';
+import { SchemaExtensions } from '../common/schema-extensions';
 import { VendorExtensions } from '../common/vendor-extensions';
 import { XML } from '../common/xml';
-import { SchemaExtensions } from '../v3/openapiv3';
-
 
 /**
  * The Schema Object allows the definition of input and output data types. These types can be objects, but also primitives and arrays.

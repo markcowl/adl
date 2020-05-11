@@ -1,7 +1,7 @@
 import { JsonReference } from '../common/json-reference';
 import { ExampleOrExamples } from './example';
 import { MediaType } from './media-type';
-import { Dictionary } from './openapiv3';
+import { Dictionary, XMSClientFlatten, XMSClientName, XMSParameterGrouping, XMSParameterLocation, XMSSkipUrlEncoding } from './openapiv3';
 import { ParameterLocation } from './parameter-location';
 import { Schema, SchemaReference } from './schema';
 
@@ -42,12 +42,16 @@ export type ParameterBase = HasSchema & {
 
 } & ExampleOrExamples;
 
+export interface ParameterExtensions extends XMSSkipUrlEncoding, XMSParameterGrouping, XMSParameterLocation, XMSClientFlatten, XMSClientName { 
+
+}
+
 /** 
  * Describes a single operation parameter.
  * 
  * @see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#parameterObject
  */
-export type Parameter = ParameterBase & {
+export type Parameter = ParameterBase & ParameterExtensions & {
   /**
    * The name of the parameter. Parameter names are case sensitive.
    * 

@@ -1,4 +1,5 @@
 import { JsonReference } from '../common/json-reference';
+import { XMSClientRequestId } from './openapiv3';
 import { ParameterBase } from './parameters';
 
 
@@ -11,7 +12,7 @@ import { ParameterBase } from './parameters';
  * 
  * @see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#header-object
  */
-export type Header = ParameterBase & {
+export type Header = ParameterBase &  XMSClientRequestId & {
   /** Describes how the parameter value will be serialized depending on the type of the parameter value 
   * 
   * simple - Simple style parameters defined by RFC6570. This option replaces collectionFormat with a csv value from OpenAPI 2.0

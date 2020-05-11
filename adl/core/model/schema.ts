@@ -334,6 +334,14 @@ export class TimePrimitive extends Primitive {
   }
 }
 
+
+export class UnixTimePrimitive extends Primitive {
+  constructor(initializer?: Partial<UnixTimePrimitive>) {
+    super('unixtime');
+    this.initialize(initializer);
+  }
+}
+
 export class DateTimePrimitive extends Primitive {
   constructor(initializer?: Partial<DateTimePrimitive>) {
     super('dateTime');
@@ -422,6 +430,7 @@ export class Schemas extends Element {
   #byteArray?: ByteArrayPrimitive;
   #date?: DatePrimitive;
   #time?: TimePrimitive;
+  #unixtime?: UnixTimePrimitive;
   #dateTime?: DateTimePrimitive;
   #duration?: DurationPrimitive;
   #uuid?: UuidPrimitive;
@@ -465,6 +474,9 @@ export class Schemas extends Element {
   }
   get Time(): TimePrimitive {
     return this.#time || (this.addPrimitive(this.#time = new TimePrimitive()));
+  }
+  get UnixTime(): TimePrimitive {
+    return this.#unixtime || (this.addPrimitive(this.#unixtime = new UnixTimePrimitive()));
   }
   get DateTime(): DateTimePrimitive {
     return this.#dateTime || (this.addPrimitive(this.#dateTime = new DateTimePrimitive()));

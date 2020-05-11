@@ -1,15 +1,16 @@
 import { values } from '@azure-tools/linq';
-import { common, v3 } from '@azure-tools/openapi';
+import { common, isReference, v2 } from '@azure-tools/openapi';
+import { JsonReference, ParameterLocation } from '@azure-tools/openapi/dist/v2';
 import { nameOf } from '@azure-tools/sourcemap';
 import { Operation } from '../../../model/http/operation';
 import { addExtensionsToAttic, push } from '../common';
 import { processExternalDocs } from '../common/info';
+import { requestBody } from './body-parameter';
 import { parameter } from './parameter';
-import { requestBody } from './request-body';
 import { response } from './response';
 import { Context } from './serializer';
 
-export async function* path(pathItem: v3.PathItem, $: Context, options?: { isAnonymous?: boolean }): AsyncGenerator<Operation> {
+export async function* path(pathItem: v2.PathItem, $: Context, options?: { isAnonymous?: boolean }): AsyncGenerator<Operation> {
   const path = nameOf(pathItem);
   for (const method of values(common.HttpMethod)) {
     if (method in pathItem) {
@@ -19,24 +20,34 @@ export async function* path(pathItem: v3.PathItem, $: Context, options?: { isAno
   addExtensionsToAttic($.api.http, pathItem);
 }
 
-export async function* operation(path: string, operation: v3.Operation, shared: v3.PathItemBase, $: Context): AsyncGenerator<Operation> {
+export async function* operation(path: string, operation: v2.Operation, shared: v2.PathItem, $: Context): AsyncGenerator<Operation> {
   const result = new Operation({
-    description: operation.description || shared.description,
-    summary: operation.summary || shared.summary,
+    description: operation.description ,
+    summary: operation.summary,
     id: operation.operationId,
     tags: [...operation.tags || []]
   });
 
   // push to the attic for now
   result.addToAttic('security', operation.security);
-  result.addToAttic('servers', operation.servers);
 
   // since we're not going thru $.process
   $.addVersionInfo(result, operation);
 
-  // OAI3 parameters are all in the operation
+  // OAI2 parameters are all in the operation
   for (const p of values(shared.parameters)) {
-    // create each parameter in the operation 
+    if (isReference(p)) {
+      const r = await $.resolveReference(p.$ref);
+      if (r.in === ParameterLocation.Body) {
+        push(result.requests, $.processInline(requestBody, <JsonReference<v2.BodyParameter>> p, { isAnonymous: true, operation }));
+        continue;
+      }
+    } else if(p.in === ParameterLocation.Body )  {
+      push(result.requests, $.processInline(requestBody, <v2.BodyParameter>p, { isAnonymous: true, operation}));
+      continue;
+    }
+
+    // create each parameter in the operation  (non-body)
     await push(result.parameters, $.processInline(parameter, p));
   }
 
@@ -45,13 +56,7 @@ export async function* operation(path: string, operation: v3.Operation, shared: 
     await push(result.parameters, $.processInline(parameter, p));
   }
 
-  // request body
-  for await (const request of $.processInline(requestBody, operation.requestBody, { isAnonymous: true })) {
-    // each request body.
-    result.requests.push(request);
-  }
-
-  for await (const rsp of $.processDictionary(response, <any>operation.responses)) {
+  for await (const rsp of $.processDictionary(response, <any>operation.responses, {operation})) {
     result.responses.push(rsp);
   }
   // pick up external docs

@@ -60,4 +60,7074 @@ metaData:
     x-providerName: github.com
     x-unofficialSpec: true
     x-preferred: false
-schemas: {}
+schemas:
+  primitives:
+    - &a1
+      type: string
+      name: anonymous<unknown>
+    - &a2
+      type: int64
+      name: anonymous<unknown>
+    - &a3
+      type: boolean
+      name: anonymous<unknown>
+    - &a4
+      type: any
+      name: anonymous<unknown>
+    - &a5
+      type: double
+      name: anonymous<unknown>
+  objects:
+    - &a6
+      type: object
+      name: actor
+      description: A user or organization
+      properties:
+        - name: avatar_url
+          schema: *a1
+        - name: bio
+          schema: *a1
+        - name: blog
+          description: The website URL from the profile page
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The website URL from the profile page
+            targetSchema: *a1
+        - name: collaborators
+          schema: *a2
+        - name: company
+          schema: *a1
+        - name: created_at
+          description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+            targetSchema: *a1
+        - name: disk_usage
+          schema: *a2
+        - name: email
+          description: "Note: The returned email is the user’s publicly visible email
+            address (or null if the user has not specified a public email
+            address in their profile)."
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: "Note: The returned email is the user’s publicly visible email
+              address (or null if the user has not specified a public email
+              address in their profile)."
+            targetSchema: *a1
+        - name: followers
+          schema: *a2
+        - name: followers_url
+          schema: *a1
+        - name: following
+          schema: *a2
+        - name: following_url
+          schema: *a1
+        - name: gists_url
+          schema: *a1
+        - name: gravatar_id
+          schema: *a1
+        - name: hireable
+          schema: *a3
+        - name: html_url
+          schema: *a1
+        - name: id
+          schema: *a2
+        - name: location
+          schema: *a1
+        - name: login
+          description: The account username
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The account username
+            targetSchema: *a1
+        - name: name
+          description: The full account name
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The full account name
+            targetSchema: *a1
+        - name: organizations_url
+          schema: *a1
+        - name: owned_private_repos
+          schema: *a2
+        - name: plan
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: collaborators
+                schema: *a2
+              - name: name
+                schema: *a1
+              - name: private_repos
+                schema: *a2
+              - name: space
+                schema: *a2
+        - name: private_gists
+          schema: *a2
+        - name: public_gists
+          schema: *a2
+        - name: public_repos
+          schema: *a2
+        - name: starred_url
+          schema: *a1
+        - name: subscriptions_url
+          schema: *a1
+        - name: total_private_repos
+          schema: *a2
+        - name: type
+          schema:
+            type: enum
+            name: type
+            elementSchema: *a4
+            sealed: true
+            values:
+              - type: constant
+                name: anonymous<unknown>
+                value: User
+                valueSchema: *a4
+              - type: constant
+                name: anonymous<unknown>
+                value: Organization
+                valueSchema: *a4
+        - name: updated_at
+          description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+            targetSchema: *a1
+        - name: url
+          schema: *a1
+    - &a68
+      type: object
+      name: asset
+      properties:
+        - name: content_type
+          schema: *a1
+        - name: created_at
+          schema: *a1
+        - name: download_count
+          schema: *a5
+        - name: id
+          schema: *a5
+        - name: label
+          schema: *a1
+        - name: name
+          schema: *a1
+        - name: size
+          schema: *a5
+        - name: state
+          schema: *a1
+        - name: updated_at
+          schema: *a1
+        - name: uploader
+          schema: &a29
+            type: object
+            name: user
+            extends:
+              - *a6
+              - *a4
+        - name: url
+          schema: *a1
+    - type: object
+      name: assetPatch
+      properties:
+        - name: label
+          schema: &a7
+            type: string
+            name: anonymous<unknown>
+        - name: name
+          required: {}
+          schema: *a7
+    - type: object
+      name: blob
+      properties:
+        - name: content
+          schema: *a7
+        - name: encoding
+          schema:
+            type: enum
+            name: encoding
+            elementSchema: &a8
+              type: any
+              name: anonymous<unknown>
+            sealed: true
+            values:
+              - type: constant
+                name: anonymous<unknown>
+                value:
+                  - u
+                  - t
+                  - f
+                  - "-"
+                  - "8"
+                valueSchema: *a8
+              - type: constant
+                name: anonymous<unknown>
+                value:
+                  - b
+                  - a
+                  - s
+                  - e
+                  - "6"
+                  - "4"
+                valueSchema: *a8
+        - name: sha
+          schema: *a7
+        - name: size
+          schema: &a16
+            type: int64
+            name: anonymous<unknown>
+    - type: object
+      name: blobs
+      properties:
+        - name: sha
+          schema: *a7
+    - type: object
+      name: branch
+      properties:
+        - name: _links
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: html
+                schema: *a7
+              - name: self
+                schema: *a7
+        - name: commit
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: author
+                schema: &a13
+                  type: object
+                  name: user
+                  extends:
+                    - &a35
+                      type: object
+                      name: actor
+                      description: A user or organization
+                      properties:
+                        - name: avatar_url
+                          schema: &a9
+                            type: string
+                            name: anonymous<unknown>
+                        - name: bio
+                          schema: *a9
+                        - name: blog
+                          description: The website URL from the profile page
+                          schema:
+                            type: alias
+                            name: anonymous<string>
+                            aliasType: schema
+                            description: The website URL from the profile page
+                            targetSchema: *a9
+                        - name: collaborators
+                          schema: &a10
+                            type: int64
+                            name: anonymous<unknown>
+                        - name: company
+                          schema: *a9
+                        - name: created_at
+                          description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                          schema:
+                            type: alias
+                            name: anonymous<string>
+                            aliasType: schema
+                            description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                            targetSchema: *a9
+                        - name: disk_usage
+                          schema: *a10
+                        - name: email
+                          description: "Note: The returned email is the user’s publicly visible email
+                            address (or null if the user has not specified a
+                            public email address in their profile)."
+                          schema:
+                            type: alias
+                            name: anonymous<string>
+                            aliasType: schema
+                            description: "Note: The returned email is the user’s publicly visible email
+                              address (or null if the user has not specified a
+                              public email address in their profile)."
+                            targetSchema: *a9
+                        - name: followers
+                          schema: *a10
+                        - name: followers_url
+                          schema: *a9
+                        - name: following
+                          schema: *a10
+                        - name: following_url
+                          schema: *a9
+                        - name: gists_url
+                          schema: *a9
+                        - name: gravatar_id
+                          schema: *a9
+                        - name: hireable
+                          schema: &a40
+                            type: boolean
+                            name: anonymous<unknown>
+                        - name: html_url
+                          schema: *a9
+                        - name: id
+                          schema: *a10
+                        - name: location
+                          schema: *a9
+                        - name: login
+                          description: The account username
+                          schema:
+                            type: alias
+                            name: anonymous<string>
+                            aliasType: schema
+                            description: The account username
+                            targetSchema: *a9
+                        - name: name
+                          description: The full account name
+                          schema:
+                            type: alias
+                            name: anonymous<string>
+                            aliasType: schema
+                            description: The full account name
+                            targetSchema: *a9
+                        - name: organizations_url
+                          schema: *a9
+                        - name: owned_private_repos
+                          schema: *a10
+                        - name: plan
+                          schema:
+                            type: object
+                            name: anonymous<object>
+                            properties:
+                              - name: collaborators
+                                schema: *a10
+                              - name: name
+                                schema: *a9
+                              - name: private_repos
+                                schema: *a10
+                              - name: space
+                                schema: *a10
+                        - name: private_gists
+                          schema: *a10
+                        - name: public_gists
+                          schema: *a10
+                        - name: public_repos
+                          schema: *a10
+                        - name: starred_url
+                          schema: *a9
+                        - name: subscriptions_url
+                          schema: *a9
+                        - name: total_private_repos
+                          schema: *a10
+                        - name: type
+                          schema:
+                            type: enum
+                            name: type
+                            elementSchema: *a8
+                            sealed: true
+                            values:
+                              - type: constant
+                                name: anonymous<unknown>
+                                value: User
+                                valueSchema: *a8
+                              - type: constant
+                                name: anonymous<unknown>
+                                value: Organization
+                                valueSchema: *a8
+                        - name: updated_at
+                          description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                          schema:
+                            type: alias
+                            name: anonymous<string>
+                            aliasType: schema
+                            description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                            targetSchema: *a9
+                        - name: url
+                          schema: *a9
+                    - *a8
+              - name: commit
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: author
+                      schema:
+                        type: object
+                        name: anonymous<object>
+                        properties:
+                          - name: date
+                            description: &a11
+                              - I
+                              - S
+                              - O
+                              - " "
+                              - "8"
+                              - "6"
+                              - "0"
+                              - "1"
+                              - " "
+                              - f
+                              - o
+                              - r
+                              - m
+                              - a
+                              - t
+                              - ":"
+                              - " "
+                              - Y
+                              - Y
+                              - Y
+                              - Y
+                              - "-"
+                              - M
+                              - M
+                              - "-"
+                              - D
+                              - D
+                              - T
+                              - H
+                              - H
+                              - ":"
+                              - M
+                              - M
+                              - ":"
+                              - S
+                              - S
+                              - Z
+                            schema:
+                              type: alias
+                              name: anonymous<string>
+                              aliasType: schema
+                              description: *a11
+                              targetSchema: *a9
+                          - name: email
+                            schema: *a7
+                          - name: name
+                            schema: *a7
+                    - name: committer
+                      schema:
+                        type: object
+                        name: anonymous<object>
+                        properties:
+                          - name: date
+                            description: &a12
+                              - I
+                              - S
+                              - O
+                              - " "
+                              - "8"
+                              - "6"
+                              - "0"
+                              - "1"
+                              - " "
+                              - f
+                              - o
+                              - r
+                              - m
+                              - a
+                              - t
+                              - ":"
+                              - " "
+                              - Y
+                              - Y
+                              - Y
+                              - Y
+                              - "-"
+                              - M
+                              - M
+                              - "-"
+                              - D
+                              - D
+                              - T
+                              - H
+                              - H
+                              - ":"
+                              - M
+                              - M
+                              - ":"
+                              - S
+                              - S
+                              - Z
+                            schema:
+                              type: alias
+                              name: anonymous<string>
+                              aliasType: schema
+                              description: *a12
+                              targetSchema: *a9
+                          - name: email
+                            schema: *a7
+                          - name: name
+                            schema: *a7
+                    - name: message
+                      schema: *a7
+                    - name: tree
+                      schema:
+                        type: object
+                        name: anonymous<object>
+                        properties:
+                          - name: sha
+                            schema: *a7
+                          - name: url
+                            schema: *a7
+                    - name: url
+                      schema: *a7
+              - name: committer
+                schema: *a13
+              - name: parents
+                schema:
+                  type: array
+                  name: anonymous<unknown>
+                  elementSchema:
+                    type: object
+                    name: anonymous<object>
+                    properties:
+                      - name: sha
+                        schema: *a7
+                      - name: url
+                        schema: *a7
+              - name: sha
+                schema: *a7
+              - name: url
+                schema: *a7
+        - name: name
+          schema: *a7
+    - type: object
+      name: comment
+      properties:
+        - name: body
+          schema: *a7
+    - type: object
+      name: commentBody
+      properties:
+        - name: body
+          required: {}
+          schema: *a7
+    - type: object
+      name: commit
+      properties:
+        - name: author
+          schema: *a13
+        - name: commit
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: author
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: date
+                      description: &a14
+                        - I
+                        - S
+                        - O
+                        - " "
+                        - "8"
+                        - "6"
+                        - "0"
+                        - "1"
+                        - " "
+                        - f
+                        - o
+                        - r
+                        - m
+                        - a
+                        - t
+                        - ":"
+                        - " "
+                        - Y
+                        - Y
+                        - Y
+                        - Y
+                        - "-"
+                        - M
+                        - M
+                        - "-"
+                        - D
+                        - D
+                        - T
+                        - H
+                        - H
+                        - ":"
+                        - M
+                        - M
+                        - ":"
+                        - S
+                        - S
+                        - Z
+                      schema:
+                        type: alias
+                        name: anonymous<string>
+                        aliasType: schema
+                        description: *a14
+                        targetSchema: *a9
+                    - name: email
+                      schema: *a7
+                    - name: name
+                      schema: *a7
+              - name: committer
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: date
+                      description: &a15
+                        - I
+                        - S
+                        - O
+                        - " "
+                        - "8"
+                        - "6"
+                        - "0"
+                        - "1"
+                        - " "
+                        - f
+                        - o
+                        - r
+                        - m
+                        - a
+                        - t
+                        - ":"
+                        - " "
+                        - Y
+                        - Y
+                        - Y
+                        - Y
+                        - "-"
+                        - M
+                        - M
+                        - "-"
+                        - D
+                        - D
+                        - T
+                        - H
+                        - H
+                        - ":"
+                        - M
+                        - M
+                        - ":"
+                        - S
+                        - S
+                        - Z
+                      schema:
+                        type: alias
+                        name: anonymous<string>
+                        aliasType: schema
+                        description: *a15
+                        targetSchema: *a9
+                    - name: email
+                      schema: *a7
+                    - name: name
+                      schema: *a7
+              - name: message
+                schema: *a7
+              - name: tree
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: sha
+                      schema: *a7
+                    - name: url
+                      schema: *a7
+              - name: url
+                schema: *a7
+        - name: committer
+          schema: *a13
+        - name: files
+          schema:
+            type: array
+            name: anonymous<unknown>
+            elementSchema:
+              type: object
+              name: anonymous<object>
+              properties:
+                - name: additions
+                  schema: *a16
+                - name: blob_url
+                  schema: *a7
+                - name: changes
+                  schema: *a16
+                - name: deletions
+                  schema: *a16
+                - name: filename
+                  schema: *a7
+                - name: patch
+                  schema: *a7
+                - name: raw_url
+                  schema: *a7
+                - name: status
+                  schema: *a7
+        - name: parents
+          schema:
+            type: array
+            name: anonymous<unknown>
+            elementSchema:
+              type: object
+              name: anonymous<object>
+              properties:
+                - name: sha
+                  schema: *a7
+                - name: url
+                  schema: *a7
+        - name: sha
+          schema: *a7
+        - name: stats
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: additions
+                schema: *a16
+              - name: deletions
+                schema: *a16
+              - name: total
+                schema: *a16
+        - name: url
+          schema: *a7
+    - type: object
+      name: commitComment
+      properties:
+        - name: body
+          schema: *a7
+        - name: commit_id
+          schema: *a7
+        - name: created_at
+          description: &a17
+            - I
+            - S
+            - O
+            - " "
+            - "8"
+            - "6"
+            - "0"
+            - "1"
+            - " "
+            - f
+            - o
+            - r
+            - m
+            - a
+            - t
+            - ":"
+            - " "
+            - Y
+            - Y
+            - Y
+            - Y
+            - "-"
+            - M
+            - M
+            - "-"
+            - D
+            - D
+            - T
+            - H
+            - H
+            - ":"
+            - M
+            - M
+            - ":"
+            - S
+            - S
+            - Z
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a17
+            targetSchema: *a9
+        - name: html_url
+          schema: *a7
+        - name: id
+          schema: *a16
+        - name: line
+          schema: *a16
+        - name: path
+          schema: *a7
+        - name: position
+          schema: *a16
+        - name: updated_at
+          description: &a18
+            - I
+            - S
+            - O
+            - " "
+            - "8"
+            - "6"
+            - "0"
+            - "1"
+            - " "
+            - f
+            - o
+            - r
+            - m
+            - a
+            - t
+            - ":"
+            - " "
+            - Y
+            - Y
+            - Y
+            - Y
+            - "-"
+            - M
+            - M
+            - "-"
+            - D
+            - D
+            - T
+            - H
+            - H
+            - ":"
+            - M
+            - M
+            - ":"
+            - S
+            - S
+            - Z
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a18
+            targetSchema: *a9
+        - name: url
+          schema: *a7
+        - name: user
+          schema: *a13
+    - type: object
+      name: commitCommentBody
+      properties:
+        - name: body
+          required: {}
+          schema: *a7
+        - name: line
+          description: &a19
+            - D
+            - e
+            - p
+            - r
+            - e
+            - c
+            - a
+            - t
+            - e
+            - d
+            - " "
+            - "-"
+            - " "
+            - U
+            - s
+            - e
+            - " "
+            - p
+            - o
+            - s
+            - i
+            - t
+            - i
+            - o
+            - n
+            - " "
+            - p
+            - a
+            - r
+            - a
+            - m
+            - e
+            - t
+            - e
+            - r
+            - " "
+            - i
+            - n
+            - s
+            - t
+            - e
+            - a
+            - d
+            - .
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a19
+            targetSchema: *a9
+        - name: number
+          description: &a20
+            - L
+            - i
+            - n
+            - e
+            - " "
+            - n
+            - u
+            - m
+            - b
+            - e
+            - r
+            - " "
+            - i
+            - n
+            - " "
+            - t
+            - h
+            - e
+            - " "
+            - f
+            - i
+            - l
+            - e
+            - " "
+            - t
+            - o
+            - " "
+            - c
+            - o
+            - m
+            - m
+            - e
+            - n
+            - t
+            - " "
+            - o
+            - n
+            - .
+            - " "
+            - D
+            - e
+            - f
+            - a
+            - u
+            - l
+            - t
+            - s
+            - " "
+            - t
+            - o
+            - " "
+            - n
+            - u
+            - l
+            - l
+            - .
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a20
+            targetSchema: *a9
+        - name: path
+          description: &a21
+            - R
+            - e
+            - l
+            - a
+            - t
+            - i
+            - v
+            - e
+            - " "
+            - p
+            - a
+            - t
+            - h
+            - " "
+            - o
+            - f
+            - " "
+            - t
+            - h
+            - e
+            - " "
+            - f
+            - i
+            - l
+            - e
+            - " "
+            - t
+            - o
+            - " "
+            - c
+            - o
+            - m
+            - m
+            - e
+            - n
+            - t
+            - " "
+            - o
+            - n
+            - .
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a21
+            targetSchema: *a9
+        - name: position
+          description: &a22
+            - L
+            - i
+            - n
+            - e
+            - " "
+            - i
+            - n
+            - d
+            - e
+            - x
+            - " "
+            - i
+            - n
+            - " "
+            - t
+            - h
+            - e
+            - " "
+            - d
+            - i
+            - f
+            - f
+            - " "
+            - t
+            - o
+            - " "
+            - c
+            - o
+            - m
+            - m
+            - e
+            - n
+            - t
+            - " "
+            - o
+            - n
+            - .
+          schema:
+            type: alias
+            name: anonymous<number>
+            aliasType: schema
+            description: *a22
+            targetSchema: *a10
+        - name: sha
+          description: &a23
+            - S
+            - H
+            - A
+            - " "
+            - o
+            - f
+            - " "
+            - t
+            - h
+            - e
+            - " "
+            - c
+            - o
+            - m
+            - m
+            - i
+            - t
+            - " "
+            - t
+            - o
+            - " "
+            - c
+            - o
+            - m
+            - m
+            - e
+            - n
+            - t
+            - " "
+            - o
+            - n
+            - .
+          required: {}
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a23
+            targetSchema: *a9
+    - type: object
+      name: compare-commits
+      properties:
+        - name: ahead_by
+          schema: *a16
+        - name: base_commit
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: author
+                schema: *a13
+              - name: commit
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: author
+                      schema:
+                        type: object
+                        name: anonymous<object>
+                        properties:
+                          - name: date
+                            schema: *a7
+                          - name: email
+                            schema: *a7
+                          - name: name
+                            schema: *a7
+                    - name: committer
+                      schema:
+                        type: object
+                        name: anonymous<object>
+                        properties:
+                          - name: date
+                            schema: *a7
+                          - name: email
+                            schema: *a7
+                          - name: name
+                            schema: *a7
+                    - name: message
+                      schema: *a7
+                    - name: tree
+                      schema:
+                        type: object
+                        name: anonymous<object>
+                        properties:
+                          - name: sha
+                            schema: *a7
+                          - name: url
+                            schema: *a7
+                    - name: url
+                      schema: *a7
+              - name: committer
+                schema: *a13
+              - name: parents
+                schema:
+                  type: array
+                  name: anonymous<unknown>
+                  elementSchema:
+                    type: object
+                    name: anonymous<object>
+                    properties:
+                      - name: sha
+                        schema: *a7
+                      - name: url
+                        schema: *a7
+              - name: sha
+                schema: *a7
+              - name: url
+                schema: *a7
+        - name: behind_by
+          schema: *a16
+        - name: commits
+          schema:
+            type: alias
+            name: commits
+            aliasType: schema
+            targetSchema:
+              type: array
+              name: anonymous<unknown>
+              elementSchema:
+                type: object
+                name: anonymous<object>
+                properties:
+                  - name: author
+                    schema: *a13
+                  - name: commit
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: author
+                          schema:
+                            type: object
+                            name: anonymous<object>
+                            properties:
+                              - name: date
+                                schema: *a7
+                              - name: email
+                                schema: *a7
+                              - name: name
+                                schema: *a7
+                        - name: committer
+                          schema:
+                            type: object
+                            name: anonymous<object>
+                            properties:
+                              - name: date
+                                schema: *a7
+                              - name: email
+                                schema: *a7
+                              - name: name
+                                schema: *a7
+                        - name: message
+                          schema: *a7
+                        - name: tree
+                          schema:
+                            type: object
+                            name: anonymous<object>
+                            properties:
+                              - name: sha
+                                schema: *a7
+                              - name: url
+                                schema: *a7
+                        - name: url
+                          schema: *a7
+                  - name: committer
+                    schema: *a13
+                  - name: parents
+                    schema:
+                      type: array
+                      name: anonymous<unknown>
+                      elementSchema:
+                        type: object
+                        name: anonymous<object>
+                        properties:
+                          - name: sha
+                            schema: *a7
+                          - name: url
+                            schema: *a7
+                  - name: sha
+                    schema: *a7
+                  - name: url
+                    schema: *a7
+        - name: diff_url
+          schema: *a7
+        - name: files
+          schema:
+            type: array
+            name: anonymous<unknown>
+            elementSchema:
+              type: object
+              name: anonymous<object>
+              properties:
+                - name: additions
+                  schema: *a16
+                - name: blob_url
+                  schema: *a7
+                - name: changes
+                  schema: *a16
+                - name: contents_url
+                  schema: *a7
+                - name: deletions
+                  schema: *a16
+                - name: filename
+                  schema: *a7
+                - name: patch
+                  schema: *a7
+                - name: raw_url
+                  schema: *a7
+                - name: sha
+                  schema: *a7
+                - name: status
+                  schema: *a7
+        - name: html_url
+          schema: *a7
+        - name: patch_url
+          schema: *a7
+        - name: permalink_url
+          schema: *a7
+        - name: status
+          schema: *a7
+        - name: total_commits
+          schema: *a16
+        - name: url
+          schema: *a7
+    - type: object
+      name: contents-path
+      properties:
+        - name: _links
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: git
+                schema: *a7
+              - name: html
+                schema: *a7
+              - name: self
+                schema: *a7
+        - name: content
+          schema: *a7
+        - name: encoding
+          schema: *a7
+        - name: git_url
+          schema: *a7
+        - name: html_url
+          schema: *a7
+        - name: name
+          schema: *a7
+        - name: path
+          schema: *a7
+        - name: sha
+          schema: *a7
+        - name: size
+          schema: *a16
+        - name: type
+          schema: *a7
+        - name: url
+          schema: *a7
+    - type: object
+      name: createFile
+      properties:
+        - name: commit
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: author
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: date
+                      schema: *a7
+                    - name: email
+                      schema: *a7
+                    - name: name
+                      schema: *a7
+              - name: committer
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: date
+                      schema: *a7
+                    - name: email
+                      schema: *a7
+                    - name: name
+                      schema: *a7
+              - name: html_url
+                schema: *a7
+              - name: message
+                schema: *a7
+              - name: parents
+                schema:
+                  type: array
+                  name: anonymous<unknown>
+                  elementSchema:
+                    type: object
+                    name: anonymous<object>
+                    properties:
+                      - name: html_url
+                        schema: *a7
+                      - name: sha
+                        schema: *a7
+                      - name: url
+                        schema: *a7
+              - name: sha
+                schema: *a7
+              - name: tree
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: sha
+                      schema: *a7
+                    - name: url
+                      schema: *a7
+              - name: url
+                schema: *a7
+        - name: content
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: _links
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: git
+                      schema: *a7
+                    - name: html
+                      schema: *a7
+                    - name: self
+                      schema: *a7
+              - name: git_url
+                schema: *a7
+              - name: html_url
+                schema: *a7
+              - name: name
+                schema: *a7
+              - name: path
+                schema: *a7
+              - name: sha
+                schema: *a7
+              - name: size
+                schema: *a16
+              - name: type
+                schema: *a7
+              - name: url
+                schema: *a7
+    - type: object
+      name: createFileBody
+      properties:
+        - name: committer
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: email
+                schema: *a7
+              - name: name
+                schema: *a7
+        - name: content
+          schema: *a7
+        - name: message
+          schema: *a7
+    - type: object
+      name: deleteFile
+      properties:
+        - name: commit
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: author
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: date
+                      schema: *a7
+                    - name: email
+                      schema: *a7
+                    - name: name
+                      schema: *a7
+              - name: committer
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: date
+                      schema: *a7
+                    - name: email
+                      schema: *a7
+                    - name: name
+                      schema: *a7
+              - name: html_url
+                schema: *a7
+              - name: message
+                schema: *a7
+              - name: parents
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: html_url
+                      schema: *a7
+                    - name: sha
+                      schema: *a7
+                    - name: url
+                      schema: *a7
+              - name: sha
+                schema: *a7
+              - name: tree
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: sha
+                      schema: *a7
+                    - name: url
+                      schema: *a7
+              - name: url
+                schema: *a7
+        - name: content
+          schema: *a7
+    - type: object
+      name: deleteFileBody
+      properties:
+        - name: committer
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: email
+                schema: *a7
+              - name: name
+                schema: *a7
+        - name: message
+          schema: *a7
+        - name: sha
+          schema: *a7
+    - type: object
+      name: deployment
+      properties:
+        - name: description
+          schema: *a7
+        - name: payload
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: deploy_user
+                schema: *a7
+              - name: environment
+                schema: *a7
+              - name: room_id
+                schema: &a28
+                  type: double
+                  name: anonymous<unknown>
+        - name: ref
+          schema: *a7
+    - type: object
+      name: deployment-resp
+      properties:
+        - name: created_at
+          schema: *a7
+        - name: creator
+          schema: *a13
+        - name: description
+          schema: *a7
+        - name: id
+          schema: *a16
+        - name: payload
+          schema: *a7
+        - name: sha
+          schema: *a7
+        - name: statuses_url
+          schema: *a7
+        - name: updated_at
+          schema: *a7
+        - name: url
+          schema: *a7
+    - type: object
+      name: deployment-statuses-create
+      properties:
+        - name: description
+          schema: *a7
+        - name: state
+          schema: *a7
+        - name: target_url
+          schema: *a7
+    - &a69
+      type: object
+      name: download
+      properties:
+        - name: content_type
+          schema: *a1
+        - name: description
+          schema: *a1
+        - name: download_count
+          schema: *a2
+        - name: html_url
+          schema: *a1
+        - name: id
+          schema: *a2
+        - name: name
+          schema: *a1
+        - name: size
+          schema: *a2
+        - name: url
+          schema: *a1
+    - type: object
+      name: editTeam
+      properties:
+        - name: name
+          required: {}
+          schema: *a7
+        - name: permission
+          schema:
+            type: enum
+            name: permission
+            elementSchema: *a8
+            sealed: true
+            values:
+              - type: constant
+                name: anonymous<unknown>
+                value:
+                  - p
+                  - u
+                  - l
+                  - l
+                valueSchema: *a8
+              - type: constant
+                name: anonymous<unknown>
+                value:
+                  - p
+                  - u
+                  - s
+                  - h
+                valueSchema: *a8
+              - type: constant
+                name: anonymous<unknown>
+                value:
+                  - a
+                  - d
+                  - m
+                  - i
+                  - n
+                valueSchema: *a8
+    - &a70
+      type: object
+      name: event
+      properties:
+        - name: actor
+          schema: *a6
+        - name: created_at
+          schema:
+            type: object
+            name: anonymous<object>
+        - name: id
+          schema: *a2
+        - name: org
+          schema: &a36
+            type: object
+            name: organization
+            extends:
+              - *a6
+              - *a4
+        - name: payload
+          schema:
+            type: object
+            name: anonymous<object>
+        - name: public
+          schema: *a3
+        - name: repo
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: id
+                schema: *a2
+              - name: name
+                schema: *a1
+              - name: url
+                schema: *a1
+        - name: type
+          schema: *a1
+    - type: object
+      name: feeds
+      properties:
+        - name: _links
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: current_user
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: href
+                      schema: *a7
+                    - name: type
+                      schema: *a7
+              - name: current_user_actor
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: href
+                      schema: *a7
+                    - name: type
+                      schema: *a7
+              - name: current_user_organization
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: href
+                      schema: *a7
+                    - name: type
+                      schema: *a7
+              - name: current_user_public
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: href
+                      schema: *a7
+                    - name: type
+                      schema: *a7
+              - name: timeline
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: href
+                      schema: *a7
+                    - name: type
+                      schema: *a7
+              - name: user
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: href
+                      schema: *a7
+                    - name: type
+                      schema: *a7
+        - name: current_user_actor_url
+          schema: *a7
+        - name: current_user_organization_url
+          schema: *a7
+        - name: current_user_public
+          schema: *a7
+        - name: current_user_url
+          schema: *a7
+        - name: timeline_url
+          schema: *a7
+        - name: user_url
+          schema: *a7
+    - type: object
+      name: forkBody
+      properties:
+        - name: organization
+          schema: *a7
+    - type: object
+      name: gist
+      properties:
+        - name: comments
+          schema: *a16
+        - name: comments_url
+          schema: *a7
+        - name: created_at
+          description: &a24
+            - T
+            - i
+            - m
+            - e
+            - s
+            - t
+            - a
+            - m
+            - p
+            - " "
+            - i
+            - n
+            - " "
+            - I
+            - S
+            - O
+            - " "
+            - "8"
+            - "6"
+            - "0"
+            - "1"
+            - " "
+            - f
+            - o
+            - r
+            - m
+            - a
+            - t
+            - ":"
+            - " "
+            - Y
+            - Y
+            - Y
+            - Y
+            - "-"
+            - M
+            - M
+            - "-"
+            - D
+            - D
+            - T
+            - H
+            - H
+            - ":"
+            - M
+            - M
+            - ":"
+            - S
+            - S
+            - Z
+            - .
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a24
+            targetSchema: *a9
+        - name: description
+          schema: *a7
+        - name: files
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: ring.erl
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: filename
+                      schema: *a7
+                    - name: raw_url
+                      schema: *a7
+                    - name: size
+                      schema: *a16
+        - name: forks
+          schema:
+            type: alias
+            name: forks
+            aliasType: schema
+            targetSchema:
+              type: array
+              name: anonymous<unknown>
+              elementSchema:
+                type: object
+                name: anonymous<object>
+                properties:
+                  - name: created_at
+                    description: &a25
+                      - T
+                      - i
+                      - m
+                      - e
+                      - s
+                      - t
+                      - a
+                      - m
+                      - p
+                      - " "
+                      - i
+                      - n
+                      - " "
+                      - I
+                      - S
+                      - O
+                      - " "
+                      - "8"
+                      - "6"
+                      - "0"
+                      - "1"
+                      - " "
+                      - f
+                      - o
+                      - r
+                      - m
+                      - a
+                      - t
+                      - ":"
+                      - " "
+                      - Y
+                      - Y
+                      - Y
+                      - Y
+                      - "-"
+                      - M
+                      - M
+                      - "-"
+                      - D
+                      - D
+                      - T
+                      - H
+                      - H
+                      - ":"
+                      - M
+                      - M
+                      - ":"
+                      - S
+                      - S
+                      - Z
+                      - .
+                    schema:
+                      type: alias
+                      name: anonymous<string>
+                      aliasType: schema
+                      description: *a25
+                      targetSchema: *a9
+                  - name: url
+                    schema: *a7
+                  - name: user
+                    schema: *a13
+        - name: git_pull_url
+          schema: *a7
+        - name: git_push_url
+          schema: *a7
+        - name: history
+          schema:
+            type: alias
+            name: history
+            aliasType: schema
+            targetSchema:
+              type: array
+              name: anonymous<unknown>
+              elementSchema:
+                type: object
+                name: anonymous<object>
+                properties:
+                  - name: change_status
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: additions
+                          schema: *a16
+                        - name: deletions
+                          schema: *a16
+                        - name: total
+                          schema: *a16
+                  - name: committed_at
+                    description: &a26
+                      - T
+                      - i
+                      - m
+                      - e
+                      - s
+                      - t
+                      - a
+                      - m
+                      - p
+                      - " "
+                      - i
+                      - n
+                      - " "
+                      - I
+                      - S
+                      - O
+                      - " "
+                      - "8"
+                      - "6"
+                      - "0"
+                      - "1"
+                      - " "
+                      - f
+                      - o
+                      - r
+                      - m
+                      - a
+                      - t
+                      - ":"
+                      - " "
+                      - Y
+                      - Y
+                      - Y
+                      - Y
+                      - "-"
+                      - M
+                      - M
+                      - "-"
+                      - D
+                      - D
+                      - T
+                      - H
+                      - H
+                      - ":"
+                      - M
+                      - M
+                      - ":"
+                      - S
+                      - S
+                      - Z
+                      - .
+                    schema:
+                      type: alias
+                      name: anonymous<string>
+                      aliasType: schema
+                      description: *a26
+                      targetSchema: *a9
+                  - name: url
+                    schema: *a7
+                  - name: user
+                    schema: *a13
+                  - name: version
+                    schema: *a7
+        - name: html_url
+          schema: *a7
+        - name: id
+          schema: *a7
+        - name: public
+          schema: &a27
+            type: boolean
+            name: anonymous<unknown>
+        - name: url
+          schema: *a7
+        - name: user
+          schema: *a13
+    - type: object
+      name: gitCommit
+      properties:
+        - name: author
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: date
+                schema: *a7
+              - name: email
+                schema: *a7
+              - name: name
+                schema: *a7
+        - name: message
+          schema: *a7
+        - name: parents
+          schema: *a7
+        - name: tree
+          schema: *a7
+    - type: object
+      name: gitRefPatch
+      properties:
+        - name: force
+          schema: *a27
+        - name: sha
+          schema: *a7
+    - type: object
+      name: gitignore-lang
+      properties:
+        - name: name
+          schema: *a7
+        - name: source
+          schema: *a7
+    - type: object
+      name: headBranch
+      properties:
+        - name: object
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: sha
+                schema: *a7
+              - name: type
+                schema: *a7
+              - name: url
+                schema: *a7
+        - name: ref
+          schema: *a7
+        - name: url
+          schema: *a7
+    - type: object
+      name: hookBody
+      properties:
+        - name: active
+          schema: *a27
+        - name: add_events
+          schema:
+            type: array
+            name: anonymous<unknown>
+            elementSchema: *a7
+    - type: object
+      name: issue
+      properties:
+        - name: assignee
+          schema: *a7
+        - name: body
+          schema: *a7
+        - name: labels
+          schema:
+            type: array
+            name: anonymous<unknown>
+            elementSchema: *a7
+        - name: milestone
+          schema: *a28
+        - name: title
+          schema: *a7
+    - &a71
+      type: object
+      name: issueEvent
+      properties:
+        - name: actor
+          schema: *a6
+        - name: commit_id
+          schema: *a1
+        - name: created_at
+          description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+            targetSchema: *a1
+        - name: event
+          schema: *a1
+        - name: issue
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: assignee
+                schema: *a29
+              - name: body
+                schema: *a1
+              - name: closed_at
+                description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                schema:
+                  type: alias
+                  name: anonymous<string>
+                  aliasType: schema
+                  description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                  targetSchema: *a1
+              - name: comments
+                schema: *a2
+              - name: created_at
+                description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                schema:
+                  type: alias
+                  name: anonymous<string>
+                  aliasType: schema
+                  description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                  targetSchema: *a1
+              - name: html_url
+                schema: *a1
+              - name: labels
+                schema:
+                  type: array
+                  name: anonymous<unknown>
+                  elementSchema:
+                    type: object
+                    name: anonymous<object>
+                    properties:
+                      - name: color
+                        schema: *a1
+                      - name: name
+                        schema: *a1
+                      - name: url
+                        schema: *a1
+              - name: milestone
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: closed_issues
+                      schema: *a2
+                    - name: created_at
+                      description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                      schema:
+                        type: alias
+                        name: anonymous<string>
+                        aliasType: schema
+                        description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                        targetSchema: *a1
+                    - name: creator
+                      schema: *a29
+                    - name: description
+                      schema: *a1
+                    - name: due_on
+                      description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                      schema:
+                        type: alias
+                        name: anonymous<string>
+                        aliasType: schema
+                        description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                        targetSchema: *a1
+                    - name: number
+                      schema: *a2
+                    - name: open_issues
+                      schema: *a2
+                    - name: state
+                      schema:
+                        type: enum
+                        name: state
+                        elementSchema: *a4
+                        sealed: true
+                        values:
+                          - type: constant
+                            name: anonymous<unknown>
+                            value: open
+                            valueSchema: *a4
+                          - type: constant
+                            name: anonymous<unknown>
+                            value: closed
+                            valueSchema: *a4
+                    - name: title
+                      schema: *a1
+                    - name: url
+                      schema: *a1
+              - name: number
+                schema: *a2
+              - name: pull_request
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: diff_url
+                      schema: *a1
+                    - name: html_url
+                      schema: *a1
+                    - name: patch_url
+                      schema: *a1
+              - name: state
+                schema:
+                  type: enum
+                  name: state
+                  elementSchema: *a4
+                  sealed: true
+                  values:
+                    - type: constant
+                      name: anonymous<unknown>
+                      value: open
+                      valueSchema: *a4
+                    - type: constant
+                      name: anonymous<unknown>
+                      value: closed
+                      valueSchema: *a4
+              - name: title
+                schema: *a1
+              - name: updated_at
+                description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                schema:
+                  type: alias
+                  name: anonymous<string>
+                  aliasType: schema
+                  description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                  targetSchema: *a1
+              - name: url
+                schema: *a1
+              - name: user
+                schema: *a29
+        - name: url
+          schema: *a1
+    - type: object
+      name: issuesComment
+      properties:
+        - name: body
+          schema: *a7
+        - name: created_at
+          description: &a30
+            - I
+            - S
+            - O
+            - " "
+            - "8"
+            - "6"
+            - "0"
+            - "1"
+            - " "
+            - f
+            - o
+            - r
+            - m
+            - a
+            - t
+            - ":"
+            - " "
+            - Y
+            - Y
+            - Y
+            - Y
+            - "-"
+            - M
+            - M
+            - "-"
+            - D
+            - D
+            - T
+            - H
+            - H
+            - ":"
+            - M
+            - M
+            - ":"
+            - S
+            - S
+            - Z
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a30
+            targetSchema: *a9
+        - name: html_url
+          schema: *a7
+        - name: id
+          schema: *a16
+        - name: updated_at
+          description: &a31
+            - I
+            - S
+            - O
+            - " "
+            - "8"
+            - "6"
+            - "0"
+            - "1"
+            - " "
+            - f
+            - o
+            - r
+            - m
+            - a
+            - t
+            - ":"
+            - " "
+            - Y
+            - Y
+            - Y
+            - Y
+            - "-"
+            - M
+            - M
+            - "-"
+            - D
+            - D
+            - T
+            - H
+            - H
+            - ":"
+            - M
+            - M
+            - ":"
+            - S
+            - S
+            - Z
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a31
+            targetSchema: *a9
+        - name: url
+          schema: *a7
+        - name: user
+          schema: *a13
+    - type: object
+      name: label
+      properties:
+        - name: color
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            constraints:
+              - type: constraint
+                name: MaxLength
+                length: {}
+              - type: constraint
+                name: MinLength
+                length: {}
+            targetSchema: *a9
+        - name: name
+          schema: *a7
+        - name: url
+          schema: *a7
+    - type: object
+      name: markdown
+      properties:
+        - name: context
+          schema: *a7
+        - name: mode
+          schema: *a7
+        - name: text
+          schema: *a7
+    - type: object
+      name: merge
+      properties:
+        - name: merged
+          schema: *a27
+        - name: message
+          schema: *a7
+        - name: sha
+          schema: *a7
+    - type: object
+      name: mergePullBody
+      properties:
+        - name: commit_message
+          schema: *a7
+    - type: object
+      name: mergesBody
+      properties:
+        - name: base
+          schema: *a7
+        - name: commit_message
+          schema: *a7
+        - name: head
+          schema: *a7
+    - type: object
+      name: mergesConflict
+      properties:
+        - name: message
+          description: &a32
+            - E
+            - r
+            - r
+            - o
+            - r
+            - " "
+            - m
+            - e
+            - s
+            - s
+            - a
+            - g
+            - e
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a32
+            targetSchema: *a9
+    - type: object
+      name: mergesSuccessful
+      properties:
+        - name: author
+          schema: *a13
+        - name: comments_url
+          schema: *a7
+        - name: commit
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: author
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: date
+                      schema: *a7
+                    - name: email
+                      schema: *a7
+                    - name: name
+                      schema: *a7
+              - name: comment_count
+                schema: *a16
+              - name: committer
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: date
+                      schema: *a7
+                    - name: email
+                      schema: *a7
+                    - name: name
+                      schema: *a7
+              - name: message
+                schema: *a7
+              - name: tree
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: sha
+                      schema: *a7
+                    - name: url
+                      schema: *a7
+              - name: url
+                schema: *a7
+        - name: committer
+          schema: *a13
+        - name: merged
+          schema: *a27
+        - name: message
+          schema: *a7
+        - name: parents
+          schema:
+            type: array
+            name: anonymous<unknown>
+            elementSchema:
+              type: object
+              name: anonymous<object>
+              properties:
+                - name: sha
+                  schema: *a7
+                - name: url
+                  schema: *a7
+        - name: sha
+          schema: *a7
+        - name: url
+          schema: *a7
+    - type: object
+      name: meta
+      properties:
+        - name: git
+          schema:
+            type: array
+            name: anonymous<unknown>
+            elementSchema:
+              type: alias
+              name: anonymous<string>
+              aliasType: schema
+              description:
+                - A
+                - n
+                - " "
+                - A
+                - r
+                - r
+                - a
+                - y
+                - " "
+                - o
+                - f
+                - " "
+                - I
+                - P
+                - " "
+                - a
+                - d
+                - d
+                - r
+                - e
+                - s
+                - s
+                - e
+                - s
+                - " "
+                - i
+                - n
+                - " "
+                - C
+                - I
+                - D
+                - R
+                - " "
+                - f
+                - o
+                - r
+                - m
+                - a
+                - t
+                - " "
+                - s
+                - p
+                - e
+                - c
+                - i
+                - f
+                - y
+                - i
+                - n
+                - g
+                - " "
+                - t
+                - h
+                - e
+                - " "
+                - G
+                - i
+                - t
+                - " "
+                - s
+                - e
+                - r
+                - v
+                - e
+                - r
+                - s
+                - " "
+                - a
+                - t
+                - " "
+                - G
+                - i
+                - t
+                - H
+                - u
+                - b
+                - .
+              targetSchema: *a9
+        - name: hooks
+          schema:
+            type: array
+            name: anonymous<unknown>
+            elementSchema:
+              type: alias
+              name: anonymous<string>
+              aliasType: schema
+              description:
+                - A
+                - n
+                - " "
+                - A
+                - r
+                - r
+                - a
+                - y
+                - " "
+                - o
+                - f
+                - " "
+                - I
+                - P
+                - " "
+                - a
+                - d
+                - d
+                - r
+                - e
+                - s
+                - s
+                - e
+                - s
+                - " "
+                - i
+                - n
+                - " "
+                - C
+                - I
+                - D
+                - R
+                - " "
+                - f
+                - o
+                - r
+                - m
+                - a
+                - t
+                - " "
+                - s
+                - p
+                - e
+                - c
+                - i
+                - f
+                - y
+                - i
+                - n
+                - g
+                - " "
+                - t
+                - h
+                - e
+                - " "
+                - a
+                - d
+                - d
+                - r
+                - e
+                - s
+                - s
+                - e
+                - s
+                - " "
+                - t
+                - h
+                - a
+                - t
+                - " "
+                - i
+                - n
+                - c
+                - o
+                - m
+                - i
+                - n
+                - g
+                - " "
+                - s
+                - e
+                - r
+                - v
+                - i
+                - c
+                - e
+                - " "
+                - h
+                - o
+                - o
+                - k
+                - s
+                - " "
+                - w
+                - i
+                - l
+                - l
+                - " "
+                - o
+                - r
+                - i
+                - g
+                - i
+                - n
+                - a
+                - t
+                - e
+                - " "
+                - f
+                - r
+                - o
+                - m
+                - .
+              targetSchema: *a9
+    - type: object
+      name: milestone
+      properties:
+        - name: closed_issues
+          schema: *a16
+        - name: created_at
+          description: &a33
+            - I
+            - S
+            - O
+            - " "
+            - "8"
+            - "6"
+            - "0"
+            - "1"
+            - " "
+            - f
+            - o
+            - r
+            - m
+            - a
+            - t
+            - ":"
+            - " "
+            - Y
+            - Y
+            - Y
+            - Y
+            - "-"
+            - M
+            - M
+            - "-"
+            - D
+            - D
+            - T
+            - H
+            - H
+            - ":"
+            - M
+            - M
+            - ":"
+            - S
+            - S
+            - Z
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a33
+            targetSchema: *a9
+        - name: creator
+          schema: *a13
+        - name: description
+          schema: *a7
+        - name: due_on
+          description: &a34
+            - I
+            - S
+            - O
+            - " "
+            - "8"
+            - "6"
+            - "0"
+            - "1"
+            - " "
+            - f
+            - o
+            - r
+            - m
+            - a
+            - t
+            - ":"
+            - " "
+            - Y
+            - Y
+            - Y
+            - Y
+            - "-"
+            - M
+            - M
+            - "-"
+            - D
+            - D
+            - T
+            - H
+            - H
+            - ":"
+            - M
+            - M
+            - ":"
+            - S
+            - S
+            - Z
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a34
+            targetSchema: *a9
+        - name: number
+          schema: *a16
+        - name: open_issues
+          schema: *a16
+        - name: state
+          schema:
+            type: enum
+            name: state
+            elementSchema: *a8
+            sealed: true
+            values:
+              - type: constant
+                name: anonymous<unknown>
+                value:
+                  - o
+                  - p
+                  - e
+                  - n
+                valueSchema: *a8
+              - type: constant
+                name: anonymous<unknown>
+                value:
+                  - c
+                  - l
+                  - o
+                  - s
+                  - e
+                  - d
+                valueSchema: *a8
+        - name: title
+          schema: *a7
+        - name: url
+          schema: *a7
+    - type: object
+      name: milestoneUpdate
+      properties:
+        - name: description
+          schema: *a7
+        - name: due_on
+          schema: *a7
+        - name: state
+          schema: *a7
+        - name: title
+          schema: *a7
+    - type: object
+      name: notificationMarkRead
+      properties:
+        - name: last_read_at
+          schema: *a7
+    - type: object
+      name: notifications
+      properties:
+        - name: id
+          schema: *a16
+        - name: last_read_at
+          schema: *a7
+        - name: reason
+          schema: *a7
+        - name: repository
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: description
+                schema: *a7
+              - name: fork
+                schema: *a27
+              - name: full_name
+                schema: *a7
+              - name: html_url
+                schema: *a7
+              - name: id
+                schema: *a16
+              - name: name
+                schema: *a7
+              - name: owner
+                schema: *a35
+              - name: private
+                schema: *a27
+              - name: url
+                schema: *a7
+        - name: subject
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: latest_comment_url
+                schema: *a7
+              - name: title
+                schema: *a7
+              - name: type
+                schema: *a7
+              - name: url
+                schema: *a7
+        - name: unread
+          schema: *a27
+        - name: updated_at
+          schema: *a7
+        - name: url
+          schema: *a7
+    - type: object
+      name: orgTeamsPost
+      properties:
+        - name: name
+          required: {}
+          schema: *a7
+        - name: permission
+          schema:
+            type: enum
+            name: permission
+            elementSchema: *a8
+            sealed: true
+            values:
+              - type: constant
+                name: anonymous<unknown>
+                value:
+                  - p
+                  - u
+                  - l
+                  - l
+                valueSchema: *a8
+              - type: constant
+                name: anonymous<unknown>
+                value:
+                  - p
+                  - u
+                  - s
+                  - h
+                valueSchema: *a8
+              - type: constant
+                name: anonymous<unknown>
+                value:
+                  - a
+                  - d
+                  - m
+                  - i
+                  - n
+                valueSchema: *a8
+        - name: repo_names
+          schema:
+            type: array
+            name: anonymous<unknown>
+            elementSchema: *a7
+    - *a36
+    - type: object
+      name: organizationAsTeamMember
+      properties:
+        - name: errors
+          schema:
+            type: array
+            name: anonymous<unknown>
+            elementSchema:
+              type: object
+              name: anonymous<object>
+              properties:
+                - name: code
+                  schema: *a7
+                - name: field
+                  schema: *a7
+                - name: resource
+                  schema: *a7
+        - name: message
+          schema: *a7
+    - type: object
+      name: participationStats
+      properties:
+        - name: all
+          schema:
+            type: array
+            name: anonymous<unknown>
+            elementSchema: *a16
+        - name: owner
+          schema:
+            type: array
+            name: anonymous<unknown>
+            elementSchema: *a16
+    - type: object
+      name: patchGist
+      properties:
+        - name: description
+          schema: *a7
+        - name: files
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: delete_this_file.txt
+                schema: *a7
+              - name: file1.txt
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: content
+                      schema: *a7
+              - name: new_file.txt
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: content
+                      schema: *a7
+              - name: old_name.txt
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: content
+                      schema: *a7
+                    - name: filename
+                      schema: *a7
+    - type: object
+      name: patchOrg
+      properties:
+        - name: billing_email
+          description: &a37
+            - B
+            - i
+            - l
+            - l
+            - i
+            - n
+            - g
+            - " "
+            - e
+            - m
+            - a
+            - i
+            - l
+            - " "
+            - a
+            - d
+            - d
+            - r
+            - e
+            - s
+            - s
+            - .
+            - " "
+            - T
+            - h
+            - i
+            - s
+            - " "
+            - a
+            - d
+            - d
+            - r
+            - e
+            - s
+            - s
+            - " "
+            - i
+            - s
+            - " "
+            - n
+            - o
+            - t
+            - " "
+            - p
+            - u
+            - b
+            - l
+            - i
+            - c
+            - i
+            - z
+            - e
+            - d
+            - .
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a37
+            targetSchema: *a9
+        - name: company
+          schema: *a7
+        - name: email
+          description: &a38
+            - P
+            - u
+            - b
+            - l
+            - i
+            - c
+            - l
+            - y
+            - " "
+            - v
+            - i
+            - s
+            - i
+            - b
+            - l
+            - e
+            - " "
+            - e
+            - m
+            - a
+            - i
+            - l
+            - " "
+            - a
+            - d
+            - d
+            - r
+            - e
+            - s
+            - s
+            - .
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a38
+            targetSchema: *a9
+        - name: location
+          schema: *a7
+        - name: name
+          schema: *a7
+    - type: object
+      name: postGist
+      properties:
+        - name: description
+          schema: *a7
+        - name: files
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: file1.txt
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: content
+                      schema: *a7
+        - name: public
+          schema: *a27
+    - type: object
+      name: postRepo
+      properties:
+        - name: auto_init
+          description: &a39
+            - T
+            - r
+            - u
+            - e
+            - " "
+            - t
+            - o
+            - " "
+            - c
+            - r
+            - e
+            - a
+            - t
+            - e
+            - " "
+            - a
+            - n
+            - " "
+            - i
+            - n
+            - i
+            - t
+            - i
+            - a
+            - l
+            - " "
+            - c
+            - o
+            - m
+            - m
+            - i
+            - t
+            - " "
+            - w
+            - i
+            - t
+            - h
+            - " "
+            - e
+            - m
+            - p
+            - t
+            - y
+            - " "
+            - R
+            - E
+            - A
+            - D
+            - M
+            - E
+            - .
+            - " "
+            - D
+            - e
+            - f
+            - a
+            - u
+            - l
+            - t
+            - " "
+            - i
+            - s
+            - " "
+            - f
+            - a
+            - l
+            - s
+            - e
+            - .
+          schema:
+            type: alias
+            name: anonymous<unknown>
+            aliasType: schema
+            description: *a39
+            targetSchema: *a40
+        - name: description
+          schema: *a7
+        - name: gitignore_template
+          description: &a41
+            - D
+            - e
+            - s
+            - i
+            - r
+            - e
+            - d
+            - " "
+            - l
+            - a
+            - n
+            - g
+            - u
+            - a
+            - g
+            - e
+            - " "
+            - o
+            - r
+            - " "
+            - p
+            - l
+            - a
+            - t
+            - f
+            - o
+            - r
+            - m
+            - " "
+            - .
+            - g
+            - i
+            - t
+            - i
+            - g
+            - n
+            - o
+            - r
+            - e
+            - " "
+            - t
+            - e
+            - m
+            - p
+            - l
+            - a
+            - t
+            - e
+            - " "
+            - t
+            - o
+            - " "
+            - a
+            - p
+            - p
+            - l
+            - y
+            - .
+            - " "
+            - U
+            - s
+            - e
+            - " "
+            - t
+            - h
+            - e
+            - " "
+            - n
+            - a
+            - m
+            - e
+            - " "
+            - o
+            - f
+            - " "
+            - t
+            - h
+            - e
+            - " "
+            - t
+            - e
+            - m
+            - p
+            - l
+            - a
+            - t
+            - e
+            - " "
+            - w
+            - i
+            - t
+            - h
+            - o
+            - u
+            - t
+            - " "
+            - t
+            - h
+            - e
+            - " "
+            - e
+            - x
+            - t
+            - e
+            - n
+            - s
+            - i
+            - o
+            - n
+            - .
+            - " "
+            - F
+            - o
+            - r
+            - " "
+            - e
+            - x
+            - a
+            - m
+            - p
+            - l
+            - e
+            - ","
+            - " "
+            - '"'
+            - H
+            - a
+            - s
+            - k
+            - e
+            - l
+            - l
+            - '"'
+            - " "
+            - I
+            - g
+            - n
+            - o
+            - r
+            - e
+            - d
+            - " "
+            - i
+            - f
+            - " "
+            - a
+            - u
+            - t
+            - o
+            - _
+            - i
+            - n
+            - i
+            - t
+            - " "
+            - p
+            - a
+            - r
+            - a
+            - m
+            - e
+            - t
+            - e
+            - r
+            - " "
+            - i
+            - s
+            - " "
+            - n
+            - o
+            - t
+            - " "
+            - p
+            - r
+            - o
+            - v
+            - i
+            - d
+            - e
+            - d
+            - .
+            - " "
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a41
+            targetSchema: *a9
+        - name: has_downloads
+          description: &a42
+            - T
+            - r
+            - u
+            - e
+            - " "
+            - t
+            - o
+            - " "
+            - e
+            - n
+            - a
+            - b
+            - l
+            - e
+            - " "
+            - d
+            - o
+            - w
+            - n
+            - l
+            - o
+            - a
+            - d
+            - s
+            - " "
+            - f
+            - o
+            - r
+            - " "
+            - t
+            - h
+            - i
+            - s
+            - " "
+            - r
+            - e
+            - p
+            - o
+            - s
+            - i
+            - t
+            - o
+            - r
+            - y
+            - ","
+            - " "
+            - f
+            - a
+            - l
+            - s
+            - e
+            - " "
+            - t
+            - o
+            - " "
+            - d
+            - i
+            - s
+            - a
+            - b
+            - l
+            - e
+            - " "
+            - t
+            - h
+            - e
+            - m
+            - .
+            - " "
+            - D
+            - e
+            - f
+            - a
+            - u
+            - l
+            - t
+            - " "
+            - i
+            - s
+            - " "
+            - t
+            - r
+            - u
+            - e
+            - .
+          schema:
+            type: alias
+            name: anonymous<unknown>
+            aliasType: schema
+            description: *a42
+            targetSchema: *a40
+        - name: has_issues
+          description: &a43
+            - T
+            - r
+            - u
+            - e
+            - " "
+            - t
+            - o
+            - " "
+            - e
+            - n
+            - a
+            - b
+            - l
+            - e
+            - " "
+            - i
+            - s
+            - s
+            - u
+            - e
+            - s
+            - " "
+            - f
+            - o
+            - r
+            - " "
+            - t
+            - h
+            - i
+            - s
+            - " "
+            - r
+            - e
+            - p
+            - o
+            - s
+            - i
+            - t
+            - o
+            - r
+            - y
+            - ","
+            - " "
+            - f
+            - a
+            - l
+            - s
+            - e
+            - " "
+            - t
+            - o
+            - " "
+            - d
+            - i
+            - s
+            - a
+            - b
+            - l
+            - e
+            - " "
+            - t
+            - h
+            - e
+            - m
+            - .
+            - " "
+            - D
+            - e
+            - f
+            - a
+            - u
+            - l
+            - t
+            - " "
+            - i
+            - s
+            - " "
+            - t
+            - r
+            - u
+            - e
+            - .
+          schema:
+            type: alias
+            name: anonymous<unknown>
+            aliasType: schema
+            description: *a43
+            targetSchema: *a40
+        - name: has_wiki
+          description: &a44
+            - T
+            - r
+            - u
+            - e
+            - " "
+            - t
+            - o
+            - " "
+            - e
+            - n
+            - a
+            - b
+            - l
+            - e
+            - " "
+            - t
+            - h
+            - e
+            - " "
+            - w
+            - i
+            - k
+            - i
+            - " "
+            - f
+            - o
+            - r
+            - " "
+            - t
+            - h
+            - i
+            - s
+            - " "
+            - r
+            - e
+            - p
+            - o
+            - s
+            - i
+            - t
+            - o
+            - r
+            - y
+            - ","
+            - " "
+            - f
+            - a
+            - l
+            - s
+            - e
+            - " "
+            - t
+            - o
+            - " "
+            - d
+            - i
+            - s
+            - a
+            - b
+            - l
+            - e
+            - " "
+            - i
+            - t
+            - .
+            - " "
+            - D
+            - e
+            - f
+            - a
+            - u
+            - l
+            - t
+            - " "
+            - i
+            - s
+            - " "
+            - t
+            - r
+            - u
+            - e
+            - .
+          schema:
+            type: alias
+            name: anonymous<unknown>
+            aliasType: schema
+            description: *a44
+            targetSchema: *a40
+        - name: homepage
+          schema: *a7
+        - name: name
+          required: {}
+          schema: *a7
+        - name: private
+          description: &a45
+            - T
+            - r
+            - u
+            - e
+            - " "
+            - t
+            - o
+            - " "
+            - c
+            - r
+            - e
+            - a
+            - t
+            - e
+            - " "
+            - a
+            - " "
+            - p
+            - r
+            - i
+            - v
+            - a
+            - t
+            - e
+            - " "
+            - r
+            - e
+            - p
+            - o
+            - s
+            - i
+            - t
+            - o
+            - r
+            - y
+            - ","
+            - " "
+            - f
+            - a
+            - l
+            - s
+            - e
+            - " "
+            - t
+            - o
+            - " "
+            - c
+            - r
+            - e
+            - a
+            - t
+            - e
+            - " "
+            - a
+            - " "
+            - p
+            - u
+            - b
+            - l
+            - i
+            - c
+            - " "
+            - o
+            - n
+            - e
+            - .
+            - " "
+            - C
+            - r
+            - e
+            - a
+            - t
+            - i
+            - n
+            - g
+            - " "
+            - p
+            - r
+            - i
+            - v
+            - a
+            - t
+            - e
+            - " "
+            - r
+            - e
+            - p
+            - o
+            - s
+            - i
+            - t
+            - o
+            - r
+            - i
+            - e
+            - s
+            - " "
+            - r
+            - e
+            - q
+            - u
+            - i
+            - r
+            - e
+            - s
+            - " "
+            - a
+            - " "
+            - p
+            - a
+            - i
+            - d
+            - " "
+            - G
+            - i
+            - t
+            - H
+            - u
+            - b
+            - " "
+            - a
+            - c
+            - c
+            - o
+            - u
+            - n
+            - t
+            - .
+          schema:
+            type: alias
+            name: anonymous<unknown>
+            aliasType: schema
+            description: *a45
+            targetSchema: *a40
+        - name: team_id
+          description: &a46
+            - T
+            - h
+            - e
+            - " "
+            - i
+            - d
+            - " "
+            - o
+            - f
+            - " "
+            - t
+            - h
+            - e
+            - " "
+            - t
+            - e
+            - a
+            - m
+            - " "
+            - t
+            - h
+            - a
+            - t
+            - " "
+            - w
+            - i
+            - l
+            - l
+            - " "
+            - b
+            - e
+            - " "
+            - g
+            - r
+            - a
+            - n
+            - t
+            - e
+            - d
+            - " "
+            - a
+            - c
+            - c
+            - e
+            - s
+            - s
+            - " "
+            - t
+            - o
+            - " "
+            - t
+            - h
+            - i
+            - s
+            - " "
+            - r
+            - e
+            - p
+            - o
+            - s
+            - i
+            - t
+            - o
+            - r
+            - y
+            - .
+            - " "
+            - T
+            - h
+            - i
+            - s
+            - " "
+            - i
+            - s
+            - " "
+            - o
+            - n
+            - l
+            - y
+            - " "
+            - v
+            - a
+            - l
+            - i
+            - d
+            - " "
+            - w
+            - h
+            - e
+            - n
+            - " "
+            - c
+            - r
+            - e
+            - a
+            - t
+            - i
+            - n
+            - g
+            - " "
+            - a
+            - " "
+            - r
+            - e
+            - p
+            - o
+            - " "
+            - i
+            - n
+            - " "
+            - a
+            - n
+            - " "
+            - o
+            - r
+            - g
+            - a
+            - n
+            - i
+            - z
+            - a
+            - t
+            - i
+            - o
+            - n
+            - .
+          schema:
+            type: alias
+            name: anonymous<number>
+            aliasType: schema
+            description: *a46
+            targetSchema: *a10
+    - type: object
+      name: pullRequest
+      properties:
+        - name: _links
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: comments
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: href
+                      schema: *a7
+              - name: html
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: href
+                      schema: *a7
+              - name: review_comments
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: href
+                      schema: *a7
+              - name: self
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: href
+                      schema: *a7
+        - name: additions
+          schema: *a16
+        - name: base
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: label
+                schema: *a7
+              - name: ref
+                schema: *a7
+              - name: repo
+                schema: &a47
+                  type: object
+                  name: repo
+                  properties:
+                    - name: clone_url
+                      schema: *a9
+                    - name: created_at
+                      description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                      schema:
+                        type: alias
+                        name: anonymous<string>
+                        aliasType: schema
+                        description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                        targetSchema: *a9
+                    - name: description
+                      schema: *a9
+                    - name: fork
+                      schema: *a40
+                    - name: forks
+                      schema: *a10
+                    - name: forks_count
+                      schema: *a10
+                    - name: full_name
+                      schema: *a9
+                    - name: git_url
+                      schema: *a9
+                    - name: has_downloads
+                      schema: *a40
+                    - name: has_issues
+                      schema: *a40
+                    - name: has_wiki
+                      schema: *a40
+                    - name: homepage
+                      schema: *a9
+                    - name: html_url
+                      schema: *a9
+                    - name: id
+                      schema: *a10
+                    - name: language
+                      schema: *a9
+                    - name: master_branch
+                      schema: *a9
+                    - name: mirror_url
+                      schema: *a9
+                    - name: name
+                      schema: *a9
+                    - name: open_issues
+                      schema: *a10
+                    - name: open_issues_count
+                      schema: *a10
+                    - name: organization
+                      schema:
+                        type: object
+                        name: organization
+                        extends:
+                          - *a35
+                          - *a8
+                    - name: owner
+                      schema: *a35
+                    - name: parent
+                      schema:
+                        type: object
+                        name: anonymous<object>
+                        extends:
+                          - *a47
+                          - *a8
+                    - name: private
+                      schema: *a40
+                    - name: pushed_at
+                      description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                      schema:
+                        type: alias
+                        name: anonymous<string>
+                        aliasType: schema
+                        description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                        targetSchema: *a9
+                    - name: size
+                      schema: *a10
+                    - name: source
+                      schema:
+                        type: object
+                        name: anonymous<object>
+                        extends:
+                          - *a47
+                          - *a8
+                    - name: ssh_url
+                      schema: *a9
+                    - name: svn_url
+                      schema: *a9
+                    - name: updated_at
+                      description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                      schema:
+                        type: alias
+                        name: anonymous<string>
+                        aliasType: schema
+                        description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                        targetSchema: *a9
+                    - name: url
+                      schema: *a9
+                    - name: watchers
+                      schema: *a10
+                    - name: watchers_count
+                      schema: *a10
+              - name: sha
+                schema: *a7
+              - name: user
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: avatar_url
+                      schema: *a7
+                    - name: gravatar_id
+                      schema: *a7
+                    - name: id
+                      schema: *a16
+                    - name: login
+                      schema: *a7
+                    - name: url
+                      schema: *a7
+        - name: body
+          schema: *a7
+        - name: changed_files
+          schema: *a16
+        - name: closed_at
+          schema: *a7
+        - name: comments
+          schema: *a16
+        - name: commits
+          schema: *a16
+        - name: created_at
+          schema: *a7
+        - name: deletions
+          schema: *a16
+        - name: diff_url
+          schema: *a7
+        - name: head
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: label
+                schema: *a7
+              - name: ref
+                schema: *a7
+              - name: repo
+                schema: *a47
+              - name: sha
+                schema: *a7
+              - name: user
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: avatar_url
+                      schema: *a7
+                    - name: gravatar_id
+                      schema: *a7
+                    - name: id
+                      schema: *a16
+                    - name: login
+                      schema: *a7
+                    - name: url
+                      schema: *a7
+        - name: html_url
+          schema: *a7
+        - name: issue_url
+          schema: *a7
+        - name: merge_commit_sha
+          schema: *a7
+        - name: mergeable
+          schema: *a27
+        - name: merged
+          schema: *a27
+        - name: merged_at
+          schema: *a7
+        - name: merged_by
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: avatar_url
+                schema: *a7
+              - name: gravatar_id
+                schema: *a7
+              - name: id
+                schema: *a16
+              - name: login
+                schema: *a7
+              - name: url
+                schema: *a7
+        - name: number
+          schema: *a16
+        - name: patch_url
+          schema: *a7
+        - name: state
+          schema: *a7
+        - name: title
+          schema: *a7
+        - name: updated_at
+          schema: *a7
+        - name: url
+          schema: *a7
+        - name: user
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: avatar_url
+                schema: *a7
+              - name: gravatar_id
+                schema: *a7
+              - name: id
+                schema: *a16
+              - name: login
+                schema: *a7
+              - name: url
+                schema: *a7
+    - type: object
+      name: pullUpdate
+      properties:
+        - name: body
+          schema: *a7
+        - name: state
+          schema: *a7
+        - name: title
+          schema: *a7
+    - type: object
+      name: pullsComment
+      properties:
+        - name: _links
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: html
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: href
+                      schema: *a7
+              - name: pull_request
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: href
+                      schema: *a7
+              - name: self
+                schema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: href
+                      schema: *a7
+        - name: body
+          schema: *a7
+        - name: commit_id
+          schema: *a7
+        - name: created_at
+          description: &a48
+            - I
+            - S
+            - O
+            - " "
+            - "8"
+            - "6"
+            - "0"
+            - "1"
+            - " "
+            - f
+            - o
+            - r
+            - m
+            - a
+            - t
+            - ":"
+            - " "
+            - Y
+            - Y
+            - Y
+            - Y
+            - "-"
+            - M
+            - M
+            - "-"
+            - D
+            - D
+            - T
+            - H
+            - H
+            - ":"
+            - M
+            - M
+            - ":"
+            - S
+            - S
+            - Z
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a48
+            targetSchema: *a9
+        - name: id
+          schema: *a16
+        - name: path
+          schema: *a7
+        - name: position
+          schema: *a16
+        - name: updated_at
+          description: &a49
+            - I
+            - S
+            - O
+            - " "
+            - "8"
+            - "6"
+            - "0"
+            - "1"
+            - " "
+            - f
+            - o
+            - r
+            - m
+            - a
+            - t
+            - ":"
+            - " "
+            - Y
+            - Y
+            - Y
+            - Y
+            - "-"
+            - M
+            - M
+            - "-"
+            - D
+            - D
+            - T
+            - H
+            - H
+            - ":"
+            - M
+            - M
+            - ":"
+            - S
+            - S
+            - Z
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a49
+            targetSchema: *a9
+        - name: url
+          schema: *a7
+        - name: user
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: avatar_url
+                schema: *a7
+              - name: gravatar_id
+                schema: *a7
+              - name: id
+                schema: *a16
+              - name: login
+                schema: *a7
+              - name: url
+                schema: *a7
+    - type: object
+      name: pullsCommentPost
+      properties:
+        - name: body
+          schema: *a7
+        - name: commit_id
+          schema: *a7
+        - name: path
+          schema: *a7
+        - name: position
+          schema: *a28
+    - type: object
+      name: pullsPost
+      properties:
+        - name: base
+          schema: *a7
+        - name: body
+          schema: *a7
+        - name: head
+          schema: *a7
+        - name: title
+          schema: *a7
+    - type: object
+      name: putSubscription
+      properties:
+        - name: created_at
+          schema: *a7
+        - name: ignored
+          schema: *a27
+        - name: reason
+          schema:
+            type: object
+            name: anonymous<object>
+        - name: subscribed
+          schema: *a27
+        - name: thread_url
+          schema: *a7
+        - name: url
+          schema: *a7
+    - type: object
+      name: rate_limit
+      properties:
+        - name: rate
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: limit
+                schema: *a16
+              - name: remaining
+                schema: *a16
+              - name: reset
+                schema: *a16
+    - type: object
+      name: refsBody
+      properties:
+        - name: ref
+          schema: *a7
+        - name: sha
+          schema: *a7
+    - type: object
+      name: release
+      properties:
+        - name: assets
+          schema:
+            type: alias
+            name: assets
+            aliasType: schema
+            targetSchema:
+              type: array
+              name: anonymous<unknown>
+              elementSchema:
+                type: object
+                name: anonymous<object>
+                properties:
+                  - name: content_type
+                    schema: *a7
+                  - name: created_at
+                    schema: *a7
+                  - name: download_count
+                    schema: *a16
+                  - name: id
+                    schema: *a16
+                  - name: label
+                    schema: *a7
+                  - name: name
+                    schema: *a7
+                  - name: size
+                    schema: *a16
+                  - name: state
+                    schema: *a7
+                  - name: updated_at
+                    schema: *a7
+                  - name: uploader
+                    schema: *a13
+                  - name: url
+                    schema: *a7
+        - name: assets_url
+          schema: *a7
+        - name: author
+          schema: *a13
+        - name: body
+          schema: *a7
+        - name: created_at
+          schema: *a7
+        - name: draft
+          schema: *a27
+        - name: html_url
+          schema: *a7
+        - name: id
+          schema: *a16
+        - name: name
+          schema: *a7
+        - name: prerelease
+          schema: *a27
+        - name: published_at
+          schema: *a7
+        - name: tag_name
+          schema: *a7
+        - name: tarball_url
+          schema: *a7
+        - name: target_commitish
+          schema: *a7
+        - name: upload_url
+          schema: *a7
+        - name: url
+          schema: *a7
+        - name: zipball_url
+          schema: *a7
+    - type: object
+      name: release-create
+      properties:
+        - name: body
+          schema: *a7
+        - name: draft
+          schema: *a27
+        - name: name
+          schema: *a7
+        - name: prerelease
+          schema: *a27
+        - name: tag_name
+          schema: *a7
+        - name: target_commitish
+          schema: *a7
+    - &a50
+      type: object
+      name: repo
+      properties:
+        - name: clone_url
+          schema: *a1
+        - name: created_at
+          description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+            targetSchema: *a1
+        - name: description
+          schema: *a1
+        - name: fork
+          schema: *a3
+        - name: forks
+          schema: *a2
+        - name: forks_count
+          schema: *a2
+        - name: full_name
+          schema: *a1
+        - name: git_url
+          schema: *a1
+        - name: has_downloads
+          schema: *a3
+        - name: has_issues
+          schema: *a3
+        - name: has_wiki
+          schema: *a3
+        - name: homepage
+          schema: *a1
+        - name: html_url
+          schema: *a1
+        - name: id
+          schema: *a2
+        - name: language
+          schema: *a1
+        - name: master_branch
+          schema: *a1
+        - name: mirror_url
+          schema: *a1
+        - name: name
+          schema: *a1
+        - name: open_issues
+          schema: *a2
+        - name: open_issues_count
+          schema: *a2
+        - name: organization
+          schema: *a36
+        - name: owner
+          schema: *a6
+        - name: parent
+          schema:
+            type: object
+            name: anonymous<object>
+            extends:
+              - *a50
+              - *a4
+        - name: private
+          schema: *a3
+        - name: pushed_at
+          description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+            targetSchema: *a1
+        - name: size
+          schema: *a2
+        - name: source
+          schema:
+            type: object
+            name: anonymous<object>
+            extends:
+              - *a50
+              - *a4
+        - name: ssh_url
+          schema: *a1
+        - name: svn_url
+          schema: *a1
+        - name: updated_at
+          description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+            targetSchema: *a1
+        - name: url
+          schema: *a1
+        - name: watchers
+          schema: *a2
+        - name: watchers_count
+          schema: *a2
+    - type: object
+      name: repoCommit
+      properties:
+        - name: author
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: date
+                description: &a51
+                  - I
+                  - S
+                  - O
+                  - " "
+                  - "8"
+                  - "6"
+                  - "0"
+                  - "1"
+                  - " "
+                  - f
+                  - o
+                  - r
+                  - m
+                  - a
+                  - t
+                  - ":"
+                  - " "
+                  - Y
+                  - Y
+                  - Y
+                  - Y
+                  - "-"
+                  - M
+                  - M
+                  - "-"
+                  - D
+                  - D
+                  - T
+                  - H
+                  - H
+                  - ":"
+                  - M
+                  - M
+                  - ":"
+                  - S
+                  - S
+                  - Z
+                schema:
+                  type: alias
+                  name: anonymous<string>
+                  aliasType: schema
+                  description: *a51
+                  targetSchema: *a9
+              - name: email
+                schema: *a7
+              - name: name
+                schema: *a7
+        - name: committer
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: date
+                description: &a52
+                  - I
+                  - S
+                  - O
+                  - " "
+                  - "8"
+                  - "6"
+                  - "0"
+                  - "1"
+                  - " "
+                  - f
+                  - o
+                  - r
+                  - m
+                  - a
+                  - t
+                  - ":"
+                  - " "
+                  - Y
+                  - Y
+                  - Y
+                  - Y
+                  - "-"
+                  - M
+                  - M
+                  - "-"
+                  - D
+                  - D
+                  - T
+                  - H
+                  - H
+                  - ":"
+                  - M
+                  - M
+                  - ":"
+                  - S
+                  - S
+                  - Z
+                schema:
+                  type: alias
+                  name: anonymous<string>
+                  aliasType: schema
+                  description: *a52
+                  targetSchema: *a9
+              - name: email
+                schema: *a7
+              - name: name
+                schema: *a7
+        - name: message
+          schema: *a7
+        - name: parents
+          schema:
+            type: array
+            name: anonymous<unknown>
+            elementSchema:
+              type: object
+              name: anonymous<object>
+              properties:
+                - name: sha
+                  schema: *a7
+                - name: url
+                  schema: *a7
+        - name: sha
+          schema: *a7
+        - name: tree
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: sha
+                schema: *a7
+              - name: url
+                schema: *a7
+        - name: url
+          schema: *a7
+    - type: object
+      name: repoCommitBody
+      properties:
+        - name: author
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: date
+                schema: *a7
+              - name: email
+                schema: *a7
+              - name: name
+                schema: *a7
+        - name: message
+          required: {}
+          schema: *a7
+        - name: parents
+          required: {}
+          schema:
+            type: array
+            name: anonymous<unknown>
+            elementSchema: *a7
+        - name: tree
+          required: {}
+          schema: *a7
+    - type: object
+      name: repoEdit
+      properties:
+        - name: description
+          schema: *a7
+        - name: has_downloads
+          schema: *a27
+        - name: has_issues
+          schema: *a27
+        - name: has_wiki
+          schema: *a27
+        - name: homepage
+          schema: *a7
+        - name: name
+          schema: *a7
+        - name: private
+          schema: *a27
+    - type: object
+      name: search-code
+      properties:
+        - name: items
+          schema:
+            type: alias
+            name: items
+            aliasType: schema
+            targetSchema:
+              type: array
+              name: anonymous<unknown>
+              elementSchema:
+                type: object
+                name: anonymous<object>
+                properties:
+                  - name: git_url
+                    schema: *a7
+                  - name: html_url
+                    schema: *a7
+                  - name: name
+                    schema: *a7
+                  - name: path
+                    schema: *a7
+                  - name: repository
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: archive_url
+                          schema: *a7
+                        - name: assignees_url
+                          schema: *a7
+                        - name: blobs_url
+                          schema: *a7
+                        - name: branches_url
+                          schema: *a7
+                        - name: collaborators_url
+                          schema: *a7
+                        - name: comments_url
+                          schema: *a7
+                        - name: commits_url
+                          schema: *a7
+                        - name: compare_url
+                          schema: *a7
+                        - name: contents_url
+                          schema: *a7
+                        - name: contributors_url
+                          schema: *a7
+                        - name: description
+                          schema: *a7
+                        - name: downloads_url
+                          schema: *a7
+                        - name: events_url
+                          schema: *a7
+                        - name: fork
+                          schema: *a27
+                        - name: forks_url
+                          schema: *a7
+                        - name: full_name
+                          schema: *a7
+                        - name: git_commits_url
+                          schema: *a7
+                        - name: git_refs_url
+                          schema: *a7
+                        - name: git_tags_url
+                          schema: *a7
+                        - name: hooks_url
+                          schema: *a7
+                        - name: html_url
+                          schema: *a7
+                        - name: id
+                          schema: *a16
+                        - name: issue_comment_url
+                          schema: *a7
+                        - name: issue_events_url
+                          schema: *a7
+                        - name: issues_url
+                          schema: *a7
+                        - name: keys_url
+                          schema: *a7
+                        - name: labels_url
+                          schema: *a7
+                        - name: languages_url
+                          schema: *a7
+                        - name: merges_url
+                          schema: *a7
+                        - name: milestones_url
+                          schema: *a7
+                        - name: name
+                          schema: *a7
+                        - name: notifications_url
+                          schema: *a7
+                        - name: owner
+                          schema: *a35
+                        - name: private
+                          schema: *a27
+                        - name: pulls_url
+                          schema: *a7
+                        - name: stargazers_url
+                          schema: *a7
+                        - name: statuses_url
+                          schema: *a7
+                        - name: subscribers_url
+                          schema: *a7
+                        - name: subscription_url
+                          schema: *a7
+                        - name: tags_url
+                          schema: *a7
+                        - name: teams_url
+                          schema: *a7
+                        - name: trees_url
+                          schema: *a7
+                        - name: url
+                          schema: *a7
+                  - name: score
+                    schema: *a28
+                  - name: sha
+                    schema: *a7
+                  - name: url
+                    schema: *a7
+        - name: total_count
+          schema: *a16
+    - type: object
+      name: search-issues
+      properties:
+        - name: items
+          schema:
+            type: alias
+            name: items
+            aliasType: schema
+            targetSchema:
+              type: array
+              name: anonymous<unknown>
+              elementSchema:
+                type: object
+                name: anonymous<object>
+                properties:
+                  - name: assignee
+                    schema: &a53
+                      type: any
+                      name: anonymous<unknown>
+                  - name: body
+                    schema: *a7
+                  - name: closed_at
+                    schema: *a53
+                  - name: comments
+                    schema: *a16
+                  - name: comments_url
+                    schema: *a7
+                  - name: created_at
+                    schema: *a7
+                  - name: events_url
+                    schema: *a7
+                  - name: html_url
+                    schema: *a7
+                  - name: id
+                    schema: *a16
+                  - name: labels
+                    schema:
+                      type: array
+                      name: anonymous<unknown>
+                      elementSchema:
+                        type: object
+                        name: anonymous<object>
+                        properties:
+                          - name: color
+                            schema: *a7
+                          - name: name
+                            schema: *a7
+                          - name: url
+                            schema: *a7
+                  - name: labels_url
+                    schema: *a7
+                  - name: milestone
+                    schema: *a53
+                  - name: number
+                    schema: *a16
+                  - name: pull_request
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: diff_url
+                          schema: *a53
+                        - name: html_url
+                          schema: *a53
+                        - name: patch_url
+                          schema: *a53
+                  - name: score
+                    schema: *a28
+                  - name: state
+                    schema: *a7
+                  - name: title
+                    schema: *a7
+                  - name: updated_at
+                    schema: *a7
+                  - name: url
+                    schema: *a7
+                  - name: user
+                    schema: *a13
+        - name: total_count
+          schema: *a16
+    - type: object
+      name: search-issues-by-keyword
+      properties:
+        - name: issues
+          schema:
+            type: array
+            name: anonymous<unknown>
+            elementSchema:
+              type: object
+              name: anonymous<object>
+              properties:
+                - name: body
+                  schema: *a7
+                - name: comments
+                  schema: *a16
+                - name: created_at
+                  schema: *a7
+                - name: gravatar_id
+                  schema: *a7
+                - name: html_url
+                  schema: *a7
+                - name: labels
+                  schema:
+                    type: array
+                    name: anonymous<unknown>
+                    elementSchema: *a7
+                - name: number
+                  schema: *a16
+                - name: position
+                  schema: *a16
+                - name: state
+                  schema: *a7
+                - name: title
+                  schema: *a7
+                - name: updated_at
+                  schema: *a7
+                - name: user
+                  schema: *a7
+                - name: votes
+                  schema: *a16
+    - type: object
+      name: search-repositories
+      properties:
+        - name: items
+          schema:
+            type: alias
+            name: items
+            aliasType: schema
+            targetSchema:
+              type: array
+              name: anonymous<unknown>
+              elementSchema: *a47
+        - name: total_count
+          schema: *a16
+    - type: object
+      name: search-repositories-by-keyword
+      properties:
+        - name: repositories
+          schema:
+            type: alias
+            name: repositories
+            aliasType: schema
+            targetSchema:
+              type: array
+              name: anonymous<unknown>
+              elementSchema: *a47
+    - type: object
+      name: search-user-by-email
+      properties:
+        - name: user
+          schema: *a13
+    - type: object
+      name: search-users
+      properties:
+        - name: items
+          schema: &a54
+            type: alias
+            name: users
+            aliasType: schema
+            targetSchema:
+              type: array
+              name: anonymous<unknown>
+              elementSchema: *a13
+        - name: total_count
+          schema: *a16
+    - type: object
+      name: search-users-by-keyword
+      properties:
+        - name: users
+          schema: *a54
+    - type: object
+      name: subscription
+      properties:
+        - name: created_at
+          description: &a55
+            - I
+            - S
+            - O
+            - " "
+            - "8"
+            - "6"
+            - "0"
+            - "1"
+            - " "
+            - f
+            - o
+            - r
+            - m
+            - a
+            - t
+            - ":"
+            - " "
+            - Y
+            - Y
+            - Y
+            - Y
+            - "-"
+            - M
+            - M
+            - "-"
+            - D
+            - D
+            - T
+            - H
+            - H
+            - ":"
+            - M
+            - M
+            - ":"
+            - S
+            - S
+            - Z
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a55
+            targetSchema: *a9
+        - name: ignored
+          schema: *a27
+        - name: reason
+          schema: *a7
+        - name: repository_url
+          schema: *a7
+        - name: subscribed
+          schema: *a27
+        - name: thread_url
+          schema: *a7
+        - name: url
+          schema: *a7
+    - type: object
+      name: subscriptionBody
+      properties:
+        - name: ignored
+          schema: *a27
+        - name: subscribed
+          schema: *a27
+    - &a73
+      type: object
+      name: tag
+      properties:
+        - name: message
+          description: String of the tag message.
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: String of the tag message.
+            targetSchema: *a1
+        - name: object
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: sha
+                schema: *a1
+              - name: type
+                description: String of the type of the tagged object. Normally this is a commit
+                  but it can also be a tree or a blob.
+                schema:
+                  type: enum
+                  name: type
+                  elementSchema: *a4
+                  sealed: true
+                  values:
+                    - type: constant
+                      name: anonymous<unknown>
+                      value: commit
+                      valueSchema: *a4
+                    - type: constant
+                      name: anonymous<unknown>
+                      value: tree
+                      valueSchema: *a4
+                    - type: constant
+                      name: anonymous<unknown>
+                      value: blob
+                      valueSchema: *a4
+              - name: url
+                schema: *a1
+        - name: sha
+          schema: *a1
+        - name: tag
+          description: The tag's name. This is typically a version (e.g., "v0.0.1").
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The tag's name. This is typically a version (e.g., "v0.0.1").
+            targetSchema: *a1
+        - name: tagger
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: date
+                description: "Timestamp of when this object was tagged, in ISO 8601 format:
+                  YYYY-MM-DDTHH:MM:SSZ"
+                schema:
+                  type: alias
+                  name: anonymous<string>
+                  aliasType: schema
+                  description: "Timestamp of when this object was tagged, in ISO 8601 format:
+                    YYYY-MM-DDTHH:MM:SSZ"
+                  targetSchema: *a1
+              - name: email
+                description: String of the email of the author of the tag.
+                schema:
+                  type: alias
+                  name: anonymous<string>
+                  aliasType: schema
+                  description: String of the email of the author of the tag.
+                  targetSchema: *a1
+              - name: name
+                description: String of the name of the author of the tag.
+                schema:
+                  type: alias
+                  name: anonymous<string>
+                  aliasType: schema
+                  description: String of the name of the author of the tag.
+                  targetSchema: *a1
+        - name: url
+          schema: *a1
+    - type: object
+      name: tagBody
+      properties:
+        - name: message
+          description: &a56
+            - S
+            - t
+            - r
+            - i
+            - n
+            - g
+            - " "
+            - o
+            - f
+            - " "
+            - t
+            - h
+            - e
+            - " "
+            - t
+            - a
+            - g
+            - " "
+            - m
+            - e
+            - s
+            - s
+            - a
+            - g
+            - e
+            - .
+          required: {}
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a56
+            targetSchema: *a9
+        - name: object
+          description: &a57
+            - S
+            - t
+            - r
+            - i
+            - n
+            - g
+            - " "
+            - o
+            - f
+            - " "
+            - t
+            - h
+            - e
+            - " "
+            - S
+            - H
+            - A
+            - " "
+            - o
+            - f
+            - " "
+            - t
+            - h
+            - e
+            - " "
+            - g
+            - i
+            - t
+            - " "
+            - o
+            - b
+            - j
+            - e
+            - c
+            - t
+            - " "
+            - t
+            - h
+            - i
+            - s
+            - " "
+            - i
+            - s
+            - " "
+            - t
+            - a
+            - g
+            - g
+            - i
+            - n
+            - g
+            - .
+          required: {}
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a57
+            targetSchema: *a9
+        - name: tag
+          description: &a58
+            - T
+            - h
+            - e
+            - " "
+            - t
+            - a
+            - g
+            - "'"
+            - s
+            - " "
+            - n
+            - a
+            - m
+            - e
+            - .
+            - " "
+            - T
+            - h
+            - i
+            - s
+            - " "
+            - i
+            - s
+            - " "
+            - t
+            - y
+            - p
+            - i
+            - c
+            - a
+            - l
+            - l
+            - y
+            - " "
+            - a
+            - " "
+            - v
+            - e
+            - r
+            - s
+            - i
+            - o
+            - n
+            - " "
+            - (
+            - e
+            - .
+            - g
+            - .
+            - ","
+            - " "
+            - '"'
+            - v
+            - "0"
+            - .
+            - "0"
+            - .
+            - "1"
+            - '"'
+            - )
+            - .
+          required: {}
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a58
+            targetSchema: *a9
+        - name: tagger
+          required: {}
+          schema:
+            type: object
+            name: anonymous<object>
+            properties:
+              - name: date
+                description: &a59
+                  - T
+                  - i
+                  - m
+                  - e
+                  - s
+                  - t
+                  - a
+                  - m
+                  - p
+                  - " "
+                  - o
+                  - f
+                  - " "
+                  - w
+                  - h
+                  - e
+                  - n
+                  - " "
+                  - t
+                  - h
+                  - i
+                  - s
+                  - " "
+                  - o
+                  - b
+                  - j
+                  - e
+                  - c
+                  - t
+                  - " "
+                  - w
+                  - a
+                  - s
+                  - " "
+                  - t
+                  - a
+                  - g
+                  - g
+                  - e
+                  - d
+                  - ","
+                  - " "
+                  - i
+                  - n
+                  - " "
+                  - I
+                  - S
+                  - O
+                  - " "
+                  - "8"
+                  - "6"
+                  - "0"
+                  - "1"
+                  - " "
+                  - f
+                  - o
+                  - r
+                  - m
+                  - a
+                  - t
+                  - ":"
+                  - " "
+                  - Y
+                  - Y
+                  - Y
+                  - Y
+                  - "-"
+                  - M
+                  - M
+                  - "-"
+                  - D
+                  - D
+                  - T
+                  - H
+                  - H
+                  - ":"
+                  - M
+                  - M
+                  - ":"
+                  - S
+                  - S
+                  - Z
+                schema:
+                  type: alias
+                  name: anonymous<string>
+                  aliasType: schema
+                  description: *a59
+                  targetSchema: *a9
+              - name: email
+                description: &a60
+                  - S
+                  - t
+                  - r
+                  - i
+                  - n
+                  - g
+                  - " "
+                  - o
+                  - f
+                  - " "
+                  - t
+                  - h
+                  - e
+                  - " "
+                  - e
+                  - m
+                  - a
+                  - i
+                  - l
+                  - " "
+                  - o
+                  - f
+                  - " "
+                  - t
+                  - h
+                  - e
+                  - " "
+                  - a
+                  - u
+                  - t
+                  - h
+                  - o
+                  - r
+                  - " "
+                  - o
+                  - f
+                  - " "
+                  - t
+                  - h
+                  - e
+                  - " "
+                  - t
+                  - a
+                  - g
+                  - .
+                schema:
+                  type: alias
+                  name: anonymous<string>
+                  aliasType: schema
+                  description: *a60
+                  targetSchema: *a9
+              - name: name
+                description: &a61
+                  - S
+                  - t
+                  - r
+                  - i
+                  - n
+                  - g
+                  - " "
+                  - o
+                  - f
+                  - " "
+                  - t
+                  - h
+                  - e
+                  - " "
+                  - n
+                  - a
+                  - m
+                  - e
+                  - " "
+                  - o
+                  - f
+                  - " "
+                  - t
+                  - h
+                  - e
+                  - " "
+                  - a
+                  - u
+                  - t
+                  - h
+                  - o
+                  - r
+                  - " "
+                  - o
+                  - f
+                  - " "
+                  - t
+                  - h
+                  - e
+                  - " "
+                  - t
+                  - a
+                  - g
+                  - .
+                schema:
+                  type: alias
+                  name: anonymous<string>
+                  aliasType: schema
+                  description: *a61
+                  targetSchema: *a9
+        - name: type
+          description:
+            - S
+            - t
+            - r
+            - i
+            - n
+            - g
+            - " "
+            - o
+            - f
+            - " "
+            - t
+            - h
+            - e
+            - " "
+            - t
+            - y
+            - p
+            - e
+            - " "
+            - o
+            - f
+            - " "
+            - t
+            - h
+            - e
+            - " "
+            - o
+            - b
+            - j
+            - e
+            - c
+            - t
+            - " "
+            - w
+            - e
+            - ’
+            - r
+            - e
+            - " "
+            - t
+            - a
+            - g
+            - g
+            - i
+            - n
+            - g
+            - .
+            - " "
+            - N
+            - o
+            - r
+            - m
+            - a
+            - l
+            - l
+            - y
+            - " "
+            - t
+            - h
+            - i
+            - s
+            - " "
+            - i
+            - s
+            - " "
+            - a
+            - " "
+            - c
+            - o
+            - m
+            - m
+            - i
+            - t
+            - " "
+            - b
+            - u
+            - t
+            - " "
+            - i
+            - t
+            - " "
+            - c
+            - a
+            - n
+            - " "
+            - a
+            - l
+            - s
+            - o
+            - " "
+            - b
+            - e
+            - " "
+            - a
+            - " "
+            - t
+            - r
+            - e
+            - e
+            - " "
+            - o
+            - r
+            - " "
+            - a
+            - " "
+            - b
+            - l
+            - o
+            - b
+            - .
+          required: {}
+          schema:
+            type: enum
+            name: type
+            elementSchema: *a8
+            sealed: true
+            values:
+              - type: constant
+                name: anonymous<unknown>
+                value:
+                  - c
+                  - o
+                  - m
+                  - m
+                  - i
+                  - t
+                valueSchema: *a8
+              - type: constant
+                name: anonymous<unknown>
+                value:
+                  - t
+                  - r
+                  - e
+                  - e
+                valueSchema: *a8
+              - type: constant
+                name: anonymous<unknown>
+                value:
+                  - b
+                  - l
+                  - o
+                  - b
+                valueSchema: *a8
+    - type: object
+      name: team
+      properties:
+        - name: id
+          schema: *a16
+        - name: members_count
+          schema: *a16
+        - name: name
+          schema: *a7
+        - name: permission
+          schema: *a7
+        - name: repos_count
+          schema: *a16
+        - name: url
+          schema: *a7
+    - type: object
+      name: teamMembership
+      properties:
+        - name: state
+          schema: *a7
+        - name: url
+          schema: *a7
+    - type: object
+      name: tree
+      properties:
+        - name: sha
+          schema: *a7
+        - name: tree
+          schema: &a67
+            type: array
+            name: anonymous<unknown>
+            elementSchema:
+              type: object
+              name: anonymous<object>
+              properties:
+                - name: mode
+                  description: &a62
+                    - O
+                    - n
+                    - e
+                    - " "
+                    - o
+                    - f
+                    - " "
+                    - "1"
+                    - "0"
+                    - "0"
+                    - "6"
+                    - "4"
+                    - "4"
+                    - " "
+                    - f
+                    - o
+                    - r
+                    - " "
+                    - f
+                    - i
+                    - l
+                    - e
+                    - " "
+                    - (
+                    - b
+                    - l
+                    - o
+                    - b
+                    - )
+                    - ","
+                    - " "
+                    - "1"
+                    - "0"
+                    - "0"
+                    - "7"
+                    - "5"
+                    - "5"
+                    - " "
+                    - f
+                    - o
+                    - r
+                    - " "
+                    - e
+                    - x
+                    - e
+                    - c
+                    - u
+                    - t
+                    - a
+                    - b
+                    - l
+                    - e
+                    - " "
+                    - (
+                    - b
+                    - l
+                    - o
+                    - b
+                    - )
+                    - ","
+                    - " "
+                    - "0"
+                    - "4"
+                    - "0"
+                    - "0"
+                    - "0"
+                    - "0"
+                    - " "
+                    - f
+                    - o
+                    - r
+                    - " "
+                    - s
+                    - u
+                    - b
+                    - d
+                    - i
+                    - r
+                    - e
+                    - c
+                    - t
+                    - o
+                    - r
+                    - y
+                    - " "
+                    - (
+                    - t
+                    - r
+                    - e
+                    - e
+                    - )
+                    - ","
+                    - " "
+                    - "1"
+                    - "6"
+                    - "0"
+                    - "0"
+                    - "0"
+                    - "0"
+                    - " "
+                    - f
+                    - o
+                    - r
+                    - " "
+                    - s
+                    - u
+                    - b
+                    - m
+                    - o
+                    - d
+                    - u
+                    - l
+                    - e
+                    - " "
+                    - (
+                    - c
+                    - o
+                    - m
+                    - m
+                    - i
+                    - t
+                    - )
+                    - " "
+                    - o
+                    - r
+                    - " "
+                    - "1"
+                    - "2"
+                    - "0"
+                    - "0"
+                    - "0"
+                    - "0"
+                    - " "
+                    - f
+                    - o
+                    - r
+                    - " "
+                    - a
+                    - " "
+                    - b
+                    - l
+                    - o
+                    - b
+                    - " "
+                    - t
+                    - h
+                    - a
+                    - t
+                    - " "
+                    - s
+                    - p
+                    - e
+                    - c
+                    - i
+                    - f
+                    - i
+                    - e
+                    - s
+                    - " "
+                    - t
+                    - h
+                    - e
+                    - " "
+                    - p
+                    - a
+                    - t
+                    - h
+                    - " "
+                    - o
+                    - f
+                    - " "
+                    - a
+                    - " "
+                    - s
+                    - y
+                    - m
+                    - l
+                    - i
+                    - n
+                    - k
+                    - .
+                  schema:
+                    type: enum
+                    name: mode
+                    elementSchema: &a63
+                      type: alias
+                      name: anonymous<string>
+                      aliasType: schema
+                      description: *a62
+                      targetSchema: *a9
+                    sealed: true
+                    values:
+                      - type: constant
+                        name: anonymous<unknown>
+                        value:
+                          - "1"
+                          - "0"
+                          - "0"
+                          - "6"
+                          - "4"
+                          - "4"
+                        valueSchema: *a63
+                      - type: constant
+                        name: anonymous<unknown>
+                        value:
+                          - "1"
+                          - "0"
+                          - "0"
+                          - "7"
+                          - "5"
+                          - "5"
+                        valueSchema: *a63
+                      - type: constant
+                        name: anonymous<unknown>
+                        value:
+                          - "0"
+                          - "4"
+                          - "0"
+                          - "0"
+                          - "0"
+                          - "0"
+                        valueSchema: *a63
+                      - type: constant
+                        name: anonymous<unknown>
+                        value:
+                          - "1"
+                          - "6"
+                          - "0"
+                          - "0"
+                          - "0"
+                          - "0"
+                        valueSchema: *a63
+                      - type: constant
+                        name: anonymous<unknown>
+                        value:
+                          - "1"
+                          - "2"
+                          - "0"
+                          - "0"
+                          - "0"
+                          - "0"
+                        valueSchema: *a63
+                - name: path
+                  schema: *a7
+                - name: sha
+                  description: &a64
+                    - S
+                    - H
+                    - A
+                    - "1"
+                    - " "
+                    - c
+                    - h
+                    - e
+                    - c
+                    - k
+                    - s
+                    - u
+                    - m
+                    - " "
+                    - I
+                    - D
+                    - " "
+                    - o
+                    - f
+                    - " "
+                    - t
+                    - h
+                    - e
+                    - " "
+                    - o
+                    - b
+                    - j
+                    - e
+                    - c
+                    - t
+                    - " "
+                    - i
+                    - n
+                    - " "
+                    - t
+                    - h
+                    - e
+                    - " "
+                    - t
+                    - r
+                    - e
+                    - e
+                    - .
+                  schema:
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    description: *a64
+                    targetSchema: *a9
+                - name: size
+                  schema: *a16
+                - name: type
+                  schema:
+                    type: enum
+                    name: type
+                    elementSchema: &a65
+                      type: alias
+                      name: anonymous<string>
+                      aliasType: schema
+                      targetSchema: *a9
+                    sealed: true
+                    values:
+                      - type: constant
+                        name: anonymous<unknown>
+                        value:
+                          - b
+                          - l
+                          - o
+                          - b
+                        valueSchema: *a65
+                      - type: constant
+                        name: anonymous<unknown>
+                        value:
+                          - t
+                          - r
+                          - e
+                          - e
+                        valueSchema: *a65
+                      - type: constant
+                        name: anonymous<unknown>
+                        value:
+                          - c
+                          - o
+                          - m
+                          - m
+                          - i
+                          - t
+                        valueSchema: *a65
+                - name: url
+                  schema: *a7
+        - name: url
+          schema: *a7
+    - type: object
+      name: trees
+      properties:
+        - name: base_tree
+          schema: *a7
+        - name: sha
+          description: &a66
+            - S
+            - H
+            - A
+            - "1"
+            - " "
+            - c
+            - h
+            - e
+            - c
+            - k
+            - s
+            - u
+            - m
+            - " "
+            - I
+            - D
+            - " "
+            - o
+            - f
+            - " "
+            - t
+            - h
+            - e
+            - " "
+            - o
+            - b
+            - j
+            - e
+            - c
+            - t
+            - " "
+            - i
+            - n
+            - " "
+            - t
+            - h
+            - e
+            - " "
+            - t
+            - r
+            - e
+            - e
+            - .
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: *a66
+            targetSchema: *a9
+        - name: tree
+          schema:
+            type: alias
+            name: tree
+            aliasType: schema
+            targetSchema:
+              type: array
+              name: anonymous<unknown>
+              elementSchema:
+                type: object
+                name: tree
+                properties:
+                  - name: sha
+                    schema: *a7
+                  - name: tree
+                    schema: *a67
+                  - name: url
+                    schema: *a7
+        - name: url
+          schema: *a7
+    - *a29
+    - type: object
+      name: user-keys-keyId
+      properties:
+        - name: id
+          schema: *a16
+        - name: key
+          schema: *a7
+        - name: title
+          schema: *a7
+        - name: url
+          schema: *a7
+    - type: object
+      name: user-keys-post
+      properties:
+        - name: key
+          schema: *a7
+        - name: title
+          schema: *a7
+    - type: object
+      name: user-update
+      properties:
+        - name: bio
+          schema: *a7
+        - name: blog
+          schema: *a7
+        - name: company
+          schema: *a7
+        - name: email
+          schema: *a7
+        - name: hireable
+          schema: *a27
+        - name: location
+          schema: *a7
+        - name: name
+          schema: *a7
+  aliases:
+    - type: alias
+      name: assets
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema: *a68
+    - type: alias
+      name: assignees
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema: *a29
+    - type: alias
+      name: comments
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema:
+          type: object
+          name: anonymous<object>
+          properties:
+            - name: body
+              schema: *a1
+            - name: created_at
+              description: ISO 8601.
+              schema:
+                type: alias
+                name: anonymous<string>
+                aliasType: schema
+                description: ISO 8601.
+                targetSchema: *a1
+            - name: id
+              schema: *a2
+            - name: url
+              schema: *a1
+            - name: user
+              schema: *a29
+    - type: alias
+      name: commits
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema:
+          type: object
+          name: anonymous<object>
+          properties:
+            - name: author
+              schema: *a29
+            - name: commit
+              schema:
+                type: object
+                name: anonymous<object>
+                properties:
+                  - name: author
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: date
+                          description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                          schema:
+                            type: alias
+                            name: anonymous<string>
+                            aliasType: schema
+                            description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                            targetSchema: *a1
+                        - name: email
+                          schema: *a1
+                        - name: name
+                          schema: *a1
+                  - name: committer
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: date
+                          description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                          schema:
+                            type: alias
+                            name: anonymous<string>
+                            aliasType: schema
+                            description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                            targetSchema: *a1
+                        - name: email
+                          schema: *a1
+                        - name: name
+                          schema: *a1
+                  - name: message
+                    schema: *a1
+                  - name: tree
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: sha
+                          schema: *a1
+                        - name: url
+                          schema: *a1
+                  - name: url
+                    schema: *a1
+            - name: committer
+              schema: *a29
+            - name: parents
+              schema:
+                type: array
+                name: anonymous<unknown>
+                elementSchema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: sha
+                      schema: *a1
+                    - name: url
+                      schema: *a1
+            - name: sha
+              schema: *a1
+            - name: url
+              schema: *a1
+    - type: alias
+      name: deployment-statuses
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema:
+          type: object
+          name: anonymous<object>
+          properties:
+            - name: created_at
+              schema: *a1
+            - name: creator
+              schema: *a29
+            - name: description
+              schema: *a1
+            - name: id
+              schema: *a2
+            - name: payload
+              schema: *a1
+            - name: state
+              schema: *a1
+            - name: target_url
+              schema: *a1
+            - name: updated_at
+              schema: *a1
+            - name: url
+              schema: *a1
+    - type: alias
+      name: downloads
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema: *a69
+    - type: alias
+      name: emojis
+      aliasType: schema
+      targetSchema:
+        type: dictionary
+        name: anonymous<unknown>
+        elementSchema:
+          type: alias
+          name: anonymous<string>
+          aliasType: schema
+          description: A URL for an image representing this emoji
+          targetSchema: *a1
+    - type: alias
+      name: events
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema: *a70
+    - type: alias
+      name: forks
+      aliasType: schema
+      targetSchema: &a72
+        type: alias
+        name: repos
+        aliasType: schema
+        targetSchema:
+          type: array
+          name: anonymous<unknown>
+          elementSchema: *a50
+    - type: alias
+      name: gists
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema:
+          type: object
+          name: anonymous<object>
+          properties:
+            - name: comments
+              schema: *a2
+            - name: comments_url
+              schema: *a1
+            - name: created_at
+              schema: *a1
+            - name: description
+              schema: *a1
+            - name: files
+              schema:
+                type: object
+                name: anonymous<object>
+                properties:
+                  - name: ring.erl
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: filename
+                          schema: *a1
+                        - name: raw_url
+                          schema: *a1
+                        - name: size
+                          schema: *a2
+            - name: git_pull_url
+              schema: *a1
+            - name: git_push_url
+              schema: *a1
+            - name: html_url
+              schema: *a1
+            - name: id
+              schema: *a1
+            - name: public
+              schema: *a3
+            - name: url
+              schema: *a1
+            - name: user
+              schema: *a29
+    - type: alias
+      name: issueEvents
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema: *a71
+    - type: alias
+      name: issues
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema:
+          type: object
+          name: anonymous<object>
+          properties:
+            - name: assignee
+              schema: *a29
+            - name: body
+              schema: *a1
+            - name: closed_at
+              description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+              schema:
+                type: alias
+                name: anonymous<string>
+                aliasType: schema
+                description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                targetSchema: *a1
+            - name: comments
+              schema: *a2
+            - name: created_at
+              description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+              schema:
+                type: alias
+                name: anonymous<string>
+                aliasType: schema
+                description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                targetSchema: *a1
+            - name: html_url
+              schema: *a1
+            - name: labels
+              schema:
+                type: array
+                name: anonymous<unknown>
+                elementSchema:
+                  type: object
+                  name: anonymous<object>
+                  properties:
+                    - name: color
+                      schema: *a1
+                    - name: name
+                      schema: *a1
+                    - name: url
+                      schema: *a1
+            - name: milestone
+              schema:
+                type: object
+                name: anonymous<object>
+                properties:
+                  - name: closed_issues
+                    schema: *a2
+                  - name: created_at
+                    description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                    schema:
+                      type: alias
+                      name: anonymous<string>
+                      aliasType: schema
+                      description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                      targetSchema: *a1
+                  - name: creator
+                    schema: *a29
+                  - name: description
+                    schema: *a1
+                  - name: due_on
+                    description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                    schema:
+                      type: alias
+                      name: anonymous<string>
+                      aliasType: schema
+                      description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                      targetSchema: *a1
+                  - name: number
+                    schema: *a2
+                  - name: open_issues
+                    schema: *a2
+                  - name: state
+                    schema:
+                      type: enum
+                      name: state
+                      elementSchema: *a4
+                      sealed: true
+                      values:
+                        - type: constant
+                          name: anonymous<unknown>
+                          value: open
+                          valueSchema: *a4
+                        - type: constant
+                          name: anonymous<unknown>
+                          value: closed
+                          valueSchema: *a4
+                  - name: title
+                    schema: *a1
+                  - name: url
+                    schema: *a1
+            - name: number
+              schema: *a2
+            - name: pull_request
+              schema:
+                type: object
+                name: anonymous<object>
+                properties:
+                  - name: diff_url
+                    schema: *a1
+                  - name: html_url
+                    schema: *a1
+                  - name: patch_url
+                    schema: *a1
+            - name: state
+              schema:
+                type: enum
+                name: state
+                elementSchema: *a4
+                sealed: true
+                values:
+                  - type: constant
+                    name: anonymous<unknown>
+                    value: open
+                    valueSchema: *a4
+                  - type: constant
+                    name: anonymous<unknown>
+                    value: closed
+                    valueSchema: *a4
+            - name: title
+              schema: *a1
+            - name: updated_at
+              description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+              schema:
+                type: alias
+                name: anonymous<string>
+                aliasType: schema
+                description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                targetSchema: *a1
+            - name: url
+              schema: *a1
+            - name: user
+              schema: *a29
+    - type: alias
+      name: issuesComments
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema:
+          type: object
+          name: anonymous<object>
+          properties:
+            - name: _links
+              schema:
+                type: object
+                name: anonymous<object>
+                properties:
+                  - name: html
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: href
+                          schema: *a1
+                  - name: pull_request
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: href
+                          schema: *a1
+                  - name: self
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: href
+                          schema: *a1
+            - name: body
+              schema: *a1
+            - name: commit_id
+              schema: *a1
+            - name: created_at
+              description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+              schema:
+                type: alias
+                name: anonymous<string>
+                aliasType: schema
+                description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                targetSchema: *a1
+            - name: id
+              schema: *a2
+            - name: path
+              schema: *a1
+            - name: position
+              schema: *a2
+            - name: updated_at
+              description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+              schema:
+                type: alias
+                name: anonymous<string>
+                aliasType: schema
+                description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                targetSchema: *a1
+            - name: url
+              schema: *a1
+            - name: user
+              schema: *a29
+    - type: alias
+      name: labels
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema:
+          type: object
+          name: anonymous<object>
+          properties:
+            - name: color
+              schema:
+                type: alias
+                name: anonymous<string>
+                aliasType: schema
+                constraints:
+                  - type: constraint
+                    name: MaxLength
+                    length: 6
+                  - type: constraint
+                    name: MinLength
+                    length: 6
+                targetSchema: *a1
+            - name: name
+              schema: *a1
+            - name: url
+              schema: *a1
+    - type: alias
+      name: languages
+      aliasType: schema
+      targetSchema:
+        type: dictionary
+        name: anonymous<unknown>
+        elementSchema: *a2
+    - type: alias
+      name: pulls
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema:
+          type: object
+          name: anonymous<object>
+          properties:
+            - name: _links
+              schema:
+                type: object
+                name: anonymous<object>
+                properties:
+                  - name: comments
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: href
+                          schema: *a1
+                  - name: html
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: href
+                          schema: *a1
+                  - name: review_comments
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: href
+                          schema: *a1
+                  - name: self
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: href
+                          schema: *a1
+            - name: base
+              schema:
+                type: object
+                name: anonymous<object>
+                properties:
+                  - name: label
+                    schema: *a1
+                  - name: ref
+                    schema: *a1
+                  - name: repo
+                    schema: *a50
+                  - name: sha
+                    schema: *a1
+                  - name: user
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: avatar_url
+                          schema: *a1
+                        - name: gravatar_id
+                          schema: *a1
+                        - name: id
+                          schema: *a2
+                        - name: login
+                          schema: *a1
+                        - name: url
+                          schema: *a1
+            - name: body
+              schema: *a1
+            - name: closed_at
+              description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+              schema:
+                type: alias
+                name: anonymous<string>
+                aliasType: schema
+                description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                targetSchema: *a1
+            - name: created_at
+              description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+              schema:
+                type: alias
+                name: anonymous<string>
+                aliasType: schema
+                description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                targetSchema: *a1
+            - name: diff_url
+              schema: *a1
+            - name: head
+              schema:
+                type: object
+                name: anonymous<object>
+                properties:
+                  - name: label
+                    schema: *a1
+                  - name: ref
+                    schema: *a1
+                  - name: repo
+                    schema: *a50
+                  - name: sha
+                    schema: *a1
+                  - name: user
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: avatar_url
+                          schema: *a1
+                        - name: gravatar_id
+                          schema: *a1
+                        - name: id
+                          schema: *a2
+                        - name: login
+                          schema: *a1
+                        - name: url
+                          schema: *a1
+            - name: html_url
+              schema: *a1
+            - name: issue_url
+              schema: *a1
+            - name: merged_at
+              description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+              schema:
+                type: alias
+                name: anonymous<string>
+                aliasType: schema
+                description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                targetSchema: *a1
+            - name: number
+              schema: *a2
+            - name: patch_url
+              schema: *a1
+            - name: state
+              schema:
+                type: enum
+                name: state
+                elementSchema: *a4
+                sealed: true
+                values:
+                  - type: constant
+                    name: anonymous<unknown>
+                    value: open
+                    valueSchema: *a4
+                  - type: constant
+                    name: anonymous<unknown>
+                    value: closed
+                    valueSchema: *a4
+            - name: title
+              schema: *a1
+            - name: updated_at
+              description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+              schema:
+                type: alias
+                name: anonymous<string>
+                aliasType: schema
+                description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                targetSchema: *a1
+            - name: url
+              schema: *a1
+            - name: user
+              schema:
+                type: object
+                name: anonymous<object>
+                properties:
+                  - name: avatar_url
+                    schema: *a1
+                  - name: gravatar_id
+                    schema: *a1
+                  - name: id
+                    schema: *a2
+                  - name: login
+                    schema: *a1
+                  - name: url
+                    schema: *a1
+    - type: alias
+      name: releases
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema:
+          type: object
+          name: anonymous<object>
+          properties:
+            - name: assets
+              schema:
+                type: alias
+                name: assets
+                aliasType: schema
+                targetSchema:
+                  type: array
+                  name: anonymous<unknown>
+                  elementSchema:
+                    type: object
+                    name: anonymous<object>
+                    properties:
+                      - name: content_type
+                        schema: *a1
+                      - name: created_at
+                        schema: *a1
+                      - name: download_count
+                        schema: *a2
+                      - name: id
+                        schema: *a2
+                      - name: label
+                        schema: *a1
+                      - name: name
+                        schema: *a1
+                      - name: size
+                        schema: *a2
+                      - name: state
+                        schema: *a1
+                      - name: updated_at
+                        schema: *a1
+                      - name: uploader
+                        schema: *a29
+                      - name: url
+                        schema: *a1
+            - name: assets_url
+              schema: *a1
+            - name: author
+              schema: *a29
+            - name: body
+              schema: *a1
+            - name: created_at
+              schema: *a1
+            - name: draft
+              schema: *a3
+            - name: html_url
+              schema: *a1
+            - name: id
+              schema: *a2
+            - name: name
+              schema: *a1
+            - name: prerelease
+              schema: *a3
+            - name: published_at
+              schema: *a1
+            - name: tag_name
+              schema: *a1
+            - name: tarball_url
+              schema: *a1
+            - name: target_commitish
+              schema: *a1
+            - name: upload_url
+              schema: *a1
+            - name: url
+              schema: *a1
+            - name: zipball_url
+              schema: *a1
+    - type: alias
+      name: repo-deployments
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema:
+          type: object
+          name: anonymous<object>
+          properties:
+            - name: created_at
+              schema: *a1
+            - name: creator
+              schema: *a29
+            - name: description
+              schema: *a1
+            - name: id
+              schema: *a2
+            - name: payload
+              schema: *a1
+            - name: sha
+              schema: *a1
+            - name: statuses_url
+              schema: *a1
+            - name: updated_at
+              schema: *a1
+            - name: url
+              schema: *a1
+    - type: alias
+      name: repoComments
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema:
+          type: object
+          name: anonymous<object>
+          properties:
+            - name: body
+              schema: *a1
+            - name: commit_id
+              schema: *a1
+            - name: created_at
+              description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+              schema:
+                type: alias
+                name: anonymous<string>
+                aliasType: schema
+                description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                targetSchema: *a1
+            - name: html_url
+              schema: *a1
+            - name: id
+              schema: *a2
+            - name: line
+              schema: *a2
+            - name: path
+              schema: *a1
+            - name: position
+              schema: *a2
+            - name: updated_at
+              description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+              schema:
+                type: alias
+                name: anonymous<string>
+                aliasType: schema
+                description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                targetSchema: *a1
+            - name: url
+              schema: *a1
+            - name: user
+              schema: *a29
+    - *a72
+    - type: alias
+      name: tags
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema: *a73
+    - type: alias
+      name: teamRepos
+      aliasType: schema
+      targetSchema: *a72
+    - type: alias
+      name: users
+      aliasType: schema
+      targetSchema:
+        type: array
+        name: anonymous<unknown>
+        elementSchema: *a29
