@@ -9,6 +9,7 @@
   - TS serialization 
   - TS deserialization full 
   - ALPHA ADL Consumer API (load/save/manipulate model*)
+  - What's working: Able to generate models.
 
 ### Jun 5
   - OAI2, OAI3 output serialization 
