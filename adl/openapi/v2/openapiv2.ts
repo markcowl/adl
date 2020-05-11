@@ -1,9 +1,9 @@
 import { Dictionary } from '../common/dictionary';
 import { ExternalDocumentation } from '../common/external-docs';
 import { Info } from '../common/info';
+import { XMSParameterizedHost } from '../common/schema-extensions';
 import { Tag } from '../common/tag';
 import { VendorExtensions } from '../common/vendor-extensions';
-import { XMSParameterizedHost, XMSPaths } from '../v3/openapiv3';
 import { Definitions } from './definitions';
 import { Parameters } from './parameters';
 import { Paths } from './path';
@@ -11,6 +11,11 @@ import { Responses } from './response';
 import { Schemes } from './schemes';
 import { SecurityScheme } from './security';
 
+
+export interface XMSPaths {
+  /** The available paths and operations for the API. (extended) */
+  'x-ms-paths': Paths;
+}
 
 /** 
  * This is the root document object for the API specification 

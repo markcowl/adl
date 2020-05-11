@@ -566,6 +566,7 @@ export async function* processEnumSchema(schema: v3.Schema, $: Context): AsyncGe
   });
 
   result.sealed = !xmsEnum.modelAsString;
+  use(xmsEnum.modelAsString);
 
   for (const each of values) {
     const constant = new Constant(type, use(each.value), {

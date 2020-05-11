@@ -64,6 +64,11 @@ export class Property extends Element {
    */
   description?: string;
 
+  /**
+   * the desired name when generating code.
+   */
+  clientName?: string;
+
   constructor(public name: string, public schema: Schema, initializer?: Partial<Property>) {
     super();
     this.initialize(initializer);
@@ -82,6 +87,11 @@ export class ObjectSchema extends Schema {
 
   /** schemas that this object extends */
   extends = new Array<Schema>();
+
+  /*
+   * the desired name when generating code
+   */
+  clientName?: string;
 
   constructor(public name: string, initializer?: Partial<ObjectSchema>) {
     super('object');
@@ -142,6 +152,14 @@ export class ExclusiveMaximumConstraint extends Constraint {
 export class MultipleOfConstraint extends Constraint {
   constructor(public multipleOf: number, initializer?: Partial<MultipleOfConstraint>) {
     super('MultipleOf');
+    this.initialize(initializer);
+  }
+}
+
+
+export class ReadOnlyConstraint extends Constraint {
+  constructor(public readOnly: boolean, initializer?: Partial<MaxLengthConstraint>) {
+    super('ReadOnly');
     this.initialize(initializer);
   }
 }

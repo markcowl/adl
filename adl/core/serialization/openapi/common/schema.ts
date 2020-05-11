@@ -1,6 +1,6 @@
 import { v2, v3 } from '@azure-tools/openapi';
 import { anonymous, use } from '@azure-tools/sourcemap';
-import { Alias, Schema, ServerDefaultValue } from '../../../model/schema';
+import { Alias, ReadOnlyConstraint, Schema, ServerDefaultValue } from '../../../model/schema';
 import { Context, OAIModel } from '../../../support/visitor';
 
 
@@ -15,6 +15,7 @@ export function commonProperties(schema: v3.Schema|v2.Schema) {
   return {
     description: schema.description,
     summary: schema.title,
+    clientName: (<any>schema)['x-ms-client-name'],
 
     // todo: I'm not fond of having this in schema -- we should strongly consider refactoring this so the consumer gets it (ie, the property)
     nullable: (<any>schema).nullable || schema['x-nullable']
@@ -111,12 +112,16 @@ export async function* processByteArraySchema<T extends OAIModel>(schema: v3.Sch
 }
 
 export function addAliasWithDefault<T extends OAIModel>(schema: v3.Schema | v2.Schema, resultSchema: Schema, $: Context<T>) {
-  if (schema.default || schema.description || schema.title || (<any>schema).nullable || schema['x-nullable'] ) {
+  if (schema.default || schema.description || schema.title || (<any>schema).nullable || schema['x-nullable'] || (<any>schema).readOnly) {
     const alias = new Alias(anonymous(resultSchema.name), resultSchema, commonProperties(schema));
     if (schema.default) {
       alias.defaults.push(new ServerDefaultValue(schema.default));
     }
     use(schema.default, true);
+
+    if ((<any>schema).readOnly) {
+      alias.constraints.push(new ReadOnlyConstraint((<any>schema).readOnly));
+    }
     return alias;
   }
   return resultSchema;

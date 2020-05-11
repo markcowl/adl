@@ -1,12 +1,17 @@
-import { Dictionary, JsonReference, v2, vendorExtensions } from '@azure-tools/openapi';
+import { items } from '@azure-tools/linq';
+import { Dictionary, isReference, JsonReference, v2, vendorExtensions } from '@azure-tools/openapi';
+import { isVendorExtension, ParameterLocation } from '@azure-tools/openapi/dist/v2';
 import { use } from '@azure-tools/sourcemap';
 import { Alias as GenericAlias } from '../../../model/alias';
 import { ApiModel } from '../../../model/api-model';
 import { Alias, AndSchema, AnyOfSchema, AnySchema, ArraySchema, Constant, Enum, ObjectSchema, Primitive, XorSchema } from '../../../model/schema';
 import { Host } from '../../../support/file-system';
 import { Context as Ctx, Visitor } from '../../../support/visitor';
-import { firstOrDefault } from '../common';
+import { firstOrDefault, push } from '../common';
 import { processExternalDocs, processInfo, processTag } from '../common/info';
+import { requestBody } from './body-parameter';
+import { parameter } from './parameter';
+import { path } from './path';
 import { processSchema } from './schema';
 import { securityScheme } from './security-schemes';
 import { processServers } from './server';
@@ -94,8 +99,39 @@ async function processRoot(oai2: v2.Model, $: Context) {
     throw new Error('Should not get here.');
   }
 
+
+  for (const [key, value] of items(oai2.parameters)) {
+    if (isVendorExtension(key)) {
+      continue;
+    }
+
+    if (isReference(value)) {
+      const r = await $.resolveReference(value.$ref);
+      if (r.in == ParameterLocation.Body) {
+        push($.api.http.requests, $.processInline(requestBody, <JsonReference<v2.BodyParameter>>value ));
+        continue;
+      }
+
+      push($.api.http.parameters, $.processInline(parameter, value));
+      continue;
+    } else if (value.in == ParameterLocation.Body) {
+      push($.api.http.requests, $.processInline(requestBody, <v2.BodyParameter>value));
+      continue;
+    }
+    push($.api.http.parameters, $.process(parameter, value));
+  }
+
+  for await (const operation of $.processDictionary(path, oai2.paths)) {
+    $.api.http.operations.push(operation);
+  }
+  for await (const operation of $.processDictionary(path, oai2['x-ms-paths'])) {
+    $.api.http.operations.push(operation);
+  }
+
   // we don't need this.
   use(oai2.swagger);
+  use(oai2.consumes, true);
+  use(oai2.produces, true);
 
   return $.api;
 }

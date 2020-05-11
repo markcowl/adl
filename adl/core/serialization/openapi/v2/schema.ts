@@ -3,7 +3,7 @@ import { IntegerFormat, NumberFormat, StringFormat, v2, XMSEnumValue } from '@az
 import { anonymous, isUsed, nameOf, unusedMembers, use, using } from '@azure-tools/sourcemap';
 import { Alias as GenericAlias } from '../../../model/alias';
 import { Identity } from '../../../model/name';
-import { Alias, ArraySchema, Constant, DictionarySchema, Enum, ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ObjectSchema, Property, RegularExpressionConstraint, Schema, ServerDefaultValue, UniqueElementsConstraint } from '../../../model/schema';
+import { Alias, ArraySchema, Constant, DictionarySchema, Enum, ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ObjectSchema, Property, ReadOnlyConstraint, RegularExpressionConstraint, Schema, ServerDefaultValue, UniqueElementsConstraint } from '../../../model/schema';
 import { firstOrDefault, isEnumSchema, isObjectSchema, push } from '../common';
 import { arrayProperties, commonProperties, numberProperties, objectProperties, processAnySchema, processBooleanSchema, processByteArraySchema, processCharSchema, processDateSchema, processDateTimeSchema, processDurationSchema, processFileSchema, processOdataSchema, processPasswordSchema, processTimeSchema, processUriSchema, processUuidSchema, stringProperties } from '../common/schema';
 import { Context } from './serializer';
@@ -203,6 +203,10 @@ export async function* processStringSchema(schema: v2.Schema, $: Context): Async
     alias.defaults.push(new ServerDefaultValue(schema.default));
   }
 
+  if (schema.readOnly) {
+    alias.constraints.push(new ReadOnlyConstraint(schema.readOnly));
+  }
+
   if (schema.maxLength) {
     alias.constraints.push(new MaxLengthConstraint(schema.maxLength));
   }
@@ -214,6 +218,10 @@ export async function* processStringSchema(schema: v2.Schema, $: Context): Async
   if (schema.pattern) {
     alias.constraints.push(new RegularExpressionConstraint(schema.pattern));
   }
+
+  // we'll have to come back to xml
+  alias.addToAttic('xml', schema.xml);
+
 
   yield alias;
 }
@@ -307,6 +315,9 @@ function constrainNumericSchema(schema: v2.Schema, $: Context, target: Schema): 
     alias.constraints.push(new MultipleOfConstraint(schema.multipleOf));
   }
 
+  // we'll have to come back to xml
+  alias.addToAttic('xml', schema.xml);
+
   return alias;
 }
 
@@ -339,6 +350,9 @@ export async function* processArraySchema(schema: v2.Schema, $: Context, options
     use(schema.default, true); // default can be more than a primitive value
   }
 
+  if (schema.readOnly) {
+    alias.constraints.push(new ReadOnlyConstraint(schema.readOnly));
+  }
   if (schema.maxItems !== undefined) {
     alias.constraints.push(new MaximumElementsConstraint(schema.maxItems));
   }
@@ -348,6 +362,10 @@ export async function* processArraySchema(schema: v2.Schema, $: Context, options
   if (schema.uniqueItems !== undefined) {
     alias.constraints.push(new UniqueElementsConstraint(schema.uniqueItems));
   }
+
+  // we'll have to come back to xml
+  alias.addToAttic('xml', schema.xml);
+
 
   return yield alias;
 }
@@ -378,9 +396,15 @@ export async function* processAdditionalProperties(schema: v2.Schema, $: Context
     if (schema.minProperties !== undefined) {
       alias.constraints.push(new MinimumPropertiesConstraint(schema.minProperties));
     }
+    if (schema.readOnly) {
+      alias.constraints.push(new ReadOnlyConstraint(schema.readOnly));
+    }
     if (schema.default) {
       alias.defaults.push(new ServerDefaultValue(schema.default));
     }
+
+    // we'll have to come back to xml
+    alias.addToAttic('xml', schema.xml);
 
     return yield alias;
   }
@@ -408,6 +432,12 @@ export async function* processObjectSchema(schema: v2.Schema, $: Context, option
   const result = new ObjectSchema(schemaName, commonProperties(schema));
 
   result.addToAttic('example', (<any>schema).example);
+  
+  // we'll have to come back to xml
+  result.addToAttic('xml', schema.xml);
+  result.addToAttic('x-ms-azure-resource', schema['x-ms-azure-resource']);
+  result.addToAttic('x-ms-external', schema['x-ms-external']);
+
 
   const schemas = getSchemas(schema.allOf, $);
   await push(result.extends, schemas);
@@ -434,9 +464,11 @@ export async function* processObjectSchema(schema: v2.Schema, $: Context, option
       // on a property, even if it's a reference
       description: (<any>property).description,
       readonly: (<any>property).readOnly,
-
+      clientName: (<any>property)['x-ms-client-name']
     });
+    
     p.addToAttic('example', (<any>property).example);
+    p.addToAttic('x-ms-client-flatten', (<any>property)['x-ms-client-flatten']);
     $.addVersionInfo(p, property);
     result.properties.push(p);
   }
@@ -467,10 +499,11 @@ export async function* processEnumSchema(schema: v2.Schema, $: Context): AsyncGe
   const type = await firstOrDefault(processSchema(schema, $, { forUnderlyingEnumType: true })) || $.api.schemas.Any;
 
   const result = new Enum(type, {
-    name: xmsEnum.name || nameOf(schema)
+    name: xmsEnum.name || nameOf(schema),
   });
 
   result.sealed = !xmsEnum.modelAsString;
+  use(xmsEnum.modelAsString );
 
   for (const each of values) {
     const constant = new Constant(type, use(each.value), {

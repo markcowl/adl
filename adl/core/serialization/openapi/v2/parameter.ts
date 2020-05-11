@@ -1,6 +1,6 @@
 import { v2 } from '@azure-tools/openapi';
 import { use, valueOf } from '@azure-tools/sourcemap';
-import { HeaderParameter, PathParameter, QueryParameter, RenderStyle } from '../../../model/http/parameter';
+import { FormDataParameter, HeaderParameter, PathParameter, QueryParameter, RenderStyle } from '../../../model/http/parameter';
 import { firstOrDefault } from '../common';
 import { processInline } from './schema';
 import { Context } from './serializer';
@@ -13,6 +13,9 @@ export async function* parameter(parameter: v2.Parameter, $: Context, options?: 
 
     case v2.ParameterLocation.Query:
       return yield* processQueryParameter(<v2.QueryParameter>parameter, $, options);
+    
+    case v2.ParameterLocation.FormData:
+      return yield* processFormDataParameter(<v2.FormDataParameter>parameter, $, options);
 
     case v2.ParameterLocation.Header:
       return yield* processHeaderParameter(<v2.HeaderParameter>parameter, $, options);
@@ -27,7 +30,8 @@ export async function* processPathParameter(parameter: v2.PathParameter, $: Cont
   const result = new PathParameter(parameter.name, schema, false, {
     description: parameter.description,
     required: parameter.required,
-    renderStyle:  RenderStyle.Simple 
+    renderStyle:  RenderStyle.Simple,
+    generatedLocation: parameter['x-ms-parameter-location']
   }); 
   yield result;
 }
@@ -42,16 +46,31 @@ export async function* processQueryParameter(parameter: v2.QueryParameter, $: Co
     renderStyle,
     allowEmptyValue: parameter.allowEmptyValue,
     allowReserved: parameter['x-ms-skip-url-encoding'],
-
+    generatedLocation: parameter['x-ms-parameter-location']
   });
   yield result;
 }
+
+export async function* processFormDataParameter(parameter: v2.FormDataParameter, $: Context, options?: { isAnonymous?: boolean }) {
+  const schema = await firstOrDefault(processInline(<v2.Schema>parameter, $)) || $.api.schemas.Any;
+  const renderStyle = RenderStyle.Form;
+  const result = new FormDataParameter(parameter.name, schema, true, {
+    description: parameter.description,
+    required: parameter.required,
+    renderStyle,
+    allowReserved: parameter['x-ms-skip-url-encoding'],
+    generatedLocation: parameter['x-ms-parameter-location']
+  });
+  yield result;
+}
+
 export async function* processHeaderParameter(parameter: v2.HeaderParameter, $: Context, options?: { isAnonymous?: boolean }) {
   const schema = await firstOrDefault(processInline(<v2.Schema>parameter, $)) || $.api.schemas.Any;
   const result = new HeaderParameter(parameter.name, schema, false, {
     description: parameter.description,
     required: parameter.required,
-    renderStyle: RenderStyle.Simple
+    renderStyle: RenderStyle.Simple,
+    generatedLocation: parameter['x-ms-parameter-location']
   });
   
   yield result;
