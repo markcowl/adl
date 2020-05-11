@@ -4,7 +4,7 @@ import { anonymous, isUsed, nameOf, unusedMembers, use, using } from '@azure-too
 import { Alias as GenericAlias } from '../../../model/alias';
 import { Identity } from '../../../model/name';
 import { Alias, AndSchema, AnyOfSchema, ArraySchema, Constant, DictionarySchema, Enum, ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ObjectSchema, Property, RegularExpressionConstraint, Schema, ServerDefaultValue, UniqueElementsConstraint, XorSchema } from '../../../model/schema';
-import { firstOrDefault, isEnumSchema, isObjectSchema, isPrimitiveSchema, push, toArray } from '../common';
+import { isEnumSchema, isObjectSchema, isPrimitiveSchema, push, singleOrDefault, toArray } from '../common';
 import { Context } from './serializer';
 
 
@@ -90,8 +90,8 @@ export async function* processAnyOf(schema: v3.Schema, $: Context, options?: Opt
 
   // they are looking to make a THIS & anyOf[...] 
   // let's process the object first, and then we can process the anyof.
-  const objectSchema = (isObjectSchema(schema) ? await firstOrDefault(processObjectSchema(schema, $, { isAnonymous: true, justTargetType: true })) : undefined);
-  const oneOf = (schema.oneOf ? await firstOrDefault(processOneOf(schema, $, { isAnonymous: true, justTargetType: true })) : undefined);
+  const objectSchema = (isObjectSchema(schema) ? await singleOrDefault(processObjectSchema(schema, $, { isAnonymous: true, justTargetType: true })) : undefined);
+  const oneOf = (schema.oneOf ? await singleOrDefault(processOneOf(schema, $, { isAnonymous: true, justTargetType: true })) : undefined);
 
   const schemaName = options?.isAnonymous ? anonymous('anyOf') : nameOf(schema);
   const combineWith = new Array<Schema>();
@@ -138,7 +138,7 @@ export async function* processOneOf(schema: v3.Schema, $: Context, options?: Opt
   }
 
   const schemaName = options?.isAnonymous ? anonymous('oneOf') : nameOf(schema);
-  const objectSchema = options?.justTargetType ? undefined : await (isObjectSchema(schema) ? await firstOrDefault(processObjectSchema(schema, $, { isAnonymous: true, justTargetType: true })) : undefined);
+  const objectSchema = options?.justTargetType ? undefined : await (isObjectSchema(schema) ? await singleOrDefault(processObjectSchema(schema, $, { isAnonymous: true, justTargetType: true })) : undefined);
   const schemas = getSchemas(schema.oneOf, $);
 
   if (objectSchema) {
@@ -523,7 +523,7 @@ export async function* processArraySchema(schema: v3.Schema, $: Context, options
   const common = (!options?.isAnonymous && !options?.isParameter && !options?.isProperty) ? commonProperties(schema) : {};
 
 
-  const elementSchema = await firstOrDefault(processInline(schema.items, $, { isAnonymous: true })) || $.api.schemas.Any;
+  const elementSchema = await singleOrDefault(processInline(schema.items, $, { isAnonymous: true })) || $.api.schemas.Any;
 
   if ($.forbiddenProperties(schema, ...stringProperties, ...numberProperties)) {
     return undefined;
@@ -568,7 +568,7 @@ export async function* processAdditionalProperties(schema: v3.Schema, $: Context
   const common = schema.properties ? {} : commonProperties(schema);
 
   // true means type == any
-  const dictionaryType = schema.additionalProperties != true ? await firstOrDefault(processInline(schema.additionalProperties, $, { isAnonymous: true })) || $.api.schemas.Any : $.api.schemas.Any;
+  const dictionaryType = schema.additionalProperties != true ? await singleOrDefault(processInline(schema.additionalProperties, $, { isAnonymous: true })) || $.api.schemas.Any : $.api.schemas.Any;
 
   if (length(common) > 0 || schema.maxProperties !== undefined || schema.minProperties !== undefined) {
     const result = new DictionarySchema(dictionaryType);
@@ -624,7 +624,7 @@ export async function* processObjectSchema(schema: v3.Schema, $: Context, option
   // process the properties
   for (const [propertyName, property] of items(use(schema.properties))) {
     // process schema/reference inline
-    const propSchema = await firstOrDefault(processInline(property, $, { isAnonymous: true })) || $.api.schemas.Any;
+    const propSchema = await singleOrDefault(processInline(property, $, { isAnonymous: true })) || $.api.schemas.Any;
 
     // grabs the 'required' value for the property
     let required = undefined;
@@ -673,7 +673,7 @@ export async function* processEnumSchema(schema: v3.Schema, $: Context): AsyncGe
   const values: Array<XMSEnumValue> = xmsEnum.values ?? schemaEnum.map(v => ({ value: v }));
 
   // not using $.process here because we need to process a node that is already marked
-  const type = await firstOrDefault(processSchema(schema, $, { forUnderlyingEnumType: true })) || $.api.schemas.Any;
+  const type = await singleOrDefault(processSchema(schema, $, { forUnderlyingEnumType: true })) || $.api.schemas.Any;
 
   const result = new Enum(type, {
     name: xmsEnum.name || nameOf(schema)

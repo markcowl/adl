@@ -4,6 +4,15 @@ import { VendorExtensions } from '../common/vendor-extensions';
 
 
 /**
+ * Lists the required security schemes to execute this operation. The object can have multiple security schemes declared in it which are all required (that is, there is a logical AND between the schemes).
+ * 
+ * The name used for each property MUST correspond to a security scheme declared in the Security Definitions.
+ *
+ * @see /https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#security-requirement-object
+ */
+export type SecurityRequirement = Dictionary<Array<string>>;
+
+/**
  * Allows the definition of a security scheme that can be used by the operations. Supported schemes are basic authentication, an API key (either as a header or as a query parameter) and OAuth2's common flows (implicit, password, application and access code).
  *
  * @see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#security-scheme-object

@@ -8,7 +8,7 @@ import { Parameters } from './parameters';
 import { Paths } from './path';
 import { Responses } from './response';
 import { Schemes } from './schemes';
-import { SecurityScheme } from './security';
+import { SecurityRequirement, SecurityScheme } from './security';
 
 
 /** 
@@ -54,7 +54,7 @@ export interface Model extends VendorExtensions {
   responses?: Responses;
 
   /** A declaration of which security schemes are applied for the API as a whole. The list of values describes alternative security schemes that can be used (that is, there is a logical OR between the security requirements). Individual operations can override this definition */
-  security?: Array<SecurityScheme>;
+  security?: Array<SecurityRequirement>;
 
   /** Security scheme definitions that can be used across the specification */
   securityDefinitions?: Dictionary<SecurityScheme>;

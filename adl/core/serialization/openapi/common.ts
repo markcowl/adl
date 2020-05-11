@@ -24,14 +24,22 @@ export async function consume<T>(g: AsyncGenerator<T>) {
   }
 }
 
-export async function firstOrDefault<T>(generator: AsyncGenerator<T>): Promise<T | undefined> {
+export async function singleOrDefault<T>(generator: AsyncGenerator<T>): Promise<T | undefined> {
   let result: T | undefined;
   for await (const each of generator) {
     if (result === undefined) {
       result = each;
       continue;
     }
-    throw new Error('Expecting only a single item');
+    throw new Error('Sequence contains more than one element.');
+  }
+  return result;
+}
+
+export async function single<T>(generator: AsyncGenerator<T>): Promise<T> {
+  const result = await singleOrDefault(generator);
+  if (result === undefined) {
+    throw new Error('Sequence contains no elements.');
   }
   return result;
 }

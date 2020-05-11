@@ -2,6 +2,7 @@ import { Alias } from '../alias';
 import * as base from '../operation';
 import { Reference } from '../Reference';
 import { Parameter } from './parameter';
+import { AuthenticationRequirement, Connection } from './protocol';
 import { Request } from './request';
 import { Response } from './response';
 
@@ -23,6 +24,16 @@ export class Operation extends base.Operation {
 
   /** a collection of reference information regarding the operation  */
   references = new Array<Reference>();
+
+  /**
+   * Authentication requirements for this operation, which override those specified globally.
+   *
+   * Only one of the elements in the array needs to be satisfied to authorize a request.
+   */
+  authenticationRequirements = new Array<AuthenticationRequirement>();
+
+  /** Connections for this operation, which override those specified globally. */
+  connections = new Array<Connection>();
 
   /**
   * 
