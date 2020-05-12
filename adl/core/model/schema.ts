@@ -1,5 +1,5 @@
 import { anonymous, valueOf } from '@azure-tools/sourcemap';
-import { EnumDeclaration, EnumMember as tsEnumMember } from 'ts-morph';
+import { EnumDeclaration, EnumMember } from 'ts-morph';
 import { ApiModel } from './api-model';
 import { Element } from './element';
 import { Identity } from './name';
@@ -109,23 +109,31 @@ export class Constant extends Schema {
   }
 }
 
-export class EnumMember extends Element { 
-  node: tsEnumMember;
+export class EnumValue extends Element { 
+  node: EnumMember;
 
-  constructor(decl: tsEnumMember) {
+  constructor(decl: EnumMember) {
     super();
     this.node = decl;
+  }
+
+  get value(): any {
+    return this.node.getValue();
+  }
+
+  get name(): string {
+    return this.node.getName();
   }
 }
 
 export class Enum extends Schema {
   node: EnumDeclaration;
   
-  get sealed() { 
-    return false;
+  get sealed() {
+    return true;
   }
   set sealed(value: boolean) {
-    // set the thing to sealed;
+    // TODO: how do we represent unsealed
   }
   
   constructor(decl: EnumDeclaration) {
@@ -133,23 +141,23 @@ export class Enum extends Schema {
     this.node = decl;
   }
  
-  static create( project: ApiModel,elementSchema: Schema, initializer?: Partial<Enum>) {
-    const file =project.createSourceFile('foo.ts');
+  static create(project: ApiModel, elementSchema: Schema, initializer?: Partial<Enum>) {
+    const file = project.createSourceFile('foo.ts');
     const result = new Enum(file.addEnum(valueOf(initializer?.name)));
     return result.initialize(initializer);
   }
-  addValue(value: Constant) {
-    
-    this.node.addMember({
-      name: valueOf(value.name),
-      value: value.value,
-    });
+
+  addValue(name: string, value: string | number, initializer?: Partial<EnumValue>): EnumValue {  
+    return new EnumValue(
+      this.node.addMember({
+        name: name,
+        value: value,
+      }));
   }
 
   get values() {
-    return this.node.getMembers().map( each => new EnumMember(each) );
+    return this.node.getMembers().map(each => new EnumValue(each));
   }
-
 }
 
 export class Constraint extends Schema {

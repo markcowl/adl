@@ -1,6 +1,6 @@
-import { v2, v3 } from '@azure-tools/openapi';
-import { anonymous, use } from '@azure-tools/sourcemap';
-import { Alias, ReadOnlyConstraint, Schema, ServerDefaultValue } from '../../../model/schema';
+import { v2, v3, XMSEnumValue } from '@azure-tools/openapi';
+import { anonymous, nameOf, use } from '@azure-tools/sourcemap';
+import { Alias, Enum, ReadOnlyConstraint, Schema, ServerDefaultValue } from '../../../model/schema';
 import { Context, OAIModel } from '../../../support/visitor';
 
 
@@ -10,6 +10,23 @@ export const stringProperties = <Array<keyof v2.Schema & v3.Schema>>['maxLength'
 export const objectProperties = <Array<keyof v2.Schema & v3.Schema>>['properties', 'discriminator', 'additionalProperties', 'minProperties', 'maxProperties'];
 export const notPrimitiveProperties = <Array<keyof v2.Schema & v3.Schema>>[...stringProperties, ...objectProperties, ...arrayProperties, ...numberProperties];
 export const notObject = [...arrayProperties, ...numberProperties, ...stringProperties];
+
+/** Schema processing options */
+export type Options = Partial<{
+  /** this is an inline-declared anonymous schema; the name is not intended to be used as the final name */
+  isAnonymous: boolean;
+
+  /** processes the schema just as the target type, and not oneOf/allOf/anyOf/object/enum */
+  justTargetType: boolean;
+
+  /** note that this is a property declaration while processing this schema */
+  isProperty: boolean;
+
+  /** note that this is a parameter declaration while processing this schema */
+  isParameter: boolean;
+
+  forUnderlyingEnumType: boolean;
+}>;
 
 export function commonProperties(schema: v3.Schema|v2.Schema) {
   return {
@@ -135,3 +152,31 @@ export async function* processFileSchema<T extends OAIModel>(schema: v3.Schema |
 export async function* processAnySchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>): AsyncGenerator<Schema> {
   return yield $.api.schemas.Any;
 }
+
+export async function* processEnumSchemaCommon<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>, type: Schema): AsyncGenerator<Schema> {
+  const schemaEnum = use(schema.enum) ?? [];
+  const xmsEnum = use(schema['x-ms-enum']) ?? {};
+  const values: Array<XMSEnumValue> = xmsEnum.values ?? schemaEnum.map(v => ({ value: v }));
+
+  const result = Enum.create($.api, type, {
+    name: xmsEnum.name || nameOf(schema)
+  });
+
+  result.sealed = !xmsEnum.modelAsString;
+  use(xmsEnum.modelAsString);
+
+  // TODO:
+  // * Should enums without named members be unioned literal types?
+  // * What do we do with enum values that are not numbers or strings?
+  for (const each of values) {
+    result.addValue(
+      each.name ?? each.value.toString(),
+      typeof each.value === 'number' ? each.value : each.value.toString());
+  }
+
+  // TODO: an enum with only one value should be treated as single constant directly
+  //       but how does this interact with adding a value to an enum?
+
+  yield result;
+}
+
