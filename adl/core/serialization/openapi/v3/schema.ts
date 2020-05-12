@@ -561,25 +561,25 @@ export async function* processEnumSchema(schema: v3.Schema, $: Context): AsyncGe
   // not using $.process here because we need to process a node that is already marked
   const type = await singleOrDefault(processSchema(schema, $, { forUnderlyingEnumType: true })) || $.api.schemas.Any;
 
-  const result = new Enum(type, {
+  const result = Enum.create($.api, type, {
     name: xmsEnum.name || nameOf(schema)
   });
 
   result.sealed = !xmsEnum.modelAsString;
   use(xmsEnum.modelAsString);
 
-  for (const each of values) {
-    const constant = new Constant(type, use(each.value), {
-      name: each.name,
-      description: each.description
-    });
-    result.values.push(constant);
-  }
+  // for (const each of values) {
+  //   const constant = new Constant(type, use(each.value), {
+  //     name: each.name,
+  //     description: each.description
+  //   });
+  //   result.values.push(constant);
+  // }
 
-  // an enum with only one value is treated as single constant directly
-  if (result.values.length == 1) {
-    return yield result.values[0];
-  }
+  // // an enum with only one value is treated as single constant directly
+  // if (result.values.length == 1) {
+  //   return yield result.values[0];
+  // }
 
   // yield the value as soon as possible so that if we start to recurse it's already in the cache.
   yield result;

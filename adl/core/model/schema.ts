@@ -116,7 +116,6 @@ export class EnumMember extends Element {
     super();
     this.node = decl;
   }
-
 }
 
 export class Enum extends Schema {

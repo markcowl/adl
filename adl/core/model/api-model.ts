@@ -1,5 +1,6 @@
 import { Dictionary } from '@azure-tools/linq';
 import { Project } from 'ts-morph';
+import { Attic } from './element';
 import { SerializationResult } from './format';
 import { HttpProtocol } from './http/protocol';
 import { InternalData } from './internal-data';
@@ -50,7 +51,10 @@ export class ApiModel extends Project {
 
   versionInfo = new Array<VersionInfo>();
 
+  attic?: Attic;
+
   addInternalData(key: string, internalData: InternalData): void {
+    // ...
   }
 }
 

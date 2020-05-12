@@ -3,7 +3,7 @@ import { IntegerFormat, NumberFormat, StringFormat, v2, XMSEnumValue } from '@az
 import { anonymous, isUsed, nameOf, unusedMembers, use, using } from '@azure-tools/sourcemap';
 import { Alias as GenericAlias } from '../../../model/alias';
 import { Identity } from '../../../model/name';
-import { Alias, ArraySchema, Constant, DictionarySchema, Enum, ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ObjectSchema, Property, ReadOnlyConstraint, RegularExpressionConstraint, Schema, ServerDefaultValue, UniqueElementsConstraint } from '../../../model/schema';
+import { Alias, ArraySchema, DictionarySchema, Enum, ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ObjectSchema, Property, ReadOnlyConstraint, RegularExpressionConstraint, Schema, ServerDefaultValue, UniqueElementsConstraint } from '../../../model/schema';
 import { isEnumSchema, isObjectSchema, push, singleOrDefault } from '../common';
 import { arrayProperties, commonProperties, numberProperties, objectProperties, processAnySchema, processBooleanSchema, processByteArraySchema, processCharSchema, processDateSchema, processDateTimeSchema, processDurationSchema, processFileSchema, processOdataSchema, processPasswordSchema, processTimeSchema, processUriSchema, processUuidSchema, stringProperties } from '../common/schema';
 import { Context } from './serializer';
@@ -498,25 +498,25 @@ export async function* processEnumSchema(schema: v2.Schema, $: Context): AsyncGe
   // not using $.process here because we need to process a node that is already marked
   const type = await singleOrDefault(processSchema(schema, $, { forUnderlyingEnumType: true })) || $.api.schemas.Any;
 
-  const result = new Enum(type, {
+  const result = Enum.create($.api, type, {
     name: xmsEnum.name || nameOf(schema),
   });
 
   result.sealed = !xmsEnum.modelAsString;
   use(xmsEnum.modelAsString );
 
-  for (const each of values) {
-    const constant = new Constant(type, use(each.value), {
-      name: each.name,
-      description: each.description
-    });
-    result.values.push(constant);
-  }
+  // for (const each of values) {
+  //   const constant = EnumMember(type, use(each.value), {
+  //     name: each.name,
+  //     description: each.description
+  //   });
+  //   result.values.push(constant);
+  //}
 
   // an enum with only one value is treated as single constant directly
-  if (result.values.length == 1) {
-    return yield result.values[0];
-  }
+  //if (result.values.length == 1) {
+  //  return yield result.values[0];
+  //}
 
   // yield the value as soon as possible so that if we start to recurse it's already in the cache.
   yield result;
