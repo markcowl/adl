@@ -1,6 +1,9 @@
-import { anonymous } from '@azure-tools/sourcemap';
+import { anonymous, valueOf } from '@azure-tools/sourcemap';
+import { EnumDeclaration, EnumMember as tsEnumMember } from 'ts-morph';
+import { ApiModel } from './api-model';
 import { Element } from './element';
 import { Identity } from './name';
+
 
 export class Schema extends Element {
   anonymous?: boolean;
@@ -106,14 +109,48 @@ export class Constant extends Schema {
   }
 }
 
-export class Enum extends Schema {
-  values = new Array<Constant>();
-  sealed = true;
+export class EnumMember extends Element { 
+  node: tsEnumMember;
 
-  constructor(public elementSchema: Schema, initializer?: Partial<Enum>) {
-    super('enum');
-    this.initialize(initializer);
+  constructor(decl: tsEnumMember) {
+    super();
+    this.node = decl;
   }
+
+}
+
+export class Enum extends Schema {
+  node: EnumDeclaration;
+  
+  get sealed() { 
+    return false;
+  }
+  set sealed(value: boolean) {
+    // set the thing to sealed;
+  }
+  
+  constructor(decl: EnumDeclaration) {
+    super('enum');
+    this.node = decl;
+  }
+ 
+  static create( project: ApiModel,elementSchema: Schema, initializer?: Partial<Enum>) {
+    const file =project.createSourceFile('foo.ts');
+    const result = new Enum(file.addEnum(valueOf(initializer?.name)));
+    return result.initialize(initializer);
+  }
+  addValue(value: Constant) {
+    
+    this.node.addMember({
+      name: valueOf(value.name),
+      value: value.value,
+    });
+  }
+
+  get values() {
+    return this.node.getMembers().map( each => new EnumMember(each) );
+  }
+
 }
 
 export class Constraint extends Schema {
@@ -526,4 +563,5 @@ export class Schemas extends Element {
   defaults = new Array<Default>();
   aliases = new Array<Alias>();
   primitives = new Array<Primitive>();
+
 }

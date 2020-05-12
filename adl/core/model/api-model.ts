@@ -1,11 +1,12 @@
 import { Dictionary } from '@azure-tools/linq';
-import { Element } from './element';
+import { Project } from 'ts-morph';
 import { SerializationResult } from './format';
 import { HttpProtocol } from './http/protocol';
 import { InternalData } from './internal-data';
 import { Metadata } from './metadata';
 import { Resource } from './resource';
 import { Schemas } from './schema';
+import { VersionInfo } from './version-info';
 
 
 export interface FileInfo {
@@ -29,7 +30,7 @@ function TypeInfo<U extends new (...args: any) => any>(type: U) {
 }
 */
 
-export class ApiModel extends Element {
+export class ApiModel extends Project {
   internalData: Dictionary<InternalData> = {};
 
   metaData = new Metadata('');
@@ -46,14 +47,22 @@ export class ApiModel extends Element {
   constructor() {
     super();
   }
-  async save(): Promise<SerializationResult> {
+
+  versionInfo = new Array<VersionInfo>();
+
+  addInternalData(key: string, internalData: InternalData): void {
+  }
+}
+
+export class None {
+  async __save(): Promise<SerializationResult> {
     throw 'unimplemented';
   }
 
   /** 
    * creates a duplicate of this API
    */
-  async clone() {
+  async __clone() {
     throw 'unimplemented';
   }
 
@@ -64,7 +73,7 @@ export class ApiModel extends Element {
    * 
    * @parameter apiVersions -- removes the definitions from this API.
    */
-  async removeVersions() {
+  async __removeVersions() {
     throw 'unimplemented';
   }
 
@@ -73,7 +82,6 @@ export class ApiModel extends Element {
    * 
    * @param apiVersion - the api version string to add
    */
-  async addVersion() {
+  async __addVersion() {
     throw 'unimplemented';
-  }
-}
+  }}
