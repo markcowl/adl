@@ -1,7 +1,8 @@
 import { isFile } from '@azure-tools/async-io';
 import * as chalk from 'chalk';
-import { unlinkSync } from 'fs';
+import * as fs from 'fs';
 import { Host, UrlFileSystem } from '../support/file-system';
+const unlink = fs.promises.unlink;
 
 export function formatDuration(msec: number) {
   const s = (msec / 1000).toString();
@@ -30,12 +31,19 @@ export function createHost(inputRoot: string) {
   return host;
 }
 
+export function Delay(delayMS: number): Promise<void> {
+  return new Promise<void>(res => setTimeout(res, delayMS));
+}
+
 export async function clean(...files: Array<string>) {
   await Promise.all(
     files.map(async (each) => {
-      if (await isFile(each)) {
-        unlinkSync(each);
+      try {
+        if (await isFile(each)) {
+          await unlink(each);
+        }
+      } catch {
+      // shh
       }
-    })
-  );
+    }));
 }

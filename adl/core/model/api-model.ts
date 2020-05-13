@@ -82,7 +82,7 @@ export class ApiModel extends Project {
     }
 
     // ensure folder is created 
-    mkdir(path);
+    await mkdir(path);
 
     // print each file and save it.
     await Promise.all(

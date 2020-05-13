@@ -1,0 +1,212 @@
+paths:
+  /#X-Amz-Target=EC2WindowsBarleyService.CreateApplication:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.CreateApplication
+  /#X-Amz-Target=EC2WindowsBarleyService.CreateComponent:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.CreateComponent
+  /#X-Amz-Target=EC2WindowsBarleyService.CreateLogPattern:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.CreateLogPattern
+  /#X-Amz-Target=EC2WindowsBarleyService.DeleteApplication:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.DeleteApplication
+  /#X-Amz-Target=EC2WindowsBarleyService.DeleteComponent:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.DeleteComponent
+  /#X-Amz-Target=EC2WindowsBarleyService.DeleteLogPattern:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.DeleteLogPattern
+  /#X-Amz-Target=EC2WindowsBarleyService.DescribeApplication:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.DescribeApplication
+  /#X-Amz-Target=EC2WindowsBarleyService.DescribeComponent:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.DescribeComponent
+  /#X-Amz-Target=EC2WindowsBarleyService.DescribeComponentConfiguration:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.DescribeComponentConfiguration
+  /#X-Amz-Target=EC2WindowsBarleyService.DescribeComponentConfigurationRecommendation:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.DescribeComponentConfigurationRecommendation
+  /#X-Amz-Target=EC2WindowsBarleyService.DescribeLogPattern:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.DescribeLogPattern
+  /#X-Amz-Target=EC2WindowsBarleyService.DescribeObservation:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.DescribeObservation
+  /#X-Amz-Target=EC2WindowsBarleyService.DescribeProblem:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.DescribeProblem
+  /#X-Amz-Target=EC2WindowsBarleyService.DescribeProblemObservations:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.DescribeProblemObservations
+  /#X-Amz-Target=EC2WindowsBarleyService.ListApplications:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.ListApplications
+  /#X-Amz-Target=EC2WindowsBarleyService.ListComponents:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.ListComponents
+  /#X-Amz-Target=EC2WindowsBarleyService.ListConfigurationHistory:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.ListConfigurationHistory
+  /#X-Amz-Target=EC2WindowsBarleyService.ListLogPatternSets:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.ListLogPatternSets
+  /#X-Amz-Target=EC2WindowsBarleyService.ListLogPatterns:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.ListLogPatterns
+  /#X-Amz-Target=EC2WindowsBarleyService.ListProblems:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.ListProblems
+  /#X-Amz-Target=EC2WindowsBarleyService.ListTagsForResource:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.ListTagsForResource
+  /#X-Amz-Target=EC2WindowsBarleyService.TagResource:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.TagResource
+  /#X-Amz-Target=EC2WindowsBarleyService.UntagResource:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.UntagResource
+  /#X-Amz-Target=EC2WindowsBarleyService.UpdateApplication:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.UpdateApplication
+  /#X-Amz-Target=EC2WindowsBarleyService.UpdateComponent:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.UpdateComponent
+  /#X-Amz-Target=EC2WindowsBarleyService.UpdateComponentConfiguration:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.UpdateComponentConfiguration
+  /#X-Amz-Target=EC2WindowsBarleyService.UpdateLogPattern:
+    post:
+      parameters:
+        - schema:
+            enum:
+              - EC2WindowsBarleyService.UpdateLogPattern
+components:
+  schemas:
+    Tier:
+      enum:
+        - DEFAULT
+        - DOT_NET_CORE
+        - DOT_NET_WORKER
+        - DOT_NET_WEB
+        - SQL_SERVER
+      minLength: 1
+      maxLength: 50
+    CloudWatchEventSource:
+      enum:
+        - EC2
+        - CODE_DEPLOY
+        - HEALTH
+    ConfigurationEventStatus:
+      enum:
+        - INFO
+        - WARN
+        - ERROR
+    ConfigurationEventResourceType:
+      enum:
+        - CLOUDWATCH_ALARM
+        - CLOUDFORMATION
+        - SSM_ASSOCIATION
+    FeedbackValue:
+      enum:
+        - NOT_SPECIFIED
+        - USEFUL
+        - NOT_USEFUL
+    FeedbackKey:
+      enum:
+        - INSIGHTS_FEEDBACK
+    LogFilter:
+      enum:
+        - ERROR
+        - WARN
+        - INFO
+    Status:
+      enum:
+        - IGNORE
+        - RESOLVED
+        - PENDING
+    SeverityLevel:
+      enum:
+        - Low
+        - Medium
+        - High

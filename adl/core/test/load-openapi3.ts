@@ -1,4 +1,4 @@
-import { isFile, mkdir, writeFile } from '@azure-tools/async-io';
+import { isFile, writeFile } from '@azure-tools/async-io';
 import { linq } from '@azure-tools/linq';
 import { v3 } from '@azure-tools/openapi';
 import { equal, fail } from 'assert';
@@ -56,8 +56,7 @@ describe('Load Single OAI3 files', () => {
       const adlOutput = resolve(`${outputRoot}/${name}`);
       
       // clean the folder and write out ts files
-      api.saveADL(adlOutput, true);
-      await mkdir(adlOutput);
+      await api.saveADL(adlOutput, true);
 
       const apiOutput = resolve(`${adlOutput}/${file.replace(/.yaml$/ig, '.api.yaml')}`);
       const atticOutput = resolve(`${adlOutput}/${file.replace(/.yaml$/ig, '.attic.yaml')}`);
@@ -69,10 +68,13 @@ describe('Load Single OAI3 files', () => {
 
       const stopwatch = new Stopwatch();
 
-      // write out yaml 
-      await writeFile(apiOutput, serialize(api.valueOf()));
+      const content = serialize(api.valueOf());
       console.log(chalk.cyan(`      serialize: '${file}' ${formatDuration(stopwatch.time)} `));
+      // write out yaml 
+      await writeFile(apiOutput, content);
+      console.log(chalk.cyan(`      save: '${file}' ${formatDuration(stopwatch.time)} `));
       equal(await isFile(apiOutput), true, `Should write file ${apiOutput} `);
+
       if (errors.count > 0) {
         fail(`Should not report errors: \n      ${errors.summary}\n`);
       }
@@ -86,7 +88,7 @@ describe('Load Multiple OAI3 files', () => {
 
   for (const folder of folders) {
     const inputRoot = resolve(root, folder, 'input');
-    const outputRoot = resolve(`${inputRoot}/../output/`);
+    const adlOutput = resolve(`${inputRoot}/../output/`);
 
     it(`Processes '${folder}'`, async () => {
       console.log('\n');
@@ -97,19 +99,22 @@ describe('Load Multiple OAI3 files', () => {
 
       
       // clean the folder and write out ts files
-      api.saveADL(outputRoot, true);
-      await mkdir(outputRoot);
-      const apiOutput = resolve(`${outputRoot}/${folder}.yaml`);
-      const atticOutput = resolve(`${outputRoot}/${folder}.attic.yaml`);
+      await api.saveADL(adlOutput, true);
+      const apiOutput = resolve(`${adlOutput}/${folder}.api.yaml`);
+      const atticOutput = resolve(`${adlOutput}/${folder}.attic.yaml`);
       const errors = new AccumulateErrors();
 
       await clean(apiOutput, atticOutput);
       await checkAttic(api, errors, atticOutput);
 
       const stopwatch = new Stopwatch();
-      await writeFile(apiOutput, serialize(api.valueOf()));
+      const content = serialize(api.valueOf());
       console.log(chalk.cyan(`      serialize: '${folder}' ${formatDuration(stopwatch.time)} `));
+      await writeFile(apiOutput, content);
+        
+      console.log(chalk.cyan(`      save: '${folder}' ${formatDuration(stopwatch.time)} `));
       equal(await isFile(apiOutput), true, `Should write file ${apiOutput} `);
+      
       if (errors.count > 0) {
         fail(`Should not report errors: \n      ${errors.summary}\n`);
       }
