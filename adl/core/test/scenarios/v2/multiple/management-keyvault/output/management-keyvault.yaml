@@ -61,7 +61,7 @@ http:
             aliasType: schema
             description: The name of the vault.
             targetSchema: *a1
-        - &a14
+        - &a4
           type: query
           name: api-version
           description: Client Api Version.
@@ -74,7 +74,7 @@ http:
             aliasType: schema
             description: Client Api Version.
             targetSchema: *a1
-        - &a15
+        - &a5
           type: path
           name: subscriptionId
           description: Subscription credentials which uniquely identify Microsoft Azure
@@ -94,7 +94,7 @@ http:
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
-          schema: &a16
+          schema: &a6
             type: file
             name: anonymous<unknown>
       responses:
@@ -105,7 +105,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: &a18
+            targetSchema: &a8
               type: object
               name: Vault
               description: Resource information with extended details.
@@ -171,7 +171,7 @@ http:
                 - name: properties
                   description: Properties of the vault
                   required: true
-                  schema: &a17
+                  schema: &a7
                     type: object
                     name: VaultProperties
                     description: Properties of the vault
@@ -186,13 +186,13 @@ http:
                           aliasType: schema
                           description: The Azure Active Directory tenant ID that should be used for
                             authenticating requests to the key vault.
-                          targetSchema: &a3
+                          targetSchema: &a2
                             type: uuid
                             name: anonymous<unknown>
                       - name: sku
                         description: SKU details
                         required: true
-                        schema: &a21
+                        schema: &a11
                           type: object
                           name: Sku
                           description: SKU details
@@ -201,39 +201,15 @@ http:
                               description: SKU family name
                               required: true
                               schema:
-                                type: constant
+                                type: enum
                                 name: anonymous<unknown>
-                                value: A
-                                valueSchema:
-                                  type: alias
-                                  name: anonymous<string>
-                                  aliasType: schema
-                                  description: SKU family name
-                                  targetSchema: *a1
                             - name: name
                               description: SKU name to specify whether the key vault is a standard vault or a
                                 premium vault.
                               required: true
                               schema:
                                 type: enum
-                                name: SkuName
-                                elementSchema: &a2
-                                  type: alias
-                                  name: anonymous<string>
-                                  aliasType: schema
-                                  description: SKU name to specify whether the key vault is a standard vault or a
-                                    premium vault.
-                                  targetSchema: *a1
-                                sealed: false
-                                values:
-                                  - type: constant
-                                    name: anonymous<unknown>
-                                    value: standard
-                                    valueSchema: *a2
-                                  - type: constant
-                                    name: anonymous<unknown>
-                                    value: premium
-                                    valueSchema: *a2
+                                name: anonymous<unknown>
                       - name: accessPolicies
                         description: An array of 0 to 16 identities that have access to the key vault.
                           All identities in the array must use the same tenant
@@ -252,7 +228,7 @@ http:
                           targetSchema:
                             type: array
                             name: anonymous<unknown>
-                            elementSchema: &a22
+                            elementSchema: &a12
                               type: object
                               name: AccessPolicyEntry
                               description: An identity that have access to the key vault. All identities in
@@ -269,7 +245,7 @@ http:
                                     aliasType: schema
                                     description: The Azure Active Directory tenant ID that should be used for
                                       authenticating requests to the key vault.
-                                    targetSchema: *a3
+                                    targetSchema: *a2
                                 - name: objectId
                                   description: The object ID of a user, service principal or security group in the
                                     Azure Active Directory tenant for the vault.
@@ -294,11 +270,11 @@ http:
                                     aliasType: schema
                                     description: " Application ID of the client making request on behalf of a
                                       principal"
-                                    targetSchema: *a3
+                                    targetSchema: *a2
                                 - name: permissions
                                   description: Permissions the identity has for keys, secrets and certificates.
                                   required: true
-                                  schema: &a56
+                                  schema: &a43
                                     type: object
                                     name: Permissions
                                     description: Permissions the identity has for keys, secrets, certificates and
@@ -316,78 +292,7 @@ http:
                                             name: anonymous<unknown>
                                             elementSchema:
                                               type: enum
-                                              name: KeyPermissions
-                                              elementSchema: &a4
-                                                type: alias
-                                                name: anonymous<string>
-                                                aliasType: schema
-                                                targetSchema: *a1
-                                              sealed: false
-                                              values:
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: encrypt
-                                                  valueSchema: *a4
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: decrypt
-                                                  valueSchema: *a4
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: wrapKey
-                                                  valueSchema: *a4
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: unwrapKey
-                                                  valueSchema: *a4
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: sign
-                                                  valueSchema: *a4
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: verify
-                                                  valueSchema: *a4
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: get
-                                                  valueSchema: *a4
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: list
-                                                  valueSchema: *a4
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: create
-                                                  valueSchema: *a4
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: update
-                                                  valueSchema: *a4
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: import
-                                                  valueSchema: *a4
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: delete
-                                                  valueSchema: *a4
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: backup
-                                                  valueSchema: *a4
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: restore
-                                                  valueSchema: *a4
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: recover
-                                                  valueSchema: *a4
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: purge
-                                                  valueSchema: *a4
+                                              name: anonymous<unknown>
                                       - name: secrets
                                         description: Permissions to secrets
                                         schema:
@@ -400,46 +305,7 @@ http:
                                             name: anonymous<unknown>
                                             elementSchema:
                                               type: enum
-                                              name: SecretPermissions
-                                              elementSchema: &a5
-                                                type: alias
-                                                name: anonymous<string>
-                                                aliasType: schema
-                                                targetSchema: *a1
-                                              sealed: false
-                                              values:
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: get
-                                                  valueSchema: *a5
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: list
-                                                  valueSchema: *a5
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: set
-                                                  valueSchema: *a5
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: delete
-                                                  valueSchema: *a5
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: backup
-                                                  valueSchema: *a5
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: restore
-                                                  valueSchema: *a5
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: recover
-                                                  valueSchema: *a5
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: purge
-                                                  valueSchema: *a5
+                                              name: anonymous<unknown>
                                       - name: certificates
                                         description: Permissions to certificates
                                         schema:
@@ -452,78 +318,7 @@ http:
                                             name: anonymous<unknown>
                                             elementSchema:
                                               type: enum
-                                              name: CertificatePermissions
-                                              elementSchema: &a6
-                                                type: alias
-                                                name: anonymous<string>
-                                                aliasType: schema
-                                                targetSchema: *a1
-                                              sealed: false
-                                              values:
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: get
-                                                  valueSchema: *a6
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: list
-                                                  valueSchema: *a6
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: delete
-                                                  valueSchema: *a6
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: create
-                                                  valueSchema: *a6
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: import
-                                                  valueSchema: *a6
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: update
-                                                  valueSchema: *a6
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: managecontacts
-                                                  valueSchema: *a6
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: getissuers
-                                                  valueSchema: *a6
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: listissuers
-                                                  valueSchema: *a6
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: setissuers
-                                                  valueSchema: *a6
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: deleteissuers
-                                                  valueSchema: *a6
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: manageissuers
-                                                  valueSchema: *a6
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: recover
-                                                  valueSchema: *a6
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: purge
-                                                  valueSchema: *a6
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: backup
-                                                  valueSchema: *a6
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: restore
-                                                  valueSchema: *a6
+                                              name: anonymous<unknown>
                                       - name: storage
                                         description: Permissions to storage accounts
                                         schema:
@@ -536,70 +331,7 @@ http:
                                             name: anonymous<unknown>
                                             elementSchema:
                                               type: enum
-                                              name: StoragePermissions
-                                              elementSchema: &a7
-                                                type: alias
-                                                name: anonymous<string>
-                                                aliasType: schema
-                                                targetSchema: *a1
-                                              sealed: false
-                                              values:
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: get
-                                                  valueSchema: *a7
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: list
-                                                  valueSchema: *a7
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: delete
-                                                  valueSchema: *a7
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: set
-                                                  valueSchema: *a7
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: update
-                                                  valueSchema: *a7
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: regeneratekey
-                                                  valueSchema: *a7
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: recover
-                                                  valueSchema: *a7
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: purge
-                                                  valueSchema: *a7
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: backup
-                                                  valueSchema: *a7
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: restore
-                                                  valueSchema: *a7
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: setsas
-                                                  valueSchema: *a7
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: listsas
-                                                  valueSchema: *a7
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: getsas
-                                                  valueSchema: *a7
-                                                - type: constant
-                                                  name: anonymous<unknown>
-                                                  value: deletesas
-                                                  valueSchema: *a7
+                                              name: anonymous<unknown>
                       - name: vaultUri
                         description: The URI of the vault for performing operations on keys and secrets.
                         schema:
@@ -619,7 +351,7 @@ http:
                           description: Property to specify whether Azure Virtual Machines are permitted to
                             retrieve certificates stored as secrets from the key
                             vault.
-                          targetSchema: &a8
+                          targetSchema: &a3
                             type: boolean
                             name: anonymous<unknown>
                       - name: enabledForDiskEncryption
@@ -631,7 +363,7 @@ http:
                           aliasType: schema
                           description: Property to specify whether Azure Disk Encryption is permitted to
                             retrieve secrets from the vault and unwrap keys.
-                          targetSchema: *a8
+                          targetSchema: *a3
                       - name: enabledForTemplateDeployment
                         description: Property to specify whether Azure Resource Manager is permitted to
                           retrieve secrets from the key vault.
@@ -641,7 +373,7 @@ http:
                           aliasType: schema
                           description: Property to specify whether Azure Resource Manager is permitted to
                             retrieve secrets from the key vault.
-                          targetSchema: *a8
+                          targetSchema: *a3
                       - name: enableSoftDelete
                         description: Property to specify whether the 'soft delete' functionality is
                           enabled for this key vault. If it's not set to any
@@ -661,7 +393,7 @@ http:
                             value(true or false) when creating new key vault, it
                             will be set to true by default. Once set to true, it
                             cannot be reverted to false.
-                          targetSchema: *a8
+                          targetSchema: *a3
                       - name: softDeleteRetentionInDays
                         description: softDelete data retention days. It accepts >=7 and <=90.
                         schema:
@@ -673,7 +405,7 @@ http:
                               name: anonymous<unknown>
                               value: 90
                           description: softDelete data retention days. It accepts >=7 and <=90.
-                          targetSchema: &a23
+                          targetSchema: &a13
                             type: int32
                             name: anonymous<unknown>
                       - name: enableRbacAuthorization
@@ -707,30 +439,13 @@ http:
                             ignored. If null or not specified, the vault is
                             created with the default value of false. Note that
                             management actions are always authorized with RBAC."
-                          targetSchema: *a8
+                          targetSchema: *a3
                       - name: createMode
                         description: The vault's create mode to indicate whether the vault need to be
                           recovered or not.
                         schema:
                           type: enum
-                          name: CreateMode
-                          elementSchema: &a9
-                            type: alias
-                            name: anonymous<string>
-                            aliasType: schema
-                            description: The vault's create mode to indicate whether the vault need to be
-                              recovered or not.
-                            targetSchema: *a1
-                          sealed: false
-                          values:
-                            - type: constant
-                              name: anonymous<unknown>
-                              value: recover
-                              valueSchema: *a9
-                            - type: constant
-                              name: anonymous<unknown>
-                              value: default
-                              valueSchema: *a9
+                          name: anonymous<unknown>
                       - name: enablePurgeProtection
                         description: Property specifying whether protection against purge is enabled for
                           this vault. Setting this property to true activates
@@ -752,11 +467,11 @@ http:
                             effective only if soft delete is also enabled.
                             Enabling this functionality is irreversible - that
                             is, the property does not accept false as its value.
-                          targetSchema: *a8
+                          targetSchema: *a3
                       - name: networkAcls
                         description: Rules governing the accessibility of the key vault from specific
                           network locations.
-                        schema: &a25
+                        schema: &a14
                           type: object
                           name: NetworkRuleSet
                           description: A set of rules governing the network accessibility of a vault.
@@ -767,51 +482,14 @@ http:
                                 default is 'AzureServices'.
                               schema:
                                 type: enum
-                                name: NetworkRuleBypassOptions
-                                elementSchema: &a10
-                                  type: alias
-                                  name: anonymous<string>
-                                  aliasType: schema
-                                  description: Tells what traffic can bypass network rules. This can be
-                                    'AzureServices' or 'None'.  If not specified
-                                    the default is 'AzureServices'.
-                                  targetSchema: *a1
-                                sealed: false
-                                values:
-                                  - type: constant
-                                    name: anonymous<unknown>
-                                    value: AzureServices
-                                    valueSchema: *a10
-                                  - type: constant
-                                    name: anonymous<unknown>
-                                    value: None
-                                    valueSchema: *a10
+                                name: anonymous<unknown>
                             - name: defaultAction
                               description: The default action when no rule from ipRules and from
                                 virtualNetworkRules match. This is only used
                                 after the bypass property has been evaluated.
                               schema:
                                 type: enum
-                                name: NetworkRuleAction
-                                elementSchema: &a11
-                                  type: alias
-                                  name: anonymous<string>
-                                  aliasType: schema
-                                  description: The default action when no rule from ipRules and from
-                                    virtualNetworkRules match. This is only used
-                                    after the bypass property has been
-                                    evaluated.
-                                  targetSchema: *a1
-                                sealed: false
-                                values:
-                                  - type: constant
-                                    name: anonymous<unknown>
-                                    value: Allow
-                                    valueSchema: *a11
-                                  - type: constant
-                                    name: anonymous<unknown>
-                                    value: Deny
-                                    valueSchema: *a11
+                                name: anonymous<unknown>
                             - name: ipRules
                               description: The list of IP address rules.
                               schema:
@@ -822,7 +500,7 @@ http:
                                 targetSchema:
                                   type: array
                                   name: anonymous<unknown>
-                                  elementSchema: &a66
+                                  elementSchema: &a53
                                     type: object
                                     name: IPRule
                                     description: A rule governing the accessibility of a vault from a specific ip
@@ -853,7 +531,7 @@ http:
                                 targetSchema:
                                   type: array
                                   name: anonymous<unknown>
-                                  elementSchema: &a67
+                                  elementSchema: &a54
                                     type: object
                                     name: VirtualNetworkRule
                                     description: A rule governing the accessibility of a vault from a specific
@@ -885,21 +563,21 @@ http:
                           targetSchema:
                             type: array
                             name: anonymous<unknown>
-                            elementSchema: &a68
+                            elementSchema: &a55
                               type: object
                               name: PrivateEndpointConnectionItem
                               description: Private endpoint connection item.
                               properties:
                                 - name: properties
                                   description: Private endpoint connection properties.
-                                  schema: &a36
+                                  schema: &a23
                                     type: object
                                     name: PrivateEndpointConnectionProperties
                                     description: Properties of the private endpoint connection resource.
                                     properties:
                                       - name: privateEndpoint
                                         description: Properties of the private endpoint object.
-                                        schema: &a69
+                                        schema: &a56
                                           type: object
                                           name: PrivateEndpoint
                                           description: Private endpoint object properties.
@@ -919,7 +597,7 @@ http:
                                                 targetSchema: *a1
                                       - name: privateLinkServiceConnectionState
                                         description: Approval state of the private link connection.
-                                        schema: &a70
+                                        schema: &a57
                                           type: object
                                           name: PrivateLinkServiceConnectionState
                                           description: An object that represents the approval state of the private link
@@ -928,33 +606,9 @@ http:
                                             - name: status
                                               description: Indicates whether the connection has been approved, rejected or
                                                 removed by the key vault owner.
-                                              schema: &a53
+                                              schema: &a40
                                                 type: enum
-                                                name: PrivateEndpointServiceConnectionStatus
-                                                elementSchema: &a12
-                                                  type: alias
-                                                  name: anonymous<string>
-                                                  aliasType: schema
-                                                  description: The private endpoint connection status.
-                                                  targetSchema: *a1
-                                                sealed: false
-                                                values:
-                                                  - type: constant
-                                                    name: anonymous<unknown>
-                                                    value: Pending
-                                                    valueSchema: *a12
-                                                  - type: constant
-                                                    name: anonymous<unknown>
-                                                    value: Approved
-                                                    valueSchema: *a12
-                                                  - type: constant
-                                                    name: anonymous<unknown>
-                                                    value: Rejected
-                                                    valueSchema: *a12
-                                                  - type: constant
-                                                    name: anonymous<unknown>
-                                                    value: Disconnected
-                                                    valueSchema: *a12
+                                                name: anonymous<unknown>
                                             - name: description
                                               description: The reason for approval or rejection.
                                               schema:
@@ -975,45 +629,9 @@ http:
                                                 targetSchema: *a1
                                       - name: provisioningState
                                         description: Provisioning state of the private endpoint connection.
-                                        schema: &a54
+                                        schema: &a41
                                           type: enum
-                                          name: PrivateEndpointConnectionProvisioningState
-                                          elementSchema: &a13
-                                            type: alias
-                                            name: anonymous<string>
-                                            aliasType: schema
-                                            constraints:
-                                              - type: constraint
-                                                name: ReadOnly
-                                                readOnly: true
-                                            description: The current provisioning state.
-                                            targetSchema: *a1
-                                          sealed: false
-                                          values:
-                                            - type: constant
-                                              name: anonymous<unknown>
-                                              value: Succeeded
-                                              valueSchema: *a13
-                                            - type: constant
-                                              name: anonymous<unknown>
-                                              value: Creating
-                                              valueSchema: *a13
-                                            - type: constant
-                                              name: anonymous<unknown>
-                                              value: Updating
-                                              valueSchema: *a13
-                                            - type: constant
-                                              name: anonymous<unknown>
-                                              value: Deleting
-                                              valueSchema: *a13
-                                            - type: constant
-                                              name: anonymous<unknown>
-                                              value: Failed
-                                              valueSchema: *a13
-                                            - type: constant
-                                              name: anonymous<unknown>
-                                              value: Disconnected
-                                              valueSchema: *a13
+                                          name: anonymous<unknown>
                                   attic:
                                     x-ms-client-flatten: true
               attic:
@@ -1055,12 +673,12 @@ http:
                 length: ^[a-zA-Z0-9-]{3,24}$
             description: Name of the vault
             targetSchema: *a1
-        - *a14
-        - *a15
+        - *a4
+        - *a5
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
-          schema: *a16
+          schema: *a6
         - name: parameters
           description: Parameters to create or update the vault
           identity: anonymous<requestBody>
@@ -1070,7 +688,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: &a60
+            targetSchema: &a47
               type: object
               name: VaultCreateOrUpdateParameters
               description: Parameters for creating or updating a vault
@@ -1098,11 +716,11 @@ http:
                 - name: properties
                   description: Properties of the vault
                   required: true
-                  schema: *a17
+                  schema: *a7
               attic:
                 x-ms-azure-resource: true
           attic:
-            x-ms-examples: &a19
+            x-ms-examples: &a9
               Create a new vault or update an existing vault:
                 $ref: ./examples/createVault.json
               Create or update a vault with network acls:
@@ -1115,7 +733,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a18
+            targetSchema: *a8
         - name: "201"
           description: Created or updated vault
           mediaType: application/json
@@ -1123,11 +741,11 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a18
+            targetSchema: *a8
       tags:
         - Vaults
       attic:
-        x-ms-examples: *a19
+        x-ms-examples: *a9
         x-ms-long-running-operation: true
     - description: Deletes the specified Azure key vault.
       id: Vaults_Delete
@@ -1156,23 +774,23 @@ http:
             aliasType: schema
             description: The name of the vault to delete
             targetSchema: *a1
-        - *a14
-        - *a15
+        - *a4
+        - *a5
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
-          schema: *a16
+          schema: *a6
       responses:
         - name: "200"
           description: OK Response.
           mediaType: application/json
-          schema: &a20
+          schema: &a10
             type: any
             name: anonymous<unknown>
         - name: "204"
           description: No Content.
           mediaType: application/json
-          schema: *a20
+          schema: *a10
       tags:
         - Vaults
       attic:
@@ -1210,12 +828,12 @@ http:
                 length: ^[a-zA-Z0-9-]{3,24}$
             description: Name of the vault
             targetSchema: *a1
-        - *a14
-        - *a15
+        - *a4
+        - *a5
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
-          schema: *a16
+          schema: *a6
         - name: parameters
           description: Parameters to patch the vault
           identity: anonymous<requestBody>
@@ -1225,7 +843,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: &a61
+            targetSchema: &a48
               type: object
               name: VaultPatchParameters
               description: Parameters for creating or updating a vault
@@ -1243,7 +861,7 @@ http:
                       elementSchema: *a1
                 - name: properties
                   description: Properties of the vault
-                  schema: &a57
+                  schema: &a44
                     type: object
                     name: VaultPatchProperties
                     description: Properties of the vault
@@ -1257,10 +875,10 @@ http:
                           aliasType: schema
                           description: The Azure Active Directory tenant ID that should be used for
                             authenticating requests to the key vault.
-                          targetSchema: *a3
+                          targetSchema: *a2
                       - name: sku
                         description: SKU details
-                        schema: *a21
+                        schema: *a11
                       - name: accessPolicies
                         description: An array of 0 to 16 identities that have access to the key vault.
                           All identities in the array must use the same tenant
@@ -1275,7 +893,7 @@ http:
                           targetSchema:
                             type: array
                             name: anonymous<unknown>
-                            elementSchema: *a22
+                            elementSchema: *a12
                       - name: enabledForDeployment
                         description: Property to specify whether Azure Virtual Machines are permitted to
                           retrieve certificates stored as secrets from the key
@@ -1287,7 +905,7 @@ http:
                           description: Property to specify whether Azure Virtual Machines are permitted to
                             retrieve certificates stored as secrets from the key
                             vault.
-                          targetSchema: *a8
+                          targetSchema: *a3
                       - name: enabledForDiskEncryption
                         description: Property to specify whether Azure Disk Encryption is permitted to
                           retrieve secrets from the vault and unwrap keys.
@@ -1297,7 +915,7 @@ http:
                           aliasType: schema
                           description: Property to specify whether Azure Disk Encryption is permitted to
                             retrieve secrets from the vault and unwrap keys.
-                          targetSchema: *a8
+                          targetSchema: *a3
                       - name: enabledForTemplateDeployment
                         description: Property to specify whether Azure Resource Manager is permitted to
                           retrieve secrets from the key vault.
@@ -1307,7 +925,7 @@ http:
                           aliasType: schema
                           description: Property to specify whether Azure Resource Manager is permitted to
                             retrieve secrets from the key vault.
-                          targetSchema: *a8
+                          targetSchema: *a3
                       - name: enableSoftDelete
                         description: Property to specify whether the 'soft delete' functionality is
                           enabled for this key vault. Once set to true, it
@@ -1319,7 +937,7 @@ http:
                           description: Property to specify whether the 'soft delete' functionality is
                             enabled for this key vault. Once set to true, it
                             cannot be reverted to false.
-                          targetSchema: *a8
+                          targetSchema: *a3
                       - name: enableRbacAuthorization
                         description: "Property that controls how data actions are authorized. When true,
                           the key vault will use Role Based Access Control
@@ -1345,7 +963,7 @@ http:
                             policy stored on Azure Resource Manager will be
                             ignored. If null or not specified, the value of this
                             property will not change."
-                          targetSchema: *a8
+                          targetSchema: *a3
                       - name: softDeleteRetentionInDays
                         description: softDelete data retention days. It accepts >=7 and <=90.
                         schema:
@@ -1353,30 +971,13 @@ http:
                           name: anonymous<number>
                           aliasType: schema
                           description: softDelete data retention days. It accepts >=7 and <=90.
-                          targetSchema: *a23
+                          targetSchema: *a13
                       - name: createMode
                         description: The vault's create mode to indicate whether the vault need to be
                           recovered or not.
                         schema:
                           type: enum
-                          name: CreateMode
-                          elementSchema: &a24
-                            type: alias
-                            name: anonymous<string>
-                            aliasType: schema
-                            description: The vault's create mode to indicate whether the vault need to be
-                              recovered or not.
-                            targetSchema: *a1
-                          sealed: false
-                          values:
-                            - type: constant
-                              name: anonymous<unknown>
-                              value: recover
-                              valueSchema: *a24
-                            - type: constant
-                              name: anonymous<unknown>
-                              value: default
-                              valueSchema: *a24
+                          name: anonymous<unknown>
                       - name: enablePurgeProtection
                         description: Property specifying whether protection against purge is enabled for
                           this vault. Setting this property to true activates
@@ -1398,15 +999,15 @@ http:
                             effective only if soft delete is also enabled.
                             Enabling this functionality is irreversible - that
                             is, the property does not accept false as its value.
-                          targetSchema: *a8
+                          targetSchema: *a3
                       - name: networkAcls
                         description: A collection of rules governing the accessibility of the vault from
                           specific network locations.
-                        schema: *a25
+                        schema: *a14
               attic:
                 x-ms-azure-resource: true
           attic:
-            x-ms-examples: &a26
+            x-ms-examples: &a15
               Update an existing vault:
                 $ref: ./examples/updateVault.json
       responses:
@@ -1417,7 +1018,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a18
+            targetSchema: *a8
         - name: "201"
           description: Patched vault
           mediaType: application/json
@@ -1425,11 +1026,11 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a18
+            targetSchema: *a8
       tags:
         - Vaults
       attic:
-        x-ms-examples: *a26
+        x-ms-examples: *a15
     - description: Update access policies in a key vault in the specified subscription.
       id: Vaults_UpdateAccessPolicy
       parameters:
@@ -1469,33 +1070,13 @@ http:
           required: true
           schema:
             type: enum
-            name: AccessPolicyUpdateKind
-            elementSchema: &a27
-              type: alias
-              name: anonymous<string>
-              aliasType: schema
-              description: Name of the operation
-              targetSchema: *a1
-            sealed: false
-            values:
-              - type: constant
-                name: anonymous<unknown>
-                value: add
-                valueSchema: *a27
-              - type: constant
-                name: anonymous<unknown>
-                value: replace
-                valueSchema: *a27
-              - type: constant
-                name: anonymous<unknown>
-                value: remove
-                valueSchema: *a27
-        - *a14
-        - *a15
+            name: anonymous<unknown>
+        - *a4
+        - *a5
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
-          schema: *a16
+          schema: *a6
         - name: parameters
           description: Access policy to merge into the vault
           identity: anonymous<requestBody>
@@ -1505,7 +1086,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: &a28
+            targetSchema: &a16
               type: object
               name: VaultAccessPolicyParameters
               description: Parameters for updating the access policy in a vault
@@ -1565,7 +1146,7 @@ http:
                 - name: properties
                   description: Properties of the access policy
                   required: true
-                  schema: &a58
+                  schema: &a45
                     type: object
                     name: VaultAccessPolicyProperties
                     description: Properties of the vault access policy
@@ -1585,11 +1166,11 @@ http:
                           targetSchema:
                             type: array
                             name: anonymous<unknown>
-                            elementSchema: *a22
+                            elementSchema: *a12
               attic:
                 x-ms-azure-resource: true
           attic:
-            x-ms-examples: &a29
+            x-ms-examples: &a17
               "Add an access policy, or update an access policy with new permissions":
                 $ref: ./examples/updateAccessPoliciesAdd.json
       responses:
@@ -1600,7 +1181,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a28
+            targetSchema: *a16
         - name: "201"
           description: The updated access policies
           mediaType: application/json
@@ -1608,11 +1189,11 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a28
+            targetSchema: *a16
       tags:
         - Vaults
       attic:
-        x-ms-examples: *a29
+        x-ms-examples: *a17
     - description: The List operation gets information about the vaults associated
         with the subscription and within the specified resource group.
       id: Vaults_ListByResourceGroup
@@ -1639,13 +1220,13 @@ http:
             name: anonymous<number>
             aliasType: schema
             description: Maximum number of results to return.
-            targetSchema: *a23
-        - *a14
-        - *a15
+            targetSchema: *a13
+        - *a4
+        - *a5
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
-          schema: *a16
+          schema: *a6
       responses:
         - name: "200"
           description: Get information about all key vaults in the specified resource group.
@@ -1654,7 +1235,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: &a30
+            targetSchema: &a18
               type: object
               name: VaultListResult
               description: List of vaults
@@ -1669,7 +1250,7 @@ http:
                     targetSchema:
                       type: array
                       name: anonymous<unknown>
-                      elementSchema: *a18
+                      elementSchema: *a8
                 - name: nextLink
                   description: The URL to get the next set of vaults.
                   schema:
@@ -1700,13 +1281,13 @@ http:
             name: anonymous<number>
             aliasType: schema
             description: Maximum number of results to return.
-            targetSchema: *a23
-        - *a14
-        - *a15
+            targetSchema: *a13
+        - *a4
+        - *a5
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
-          schema: *a16
+          schema: *a6
       responses:
         - name: "200"
           description: Get information about all key vaults in the specified subscription.
@@ -1715,7 +1296,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a30
+            targetSchema: *a18
       tags:
         - Vaults
       attic:
@@ -1727,12 +1308,12 @@ http:
     - description: Gets information about the deleted vaults in a subscription.
       id: Vaults_ListDeleted
       parameters:
-        - *a14
-        - *a15
+        - *a4
+        - *a5
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
-          schema: *a16
+          schema: *a6
       responses:
         - name: "200"
           description: Retrieved information about all deleted key vaults in a subscription.
@@ -1741,7 +1322,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: &a62
+            targetSchema: &a49
               type: object
               name: DeletedVaultListResult
               description: List of vaults
@@ -1756,7 +1337,7 @@ http:
                     targetSchema:
                       type: array
                       name: anonymous<unknown>
-                      elementSchema: &a32
+                      elementSchema: &a20
                         type: object
                         name: DeletedVault
                         description: Deleted vault information with extended details.
@@ -1802,7 +1383,7 @@ http:
                               targetSchema: *a1
                           - name: properties
                             description: Properties of the vault
-                            schema: &a59
+                            schema: &a46
                               type: object
                               name: DeletedVaultProperties
                               description: Properties of the deleted vault.
@@ -1845,7 +1426,7 @@ http:
                                         name: ReadOnly
                                         readOnly: true
                                     description: The deleted date.
-                                    targetSchema: &a31
+                                    targetSchema: &a19
                                       type: dateTime
                                       name: anonymous<unknown>
                                 - name: scheduledPurgeDate
@@ -1860,7 +1441,7 @@ http:
                                         name: ReadOnly
                                         readOnly: true
                                     description: The scheduled purged date.
-                                    targetSchema: *a31
+                                    targetSchema: *a19
                                 - name: tags
                                   description: Tags of the original vault.
                                   readonly: true
@@ -1920,12 +1501,12 @@ http:
             aliasType: schema
             description: The location of the deleted vault.
             targetSchema: *a1
-        - *a14
-        - *a15
+        - *a4
+        - *a5
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
-          schema: *a16
+          schema: *a6
       responses:
         - name: "200"
           description: Retrieved information about the deleted vault.
@@ -1934,7 +1515,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a32
+            targetSchema: *a20
       tags:
         - Vaults
       attic:
@@ -1969,21 +1550,21 @@ http:
             aliasType: schema
             description: The location of the soft-deleted vault.
             targetSchema: *a1
-        - *a14
-        - *a15
+        - *a4
+        - *a5
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
-          schema: *a16
+          schema: *a6
       responses:
         - name: "200"
           description: The vault is purged.
           mediaType: application/json
-          schema: *a20
+          schema: *a10
         - name: "202"
           description: Vault is being purged.
           mediaType: application/json
-          schema: *a20
+          schema: *a10
       tags:
         - Vaults
       attic:
@@ -2002,15 +1583,8 @@ http:
           renderStyle: form
           required: true
           schema:
-            type: constant
+            type: enum
             name: anonymous<unknown>
-            value: resourceType eq 'Microsoft.KeyVault/vaults'
-            valueSchema:
-              type: alias
-              name: anonymous<string>
-              aliasType: schema
-              description: The filter to apply on the operation.
-              targetSchema: *a1
         - type: query
           name: $top
           description: Maximum number of results to return.
@@ -2021,7 +1595,7 @@ http:
             name: anonymous<number>
             aliasType: schema
             description: Maximum number of results to return.
-            targetSchema: *a23
+            targetSchema: *a13
         - type: query
           name: api-version
           description: Azure Resource Manager Api Version.
@@ -2029,16 +1603,9 @@ http:
           renderStyle: form
           required: true
           schema:
-            type: constant
+            type: enum
             name: anonymous<unknown>
-            value: 2015-11-01
-            valueSchema:
-              type: alias
-              name: anonymous<string>
-              aliasType: schema
-              description: Azure Resource Manager Api Version.
-              targetSchema: *a1
-        - *a15
+        - *a5
       responses:
         - name: "200"
           description: Get information about all key vaults in the subscription.
@@ -2047,7 +1614,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: &a63
+            targetSchema: &a50
               type: object
               name: ResourceListResult
               description: List of vault resources.
@@ -2062,7 +1629,7 @@ http:
                     targetSchema:
                       type: array
                       name: anonymous<unknown>
-                      elementSchema: &a35
+                      elementSchema: &a22
                         type: object
                         name: Resource
                         description: Key Vault resource
@@ -2156,12 +1723,12 @@ http:
     - description: Checks that the vault name is valid and is not already in use.
       id: Vaults_CheckNameAvailability
       parameters:
-        - *a14
-        - *a15
+        - *a4
+        - *a5
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
-          schema: *a16
+          schema: *a6
         - name: vaultName
           description: The name of the vault.
           identity: anonymous<requestBody>
@@ -2171,7 +1738,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: &a64
+            targetSchema: &a51
               type: object
               name: VaultCheckNameAvailabilityParameters
               description: The parameters used to check the availability of the vault name.
@@ -2189,17 +1756,10 @@ http:
                   description: The type of resource, Microsoft.KeyVault/vaults
                   required: true
                   schema:
-                    type: constant
+                    type: enum
                     name: anonymous<unknown>
-                    value: Microsoft.KeyVault/vaults
-                    valueSchema:
-                      type: alias
-                      name: anonymous<string>
-                      aliasType: schema
-                      description: The type of resource, Microsoft.KeyVault/vaults
-                      targetSchema: *a1
           attic:
-            x-ms-examples: &a34
+            x-ms-examples: &a21
               Validate a vault name:
                 $ref: ./examples/checkVaultNameAvailability.json
       responses:
@@ -2210,7 +1770,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: &a65
+            targetSchema: &a52
               type: object
               name: CheckNameAvailabilityResult
               description: The CheckNameAvailability operation response.
@@ -2233,35 +1793,14 @@ http:
                       you to use. If true, the name is available. If false, the
                       name has already been taken or is invalid and cannot be
                       used.
-                    targetSchema: *a8
+                    targetSchema: *a3
                 - name: reason
                   description: The reason that a vault name could not be used. The Reason element
                     is only returned if NameAvailable is false.
                   readonly: true
                   schema:
                     type: enum
-                    name: Reason
-                    elementSchema: &a33
-                      type: alias
-                      name: anonymous<string>
-                      aliasType: schema
-                      constraints:
-                        - type: constraint
-                          name: ReadOnly
-                          readOnly: true
-                      description: The reason that a vault name could not be used. The Reason element
-                        is only returned if NameAvailable is false.
-                      targetSchema: *a1
-                    sealed: false
-                    values:
-                      - type: constant
-                        name: anonymous<unknown>
-                        value: AccountNameInvalid
-                        valueSchema: *a33
-                      - type: constant
-                        name: anonymous<unknown>
-                        value: AlreadyExists
-                        valueSchema: *a33
+                    name: anonymous<unknown>
                 - name: message
                   description: An error message explaining the Reason value in more detail.
                   readonly: true
@@ -2278,13 +1817,13 @@ http:
       tags:
         - Vaults
       attic:
-        x-ms-examples: *a34
+        x-ms-examples: *a21
     - description: Gets the specified private endpoint connection associated with the
         key vault.
       id: PrivateEndpointConnections_Get
       parameters:
-        - *a15
-        - &a37
+        - *a5
+        - &a24
           type: path
           name: resourceGroupName
           description: Name of the resource group that contains the key vault.
@@ -2298,7 +1837,7 @@ http:
             aliasType: schema
             description: Name of the resource group that contains the key vault.
             targetSchema: *a1
-        - &a38
+        - &a25
           type: path
           name: vaultName
           description: The name of the key vault.
@@ -2316,7 +1855,7 @@ http:
                 length: ^[a-zA-Z0-9-]{3,24}$
             description: The name of the key vault.
             targetSchema: *a1
-        - &a39
+        - &a26
           type: path
           name: privateEndpointConnectionName
           description: Name of the private endpoint connection associated with the key
@@ -2332,7 +1871,7 @@ http:
             description: Name of the private endpoint connection associated with the key
               vault.
             targetSchema: *a1
-        - *a14
+        - *a4
       responses:
         - name: "200"
           description: Private endpoint connection successfully returned.
@@ -2341,16 +1880,16 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: &a40
+            targetSchema: &a27
               type: object
               name: PrivateEndpointConnection
               description: Private endpoint connection resource.
               extends:
-                - *a35
+                - *a22
               properties:
                 - name: properties
                   description: Resource properties.
-                  schema: *a36
+                  schema: *a23
                   attic:
                     x-ms-client-flatten: true
               attic:
@@ -2362,13 +1901,13 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: &a41
+            targetSchema: &a28
               type: object
               name: CloudError
               description: An error response from Key Vault resource provider
               properties:
                 - name: error
-                  schema: &a55
+                  schema: &a42
                     type: object
                     name: CloudErrorBody
                     description: An error response from Key Vault resource provider
@@ -2407,15 +1946,15 @@ http:
         the key vault.
       id: PrivateEndpointConnections_Put
       parameters:
-        - *a15
-        - *a37
-        - *a38
-        - *a39
-        - *a14
+        - *a5
+        - *a24
+        - *a25
+        - *a26
+        - *a4
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
-          schema: *a16
+          schema: *a6
         - name: properties
           description: The intended state of private endpoint connection.
           identity: anonymous<requestBody>
@@ -2425,9 +1964,9 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a40
+            targetSchema: *a27
           attic:
-            x-ms-examples: &a42
+            x-ms-examples: &a29
               KeyVaultPutPrivateEndpointConnection:
                 $ref: ./examples/putPrivateEndpointConnection.json
       responses:
@@ -2445,7 +1984,7 @@ http:
                 description: (specified only if operation does not finish synchronously) The
                   recommended number of seconds to wait before calling the URI
                   specified in Azure-AsyncOperation.
-                targetSchema: &a43
+                targetSchema: &a30
                   type: int64
                   name: anonymous<unknown>
             - name: "[object Object]"
@@ -2465,7 +2004,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a40
+            targetSchema: *a27
         - name: default
           description: Error response describing why the operation failed.
           mediaType: application/json
@@ -2473,20 +2012,20 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a41
+            targetSchema: *a28
       tags:
         - PrivateEndpointConnections
       attic:
-        x-ms-examples: *a42
+        x-ms-examples: *a29
     - description: Deletes the specified private endpoint connection associated with
         the key vault.
       id: PrivateEndpointConnections_Delete
       parameters:
-        - *a15
-        - *a37
-        - *a38
-        - *a39
-        - *a14
+        - *a5
+        - *a24
+        - *a25
+        - *a26
+        - *a4
       responses:
         - name: "200"
           description: The private endpoint connection was successfully deleted.
@@ -2495,7 +2034,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a40
+            targetSchema: *a27
         - name: "202"
           description: The private endpoint connection is being deleted.
           headers:
@@ -2508,7 +2047,7 @@ http:
                 aliasType: schema
                 description: The recommended number of seconds to wait before calling the URI
                   specified in the location header.
-                targetSchema: *a43
+                targetSchema: *a30
             - name: "[object Object]"
               description: The URI to poll for completion status.
               schema:
@@ -2518,11 +2057,11 @@ http:
                 description: The URI to poll for completion status.
                 targetSchema: *a1
           mediaType: application/json
-          schema: *a20
+          schema: *a10
         - name: "204"
           description: The private endpoint connection does not exist.
           mediaType: application/json
-          schema: *a20
+          schema: *a10
         - name: default
           description: Error response describing why the operation failed.
           mediaType: application/json
@@ -2530,7 +2069,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a41
+            targetSchema: *a28
       tags:
         - PrivateEndpointConnections
       attic:
@@ -2541,10 +2080,10 @@ http:
     - description: Gets the private link resources supported for the key vault.
       id: PrivateLinkResources_ListByVault
       parameters:
-        - *a15
-        - *a37
-        - *a38
-        - *a14
+        - *a5
+        - *a24
+        - *a25
+        - *a4
       responses:
         - name: "200"
           description: Successfully retrieved private link resources.
@@ -2553,7 +2092,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: &a71
+            targetSchema: &a58
               type: object
               name: PrivateLinkResourceListResult
               description: A list of private link resources
@@ -2568,16 +2107,16 @@ http:
                     targetSchema:
                       type: array
                       name: anonymous<unknown>
-                      elementSchema: &a72
+                      elementSchema: &a59
                         type: object
                         name: PrivateLinkResource
                         description: A private link resource
                         extends:
-                          - *a35
+                          - *a22
                         properties:
                           - name: properties
                             description: Resource properties.
-                            schema: &a73
+                            schema: &a60
                               type: object
                               name: PrivateLinkResourceProperties
                               description: Properties of a private link resource.
@@ -2631,7 +2170,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a41
+            targetSchema: *a28
       tags:
         - PrivateLinkResources
       attic:
@@ -2641,7 +2180,7 @@ http:
     - description: Lists all of the available Key Vault Rest API operations.
       id: Operations_List
       parameters:
-        - &a52
+        - &a39
           type: alias
           name: anonymous<string>
           aliasType: schema
@@ -2650,7 +2189,7 @@ http:
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
-          schema: *a16
+          schema: *a6
       responses:
         - name: "200"
           description: OK. The request has succeeded.
@@ -2659,7 +2198,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: &a74
+            targetSchema: &a61
               type: object
               name: OperationListResult
               description: Result of the request to list Storage operations. It contains a
@@ -2678,7 +2217,7 @@ http:
                     targetSchema:
                       type: array
                       name: anonymous<unknown>
-                      elementSchema: &a75
+                      elementSchema: &a62
                         type: object
                         name: Operation
                         description: Key Vault REST API operation definition.
@@ -2741,14 +2280,14 @@ http:
                           - name: properties
                             clientName: OperationProperties
                             description: Properties of operation, include metric specifications.
-                            schema: &a76
+                            schema: &a63
                               type: object
                               name: OperationProperties
                               description: Properties of operation, include metric specifications.
                               properties:
                                 - name: serviceSpecification
                                   description: One property of operation, include metric specifications.
-                                  schema: &a77
+                                  schema: &a64
                                     type: object
                                     name: ServiceSpecification
                                     description: One property of operation, include log specifications.
@@ -2763,7 +2302,7 @@ http:
                                           targetSchema:
                                             type: array
                                             name: anonymous<unknown>
-                                            elementSchema: &a78
+                                            elementSchema: &a65
                                               type: object
                                               name: LogSpecification
                                               description: Log specification of operation.
@@ -2851,7 +2390,7 @@ http:
             aliasType: schema
             description: The name of the secret.
             targetSchema: *a1
-        - &a45
+        - &a32
           type: query
           name: api-version
           description: Client Api Version.
@@ -2864,7 +2403,7 @@ http:
             aliasType: schema
             description: Client Api Version.
             targetSchema: *a1
-        - &a46
+        - &a33
           type: path
           name: subscriptionId
           description: Subscription credentials which uniquely identify Microsoft Azure
@@ -2884,7 +2423,7 @@ http:
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
-          schema: *a16
+          schema: *a6
       responses:
         - name: "200"
           description: Retrieved secret
@@ -2893,17 +2432,17 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: &a48
+            targetSchema: &a35
               type: object
               name: Secret
               description: Resource information with extended details.
               extends:
-                - *a35
+                - *a22
               properties:
                 - name: properties
                   description: Properties of the secret
                   required: true
-                  schema: &a47
+                  schema: &a34
                     type: object
                     name: SecretProperties
                     description: Properties of the secret
@@ -2934,12 +2473,12 @@ http:
                           targetSchema: *a1
                       - name: attributes
                         description: The attributes of the secret.
-                        schema: &a50
+                        schema: &a37
                           type: object
                           name: SecretAttributes
                           description: The secret management attributes.
                           extends:
-                            - &a79
+                            - &a66
                               type: object
                               name: Attributes
                               description: The object attributes managed by the KeyVault service.
@@ -2951,7 +2490,7 @@ http:
                                     name: anonymous<unknown>
                                     aliasType: schema
                                     description: Determines whether the object is enabled.
-                                    targetSchema: *a8
+                                    targetSchema: *a3
                                 - name: nbf
                                   clientName: NotBefore
                                   description: Not before date in seconds since 1970-01-01T00:00:00Z.
@@ -2961,7 +2500,7 @@ http:
                                     aliasType: schema
                                     clientName: NotBefore
                                     description: Not before date in seconds since 1970-01-01T00:00:00Z.
-                                    targetSchema: &a44
+                                    targetSchema: &a31
                                       type: time
                                       name: anonymous<unknown>
                                 - name: exp
@@ -2973,7 +2512,7 @@ http:
                                     aliasType: schema
                                     clientName: Expires
                                     description: Expiry date in seconds since 1970-01-01T00:00:00Z.
-                                    targetSchema: *a44
+                                    targetSchema: *a31
                                 - name: created
                                   description: Creation time in seconds since 1970-01-01T00:00:00Z.
                                   readonly: true
@@ -2982,7 +2521,7 @@ http:
                                     name: anonymous<number>
                                     aliasType: schema
                                     description: Creation time in seconds since 1970-01-01T00:00:00Z.
-                                    targetSchema: *a44
+                                    targetSchema: *a31
                                 - name: updated
                                   description: Last updated time in seconds since 1970-01-01T00:00:00Z.
                                   readonly: true
@@ -2991,7 +2530,7 @@ http:
                                     name: anonymous<number>
                                     aliasType: schema
                                     description: Last updated time in seconds since 1970-01-01T00:00:00Z.
-                                    targetSchema: *a44
+                                    targetSchema: *a31
                       - name: secretUri
                         description: The URI to retrieve the current version of the secret.
                         readonly: true
@@ -3074,12 +2613,12 @@ http:
                 length: ^[a-zA-Z0-9-]{1,127}$
             description: Name of the secret
             targetSchema: *a1
-        - *a45
-        - *a46
+        - *a32
+        - *a33
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
-          schema: *a16
+          schema: *a6
         - name: parameters
           description: Parameters to create or update the secret
           identity: anonymous<requestBody>
@@ -3089,7 +2628,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: &a81
+            targetSchema: &a68
               type: object
               name: SecretCreateOrUpdateParameters
               description: Parameters for creating or updating a secret
@@ -3108,11 +2647,11 @@ http:
                 - name: properties
                   description: Properties of the secret
                   required: true
-                  schema: *a47
+                  schema: *a34
               attic:
                 x-ms-azure-resource: true
           attic:
-            x-ms-examples: &a49
+            x-ms-examples: &a36
               Create a secret:
                 $ref: ./examples/createSecret.json
       responses:
@@ -3123,7 +2662,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a48
+            targetSchema: *a35
         - name: "201"
           description: Created or updated vault
           mediaType: application/json
@@ -3131,11 +2670,11 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a48
+            targetSchema: *a35
       tags:
         - Secrets
       attic:
-        x-ms-examples: *a49
+        x-ms-examples: *a36
     - description: "Update a secret in the specified subscription.  NOTE: This API is
         intended for internal use in ARM deployments.  Users should use the
         data-plane REST service for interaction with vault secrets."
@@ -3185,12 +2724,12 @@ http:
                 length: ^[a-zA-Z0-9-]{1,127}$
             description: Name of the secret
             targetSchema: *a1
-        - *a45
-        - *a46
+        - *a32
+        - *a33
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
-          schema: *a16
+          schema: *a6
         - name: parameters
           description: Parameters to patch the secret
           identity: anonymous<requestBody>
@@ -3200,7 +2739,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: &a82
+            targetSchema: &a69
               type: object
               name: SecretPatchParameters
               description: Parameters for patching a secret
@@ -3218,7 +2757,7 @@ http:
                       elementSchema: *a1
                 - name: properties
                   description: Properties of the secret
-                  schema: &a80
+                  schema: &a67
                     type: object
                     name: SecretPatchProperties
                     description: Properties of the secret
@@ -3241,11 +2780,11 @@ http:
                           targetSchema: *a1
                       - name: attributes
                         description: The attributes of the secret.
-                        schema: *a50
+                        schema: *a37
               attic:
                 x-ms-azure-resource: true
           attic:
-            x-ms-examples: &a51
+            x-ms-examples: &a38
               Update a secret:
                 $ref: ./examples/updateSecret.json
       responses:
@@ -3256,7 +2795,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a48
+            targetSchema: *a35
         - name: "201"
           description: Patched secret
           mediaType: application/json
@@ -3264,11 +2803,11 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: *a48
+            targetSchema: *a35
       tags:
         - Secrets
       attic:
-        x-ms-examples: *a51
+        x-ms-examples: *a38
     - description: "The List operation gets information about the secrets in a
         vault.  NOTE: This API is intended for internal use in ARM deployments.
         Users should use the data-plane REST service for interaction with vault
@@ -3309,13 +2848,13 @@ http:
             name: anonymous<number>
             aliasType: schema
             description: Maximum number of results to return.
-            targetSchema: *a23
-        - *a45
-        - *a46
+            targetSchema: *a13
+        - *a32
+        - *a33
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
-          schema: *a16
+          schema: *a6
       responses:
         - name: "200"
           description: Get information about secrets in the specified vault.
@@ -3324,7 +2863,7 @@ http:
             type: alias
             name: schema
             aliasType: schema
-            targetSchema: &a83
+            targetSchema: &a70
               type: object
               name: SecretListResult
               description: List of secrets
@@ -3339,7 +2878,7 @@ http:
                     targetSchema:
                       type: array
                       name: anonymous<unknown>
-                      elementSchema: *a48
+                      elementSchema: *a35
                 - name: nextLink
                   description: The URL to get the next set of secrets.
                   schema:
@@ -3357,11 +2896,11 @@ http:
         x-ms-pageable:
           nextLinkName: nextLink
   parameters:
-    - *a15
-    - *a37
-    - *a38
-    - *a39
-    - *a14
+    - *a5
+    - *a24
+    - *a25
+    - *a26
+    - *a4
     - type: path
       name: subscriptionId
       description: Subscription credentials which uniquely identify Microsoft Azure
@@ -3384,9 +2923,9 @@ http:
       expandParameterValues: true
       renderStyle: form
       required: true
-      schema: *a52
-    - *a46
-    - *a45
+      schema: *a39
+    - *a33
+    - *a32
 metaData:
   name: KeyVaultManagementClient
   description: The Azure management API provides a RESTful set of web services
@@ -3394,59 +2933,59 @@ metaData:
 schemas:
   primitives:
     - *a1
+    - *a2
     - *a3
-    - *a8
-    - *a23
+    - *a13
+    - *a19
+    - *a6
+    - *a10
+    - *a30
     - *a31
-    - *a16
-    - *a20
-    - *a43
-    - *a44
   enums:
+    - *a40
+    - *a41
+  objects:
+    - *a28
+    - *a42
+    - *a11
+    - *a12
+    - *a43
+    - *a7
+    - *a44
+    - *a45
+    - *a46
+    - *a47
+    - *a48
+    - *a16
+    - *a8
+    - *a20
+    - *a18
+    - *a49
+    - *a50
+    - *a22
+    - *a51
+    - *a52
+    - *a14
     - *a53
     - *a54
-  objects:
-    - *a41
     - *a55
-    - *a21
-    - *a22
+    - *a27
+    - *a23
     - *a56
-    - *a17
     - *a57
     - *a58
     - *a59
     - *a60
     - *a61
-    - *a28
-    - *a18
-    - *a32
-    - *a30
     - *a62
     - *a63
-    - *a35
     - *a64
     - *a65
-    - *a25
     - *a66
+    - *a34
     - *a67
+    - *a37
     - *a68
-    - *a40
-    - *a36
     - *a69
+    - *a35
     - *a70
-    - *a71
-    - *a72
-    - *a73
-    - *a74
-    - *a75
-    - *a76
-    - *a77
-    - *a78
-    - *a79
-    - *a47
-    - *a80
-    - *a50
-    - *a81
-    - *a82
-    - *a48
-    - *a83

@@ -1,11 +1,11 @@
-import { isFile, writeFile } from '@azure-tools/async-io';
+import { isFile, mkdir, writeFile } from '@azure-tools/async-io';
 import { linq } from '@azure-tools/linq';
 import { v2 } from '@azure-tools/openapi';
 import { equal, fail } from 'assert';
 import * as chalk from 'chalk';
 import { readdirSync, statSync } from 'fs';
 import { describe, it } from 'mocha';
-import { resolve } from 'path';
+import { basename, resolve } from 'path';
 import { ApiModel } from '../model/api-model';
 import { deserializeOpenAPI2 } from '../serialization/openapi/v2/serializer';
 import { Stopwatch } from '../support/stopwatch';
@@ -47,15 +47,24 @@ describe('Load Single OAI2 files', () => {
       console.log('\n');
       const host = createHost(inputRoot);
       const api = await deserializeOpenAPI2(host, file);
+      const name = basename(file, '.yaml');
 
-      const apiOutput = resolve(`${outputRoot}/${file.replace(/.yaml$/ig, '.api.yaml')}`);
-      const atticOutput = resolve(`${outputRoot}/${file.replace(/.yaml$/ig, '.attic.yaml')}`);
+      const adlOutput = resolve(`${outputRoot}/${name}`);
+      
+      // clean the folder and write out ts files
+      api.saveADL(adlOutput, true);
+      await mkdir(adlOutput);
+      const apiOutput = resolve(`${adlOutput}/${file.replace(/.yaml$/ig, '.api.yaml')}`);
+      const atticOutput = resolve(`${adlOutput}/${file.replace(/.yaml$/ig, '.attic.yaml')}`);
+
       const errors = new AccumulateErrors();
 
       await clean(apiOutput, atticOutput);
       await checkAttic(api, errors, atticOutput);
 
       const stopwatch = new Stopwatch();
+      
+      // write out yaml 
       await writeFile(apiOutput, serialize(api.valueOf()));
       console.log(chalk.cyan(`      serialize: '${file}' ${formatDuration(stopwatch.time)} `));
       equal(await isFile(apiOutput), true, `Should write file ${apiOutput} `);
@@ -78,8 +87,14 @@ describe('Load Multiple OAI2 files', () => {
       console.log('\n');
       const host = createHost(inputRoot);
 
+      
       const files = linq.values(readdirSync(inputRoot)).where(each => statSync(`${inputRoot}/${each}`).isFile()).toArray();
       const api = await deserializeOpenAPI2(host, ...files);
+
+      // clean the folder and write out ts files
+      api.saveADL(outputRoot, true);
+
+      await mkdir(outputRoot);
       const apiOutput = resolve(`${outputRoot}/${folder}.yaml`);
       const atticOutput = resolve(`${outputRoot}/${folder}.attic.yaml`);
 

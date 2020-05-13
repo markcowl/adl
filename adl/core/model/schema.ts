@@ -1,5 +1,6 @@
-import { anonymous, valueOf } from '@azure-tools/sourcemap';
+import { anonymous, isAnonymous, valueOf } from '@azure-tools/sourcemap';
 import { EnumDeclaration, EnumMember } from 'ts-morph';
+import { quoteForIdentifier } from '../support/codegen';
 import { ApiModel } from './api-model';
 import { Element } from './element';
 import { Identity } from './name';
@@ -141,18 +142,28 @@ export class Enum extends Schema {
     this.node = decl;
   }
  
+  static counter = 0;
   static create(project: ApiModel, elementSchema: Schema, initializer?: Partial<Enum>) {
-    const file = project.createSourceFile('foo.ts');
-    const result = new Enum(file.addEnum(valueOf(initializer?.name)));
-    return result.initialize(initializer);
+    let name = initializer?.name || `enum${this.counter++}` ;
+    name = isAnonymous(name) ?`enum${this.counter++}` : name.toString();
+    const file = valueOf(project).createSourceFile(`${name}.ts`);
+    const result = new Enum(file.addEnum({
+      name,
+      members: [],
+      isExported: true,
+    }));
+    return result; // result.initialize(initializer);
   }
 
-  addValue(name: string, value: string | number, initializer?: Partial<EnumValue>): EnumValue {  
-    return new EnumValue(
-      this.node.addMember({
-        name: name,
-        value: value,
-      }));
+  addValue(name: string, value: string | number, initializer?: Partial<EnumValue>) /* :EnumValue*/ {  
+    const em = this.node.addMember({
+      name: quoteForIdentifier( valueOf(name)),
+      value: valueOf(value),
+    });
+    
+    const ev = new EnumValue(em);
+
+    return ev;
   }
 
   get values() {

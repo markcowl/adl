@@ -1,0 +1,2 @@
+export enum enum364 {
+}

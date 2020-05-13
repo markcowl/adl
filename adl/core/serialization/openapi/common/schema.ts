@@ -153,13 +153,13 @@ export async function* processAnySchema<T extends OAIModel>(schema: v3.Schema|v2
   return yield $.api.schemas.Any;
 }
 
-export async function* processEnumSchemaCommon<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>, type: Schema): AsyncGenerator<Schema> {
+export async function* processEnumSchemaCommon<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>, type: Schema, options?: Options): AsyncGenerator<Schema> {
   const schemaEnum = use(schema.enum) ?? [];
   const xmsEnum = use(schema['x-ms-enum']) ?? {};
   const values: Array<XMSEnumValue> = xmsEnum.values ?? schemaEnum.map(v => ({ value: v }));
 
   const result = Enum.create($.api, type, {
-    name: xmsEnum.name || nameOf(schema)
+    name: xmsEnum.name ||options?.isAnonymous ? anonymous('enum') :  nameOf(schema),
   });
 
   result.sealed = !xmsEnum.modelAsString;
