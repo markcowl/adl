@@ -269,7 +269,7 @@ export class TrackedSource<T extends Object, instanceType> {
       case SpecialProperties.IsUsed:
         return this.isUsed === true;
     }
-
+    
     const value = (<any>this.instance)[property];
     if (value === undefined || value === null) {
       return value;
@@ -415,6 +415,9 @@ export class TrackedTarget<T extends Object> {
 
       case SpecialProperties.IsUsed:
         return undefined;
+
+      case 'project':
+        return (<any>this.instance)[property];        
     }
     const value = actual[property];
     if (value === undefined || value === null) {

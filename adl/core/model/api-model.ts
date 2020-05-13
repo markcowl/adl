@@ -1,6 +1,5 @@
 import { exists, isFile, mkdir, rmdir, writeFile } from '@azure-tools/async-io';
 import { Dictionary } from '@azure-tools/linq';
-import { valueOf } from '@azure-tools/sourcemap';
 import { dirname, join } from 'path';
 import { IndentationText, Project, QuoteKind } from 'ts-morph';
 import { Attic } from './element';
@@ -34,7 +33,12 @@ function TypeInfo<U extends new (...args: any) => any>(type: U) {
 }
 */
 
-export class ApiModel extends Project {
+export class ApiModel  {
+  #project: Project;
+
+  get project() {
+    return this.#project;
+  }
   internalData: Dictionary<InternalData> = {};
 
   metaData = new Metadata('');
@@ -49,7 +53,7 @@ export class ApiModel extends Project {
 
 
   constructor() {
-    super({
+    this.#project  = new Project({
       useInMemoryFileSystem: true, manipulationSettings: {
         indentationText: IndentationText.TwoSpaces,
         insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces: true,
@@ -69,7 +73,7 @@ export class ApiModel extends Project {
 
   async saveADL(path: string, cleanDirectory = true)  {
     // save any open files to memory
-    await valueOf(this).save();
+    await this.project.save();
 
     // remove folder if required
     if (await exists(path)) {
@@ -86,7 +90,7 @@ export class ApiModel extends Project {
 
     // print each file and save it.
     await Promise.all(
-      valueOf(this).getSourceFiles().map( async (each) => {
+      this.project.getSourceFiles().map( async (each) => {
         each.formatText({
           indentSize: 2
         });
@@ -98,11 +102,10 @@ export class ApiModel extends Project {
 
         await writeFile(filename, each.print().
           replace(/\*\/\s*\/\*\*\s*/g, ''));
-
-        
       }));
-    
   }
+
+  
 }
 
 export class None {

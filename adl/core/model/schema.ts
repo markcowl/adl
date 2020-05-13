@@ -143,10 +143,10 @@ export class Enum extends Schema {
   }
  
   static counter = 0;
-  static create(project: ApiModel, elementSchema: Schema, initializer?: Partial<Enum>) {
+  static create(api: ApiModel, elementSchema: Schema, initializer?: Partial<Enum>) {
     let name = initializer?.name || `enum${this.counter++}` ;
     name = isAnonymous(name) ?`enum${this.counter++}` : name.toString();
-    const file = valueOf(project).createSourceFile(`${name}.ts`);
+    const file = api.project.createSourceFile(`${name}.ts`);
     const result = new Enum(file.addEnum({
       name,
       members: [],
