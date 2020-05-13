@@ -5,27 +5,8 @@ import { Alias as GenericAlias } from '../../../model/alias';
 import { Identity } from '../../../model/name';
 import { Alias, ArraySchema, DictionarySchema, ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ObjectSchema, Property, ReadOnlyConstraint, RegularExpressionConstraint, Schema, ServerDefaultValue, UniqueElementsConstraint } from '../../../model/schema';
 import { isEnumSchema, isObjectSchema, push, singleOrDefault } from '../common';
-import { arrayProperties, commonProperties, numberProperties, objectProperties, processAnySchema, processBooleanSchema, processByteArraySchema, processCharSchema, processDateSchema, processDateTimeSchema, processDurationSchema, processEnumSchemaCommon, processFileSchema, processOdataSchema, processPasswordSchema, processTimeSchema, processUriSchema, processUuidSchema, stringProperties } from '../common/schema';
+import { arrayProperties, commonProperties, numberProperties, objectProperties, Options, processAnySchema, processBooleanSchema, processByteArraySchema, processCharSchema, processDateSchema, processDateTimeSchema, processDurationSchema, processEnumSchemaCommon, processFileSchema, processOdataSchema, processPasswordSchema, processTimeSchema, processUriSchema, processUuidSchema, stringProperties } from '../common/schema';
 import { Context } from './serializer';
-
-
-/** Schema processing options */
-type Options = Partial<{
-  /** this is an inline-declared anonymous schema; the name is not intended to be used as the final name */
-  isAnonymous: boolean;
-
-  /** processes the schema just as the target type, and not oneOf/allOf/anyOf/object/enum */
-  justTargetType: boolean;
-
-  /** note that this is a property declaration while processing this schema */
-  isProperty: boolean;
-
-  /** note that this is a parameter declaration while processing this schema */
-  isParameter: boolean;
-
-  forUnderlyingEnumType: boolean;
-}>;
-
 
 export async function* processInline(schema: v2.Schema | v2.SchemaReference | undefined, $: Context, options?: Options): AsyncGenerator<Schema> {
   if (schema) {

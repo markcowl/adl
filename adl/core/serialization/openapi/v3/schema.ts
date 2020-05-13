@@ -540,5 +540,6 @@ export async function* processEnumSchema(schema: v3.Schema, $: Context, options?
   // not using $.process here because we need to process a node that is already marked
   const type = await singleOrDefault(processSchema(schema, $, { forUnderlyingEnumType: true })) || $.api.schemas.Any;
   return yield* processEnumSchemaCommon(schema, $, type, options);
+
 }
 
