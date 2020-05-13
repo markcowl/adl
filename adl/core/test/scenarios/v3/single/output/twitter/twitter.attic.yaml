@@ -1,0 +1,241 @@
+paths:
+  "/labs/2/tweets/{id}/hidden":
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                hidden:
+                  enum:
+                    - true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    properties:
+                      hidden:
+                        enum:
+                          - true
+components:
+  parameters:
+    MediaFieldsParameter:
+      schema:
+        items:
+          enum:
+            - media_key
+            - duration_ms
+            - height
+            - preview_image_url
+            - type
+            - url
+            - width
+    PlaceFieldsParameter:
+      schema:
+        items:
+          enum:
+            - id
+            - name
+            - country_code
+            - place_type
+            - full_name
+            - country
+            - contained_within
+            - geo
+    PollFieldsParameter:
+      schema:
+        items:
+          enum:
+            - id
+            - options
+            - voting_status
+            - end_datetime
+            - duration_minutes
+    TweetExpansionsParameter:
+      schema:
+        items:
+          enum:
+            - author_id
+            - referenced_tweets.id
+            - in_reply_to_user_id
+            - geo.place_id
+            - attachments.media_keys
+            - attachments.poll_ids
+            - entities.mentions.username
+            - referenced_tweets.id.author_id
+    TweetFieldsParameter:
+      schema:
+        items:
+          enum:
+            - id
+            - created_at
+            - text
+            - author_id
+            - in_reply_to_user_id
+            - referenced_tweets
+            - attachments
+            - withheld
+            - geo
+            - entities
+            - public_metrics
+            - possibly_sensitive
+            - source
+            - lang
+            - context_annotations
+    UserExpansionsParameter:
+      schema:
+        items:
+          enum:
+            - pinned_tweet_id
+    UserFieldsParameter:
+      schema:
+        items:
+          enum:
+            - id
+            - created_at
+            - name
+            - username
+            - protected
+            - verified
+            - withheld
+            - profile_image_url
+            - location
+            - url
+            - description
+            - entities
+            - pinned_tweet_id
+            - public_metrics
+  schemas:
+    AnimatedGif:
+      properties:
+        type:
+          enum:
+            - animated_gif
+    ClientForbiddenProblem:
+      properties:
+        reason:
+          enum:
+            - official-client-forbidden
+            - client-not-enrolled
+        type:
+          enum:
+            - https://api.twitter.com/labs/2/problems/client-forbidden
+    DisallowedResourceProblem:
+      properties:
+        resource_type:
+          enum:
+            - tweet
+        section:
+          enum:
+            - data
+            - includes
+        type:
+          enum:
+            - https://api.twitter.com/labs/2/problems/disallowed-resource
+    GenericProblem:
+      properties:
+        type:
+          enum:
+            - about:blank
+    Geo:
+      properties:
+        type:
+          enum:
+            - Feature
+    InvalidRequestProblem:
+      properties:
+        type:
+          enum:
+            - https://api.twitter.com/labs/2/problems/invalid-request
+    Photo:
+      properties:
+        type:
+          enum:
+            - photo
+    PlaceType:
+      enum:
+        - poi
+        - neighborhood
+        - city
+        - admin
+        - country
+        - unknown
+    Point:
+      properties:
+        type:
+          enum:
+            - Point
+    Poll:
+      properties:
+        voting_status:
+          enum:
+            - open
+            - closed
+    ResourceNotFoundProblem:
+      properties:
+        resource_type:
+          enum:
+            - user
+            - tweet
+        type:
+          enum:
+            - https://api.twitter.com/labs/2/problems/resource-not-found
+    ResourceUnauthorizedProblem:
+      properties:
+        resource_type:
+          enum:
+            - tweet
+        section:
+          enum:
+            - data
+            - includes
+        type:
+          enum:
+            - https://api.twitter.com/labs/2/problems/not-authorized-for-resource
+    Tweet:
+      properties:
+        referenced_tweets:
+          items:
+            properties:
+              type:
+                enum:
+                  - retweeted
+                  - quoted
+                  - replied_to
+    TweetWithheld:
+      properties:
+        scope:
+          enum:
+            - tweet
+            - user
+    UnsupportedAuthenticationProblem:
+      properties:
+        type:
+          enum:
+            - https://api.twitter.com/labs/2/problems/unsupported-authentication
+    UsageCapExceededProblem:
+      properties:
+        period:
+          enum:
+            - Daily
+            - Monthly
+        scope:
+          enum:
+            - Account
+            - Product
+        type:
+          enum:
+            - https://api.twitter.com/labs/2/problems/usage-capped
+    UserWithheld:
+      properties:
+        scope:
+          enum:
+            - user
+    Video:
+      properties:
+        type:
+          enum:
+            - video

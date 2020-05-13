@@ -1,1 +1,171 @@
-{}
+paths:
+  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/accessPolicies/{operationKind}":
+    put:
+      parameters:
+        - enum:
+            - add
+            - replace
+            - remove
+          x-ms-enum:
+            name: AccessPolicyUpdateKind
+  "/subscriptions/{subscriptionId}/resources":
+    get:
+      parameters:
+        - enum:
+            - resourceType eq 'Microsoft.KeyVault/vaults'
+        - enum:
+            - 2015-11-01
+definitions:
+  Sku:
+    properties:
+      family:
+        enum:
+          - A
+        x-ms-enum:
+          name: SkuFamily
+      name:
+        enum:
+          - standard
+          - premium
+        x-ms-enum:
+          name: SkuName
+  Permissions:
+    properties:
+      keys:
+        items:
+          enum:
+            - encrypt
+            - decrypt
+            - wrapKey
+            - unwrapKey
+            - sign
+            - verify
+            - get
+            - list
+            - create
+            - update
+            - import
+            - delete
+            - backup
+            - restore
+            - recover
+            - purge
+          x-ms-enum:
+            name: KeyPermissions
+      secrets:
+        items:
+          enum:
+            - get
+            - list
+            - set
+            - delete
+            - backup
+            - restore
+            - recover
+            - purge
+          x-ms-enum:
+            name: SecretPermissions
+      certificates:
+        items:
+          enum:
+            - get
+            - list
+            - delete
+            - create
+            - import
+            - update
+            - managecontacts
+            - getissuers
+            - listissuers
+            - setissuers
+            - deleteissuers
+            - manageissuers
+            - recover
+            - purge
+            - backup
+            - restore
+          x-ms-enum:
+            name: CertificatePermissions
+      storage:
+        items:
+          enum:
+            - get
+            - list
+            - delete
+            - set
+            - update
+            - regeneratekey
+            - recover
+            - purge
+            - backup
+            - restore
+            - setsas
+            - listsas
+            - getsas
+            - deletesas
+          x-ms-enum:
+            name: StoragePermissions
+  VaultProperties:
+    properties:
+      createMode:
+        enum:
+          - recover
+          - default
+        x-ms-enum:
+          name: CreateMode
+  VaultPatchProperties:
+    properties:
+      createMode:
+        enum:
+          - recover
+          - default
+        x-ms-enum:
+          name: CreateMode
+  VaultCheckNameAvailabilityParameters:
+    properties:
+      type:
+        enum:
+          - Microsoft.KeyVault/vaults
+        x-ms-enum:
+          name: Type
+  CheckNameAvailabilityResult:
+    properties:
+      reason:
+        enum:
+          - AccountNameInvalid
+          - AlreadyExists
+        x-ms-enum:
+          name: Reason
+  NetworkRuleSet:
+    properties:
+      bypass:
+        enum:
+          - AzureServices
+          - None
+        x-ms-enum:
+          name: NetworkRuleBypassOptions
+      defaultAction:
+        enum:
+          - Allow
+          - Deny
+        x-ms-enum:
+          name: NetworkRuleAction
+  PrivateEndpointServiceConnectionStatus:
+    enum:
+      - Pending
+      - Approved
+      - Rejected
+      - Disconnected
+    x-ms-enum:
+      name: PrivateEndpointServiceConnectionStatus
+  PrivateEndpointConnectionProvisioningState:
+    readOnly: true
+    enum:
+      - Succeeded
+      - Creating
+      - Updating
+      - Deleting
+      - Failed
+      - Disconnected
+    x-ms-enum:
+      name: PrivateEndpointConnectionProvisioningState

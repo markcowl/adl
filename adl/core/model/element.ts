@@ -1,5 +1,6 @@
 import { Dictionary, items } from '@azure-tools/linq';
 import { TrackedTarget, use } from '@azure-tools/sourcemap';
+import { JSDocableNode } from 'ts-morph';
 import { InternalData } from './internal-data';
 import { VersionInfo } from './version-info';
 
@@ -14,7 +15,7 @@ function clean(this: any, key: string, value: any): any {
 
 /** inheriting from Initializer adds an apply<T> method to the class, allowing you to accept an object initalizer, and applying it to the class in the constructor. */
 export class Initializer {
-  protected initialize<T>(initializer?: Partial<T>) {
+  initialize<T>(initializer?: Partial<T>) {
     for (const [ key, value ] of items(initializer)) {
       // copy the true value of the items to the object
       // (use the proxy)
@@ -37,6 +38,7 @@ export class Initializer {
         proxy[key] = (<any>value);
       }
     }
+    return this;
   }
 }
 
@@ -45,6 +47,8 @@ export class Initializer {
  * Base type for all objects in the model 
  */
 export class Element extends Initializer {
+  node!: JSDocableNode;
+
   internalData?: Dictionary<InternalData>;
   versionInfo = new Array<VersionInfo>();
   attic?: Attic;

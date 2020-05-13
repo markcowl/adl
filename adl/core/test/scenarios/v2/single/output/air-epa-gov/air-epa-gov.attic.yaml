@@ -1,0 +1,576 @@
+parameters:
+  f.descending:
+    enum:
+      - Y
+      - N
+  f.maplist:
+    enum:
+      - Y
+      - N
+  f.p_act:
+    enum:
+      - Y
+      - N
+      - A
+  f.p_agoo:
+    enum:
+      - AND
+      - OR
+  f.p_cifdi:
+    enum:
+      - Any
+      - Yes
+      - No
+      - Undetermined
+  f.p_decouple:
+    enum:
+      - Y
+      - N
+  f.p_ejscreen_over80cnt:
+    enum:
+      - "1"
+      - "2"
+      - "3"
+      - "4"
+      - "5"
+      - "6"
+      - "7"
+      - "8"
+      - "9"
+      - "10"
+      - "11"
+  f.p_fac_ico:
+    enum:
+      - Y
+      - N
+  f.p_fea:
+    enum:
+      - W
+      - N
+  f.p_feaa:
+    enum:
+      - A
+      - E
+      - S
+  f.p_feay:
+    enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+  f.p_fntype:
+    enum:
+      - ALL
+      - CONTAINS
+      - EXACT
+      - BEGINS
+  f.p_ghg_amt:
+    enum:
+      - None
+      - "0"
+      - GT0
+      - GT10000
+      - GT25000
+      - GT250000
+      - GT1000000
+  f.p_ghg_cat:
+    enum:
+      - ALL
+      - BIOCO2
+      - CH4
+      - CO2
+      - HFC
+      - N2O
+      - NF3
+      - OTHER_L
+      - PFC
+      - SF6
+  f.p_ico:
+    enum:
+      - Y
+      - N
+  f.p_iea:
+    enum:
+      - W
+      - N
+  f.p_ieaa:
+    enum:
+      - E
+      - S
+  f.p_ieay:
+    enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+  f.p_impw:
+    enum:
+      - Y
+      - N
+  f.p_limit_addr:
+    enum:
+      - Y
+      - N
+  f.p_maj:
+    enum:
+      - Y
+      - N
+  f.p_med:
+    enum:
+      - M
+      - R
+      - S
+      - W
+      - ALL
+  f.p_nei_amt:
+    enum:
+      - None
+      - "0"
+      - GT0
+      - GT10000
+      - GT25000
+      - GT250000
+      - GT1000000
+  f.p_pctrack:
+    enum:
+      - Off
+      - Partial
+      - On
+  f.p_pd:
+    enum:
+      - NONE
+      - GT100
+      - GT500
+      - GT1000
+      - GT5000
+      - GT10000
+      - GT20000
+  f.p_pidall:
+    enum:
+      - Y
+      - N
+  f.p_pm:
+    enum:
+      - NONE
+      - GT5
+      - GT10
+      - GT25
+      - GT50
+      - GT75
+  f.p_psncq:
+    enum:
+      - GT1
+      - GE1
+      - GT2
+      - GE2
+      - GT4
+      - GE4
+      - GT8
+      - GE8
+      - GT12
+      - GE12
+  f.p_qiv:
+    enum:
+      - "0"
+      - GT1
+      - GT2
+      - GT4
+      - GT8
+      - "12"
+  f.p_reg:
+    enum:
+      - "01"
+      - "02"
+      - "03"
+      - "04"
+      - "05"
+      - "06"
+      - "07"
+      - 8
+      - 9
+      - "10"
+  f.p_stsl:
+    enum:
+      - W
+      - N
+  f.p_stsla:
+    enum:
+      - A
+      - E
+      - S
+  f.p_stsly:
+    enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+  f.p_swpa:
+    enum:
+      - source water
+      - surface water
+      - ground water
+      - waiting for SSO
+  f.p_trep:
+    enum:
+      - NONE
+      - CURR
+      - NOTCURR
+  f.p_tri_amt:
+    enum:
+      - "0"
+      - GT0
+      - GT1000
+      - GT5000
+      - GT10000
+      - GT50000
+  f.p_tri_cat:
+    enum:
+      - TOTAL
+      - CARC
+      - HAP
+  f.p_usmex:
+    enum:
+      - Y
+      - N
+  f.p_ysl:
+    enum:
+      - W
+      - N
+      - NV
+  f.p_ysla:
+    enum:
+      - E
+      - S
+      - A
+  f.p_ysly:
+    enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+  f.summarylist:
+    enum:
+      - Y
+      - N
+  f.tablelist:
+    enum:
+      - Y
+      - N
+  q.descending:
+    enum:
+      - Y
+      - N
+  q.maplist:
+    enum:
+      - Y
+      - N
+  q.p_act:
+    enum:
+      - Y
+      - N
+      - A
+  q.p_agoo:
+    enum:
+      - AND
+      - OR
+  q.p_cifdi:
+    enum:
+      - Any
+      - Yes
+      - No
+      - Undetermined
+  q.p_decouple:
+    enum:
+      - Y
+      - N
+  q.p_ejscreen_over80cnt:
+    enum:
+      - "1"
+      - "2"
+      - "3"
+      - "4"
+      - "5"
+      - "6"
+      - "7"
+      - "8"
+      - "9"
+      - "10"
+      - "11"
+  q.p_fac_ico:
+    enum:
+      - Y
+      - N
+  q.p_fea:
+    enum:
+      - W
+      - N
+  q.p_feaa:
+    enum:
+      - A
+      - E
+      - S
+  q.p_feay:
+    enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+  q.p_fntype:
+    enum:
+      - ALL
+      - CONTAINS
+      - EXACT
+      - BEGINS
+  q.p_ghg_amt:
+    enum:
+      - None
+      - "0"
+      - GT0
+      - GT10000
+      - GT25000
+      - GT250000
+      - GT1000000
+  q.p_ghg_cat:
+    enum:
+      - ALL
+      - BIOCO2
+      - CH4
+      - CO2
+      - HFC
+      - N2O
+      - NF3
+      - OTHER_L
+      - PFC
+      - SF6
+  q.p_ico:
+    enum:
+      - Y
+      - N
+  q.p_iea:
+    enum:
+      - W
+      - N
+  q.p_ieaa:
+    enum:
+      - E
+      - S
+  q.p_ieay:
+    enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+  q.p_impw:
+    enum:
+      - Y
+      - N
+  q.p_limit_addr:
+    enum:
+      - Y
+      - N
+  q.p_maj:
+    enum:
+      - Y
+      - N
+  q.p_med:
+    enum:
+      - M
+      - R
+      - S
+      - W
+      - ALL
+  q.p_nei_amt:
+    enum:
+      - None
+      - "0"
+      - GT0
+      - GT10000
+      - GT25000
+      - GT250000
+      - GT1000000
+  q.p_pctrack:
+    enum:
+      - Off
+      - Partial
+      - On
+  q.p_pd:
+    enum:
+      - NONE
+      - GT100
+      - GT500
+      - GT1000
+      - GT5000
+      - GT10000
+      - GT20000
+  q.p_pidall:
+    enum:
+      - Y
+      - N
+  q.p_pm:
+    enum:
+      - NONE
+      - GT5
+      - GT10
+      - GT25
+      - GT50
+      - GT75
+  q.p_psncq:
+    enum:
+      - GT1
+      - GE1
+      - GT2
+      - GE2
+      - GT4
+      - GE4
+      - GT8
+      - GE8
+      - GT12
+      - GE12
+  q.p_qiv:
+    enum:
+      - "0"
+      - GT1
+      - GT2
+      - GT4
+      - GT8
+      - "12"
+  q.p_reg:
+    enum:
+      - "01"
+      - "02"
+      - "03"
+      - "04"
+      - "05"
+      - "06"
+      - "07"
+      - 8
+      - 9
+      - "10"
+  q.p_stsl:
+    enum:
+      - W
+      - N
+  q.p_stsla:
+    enum:
+      - A
+      - E
+      - S
+  q.p_stsly:
+    enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+  q.p_swpa:
+    enum:
+      - source water
+      - surface water
+      - ground water
+      - waiting for SSO
+  q.p_trep:
+    enum:
+      - NONE
+      - CURR
+      - NOTCURR
+  q.p_tri_amt:
+    enum:
+      - "0"
+      - GT0
+      - GT1000
+      - GT5000
+      - GT10000
+      - GT50000
+  q.p_tri_cat:
+    enum:
+      - TOTAL
+      - CARC
+      - HAP
+  q.p_usmex:
+    enum:
+      - Y
+      - N
+  q.p_ysl:
+    enum:
+      - W
+      - N
+      - NV
+  q.p_ysla:
+    enum:
+      - E
+      - S
+      - A
+  q.p_ysly:
+    enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+  q.summarylist:
+    enum:
+      - Y
+      - N
+  q.tablelist:
+    enum:
+      - Y
+      - N
+paths:
+  /air_rest_services.get_facilities:
+    get:
+      parameters:
+        - enum:
+            - JSONP
+            - JSON
+            - XML
+    post:
+      parameters:
+        - enum:
+            - JSONP
+            - JSON
+            - XML
+  /air_rest_services.get_map:
+    get:
+      parameters:
+        - enum:
+            - JSONP
+            - JSON
+            - XML
+    post:
+      parameters:
+        - enum:
+            - JSONP
+            - JSON
+            - XML
+  /air_rest_services.get_qid:
+    get:
+      parameters:
+        - enum:
+            - JSONP
+            - JSON
+            - XML
+    post:
+      parameters:
+        - enum:
+            - JSONP
+            - JSON
+            - XML
+  /air_rest_services.metadata:
+    get:
+      parameters:
+        - enum:
+            - JSONP
+            - JSON
+            - XML
+    post:
+      parameters:
+        - enum:
+            - JSONP
+            - JSON
+            - XML

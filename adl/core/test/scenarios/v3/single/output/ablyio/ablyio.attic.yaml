@@ -1,0 +1,70 @@
+paths:
+  /channels:
+    get:
+      parameters:
+        - schema:
+            enum:
+              - value
+              - id
+  /stats:
+    get:
+      parameters:
+        - schema:
+            default: minute
+            enum:
+              - minute
+              - hour
+              - day
+              - month
+components:
+  parameters:
+    filterDirection:
+      schema:
+        default: backwards
+        enum:
+          - forwards
+          - backwards
+    responseFormat:
+      schema:
+        enum:
+          - json
+          - jsonp
+          - msgpack
+          - html
+  schemas:
+    DeviceDetails:
+      properties:
+        formFactor:
+          enum:
+            - phone
+            - tablet
+            - desktop
+            - tv
+            - watch
+            - car
+            - embedded
+        platform:
+          enum:
+            - ios
+            - android
+        push.state:
+          enum:
+            - Active
+            - Failing
+            - Failed
+    PresenceMessage:
+      properties:
+        action:
+          enum:
+            - ABSENT
+            - PRESENT
+            - ENTER
+            - LEAVE
+            - UPDATE
+    Recipient:
+      properties:
+        transportType:
+          enum:
+            - apns
+            - fcm
+            - gcm

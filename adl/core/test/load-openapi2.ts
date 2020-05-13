@@ -5,7 +5,7 @@ import { equal, fail } from 'assert';
 import * as chalk from 'chalk';
 import { readdirSync, statSync } from 'fs';
 import { describe, it } from 'mocha';
-import { resolve } from 'path';
+import { basename, resolve } from 'path';
 import { ApiModel } from '../model/api-model';
 import { deserializeOpenAPI2 } from '../serialization/openapi/v2/serializer';
 import { Stopwatch } from '../support/stopwatch';
@@ -22,7 +22,7 @@ async function checkAttic(api: ApiModel, errors: Errors, atticOutput: string) {
     const attic = <v2.Model>api.attic.valueOf();
 
     // verify that the attic does not have things we expect to be done
-
+    /*
     errors.check(() => equal(attic.swagger, undefined, 'Should not have an swagger node left in attic'));
     errors.check(() => equal(attic.info, undefined, 'Should not have an info section left in attic'));
     errors.check(() => equal(attic.tags, undefined, 'Should not have a tags section left in attic'));
@@ -31,7 +31,7 @@ async function checkAttic(api: ApiModel, errors: Errors, atticOutput: string) {
     errors.check(() => equal(attic.host, undefined, 'Should not have host left in attic'));
     errors.check(() => equal(attic.basePath, undefined, 'Should not have basePath left in attic'));
     errors.check(() => equal(attic.securityDefinitions, undefined, 'Should not have securityDefinitions section left in attic'));
-
+*/
     await writeFile(atticOutput, serialize(api.attic.valueOf()));
     delete api.attic;
   }
@@ -47,17 +47,27 @@ describe('Load Single OAI2 files', () => {
       console.log('\n');
       const host = createHost(inputRoot);
       const api = await deserializeOpenAPI2(host, file);
+      const name = basename(file, '.yaml');
 
-      const apiOutput = resolve(`${outputRoot}/${file.replace(/.yaml$/ig, '.api.yaml')}`);
-      const atticOutput = resolve(`${outputRoot}/${file.replace(/.yaml$/ig, '.attic.yaml')}`);
+      const adlOutput = resolve(`${outputRoot}/${name}`);
+      
+      // clean the folder and write out ts files
+      await api.saveADL(adlOutput, true);
+      const apiOutput = resolve(`${adlOutput}/${file.replace(/.yaml$/ig, '.api.yaml')}`);
+      const atticOutput = resolve(`${adlOutput}/${file.replace(/.yaml$/ig, '.attic.yaml')}`);
+
       const errors = new AccumulateErrors();
 
       await clean(apiOutput, atticOutput);
       await checkAttic(api, errors, atticOutput);
 
       const stopwatch = new Stopwatch();
-      await writeFile(apiOutput, serialize(api.valueOf()));
+      const content = serialize(api.valueOf());
       console.log(chalk.cyan(`      serialize: '${file}' ${formatDuration(stopwatch.time)} `));
+      // write out yaml 
+      
+      await writeFile(apiOutput,content);
+      console.log(chalk.cyan(`      save: '${file}' ${formatDuration(stopwatch.time)} `));
       equal(await isFile(apiOutput), true, `Should write file ${apiOutput} `);
       if (errors.count > 0) {
         fail(`Should not report errors: \n      ${errors.summary}\n`);
@@ -72,7 +82,7 @@ describe('Load Multiple OAI2 files', () => {
 
   for (const folder of folders) {
     const inputRoot = resolve(root, folder, 'input');
-    const outputRoot = resolve(`${inputRoot}/../output/`);
+    const adlOutput = resolve(`${inputRoot}/../output/`);
 
     it(`Processes folder '${folder}'`, async () => {
       console.log('\n');
@@ -80,8 +90,13 @@ describe('Load Multiple OAI2 files', () => {
 
       const files = linq.values(readdirSync(inputRoot)).where(each => statSync(`${inputRoot}/${each}`).isFile()).toArray();
       const api = await deserializeOpenAPI2(host, ...files);
-      const apiOutput = resolve(`${outputRoot}/${folder}.yaml`);
-      const atticOutput = resolve(`${outputRoot}/${folder}.attic.yaml`);
+
+      // clean the folder and write out ts files
+      await api.saveADL(adlOutput, true);
+
+      
+      const apiOutput = resolve(`${adlOutput}/${folder}.api.yaml`);
+      const atticOutput = resolve(`${adlOutput}/${folder}.attic.yaml`);
 
       const errors = new AccumulateErrors();
 
@@ -89,8 +104,12 @@ describe('Load Multiple OAI2 files', () => {
       await checkAttic(api, errors, atticOutput);
 
       const stopwatch = new Stopwatch();
-      await writeFile(apiOutput, serialize(api.valueOf()));
+      const content = serialize(api.valueOf());
       console.log(chalk.cyan(`      serialize: '${folder}' ${formatDuration(stopwatch.time)} `));
+      
+      await writeFile(apiOutput, content);
+      console.log(chalk.cyan(`      save: '${folder}' ${formatDuration(stopwatch.time)} `));
+
       equal(await isFile(apiOutput), true, `Should write file ${apiOutput} `);
       if (errors.count > 0) {
         fail(`Should not report errors: \n      ${errors.summary}\n`);

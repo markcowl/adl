@@ -1,8 +1,9 @@
 import { linq } from '@azure-tools/linq';
-import { isAnonymous } from '@azure-tools/sourcemap';
+import { isAnonymous, valueOf } from '@azure-tools/sourcemap';
 import { AST, CST, Document, stringify } from 'yaml';
 import { Schema, YAMLMap } from 'yaml/types';
 import { parseMap } from 'yaml/util';
+import { ApiModel } from '../model/api-model';
 import { Element } from '../model/element';
 
 const propertyPriority = [
@@ -59,7 +60,12 @@ function sortWithPriorty(a: any, b: any): number {
 }
 
 export const elementTag = <Schema.CustomTag>{
-  identify: (v: any) => v !== undefined && v !== null && typeof v === 'object' && !Array.isArray(v.valueOf()) && (v instanceof Element || v.valueOf().added),
+  identify: (v: any) => 
+    v !== undefined && 
+    v !== null && 
+    typeof v === 'object' && 
+    !Array.isArray(valueOf(v)) && 
+    (v instanceof ApiModel || v instanceof Element || valueOf(v).added),
   default: true,
   tag: 'tag:yaml.org,2002:map',
   resolve: (doc: Document, cst: CST.Node): AST.Node => {
@@ -82,11 +88,15 @@ export const elementTag = <Schema.CustomTag>{
       if (isAnonymous(v)) {
         v = v.name;
       }
-
+      if( typeof key === 'string' && key.startsWith('_')){
+        continue;
+      }
+      
       switch (key) {
         // temporary -- this is just noisy while we only have one version to play with.
         case 'versionInfo':
         case 'internalData':
+        case 'node':
           continue;
       }
 

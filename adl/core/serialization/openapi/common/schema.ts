@@ -1,6 +1,6 @@
 import { v2, v3, XMSEnumValue } from '@azure-tools/openapi';
 import { anonymous, nameOf, use } from '@azure-tools/sourcemap';
-import { Alias, Constant, Enum, ReadOnlyConstraint, Schema, ServerDefaultValue } from '../../../model/schema';
+import { Alias, createEnum, ReadOnlyConstraint, Schema, ServerDefaultValue } from '../../../model/schema';
 import { Context, OAIModel } from '../../../support/visitor';
 
 
@@ -153,32 +153,24 @@ export async function* processAnySchema<T extends OAIModel>(schema: v3.Schema|v2
   return yield $.api.schemas.Any;
 }
 
-export async function* processEnumSchemaCommon<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>, type: Schema): AsyncGenerator<Schema> {
+export async function* processEnumSchemaCommon<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>, type: Schema, options?: Options): AsyncGenerator<Schema> {
   const schemaEnum = use(schema.enum) ?? [];
   const xmsEnum = use(schema['x-ms-enum']) ?? {};
   const values: Array<XMSEnumValue> = xmsEnum.values ?? schemaEnum.map(v => ({ value: v }));
 
-  const result = new Enum(type, {
-    name: xmsEnum.name || nameOf(schema),
+  const isanon= xmsEnum.name ? false : options?.isAnonymous;
+
+  const result = createEnum($.api, type, {
+    name: xmsEnum.name || (isanon ? anonymous('enum') : nameOf(schema)),
+    values
   });
 
   result.sealed = !xmsEnum.modelAsString;
   use(xmsEnum.modelAsString);
 
-  for (const each of values) {
-    const constant = new Constant(type, use(each.value), {
-      name: each.name,
-      description: each.description
-    });
-    result.values.push(constant);
-  }
+  // TODO: an enum with only one value should be treated as single constant directly
+  //       but how does this interact with adding a value to an enum?
 
-  // an enum with only one value is treated as single constant directly
-  if (result.values.length == 1) {
-    return yield result.values[0];
-  }
-
-  // yield the value as soon as possible so that if we start to recurse it's already in the cache.
   yield result;
 }
 

@@ -1,0 +1,2993 @@
+http:
+  authentications:
+    - type: oauth2
+      name: azure_auth
+      description: Azure Active Directory OAuth2 Flow
+      flows:
+        implicit:
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+          scopes:
+            - name: user_impersonation
+              description: impersonate your user account
+    - type: oauth2
+      name: azure_auth
+      description: Azure Active Directory OAuth2 Flow
+      flows:
+        implicit:
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+          scopes:
+            - name: user_impersonation
+              description: impersonate your user account
+    - type: oauth2
+      name: azure_auth
+      description: Azure Active Directory OAuth2 Flow
+      flows:
+        implicit:
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+          scopes:
+            - name: user_impersonation
+              description: impersonate your user account
+  connections:
+    - url: https://management.azure.com/
+    - url: https://management.azure.com/
+    - url: https://management.azure.com/
+  operations:
+    - description: Gets the specified Azure key vault.
+      id: Vaults_Get
+      parameters:
+        - type: path
+          name: resourceGroupName
+          description: The name of the Resource Group to which the vault belongs.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The name of the Resource Group to which the vault belongs.
+            targetSchema: &a1
+              type: string
+              name: anonymous<unknown>
+        - type: path
+          name: vaultName
+          description: The name of the vault.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The name of the vault.
+            targetSchema: *a1
+        - &a4
+          type: query
+          name: api-version
+          description: Client Api Version.
+          expandParameterValues: true
+          renderStyle: form
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: Client Api Version.
+            targetSchema: *a1
+        - &a5
+          type: path
+          name: subscriptionId
+          description: Subscription credentials which uniquely identify Microsoft Azure
+            subscription. The subscription ID forms part of the URI for every
+            service call.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: Subscription credentials which uniquely identify Microsoft Azure
+              subscription. The subscription ID forms part of the URI for every
+              service call.
+            targetSchema: *a1
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          schema: &a6
+            type: file
+            name: anonymous<unknown>
+      responses:
+        - name: "200"
+          description: Retrieved vault
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a8
+              type: object
+              name: Vault
+              description: Resource information with extended details.
+              properties:
+                - name: id
+                  description: Fully qualified identifier of the key vault resource.
+                  readonly: true
+                  schema:
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: ReadOnly
+                        readOnly: true
+                    description: Fully qualified identifier of the key vault resource.
+                    targetSchema: *a1
+                - name: name
+                  description: Name of the key vault resource.
+                  readonly: true
+                  schema:
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: ReadOnly
+                        readOnly: true
+                    description: Name of the key vault resource.
+                    targetSchema: *a1
+                - name: type
+                  description: Resource type of the key vault resource.
+                  readonly: true
+                  schema:
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: ReadOnly
+                        readOnly: true
+                    description: Resource type of the key vault resource.
+                    targetSchema: *a1
+                - name: location
+                  description: Azure location of the key vault resource.
+                  schema:
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    description: Azure location of the key vault resource.
+                    targetSchema: *a1
+                - name: tags
+                  description: Tags assigned to the key vault resource.
+                  schema:
+                    type: alias
+                    name: anonymous<dictionary>
+                    aliasType: schema
+                    description: Tags assigned to the key vault resource.
+                    targetSchema:
+                      type: dictionary
+                      name: anonymous<unknown>
+                      elementSchema: *a1
+                - name: properties
+                  description: Properties of the vault
+                  required: true
+                  schema: &a7
+                    type: object
+                    name: VaultProperties
+                    description: Properties of the vault
+                    properties:
+                      - name: tenantId
+                        description: The Azure Active Directory tenant ID that should be used for
+                          authenticating requests to the key vault.
+                        required: true
+                        schema:
+                          type: alias
+                          name: anonymous<unknown>
+                          aliasType: schema
+                          description: The Azure Active Directory tenant ID that should be used for
+                            authenticating requests to the key vault.
+                          targetSchema: &a2
+                            type: uuid
+                            name: anonymous<unknown>
+                      - name: sku
+                        description: SKU details
+                        required: true
+                        schema: &a11
+                          type: object
+                          name: Sku
+                          description: SKU details
+                          properties:
+                            - name: family
+                              description: SKU family name
+                              required: true
+                              schema:
+                                type: enum
+                                name: anonymous<unknown>
+                            - name: name
+                              description: SKU name to specify whether the key vault is a standard vault or a
+                                premium vault.
+                              required: true
+                              schema:
+                                type: enum
+                                name: anonymous<unknown>
+                      - name: accessPolicies
+                        description: An array of 0 to 16 identities that have access to the key vault.
+                          All identities in the array must use the same tenant
+                          ID as the key vault's tenant ID. When `createMode` is
+                          set to `recover`, access policies are not required.
+                          Otherwise, access policies are required.
+                        schema:
+                          type: alias
+                          name: accessPolicies
+                          aliasType: schema
+                          description: An array of 0 to 16 identities that have access to the key vault.
+                            All identities in the array must use the same tenant
+                            ID as the key vault's tenant ID. When `createMode`
+                            is set to `recover`, access policies are not
+                            required. Otherwise, access policies are required.
+                          targetSchema:
+                            type: array
+                            name: anonymous<unknown>
+                            elementSchema: &a12
+                              type: object
+                              name: AccessPolicyEntry
+                              description: An identity that have access to the key vault. All identities in
+                                the array must use the same tenant ID as the key
+                                vault's tenant ID.
+                              properties:
+                                - name: tenantId
+                                  description: The Azure Active Directory tenant ID that should be used for
+                                    authenticating requests to the key vault.
+                                  required: true
+                                  schema:
+                                    type: alias
+                                    name: anonymous<unknown>
+                                    aliasType: schema
+                                    description: The Azure Active Directory tenant ID that should be used for
+                                      authenticating requests to the key vault.
+                                    targetSchema: *a2
+                                - name: objectId
+                                  description: The object ID of a user, service principal or security group in the
+                                    Azure Active Directory tenant for the vault.
+                                    The object ID must be unique for the list of
+                                    access policies.
+                                  required: true
+                                  schema:
+                                    type: alias
+                                    name: anonymous<string>
+                                    aliasType: schema
+                                    description: The object ID of a user, service principal or security group in the
+                                      Azure Active Directory tenant for the
+                                      vault. The object ID must be unique for
+                                      the list of access policies.
+                                    targetSchema: *a1
+                                - name: applicationId
+                                  description: " Application ID of the client making request on behalf of a
+                                    principal"
+                                  schema:
+                                    type: alias
+                                    name: anonymous<unknown>
+                                    aliasType: schema
+                                    description: " Application ID of the client making request on behalf of a
+                                      principal"
+                                    targetSchema: *a2
+                                - name: permissions
+                                  description: Permissions the identity has for keys, secrets and certificates.
+                                  required: true
+                                  schema: &a43
+                                    type: object
+                                    name: Permissions
+                                    description: Permissions the identity has for keys, secrets, certificates and
+                                      storage.
+                                    properties:
+                                      - name: keys
+                                        description: Permissions to keys
+                                        schema:
+                                          type: alias
+                                          name: keys
+                                          aliasType: schema
+                                          description: Permissions to keys
+                                          targetSchema:
+                                            type: array
+                                            name: anonymous<unknown>
+                                            elementSchema:
+                                              type: enum
+                                              name: anonymous<unknown>
+                                      - name: secrets
+                                        description: Permissions to secrets
+                                        schema:
+                                          type: alias
+                                          name: secrets
+                                          aliasType: schema
+                                          description: Permissions to secrets
+                                          targetSchema:
+                                            type: array
+                                            name: anonymous<unknown>
+                                            elementSchema:
+                                              type: enum
+                                              name: anonymous<unknown>
+                                      - name: certificates
+                                        description: Permissions to certificates
+                                        schema:
+                                          type: alias
+                                          name: certificates
+                                          aliasType: schema
+                                          description: Permissions to certificates
+                                          targetSchema:
+                                            type: array
+                                            name: anonymous<unknown>
+                                            elementSchema:
+                                              type: enum
+                                              name: anonymous<unknown>
+                                      - name: storage
+                                        description: Permissions to storage accounts
+                                        schema:
+                                          type: alias
+                                          name: storage
+                                          aliasType: schema
+                                          description: Permissions to storage accounts
+                                          targetSchema:
+                                            type: array
+                                            name: anonymous<unknown>
+                                            elementSchema:
+                                              type: enum
+                                              name: anonymous<unknown>
+                      - name: vaultUri
+                        description: The URI of the vault for performing operations on keys and secrets.
+                        schema:
+                          type: alias
+                          name: anonymous<string>
+                          aliasType: schema
+                          description: The URI of the vault for performing operations on keys and secrets.
+                          targetSchema: *a1
+                      - name: enabledForDeployment
+                        description: Property to specify whether Azure Virtual Machines are permitted to
+                          retrieve certificates stored as secrets from the key
+                          vault.
+                        schema:
+                          type: alias
+                          name: anonymous<unknown>
+                          aliasType: schema
+                          description: Property to specify whether Azure Virtual Machines are permitted to
+                            retrieve certificates stored as secrets from the key
+                            vault.
+                          targetSchema: &a3
+                            type: boolean
+                            name: anonymous<unknown>
+                      - name: enabledForDiskEncryption
+                        description: Property to specify whether Azure Disk Encryption is permitted to
+                          retrieve secrets from the vault and unwrap keys.
+                        schema:
+                          type: alias
+                          name: anonymous<unknown>
+                          aliasType: schema
+                          description: Property to specify whether Azure Disk Encryption is permitted to
+                            retrieve secrets from the vault and unwrap keys.
+                          targetSchema: *a3
+                      - name: enabledForTemplateDeployment
+                        description: Property to specify whether Azure Resource Manager is permitted to
+                          retrieve secrets from the key vault.
+                        schema:
+                          type: alias
+                          name: anonymous<unknown>
+                          aliasType: schema
+                          description: Property to specify whether Azure Resource Manager is permitted to
+                            retrieve secrets from the key vault.
+                          targetSchema: *a3
+                      - name: enableSoftDelete
+                        description: Property to specify whether the 'soft delete' functionality is
+                          enabled for this key vault. If it's not set to any
+                          value(true or false) when creating new key vault, it
+                          will be set to true by default. Once set to true, it
+                          cannot be reverted to false.
+                        schema:
+                          type: alias
+                          name: anonymous<unknown>
+                          aliasType: schema
+                          defaults:
+                            - type: server-default
+                              name: anonymous<unknown>
+                              value: true
+                          description: Property to specify whether the 'soft delete' functionality is
+                            enabled for this key vault. If it's not set to any
+                            value(true or false) when creating new key vault, it
+                            will be set to true by default. Once set to true, it
+                            cannot be reverted to false.
+                          targetSchema: *a3
+                      - name: softDeleteRetentionInDays
+                        description: softDelete data retention days. It accepts >=7 and <=90.
+                        schema:
+                          type: alias
+                          name: anonymous<number>
+                          aliasType: schema
+                          defaults:
+                            - type: server-default
+                              name: anonymous<unknown>
+                              value: 90
+                          description: softDelete data retention days. It accepts >=7 and <=90.
+                          targetSchema: &a13
+                            type: int32
+                            name: anonymous<unknown>
+                      - name: enableRbacAuthorization
+                        description: "Property that controls how data actions are authorized. When true,
+                          the key vault will use Role Based Access Control
+                          (RBAC) for authorization of data actions, and the
+                          access policies specified in vault properties will
+                          be  ignored (warning: this is a preview feature). When
+                          false, the key vault will use the access policies
+                          specified in vault properties, and any policy stored
+                          on Azure Resource Manager will be ignored. If null or
+                          not specified, the vault is created with the default
+                          value of false. Note that management actions are
+                          always authorized with RBAC."
+                        schema:
+                          type: alias
+                          name: anonymous<unknown>
+                          aliasType: schema
+                          defaults:
+                            - type: server-default
+                              name: anonymous<unknown>
+                              value: false
+                          description: "Property that controls how data actions are authorized. When true,
+                            the key vault will use Role Based Access Control
+                            (RBAC) for authorization of data actions, and the
+                            access policies specified in vault properties will
+                            be  ignored (warning: this is a preview feature).
+                            When false, the key vault will use the access
+                            policies specified in vault properties, and any
+                            policy stored on Azure Resource Manager will be
+                            ignored. If null or not specified, the vault is
+                            created with the default value of false. Note that
+                            management actions are always authorized with RBAC."
+                          targetSchema: *a3
+                      - name: createMode
+                        description: The vault's create mode to indicate whether the vault need to be
+                          recovered or not.
+                        schema:
+                          type: enum
+                          name: anonymous<unknown>
+                      - name: enablePurgeProtection
+                        description: Property specifying whether protection against purge is enabled for
+                          this vault. Setting this property to true activates
+                          protection against purge for this vault and its
+                          content - only the Key Vault service may initiate a
+                          hard, irrecoverable deletion. The setting is effective
+                          only if soft delete is also enabled. Enabling this
+                          functionality is irreversible - that is, the property
+                          does not accept false as its value.
+                        schema:
+                          type: alias
+                          name: anonymous<unknown>
+                          aliasType: schema
+                          description: Property specifying whether protection against purge is enabled for
+                            this vault. Setting this property to true activates
+                            protection against purge for this vault and its
+                            content - only the Key Vault service may initiate a
+                            hard, irrecoverable deletion. The setting is
+                            effective only if soft delete is also enabled.
+                            Enabling this functionality is irreversible - that
+                            is, the property does not accept false as its value.
+                          targetSchema: *a3
+                      - name: networkAcls
+                        description: Rules governing the accessibility of the key vault from specific
+                          network locations.
+                        schema: &a14
+                          type: object
+                          name: NetworkRuleSet
+                          description: A set of rules governing the network accessibility of a vault.
+                          properties:
+                            - name: bypass
+                              description: Tells what traffic can bypass network rules. This can be
+                                'AzureServices' or 'None'.  If not specified the
+                                default is 'AzureServices'.
+                              schema:
+                                type: enum
+                                name: anonymous<unknown>
+                            - name: defaultAction
+                              description: The default action when no rule from ipRules and from
+                                virtualNetworkRules match. This is only used
+                                after the bypass property has been evaluated.
+                              schema:
+                                type: enum
+                                name: anonymous<unknown>
+                            - name: ipRules
+                              description: The list of IP address rules.
+                              schema:
+                                type: alias
+                                name: ipRules
+                                aliasType: schema
+                                description: The list of IP address rules.
+                                targetSchema:
+                                  type: array
+                                  name: anonymous<unknown>
+                                  elementSchema: &a53
+                                    type: object
+                                    name: IPRule
+                                    description: A rule governing the accessibility of a vault from a specific ip
+                                      address or ip range.
+                                    properties:
+                                      - name: value
+                                        description: An IPv4 address range in CIDR notation, such as '124.56.78.91'
+                                          (simple IP address) or
+                                          '124.56.78.0/24' (all addresses that
+                                          start with 124.56.78).
+                                        required: true
+                                        schema:
+                                          type: alias
+                                          name: anonymous<string>
+                                          aliasType: schema
+                                          description: An IPv4 address range in CIDR notation, such as '124.56.78.91'
+                                            (simple IP address) or
+                                            '124.56.78.0/24' (all addresses that
+                                            start with 124.56.78).
+                                          targetSchema: *a1
+                            - name: virtualNetworkRules
+                              description: The list of virtual network rules.
+                              schema:
+                                type: alias
+                                name: virtualNetworkRules
+                                aliasType: schema
+                                description: The list of virtual network rules.
+                                targetSchema:
+                                  type: array
+                                  name: anonymous<unknown>
+                                  elementSchema: &a54
+                                    type: object
+                                    name: VirtualNetworkRule
+                                    description: A rule governing the accessibility of a vault from a specific
+                                      virtual network.
+                                    properties:
+                                      - name: id
+                                        description: Full resource id of a vnet subnet, such as
+                                          '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'.
+                                        required: true
+                                        schema:
+                                          type: alias
+                                          name: anonymous<string>
+                                          aliasType: schema
+                                          description: Full resource id of a vnet subnet, such as
+                                            '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'.
+                                          targetSchema: *a1
+                      - name: privateEndpointConnections
+                        description: List of private endpoint connections associated with the key vault.
+                        readonly: true
+                        schema:
+                          type: alias
+                          name: privateEndpointConnections
+                          aliasType: schema
+                          constraints:
+                            - type: constraint
+                              name: ReadOnly
+                              readOnly: true
+                          description: List of private endpoint connections associated with the key vault.
+                          targetSchema:
+                            type: array
+                            name: anonymous<unknown>
+                            elementSchema: &a55
+                              type: object
+                              name: PrivateEndpointConnectionItem
+                              description: Private endpoint connection item.
+                              properties:
+                                - name: properties
+                                  description: Private endpoint connection properties.
+                                  schema: &a23
+                                    type: object
+                                    name: PrivateEndpointConnectionProperties
+                                    description: Properties of the private endpoint connection resource.
+                                    properties:
+                                      - name: privateEndpoint
+                                        description: Properties of the private endpoint object.
+                                        schema: &a56
+                                          type: object
+                                          name: PrivateEndpoint
+                                          description: Private endpoint object properties.
+                                          properties:
+                                            - name: id
+                                              description: Full identifier of the private endpoint resource.
+                                              readonly: true
+                                              schema:
+                                                type: alias
+                                                name: anonymous<string>
+                                                aliasType: schema
+                                                constraints:
+                                                  - type: constraint
+                                                    name: ReadOnly
+                                                    readOnly: true
+                                                description: Full identifier of the private endpoint resource.
+                                                targetSchema: *a1
+                                      - name: privateLinkServiceConnectionState
+                                        description: Approval state of the private link connection.
+                                        schema: &a57
+                                          type: object
+                                          name: PrivateLinkServiceConnectionState
+                                          description: An object that represents the approval state of the private link
+                                            connection.
+                                          properties:
+                                            - name: status
+                                              description: Indicates whether the connection has been approved, rejected or
+                                                removed by the key vault owner.
+                                              schema: &a40
+                                                type: enum
+                                                name: anonymous<unknown>
+                                            - name: description
+                                              description: The reason for approval or rejection.
+                                              schema:
+                                                type: alias
+                                                name: anonymous<string>
+                                                aliasType: schema
+                                                description: The reason for approval or rejection.
+                                                targetSchema: *a1
+                                            - name: actionRequired
+                                              description: A message indicating if changes on the service provider require any
+                                                updates on the consumer.
+                                              schema:
+                                                type: alias
+                                                name: anonymous<string>
+                                                aliasType: schema
+                                                description: A message indicating if changes on the service provider require any
+                                                  updates on the consumer.
+                                                targetSchema: *a1
+                                      - name: provisioningState
+                                        description: Provisioning state of the private endpoint connection.
+                                        schema: &a41
+                                          type: enum
+                                          name: anonymous<unknown>
+                                  attic:
+                                    x-ms-client-flatten: true
+              attic:
+                x-ms-azure-resource: true
+      tags:
+        - Vaults
+      attic:
+        x-ms-examples:
+          Retrieve a vault:
+            $ref: ./examples/getVault.json
+    - description: Create or update a key vault in the specified subscription.
+      id: Vaults_CreateOrUpdate
+      parameters:
+        - type: path
+          name: resourceGroupName
+          description: The name of the Resource Group to which the server belongs.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The name of the Resource Group to which the server belongs.
+            targetSchema: *a1
+        - type: path
+          name: vaultName
+          description: Name of the vault
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            constraints:
+              - type: constraint
+                name: RegularExpression
+                length: ^[a-zA-Z0-9-]{3,24}$
+            description: Name of the vault
+            targetSchema: *a1
+        - *a4
+        - *a5
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          schema: *a6
+        - name: parameters
+          description: Parameters to create or update the vault
+          identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a47
+              type: object
+              name: VaultCreateOrUpdateParameters
+              description: Parameters for creating or updating a vault
+              properties:
+                - name: location
+                  description: The supported Azure location where the key vault should be created.
+                  required: true
+                  schema:
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    description: The supported Azure location where the key vault should be created.
+                    targetSchema: *a1
+                - name: tags
+                  description: The tags that will be assigned to the key vault.
+                  schema:
+                    type: alias
+                    name: anonymous<dictionary>
+                    aliasType: schema
+                    description: The tags that will be assigned to the key vault.
+                    targetSchema:
+                      type: dictionary
+                      name: anonymous<unknown>
+                      elementSchema: *a1
+                - name: properties
+                  description: Properties of the vault
+                  required: true
+                  schema: *a7
+              attic:
+                x-ms-azure-resource: true
+          attic:
+            x-ms-examples: &a9
+              Create a new vault or update an existing vault:
+                $ref: ./examples/createVault.json
+              Create or update a vault with network acls:
+                $ref: ./examples/createVaultWithNetworkAcls.json
+      responses:
+        - name: "200"
+          description: Created or updated vault
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a8
+        - name: "201"
+          description: Created or updated vault
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a8
+      tags:
+        - Vaults
+      attic:
+        x-ms-examples: *a9
+        x-ms-long-running-operation: true
+    - description: Deletes the specified Azure key vault.
+      id: Vaults_Delete
+      parameters:
+        - type: path
+          name: resourceGroupName
+          description: The name of the Resource Group to which the vault belongs.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The name of the Resource Group to which the vault belongs.
+            targetSchema: *a1
+        - type: path
+          name: vaultName
+          description: The name of the vault to delete
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The name of the vault to delete
+            targetSchema: *a1
+        - *a4
+        - *a5
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          schema: *a6
+      responses:
+        - name: "200"
+          description: OK Response.
+          mediaType: application/json
+          schema: &a10
+            type: any
+            name: anonymous<unknown>
+        - name: "204"
+          description: No Content.
+          mediaType: application/json
+          schema: *a10
+      tags:
+        - Vaults
+      attic:
+        x-ms-examples:
+          Delete a vault:
+            $ref: ./examples/deleteVault.json
+    - description: Update a key vault in the specified subscription.
+      id: Vaults_Update
+      parameters:
+        - type: path
+          name: resourceGroupName
+          description: The name of the Resource Group to which the server belongs.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The name of the Resource Group to which the server belongs.
+            targetSchema: *a1
+        - type: path
+          name: vaultName
+          description: Name of the vault
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            constraints:
+              - type: constraint
+                name: RegularExpression
+                length: ^[a-zA-Z0-9-]{3,24}$
+            description: Name of the vault
+            targetSchema: *a1
+        - *a4
+        - *a5
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          schema: *a6
+        - name: parameters
+          description: Parameters to patch the vault
+          identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a48
+              type: object
+              name: VaultPatchParameters
+              description: Parameters for creating or updating a vault
+              properties:
+                - name: tags
+                  description: "The tags that will be assigned to the key vault. "
+                  schema:
+                    type: alias
+                    name: anonymous<dictionary>
+                    aliasType: schema
+                    description: "The tags that will be assigned to the key vault. "
+                    targetSchema:
+                      type: dictionary
+                      name: anonymous<unknown>
+                      elementSchema: *a1
+                - name: properties
+                  description: Properties of the vault
+                  schema: &a44
+                    type: object
+                    name: VaultPatchProperties
+                    description: Properties of the vault
+                    properties:
+                      - name: tenantId
+                        description: The Azure Active Directory tenant ID that should be used for
+                          authenticating requests to the key vault.
+                        schema:
+                          type: alias
+                          name: anonymous<unknown>
+                          aliasType: schema
+                          description: The Azure Active Directory tenant ID that should be used for
+                            authenticating requests to the key vault.
+                          targetSchema: *a2
+                      - name: sku
+                        description: SKU details
+                        schema: *a11
+                      - name: accessPolicies
+                        description: An array of 0 to 16 identities that have access to the key vault.
+                          All identities in the array must use the same tenant
+                          ID as the key vault's tenant ID.
+                        schema:
+                          type: alias
+                          name: accessPolicies
+                          aliasType: schema
+                          description: An array of 0 to 16 identities that have access to the key vault.
+                            All identities in the array must use the same tenant
+                            ID as the key vault's tenant ID.
+                          targetSchema:
+                            type: array
+                            name: anonymous<unknown>
+                            elementSchema: *a12
+                      - name: enabledForDeployment
+                        description: Property to specify whether Azure Virtual Machines are permitted to
+                          retrieve certificates stored as secrets from the key
+                          vault.
+                        schema:
+                          type: alias
+                          name: anonymous<unknown>
+                          aliasType: schema
+                          description: Property to specify whether Azure Virtual Machines are permitted to
+                            retrieve certificates stored as secrets from the key
+                            vault.
+                          targetSchema: *a3
+                      - name: enabledForDiskEncryption
+                        description: Property to specify whether Azure Disk Encryption is permitted to
+                          retrieve secrets from the vault and unwrap keys.
+                        schema:
+                          type: alias
+                          name: anonymous<unknown>
+                          aliasType: schema
+                          description: Property to specify whether Azure Disk Encryption is permitted to
+                            retrieve secrets from the vault and unwrap keys.
+                          targetSchema: *a3
+                      - name: enabledForTemplateDeployment
+                        description: Property to specify whether Azure Resource Manager is permitted to
+                          retrieve secrets from the key vault.
+                        schema:
+                          type: alias
+                          name: anonymous<unknown>
+                          aliasType: schema
+                          description: Property to specify whether Azure Resource Manager is permitted to
+                            retrieve secrets from the key vault.
+                          targetSchema: *a3
+                      - name: enableSoftDelete
+                        description: Property to specify whether the 'soft delete' functionality is
+                          enabled for this key vault. Once set to true, it
+                          cannot be reverted to false.
+                        schema:
+                          type: alias
+                          name: anonymous<unknown>
+                          aliasType: schema
+                          description: Property to specify whether the 'soft delete' functionality is
+                            enabled for this key vault. Once set to true, it
+                            cannot be reverted to false.
+                          targetSchema: *a3
+                      - name: enableRbacAuthorization
+                        description: "Property that controls how data actions are authorized. When true,
+                          the key vault will use Role Based Access Control
+                          (RBAC) for authorization of data actions, and the
+                          access policies specified in vault properties will
+                          be  ignored (warning: this is a preview feature). When
+                          false, the key vault will use the access policies
+                          specified in vault properties, and any policy stored
+                          on Azure Resource Manager will be ignored. If null or
+                          not specified, the value of this property will not
+                          change."
+                        schema:
+                          type: alias
+                          name: anonymous<unknown>
+                          aliasType: schema
+                          description: "Property that controls how data actions are authorized. When true,
+                            the key vault will use Role Based Access Control
+                            (RBAC) for authorization of data actions, and the
+                            access policies specified in vault properties will
+                            be  ignored (warning: this is a preview feature).
+                            When false, the key vault will use the access
+                            policies specified in vault properties, and any
+                            policy stored on Azure Resource Manager will be
+                            ignored. If null or not specified, the value of this
+                            property will not change."
+                          targetSchema: *a3
+                      - name: softDeleteRetentionInDays
+                        description: softDelete data retention days. It accepts >=7 and <=90.
+                        schema:
+                          type: alias
+                          name: anonymous<number>
+                          aliasType: schema
+                          description: softDelete data retention days. It accepts >=7 and <=90.
+                          targetSchema: *a13
+                      - name: createMode
+                        description: The vault's create mode to indicate whether the vault need to be
+                          recovered or not.
+                        schema:
+                          type: enum
+                          name: anonymous<unknown>
+                      - name: enablePurgeProtection
+                        description: Property specifying whether protection against purge is enabled for
+                          this vault. Setting this property to true activates
+                          protection against purge for this vault and its
+                          content - only the Key Vault service may initiate a
+                          hard, irrecoverable deletion. The setting is effective
+                          only if soft delete is also enabled. Enabling this
+                          functionality is irreversible - that is, the property
+                          does not accept false as its value.
+                        schema:
+                          type: alias
+                          name: anonymous<unknown>
+                          aliasType: schema
+                          description: Property specifying whether protection against purge is enabled for
+                            this vault. Setting this property to true activates
+                            protection against purge for this vault and its
+                            content - only the Key Vault service may initiate a
+                            hard, irrecoverable deletion. The setting is
+                            effective only if soft delete is also enabled.
+                            Enabling this functionality is irreversible - that
+                            is, the property does not accept false as its value.
+                          targetSchema: *a3
+                      - name: networkAcls
+                        description: A collection of rules governing the accessibility of the vault from
+                          specific network locations.
+                        schema: *a14
+              attic:
+                x-ms-azure-resource: true
+          attic:
+            x-ms-examples: &a15
+              Update an existing vault:
+                $ref: ./examples/updateVault.json
+      responses:
+        - name: "200"
+          description: Patched vault
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a8
+        - name: "201"
+          description: Patched vault
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a8
+      tags:
+        - Vaults
+      attic:
+        x-ms-examples: *a15
+    - description: Update access policies in a key vault in the specified subscription.
+      id: Vaults_UpdateAccessPolicy
+      parameters:
+        - type: path
+          name: resourceGroupName
+          description: The name of the Resource Group to which the vault belongs.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The name of the Resource Group to which the vault belongs.
+            targetSchema: *a1
+        - type: path
+          name: vaultName
+          description: Name of the vault
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            constraints:
+              - type: constraint
+                name: RegularExpression
+                length: ^[a-zA-Z0-9-]{3,24}$
+            description: Name of the vault
+            targetSchema: *a1
+        - type: path
+          name: operationKind
+          description: Name of the operation
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+        - *a4
+        - *a5
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          schema: *a6
+        - name: parameters
+          description: Access policy to merge into the vault
+          identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a16
+              type: object
+              name: VaultAccessPolicyParameters
+              description: Parameters for updating the access policy in a vault
+              properties:
+                - name: id
+                  description: The resource id of the access policy.
+                  readonly: true
+                  schema:
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: ReadOnly
+                        readOnly: true
+                    description: The resource id of the access policy.
+                    targetSchema: *a1
+                - name: name
+                  description: The resource name of the access policy.
+                  readonly: true
+                  schema:
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: ReadOnly
+                        readOnly: true
+                    description: The resource name of the access policy.
+                    targetSchema: *a1
+                - name: type
+                  description: The resource name of the access policy.
+                  readonly: true
+                  schema:
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: ReadOnly
+                        readOnly: true
+                    description: The resource name of the access policy.
+                    targetSchema: *a1
+                - name: location
+                  description: The resource type of the access policy.
+                  readonly: true
+                  schema:
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: ReadOnly
+                        readOnly: true
+                    description: The resource type of the access policy.
+                    targetSchema: *a1
+                - name: properties
+                  description: Properties of the access policy
+                  required: true
+                  schema: &a45
+                    type: object
+                    name: VaultAccessPolicyProperties
+                    description: Properties of the vault access policy
+                    properties:
+                      - name: accessPolicies
+                        description: An array of 0 to 16 identities that have access to the key vault.
+                          All identities in the array must use the same tenant
+                          ID as the key vault's tenant ID.
+                        required: true
+                        schema:
+                          type: alias
+                          name: accessPolicies
+                          aliasType: schema
+                          description: An array of 0 to 16 identities that have access to the key vault.
+                            All identities in the array must use the same tenant
+                            ID as the key vault's tenant ID.
+                          targetSchema:
+                            type: array
+                            name: anonymous<unknown>
+                            elementSchema: *a12
+              attic:
+                x-ms-azure-resource: true
+          attic:
+            x-ms-examples: &a17
+              "Add an access policy, or update an access policy with new permissions":
+                $ref: ./examples/updateAccessPoliciesAdd.json
+      responses:
+        - name: "200"
+          description: The updated access policies
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a16
+        - name: "201"
+          description: The updated access policies
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a16
+      tags:
+        - Vaults
+      attic:
+        x-ms-examples: *a17
+    - description: The List operation gets information about the vaults associated
+        with the subscription and within the specified resource group.
+      id: Vaults_ListByResourceGroup
+      parameters:
+        - type: path
+          name: resourceGroupName
+          description: The name of the Resource Group to which the vault belongs.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The name of the Resource Group to which the vault belongs.
+            targetSchema: *a1
+        - type: query
+          name: $top
+          description: Maximum number of results to return.
+          expandParameterValues: true
+          renderStyle: form
+          schema:
+            type: alias
+            name: anonymous<number>
+            aliasType: schema
+            description: Maximum number of results to return.
+            targetSchema: *a13
+        - *a4
+        - *a5
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          schema: *a6
+      responses:
+        - name: "200"
+          description: Get information about all key vaults in the specified resource group.
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a18
+              type: object
+              name: VaultListResult
+              description: List of vaults
+              properties:
+                - name: value
+                  description: The list of vaults.
+                  schema:
+                    type: alias
+                    name: value
+                    aliasType: schema
+                    description: The list of vaults.
+                    targetSchema:
+                      type: array
+                      name: anonymous<unknown>
+                      elementSchema: *a8
+                - name: nextLink
+                  description: The URL to get the next set of vaults.
+                  schema:
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    description: The URL to get the next set of vaults.
+                    targetSchema: *a1
+      tags:
+        - Vaults
+      attic:
+        x-ms-examples:
+          List vaults in the specified resource group:
+            $ref: ./examples/listVaultByResourceGroup.json
+        x-ms-pageable:
+          nextLinkName: nextLink
+    - description: The List operation gets information about the vaults associated
+        with the subscription.
+      id: Vaults_ListBySubscription
+      parameters:
+        - type: query
+          name: $top
+          description: Maximum number of results to return.
+          expandParameterValues: true
+          renderStyle: form
+          schema:
+            type: alias
+            name: anonymous<number>
+            aliasType: schema
+            description: Maximum number of results to return.
+            targetSchema: *a13
+        - *a4
+        - *a5
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          schema: *a6
+      responses:
+        - name: "200"
+          description: Get information about all key vaults in the specified subscription.
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a18
+      tags:
+        - Vaults
+      attic:
+        x-ms-examples:
+          List vaults in the specified subscription:
+            $ref: ./examples/listVaultBySubscription.json
+        x-ms-pageable:
+          nextLinkName: nextLink
+    - description: Gets information about the deleted vaults in a subscription.
+      id: Vaults_ListDeleted
+      parameters:
+        - *a4
+        - *a5
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          schema: *a6
+      responses:
+        - name: "200"
+          description: Retrieved information about all deleted key vaults in a subscription.
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a49
+              type: object
+              name: DeletedVaultListResult
+              description: List of vaults
+              properties:
+                - name: value
+                  description: The list of deleted vaults.
+                  schema:
+                    type: alias
+                    name: value
+                    aliasType: schema
+                    description: The list of deleted vaults.
+                    targetSchema:
+                      type: array
+                      name: anonymous<unknown>
+                      elementSchema: &a20
+                        type: object
+                        name: DeletedVault
+                        description: Deleted vault information with extended details.
+                        properties:
+                          - name: id
+                            description: The resource ID for the deleted key vault.
+                            readonly: true
+                            schema:
+                              type: alias
+                              name: anonymous<string>
+                              aliasType: schema
+                              constraints:
+                                - type: constraint
+                                  name: ReadOnly
+                                  readOnly: true
+                              description: The resource ID for the deleted key vault.
+                              targetSchema: *a1
+                          - name: name
+                            description: The name of the key vault.
+                            readonly: true
+                            schema:
+                              type: alias
+                              name: anonymous<string>
+                              aliasType: schema
+                              constraints:
+                                - type: constraint
+                                  name: ReadOnly
+                                  readOnly: true
+                              description: The name of the key vault.
+                              targetSchema: *a1
+                          - name: type
+                            description: The resource type of the key vault.
+                            readonly: true
+                            schema:
+                              type: alias
+                              name: anonymous<string>
+                              aliasType: schema
+                              constraints:
+                                - type: constraint
+                                  name: ReadOnly
+                                  readOnly: true
+                              description: The resource type of the key vault.
+                              targetSchema: *a1
+                          - name: properties
+                            description: Properties of the vault
+                            schema: &a46
+                              type: object
+                              name: DeletedVaultProperties
+                              description: Properties of the deleted vault.
+                              properties:
+                                - name: vaultId
+                                  description: The resource id of the original vault.
+                                  readonly: true
+                                  schema:
+                                    type: alias
+                                    name: anonymous<string>
+                                    aliasType: schema
+                                    constraints:
+                                      - type: constraint
+                                        name: ReadOnly
+                                        readOnly: true
+                                    description: The resource id of the original vault.
+                                    targetSchema: *a1
+                                - name: location
+                                  description: The location of the original vault.
+                                  readonly: true
+                                  schema:
+                                    type: alias
+                                    name: anonymous<string>
+                                    aliasType: schema
+                                    constraints:
+                                      - type: constraint
+                                        name: ReadOnly
+                                        readOnly: true
+                                    description: The location of the original vault.
+                                    targetSchema: *a1
+                                - name: deletionDate
+                                  description: The deleted date.
+                                  readonly: true
+                                  schema:
+                                    type: alias
+                                    name: anonymous<unknown>
+                                    aliasType: schema
+                                    constraints:
+                                      - type: constraint
+                                        name: ReadOnly
+                                        readOnly: true
+                                    description: The deleted date.
+                                    targetSchema: &a19
+                                      type: dateTime
+                                      name: anonymous<unknown>
+                                - name: scheduledPurgeDate
+                                  description: The scheduled purged date.
+                                  readonly: true
+                                  schema:
+                                    type: alias
+                                    name: anonymous<unknown>
+                                    aliasType: schema
+                                    constraints:
+                                      - type: constraint
+                                        name: ReadOnly
+                                        readOnly: true
+                                    description: The scheduled purged date.
+                                    targetSchema: *a19
+                                - name: tags
+                                  description: Tags of the original vault.
+                                  readonly: true
+                                  schema:
+                                    type: alias
+                                    name: anonymous<dictionary>
+                                    aliasType: schema
+                                    constraints:
+                                      - type: constraint
+                                        name: ReadOnly
+                                        readOnly: true
+                                    description: Tags of the original vault.
+                                    targetSchema:
+                                      type: dictionary
+                                      name: anonymous<unknown>
+                                      elementSchema: *a1
+                - name: nextLink
+                  description: The URL to get the next set of deleted vaults.
+                  schema:
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    description: The URL to get the next set of deleted vaults.
+                    targetSchema: *a1
+      tags:
+        - Vaults
+      attic:
+        x-ms-examples:
+          List deleted vaults in the specified subscription:
+            $ref: ./examples/listDeletedVaults.json
+        x-ms-pageable:
+          nextLinkName: nextLink
+    - description: Gets the deleted Azure key vault.
+      id: Vaults_GetDeleted
+      parameters:
+        - type: path
+          name: vaultName
+          description: The name of the vault.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The name of the vault.
+            targetSchema: *a1
+        - type: path
+          name: location
+          description: The location of the deleted vault.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The location of the deleted vault.
+            targetSchema: *a1
+        - *a4
+        - *a5
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          schema: *a6
+      responses:
+        - name: "200"
+          description: Retrieved information about the deleted vault.
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a20
+      tags:
+        - Vaults
+      attic:
+        x-ms-examples:
+          Retrieve a deleted vault:
+            $ref: ./examples/getDeletedVault.json
+    - description: Permanently deletes the specified vault. aka Purges the deleted
+        Azure key vault.
+      id: Vaults_PurgeDeleted
+      parameters:
+        - type: path
+          name: vaultName
+          description: The name of the soft-deleted vault.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The name of the soft-deleted vault.
+            targetSchema: *a1
+        - type: path
+          name: location
+          description: The location of the soft-deleted vault.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The location of the soft-deleted vault.
+            targetSchema: *a1
+        - *a4
+        - *a5
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          schema: *a6
+      responses:
+        - name: "200"
+          description: The vault is purged.
+          mediaType: application/json
+          schema: *a10
+        - name: "202"
+          description: Vault is being purged.
+          mediaType: application/json
+          schema: *a10
+      tags:
+        - Vaults
+      attic:
+        x-ms-examples:
+          Purge a deleted vault:
+            $ref: ./examples/purgeDeletedVault.json
+        x-ms-long-running-operation: true
+    - description: The List operation gets information about the vaults associated
+        with the subscription.
+      id: Vaults_List
+      parameters:
+        - type: query
+          name: $filter
+          description: The filter to apply on the operation.
+          expandParameterValues: true
+          renderStyle: form
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+        - type: query
+          name: $top
+          description: Maximum number of results to return.
+          expandParameterValues: true
+          renderStyle: form
+          schema:
+            type: alias
+            name: anonymous<number>
+            aliasType: schema
+            description: Maximum number of results to return.
+            targetSchema: *a13
+        - type: query
+          name: api-version
+          description: Azure Resource Manager Api Version.
+          expandParameterValues: true
+          renderStyle: form
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+        - *a5
+      responses:
+        - name: "200"
+          description: Get information about all key vaults in the subscription.
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a50
+              type: object
+              name: ResourceListResult
+              description: List of vault resources.
+              properties:
+                - name: value
+                  description: The list of vault resources.
+                  schema:
+                    type: alias
+                    name: value
+                    aliasType: schema
+                    description: The list of vault resources.
+                    targetSchema:
+                      type: array
+                      name: anonymous<unknown>
+                      elementSchema: &a22
+                        type: object
+                        name: Resource
+                        description: Key Vault resource
+                        properties:
+                          - name: id
+                            description: Fully qualified identifier of the key vault resource.
+                            readonly: true
+                            schema:
+                              type: alias
+                              name: anonymous<string>
+                              aliasType: schema
+                              constraints:
+                                - type: constraint
+                                  name: ReadOnly
+                                  readOnly: true
+                              description: Fully qualified identifier of the key vault resource.
+                              targetSchema: *a1
+                          - name: name
+                            description: Name of the key vault resource.
+                            readonly: true
+                            schema:
+                              type: alias
+                              name: anonymous<string>
+                              aliasType: schema
+                              constraints:
+                                - type: constraint
+                                  name: ReadOnly
+                                  readOnly: true
+                              description: Name of the key vault resource.
+                              targetSchema: *a1
+                          - name: type
+                            description: Resource type of the key vault resource.
+                            readonly: true
+                            schema:
+                              type: alias
+                              name: anonymous<string>
+                              aliasType: schema
+                              constraints:
+                                - type: constraint
+                                  name: ReadOnly
+                                  readOnly: true
+                              description: Resource type of the key vault resource.
+                              targetSchema: *a1
+                          - name: location
+                            description: Azure location of the key vault resource.
+                            readonly: true
+                            schema:
+                              type: alias
+                              name: anonymous<string>
+                              aliasType: schema
+                              constraints:
+                                - type: constraint
+                                  name: ReadOnly
+                                  readOnly: true
+                              description: Azure location of the key vault resource.
+                              targetSchema: *a1
+                          - name: tags
+                            description: Tags assigned to the key vault resource.
+                            readonly: true
+                            schema:
+                              type: alias
+                              name: anonymous<dictionary>
+                              aliasType: schema
+                              constraints:
+                                - type: constraint
+                                  name: ReadOnly
+                                  readOnly: true
+                              description: Tags assigned to the key vault resource.
+                              targetSchema:
+                                type: dictionary
+                                name: anonymous<unknown>
+                                elementSchema: *a1
+                        attic:
+                          x-ms-azure-resource: true
+                - name: nextLink
+                  description: The URL to get the next set of vault resources.
+                  schema:
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    description: The URL to get the next set of vault resources.
+                    targetSchema: *a1
+      tags:
+        - Vaults
+      attic:
+        x-ms-examples:
+          List vaults in the specified subscription:
+            $ref: ./examples/listVault.json
+        x-ms-pageable:
+          nextLinkName: nextLink
+    - description: Checks that the vault name is valid and is not already in use.
+      id: Vaults_CheckNameAvailability
+      parameters:
+        - *a4
+        - *a5
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          schema: *a6
+        - name: vaultName
+          description: The name of the vault.
+          identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a51
+              type: object
+              name: VaultCheckNameAvailabilityParameters
+              description: The parameters used to check the availability of the vault name.
+              properties:
+                - name: name
+                  description: The vault name.
+                  required: true
+                  schema:
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    description: The vault name.
+                    targetSchema: *a1
+                - name: type
+                  description: The type of resource, Microsoft.KeyVault/vaults
+                  required: true
+                  schema:
+                    type: enum
+                    name: anonymous<unknown>
+          attic:
+            x-ms-examples: &a21
+              Validate a vault name:
+                $ref: ./examples/checkVaultNameAvailability.json
+      responses:
+        - name: "200"
+          description: OK -- Operation to check the vault name availability was successful.
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a52
+              type: object
+              name: CheckNameAvailabilityResult
+              description: The CheckNameAvailability operation response.
+              properties:
+                - name: nameAvailable
+                  description: A boolean value that indicates whether the name is available for
+                    you to use. If true, the name is available. If false, the
+                    name has already been taken or is invalid and cannot be
+                    used.
+                  readonly: true
+                  schema:
+                    type: alias
+                    name: anonymous<unknown>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: ReadOnly
+                        readOnly: true
+                    description: A boolean value that indicates whether the name is available for
+                      you to use. If true, the name is available. If false, the
+                      name has already been taken or is invalid and cannot be
+                      used.
+                    targetSchema: *a3
+                - name: reason
+                  description: The reason that a vault name could not be used. The Reason element
+                    is only returned if NameAvailable is false.
+                  readonly: true
+                  schema:
+                    type: enum
+                    name: anonymous<unknown>
+                - name: message
+                  description: An error message explaining the Reason value in more detail.
+                  readonly: true
+                  schema:
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: ReadOnly
+                        readOnly: true
+                    description: An error message explaining the Reason value in more detail.
+                    targetSchema: *a1
+      tags:
+        - Vaults
+      attic:
+        x-ms-examples: *a21
+    - description: Gets the specified private endpoint connection associated with the
+        key vault.
+      id: PrivateEndpointConnections_Get
+      parameters:
+        - *a5
+        - &a24
+          type: path
+          name: resourceGroupName
+          description: Name of the resource group that contains the key vault.
+          expandParameterValues: false
+          generatedLocation: method
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: Name of the resource group that contains the key vault.
+            targetSchema: *a1
+        - &a25
+          type: path
+          name: vaultName
+          description: The name of the key vault.
+          expandParameterValues: false
+          generatedLocation: method
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            constraints:
+              - type: constraint
+                name: RegularExpression
+                length: ^[a-zA-Z0-9-]{3,24}$
+            description: The name of the key vault.
+            targetSchema: *a1
+        - &a26
+          type: path
+          name: privateEndpointConnectionName
+          description: Name of the private endpoint connection associated with the key
+            vault.
+          expandParameterValues: false
+          generatedLocation: method
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: Name of the private endpoint connection associated with the key
+              vault.
+            targetSchema: *a1
+        - *a4
+      responses:
+        - name: "200"
+          description: Private endpoint connection successfully returned.
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a27
+              type: object
+              name: PrivateEndpointConnection
+              description: Private endpoint connection resource.
+              extends:
+                - *a22
+              properties:
+                - name: properties
+                  description: Resource properties.
+                  schema: *a23
+                  attic:
+                    x-ms-client-flatten: true
+              attic:
+                x-ms-azure-resource: true
+        - name: default
+          description: Error response describing why the operation failed.
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a28
+              type: object
+              name: CloudError
+              description: An error response from Key Vault resource provider
+              properties:
+                - name: error
+                  schema: &a42
+                    type: object
+                    name: CloudErrorBody
+                    description: An error response from Key Vault resource provider
+                    properties:
+                      - name: code
+                        description: Error code. This is a mnemonic that can be consumed
+                          programmatically.
+                        schema:
+                          type: alias
+                          name: anonymous<string>
+                          aliasType: schema
+                          description: Error code. This is a mnemonic that can be consumed
+                            programmatically.
+                          targetSchema: *a1
+                      - name: message
+                        description: User friendly error message. The message is typically localized and
+                          may vary with service version.
+                        schema:
+                          type: alias
+                          name: anonymous<string>
+                          aliasType: schema
+                          description: User friendly error message. The message is typically localized and
+                            may vary with service version.
+                          targetSchema: *a1
+                    attic:
+                      x-ms-external: true
+              attic:
+                x-ms-external: true
+      tags:
+        - PrivateEndpointConnections
+      attic:
+        x-ms-examples:
+          KeyVaultGetPrivateEndpointConnection:
+            $ref: ./examples/getPrivateEndpointConnection.json
+    - description: Updates the specified private endpoint connection associated with
+        the key vault.
+      id: PrivateEndpointConnections_Put
+      parameters:
+        - *a5
+        - *a24
+        - *a25
+        - *a26
+        - *a4
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          schema: *a6
+        - name: properties
+          description: The intended state of private endpoint connection.
+          identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a27
+          attic:
+            x-ms-examples: &a29
+              KeyVaultPutPrivateEndpointConnection:
+                $ref: ./examples/putPrivateEndpointConnection.json
+      responses:
+        - name: "200"
+          description: The state of private endpoint connection was updated successfully.
+          headers:
+            - name: "[object Object]"
+              description: (specified only if operation does not finish synchronously) The
+                recommended number of seconds to wait before calling the URI
+                specified in Azure-AsyncOperation.
+              schema:
+                type: alias
+                name: anonymous<number>
+                aliasType: schema
+                description: (specified only if operation does not finish synchronously) The
+                  recommended number of seconds to wait before calling the URI
+                  specified in Azure-AsyncOperation.
+                targetSchema: &a30
+                  type: int64
+                  name: anonymous<unknown>
+            - name: "[object Object]"
+              description: (specified only if operation does not finish synchronously) The URI
+                to poll for completion status. The response of this URI may be
+                synchronous or asynchronous.
+              schema:
+                type: alias
+                name: anonymous<string>
+                aliasType: schema
+                description: (specified only if operation does not finish synchronously) The URI
+                  to poll for completion status. The response of this URI may be
+                  synchronous or asynchronous.
+                targetSchema: *a1
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a27
+        - name: default
+          description: Error response describing why the operation failed.
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a28
+      tags:
+        - PrivateEndpointConnections
+      attic:
+        x-ms-examples: *a29
+    - description: Deletes the specified private endpoint connection associated with
+        the key vault.
+      id: PrivateEndpointConnections_Delete
+      parameters:
+        - *a5
+        - *a24
+        - *a25
+        - *a26
+        - *a4
+      responses:
+        - name: "200"
+          description: The private endpoint connection was successfully deleted.
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a27
+        - name: "202"
+          description: The private endpoint connection is being deleted.
+          headers:
+            - name: "[object Object]"
+              description: The recommended number of seconds to wait before calling the URI
+                specified in the location header.
+              schema:
+                type: alias
+                name: anonymous<number>
+                aliasType: schema
+                description: The recommended number of seconds to wait before calling the URI
+                  specified in the location header.
+                targetSchema: *a30
+            - name: "[object Object]"
+              description: The URI to poll for completion status.
+              schema:
+                type: alias
+                name: anonymous<string>
+                aliasType: schema
+                description: The URI to poll for completion status.
+                targetSchema: *a1
+          mediaType: application/json
+          schema: *a10
+        - name: "204"
+          description: The private endpoint connection does not exist.
+          mediaType: application/json
+          schema: *a10
+        - name: default
+          description: Error response describing why the operation failed.
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a28
+      tags:
+        - PrivateEndpointConnections
+      attic:
+        x-ms-examples:
+          KeyVaultDeletePrivateEndpointConnection:
+            $ref: ./examples/deletePrivateEndpointConnection.json
+        x-ms-long-running-operation: true
+    - description: Gets the private link resources supported for the key vault.
+      id: PrivateLinkResources_ListByVault
+      parameters:
+        - *a5
+        - *a24
+        - *a25
+        - *a4
+      responses:
+        - name: "200"
+          description: Successfully retrieved private link resources.
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a58
+              type: object
+              name: PrivateLinkResourceListResult
+              description: A list of private link resources
+              properties:
+                - name: value
+                  description: Array of private link resources
+                  schema:
+                    type: alias
+                    name: value
+                    aliasType: schema
+                    description: Array of private link resources
+                    targetSchema:
+                      type: array
+                      name: anonymous<unknown>
+                      elementSchema: &a59
+                        type: object
+                        name: PrivateLinkResource
+                        description: A private link resource
+                        extends:
+                          - *a22
+                        properties:
+                          - name: properties
+                            description: Resource properties.
+                            schema: &a60
+                              type: object
+                              name: PrivateLinkResourceProperties
+                              description: Properties of a private link resource.
+                              properties:
+                                - name: groupId
+                                  description: Group identifier of private link resource.
+                                  readonly: true
+                                  schema:
+                                    type: alias
+                                    name: anonymous<string>
+                                    aliasType: schema
+                                    constraints:
+                                      - type: constraint
+                                        name: ReadOnly
+                                        readOnly: true
+                                    description: Group identifier of private link resource.
+                                    targetSchema: *a1
+                                - name: requiredMembers
+                                  description: Required member names of private link resource.
+                                  readonly: true
+                                  schema:
+                                    type: alias
+                                    name: requiredMembers
+                                    aliasType: schema
+                                    constraints:
+                                      - type: constraint
+                                        name: ReadOnly
+                                        readOnly: true
+                                    description: Required member names of private link resource.
+                                    targetSchema:
+                                      type: array
+                                      name: anonymous<unknown>
+                                      elementSchema: *a1
+                                - name: requiredZoneNames
+                                  description: Required DNS zone names of the the private link resource.
+                                  schema:
+                                    type: alias
+                                    name: requiredZoneNames
+                                    aliasType: schema
+                                    description: Required DNS zone names of the the private link resource.
+                                    targetSchema:
+                                      type: array
+                                      name: anonymous<unknown>
+                                      elementSchema: *a1
+                            attic:
+                              x-ms-client-flatten: true
+        - name: default
+          description: Error response describing why the operation failed.
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a28
+      tags:
+        - PrivateLinkResources
+      attic:
+        x-ms-examples:
+          KeyVaultListPrivateLinkResources:
+            $ref: ./examples/listPrivateLinkResources.json
+    - description: Lists all of the available Key Vault Rest API operations.
+      id: Operations_List
+      parameters:
+        - &a39
+          type: alias
+          name: anonymous<string>
+          aliasType: schema
+          description: Client Api Version.
+          targetSchema: *a1
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          schema: *a6
+      responses:
+        - name: "200"
+          description: OK. The request has succeeded.
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a61
+              type: object
+              name: OperationListResult
+              description: Result of the request to list Storage operations. It contains a
+                list of operations and a URL link to get the next set of
+                results.
+              properties:
+                - name: value
+                  description: List of Storage operations supported by the Storage resource
+                    provider.
+                  schema:
+                    type: alias
+                    name: value
+                    aliasType: schema
+                    description: List of Storage operations supported by the Storage resource
+                      provider.
+                    targetSchema:
+                      type: array
+                      name: anonymous<unknown>
+                      elementSchema: &a62
+                        type: object
+                        name: Operation
+                        description: Key Vault REST API operation definition.
+                        properties:
+                          - name: name
+                            description: "Operation name: {provider}/{resource}/{operation}"
+                            schema:
+                              type: alias
+                              name: anonymous<string>
+                              aliasType: schema
+                              description: "Operation name: {provider}/{resource}/{operation}"
+                              targetSchema: *a1
+                          - name: display
+                            description: Display metadata associated with the operation.
+                            schema:
+                              type: object
+                              name: anonymous<object>
+                              description: Display metadata associated with the operation.
+                              properties:
+                                - name: provider
+                                  description: "Service provider: Microsoft Key Vault."
+                                  schema:
+                                    type: alias
+                                    name: anonymous<string>
+                                    aliasType: schema
+                                    description: "Service provider: Microsoft Key Vault."
+                                    targetSchema: *a1
+                                - name: resource
+                                  description: Resource on which the operation is performed etc.
+                                  schema:
+                                    type: alias
+                                    name: anonymous<string>
+                                    aliasType: schema
+                                    description: Resource on which the operation is performed etc.
+                                    targetSchema: *a1
+                                - name: operation
+                                  description: "Type of operation: get, read, delete, etc."
+                                  schema:
+                                    type: alias
+                                    name: anonymous<string>
+                                    aliasType: schema
+                                    description: "Type of operation: get, read, delete, etc."
+                                    targetSchema: *a1
+                                - name: description
+                                  description: Description of operation.
+                                  schema:
+                                    type: alias
+                                    name: anonymous<string>
+                                    aliasType: schema
+                                    description: Description of operation.
+                                    targetSchema: *a1
+                          - name: origin
+                            description: The origin of operations.
+                            schema:
+                              type: alias
+                              name: anonymous<string>
+                              aliasType: schema
+                              description: The origin of operations.
+                              targetSchema: *a1
+                          - name: properties
+                            clientName: OperationProperties
+                            description: Properties of operation, include metric specifications.
+                            schema: &a63
+                              type: object
+                              name: OperationProperties
+                              description: Properties of operation, include metric specifications.
+                              properties:
+                                - name: serviceSpecification
+                                  description: One property of operation, include metric specifications.
+                                  schema: &a64
+                                    type: object
+                                    name: ServiceSpecification
+                                    description: One property of operation, include log specifications.
+                                    properties:
+                                      - name: logSpecifications
+                                        description: Log specifications of operation.
+                                        schema:
+                                          type: alias
+                                          name: logSpecifications
+                                          aliasType: schema
+                                          description: Log specifications of operation.
+                                          targetSchema:
+                                            type: array
+                                            name: anonymous<unknown>
+                                            elementSchema: &a65
+                                              type: object
+                                              name: LogSpecification
+                                              description: Log specification of operation.
+                                              properties:
+                                                - name: name
+                                                  description: Name of log specification.
+                                                  schema:
+                                                    type: alias
+                                                    name: anonymous<string>
+                                                    aliasType: schema
+                                                    description: Name of log specification.
+                                                    targetSchema: *a1
+                                                - name: displayName
+                                                  description: Display name of log specification.
+                                                  schema:
+                                                    type: alias
+                                                    name: anonymous<string>
+                                                    aliasType: schema
+                                                    description: Display name of log specification.
+                                                    targetSchema: *a1
+                                                - name: blobDuration
+                                                  description: Blob duration of specification.
+                                                  schema:
+                                                    type: alias
+                                                    name: anonymous<string>
+                                                    aliasType: schema
+                                                    description: Blob duration of specification.
+                                                    targetSchema: *a1
+                            attic:
+                              x-ms-client-flatten: true
+                - name: nextLink
+                  description: The URL to get the next set of operations.
+                  schema:
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    description: The URL to get the next set of operations.
+                    targetSchema: *a1
+      tags:
+        - Operations
+      attic:
+        x-ms-examples:
+          Lists available Rest API operations.:
+            $ref: ./examples/listOperations.json
+        x-ms-pageable:
+          nextLinkName: nextLink
+    - description: "Gets the specified secret.  NOTE: This API is intended for
+        internal use in ARM deployments. Users should use the data-plane REST
+        service for interaction with vault secrets."
+      id: Secrets_Get
+      parameters:
+        - type: path
+          name: resourceGroupName
+          description: The name of the Resource Group to which the vault belongs.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The name of the Resource Group to which the vault belongs.
+            targetSchema: *a1
+        - type: path
+          name: vaultName
+          description: The name of the vault.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The name of the vault.
+            targetSchema: *a1
+        - type: path
+          name: secretName
+          description: The name of the secret.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The name of the secret.
+            targetSchema: *a1
+        - &a32
+          type: query
+          name: api-version
+          description: Client Api Version.
+          expandParameterValues: true
+          renderStyle: form
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: Client Api Version.
+            targetSchema: *a1
+        - &a33
+          type: path
+          name: subscriptionId
+          description: Subscription credentials which uniquely identify Microsoft Azure
+            subscription. The subscription ID forms part of the URI for every
+            service call.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: Subscription credentials which uniquely identify Microsoft Azure
+              subscription. The subscription ID forms part of the URI for every
+              service call.
+            targetSchema: *a1
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          schema: *a6
+      responses:
+        - name: "200"
+          description: Retrieved secret
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a35
+              type: object
+              name: Secret
+              description: Resource information with extended details.
+              extends:
+                - *a22
+              properties:
+                - name: properties
+                  description: Properties of the secret
+                  required: true
+                  schema: &a34
+                    type: object
+                    name: SecretProperties
+                    description: Properties of the secret
+                    properties:
+                      - name: value
+                        description: "The value of the secret. NOTE: 'value' will never be returned from
+                          the service, as APIs using this model are is intended
+                          for internal use in ARM deployments. Users should use
+                          the data-plane REST service for interaction with vault
+                          secrets."
+                        schema:
+                          type: alias
+                          name: anonymous<string>
+                          aliasType: schema
+                          description: "The value of the secret. NOTE: 'value' will never be returned from
+                            the service, as APIs using this model are is
+                            intended for internal use in ARM deployments. Users
+                            should use the data-plane REST service for
+                            interaction with vault secrets."
+                          targetSchema: *a1
+                      - name: contentType
+                        description: The content type of the secret.
+                        schema:
+                          type: alias
+                          name: anonymous<string>
+                          aliasType: schema
+                          description: The content type of the secret.
+                          targetSchema: *a1
+                      - name: attributes
+                        description: The attributes of the secret.
+                        schema: &a37
+                          type: object
+                          name: SecretAttributes
+                          description: The secret management attributes.
+                          extends:
+                            - &a66
+                              type: object
+                              name: Attributes
+                              description: The object attributes managed by the KeyVault service.
+                              properties:
+                                - name: enabled
+                                  description: Determines whether the object is enabled.
+                                  schema:
+                                    type: alias
+                                    name: anonymous<unknown>
+                                    aliasType: schema
+                                    description: Determines whether the object is enabled.
+                                    targetSchema: *a3
+                                - name: nbf
+                                  clientName: NotBefore
+                                  description: Not before date in seconds since 1970-01-01T00:00:00Z.
+                                  schema:
+                                    type: alias
+                                    name: anonymous<number>
+                                    aliasType: schema
+                                    clientName: NotBefore
+                                    description: Not before date in seconds since 1970-01-01T00:00:00Z.
+                                    targetSchema: &a31
+                                      type: time
+                                      name: anonymous<unknown>
+                                - name: exp
+                                  clientName: Expires
+                                  description: Expiry date in seconds since 1970-01-01T00:00:00Z.
+                                  schema:
+                                    type: alias
+                                    name: anonymous<number>
+                                    aliasType: schema
+                                    clientName: Expires
+                                    description: Expiry date in seconds since 1970-01-01T00:00:00Z.
+                                    targetSchema: *a31
+                                - name: created
+                                  description: Creation time in seconds since 1970-01-01T00:00:00Z.
+                                  readonly: true
+                                  schema:
+                                    type: alias
+                                    name: anonymous<number>
+                                    aliasType: schema
+                                    description: Creation time in seconds since 1970-01-01T00:00:00Z.
+                                    targetSchema: *a31
+                                - name: updated
+                                  description: Last updated time in seconds since 1970-01-01T00:00:00Z.
+                                  readonly: true
+                                  schema:
+                                    type: alias
+                                    name: anonymous<number>
+                                    aliasType: schema
+                                    description: Last updated time in seconds since 1970-01-01T00:00:00Z.
+                                    targetSchema: *a31
+                      - name: secretUri
+                        description: The URI to retrieve the current version of the secret.
+                        readonly: true
+                        schema:
+                          type: alias
+                          name: anonymous<string>
+                          aliasType: schema
+                          constraints:
+                            - type: constraint
+                              name: ReadOnly
+                              readOnly: true
+                          description: The URI to retrieve the current version of the secret.
+                          targetSchema: *a1
+                      - name: secretUriWithVersion
+                        description: The URI to retrieve the specific version of the secret.
+                        readonly: true
+                        schema:
+                          type: alias
+                          name: anonymous<string>
+                          aliasType: schema
+                          constraints:
+                            - type: constraint
+                              name: ReadOnly
+                              readOnly: true
+                          description: The URI to retrieve the specific version of the secret.
+                          targetSchema: *a1
+      tags:
+        - Secrets
+      attic:
+        x-ms-examples:
+          Get a secret:
+            $ref: ./examples/getSecret.json
+    - description: "Create or update a secret in a key vault in the specified
+        subscription.  NOTE: This API is intended for internal use in ARM
+        deployments. Users should use the data-plane REST service for
+        interaction with vault secrets."
+      id: Secrets_CreateOrUpdate
+      parameters:
+        - type: path
+          name: resourceGroupName
+          description: The name of the Resource Group to which the vault belongs.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The name of the Resource Group to which the vault belongs.
+            targetSchema: *a1
+        - type: path
+          name: vaultName
+          description: Name of the vault
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            constraints:
+              - type: constraint
+                name: RegularExpression
+                length: ^[a-zA-Z0-9-]{3,24}$
+            description: Name of the vault
+            targetSchema: *a1
+        - type: path
+          name: secretName
+          description: Name of the secret
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            constraints:
+              - type: constraint
+                name: RegularExpression
+                length: ^[a-zA-Z0-9-]{1,127}$
+            description: Name of the secret
+            targetSchema: *a1
+        - *a32
+        - *a33
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          schema: *a6
+        - name: parameters
+          description: Parameters to create or update the secret
+          identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a68
+              type: object
+              name: SecretCreateOrUpdateParameters
+              description: Parameters for creating or updating a secret
+              properties:
+                - name: tags
+                  description: "The tags that will be assigned to the secret. "
+                  schema:
+                    type: alias
+                    name: anonymous<dictionary>
+                    aliasType: schema
+                    description: "The tags that will be assigned to the secret. "
+                    targetSchema:
+                      type: dictionary
+                      name: anonymous<unknown>
+                      elementSchema: *a1
+                - name: properties
+                  description: Properties of the secret
+                  required: true
+                  schema: *a34
+              attic:
+                x-ms-azure-resource: true
+          attic:
+            x-ms-examples: &a36
+              Create a secret:
+                $ref: ./examples/createSecret.json
+      responses:
+        - name: "200"
+          description: Created or updated secret
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a35
+        - name: "201"
+          description: Created or updated vault
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a35
+      tags:
+        - Secrets
+      attic:
+        x-ms-examples: *a36
+    - description: "Update a secret in the specified subscription.  NOTE: This API is
+        intended for internal use in ARM deployments.  Users should use the
+        data-plane REST service for interaction with vault secrets."
+      id: Secrets_Update
+      parameters:
+        - type: path
+          name: resourceGroupName
+          description: The name of the Resource Group to which the vault belongs.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The name of the Resource Group to which the vault belongs.
+            targetSchema: *a1
+        - type: path
+          name: vaultName
+          description: Name of the vault
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            constraints:
+              - type: constraint
+                name: RegularExpression
+                length: ^[a-zA-Z0-9-]{3,24}$
+            description: Name of the vault
+            targetSchema: *a1
+        - type: path
+          name: secretName
+          description: Name of the secret
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            constraints:
+              - type: constraint
+                name: RegularExpression
+                length: ^[a-zA-Z0-9-]{1,127}$
+            description: Name of the secret
+            targetSchema: *a1
+        - *a32
+        - *a33
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          schema: *a6
+        - name: parameters
+          description: Parameters to patch the secret
+          identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a69
+              type: object
+              name: SecretPatchParameters
+              description: Parameters for patching a secret
+              properties:
+                - name: tags
+                  description: "The tags that will be assigned to the secret. "
+                  schema:
+                    type: alias
+                    name: anonymous<dictionary>
+                    aliasType: schema
+                    description: "The tags that will be assigned to the secret. "
+                    targetSchema:
+                      type: dictionary
+                      name: anonymous<unknown>
+                      elementSchema: *a1
+                - name: properties
+                  description: Properties of the secret
+                  schema: &a67
+                    type: object
+                    name: SecretPatchProperties
+                    description: Properties of the secret
+                    properties:
+                      - name: value
+                        description: The value of the secret.
+                        schema:
+                          type: alias
+                          name: anonymous<string>
+                          aliasType: schema
+                          description: The value of the secret.
+                          targetSchema: *a1
+                      - name: contentType
+                        description: The content type of the secret.
+                        schema:
+                          type: alias
+                          name: anonymous<string>
+                          aliasType: schema
+                          description: The content type of the secret.
+                          targetSchema: *a1
+                      - name: attributes
+                        description: The attributes of the secret.
+                        schema: *a37
+              attic:
+                x-ms-azure-resource: true
+          attic:
+            x-ms-examples: &a38
+              Update a secret:
+                $ref: ./examples/updateSecret.json
+      responses:
+        - name: "200"
+          description: Patched secret
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a35
+        - name: "201"
+          description: Patched secret
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a35
+      tags:
+        - Secrets
+      attic:
+        x-ms-examples: *a38
+    - description: "The List operation gets information about the secrets in a
+        vault.  NOTE: This API is intended for internal use in ARM deployments.
+        Users should use the data-plane REST service for interaction with vault
+        secrets."
+      id: Secrets_List
+      parameters:
+        - type: path
+          name: resourceGroupName
+          description: The name of the Resource Group to which the vault belongs.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The name of the Resource Group to which the vault belongs.
+            targetSchema: *a1
+        - type: path
+          name: vaultName
+          description: The name of the vault.
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: alias
+            name: anonymous<string>
+            aliasType: schema
+            description: The name of the vault.
+            targetSchema: *a1
+        - type: query
+          name: $top
+          description: Maximum number of results to return.
+          expandParameterValues: true
+          renderStyle: form
+          schema:
+            type: alias
+            name: anonymous<number>
+            aliasType: schema
+            description: Maximum number of results to return.
+            targetSchema: *a13
+        - *a32
+        - *a33
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          schema: *a6
+      responses:
+        - name: "200"
+          description: Get information about secrets in the specified vault.
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a70
+              type: object
+              name: SecretListResult
+              description: List of secrets
+              properties:
+                - name: value
+                  description: The list of secrets.
+                  schema:
+                    type: alias
+                    name: value
+                    aliasType: schema
+                    description: The list of secrets.
+                    targetSchema:
+                      type: array
+                      name: anonymous<unknown>
+                      elementSchema: *a35
+                - name: nextLink
+                  description: The URL to get the next set of secrets.
+                  schema:
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    description: The URL to get the next set of secrets.
+                    targetSchema: *a1
+      tags:
+        - Secrets
+      attic:
+        x-ms-examples:
+          List secrets in the vault:
+            $ref: ./examples/listSecrets.json
+        x-ms-pageable:
+          nextLinkName: nextLink
+  parameters:
+    - *a5
+    - *a24
+    - *a25
+    - *a26
+    - *a4
+    - type: path
+      name: subscriptionId
+      description: Subscription credentials which uniquely identify Microsoft Azure
+        subscription. The subscription ID forms part of the URI for every
+        service call.
+      expandParameterValues: false
+      renderStyle: simple
+      required: true
+      schema:
+        type: alias
+        name: anonymous<string>
+        aliasType: schema
+        description: Subscription credentials which uniquely identify Microsoft Azure
+          subscription. The subscription ID forms part of the URI for every
+          service call.
+        targetSchema: *a1
+    - type: query
+      name: api-version
+      description: Client Api Version.
+      expandParameterValues: true
+      renderStyle: form
+      required: true
+      schema: *a39
+    - *a33
+    - *a32
+metaData:
+  name: KeyVaultManagementClient
+  description: The Azure management API provides a RESTful set of web services
+    that interact with Azure Key Vault.
+schemas:
+  primitives:
+    - *a1
+    - *a2
+    - *a3
+    - *a13
+    - *a19
+    - *a6
+    - *a10
+    - *a30
+    - *a31
+  enums:
+    - *a40
+    - *a41
+  objects:
+    - *a28
+    - *a42
+    - *a11
+    - *a12
+    - *a43
+    - *a7
+    - *a44
+    - *a45
+    - *a46
+    - *a47
+    - *a48
+    - *a16
+    - *a8
+    - *a20
+    - *a18
+    - *a49
+    - *a50
+    - *a22
+    - *a51
+    - *a52
+    - *a14
+    - *a53
+    - *a54
+    - *a55
+    - *a27
+    - *a23
+    - *a56
+    - *a57
+    - *a58
+    - *a59
+    - *a60
+    - *a61
+    - *a62
+    - *a63
+    - *a64
+    - *a65
+    - *a66
+    - *a34
+    - *a67
+    - *a37
+    - *a68
+    - *a69
+    - *a35
+    - *a70

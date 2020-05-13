@@ -1,0 +1,3713 @@
+http:
+  authenticationRequirements:
+    - authentications:
+        - authentication:
+            aliasType: authentication
+            target: &a1
+              type: apikey
+              name: hmac
+              description: Amazon Signature authorization v4
+              parameterLocation: header
+              parameterName: Authorization
+              attic:
+                x-amazon-apigateway-authtype: awsSigv4
+  authentications:
+    - *a1
+  connections:
+    - description: The Application Insights multi-region endpoint
+      url: http://applicationinsights.{region}.amazonaws.com
+      variables:
+        - name: region
+          allowedValues:
+            - us-east-1
+            - us-east-2
+            - us-west-1
+            - us-west-2
+            - us-gov-west-1
+            - us-gov-east-1
+            - ca-central-1
+            - eu-north-1
+            - eu-west-1
+            - eu-west-2
+            - eu-west-3
+            - eu-central-1
+            - ap-northeast-1
+            - ap-northeast-2
+            - ap-northeast-3
+            - ap-southeast-1
+            - ap-southeast-2
+            - ap-south-1
+            - sa-east-1
+          defaultValue: us-east-1
+          description: The AWS region
+    - description: The Application Insights multi-region endpoint
+      url: https://applicationinsights.{region}.amazonaws.com
+      variables:
+        - name: region
+          allowedValues:
+            - us-east-1
+            - us-east-2
+            - us-west-1
+            - us-west-2
+            - us-gov-west-1
+            - us-gov-east-1
+            - ca-central-1
+            - eu-north-1
+            - eu-west-1
+            - eu-west-2
+            - eu-west-3
+            - eu-central-1
+            - ap-northeast-1
+            - ap-northeast-2
+            - ap-northeast-3
+            - ap-southeast-1
+            - ap-southeast-2
+            - ap-south-1
+            - sa-east-1
+          defaultValue: us-east-1
+          description: The AWS region
+    - description: The Application Insights endpoint for China (Beijing) and China (Ningxia)
+      url: http://applicationinsights.{region}.amazonaws.com.cn
+      variables:
+        - name: region
+          allowedValues:
+            - cn-north-1
+            - cn-northwest-1
+          defaultValue: cn-north-1
+          description: The AWS region
+    - description: The Application Insights endpoint for China (Beijing) and China (Ningxia)
+      url: https://applicationinsights.{region}.amazonaws.com.cn
+      variables:
+        - name: region
+          allowedValues:
+            - cn-north-1
+            - cn-northwest-1
+          defaultValue: cn-north-1
+          description: The AWS region
+  operations:
+    - description: Adds an application that is created from a resource group.
+      id: CreateApplication
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: &a7
+            type: header
+            name: X-Amz-Content-Sha256
+            expandParameterValues: false
+            renderStyle: simple
+            required: false
+            schema: &a2
+              type: string
+              name: anonymous<unknown>
+        - name: "1"
+          aliasType: parameter
+          target: &a8
+            type: header
+            name: X-Amz-Date
+            expandParameterValues: false
+            renderStyle: simple
+            required: false
+            schema: *a2
+        - name: "2"
+          aliasType: parameter
+          target: &a9
+            type: header
+            name: X-Amz-Algorithm
+            expandParameterValues: false
+            renderStyle: simple
+            required: false
+            schema: *a2
+        - name: "3"
+          aliasType: parameter
+          target: &a10
+            type: header
+            name: X-Amz-Credential
+            expandParameterValues: false
+            renderStyle: simple
+            required: false
+            schema: *a2
+        - name: "4"
+          aliasType: parameter
+          target: &a11
+            type: header
+            name: X-Amz-Security-Token
+            expandParameterValues: false
+            renderStyle: simple
+            required: false
+            schema: *a2
+        - name: "5"
+          aliasType: parameter
+          target: &a12
+            type: header
+            name: X-Amz-Signature
+            expandParameterValues: false
+            renderStyle: simple
+            required: false
+            schema: *a2
+        - name: "6"
+          aliasType: parameter
+          target: &a13
+            type: header
+            name: X-Amz-SignedHeaders
+            expandParameterValues: false
+            renderStyle: simple
+            required: false
+            schema: *a2
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a42
+              type: object
+              name: CreateApplicationRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: &a4
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: MaxLength
+                        length: 256
+                      - type: constraint
+                        name: MinLength
+                        length: 1
+                      - type: constraint
+                        name: RegularExpression
+                        length: "[a-zA-Z0-9\\.\\-_]*"
+                    targetSchema: *a2
+                - name: OpsCenterEnabled
+                  description: " When set to <code>true</code>, creates opsItems for any problems
+                    detected on an application. "
+                  schema: &a3
+                    type: boolean
+                    name: anonymous<unknown>
+                - name: CWEMonitorEnabled
+                  description: " Indicates whether Application Insights can listen to CloudWatch
+                    events for the application resources, such as <code>instance
+                    terminated</code>, <code>failed deployment</code>, and
+                    others. "
+                  schema: *a3
+                - name: OpsItemSNSTopicArn
+                  description: " The SNS topic provided to Application Insights that is associated
+                    to the created opsItem. Allows you to receive notifications
+                    for updates to the opsItem. "
+                  schema: &a5
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: MaxLength
+                        length: 300
+                      - type: constraint
+                        name: MinLength
+                        length: 20
+                    targetSchema: *a2
+                - name: Tags
+                  description: List of tags to add to the application. tag key (<code>Key</code>)
+                    and an associated tag value (<code>Value</code>). The
+                    maximum length of a tag key is 128 characters. The maximum
+                    length of a tag value is 256 characters.
+                  schema: &a31
+                    type: alias
+                    name: TagList
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: MaximumElements
+                        count: 200
+                      - type: constraint
+                        name: MinimumElements
+                        count: 0
+                    targetSchema:
+                      type: array
+                      name: anonymous<unknown>
+                      elementSchema: &a97
+                        type: object
+                        name: Tag
+                        description: "<p>An object that defines the tags associated with an application.
+                          A <i>tag</i> is a label that you optionally define and
+                          associate with an application. Tags can help you
+                          categorize and manage resources in different ways,
+                          such as by purpose, owner, environment, or other
+                          criteria.</p> <p>Each tag consists of a required
+                          <i>tag key</i> and an associated <i>tag value</i>,
+                          both of which you define. A tag key is a general label
+                          that acts as a category for a more specific tag value.
+                          A tag value acts as a descriptor within a tag key. A
+                          tag key can contain as many as 128 characters. A tag
+                          value can contain as many as 256 characters. The
+                          characters can be Unicode letters, digits, white
+                          space, or one of the following symbols: _ . : / = + -.
+                          The following additional restrictions apply to
+                          tags:</p> <ul> <li> <p>Tag keys and values are case
+                          sensitive.</p> </li> <li> <p>For each associated
+                          resource, each tag key must be unique and it can have
+                          only one value.</p> </li> <li> <p>The
+                          <code>aws:</code> prefix is reserved for use by AWS;
+                          you can’t use it in any tag keys or values that you
+                          define. In addition, you can't edit or remove tag keys
+                          or values that use this prefix. </p> </li> </ul>"
+                        properties:
+                          - name: Key
+                            description: One part of a key-value pair that defines a tag. The maximum length
+                              of a tag key is 128 characters. The minimum length
+                              is 1 character.
+                            required: true
+                            schema: &a33
+                              type: alias
+                              name: anonymous<string>
+                              aliasType: schema
+                              constraints:
+                                - type: constraint
+                                  name: MaxLength
+                                  length: 128
+                                - type: constraint
+                                  name: MinLength
+                                  length: 1
+                              targetSchema: *a2
+                          - name: Value
+                            description: The optional part of a key-value pair that defines a tag. The
+                              maximum length of a tag value is 256 characters.
+                              The minimum length is 0 characters. If you don't
+                              want an application to have a specific tag value,
+                              don't specify a value for this parameter.
+                            required: true
+                            schema: &a107
+                              type: alias
+                              name: anonymous<string>
+                              aliasType: schema
+                              constraints:
+                                - type: constraint
+                                  name: MaxLength
+                                  length: 256
+                                - type: constraint
+                                  name: MinLength
+                                  length: 0
+                              targetSchema: *a2
+              summary: CreateApplicationRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a41
+              type: object
+              name: CreateApplicationResponse
+              properties:
+                - name: ApplicationInfo
+                  description: Information about the application.
+                  schema: &a18
+                    type: object
+                    name: ApplicationInfo
+                    description: Describes the status of the application.
+                    properties:
+                      - name: ResourceGroupName
+                        description: The name of the resource group used for the application.
+                        schema: *a4
+                      - name: LifeCycle
+                        description: "The lifecycle of the application. "
+                        schema: *a2
+                      - name: OpsItemSNSTopicArn
+                        description: " The SNS topic provided to Application Insights that is associated
+                          to the created opsItems to receive SNS notifications
+                          for opsItem updates. "
+                        schema: *a5
+                      - name: OpsCenterEnabled
+                        description: " Indicates whether Application Insights will create opsItems for
+                          any problem detected by Application Insights for an
+                          application. "
+                        schema: *a3
+                      - name: CWEMonitorEnabled
+                        description: " Indicates whether Application Insights can listen to CloudWatch
+                          events for the application resources, such as
+                          <code>instance terminated</code>, <code>failed
+                          deployment</code>, and others. "
+                        schema: *a3
+                      - name: Remarks
+                        description: <p>The issues on the user side that block Application Insights from
+                          successfully monitoring an application. Example
+                          remarks include:</p> <ul> <li> <p>“Configuring
+                          application, detected 1 Errors, 3 Warnings”</p> </li>
+                          <li> <p>“Configuring application, detected 1
+                          Unconfigured Components”</p> </li> </ul>
+                        schema: *a2
+        - name: "480"
+          description: ResourceInUseException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a6
+              type: any
+              name: anonymous<unknown>
+        - name: "481"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "483"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "484"
+          description: TagsAlreadyExistException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Creates a custom component by grouping similar standalone instances
+        to monitor.
+      id: CreateComponent
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a44
+              type: object
+              name: CreateComponentRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: *a4
+                - name: ComponentName
+                  description: The name of the component.
+                  required: true
+                  schema: *a2
+                - name: ResourceList
+                  description: The list of resource ARNs that belong to the component.
+                  required: true
+                  schema: &a19
+                    type: alias
+                    name: ResourceList
+                    aliasType: schema
+                    targetSchema:
+                      type: array
+                      name: anonymous<unknown>
+                      elementSchema: &a106
+                        type: alias
+                        name: anonymous<string>
+                        aliasType: schema
+                        constraints:
+                          - type: constraint
+                            name: MaxLength
+                            length: 1011
+                          - type: constraint
+                            name: MinLength
+                            length: 1
+                        targetSchema: *a2
+              summary: CreateComponentRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a43
+              type: object
+              name: CreateComponentResponse
+        - name: "480"
+          description: ResourceInUseException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "483"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Adds an log pattern to a <code>LogPatternSet</code>.
+      id: CreateLogPattern
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a46
+              type: object
+              name: CreateLogPatternRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: *a4
+                - name: PatternSetName
+                  description: The name of the log pattern set.
+                  required: true
+                  schema: &a14
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: MaxLength
+                        length: 30
+                      - type: constraint
+                        name: MinLength
+                        length: 1
+                      - type: constraint
+                        name: RegularExpression
+                        length: "[a-zA-Z0-9\\.\\-_]*"
+                    targetSchema: *a2
+                - name: PatternName
+                  description: The name of the log pattern.
+                  required: true
+                  schema: &a15
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: MaxLength
+                        length: 50
+                      - type: constraint
+                        name: MinLength
+                        length: 1
+                      - type: constraint
+                        name: RegularExpression
+                        length: "[a-zA-Z0-9\\.\\-_]*"
+                    targetSchema: *a2
+                - name: Pattern
+                  description: The log pattern.
+                  required: true
+                  schema: &a16
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: MaxLength
+                        length: 50
+                      - type: constraint
+                        name: MinLength
+                        length: 1
+                    targetSchema: *a2
+                - name: Rank
+                  description: Rank of the log pattern.
+                  required: true
+                  schema: &a17
+                    type: int64
+                    name: anonymous<unknown>
+              summary: CreateLogPatternRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a45
+              type: object
+              name: CreateLogPatternResponse
+              properties:
+                - name: LogPattern
+                  description: The successfully created log pattern.
+                  schema: &a22
+                    type: object
+                    name: LogPattern
+                    description: An object that defines the log patterns that belongs to a
+                      <code>LogPatternSet</code>.
+                    properties:
+                      - name: PatternSetName
+                        description: "The name of the log pattern. A log pattern name can contains at
+                          many as 30 characters, and it cannot be empty. The
+                          characters can be Unicode letters, digits or one of
+                          the following symbols: period, dash, underscore."
+                        schema: *a14
+                      - name: PatternName
+                        description: "The name of the log pattern. A log pattern name can contains at
+                          many as 50 characters, and it cannot be empty. The
+                          characters can be Unicode letters, digits or one of
+                          the following symbols: period, dash, underscore."
+                        schema: *a15
+                      - name: Pattern
+                        description: A regular expression that defines the log pattern. A log pattern
+                          can contains at many as 50 characters, and it cannot
+                          be empty.
+                        schema: *a16
+                      - name: Rank
+                        description: Rank of the log pattern.
+                        schema: *a17
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  schema: *a4
+        - name: "480"
+          description: ResourceInUseException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "483"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Removes the specified application from monitoring. Does not delete
+        the application.
+      id: DeleteApplication
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a48
+              type: object
+              name: DeleteApplicationRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: *a4
+              summary: DeleteApplicationRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a47
+              type: object
+              name: DeleteApplicationResponse
+        - name: "480"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: BadRequestException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "483"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Ungroups a custom component. When you ungroup custom components,
+        all applicable monitors that are set up for the component are removed
+        and the instances revert to their standalone status.
+      id: DeleteComponent
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a50
+              type: object
+              name: DeleteComponentRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: *a4
+                - name: ComponentName
+                  description: The name of the component.
+                  required: true
+                  schema: *a2
+              summary: DeleteComponentRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a49
+              type: object
+              name: DeleteComponentResponse
+        - name: "480"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Removes the specified log pattern from a <code>LogPatternSet</code>.
+      id: DeleteLogPattern
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a52
+              type: object
+              name: DeleteLogPatternRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: *a4
+                - name: PatternSetName
+                  description: The name of the log pattern set.
+                  required: true
+                  schema: *a14
+                - name: PatternName
+                  description: The name of the log pattern.
+                  required: true
+                  schema: *a15
+              summary: DeleteLogPatternRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a51
+              type: object
+              name: DeleteLogPatternResponse
+        - name: "480"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: BadRequestException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "483"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Describes the application.
+      id: DescribeApplication
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a54
+              type: object
+              name: DescribeApplicationRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: *a4
+              summary: DescribeApplicationRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a53
+              type: object
+              name: DescribeApplicationResponse
+              properties:
+                - name: ApplicationInfo
+                  description: Information about the application.
+                  schema: *a18
+        - name: "480"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Describes a component and lists the resources that are grouped
+        together in a component.
+      id: DescribeComponent
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a56
+              type: object
+              name: DescribeComponentRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: *a4
+                - name: ComponentName
+                  description: The name of the component.
+                  required: true
+                  schema: *a2
+              summary: DescribeComponentRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a55
+              type: object
+              name: DescribeComponentResponse
+              properties:
+                - name: ApplicationComponent
+                  schema: &a28
+                    type: object
+                    name: ApplicationComponent
+                    description: Describes a standalone resource or similarly grouped resources that
+                      the application is made up of.
+                    properties:
+                      - name: ComponentName
+                        description: The name of the component.
+                        schema: *a2
+                      - name: ResourceType
+                        description: The resource type. Supported resource types include EC2 instances,
+                          Auto Scaling group, Classic ELB, Application ELB, and
+                          SQS Queue.
+                        schema: *a2
+                      - name: Tier
+                        description: The stack tier of the application component.
+                        schema: &a20
+                          type: enum
+                          name: anonymous<unknown>
+                      - name: Monitor
+                        description: "Indicates whether the application component is monitored. "
+                        schema: *a3
+                - name: ResourceList
+                  description: The list of resource ARNs that belong to the component.
+                  schema: *a19
+        - name: "480"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Describes the monitoring configuration of the component.
+      id: DescribeComponentConfiguration
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a58
+              type: object
+              name: DescribeComponentConfigurationRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: *a4
+                - name: ComponentName
+                  description: The name of the component.
+                  required: true
+                  schema: *a2
+              summary: DescribeComponentConfigurationRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a57
+              type: object
+              name: DescribeComponentConfigurationResponse
+              properties:
+                - name: Monitor
+                  description: Indicates whether the application component is monitored.
+                  schema: *a3
+                - name: Tier
+                  description: "The tier of the application component. Supported tiers include
+                    <code>DOT_NET_CORE</code>, <code>DOT_NET_WORKER</code>,
+                    <code>DOT_NET_WEB</code>, <code>SQL_SERVER</code>, and
+                    <code>DEFAULT</code> "
+                  schema: *a20
+                - name: ComponentConfiguration
+                  description: The configuration settings of the component. The value is the
+                    escaped JSON of the configuration.
+                  schema: &a21
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: MaxLength
+                        length: 10000
+                      - type: constraint
+                        name: MinLength
+                        length: 1
+                    targetSchema: *a2
+        - name: "480"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Describes the recommended monitoring configuration of the component.
+      id: DescribeComponentConfigurationRecommendation
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a60
+              type: object
+              name: DescribeComponentConfigurationRecommendationRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: *a4
+                - name: ComponentName
+                  description: The name of the component.
+                  required: true
+                  schema: *a2
+                - name: Tier
+                  description: The tier of the application component. Supported tiers include
+                    <code>DOT_NET_CORE</code>, <code>DOT_NET_WORKER</code>,
+                    <code>DOT_NET_WEB</code>, <code>SQL_SERVER</code>, and
+                    <code>DEFAULT</code>.
+                  required: true
+                  schema: *a20
+              summary: DescribeComponentConfigurationRecommendationRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a59
+              type: object
+              name: DescribeComponentConfigurationRecommendationResponse
+              properties:
+                - name: ComponentConfiguration
+                  description: The recommended configuration settings of the component. The value
+                    is the escaped JSON of the configuration.
+                  schema: *a21
+        - name: "480"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Describe a specific log pattern from a <code>LogPatternSet</code>.
+      id: DescribeLogPattern
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a62
+              type: object
+              name: DescribeLogPatternRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: *a4
+                - name: PatternSetName
+                  description: The name of the log pattern set.
+                  required: true
+                  schema: *a14
+                - name: PatternName
+                  description: The name of the log pattern.
+                  required: true
+                  schema: *a15
+              summary: DescribeLogPatternRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a61
+              type: object
+              name: DescribeLogPatternResponse
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  schema: *a4
+                - name: LogPattern
+                  description: The successfully created log pattern.
+                  schema: *a22
+        - name: "480"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Describes an anomaly or error with the application.
+      id: DescribeObservation
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a64
+              type: object
+              name: DescribeObservationRequest
+              properties:
+                - name: ObservationId
+                  description: The ID of the observation.
+                  required: true
+                  schema: &a23
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: MaxLength
+                        length: 38
+                      - type: constraint
+                        name: MinLength
+                        length: 38
+                      - type: constraint
+                        name: RegularExpression
+                        length: o-[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}
+                    targetSchema: *a2
+              summary: DescribeObservationRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a63
+              type: object
+              name: DescribeObservationResponse
+              properties:
+                - name: Observation
+                  description: Information about the observation.
+                  schema: &a26
+                    type: object
+                    name: Observation
+                    description: Describes an anomaly or error with the application.
+                    properties:
+                      - name: Id
+                        description: The ID of the observation type.
+                        schema: *a23
+                      - name: StartTime
+                        description: The time when the observation was first detected, in epoch seconds.
+                        schema: &a24
+                          type: dateTime
+                          name: anonymous<unknown>
+                      - name: EndTime
+                        description: The time when the observation ended, in epoch seconds.
+                        schema: *a24
+                      - name: SourceType
+                        description: The source type of the observation.
+                        schema: *a2
+                      - name: SourceARN
+                        description: The source resource ARN of the observation.
+                        schema: *a2
+                      - name: LogGroup
+                        description: The log group name.
+                        schema: *a2
+                      - name: LineTime
+                        description: The timestamp in the CloudWatch Logs that specifies when the
+                          matched line occurred.
+                        schema: *a24
+                      - name: LogText
+                        description: The log text of the observation.
+                        schema: *a2
+                      - name: LogFilter
+                        description: The log filter of the observation.
+                        schema: &a38
+                          type: enum
+                          name: anonymous<unknown>
+                      - name: MetricNamespace
+                        description: The namespace of the observation metric.
+                        schema: *a2
+                      - name: MetricName
+                        description: The name of the observation metric.
+                        schema: *a2
+                      - name: Unit
+                        description: The unit of the source observation metric.
+                        schema: *a2
+                      - name: Value
+                        description: The value of the source observation metric.
+                        schema: &a34
+                          type: double
+                          name: anonymous<unknown>
+                      - name: CloudWatchEventId
+                        description: " The ID of the CloudWatch Event-based observation related to the
+                          detected problem. "
+                        schema: *a2
+                      - name: CloudWatchEventSource
+                        description: " The source of the CloudWatch Event. "
+                        schema: &a35
+                          type: enum
+                          name: anonymous<unknown>
+                      - name: CloudWatchEventDetailType
+                        description: " The detail type of the CloudWatch Event-based observation, for
+                          example, <code>EC2 Instance State-change
+                          Notification</code>. "
+                        schema: *a2
+                      - name: HealthEventArn
+                        description: " The Amazon Resource Name (ARN) of the AWS Health Event-based
+                          observation."
+                        schema: *a2
+                      - name: HealthService
+                        description: " The service to which the AWS Health Event belongs, such as EC2. "
+                        schema: *a2
+                      - name: HealthEventTypeCode
+                        description: " The type of the AWS Health event, for example,
+                          <code>AWS_EC2_POWER_CONNECTIVITY_ISSUE</code>. "
+                        schema: *a2
+                      - name: HealthEventTypeCategory
+                        description: " The category of the AWS Health event, such as <code>issue</code>.
+                          "
+                        schema: *a2
+                      - name: HealthEventDescription
+                        description: " The description of the AWS Health event provided by the service,
+                          such as Amazon EC2. "
+                        schema: *a2
+                      - name: CodeDeployDeploymentId
+                        description: " The deployment ID of the CodeDeploy-based observation related to
+                          the detected problem. "
+                        schema: *a2
+                      - name: CodeDeployDeploymentGroup
+                        description: " The deployment group to which the CodeDeploy deployment belongs.
+                          "
+                        schema: *a2
+                      - name: CodeDeployState
+                        description: " The status of the CodeDeploy deployment, for example
+                          <code>SUCCESS</code> or <code> FAILURE</code>. "
+                        schema: *a2
+                      - name: CodeDeployApplication
+                        description: " The CodeDeploy application to which the deployment belongs. "
+                        schema: *a2
+                      - name: CodeDeployInstanceGroupId
+                        description: " The instance group to which the CodeDeploy instance belongs. "
+                        schema: *a2
+                      - name: Ec2State
+                        description: " The state of the instance, such as <code>STOPPING</code> or
+                          <code>TERMINATING</code>. "
+                        schema: *a2
+                      - name: XRayFaultPercent
+                        description: " The X-Ray request fault percentage for this node. "
+                        schema: *a17
+                      - name: XRayThrottlePercent
+                        description: " The X-Ray request throttle percentage for this node. "
+                        schema: *a17
+                      - name: XRayErrorPercent
+                        description: " The X-Ray request error percentage for this node. "
+                        schema: *a17
+                      - name: XRayRequestCount
+                        description: " The X-Ray request count for this node. "
+                        schema: *a17
+                      - name: XRayRequestAverageLatency
+                        description: " The X-Ray node request average latency for this node. "
+                        schema: *a17
+                      - name: XRayNodeName
+                        description: " The name of the X-Ray node. "
+                        schema: *a2
+                      - name: XRayNodeType
+                        description: " The type of the X-Ray node. "
+                        schema: *a2
+        - name: "480"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Describes an application problem.
+      id: DescribeProblem
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a66
+              type: object
+              name: DescribeProblemRequest
+              properties:
+                - name: ProblemId
+                  description: The ID of the problem.
+                  required: true
+                  schema: &a25
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: MaxLength
+                        length: 38
+                      - type: constraint
+                        name: MinLength
+                        length: 38
+                      - type: constraint
+                        name: RegularExpression
+                        length: p-[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}
+                    targetSchema: *a2
+              summary: DescribeProblemRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a65
+              type: object
+              name: DescribeProblemResponse
+              properties:
+                - name: Problem
+                  description: "Information about the problem. "
+                  schema: &a30
+                    type: object
+                    name: Problem
+                    description: Describes a problem that is detected by correlating observations.
+                    properties:
+                      - name: Id
+                        description: The ID of the problem.
+                        schema: *a25
+                      - name: Title
+                        description: The name of the problem.
+                        schema: *a2
+                      - name: Insights
+                        description: A detailed analysis of the problem using machine learning.
+                        schema: *a2
+                      - name: Status
+                        description: The status of the problem.
+                        schema: &a39
+                          type: enum
+                          name: anonymous<unknown>
+                      - name: AffectedResource
+                        description: The resource affected by the problem.
+                        schema: *a2
+                      - name: StartTime
+                        description: The time when the problem started, in epoch seconds.
+                        schema: *a24
+                      - name: EndTime
+                        description: The time when the problem ended, in epoch seconds.
+                        schema: *a24
+                      - name: SeverityLevel
+                        description: A measure of the level of impact of the problem.
+                        schema: &a40
+                          type: enum
+                          name: anonymous<unknown>
+                      - name: ResourceGroupName
+                        description: The name of the resource group affected by the problem.
+                        schema: *a4
+                      - name: Feedback
+                        description: Feedback provided by the user about the problem.
+                        schema: &a101
+                          type: alias
+                          name: Feedback
+                          aliasType: schema
+                          constraints:
+                            - type: constraint
+                              name: MaximumProperties
+                              count: 10
+                          targetSchema:
+                            type: dictionary
+                            name: anonymous<unknown>
+                            elementSchema: &a37
+                              type: enum
+                              name: anonymous<unknown>
+        - name: "480"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Describes the anomalies or errors associated with the problem.
+      id: DescribeProblemObservations
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a68
+              type: object
+              name: DescribeProblemObservationsRequest
+              properties:
+                - name: ProblemId
+                  description: The ID of the problem.
+                  required: true
+                  schema: *a25
+              summary: DescribeProblemObservationsRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a67
+              type: object
+              name: DescribeProblemObservationsResponse
+              properties:
+                - name: RelatedObservations
+                  description: Observations related to the problem.
+                  schema: &a96
+                    type: object
+                    name: RelatedObservations
+                    description: Describes observations related to the problem.
+                    properties:
+                      - name: ObservationList
+                        description: The list of observations related to the problem.
+                        schema: &a105
+                          type: alias
+                          name: ObservationList
+                          aliasType: schema
+                          targetSchema:
+                            type: array
+                            name: anonymous<unknown>
+                            elementSchema: *a26
+        - name: "480"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: "Lists the IDs of the applications that you are monitoring. "
+      id: ListApplications
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: query
+          name: MaxResults
+          description: Pagination limit
+          expandParameterValues: true
+          renderStyle: form
+          required: false
+          schema: *a2
+        - type: query
+          name: NextToken
+          description: Pagination token
+          expandParameterValues: true
+          renderStyle: form
+          required: false
+          schema: *a2
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a70
+              type: object
+              name: ListApplicationsRequest
+              properties:
+                - name: MaxResults
+                  description: The maximum number of results to return in a single call. To
+                    retrieve the remaining results, make another call with the
+                    returned <code>NextToken</code> value.
+                  schema: &a27
+                    type: alias
+                    name: anonymous<number>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: Minimum
+                        minimum: 1
+                      - type: constraint
+                        name: Maximum
+                        maximum: 40
+                    targetSchema: *a17
+                - name: NextToken
+                  description: The token to request the next page of results.
+                  schema: *a2
+              summary: ListApplicationsRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a69
+              type: object
+              name: ListApplicationsResponse
+              properties:
+                - name: ApplicationInfoList
+                  description: The list of applications.
+                  schema: &a99
+                    type: alias
+                    name: ApplicationInfoList
+                    aliasType: schema
+                    targetSchema:
+                      type: array
+                      name: anonymous<unknown>
+                      elementSchema: *a18
+                - name: NextToken
+                  description: "The token used to retrieve the next page of results. This value is
+                    <code>null</code> when there are no more results to return.
+                    "
+                  schema: *a2
+        - name: "480"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Lists the auto-grouped, standalone, and custom components of the
+        application.
+      id: ListComponents
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: query
+          name: MaxResults
+          description: Pagination limit
+          expandParameterValues: true
+          renderStyle: form
+          required: false
+          schema: *a2
+        - type: query
+          name: NextToken
+          description: Pagination token
+          expandParameterValues: true
+          renderStyle: form
+          required: false
+          schema: *a2
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a72
+              type: object
+              name: ListComponentsRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: *a4
+                - name: MaxResults
+                  description: The maximum number of results to return in a single call. To
+                    retrieve the remaining results, make another call with the
+                    returned <code>NextToken</code> value.
+                  schema: *a27
+                - name: NextToken
+                  description: The token to request the next page of results.
+                  schema: *a2
+              summary: ListComponentsRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a71
+              type: object
+              name: ListComponentsResponse
+              properties:
+                - name: ApplicationComponentList
+                  description: The list of application components.
+                  schema: &a98
+                    type: alias
+                    name: ApplicationComponentList
+                    aliasType: schema
+                    targetSchema:
+                      type: array
+                      name: anonymous<unknown>
+                      elementSchema: *a28
+                - name: NextToken
+                  description: The token to request the next page of results.
+                  schema: *a2
+        - name: "480"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: "<p> Lists the INFO, WARN, and ERROR events for periodic
+        configuration updates performed by Application Insights. Examples of
+        events represented are: </p> <ul> <li> <p>INFO: creating a new alarm or
+        updating an alarm threshold.</p> </li> <li> <p>WARN: alarm not created
+        due to insufficient data points used to predict thresholds.</p> </li>
+        <li> <p>ERROR: alarm not created due to permission errors or exceeding
+        quotas. </p> </li> </ul>"
+      id: ListConfigurationHistory
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: query
+          name: MaxResults
+          description: Pagination limit
+          expandParameterValues: true
+          renderStyle: form
+          required: false
+          schema: *a2
+        - type: query
+          name: NextToken
+          description: Pagination token
+          expandParameterValues: true
+          renderStyle: form
+          required: false
+          schema: *a2
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a74
+              type: object
+              name: ListConfigurationHistoryRequest
+              properties:
+                - name: ResourceGroupName
+                  description: "Resource group to which the application belongs. "
+                  schema: *a4
+                - name: StartTime
+                  description: "The start time of the event. "
+                  schema: *a24
+                - name: EndTime
+                  description: The end time of the event.
+                  schema: *a24
+                - name: EventStatus
+                  description: The status of the configuration update event. Possible values
+                    include INFO, WARN, and ERROR.
+                  schema: &a29
+                    type: enum
+                    name: anonymous<unknown>
+                - name: MaxResults
+                  description: " The maximum number of results returned by
+                    <code>ListConfigurationHistory</code> in paginated output.
+                    When this parameter is used,
+                    <code>ListConfigurationHistory</code> returns only
+                    <code>MaxResults</code> in a single page along with a
+                    <code>NextToken</code> response element. The remaining
+                    results of the initial request can be seen by sending
+                    another <code>ListConfigurationHistory</code> request with
+                    the returned <code>NextToken</code> value. If this parameter
+                    is not used, then <code>ListConfigurationHistory</code>
+                    returns all results. "
+                  schema: *a27
+                - name: NextToken
+                  description: The <code>NextToken</code> value returned from a previous paginated
+                    <code>ListConfigurationHistory</code> request where
+                    <code>MaxResults</code> was used and the results exceeded
+                    the value of that parameter. Pagination continues from the
+                    end of the previous results that returned the
+                    <code>NextToken</code> value. This value is
+                    <code>null</code> when there are no more results to return.
+                  schema: *a2
+              summary: ListConfigurationHistoryRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a73
+              type: object
+              name: ListConfigurationHistoryResponse
+              properties:
+                - name: EventList
+                  description: " The list of configuration events and their corresponding details.
+                    "
+                  schema: &a100
+                    type: alias
+                    name: ConfigurationEventList
+                    aliasType: schema
+                    targetSchema:
+                      type: array
+                      name: anonymous<unknown>
+                      elementSchema: &a95
+                        type: object
+                        name: ConfigurationEvent
+                        description: " The event information. "
+                        properties:
+                          - name: MonitoredResourceARN
+                            description: " The resource monitored by Application Insights. "
+                            schema: *a2
+                          - name: EventStatus
+                            description: " The status of the configuration update event. Possible values
+                              include INFO, WARN, and ERROR. "
+                            schema: *a29
+                          - name: EventResourceType
+                            description: " The resource type that Application Insights attempted to
+                              configure, for example, CLOUDWATCH_ALARM. "
+                            schema: &a36
+                              type: enum
+                              name: anonymous<unknown>
+                          - name: EventTime
+                            description: " The timestamp of the event. "
+                            schema: *a24
+                          - name: EventDetail
+                            description: " The details of the event in plain text. "
+                            schema: *a2
+                          - name: EventResourceName
+                            description: " The name of the resource Application Insights attempted to
+                              configure. "
+                            schema: *a2
+                - name: NextToken
+                  description: The <code>NextToken</code> value to include in a future
+                    <code>ListConfigurationHistory</code> request. When the
+                    results of a <code>ListConfigurationHistory</code> request
+                    exceed <code>MaxResults</code>, this value can be used to
+                    retrieve the next page of results. This value is
+                    <code>null</code> when there are no more results to return.
+                  schema: *a2
+        - name: "480"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Lists the log pattern sets in the specific application.
+      id: ListLogPatternSets
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: query
+          name: MaxResults
+          description: Pagination limit
+          expandParameterValues: true
+          renderStyle: form
+          required: false
+          schema: *a2
+        - type: query
+          name: NextToken
+          description: Pagination token
+          expandParameterValues: true
+          renderStyle: form
+          required: false
+          schema: *a2
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a76
+              type: object
+              name: ListLogPatternSetsRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: *a4
+                - name: MaxResults
+                  description: The maximum number of results to return in a single call. To
+                    retrieve the remaining results, make another call with the
+                    returned <code>NextToken</code> value.
+                  schema: *a27
+                - name: NextToken
+                  description: The token to request the next page of results.
+                  schema: *a2
+              summary: ListLogPatternSetsRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a75
+              type: object
+              name: ListLogPatternSetsResponse
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  schema: *a4
+                - name: LogPatternSets
+                  description: The list of log pattern sets.
+                  schema: &a102
+                    type: alias
+                    name: LogPatternSetList
+                    aliasType: schema
+                    targetSchema:
+                      type: array
+                      name: anonymous<unknown>
+                      elementSchema: *a14
+                - name: NextToken
+                  description: "The token used to retrieve the next page of results. This value is
+                    <code>null</code> when there are no more results to return.
+                    "
+                  schema: *a2
+        - name: "480"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Lists the log patterns in the specific log <code>LogPatternSet</code>.
+      id: ListLogPatterns
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: query
+          name: MaxResults
+          description: Pagination limit
+          expandParameterValues: true
+          renderStyle: form
+          required: false
+          schema: *a2
+        - type: query
+          name: NextToken
+          description: Pagination token
+          expandParameterValues: true
+          renderStyle: form
+          required: false
+          schema: *a2
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a78
+              type: object
+              name: ListLogPatternsRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: *a4
+                - name: PatternSetName
+                  description: The name of the log pattern set.
+                  schema: *a14
+                - name: MaxResults
+                  description: The maximum number of results to return in a single call. To
+                    retrieve the remaining results, make another call with the
+                    returned <code>NextToken</code> value.
+                  schema: *a27
+                - name: NextToken
+                  description: The token to request the next page of results.
+                  schema: *a2
+              summary: ListLogPatternsRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a77
+              type: object
+              name: ListLogPatternsResponse
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  schema: *a4
+                - name: LogPatterns
+                  description: The list of log patterns.
+                  schema: &a103
+                    type: alias
+                    name: LogPatternList
+                    aliasType: schema
+                    targetSchema:
+                      type: array
+                      name: anonymous<unknown>
+                      elementSchema: *a22
+                - name: NextToken
+                  description: "The token used to retrieve the next page of results. This value is
+                    <code>null</code> when there are no more results to return.
+                    "
+                  schema: *a2
+        - name: "480"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Lists the problems with your application.
+      id: ListProblems
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: query
+          name: MaxResults
+          description: Pagination limit
+          expandParameterValues: true
+          renderStyle: form
+          required: false
+          schema: *a2
+        - type: query
+          name: NextToken
+          description: Pagination token
+          expandParameterValues: true
+          renderStyle: form
+          required: false
+          schema: *a2
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a80
+              type: object
+              name: ListProblemsRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  schema: *a4
+                - name: StartTime
+                  description: The time when the problem was detected, in epoch seconds. If you
+                    don't specify a time frame for the request, problems within
+                    the past seven days are returned.
+                  schema: *a24
+                - name: EndTime
+                  description: The time when the problem ended, in epoch seconds. If not
+                    specified, problems within the past seven days are returned.
+                  schema: *a24
+                - name: MaxResults
+                  description: The maximum number of results to return in a single call. To
+                    retrieve the remaining results, make another call with the
+                    returned <code>NextToken</code> value.
+                  schema: *a27
+                - name: NextToken
+                  description: The token to request the next page of results.
+                  schema: *a2
+              summary: ListProblemsRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a79
+              type: object
+              name: ListProblemsResponse
+              properties:
+                - name: ProblemList
+                  description: "The list of problems. "
+                  schema: &a104
+                    type: alias
+                    name: ProblemList
+                    aliasType: schema
+                    targetSchema:
+                      type: array
+                      name: anonymous<unknown>
+                      elementSchema: *a30
+                - name: NextToken
+                  description: "The token used to retrieve the next page of results. This value is
+                    <code>null</code> when there are no more results to return.
+                    "
+                  schema: *a2
+        - name: "480"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Retrieve a list of the tags (keys and values) that are associated
+        with a specified application. A <i>tag</i> is a label that you
+        optionally define and associate with an application. Each tag consists
+        of a required <i>tag key</i> and an optional associated <i>tag
+        value</i>. A tag key is a general label that acts as a category for more
+        specific tag values. A tag value acts as a descriptor within a tag key.
+      id: ListTagsForResource
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a82
+              type: object
+              name: ListTagsForResourceRequest
+              properties:
+                - name: ResourceARN
+                  description: The Amazon Resource Name (ARN) of the application that you want to
+                    retrieve tag information for.
+                  required: true
+                  schema: &a32
+                    type: alias
+                    name: anonymous<string>
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: MaxLength
+                        length: 1011
+                      - type: constraint
+                        name: MinLength
+                        length: 1
+                    targetSchema: *a2
+              summary: ListTagsForResourceRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a81
+              type: object
+              name: ListTagsForResourceResponse
+              properties:
+                - name: Tags
+                  description: An array that lists all the tags that are associated with the
+                    application. Each tag consists of a required tag key
+                    (<code>Key</code>) and an associated tag value
+                    (<code>Value</code>).
+                  schema: *a31
+        - name: "480"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: <p>Add one or more tags (keys and values) to a specified
+        application. A <i>tag</i> is a label that you optionally define and
+        associate with an application. Tags can help you categorize and manage
+        application in different ways, such as by purpose, owner, environment,
+        or other criteria. </p> <p>Each tag consists of a required <i>tag
+        key</i> and an associated <i>tag value</i>, both of which you define. A
+        tag key is a general label that acts as a category for more specific tag
+        values. A tag value acts as a descriptor within a tag key.</p>
+      id: TagResource
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a84
+              type: object
+              name: TagResourceRequest
+              properties:
+                - name: ResourceARN
+                  description: The Amazon Resource Name (ARN) of the application that you want to
+                    add one or more tags to.
+                  required: true
+                  schema: *a32
+                - name: Tags
+                  description: A list of tags that to add to the application. A tag consists of a
+                    required tag key (<code>Key</code>) and an associated tag
+                    value (<code>Value</code>). The maximum length of a tag key
+                    is 128 characters. The maximum length of a tag value is 256
+                    characters.
+                  required: true
+                  schema: *a31
+              summary: TagResourceRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a83
+              type: object
+              name: TagResourceResponse
+        - name: "480"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: TooManyTagsException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Remove one or more tags (keys and values) from a specified application.
+      id: UntagResource
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a86
+              type: object
+              name: UntagResourceRequest
+              properties:
+                - name: ResourceARN
+                  description: The Amazon Resource Name (ARN) of the application that you want to
+                    remove one or more tags from.
+                  required: true
+                  schema: *a32
+                - name: TagKeys
+                  description: <p>The tags (tag keys) that you want to remove from the resource.
+                    When you specify a tag key, the action removes both that key
+                    and its associated tag value.</p> <p>To remove more than one
+                    tag from the application, append the <code>TagKeys</code>
+                    parameter and argument for each additional tag to remove,
+                    separated by an ampersand. </p>
+                  required: true
+                  schema: &a108
+                    type: alias
+                    name: TagKeyList
+                    aliasType: schema
+                    constraints:
+                      - type: constraint
+                        name: MaximumElements
+                        count: 200
+                      - type: constraint
+                        name: MinimumElements
+                        count: 0
+                    targetSchema:
+                      type: array
+                      name: anonymous<unknown>
+                      elementSchema: *a33
+              summary: UntagResourceRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a85
+              type: object
+              name: UntagResourceResponse
+        - name: "480"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Updates the application.
+      id: UpdateApplication
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a88
+              type: object
+              name: UpdateApplicationRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: *a4
+                - name: OpsCenterEnabled
+                  description: " When set to <code>true</code>, creates opsItems for any problems
+                    detected on an application. "
+                  schema: *a3
+                - name: CWEMonitorEnabled
+                  description: " Indicates whether Application Insights can listen to CloudWatch
+                    events for the application resources, such as <code>instance
+                    terminated</code>, <code>failed deployment</code>, and
+                    others. "
+                  schema: *a3
+                - name: OpsItemSNSTopicArn
+                  description: " The SNS topic provided to Application Insights that is associated
+                    to the created opsItem. Allows you to receive notifications
+                    for updates to the opsItem."
+                  schema: *a5
+                - name: RemoveSNSTopic
+                  description: " Disassociates the SNS topic from the opsItem created for detected
+                    problems."
+                  schema: *a3
+              summary: UpdateApplicationRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a87
+              type: object
+              name: UpdateApplicationResponse
+              properties:
+                - name: ApplicationInfo
+                  description: "Information about the application. "
+                  schema: *a18
+        - name: "480"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Updates the custom component name and/or the list of resources that
+        make up the component.
+      id: UpdateComponent
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a90
+              type: object
+              name: UpdateComponentRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: *a4
+                - name: ComponentName
+                  description: The name of the component.
+                  required: true
+                  schema: *a2
+                - name: NewComponentName
+                  description: The new name of the component.
+                  schema: *a2
+                - name: ResourceList
+                  description: The list of resource ARNs that belong to the component.
+                  schema: *a19
+              summary: UpdateComponentRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a89
+              type: object
+              name: UpdateComponentResponse
+        - name: "480"
+          description: ResourceInUseException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "483"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: "Updates the monitoring configurations for the component. The
+        configuration input parameter is an escaped JSON of the configuration
+        and should match the schema of what is returned by
+        <code>DescribeComponentConfigurationRecommendation</code>. "
+      id: UpdateComponentConfiguration
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a92
+              type: object
+              name: UpdateComponentConfigurationRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: *a4
+                - name: ComponentName
+                  description: The name of the component.
+                  required: true
+                  schema: *a2
+                - name: Monitor
+                  description: Indicates whether the application component is monitored.
+                  schema: *a3
+                - name: Tier
+                  description: The tier of the application component. Supported tiers include
+                    <code>DOT_NET_WORKER</code>, <code>DOT_NET_WEB</code>,
+                    <code>DOT_NET_CORE</code>, <code>SQL_SERVER</code>, and
+                    <code>DEFAULT</code>.
+                  schema: *a20
+                - name: ComponentConfiguration
+                  description: The configuration settings of the component. The value is the
+                    escaped JSON of the configuration. For more information
+                    about the JSON format, see <a
+                    href="https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/working-with-json.html">Working
+                    with JSON</a>. You can send a request to
+                    <code>DescribeComponentConfigurationRecommendation</code> to
+                    see the recommended configuration for a component. For the
+                    complete format of the component configuration file, see <a
+                    href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/component-config.html">Component
+                    Configuration</a>.
+                  schema: *a21
+              summary: UpdateComponentConfigurationRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a91
+              type: object
+              name: UpdateComponentConfigurationResponse
+        - name: "480"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+    - description: Adds a log pattern to a <code>LogPatternSet</code>.
+      id: UpdateLogPattern
+      parameters:
+        - name: "0"
+          aliasType: parameter
+          target: *a7
+        - name: "1"
+          aliasType: parameter
+          target: *a8
+        - name: "2"
+          aliasType: parameter
+          target: *a9
+        - name: "3"
+          aliasType: parameter
+          target: *a10
+        - name: "4"
+          aliasType: parameter
+          target: *a11
+        - name: "5"
+          aliasType: parameter
+          target: *a12
+        - name: "6"
+          aliasType: parameter
+          target: *a13
+        - type: header
+          name: X-Amz-Target
+          expandParameterValues: false
+          renderStyle: simple
+          required: true
+          schema:
+            type: enum
+            name: anonymous<unknown>
+            sealed: true
+      requests:
+        - identity: anonymous<requestBody>
+          mediaType: application/json
+          required: true
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a94
+              type: object
+              name: UpdateLogPatternRequest
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  required: true
+                  schema: *a4
+                - name: PatternSetName
+                  description: The name of the log pattern set.
+                  required: true
+                  schema: *a14
+                - name: PatternName
+                  description: The name of the log pattern.
+                  required: true
+                  schema: *a15
+                - name: Pattern
+                  description: The log pattern.
+                  schema: *a16
+                - name: Rank
+                  description: Rank of the log pattern.
+                  schema: *a17
+              summary: UpdateLogPatternRequest
+      responses:
+        - name: "200"
+          description: Success
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: &a93
+              type: object
+              name: UpdateLogPatternResponse
+              properties:
+                - name: ResourceGroupName
+                  description: The name of the resource group.
+                  schema: *a4
+                - name: LogPattern
+                  description: The successfully created log pattern.
+                  schema: *a22
+        - name: "480"
+          description: ResourceInUseException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "481"
+          description: ResourceNotFoundException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "482"
+          description: ValidationException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+        - name: "483"
+          description: InternalServerException
+          mediaType: application/json
+          schema:
+            type: alias
+            name: schema
+            aliasType: schema
+            targetSchema: *a6
+  parameters:
+    - *a7
+    - *a8
+    - *a9
+    - *a10
+    - *a11
+    - *a12
+    - *a13
+metaData:
+  name: Amazon CloudWatch Application Insights
+  contacts:
+    - name: Mike Ralphson
+      email: mike.ralphson@gmail.com
+      role: author
+      url: https://github.com/mermade/aws2openapi
+      attic:
+        x-twitter: PermittedSoc
+  description: <fullname>Amazon CloudWatch Application Insights for .NET and SQL
+    Server</fullname> <p> Amazon CloudWatch Application Insights for .NET and
+    SQL Server is a service that helps you detect common problems with your .NET
+    and SQL Server-based applications. It enables you to pinpoint the source of
+    issues in your applications (built with technologies such as Microsoft IIS,
+    .NET, and Microsoft SQL Server), by providing key insights into detected
+    problems.</p> <p>After you onboard your application, CloudWatch Application
+    Insights for .NET and SQL Server identifies, recommends, and sets up metrics
+    and logs. It continuously analyzes and correlates your metrics and logs for
+    unusual behavior to surface actionable problems with your application. For
+    example, if your application is slow and unresponsive and leading to HTTP
+    500 errors in your Application Load Balancer (ALB), Application Insights
+    informs you that a memory pressure problem with your SQL Server database is
+    occurring. It bases this analysis on impactful metrics and log errors. </p>
+  licenses:
+    - name: Apache 2.0 License
+      url: http://www.apache.org/licenses/
+  references:
+    - name: external-documentation
+      description: Amazon Web Services documentation
+      location: https://docs.aws.amazon.com/applicationinsights/
+  termsOfService: https://aws.amazon.com/service-terms/
+  attic:
+    x-release: v4
+    x-logo:
+      url: https://twitter.com/awscloud/profile_image?size=original
+      backgroundColor: "#FFFFFF"
+    x-providerName: amazonaws.com
+    x-serviceName: application-insights
+    x-origin:
+      - contentType: application/json
+        url: https://raw.githubusercontent.com/aws/aws-sdk-js/master/apis/application-insights-2018-11-25.normal.json
+        converter:
+          url: https://github.com/mermade/aws2openapi
+          version: 1.0.0
+        x-apisguru-driver: external
+    x-apiClientRegistration:
+      url: https://portal.aws.amazon.com/gp/aws/developer/registration/index.html?nc2=h_ct
+    x-apisguru-categories:
+      - cloud
+    x-preferred: true
+schemas:
+  primitives:
+    - *a2
+    - *a3
+    - *a6
+    - *a17
+    - *a24
+    - *a34
+  enums:
+    - *a20
+    - *a35
+    - *a29
+    - *a36
+    - *a37
+    - type: enum
+      name: anonymous<unknown>
+    - *a38
+    - *a39
+    - *a40
+  objects:
+    - *a41
+    - *a42
+    - *a43
+    - *a44
+    - *a45
+    - *a46
+    - *a47
+    - *a48
+    - *a49
+    - *a50
+    - *a51
+    - *a52
+    - *a53
+    - *a54
+    - *a55
+    - *a56
+    - *a57
+    - *a58
+    - *a59
+    - *a60
+    - *a61
+    - *a62
+    - *a63
+    - *a64
+    - *a65
+    - *a66
+    - *a67
+    - *a68
+    - *a69
+    - *a70
+    - *a71
+    - *a72
+    - *a73
+    - *a74
+    - *a75
+    - *a76
+    - *a77
+    - *a78
+    - *a79
+    - *a80
+    - *a81
+    - *a82
+    - *a83
+    - *a84
+    - *a85
+    - *a86
+    - *a87
+    - *a88
+    - *a89
+    - *a90
+    - *a91
+    - *a92
+    - *a93
+    - *a94
+    - *a28
+    - *a18
+    - *a95
+    - *a22
+    - *a26
+    - *a96
+    - *a30
+    - *a97
+  aliases:
+    - *a32
+    - *a98
+    - *a4
+    - *a5
+    - *a99
+    - *a21
+    - *a100
+    - *a31
+    - *a19
+    - *a14
+    - *a15
+    - *a16
+    - *a23
+    - *a25
+    - *a101
+    - *a27
+    - *a102
+    - *a103
+    - *a104
+    - *a105
+    - *a106
+    - *a33
+    - *a107
+    - *a108

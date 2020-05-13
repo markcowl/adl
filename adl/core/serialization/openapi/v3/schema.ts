@@ -133,7 +133,7 @@ export async function* processSchema(schema: v3.Schema, $: Context, options?: { 
     // if enum or x-ms-enum is specified, process as enum
     // but not if we're already processing the enum and are now processing its underlying type
     if (!options?.forUnderlyingEnumType && isEnumSchema(schema)) {
-      return processEnumSchema(schema, $);
+      return processEnumSchema(schema, $, options);
     }
 
     if (length(schema.anyOf) > 0) {
@@ -536,9 +536,10 @@ export async function* processObjectSchema(schema: v3.Schema, $: Context, option
   }
 }
 
-export async function* processEnumSchema(schema: v3.Schema, $: Context): AsyncGenerator<Schema> {
+export async function* processEnumSchema(schema: v3.Schema, $: Context, options?: Options): AsyncGenerator<Schema> {
   // not using $.process here because we need to process a node that is already marked
   const type = await singleOrDefault(processSchema(schema, $, { forUnderlyingEnumType: true })) || $.api.schemas.Any;
-  return yield* processEnumSchemaCommon(schema, $, type);
+  return yield* processEnumSchemaCommon(schema, $, type, options);
+
 }
 

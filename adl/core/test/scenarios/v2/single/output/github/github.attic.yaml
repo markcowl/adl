@@ -1,0 +1,368 @@
+paths:
+  /issues:
+    get:
+      parameters:
+        - default: all
+          enum:
+            - assigned
+            - created
+            - mentioned
+            - subscribed
+            - all
+        - default: open
+          enum:
+            - open
+            - closed
+        - default: created
+          enum:
+            - created
+            - updated
+            - comments
+        - default: desc
+          enum:
+            - asc
+            - desc
+  "/legacy/issues/search/{owner}/{repository}/{state}/{keyword}":
+    get:
+      parameters:
+        - enum:
+            - open
+            - closed
+  "/legacy/repos/search/{keyword}":
+    get:
+      parameters:
+        - default: desc
+          enum:
+            - desc
+            - asc
+        - enum:
+            - updated
+            - stars
+            - forks
+  "/legacy/user/search/{keyword}":
+    get:
+      parameters:
+        - default: desc
+          enum:
+            - desc
+            - asc
+        - enum:
+            - updated
+            - stars
+            - forks
+  "/orgs/{org}/issues":
+    get:
+      parameters:
+        - default: all
+          enum:
+            - assigned
+            - created
+            - mentioned
+            - subscribed
+            - all
+        - default: open
+          enum:
+            - open
+            - closed
+        - default: created
+          enum:
+            - created
+            - updated
+            - comments
+        - default: desc
+          enum:
+            - asc
+            - desc
+  "/orgs/{org}/repos":
+    get:
+      parameters:
+        - default: all
+          enum:
+            - all
+            - public
+            - private
+            - forks
+            - sources
+            - member
+  "/repos/{owner}/{repo}/forks":
+    get:
+      parameters:
+        - default: newes
+          enum:
+            - newes
+            - oldes
+            - watchers
+  "/repos/{owner}/{repo}/issues":
+    get:
+      parameters:
+        - default: all
+          enum:
+            - assigned
+            - created
+            - mentioned
+            - subscribed
+            - all
+        - default: open
+          enum:
+            - open
+            - closed
+        - default: created
+          enum:
+            - created
+            - updated
+            - comments
+        - default: desc
+          enum:
+            - asc
+            - desc
+  "/repos/{owner}/{repo}/issues/comments":
+    get:
+      parameters:
+        - enum:
+            - created
+            - updated
+  "/repos/{owner}/{repo}/milestones":
+    get:
+      parameters:
+        - default: open
+          enum:
+            - open
+            - closed
+        - default: due_date
+          enum:
+            - due_date
+            - completeness
+  "/repos/{owner}/{repo}/pulls":
+    get:
+      parameters:
+        - default: open
+          enum:
+            - open
+            - closed
+  "/repos/{owner}/{repo}/pulls/comments":
+    get:
+      parameters:
+        - enum:
+            - created
+            - updated
+  "/repos/{owner}/{repo}/{archive_format}/{path}":
+    get:
+      parameters:
+        - enum:
+            - tarball
+            - zipball
+  /search/code:
+    get:
+      parameters:
+        - default: desc
+          enum:
+            - desc
+            - asc
+        - enum:
+            - indexed
+  /search/issues:
+    get:
+      parameters:
+        - default: desc
+          enum:
+            - desc
+            - asc
+        - enum:
+            - updated
+            - created
+            - comments
+  /search/repositories:
+    get:
+      parameters:
+        - default: desc
+          enum:
+            - desc
+            - asc
+        - enum:
+            - stars
+            - forks
+            - updated
+  /search/users:
+    get:
+      parameters:
+        - default: desc
+          enum:
+            - desc
+            - asc
+        - enum:
+            - followers
+            - repositories
+            - joined
+  /user/issues:
+    get:
+      parameters:
+        - default: all
+          enum:
+            - assigned
+            - created
+            - mentioned
+            - subscribed
+            - all
+        - default: open
+          enum:
+            - open
+            - closed
+        - default: created
+          enum:
+            - created
+            - updated
+            - comments
+        - default: desc
+          enum:
+            - asc
+            - desc
+  /user/repos:
+    get:
+      parameters:
+        - default: all
+          enum:
+            - all
+            - public
+            - private
+            - forks
+            - sources
+            - member
+  /user/starred:
+    get:
+      parameters:
+        - default: created
+          enum:
+            - created
+            - updated
+  "/users/{username}/repos":
+    get:
+      parameters:
+        - default: all
+          enum:
+            - all
+            - public
+            - private
+            - forks
+            - sources
+            - member
+definitions:
+  actor:
+    properties:
+      type:
+        enum:
+          - User
+          - Organization
+  blob:
+    properties:
+      encoding:
+        enum:
+          - utf-8
+          - base64
+  editTeam:
+    properties:
+      permission:
+        enum:
+          - pull
+          - push
+          - admin
+  hook:
+    items:
+      properties:
+        events:
+          items:
+            enum:
+              - push
+              - issues
+              - issue_comment
+              - commit_comment
+              - pull_request
+              - pull_request_review_comment
+              - gollum
+              - watch
+              - download
+              - fork
+              - fork_apply
+              - member
+              - public
+              - team_add
+              - status
+  issueEvent:
+    properties:
+      issue:
+        properties:
+          milestone:
+            properties:
+              state:
+                enum:
+                  - open
+                  - closed
+          state:
+            enum:
+              - open
+              - closed
+  issues:
+    items:
+      properties:
+        milestone:
+          properties:
+            state:
+              enum:
+                - open
+                - closed
+        state:
+          enum:
+            - open
+            - closed
+  milestone:
+    properties:
+      state:
+        enum:
+          - open
+          - closed
+  orgTeamsPost:
+    properties:
+      permission:
+        enum:
+          - pull
+          - push
+          - admin
+  pulls:
+    items:
+      properties:
+        state:
+          enum:
+            - open
+            - closed
+  tag:
+    properties:
+      object:
+        properties:
+          type:
+            enum:
+              - commit
+              - tree
+              - blob
+  tagBody:
+    properties:
+      type:
+        enum:
+          - commit
+          - tree
+          - blob
+  tree:
+    properties:
+      tree:
+        items:
+          properties:
+            mode:
+              enum:
+                - "100644"
+                - "100755"
+                - "040000"
+                - "160000"
+                - "120000"
+            type:
+              enum:
+                - blob
+                - tree
+                - commit

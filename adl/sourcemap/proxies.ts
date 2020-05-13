@@ -66,13 +66,13 @@ export function isProxy<T>(value: T) {
 }
 
 export function isActualValue(value: any) {
-  return value === undefined || value === null || typeof value !== 'object' || value.valueOf() !== value;
+  return value === undefined || value === null || typeof value !== 'object' || valueOf(value) !== value;
 }
-export function valueOf(value: any): any {
+export function valueOf<T>(value: T): T {
   if (value === undefined || value === null || typeof value !== 'object') {
     return value;
   }
-  const v = value.valueOf();
+  const v = (<any>value).valueOf();
   return v !== value ? valueOf(v) : v;
 }
 
@@ -263,13 +263,13 @@ export class TrackedSource<T extends Object, instanceType> {
       case SpecialProperties.valueOf:
         return () => valueOf(this.instance);
       case SpecialProperties.toString:
-        return () => valueOf(this.instance).toString();
+        return () => (<any>valueOf(this.instance)).toString();
       case SpecialProperties.RefToHere:
         return `${this.origin.sourceFile.filename}#/${this.origin.path.join('/')}`;
       case SpecialProperties.IsUsed:
         return this.isUsed === true;
     }
-
+    
     const value = (<any>this.instance)[property];
     if (value === undefined || value === null) {
       return value;
@@ -370,6 +370,9 @@ export class TrackedTarget<T extends Object> {
             // with the raw value (still call onAdd too.)
             (<any>this.instance)[key] = rawValue;
           }
+          if( key === 'node') {
+            continue;
+          }
           // make sure the original value is used
           use(value);
 
@@ -412,6 +415,9 @@ export class TrackedTarget<T extends Object> {
 
       case SpecialProperties.IsUsed:
         return undefined;
+
+      case 'project':
+        return (<any>this.instance)[property];        
     }
     const value = actual[property];
     if (value === undefined || value === null) {
