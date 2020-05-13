@@ -1,6 +1,6 @@
 import { v2, v3, XMSEnumValue } from '@azure-tools/openapi';
 import { anonymous, nameOf, use } from '@azure-tools/sourcemap';
-import { Alias, Enum, ReadOnlyConstraint, Schema, ServerDefaultValue } from '../../../model/schema';
+import { Alias, createEnum, ReadOnlyConstraint, Schema, ServerDefaultValue } from '../../../model/schema';
 import { Context, OAIModel } from '../../../support/visitor';
 
 
@@ -158,21 +158,15 @@ export async function* processEnumSchemaCommon<T extends OAIModel>(schema: v3.Sc
   const xmsEnum = use(schema['x-ms-enum']) ?? {};
   const values: Array<XMSEnumValue> = xmsEnum.values ?? schemaEnum.map(v => ({ value: v }));
 
-  const result = Enum.create($.api, type, {
-    name: xmsEnum.name ||options?.isAnonymous ? anonymous('enum') :  nameOf(schema),
+  const isanon= xmsEnum.name ? false : options?.isAnonymous;
+
+  const result = createEnum($.api, type, {
+    name: xmsEnum.name || (isanon ? anonymous('enum') : nameOf(schema)),
+    values
   });
 
   result.sealed = !xmsEnum.modelAsString;
   use(xmsEnum.modelAsString);
-
-  // TODO:
-  // * Should enums without named members be unioned literal types?
-  // * What do we do with enum values that are not numbers or strings?
-  for (const each of values) {
-    result.addValue(
-      each.name ?? each.value.toString(),
-      typeof each.value === 'number' ? each.value : each.value.toString());
-  }
 
   // TODO: an enum with only one value should be treated as single constant directly
   //       but how does this interact with adding a value to an enum?

@@ -65,6 +65,7 @@ http:
             schema:
               type: enum
               name: anonymous<unknown>
+              sealed: true
         - name: "1"
           aliasType: parameter
           target: &a6

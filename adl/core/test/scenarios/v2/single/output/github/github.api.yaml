@@ -301,6 +301,7 @@ http:
                             schema:
                               type: enum
                               name: anonymous<unknown>
+                              sealed: true
                           - name: updated_at
                             description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
                             schema:
@@ -2392,6 +2393,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: state
           expandParameterValues: true
@@ -2400,6 +2402,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: labels
           description: String list of comma separated Label names. Example - bug,ui,@high.
@@ -2420,6 +2423,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: direction
           expandParameterValues: true
@@ -2428,6 +2432,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: since
           description: >
@@ -2573,6 +2578,7 @@ http:
                             schema:
                               type: enum
                               name: anonymous<unknown>
+                              sealed: true
                           - name: title
                             schema: *a1
                           - name: url
@@ -2594,6 +2600,7 @@ http:
                       schema:
                         type: enum
                         name: anonymous<unknown>
+                        sealed: true
                     - name: title
                       schema: *a1
                     - name: updated_at
@@ -2659,6 +2666,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: path
           name: owner
           expandParameterValues: false
@@ -2813,6 +2821,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: language
           description: Filter results by language
@@ -2844,6 +2853,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -3132,6 +3142,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: start_page
           description: The page number to fetch
@@ -3152,6 +3163,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -4623,6 +4635,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: state
           expandParameterValues: true
@@ -4631,6 +4644,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: labels
           description: String list of comma separated Label names. Example - bug,ui,@high.
@@ -4651,6 +4665,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: direction
           expandParameterValues: true
@@ -4659,6 +4674,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: since
           description: >
@@ -5517,6 +5533,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -5924,6 +5941,7 @@ http:
                   schema:
                     type: enum
                     name: anonymous<unknown>
+                    sealed: true
                 - name: repo_names
                   schema:
                     type: array
@@ -10776,6 +10794,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -11022,6 +11041,7 @@ http:
                   schema:
                     type: enum
                     name: anonymous<unknown>
+                    sealed: true
                 - name: sha
                   schema: *a1
                 - name: size
@@ -12238,6 +12258,7 @@ http:
                   schema:
                     type: enum
                     name: anonymous<unknown>
+                    sealed: true
       responses:
         - name: "201"
           description: Created
@@ -12290,6 +12311,7 @@ http:
                         schema:
                           type: enum
                           name: anonymous<unknown>
+                          sealed: true
                       - name: url
                         schema: *a1
                 - name: sha
@@ -12550,6 +12572,7 @@ http:
                             schema:
                               type: enum
                               name: anonymous<unknown>
+                              sealed: true
                           - name: path
                             schema: *a1
                           - name: sha
@@ -12566,6 +12589,7 @@ http:
                             schema:
                               type: enum
                               name: anonymous<unknown>
+                              sealed: true
                           - name: url
                             schema: *a1
                 - name: url
@@ -12877,6 +12901,7 @@ http:
                           elementSchema:
                             type: enum
                             name: anonymous<unknown>
+                            sealed: true
                     - name: id
                       schema: *a2
                     - name: name
@@ -13516,6 +13541,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: state
           expandParameterValues: true
@@ -13524,6 +13550,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: labels
           description: String list of comma separated Label names. Example - bug,ui,@high.
@@ -13544,6 +13571,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: direction
           expandParameterValues: true
@@ -13552,6 +13580,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: since
           description: >
@@ -13808,6 +13837,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: since
           description: >
@@ -14493,6 +14523,7 @@ http:
                                   schema:
                                     type: enum
                                     name: anonymous<unknown>
+                                    sealed: true
                                 - name: title
                                   schema: *a1
                                 - name: url
@@ -14514,6 +14545,7 @@ http:
                             schema:
                               type: enum
                               name: anonymous<unknown>
+                              sealed: true
                           - name: title
                             schema: *a1
                           - name: updated_at
@@ -17230,6 +17262,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: direction
           description: Ignored without 'sort' parameter.
@@ -17248,6 +17281,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -17324,6 +17358,7 @@ http:
                   schema:
                     type: enum
                     name: anonymous<unknown>
+                    sealed: true
                 - name: title
                   schema: *a1
                 - name: url
@@ -18196,6 +18231,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: head
           description: >
@@ -18408,6 +18444,7 @@ http:
                       schema:
                         type: enum
                         name: anonymous<unknown>
+                        sealed: true
                     - name: title
                       schema: *a1
                     - name: updated_at
@@ -18624,6 +18661,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: since
           description: >
@@ -23246,6 +23284,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: path
           name: path
           description: Valid Git reference, defaults to 'master'.
@@ -23430,6 +23469,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: q
           description: >
@@ -23507,6 +23547,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -23710,6 +23751,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: q
           description: "The q search term can also contain any combination of the
@@ -23733,6 +23775,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -23891,6 +23934,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: q
           description: >
@@ -23963,6 +24007,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -24057,6 +24102,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: q
           description: >
@@ -24124,6 +24170,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -24424,6 +24471,7 @@ http:
                   schema:
                     type: enum
                     name: anonymous<unknown>
+                    sealed: true
       responses:
         - name: "200"
           description: OK
@@ -26492,6 +26540,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: state
           expandParameterValues: true
@@ -26500,6 +26549,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: labels
           description: String list of comma separated Label names. Example - bug,ui,@high.
@@ -26520,6 +26570,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: direction
           expandParameterValues: true
@@ -26528,6 +26579,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: since
           description: >
@@ -27029,6 +27081,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -27204,6 +27257,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -28956,6 +29010,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: header
           name: Accept
           description: Is used to set specified media type.

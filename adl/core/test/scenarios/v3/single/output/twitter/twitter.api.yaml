@@ -82,6 +82,7 @@ http:
                 elementSchema:
                   type: enum
                   name: anonymous<unknown>
+                  sealed: true
               attic:
                 example: author_id
         - name: "2"
@@ -111,6 +112,7 @@ http:
                 elementSchema:
                   type: enum
                   name: anonymous<unknown>
+                  sealed: true
               attic:
                 example: created_at
         - name: "3"
@@ -140,6 +142,7 @@ http:
                 elementSchema:
                   type: enum
                   name: anonymous<unknown>
+                  sealed: true
               attic:
                 example: created_at
         - name: "4"
@@ -169,6 +172,7 @@ http:
                 elementSchema:
                   type: enum
                   name: anonymous<unknown>
+                  sealed: true
               attic:
                 example: created_at
         - name: "5"
@@ -198,6 +202,7 @@ http:
                 elementSchema:
                   type: enum
                   name: anonymous<unknown>
+                  sealed: true
               attic:
                 example: country_code
         - name: "6"
@@ -227,6 +232,7 @@ http:
                 elementSchema:
                   type: enum
                   name: anonymous<unknown>
+                  sealed: true
               attic:
                 example: end_datetime
       responses:
@@ -730,6 +736,7 @@ http:
                                         schema:
                                           type: enum
                                           name: anonymous<unknown>
+                                          sealed: true
                                 - name: place_id
                                   schema: &a13
                                     type: alias
@@ -838,6 +845,7 @@ http:
                                       schema:
                                         type: enum
                                         name: anonymous<unknown>
+                                        sealed: true
                           - name: source
                             description: The name of the app the user Tweeted from.
                             schema:
@@ -906,6 +914,7 @@ http:
                                   schema:
                                     type: enum
                                     name: anonymous<unknown>
+                                    sealed: true
                         attic:
                           example:
                             author_id: "712089797812"
@@ -957,6 +966,7 @@ http:
                                 schema:
                                   type: enum
                                   name: anonymous<unknown>
+                                  sealed: true
                           - &a54
                             type: object
                             name: InvalidRequestProblem
@@ -990,6 +1000,7 @@ http:
                                 schema:
                                   type: enum
                                   name: anonymous<unknown>
+                                  sealed: true
                           - &a44
                             type: object
                             name: ClientForbiddenProblem
@@ -1002,12 +1013,14 @@ http:
                                 schema:
                                   type: enum
                                   name: anonymous<unknown>
+                                  sealed: true
                               - name: registration_url
                                 schema: *a1
                               - name: type
                                 schema:
                                   type: enum
                                   name: anonymous<unknown>
+                                  sealed: true
                           - &a61
                             type: object
                             name: ResourceNotFoundProblem
@@ -1032,10 +1045,12 @@ http:
                                 schema:
                                   type: enum
                                   name: anonymous<unknown>
+                                  sealed: true
                               - name: type
                                 schema:
                                   type: enum
                                   name: anonymous<unknown>
+                                  sealed: true
                               - name: value
                                 description: Value will match the schema of the field.
                                 required: true
@@ -1058,15 +1073,18 @@ http:
                                 schema:
                                   type: enum
                                   name: anonymous<unknown>
+                                  sealed: true
                               - name: section
                                 required: true
                                 schema:
                                   type: enum
                                   name: anonymous<unknown>
+                                  sealed: true
                               - name: type
                                 schema:
                                   type: enum
                                   name: anonymous<unknown>
+                                  sealed: true
                           - &a48
                             type: object
                             name: DisallowedResourceProblem
@@ -1083,15 +1101,18 @@ http:
                                 schema:
                                   type: enum
                                   name: anonymous<unknown>
+                                  sealed: true
                               - name: section
                                 required: true
                                 schema:
                                   type: enum
                                   name: anonymous<unknown>
+                                  sealed: true
                               - name: type
                                 schema:
                                   type: enum
                                   name: anonymous<unknown>
+                                  sealed: true
                           - &a69
                             type: object
                             name: UnsupportedAuthenticationProblem
@@ -1104,6 +1125,7 @@ http:
                                 schema:
                                   type: enum
                                   name: anonymous<unknown>
+                                  sealed: true
                           - &a70
                             type: object
                             name: UsageCapExceededProblem
@@ -1115,14 +1137,17 @@ http:
                                 schema:
                                   type: enum
                                   name: anonymous<unknown>
+                                  sealed: true
                               - name: scope
                                 schema:
                                   type: enum
                                   name: anonymous<unknown>
+                                  sealed: true
                               - name: type
                                 schema:
                                   type: enum
                                   name: anonymous<unknown>
+                                  sealed: true
                 - name: includes
                   schema: &a31
                     type: object
@@ -1165,6 +1190,7 @@ http:
                                       schema:
                                         type: enum
                                         name: anonymous<unknown>
+                                        sealed: true
                                     - name: url
                                       schema: *a1
                                 - &a72
@@ -1181,6 +1207,7 @@ http:
                                       schema:
                                         type: enum
                                         name: anonymous<unknown>
+                                        sealed: true
                                 - &a41
                                   type: object
                                   name: AnimatedGif
@@ -1193,6 +1220,7 @@ http:
                                       schema:
                                         type: enum
                                         name: anonymous<unknown>
+                                        sealed: true
                       - name: places
                         schema:
                           type: alias
@@ -1274,6 +1302,7 @@ http:
                                         schema:
                                           type: enum
                                           name: anonymous<unknown>
+                                          sealed: true
                                 - name: id
                                   required: true
                                   schema: *a13
@@ -1365,6 +1394,7 @@ http:
                                   schema:
                                     type: enum
                                     name: anonymous<unknown>
+                                    sealed: true
                       - name: tweets
                         schema:
                           type: alias
@@ -1585,6 +1615,7 @@ http:
                                         schema:
                                           type: enum
                                           name: anonymous<unknown>
+                                          sealed: true
                               attic:
                                 example:
                                   created_at: 2017-10-09T17:16:24Z
@@ -1935,6 +1966,7 @@ http:
                 schema:
                   type: enum
                   name: anonymous<unknown>
+                  sealed: true
       responses:
         - name: "200"
           description: A successful response. The reply has been hidden.
@@ -1952,6 +1984,7 @@ http:
                       schema:
                         type: enum
                         name: anonymous<unknown>
+                        sealed: true
         - name: default
           aliasType: response
           target: *a32
@@ -2013,6 +2046,7 @@ http:
                 elementSchema:
                   type: enum
                   name: anonymous<unknown>
+                  sealed: true
               attic:
                 example: pinned_tweet_id
         - name: "2"

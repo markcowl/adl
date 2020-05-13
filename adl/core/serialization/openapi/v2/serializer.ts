@@ -85,8 +85,8 @@ async function processRoot(oai2: v2.Model, $: Context) {
       $.api.schemas.objects.push(schema);
       continue;
     }
-    if (schema instanceof Enum) {
-      $.api.schemas.enums.push(schema);
+    if (schema.type === 'enum' ) {
+      $.api.schemas.enums.push(<Enum>schema);
       continue;
     }
     if (schema instanceof Constant) {

@@ -1,7 +1,8 @@
 import { exists, isFile, mkdir, rmdir, writeFile } from '@azure-tools/async-io';
-import { Dictionary } from '@azure-tools/linq';
+import { Dictionary, linq } from '@azure-tools/linq';
+import { isAnonymous, isProxy, valueOf } from '@azure-tools/sourcemap';
 import { dirname, join } from 'path';
-import { IndentationText, Project, QuoteKind } from 'ts-morph';
+import { IndentationText, Project, QuoteKind, SourceFile } from 'ts-morph';
 import { Attic } from './element';
 import { SerializationResult } from './format';
 import { HttpProtocol } from './http/protocol';
@@ -91,6 +92,9 @@ export class ApiModel  {
     // print each file and save it.
     await Promise.all(
       this.project.getSourceFiles().map( async (each) => {
+        if( each === this.anonymousFile) {
+          return;
+        }
         each.formatText({
           indentSize: 2
         });
@@ -105,7 +109,38 @@ export class ApiModel  {
       }));
   }
 
+  getEnumFile(name: string): SourceFile {
+    if (isProxy(this)) {
+      return valueOf(this).getEnumFile(name);
+    }
+    if( isAnonymous(name)) {
+      return this.anonymousFile;
+    }
+    const filename = `${name}.ts`;
+    return  this.project.getSourceFile(filename) ||  this.project.createSourceFile(filename);
+  }
+
+  getEnum(name: string ) {
+    return linq.values(this.project.getSourceFiles()).selectMany( each => each.getEnums() ).where( each => each.getName() === name).toArray();
+  }
+
+  #aliasFile?: SourceFile;
+  getAliasSourceFile(): SourceFile {
+    if( isProxy(this) ) {
+      return valueOf(this).getAliasSourceFile();
+    }
+    return this.#aliasFile || (this.#aliasFile = this.project.createSourceFile('aliases.ts'));
+  }
   
+
+  #anonymousFile?: SourceFile;
+  get anonymousFile(): SourceFile {
+    if (isProxy(this)) {
+      return valueOf(this).anonymousFile;
+    }
+    return this.#anonymousFile || (this.#anonymousFile = this.project.createSourceFile('anonymous.ts'));
+  }
+
 }
 
 export class None {

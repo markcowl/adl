@@ -1,5 +1,0 @@
-export enum enum313 {
-    APPROVE = 'APPROVE',
-    REQUEST_CHANGES = 'REQUEST_CHANGES',
-    COMMENT = 'COMMENT'
-}

@@ -217,6 +217,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a9
           type: query
           name: p_fn
@@ -392,6 +393,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a20
           type: query
           name: p_sic
@@ -571,6 +573,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a26
           type: query
           name: p_sic2
@@ -643,6 +646,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a30
           type: query
           name: p_maj
@@ -654,6 +658,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a31
           type: query
           name: p_mact
@@ -736,6 +741,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a36
           type: query
           name: p_feay
@@ -749,6 +755,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a37
           type: query
           name: p_feaa
@@ -763,6 +770,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a38
           type: query
           name: p_iea
@@ -780,6 +788,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a39
           type: query
           name: p_ieay
@@ -793,6 +802,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a40
           type: query
           name: p_ieaa
@@ -809,6 +819,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a41
           type: query
           name: p_qiv
@@ -827,6 +838,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a42
           type: query
           name: p_naa
@@ -854,6 +866,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a44
           type: query
           name: p_trep
@@ -872,6 +885,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a45
           type: query
           name: p_tri_cat
@@ -894,6 +908,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a46
           type: query
           name: p_tri_amt
@@ -908,6 +923,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a47
           type: query
           name: p_tri_any_amt
@@ -957,6 +973,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a50
           type: query
           name: p_ghg_amt
@@ -969,6 +986,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a51
           type: query
           name: p_ghg_any_amt
@@ -1030,6 +1048,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a55
           type: query
           name: p_nei_any_amt
@@ -1102,6 +1121,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a59
           type: query
           name: p_pd
@@ -1128,6 +1148,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a60
           type: query
           name: p_ico
@@ -1139,6 +1160,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a61
           type: query
           name: p_huc
@@ -1203,6 +1225,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a65
           type: query
           name: p_ysl
@@ -1220,6 +1243,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a66
           type: query
           name: p_ysly
@@ -1231,6 +1255,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a67
           type: query
           name: p_ysla
@@ -1247,6 +1272,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a68
           type: query
           name: p_stsl
@@ -1263,6 +1289,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a69
           type: query
           name: p_stsly
@@ -1274,6 +1301,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a70
           type: query
           name: p_stsla
@@ -1288,6 +1316,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a71
           type: query
           name: p_stres
@@ -1471,6 +1500,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a80
           type: query
           name: p_idt1
@@ -1574,6 +1604,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a86
           type: query
           name: p_pfead1
@@ -1652,6 +1683,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a90
           type: query
           name: p_pctrack
@@ -1671,6 +1703,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a91
           type: query
           name: p_swpa
@@ -1681,6 +1714,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a92
           type: query
           name: p_des
@@ -1721,6 +1755,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a94
           type: query
           name: p_hpvmth
@@ -1876,6 +1911,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a100
           type: query
           name: p_fac_ico
@@ -1887,6 +1923,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a101
           type: query
           name: p_icoo
@@ -1948,6 +1985,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a105
           type: query
           name: p_lat
@@ -2001,6 +2039,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a109
           type: query
           name: p_ejscreen_over80cnt
@@ -2012,6 +2051,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a110
           type: query
           name: queryset
@@ -2053,6 +2093,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a277
           type: query
           name: maplist
@@ -2065,6 +2106,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a112
           type: query
           name: summarylist
@@ -2076,6 +2118,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a113
           type: query
           name: callback
@@ -4934,6 +4977,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a116
           type: formdata
           name: p_fn
@@ -5109,6 +5153,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a127
           type: formdata
           name: p_sic
@@ -5288,6 +5333,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a133
           type: formdata
           name: p_sic2
@@ -5360,6 +5406,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a137
           type: formdata
           name: p_maj
@@ -5371,6 +5418,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a138
           type: formdata
           name: p_mact
@@ -5453,6 +5501,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a143
           type: formdata
           name: p_feay
@@ -5466,6 +5515,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a144
           type: formdata
           name: p_feaa
@@ -5480,6 +5530,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a145
           type: formdata
           name: p_iea
@@ -5497,6 +5548,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a146
           type: formdata
           name: p_ieay
@@ -5510,6 +5562,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a147
           type: formdata
           name: p_ieaa
@@ -5526,6 +5579,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a148
           type: formdata
           name: p_qiv
@@ -5544,6 +5598,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a149
           type: formdata
           name: p_naa
@@ -5571,6 +5626,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a151
           type: formdata
           name: p_trep
@@ -5589,6 +5645,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a152
           type: formdata
           name: p_tri_cat
@@ -5611,6 +5668,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a153
           type: formdata
           name: p_tri_amt
@@ -5625,6 +5683,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a154
           type: formdata
           name: p_tri_any_amt
@@ -5674,6 +5733,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a157
           type: formdata
           name: p_ghg_amt
@@ -5686,6 +5746,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a158
           type: formdata
           name: p_ghg_any_amt
@@ -5747,6 +5808,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a162
           type: formdata
           name: p_nei_any_amt
@@ -5819,6 +5881,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a166
           type: formdata
           name: p_pd
@@ -5845,6 +5908,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a167
           type: formdata
           name: p_ico
@@ -5856,6 +5920,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a168
           type: formdata
           name: p_huc
@@ -5920,6 +5985,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a172
           type: formdata
           name: p_ysl
@@ -5937,6 +6003,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a173
           type: formdata
           name: p_ysly
@@ -5948,6 +6015,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a174
           type: formdata
           name: p_ysla
@@ -5964,6 +6032,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a175
           type: formdata
           name: p_stsl
@@ -5980,6 +6049,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a176
           type: formdata
           name: p_stsly
@@ -5991,6 +6061,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a177
           type: formdata
           name: p_stsla
@@ -6005,6 +6076,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a178
           type: formdata
           name: p_stres
@@ -6188,6 +6260,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a187
           type: formdata
           name: p_idt1
@@ -6291,6 +6364,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a193
           type: formdata
           name: p_pfead1
@@ -6369,6 +6443,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a197
           type: formdata
           name: p_pctrack
@@ -6388,6 +6463,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a198
           type: formdata
           name: p_swpa
@@ -6398,6 +6474,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a199
           type: formdata
           name: p_des
@@ -6438,6 +6515,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a201
           type: formdata
           name: p_hpvmth
@@ -6593,6 +6671,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a207
           type: formdata
           name: p_fac_ico
@@ -6604,6 +6683,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a208
           type: formdata
           name: p_icoo
@@ -6665,6 +6745,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a212
           type: formdata
           name: p_lat
@@ -6718,6 +6799,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a216
           type: formdata
           name: p_ejscreen_over80cnt
@@ -6729,6 +6811,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a217
           type: formdata
           name: queryset
@@ -6770,6 +6853,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a276
           type: formdata
           name: maplist
@@ -6782,6 +6866,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a219
           type: formdata
           name: summarylist
@@ -6793,6 +6878,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - &a220
           type: formdata
           name: callback
@@ -10295,6 +10381,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - *a4
         - *a114
       requests:
@@ -12760,6 +12847,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - *a6
         - *a221
       requests:
@@ -12949,6 +13037,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - *a224
         - *a113
         - *a229
@@ -13148,6 +13237,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - *a226
         - *a220
         - *a232
@@ -13284,6 +13374,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - *a224
         - &a271
           type: query
@@ -13437,6 +13528,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - *a226
         - &a256
           type: formdata
@@ -13509,6 +13601,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - *a113
       requests:
         - identity: anonymous<requestBody>
@@ -13667,6 +13760,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - *a220
       requests:
         - identity: anonymous<requestBody>

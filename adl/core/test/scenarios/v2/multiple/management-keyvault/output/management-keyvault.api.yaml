@@ -1585,6 +1585,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - type: query
           name: $top
           description: Maximum number of results to return.
@@ -1605,6 +1606,7 @@ http:
           schema:
             type: enum
             name: anonymous<unknown>
+            sealed: true
         - *a5
       responses:
         - name: "200"
