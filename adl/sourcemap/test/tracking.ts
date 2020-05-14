@@ -1,5 +1,5 @@
 import { describe, it } from 'mocha';
-import { Path } from '../exports';
+import { Path, SourceMap, TargetMap } from '../exports';
 import { Origin, TrackedSource, TrackedTarget } from '../proxies';
 require('source-map-support').install();
 
@@ -16,6 +16,9 @@ const src = {
 describe('can track source/destinations', () => {
   it('simple', () => {
     const tracker = {
+      track:(targetMap: TargetMap, sourceMap: SourceMap)=> {
+        //
+      },
       add: (inTarget: Path, inSource: Origin) => {
         if (!inSource) {
           console.log(`Skipping add for ${inTarget.join('/')} because I don't know the source`);

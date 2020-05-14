@@ -1,8 +1,9 @@
 import { exists, isFile, mkdir, rmdir, writeFile } from '@azure-tools/async-io';
-import { Dictionary, linq } from '@azure-tools/linq';
-import { isAnonymous, isProxy, valueOf } from '@azure-tools/sourcemap';
+import { Dictionary, linq, values } from '@azure-tools/linq';
+import { isAnonymous, isProxy, Path, SourceMap, TargetMap, use, valueOf } from '@azure-tools/sourcemap';
 import { dirname, join } from 'path';
-import { IndentationText, Project, QuoteKind, SourceFile } from 'ts-morph';
+import { IndentationText, Node, Project, QuoteKind, SourceFile } from 'ts-morph';
+import { getNode, virtual } from '../support/typescript';
 import { Attic } from './element';
 import { SerializationResult } from './format';
 import { HttpProtocol } from './http/protocol';
@@ -61,7 +62,14 @@ export class ApiModel  {
         quoteKind: QuoteKind.Single,
       }
     });
-    
+    (<any>this.#project).api = this;
+  }
+
+  track(targetMap: TargetMap, sourceMap: SourceMap ) {
+    // temporary -- use up everything that we are given in the source map.
+    for( const each of values(sourceMap)) {
+      use(each);
+    }
   }
 
   versionInfo = new Array<VersionInfo>();
@@ -109,6 +117,10 @@ export class ApiModel  {
       }));
   }
 
+  getNode(path: Path): Node|undefined {
+    return getNode(path, this.project);
+  }
+
   getEnumFile(name: string): SourceFile {
     if (isProxy(this)) {
       return valueOf(this).getEnumFile(name);
@@ -121,7 +133,8 @@ export class ApiModel  {
   }
 
   getEnum(name: string ) {
-    return linq.values(this.project.getSourceFiles()).selectMany( each => each.getEnums() ).where( each => each.getName() === name).toArray();
+    name = valueOf(name);
+    return linq.values(this.project.getSourceFiles()).selectMany( each => each.getEnums() ).where( each => each.getName() === name).select( each => virtual(each)).toArray();
   }
 
   #aliasFile?: SourceFile;
@@ -132,7 +145,6 @@ export class ApiModel  {
     return this.#aliasFile || (this.#aliasFile = this.project.createSourceFile('aliases.ts'));
   }
   
-
   #anonymousFile?: SourceFile;
   get anonymousFile(): SourceFile {
     if (isProxy(this)) {
