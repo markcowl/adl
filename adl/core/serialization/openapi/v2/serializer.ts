@@ -4,7 +4,12 @@ import { isVendorExtension, ParameterLocation } from '@azure-tools/openapi/dist/
 import { use } from '@azure-tools/sourcemap';
 import { Alias as GenericAlias } from '../../../model/alias';
 import { ApiModel } from '../../../model/api-model';
-import { Alias, AndSchema, AnyOfSchema, AnySchema, ArraySchema, Constant, Enum, ObjectSchema, Primitive, XorSchema } from '../../../model/schema';
+import { Alias } from '../../../model/schema/alias';
+import { Constant } from '../../../model/schema/constant';
+import { Enum } from '../../../model/schema/enum';
+import { AndSchema, AnyOfSchema, XorSchema } from '../../../model/schema/group';
+import { ObjectSchema } from '../../../model/schema/object';
+import { AnySchema, ArraySchema, Primitive } from '../../../model/schema/primitive';
 import { Host } from '../../../support/file-system';
 import { Context as Ctx, Visitor } from '../../../support/visitor';
 import { push, singleOrDefault } from '../common';

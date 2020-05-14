@@ -3,7 +3,13 @@ import { IntegerFormat, NumberFormat, StringFormat, v3 } from '@azure-tools/open
 import { anonymous, isUsed, nameOf, unusedMembers, use, using } from '@azure-tools/sourcemap';
 import { Alias as GenericAlias } from '../../../model/alias';
 import { Identity } from '../../../model/name';
-import { Alias, AndSchema, AnyOfSchema, ArraySchema, DictionarySchema, ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ObjectSchema, Property, RegularExpressionConstraint, Schema, ServerDefaultValue, UniqueElementsConstraint, XorSchema } from '../../../model/schema';
+import { Alias } from '../../../model/schema/alias';
+import { ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, RegularExpressionConstraint, UniqueElementsConstraint } from '../../../model/schema/constraint';
+import { ServerDefaultValue } from '../../../model/schema/default';
+import { AndSchema, AnyOfSchema, XorSchema } from '../../../model/schema/group';
+import { ObjectSchema, Property } from '../../../model/schema/object';
+import { ArraySchema, DictionarySchema } from '../../../model/schema/primitive';
+import { Schema } from '../../../model/schema/schema';
 import { isEnumSchema, isObjectSchema, isPrimitiveSchema, push, singleOrDefault, toArray } from '../common';
 import { arrayProperties, commonProperties, numberProperties, objectProperties, Options, processAnySchema, processBooleanSchema, processByteArraySchema, processCharSchema, processDateSchema, processDateTimeSchema, processDurationSchema, processEnumSchemaCommon, processFileSchema, processOdataSchema, processPasswordSchema, processTimeSchema, processUriSchema, processUuidSchema, stringProperties } from '../common/schema';
 import { Context } from './serializer';

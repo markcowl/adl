@@ -1,6 +1,10 @@
 import { v2, v3, XMSEnumValue } from '@azure-tools/openapi';
 import { anonymous, nameOf, use } from '@azure-tools/sourcemap';
-import { Alias, createEnum, ReadOnlyConstraint, Schema, ServerDefaultValue } from '../../../model/schema';
+import { Alias } from '../../../model/schema/alias';
+import { ReadOnlyConstraint } from '../../../model/schema/constraint';
+import { ServerDefaultValue } from '../../../model/schema/default';
+import { createEnum } from '../../../model/schema/enum';
+import { Schema } from '../../../model/schema/schema';
 import { Context, OAIModel } from '../../../support/visitor';
 
 

@@ -1,5 +1,5 @@
 import * as base from '../operation';
-import { Schema } from '../schema';
+import { Schema } from '../schema/schema';
 
 
 export enum RenderStyle {

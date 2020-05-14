@@ -1,7 +1,12 @@
 import { v3 } from '@azure-tools/openapi';
 import { Alias as GenericAlias } from '../../../model/alias';
 import { Element } from '../../../model/element';
-import { Alias, AndSchema, AnyOfSchema, AnySchema, ArraySchema, Constant, Enum, ObjectSchema, Primitive, XorSchema } from '../../../model/schema';
+import { Alias } from '../../../model/schema/alias';
+import { Constant } from '../../../model/schema/constant';
+import { Enum } from '../../../model/schema/enum';
+import { AndSchema, AnyOfSchema, XorSchema } from '../../../model/schema/group';
+import { ObjectSchema } from '../../../model/schema/object';
+import { AnySchema, ArraySchema, Primitive } from '../../../model/schema/primitive';
 import { header } from './header';
 import { parameter } from './parameter';
 import { requestBody } from './request-body';

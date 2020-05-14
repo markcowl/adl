@@ -3,7 +3,12 @@ import { IntegerFormat, NumberFormat, StringFormat, v2 } from '@azure-tools/open
 import { anonymous, isUsed, nameOf, unusedMembers, use, using } from '@azure-tools/sourcemap';
 import { Alias as GenericAlias } from '../../../model/alias';
 import { Identity } from '../../../model/name';
-import { Alias, ArraySchema, DictionarySchema, ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ObjectSchema, Property, ReadOnlyConstraint, RegularExpressionConstraint, Schema, ServerDefaultValue, UniqueElementsConstraint } from '../../../model/schema';
+import { Alias } from '../../../model/schema/alias';
+import { ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ReadOnlyConstraint, RegularExpressionConstraint, UniqueElementsConstraint } from '../../../model/schema/constraint';
+import { ServerDefaultValue } from '../../../model/schema/default';
+import { ObjectSchema, Property } from '../../../model/schema/object';
+import { ArraySchema, DictionarySchema } from '../../../model/schema/primitive';
+import { Schema } from '../../../model/schema/schema';
 import { isEnumSchema, isObjectSchema, push, singleOrDefault } from '../common';
 import { arrayProperties, commonProperties, numberProperties, objectProperties, Options, processAnySchema, processBooleanSchema, processByteArraySchema, processCharSchema, processDateSchema, processDateTimeSchema, processDurationSchema, processEnumSchemaCommon, processFileSchema, processOdataSchema, processPasswordSchema, processTimeSchema, processUriSchema, processUuidSchema, stringProperties } from '../common/schema';
 import { Context } from './serializer';
