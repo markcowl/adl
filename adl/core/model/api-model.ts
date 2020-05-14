@@ -10,7 +10,7 @@ import { HttpProtocol } from './http/protocol';
 import { InternalData } from './internal-data';
 import { Metadata } from './metadata';
 import { Resource } from './resource';
-import { Schemas } from './schema/schema';
+import { Schemas } from './schema/schemas';
 import { VersionInfo } from './version-info';
 
 
