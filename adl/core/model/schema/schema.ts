@@ -1,11 +1,11 @@
 import { Dictionary, length, values } from '@azure-tools/linq';
 import { anonymous, isAnonymous, valueOf } from '@azure-tools/sourcemap';
 import { EnumDeclaration, EnumMember } from 'ts-morph';
-import { quoteForIdentifier } from '../support/codegen';
-import { getPath, referenceTo } from '../support/typescript';
-import { ApiModel } from './api-model';
-import { Element } from './element';
-import { Identity } from './name';
+import { quoteForIdentifier } from '../../support/codegen';
+import { getPath, referenceTo } from '../../support/typescript';
+import { ApiModel } from '../api-model';
+import { Element } from '../element';
+import { Identity } from '../name';
 
 export class Schema extends Element {
   get targetMap(): Dictionary<any> {

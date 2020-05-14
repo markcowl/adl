@@ -1,6 +1,6 @@
 import { Alias } from './alias';
 import { Element } from './element';
-import { Schema } from './schema';
+import { Schema } from './schema/schema';
 
 export class Operation extends Element {
 
