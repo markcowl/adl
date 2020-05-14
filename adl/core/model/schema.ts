@@ -1,13 +1,21 @@
-import { length, values } from '@azure-tools/linq';
+import { Dictionary, length, values } from '@azure-tools/linq';
 import { anonymous, isAnonymous, valueOf } from '@azure-tools/sourcemap';
 import { EnumDeclaration, EnumMember } from 'ts-morph';
 import { quoteForIdentifier } from '../support/codegen';
+import { getPath, referenceTo } from '../support/typescript';
 import { ApiModel } from './api-model';
 import { Element } from './element';
 import { Identity } from './name';
 
-
 export class Schema extends Element {
+  get targetMap(): Dictionary<any> {
+    return {
+      ...super.targetMap,
+      summary: getPath(this.node, /* path to summary jsdoc */),
+      description: getPath(this.node, /* path to description jsdoc */),
+    };
+  }
+
   anonymous?: boolean;
   /** 
    * name of this schema - may be an alias or an actual string name 
@@ -41,7 +49,6 @@ export class Schema extends Element {
     this.name = anonymous('');
     this.initialize(initializer);
   }
-
 }
 
 export class Property extends Element {
@@ -113,12 +120,19 @@ export class Constant extends Schema {
 
 export class EnumValue extends Element { 
   node: EnumMember;
+  get targetMap() {
+    return {
+      ...super.targetMap,
+      $: getPath(this.node),
+      value: getPath(this.node, 'getValue')
+    };
+  }
 
   constructor(decl: EnumMember) {
     super();
-    this.node = decl;
+    this.node = referenceTo(decl);
   }
-
+  
   get value(): any {
     return this.node.getValue();
   }
@@ -153,6 +167,12 @@ class InlineEnum extends Schema implements Enum{
 
 class EnumActual extends Schema implements Enum {
   node: EnumDeclaration;
+  get targetMap(): Dictionary<any> {
+    return {
+      ...super.targetMap,
+      $: getPath(this.node),
+    };
+  }
   
   get sealed() {
     return true;
@@ -163,17 +183,21 @@ class EnumActual extends Schema implements Enum {
   
   constructor(decl: EnumDeclaration) {
     super('enum');
-    this.node = decl;
+    this.node = referenceTo(decl);
   }
   
-  addValue(name: string, value: string | number, initializer?: Partial<EnumValue>) /* :EnumValue*/ {  
+  addValue(name: string, value: string | number): EnumValue {  
     const em = this.node.addMember({
       name: quoteForIdentifier( valueOf(name)),
       value: valueOf(value),
     });
-    
-    const ev = new EnumValue(em);
 
+    const ev = new EnumValue(em).track({
+      // he who creates a trackable object shall call track
+      $: name,
+      value: value
+    });
+    
     return ev;
   }
 
@@ -197,11 +221,11 @@ export function createEnum(api: ApiModel, elementSchema: Schema, initializer?: {
   // do we have names or descriptions?
   // do we have a name for this enum
   
-  const name = valueOf(initializer?.name) || anonymous('enum') ;
+  const name = initializer?.name || anonymous('enum') ;
   const enumvalues = initializer?.values;
 
   if( length(enumvalues) > 0 ) {
-    if (!isAnonymous(name)  ) {
+    if (!isAnonymous(name)) {
       // make a enum type
       const existing = api.getEnum(name);
       
@@ -209,16 +233,20 @@ export function createEnum(api: ApiModel, elementSchema: Schema, initializer?: {
         each.addJsDoc({description: 'I think we emitted this before, reusing'});
         return new EnumActual(each);
       }
-
+      
       const file = api.getEnumFile(name);
+      
       const result = new EnumActual(file.addEnum({
-        name,
+        name: valueOf(name),
         isExported: true,
-      }));
+      })).track({
+        // he who creates a trackable object shall call track
+        $: name
+      });
+  
       for (const each of values(enumvalues)) {
         result.addValue(each.name || each.value, each.value);
       }
-     
       
       return result;
     }
@@ -228,8 +256,6 @@ export function createEnum(api: ApiModel, elementSchema: Schema, initializer?: {
   const file = api.getAliasSourceFile();
   const result = new InlineEnum(`${enumvalues?.join('|')}`);
   return result;
-
-  
 }
 
 export class Constraint extends Schema {

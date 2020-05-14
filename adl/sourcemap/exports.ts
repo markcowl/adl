@@ -1,3 +1,4 @@
+import { Dictionary } from '@azure-tools/linq';
 import { Origin, valueOf } from './proxies';
 
 // eslint-disable-next-line @typescript-eslint/class-name-casing
@@ -16,6 +17,12 @@ class Anonymous {
 }
 export const anonymous = (instance: any) => new Anonymous(instance);
 
+export interface TargetMap extends Dictionary<any> {
+}
+
+export interface SourceMap extends Dictionary<any> {
+}
+
 export type Step = string | number | symbol | anonymous;
 export type Path = Array<Step>;
 
@@ -28,6 +35,10 @@ export function isAnonymous(instance: any): instance is anonymous {
 export class Tracker {
 
   add(inTarget: Path, inSource: Origin) {
+    // 
+  }
+
+  track( targetMap: TargetMap, sourceMap: SourceMap ) {
     // 
   }
 }

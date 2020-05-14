@@ -164,49 +164,5 @@ paths:
 components:
   schemas:
     Tier:
-      enum:
-        - DEFAULT
-        - DOT_NET_CORE
-        - DOT_NET_WORKER
-        - DOT_NET_WEB
-        - SQL_SERVER
       minLength: 1
       maxLength: 50
-    CloudWatchEventSource:
-      enum:
-        - EC2
-        - CODE_DEPLOY
-        - HEALTH
-    ConfigurationEventStatus:
-      enum:
-        - INFO
-        - WARN
-        - ERROR
-    ConfigurationEventResourceType:
-      enum:
-        - CLOUDWATCH_ALARM
-        - CLOUDFORMATION
-        - SSM_ASSOCIATION
-    FeedbackValue:
-      enum:
-        - NOT_SPECIFIED
-        - USEFUL
-        - NOT_USEFUL
-    FeedbackKey:
-      enum:
-        - INSIGHTS_FEEDBACK
-    LogFilter:
-      enum:
-        - ERROR
-        - WARN
-        - INFO
-    Status:
-      enum:
-        - IGNORE
-        - RESOLVED
-        - PENDING
-    SeverityLevel:
-      enum:
-        - Low
-        - Medium
-        - High

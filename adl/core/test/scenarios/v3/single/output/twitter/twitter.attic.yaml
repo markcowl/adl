@@ -155,14 +155,6 @@ components:
         type:
           enum:
             - photo
-    PlaceType:
-      enum:
-        - poi
-        - neighborhood
-        - city
-        - admin
-        - country
-        - unknown
     Point:
       properties:
         type:
