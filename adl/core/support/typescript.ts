@@ -7,19 +7,19 @@ import { ApiModel } from '../model/api-model';
  * returns the best possible identifier for the node
  * @param node the node to create an identifier for.
  */
-export function getNodeIdentifier(node:Node) {
+export function getNodeIdentifier(node: Node) {
 
   return (<any>node).getName ? (<any>node).getName() : 
-         (<any>node).getFilePath ? (<any>node).getFilePath() : 
-         (<any>node).getValue ? (<any>node).getValue() : 
-         node.getChildIndex() 
+    (<any>node).getFilePath ? (<any>node).getFilePath() : 
+      (<any>node).getValue ? (<any>node).getValue() : 
+        node.getChildIndex(); 
 }
 /**
  * returns a Path to the node that we can use to find it again.
  * 
  * @param node the node to create the path for.
  */
-export function getPath(node: Node, ...args:Path ): Path{
+export function getPath(node: Node, ...args: Path ): Path{
   return [...node.getAncestors().map(getNodeIdentifier),getNodeIdentifier(node),...args];
 }
 
@@ -33,7 +33,7 @@ export function getNode(path: Path, from: Node|Project ): Node | undefined {
     index = path.shift();
   }
   
-  const result = (<any>from).getChildren().find((each:any) => { 
+  const result = (<any>from).getChildren().find((each: any) => { 
     if ((<any>each).getName && (<any>each).getName() === index ) {
       return true;
     }
@@ -50,10 +50,10 @@ export function getNode(path: Path, from: Node|Project ): Node | undefined {
  * 
  * @param input the node to create a reference for.
  */
-export function virtual<T extends Node>(input:T): T { 
+export function referenceTo<T extends Node>(input: T): T { 
   const project = input.getProject();
   let current = input;
-  let path = getPath(input);
+  const path = getPath(input);
 
   return new Proxy(input,{
     get:(originalTarget: T, property: keyof T, proxy: T): any => {
@@ -68,9 +68,9 @@ export function virtual<T extends Node>(input:T): T {
     set: (originalTarget: T, property: keyof T, value: any, receiver: any)=> {
       return Reflect.set(current.wasForgotten() ? (current = <T>getNode([...path], project)) : current, property, value);
     }
-  })
+  });
 }
 
-export function project<T extends Node>(input:T): ApiModel {
-  return (<any>input.getProject()).api
+export function project<T extends Node>(input: T): ApiModel {
+  return (<any>input.getProject()).api;
 }
