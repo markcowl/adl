@@ -1,18 +1,38 @@
 import { Path } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
-import { Node, Project } from 'ts-morph';
+import { EnumDeclaration, EnumMember, Node, Project, SyntaxList } from 'ts-morph';
 import { ApiModel } from '../model/api-model';
+import { createSandbox } from './sandbox';
 
+
+const evaluateExpression = createSandbox();
+function quote(text: string) {
+  return JSON.stringify(text);
+}
 /**
  * returns the best possible identifier for the node
  * @param node the node to create an identifier for.
  */
 export function getNodeIdentifier(node: Node) {
+  // for some nodes, we have to give it an expression that can 
+  // effectively find the node we're looking for.
+  // this can be far more reliable than using the name or index 
+  // as a means to find something.
+  switch( node.getKindName() ) {
+    case 'SourceFile':
+      return  (<any>node).getFilePath();
 
+    case 'EnumMember':
+      return `$.getMember(${quote((<EnumMember>node).getName())})`;
+
+    case 'EnumDeclaration':
+      return `$.getEnum(${quote((<EnumDeclaration>node).getName())})`;
+  }
+
+  // otherwise, just use the name of the node, or the value, or the index in the list of children
   return (<any>node).getName ? (<any>node).getName() : 
-    (<any>node).getFilePath ? (<any>node).getFilePath() : 
-      (<any>node).getValue ? (<any>node).getValue() : 
-        node.getChildIndex(); 
+    (<any>node).getValue ? (<any>node).getValue() : 
+      node.getChildIndex(); 
 }
 /**
  * returns a Path to the node that we can use to find it again.
@@ -32,16 +52,27 @@ export function getNode(path: Path, from: Node|Project ): Node | undefined {
     from = from.getSourceFile(<string>index)?.getChildAtIndex(0) || fail(`SourceFile ${<string>index} is not in the project`);
     index = path.shift();
   }
-  
-  const result = (<any>from).getChildren().find((each: any) => { 
-    if ((<any>each).getName && (<any>each).getName() === index ) {
-      return true;
-    }
-    if ((<any>each).getValue && (<any>each).getValue() === index) {
-      return true;
-    }
-    return false;
-  }) || (typeof index === 'number' ? from.getChildAtIndex(index) : undefined);
+  let result: Node|undefined;
+
+  // if the path leads us to an expression that needs to evaluate
+  if( typeof index === 'string' && index.startsWith('$.')) {
+    console.log( `executing ${index}`);
+    result = evaluateExpression( index, {$: from instanceof SyntaxList ? from.getParent() : from});
+  }
+
+  // otherwise, just try to find it in the children
+  if( result === undefined ) {
+    result = from.getChildren().find((each: any) => { 
+      if ((<any>each).getName && (<any>each).getName() === index ) {
+        return true;
+      }
+      if ((<any>each).getValue && (<any>each).getValue() === index) {
+        return true;
+      }
+      return false;
+    }) || (typeof index === 'number' ? from.getChildAtIndex(index) : undefined);
+  }
+
   return result && path.length ? getNode( path, result) : result;
 }
 
