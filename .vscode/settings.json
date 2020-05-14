@@ -1,5 +1,5 @@
 {
-  "typescript.tsdk": "common/temp/node_modules/.registry.npmjs.org/typescript/3.8.3/node_modules/typescript/lib",
+  "typescript.tsdk": "common/temp/node_modules/.registry.npmjs.org/typescript/3.9.2/node_modules/typescript/lib",
   "files.eol": "\n",
   "files.exclude": {
     "**/common/temp/**": true,
