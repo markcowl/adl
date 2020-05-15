@@ -1,3 +1,4 @@
+/** @extensible */
 export enum StoragePermissions {
     get = 'get',
     list = 'list',

@@ -1,14 +1,25 @@
-import { Dictionary, length, values } from '@azure-tools/linq';
+import { Dictionary, linq } from '@azure-tools/linq';
 import { anonymous, isAnonymous, valueOf } from '@azure-tools/sourcemap';
 import { EnumDeclaration, EnumMember } from 'ts-morph';
 import { quoteForIdentifier } from '../../support/codegen';
-import { getPath, referenceTo } from '../../support/typescript';
+import { getPath } from '../../support/typescript';
 import { ApiModel } from '../api-model';
-import { Element } from '../element';
-import { Schema } from './schema';
+import { TSElement } from '../element';
+import { Schema, TSSchema } from './schema';
 
-export class EnumValue extends Element {
-  node: EnumMember;
+export interface Enum extends Schema {
+  extensible?: boolean;
+  readonly values: Array<EnumValue>;
+  addValue(value: EnumValue): EnumValue;
+}
+
+export interface EnumValue {
+  name?: string;
+  description?: string;
+  value: any;
+}
+
+class GenuineEnumValue extends TSElement<EnumMember> implements EnumValue {
   get targetMap() {
     return {
       ...super.targetMap,
@@ -17,9 +28,8 @@ export class EnumValue extends Element {
     };
   }
 
-  constructor(decl: EnumMember) {
-    super();
-    this.node = referenceTo(decl);
+  constructor(node: EnumMember) {
+    super(node);
   }
 
   get value(): any {
@@ -29,30 +39,43 @@ export class EnumValue extends Element {
   get name(): string | undefined {
     return this.node.getName();
   }
+
+  get description(): string | undefined {
+    return this.getDocSummary();
+  }
+  set description(value: string | undefined) {
+    this.setDocSummary(value);
+  }
 }
 
-export interface Enum extends Schema {
-  sealed?: boolean;
-  addValue(name: string, value: string | number, initializer?: Partial<EnumValue>): EnumValue;
-  readonly values: Array<EnumValue>;
-}
+/**
+ * An unnamed enum that has no names or descriptions, only values.
+ * It can be inlined wherever used as value1 | ...  | valueN
+ * Code emit is therefore deferred to referencers and this just holds the values.
+ */
 class InlineEnum extends Schema implements Enum {
-  // x : 'foo'|'bar'|'baz'
-  sealed?: boolean | undefined;
-  addValue(name: string, value: string | number, initializer?: Partial<EnumValue> | undefined): EnumValue {
-    throw new Error('Method not implemented.');
-  }
-  get values(): Array<EnumValue> {
-    return [];
+  #values = new Array<any>();
+  name = anonymous('enum');
+  extensible = false;
+
+  addValue(value: EnumValue) {
+    if (value.name || value.description) {
+      throw new Error('Inline enum values cannot be named or have descriptions.');
+    }
+    this.#values.push(value.value);
+    return value;
   }
 
-  constructor(decl: string) {
+  get values() {
+    return this.#values.map<EnumValue>(value => ({ value }));
+  }
+
+  constructor() {
     super('enum');
-
   }
 }
-class EnumActual extends Schema implements Enum {
-  node: EnumDeclaration;
+
+class GenuineEnum extends TSSchema<EnumDeclaration> implements Enum {
   get targetMap(): Dictionary<any> {
     return {
       ...super.targetMap,
@@ -60,84 +83,80 @@ class EnumActual extends Schema implements Enum {
     };
   }
 
-  get sealed() {
-    return true;
+  get extensible() {
+    return this.hasDocTag('extensible');
   }
-  set sealed(value: boolean) {
-    // TODO: how do we represent unsealed
-  }
-
-  constructor(decl: EnumDeclaration) {
-    super('enum');
-    this.node = referenceTo(decl);
+  set extensible(value: boolean) {
+    this.setDocTag('extensible', value);
   }
 
-  addValue(name: string, value: string | number): EnumValue {
-    const em = this.node.addMember({
-      name: quoteForIdentifier(valueOf(name)),
-      value: valueOf(value),
-    });
-
-    const ev = new EnumValue(em).track({
-      // he who creates a trackable object shall call track
-      $: name,
-      value: value
-    });
-
-    return ev;
+  constructor(node: EnumDeclaration) {
+    super('enum', node);
   }
 
+  addValue(value: EnumValue) {
+    const name = valueOf(value.name) ?? value.value.toString();
+    const val = valueOf(value.value);
+
+    let member: EnumMember;
+
+    switch (typeof val) {
+      case 'string':
+      case 'number':
+        member = this.node.addMember({
+          name: quoteForIdentifier(name),
+          value: val
+        });
+        break;
+
+      default:
+        throw new Error('Cannot add non-string, non-numeric value to enum');
+    }
+
+    const result = new GenuineEnumValue(member);
+    result.description = value.description;
+    return result;
+  }
   get values(): Array<EnumValue> {
-    return this.node.getMembers().map(each => new EnumValue(each));
+    return this.node.getMembers().map<EnumValue>(each => new GenuineEnumValue(each));
   }
 }
 
-export interface NamedValue {
-  name?: string;
-  value: any;
-  description?: string;
+
+let generatedEnumCounter = 1;
+function generateTypeName() {
+  return `enum${generatedEnumCounter++}`;
 }
 
+export function createEnum(api: ApiModel, values: Array<EnumValue>, initializer?: Partial<Enum>) {
+  const name = initializer?.name ?? anonymous('enum');
 
-export function createEnum(api: ApiModel, elementSchema: Schema, initializer?: { name?: string; values?: Array<NamedValue> }) {
-  // decide whether to make an inline enum or actual enum
-
-  // are we dealing with strings/numbers?
-  // do we have names or descriptions?
-  // do we have a name for this enum
-  const name = initializer?.name || anonymous('enum');
-  const enumvalues = initializer?.values;
-
-  if (length(enumvalues) > 0) {
-    if (!isAnonymous(name)) {
-      // make a enum type
-      const existing = api.getEnum(name);
-
-      for (const each of existing) {
-        each.addJsDoc({ description: 'I think we emitted this before, reusing' });
-        return new EnumActual(each);
-      }
-
-      const file = api.getEnumFile(name);
-
-      const result = new EnumActual(file.addEnum({
-        name: valueOf(name),
-        isExported: true,
-      })).track({
-        // he who creates a trackable object shall call track
-        $: name
-      });
-
-      for (const each of values(enumvalues)) {
-        result.addValue(each.name || each.value, each.value);
-      }
-
-      return result;
+  if (!isAnonymous(name)) {
+    const existing = api.getEnum(name);
+    if (existing) {
+      // TODO: This should be made reusable, determine that the definitions are fully the same, then emit nothing.
+      existing.addJsDoc({ tags: [{ tagName: 'todo-temporary-reuse-marker' }] });
+      return new GenuineEnum(existing);
     }
   }
 
-  // make an inline enum
-  const file = api.getAliasSourceFile();
-  const result = new InlineEnum(`${enumvalues?.join('|')}`);
+  const summary = initializer?.summary;
+  let result: Enum;
+
+  // We can only be inline if we have no names or summaries
+  if (!isAnonymous(name) || summary || linq.values(values).any(v => !!(v.name || v.description))) {
+    const enumName = isAnonymous(name) ? generateTypeName() : valueOf(name);
+    const file = api.getEnumFile(enumName);
+    const type = file.addEnum({ name: enumName, isExported: true });
+    result = new GenuineEnum(type);
+  } else {
+    result = new InlineEnum();
+  }
+
+  for (const each of values) {
+    result.addValue(each);
+  }
+
+  result.initialize(initializer);
   return result;
 }

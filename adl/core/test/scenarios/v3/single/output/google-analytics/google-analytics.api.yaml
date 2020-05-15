@@ -64,8 +64,8 @@ http:
             renderStyle: form
             schema:
               type: enum
-              name: anonymous<unknown>
-              sealed: true
+              name: anonymous<enum>
+              extensible: false
         - name: "1"
           aliasType: parameter
           target: &a6
@@ -76,7 +76,7 @@ http:
             renderStyle: form
             schema: &a3
               type: string
-              name: anonymous<unknown>
+              name: anonymous<string>
         - name: "2"
           aliasType: parameter
           target: &a7
@@ -107,15 +107,15 @@ http:
             renderStyle: form
             schema:
               type: alias
-              name: anonymous<unknown>
+              name: anonymous<boolean>
               aliasType: schema
               defaults:
                 - type: server-default
-                  name: anonymous<unknown>
+                  name: anonymous<server-default>
                   value: false
               targetSchema: &a12
                 type: boolean
-                name: anonymous<unknown>
+                name: anonymous<boolean>
         - name: "5"
           aliasType: parameter
           target: &a10
@@ -189,7 +189,7 @@ http:
           renderStyle: form
           schema: &a4
             type: int64
-            name: anonymous<unknown>
+            name: anonymous<int64>
         - type: query
           name: segment
           description: An Analytics advanced segment to be applied to the report data.

@@ -1,8 +1,8 @@
 import { exists, isFile, mkdir, rmdir, writeFile } from '@azure-tools/async-io';
-import { Dictionary, linq, values } from '@azure-tools/linq';
+import { Dictionary, values } from '@azure-tools/linq';
 import { isAnonymous, isProxy, Path, SourceMap, TargetMap, use, valueOf } from '@azure-tools/sourcemap';
 import { dirname, join } from 'path';
-import { IndentationText, Node, Project, QuoteKind, SourceFile } from 'ts-morph';
+import { EnumDeclaration, IndentationText, Node, Project, QuoteKind, SourceFile } from 'ts-morph';
 import { getNode, referenceTo } from '../support/typescript';
 import { Attic } from './element';
 import { SerializationResult } from './format';
@@ -134,7 +134,16 @@ export class ApiModel  {
 
   getEnum(name: string ) {
     name = valueOf(name);
-    return linq.values(this.project.getSourceFiles()).selectMany( each => each.getEnums() ).where( each => each.getName() === name).select( each => referenceTo(each)).toArray();
+    let result: EnumDeclaration | undefined;
+
+    for (const file of this.project.getSourceFiles()) {
+      const result = file.getEnum(name);
+      if (result) {
+        return referenceTo(result);
+      }
+    }
+
+    return undefined;
   }
 
   #aliasFile?: SourceFile;

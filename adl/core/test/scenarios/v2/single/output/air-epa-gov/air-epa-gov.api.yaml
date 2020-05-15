@@ -29,7 +29,7 @@ http:
               - GEOJSOND = Facility results formatted as GeoJSON feature collection download.
             targetSchema: &a1
               type: string
-              name: anonymous<unknown>
+              name: anonymous<string>
         - &a224
           type: query
           name: qid
@@ -82,13 +82,13 @@ http:
               human readable as pretty printing has a performance cost.
             targetSchema: &a3
               type: double
-              name: anonymous<unknown>
+              name: anonymous<double>
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/x-www-form-urlencoded
           schema: &a2
             type: file
-            name: anonymous<unknown>
+            name: anonymous<file>
       responses:
         - name: "200"
           description: Results are a comma separated value (CSV) file or a file containing
@@ -216,8 +216,16 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Output Format Flag.  Enter one of the following keywords:
+
+              - JSON = Data model formatted as Javascript Object Notation (default).
+
+              - JSONP = Data model formatted as Javascript Object Notation with Padding.  
+
+              - XML = Data model formatted as Extensible Markup Language.
+            extensible: false
         - &a9
           type: query
           name: p_fn
@@ -392,8 +400,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: EPA Region Filter. Provide a single value of 01 thru 10 to restrict
+              results to a single EPA region.
+            extensible: false
         - &a20
           type: query
           name: p_sic
@@ -494,7 +504,7 @@ http:
               to limit results.   Provide multiple codes as a comma-delimited
               list.
             targetSchema: *a1
-        - &a265
+        - &a267
           type: query
           name: p_c1lat
           description: In decimal degrees.  Latitude of 1st corner of box that bounds the
@@ -511,7 +521,7 @@ http:
               resulting facilities. The latitude and longitude of both corners
               of the bounding box must be provided.
             targetSchema: *a3
-        - &a266
+        - &a268
           type: query
           name: p_c1lon
           description: In decimal degrees.  Longitude of 1st corner of box that bounds the
@@ -528,7 +538,7 @@ http:
               resulting facilities. The latitude and longitude of both corners
               of the bounding box must be provided.
             targetSchema: *a3
-        - &a267
+        - &a269
           type: query
           name: p_c2lat
           description: In decimal degrees.  Latitude of 2nd corner of box that bounds the
@@ -545,7 +555,7 @@ http:
               resulting facilities. The latitude and longitude of both corners
               of the bounding box must be provided.
             targetSchema: *a3
-        - &a268
+        - &a270
           type: query
           name: p_c2lon
           description: In decimal degrees.  Longitude of 2nd corner of box that bounds the
@@ -572,8 +582,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: US-Mexico Border Flag.  Enter Y/N to restrict searches to
+              facilities located within 100KM of the border.
+            extensible: false
         - &a26
           type: query
           name: p_sic2
@@ -645,8 +657,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Active Permits/Facilities Flag.  Provide Y or N to filter results
+              to facilities with active permits.
+            extensible: false
         - &a30
           type: query
           name: p_maj
@@ -657,8 +671,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Major Facility Flag.  Enter Y to restrict results to Major
+              facilities only.
+            extensible: false
         - &a31
           type: query
           name: p_mact
@@ -740,8 +756,16 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Formal Enforcement Actions [within / not within] specified date
+              range indicator. The date range is determined by parameters
+              p_fead1 and p_fead2 or by parameter p_feay.
+
+              - W = within date range
+
+              - N = not within date range
+            extensible: false
         - &a36
           type: query
           name: p_feay
@@ -754,8 +778,12 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Years (1 to 5) Range.  This value is used to create a date range
+              for Formal Enforcement Actions (FEA). Used along with p_fea (which
+              indicates whether to look within or outside of the date range) to
+              find FEAs within (or not within) the number of years specified.
+            extensible: false
         - &a37
           type: query
           name: p_feaa
@@ -769,8 +797,13 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: |-
+              Agency associated with Formal Enforcement Actions:
+              - E = EPA
+              - S = State
+              - A = All
+            extensible: false
         - &a38
           type: query
           name: p_iea
@@ -787,8 +820,16 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Informal Enforcement Actions [within / not within] specified date
+              range.  The date range is determined by parameters p_iead1 and
+              p_iead2 or by parameter p_ieay.
+
+              - W = within date range
+
+              - N = not within date range
+            extensible: false
         - &a39
           type: query
           name: p_ieay
@@ -801,8 +842,13 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Years (1 to 5) Range.  This value is used to create a date range
+              for Informal Enforcement Actions (IEA). Used along with p_iea
+              (which indicates whether to look within or outside of the date
+              range) to find IEAs within (or not within) the number of years
+              specified.
+            extensible: false
         - &a40
           type: query
           name: p_ieaa
@@ -818,8 +864,15 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Agency associated with Informal Enforcement Actions. If left
+              blank, both agencies are included.
+
+              - E = EPA
+
+              - S = State
+            extensible: false
         - &a41
           type: query
           name: p_qiv
@@ -837,8 +890,17 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Quarters in Noncompliance Limiter.  Enter a coded value to limit
+              results to facilities with given quarter of noncompliance.
+
+              - Z = Zero quarters in noncompliance.
+
+              - GEXX = Replacing XX with a numeric value, that number of quarterd or more in noncompliance.
+
+              - GTXX = Replacing XX with a numeric value, more than that number of quarters in noncompliance.
+            extensible: false
         - &a42
           type: query
           name: p_naa
@@ -865,8 +927,11 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Discharging into Impaired Waters Flag. Enter Y to limit results to
+              facilities with discharge to waterbodies listed as impaired in the
+              ATTAINS database.
+            extensible: false
         - &a44
           type: query
           name: p_trep
@@ -884,8 +949,17 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Current Toxics Release Inventory (TRI) Reporter Limiter.  Enter
+              one of the following codes to limit results.
+
+              - NONE = Never has reported to TRI.
+
+              - CURR = Current TRI reporter.
+
+              - NONCURR = Has reported to TRI in the past but not for the current reporting year.
+            extensible: false
         - &a45
           type: query
           name: p_tri_cat
@@ -907,8 +981,21 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Toxic Release Inventory Released To Air Chemical Identifier
+              Category Filter.  Enter the chemical identifier category code to
+              limit results. Note when filtering by TRI chemical identifier
+              categories one may not also filter by specific chemical
+              identifiers via p_tri_pol.  You must also specify a release amount
+              using p_tri_amt or p_tri_any_amt.
+
+              - TOTAL = Total Released to Air
+
+              - CARC = Total Carcinogens Released to Air
+
+              - HAP = Total Hazardous Air Pollutants Released to Air
+            extensible: false
         - &a46
           type: query
           name: p_tri_amt
@@ -922,8 +1009,13 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Toxic Release Inventory Release Amount Filter.  Enter a value in
+              pounds to limit results to facilities releasing this amount or
+              greateer of TRI releases.  Valid values are 0, GT0, GT1000,
+              GT5000, GT10000 and GT50000. Note when filtering by TRI release
+              amounts one may only use either p_tri_amt or p_tri_any_amt.
+            extensible: false
         - &a47
           type: query
           name: p_tri_any_amt
@@ -972,8 +1064,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Green House Gas (GHG) Gas Code Category.  Must be used with either
+              a formatted (p_ghg_amt) or custom (p_ghg_any_amt) release amount.
+            extensible: false
         - &a50
           type: query
           name: p_ghg_amt
@@ -985,8 +1079,11 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Green House Gas (GHG) CO2 Equivalent Formatted Release
+              Amount.  First 2 characters must contain GT (greater than)
+              followed by a number.
+            extensible: false
         - &a51
           type: query
           name: p_ghg_any_amt
@@ -1047,8 +1144,13 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: "National Emissions Inventory (NEI) Formatted Pollutant Amount.  A
+              formatted value where the 1st two characters must start with GT or
+              LT followed by a number.  Identifies facilities that have a NEI
+              Pollutant Emission  where the supplied value is > or < the
+              pollutant emission amount.  "
+            extensible: false
         - &a55
           type: query
           name: p_nei_any_amt
@@ -1120,8 +1222,24 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Percent Minority Population Limiter.  Enter a value to restrict
+              results to facilities with a given percentage of minority
+              population within 3-mile radius.
+
+              - NONE = 0%
+
+              - GT5 = greater than 5%
+
+              - GT10 = greater than 10%
+
+              - GT25 = greater than 25%
+
+              - GT50 = greater than 50%
+
+              - GT75 = greater than 75%
+            extensible: false
         - &a59
           type: query
           name: p_pd
@@ -1147,8 +1265,26 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Population Density Limiter (per sq mile). Enter a value to limit
+              results to facilities located in area of a given population
+              density.
+
+              - NONE = 0 population density per square mile
+
+              - GT100 = More than 100 population density per square mile
+
+              - GT500 = More than 500 population density per square mile
+
+              - GT1000 = More than 1000 population density per square mile
+
+              - GT5000 = More than 5000 population density per square mile
+
+              - GT10000 = More than 10000 population density per square mile
+
+              - GT20000 = More than 20000 population density per square mile
+            extensible: false
         - &a60
           type: query
           name: p_ico
@@ -1159,8 +1295,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Indian Country Flag.  Enter a "Y" or "N" to restrict searches to
+              facilities inside or outside Indian Country.
+            extensible: false
         - &a61
           type: query
           name: p_huc
@@ -1224,8 +1362,15 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: |-
+              Filter Results by Media.
+              - M = RMP (Risk Management Plan)
+              - R = RCRA (Hazardous Waste)
+              - S = SDWA (Public Drinking Water Systems)
+              - W = Water
+              - ALL = Water and RCRA and SDWA
+            extensible: false
         - &a65
           type: query
           name: p_ysl
@@ -1242,8 +1387,16 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Last Facility Inspection [within / not within] Specified Date
+              Range Indicator. The date range is determined by parameters p_idt1
+              and p_idt2 or by parameter p_ysly.
+
+              - W = within date range
+
+              - N = not within date range
+            extensible: false
         - &a66
           type: query
           name: p_ysly
@@ -1254,8 +1407,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Number of years (1 to 5) since last facility inspection.  A value
+              of 1 means that it has been inspected within the year.
+            extensible: false
         - &a67
           type: query
           name: p_ysla
@@ -1271,8 +1426,15 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Facility Last Inspection Code Filter.  If left blank, both
+              agencies are included.  Enter a value to limit results:
+
+              - E = EPA
+
+              - S = State
+            extensible: false
         - &a68
           type: query
           name: p_stsl
@@ -1288,8 +1450,15 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Last Stack Test [within / not within] Specified Date Range
+              Indicator.
+
+              - W = within date range
+
+              - N = not within date range
+            extensible: false
         - &a69
           type: query
           name: p_stsly
@@ -1300,8 +1469,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Number of years (1 to 5) since date of last stack test. A value of
+              1 means it has been inspected within the year.
+            extensible: false
         - &a70
           type: query
           name: p_stsla
@@ -1315,8 +1486,13 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: |-
+              Stack Last Test Code Filter.  Enter a value to limit results:
+              - A = All
+              - E = EPA
+              - S = State
+            extensible: false
         - &a71
           type: query
           name: p_stres
@@ -1499,8 +1675,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Indicates whether to AND or OR the Owner/Operator parameter
+              (p_owop) and the federal agency code (p_fa) parameters.
+            extensible: false
         - &a80
           type: query
           name: p_idt1
@@ -1603,8 +1781,9 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Compliance issuess found during inspection.
+            extensible: false
         - &a86
           type: query
           name: p_pfead1
@@ -1682,8 +1861,18 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Quarters in Significant Noncompliance Limiter.  Enter a coded
+              value to limit results to facilities with given quarter of
+              significant noncompliance.
+
+              - Z = Zero quarters in significant noncompliance.
+
+              - GEXX = Replacing XX with a numeric value, that number of quarterd or more in significant noncompliance.
+
+              - GTXX = Replacing XX with a numeric value, more than that number of quarters in significant noncompliance.
+            extensible: false
         - &a90
           type: query
           name: p_pctrack
@@ -1702,8 +1891,18 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Compliance Tracking Limiter. Provide a keyword to indicate the
+              extent to which data is being entered and effluent exceedances are
+              being identified.
+
+              - Off
+
+              - Partial
+
+              - On
+            extensible: false
         - &a91
           type: query
           name: p_swpa
@@ -1713,8 +1912,9 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Source water protection area
+            extensible: false
         - &a92
           type: query
           name: p_des
@@ -1754,8 +1954,19 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Controls type of text search performed on facility name with
+              parameter p_fn.
+
+              - EXACT = Find facilities having the exact provided name(s).
+
+              - BEGINS = Find facilities with names starting with the provided term(s).
+
+              - ALL = Find facilities using Oracle text search terms.
+
+              - CONTAINS = 
+            extensible: false
         - &a94
           type: query
           name: p_hpvmth
@@ -1910,8 +2121,11 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Controls whether search is restricted to existing system. Y means
+              the search will match the p_pid parameter against all associated
+              permits (AIR, RCRA, SDWIS, etc).
+            extensible: false
         - &a100
           type: query
           name: p_fac_ico
@@ -1922,8 +2136,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: FRS tribal land code flag.  Enter "Y" or "N" to include or exclude
+              facilities based on FRS tribal land code.
+            extensible: false
         - &a101
           type: query
           name: p_icoo
@@ -1984,8 +2200,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: "Limit Address Search Flag.  Enter Y to restrict facility searches
+              to native data source only.  "
+            extensible: false
         - &a105
           type: query
           name: p_lat
@@ -2038,8 +2256,11 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Decouple Inspection Code Search Flag.  Enter "Y" to search for
+              inspection code types with p_pityp without respect to the date
+              range search provided with p_ysl* parameters.
+            extensible: false
         - &a109
           type: query
           name: p_ejscreen_over80cnt
@@ -2050,8 +2271,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: The number of Environmenmt Justice Indicators above the 80th
+              percentile.  Valid values are 1 through 11.
+            extensible: false
         - &a110
           type: query
           name: queryset
@@ -2092,9 +2315,11 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
-        - &a277
+            name: anonymous<enum>
+            description: Table List Flag. Enter a Y to display the first page of facility
+              results.
+            extensible: false
+        - &a266
           type: query
           name: maplist
           description: Map List Flag.  Provide a Y to return mappable coordinates
@@ -2105,8 +2330,11 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Map List Flag.  Provide a Y to return mappable coordinates
+              representing the full geographic extent of the queryset (all
+              facilities that met the selection criteria).
+            extensible: false
         - &a112
           type: query
           name: summarylist
@@ -2117,8 +2345,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Summary List Flag.  Enter a Y to return a list of summary
+              statistics based on the parameters submitted to the query service.
+            extensible: false
         - &a113
           type: query
           name: callback
@@ -2207,7 +2437,7 @@ http:
                         summary: Facilities
                         targetSchema:
                           type: array
-                          name: anonymous<unknown>
+                          name: anonymous<array>
                           elementSchema: &a237
                             type: object
                             name: air2_Facilities
@@ -4624,7 +4854,7 @@ http:
                               summary: Map Data
                               targetSchema:
                                 type: array
-                                name: anonymous<unknown>
+                                name: anonymous<array>
                                 elementSchema: &a230
                                   type: object
                                   name: air1_MapData
@@ -4976,8 +5206,16 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Output Format Flag.  Enter one of the following keywords:
+
+              - JSON = Data model formatted as Javascript Object Notation (default).
+
+              - JSONP = Data model formatted as Javascript Object Notation with Padding.  
+
+              - XML = Data model formatted as Extensible Markup Language.
+            extensible: false
         - &a116
           type: formdata
           name: p_fn
@@ -5152,8 +5390,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: EPA Region Filter. Provide a single value of 01 thru 10 to restrict
+              results to a single EPA region.
+            extensible: false
         - &a127
           type: formdata
           name: p_sic
@@ -5254,7 +5494,7 @@ http:
               to limit results.   Provide multiple codes as a comma-delimited
               list.
             targetSchema: *a1
-        - &a250
+        - &a251
           type: formdata
           name: p_c1lat
           description: In decimal degrees.  Latitude of 1st corner of box that bounds the
@@ -5271,7 +5511,7 @@ http:
               resulting facilities. The latitude and longitude of both corners
               of the bounding box must be provided.
             targetSchema: *a3
-        - &a251
+        - &a252
           type: formdata
           name: p_c1lon
           description: In decimal degrees.  Longitude of 1st corner of box that bounds the
@@ -5288,7 +5528,7 @@ http:
               resulting facilities. The latitude and longitude of both corners
               of the bounding box must be provided.
             targetSchema: *a3
-        - &a252
+        - &a253
           type: formdata
           name: p_c2lat
           description: In decimal degrees.  Latitude of 2nd corner of box that bounds the
@@ -5305,7 +5545,7 @@ http:
               resulting facilities. The latitude and longitude of both corners
               of the bounding box must be provided.
             targetSchema: *a3
-        - &a253
+        - &a254
           type: formdata
           name: p_c2lon
           description: In decimal degrees.  Longitude of 2nd corner of box that bounds the
@@ -5332,8 +5572,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: US-Mexico Border Flag.  Enter Y/N to restrict searches to
+              facilities located within 100KM of the border.
+            extensible: false
         - &a133
           type: formdata
           name: p_sic2
@@ -5405,8 +5647,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Active Permits/Facilities Flag.  Provide Y or N to filter results
+              to facilities with active permits.
+            extensible: false
         - &a137
           type: formdata
           name: p_maj
@@ -5417,8 +5661,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Major Facility Flag.  Enter Y to restrict results to Major
+              facilities only.
+            extensible: false
         - &a138
           type: formdata
           name: p_mact
@@ -5500,8 +5746,16 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Formal Enforcement Actions [within / not within] specified date
+              range indicator. The date range is determined by parameters
+              p_fead1 and p_fead2 or by parameter p_feay.
+
+              - W = within date range
+
+              - N = not within date range
+            extensible: false
         - &a143
           type: formdata
           name: p_feay
@@ -5514,8 +5768,12 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Years (1 to 5) Range.  This value is used to create a date range
+              for Formal Enforcement Actions (FEA). Used along with p_fea (which
+              indicates whether to look within or outside of the date range) to
+              find FEAs within (or not within) the number of years specified.
+            extensible: false
         - &a144
           type: formdata
           name: p_feaa
@@ -5529,8 +5787,13 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: |-
+              Agency associated with Formal Enforcement Actions:
+              - E = EPA
+              - S = State
+              - A = All
+            extensible: false
         - &a145
           type: formdata
           name: p_iea
@@ -5547,8 +5810,16 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Informal Enforcement Actions [within / not within] specified date
+              range.  The date range is determined by parameters p_iead1 and
+              p_iead2 or by parameter p_ieay.
+
+              - W = within date range
+
+              - N = not within date range
+            extensible: false
         - &a146
           type: formdata
           name: p_ieay
@@ -5561,8 +5832,13 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Years (1 to 5) Range.  This value is used to create a date range
+              for Informal Enforcement Actions (IEA). Used along with p_iea
+              (which indicates whether to look within or outside of the date
+              range) to find IEAs within (or not within) the number of years
+              specified.
+            extensible: false
         - &a147
           type: formdata
           name: p_ieaa
@@ -5578,8 +5854,15 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Agency associated with Informal Enforcement Actions. If left
+              blank, both agencies are included.
+
+              - E = EPA
+
+              - S = State
+            extensible: false
         - &a148
           type: formdata
           name: p_qiv
@@ -5597,8 +5880,17 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Quarters in Noncompliance Limiter.  Enter a coded value to limit
+              results to facilities with given quarter of noncompliance.
+
+              - Z = Zero quarters in noncompliance.
+
+              - GEXX = Replacing XX with a numeric value, that number of quarterd or more in noncompliance.
+
+              - GTXX = Replacing XX with a numeric value, more than that number of quarters in noncompliance.
+            extensible: false
         - &a149
           type: formdata
           name: p_naa
@@ -5625,8 +5917,11 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Discharging into Impaired Waters Flag. Enter Y to limit results to
+              facilities with discharge to waterbodies listed as impaired in the
+              ATTAINS database.
+            extensible: false
         - &a151
           type: formdata
           name: p_trep
@@ -5644,8 +5939,17 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Current Toxics Release Inventory (TRI) Reporter Limiter.  Enter
+              one of the following codes to limit results.
+
+              - NONE = Never has reported to TRI.
+
+              - CURR = Current TRI reporter.
+
+              - NONCURR = Has reported to TRI in the past but not for the current reporting year.
+            extensible: false
         - &a152
           type: formdata
           name: p_tri_cat
@@ -5667,8 +5971,21 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Toxic Release Inventory Released To Air Chemical Identifier
+              Category Filter.  Enter the chemical identifier category code to
+              limit results. Note when filtering by TRI chemical identifier
+              categories one may not also filter by specific chemical
+              identifiers via p_tri_pol.  You must also specify a release amount
+              using p_tri_amt or p_tri_any_amt.
+
+              - TOTAL = Total Released to Air
+
+              - CARC = Total Carcinogens Released to Air
+
+              - HAP = Total Hazardous Air Pollutants Released to Air
+            extensible: false
         - &a153
           type: formdata
           name: p_tri_amt
@@ -5682,8 +5999,13 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Toxic Release Inventory Release Amount Filter.  Enter a value in
+              pounds to limit results to facilities releasing this amount or
+              greateer of TRI releases.  Valid values are 0, GT0, GT1000,
+              GT5000, GT10000 and GT50000. Note when filtering by TRI release
+              amounts one may only use either p_tri_amt or p_tri_any_amt.
+            extensible: false
         - &a154
           type: formdata
           name: p_tri_any_amt
@@ -5732,8 +6054,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Green House Gas (GHG) Gas Code Category.  Must be used with either
+              a formatted (p_ghg_amt) or custom (p_ghg_any_amt) release amount.
+            extensible: false
         - &a157
           type: formdata
           name: p_ghg_amt
@@ -5745,8 +6069,11 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Green House Gas (GHG) CO2 Equivalent Formatted Release
+              Amount.  First 2 characters must contain GT (greater than)
+              followed by a number.
+            extensible: false
         - &a158
           type: formdata
           name: p_ghg_any_amt
@@ -5807,8 +6134,13 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: "National Emissions Inventory (NEI) Formatted Pollutant Amount.  A
+              formatted value where the 1st two characters must start with GT or
+              LT followed by a number.  Identifies facilities that have a NEI
+              Pollutant Emission  where the supplied value is > or < the
+              pollutant emission amount.  "
+            extensible: false
         - &a162
           type: formdata
           name: p_nei_any_amt
@@ -5880,8 +6212,24 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Percent Minority Population Limiter.  Enter a value to restrict
+              results to facilities with a given percentage of minority
+              population within 3-mile radius.
+
+              - NONE = 0%
+
+              - GT5 = greater than 5%
+
+              - GT10 = greater than 10%
+
+              - GT25 = greater than 25%
+
+              - GT50 = greater than 50%
+
+              - GT75 = greater than 75%
+            extensible: false
         - &a166
           type: formdata
           name: p_pd
@@ -5907,8 +6255,26 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Population Density Limiter (per sq mile). Enter a value to limit
+              results to facilities located in area of a given population
+              density.
+
+              - NONE = 0 population density per square mile
+
+              - GT100 = More than 100 population density per square mile
+
+              - GT500 = More than 500 population density per square mile
+
+              - GT1000 = More than 1000 population density per square mile
+
+              - GT5000 = More than 5000 population density per square mile
+
+              - GT10000 = More than 10000 population density per square mile
+
+              - GT20000 = More than 20000 population density per square mile
+            extensible: false
         - &a167
           type: formdata
           name: p_ico
@@ -5919,8 +6285,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Indian Country Flag.  Enter a "Y" or "N" to restrict searches to
+              facilities inside or outside Indian Country.
+            extensible: false
         - &a168
           type: formdata
           name: p_huc
@@ -5984,8 +6352,15 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: |-
+              Filter Results by Media.
+              - M = RMP (Risk Management Plan)
+              - R = RCRA (Hazardous Waste)
+              - S = SDWA (Public Drinking Water Systems)
+              - W = Water
+              - ALL = Water and RCRA and SDWA
+            extensible: false
         - &a172
           type: formdata
           name: p_ysl
@@ -6002,8 +6377,16 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Last Facility Inspection [within / not within] Specified Date
+              Range Indicator. The date range is determined by parameters p_idt1
+              and p_idt2 or by parameter p_ysly.
+
+              - W = within date range
+
+              - N = not within date range
+            extensible: false
         - &a173
           type: formdata
           name: p_ysly
@@ -6014,8 +6397,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Number of years (1 to 5) since last facility inspection.  A value
+              of 1 means that it has been inspected within the year.
+            extensible: false
         - &a174
           type: formdata
           name: p_ysla
@@ -6031,8 +6416,15 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Facility Last Inspection Code Filter.  If left blank, both
+              agencies are included.  Enter a value to limit results:
+
+              - E = EPA
+
+              - S = State
+            extensible: false
         - &a175
           type: formdata
           name: p_stsl
@@ -6048,8 +6440,15 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Last Stack Test [within / not within] Specified Date Range
+              Indicator.
+
+              - W = within date range
+
+              - N = not within date range
+            extensible: false
         - &a176
           type: formdata
           name: p_stsly
@@ -6060,8 +6459,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Number of years (1 to 5) since date of last stack test. A value of
+              1 means it has been inspected within the year.
+            extensible: false
         - &a177
           type: formdata
           name: p_stsla
@@ -6075,8 +6476,13 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: |-
+              Stack Last Test Code Filter.  Enter a value to limit results:
+              - A = All
+              - E = EPA
+              - S = State
+            extensible: false
         - &a178
           type: formdata
           name: p_stres
@@ -6259,8 +6665,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Indicates whether to AND or OR the Owner/Operator parameter
+              (p_owop) and the federal agency code (p_fa) parameters.
+            extensible: false
         - &a187
           type: formdata
           name: p_idt1
@@ -6363,8 +6771,9 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Compliance issuess found during inspection.
+            extensible: false
         - &a193
           type: formdata
           name: p_pfead1
@@ -6442,8 +6851,18 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Quarters in Significant Noncompliance Limiter.  Enter a coded
+              value to limit results to facilities with given quarter of
+              significant noncompliance.
+
+              - Z = Zero quarters in significant noncompliance.
+
+              - GEXX = Replacing XX with a numeric value, that number of quarterd or more in significant noncompliance.
+
+              - GTXX = Replacing XX with a numeric value, more than that number of quarters in significant noncompliance.
+            extensible: false
         - &a197
           type: formdata
           name: p_pctrack
@@ -6462,8 +6881,18 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Compliance Tracking Limiter. Provide a keyword to indicate the
+              extent to which data is being entered and effluent exceedances are
+              being identified.
+
+              - Off
+
+              - Partial
+
+              - On
+            extensible: false
         - &a198
           type: formdata
           name: p_swpa
@@ -6473,8 +6902,9 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Source water protection area
+            extensible: false
         - &a199
           type: formdata
           name: p_des
@@ -6514,8 +6944,19 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Controls type of text search performed on facility name with
+              parameter p_fn.
+
+              - EXACT = Find facilities having the exact provided name(s).
+
+              - BEGINS = Find facilities with names starting with the provided term(s).
+
+              - ALL = Find facilities using Oracle text search terms.
+
+              - CONTAINS = 
+            extensible: false
         - &a201
           type: formdata
           name: p_hpvmth
@@ -6670,8 +7111,11 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Controls whether search is restricted to existing system. Y means
+              the search will match the p_pid parameter against all associated
+              permits (AIR, RCRA, SDWIS, etc).
+            extensible: false
         - &a207
           type: formdata
           name: p_fac_ico
@@ -6682,8 +7126,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: FRS tribal land code flag.  Enter "Y" or "N" to include or exclude
+              facilities based on FRS tribal land code.
+            extensible: false
         - &a208
           type: formdata
           name: p_icoo
@@ -6744,8 +7190,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: "Limit Address Search Flag.  Enter Y to restrict facility searches
+              to native data source only.  "
+            extensible: false
         - &a212
           type: formdata
           name: p_lat
@@ -6798,8 +7246,11 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Decouple Inspection Code Search Flag.  Enter "Y" to search for
+              inspection code types with p_pityp without respect to the date
+              range search provided with p_ysl* parameters.
+            extensible: false
         - &a216
           type: formdata
           name: p_ejscreen_over80cnt
@@ -6810,8 +7261,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: The number of Environmenmt Justice Indicators above the 80th
+              percentile.  Valid values are 1 through 11.
+            extensible: false
         - &a217
           type: formdata
           name: queryset
@@ -6852,9 +7305,11 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
-        - &a276
+            name: anonymous<enum>
+            description: Table List Flag. Enter a Y to display the first page of facility
+              results.
+            extensible: false
+        - &a250
           type: formdata
           name: maplist
           description: Map List Flag.  Provide a Y to return mappable coordinates
@@ -6865,8 +7320,11 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Map List Flag.  Provide a Y to return mappable coordinates
+              representing the full geographic extent of the queryset (all
+              facilities that met the selection criteria).
+            extensible: false
         - &a219
           type: formdata
           name: summarylist
@@ -6877,8 +7335,10 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Summary List Flag.  Enter a Y to return a list of summary
+              statistics based on the parameters submitted to the query service.
+            extensible: false
         - &a220
           type: formdata
           name: callback
@@ -6986,7 +7446,7 @@ http:
         - *a22
         - *a23
         - *a24
-        - &a273
+        - &a275
           type: query
           name: xmin
           description: Minimum longitude value in decimal degrees.
@@ -6999,7 +7459,7 @@ http:
             aliasType: schema
             description: Minimum longitude value in decimal degrees.
             targetSchema: *a3
-        - &a275
+        - &a277
           type: query
           name: ymin
           description: Minimum latitude value in decimal degrees.
@@ -7012,7 +7472,7 @@ http:
             aliasType: schema
             description: Minimum latitude value in decimal degrees.
             targetSchema: *a3
-        - &a272
+        - &a274
           type: query
           name: xmax
           description: Maximum longitude value in decimal degrees.
@@ -7025,7 +7485,7 @@ http:
             aliasType: schema
             description: Maximum longitude value in decimal degrees.
             targetSchema: *a3
-        - &a274
+        - &a276
           type: query
           name: ymax
           description: Maximum latitude value in decimal degrees.
@@ -7192,7 +7652,7 @@ http:
                               summary: Cluster Data
                               targetSchema:
                                 type: array
-                                name: anonymous<unknown>
+                                name: anonymous<array>
                                 elementSchema: &a278
                                   type: object
                                   name: air1_ClusterData
@@ -7487,7 +7947,7 @@ http:
                         summary: Facilities
                         targetSchema:
                           type: array
-                          name: anonymous<unknown>
+                          name: anonymous<array>
                           elementSchema: &a281
                             type: object
                             name: air3_Facilities
@@ -9956,7 +10416,7 @@ http:
                         summary: Query Parameters
                         targetSchema:
                           type: array
-                          name: anonymous<unknown>
+                          name: anonymous<array>
                           elementSchema: &a285
                             type: object
                             name: qp0
@@ -10146,7 +10606,7 @@ http:
         - *a129
         - *a130
         - *a131
-        - &a258
+        - &a259
           type: formdata
           name: xmin
           description: Minimum longitude value in decimal degrees.
@@ -10159,7 +10619,7 @@ http:
             aliasType: schema
             description: Minimum longitude value in decimal degrees.
             targetSchema: *a3
-        - &a260
+        - &a261
           type: formdata
           name: ymin
           description: Minimum latitude value in decimal degrees.
@@ -10172,7 +10632,7 @@ http:
             aliasType: schema
             description: Minimum latitude value in decimal degrees.
             targetSchema: *a3
-        - &a257
+        - &a258
           type: formdata
           name: xmax
           description: Maximum longitude value in decimal degrees.
@@ -10185,7 +10645,7 @@ http:
             aliasType: schema
             description: Maximum longitude value in decimal degrees.
             targetSchema: *a3
-        - &a259
+        - &a260
           type: formdata
           name: ymax
           description: Maximum latitude value in decimal degrees.
@@ -10380,8 +10840,11 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Output Sort Column Descending Flag.  Enter Y to column identified
+              in the newsort parameter descending.  Enter N to use ascending
+              sort order. Used only when newsort parameter is populated.
+            extensible: false
         - *a4
         - *a114
       requests:
@@ -10408,7 +10871,7 @@ http:
                   summary: Features Array
                   targetSchema:
                     type: array
-                    name: anonymous<unknown>
+                    name: anonymous<array>
                     elementSchema: &a227
                       type: object
                       name: air6_Feature
@@ -10432,7 +10895,7 @@ http:
                                   summary: Coordinates Array
                                   targetSchema:
                                     type: array
-                                    name: anonymous<unknown>
+                                    name: anonymous<array>
                                     elementSchema: *a3
                                   attic:
                                     example: -87.86253
@@ -12846,8 +13309,11 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Output Sort Column Descending Flag.  Enter Y to column identified
+              in the newsort parameter descending.  Enter N to use ascending
+              sort order. Used only when newsort parameter is populated.
+            extensible: false
         - *a6
         - *a221
       requests:
@@ -12874,7 +13340,7 @@ http:
                   summary: Features Array
                   targetSchema:
                     type: array
-                    name: anonymous<unknown>
+                    name: anonymous<array>
                     elementSchema: *a227
               - name: type
                 description: Static marker indicating object is a GeoJSON Feature Collection.
@@ -12922,7 +13388,7 @@ http:
 
               - GEOJSOND = Facility results formatted as GeoJSON feature collection download.
             targetSchema: *a1
-        - &a270
+        - &a272
           type: query
           name: p_qid
           description: Query ID Selector.  Enter the QueryID number from a previously run
@@ -12981,7 +13447,7 @@ http:
 
               - GEOJSOND = Facility results formatted as GeoJSON feature collection download.
             targetSchema: *a1
-        - &a255
+        - &a256
           type: formdata
           name: p_qid
           description: Query ID Selector.  Enter the QueryID number from a previously run
@@ -13036,12 +13502,20 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Output Format Flag.  Enter one of the following keywords:
+
+              - JSON = Data model formatted as Javascript Object Notation (default).
+
+              - JSONP = Data model formatted as Javascript Object Notation with Padding.  
+
+              - XML = Data model formatted as Extensible Markup Language.
+            extensible: false
         - *a224
         - *a113
         - *a229
-        - &a261
+        - &a262
           type: query
           name: c1_lat
           description: Latitude of 1st corner of box that bounds the resulting facilities.
@@ -13058,7 +13532,7 @@ http:
               The latitude and longitude of both corners of the bounding box
               must be provided.
             targetSchema: *a3
-        - &a262
+        - &a263
           type: query
           name: c1_long
           description: Longitude of 1st corner of box that bounds the resulting
@@ -13075,7 +13549,7 @@ http:
               facilities. The latitude and longitude of both corners of the
               bounding box must be provided.
             targetSchema: *a3
-        - &a263
+        - &a264
           type: query
           name: c2_lat
           description: Latitude of 2nd corner of box that bounds the resulting facilities.
@@ -13092,7 +13566,7 @@ http:
               The latitude and longitude of both corners of the bounding box
               must be provided.
             targetSchema: *a3
-        - &a264
+        - &a265
           type: query
           name: c2_long
           description: Longitude of 2nd corner of box that bounds the resulting
@@ -13109,7 +13583,7 @@ http:
               facilities. The latitude and longitude of both corners of the
               bounding box must be provided.
             targetSchema: *a3
-        - &a269
+        - &a271
           type: query
           name: p_id
           description: Identifier for the service.
@@ -13169,7 +13643,7 @@ http:
                         summary: Map Data
                         targetSchema:
                           type: array
-                          name: anonymous<unknown>
+                          name: anonymous<array>
                           elementSchema: *a230
                         attic:
                           xml:
@@ -13236,8 +13710,16 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Output Format Flag.  Enter one of the following keywords:
+
+              - JSON = Data model formatted as Javascript Object Notation (default).
+
+              - JSONP = Data model formatted as Javascript Object Notation with Padding.  
+
+              - XML = Data model formatted as Extensible Markup Language.
+            extensible: false
         - *a226
         - *a220
         - *a232
@@ -13309,7 +13791,7 @@ http:
               facilities. The latitude and longitude of both corners of the
               bounding box must be provided.
             targetSchema: *a3
-        - &a254
+        - &a255
           type: formdata
           name: p_id
           description: Identifier for the service.
@@ -13373,10 +13855,18 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Output Format Flag.  Enter one of the following keywords:
+
+              - JSON = Data model formatted as Javascript Object Notation (default).
+
+              - JSONP = Data model formatted as Javascript Object Notation with Padding.  
+
+              - XML = Data model formatted as Extensible Markup Language.
+            extensible: false
         - *a224
-        - &a271
+        - &a273
           type: query
           name: pageno
           description: Indicates the number of the page to display. It is used only when
@@ -13390,7 +13880,7 @@ http:
             aliasType: schema
             defaults:
               - type: server-default
-                name: anonymous<unknown>
+                name: anonymous<server-default>
                 value: 1
             description: Indicates the number of the page to display. It is used only when
               the results are paginated.
@@ -13431,7 +13921,7 @@ http:
                         summary: Facilities
                         targetSchema:
                           type: array
-                          name: anonymous<unknown>
+                          name: anonymous<array>
                           elementSchema: *a237
                         attic:
                           xml:
@@ -13527,10 +14017,18 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Output Format Flag.  Enter one of the following keywords:
+
+              - JSON = Data model formatted as Javascript Object Notation (default).
+
+              - JSONP = Data model formatted as Javascript Object Notation with Padding.  
+
+              - XML = Data model formatted as Extensible Markup Language.
+            extensible: false
         - *a226
-        - &a256
+        - &a257
           type: formdata
           name: pageno
           description: Indicates the number of the page to display. It is used only when
@@ -13544,7 +14042,7 @@ http:
             aliasType: schema
             defaults:
               - type: server-default
-                name: anonymous<unknown>
+                name: anonymous<server-default>
                 value: 1
             description: Indicates the number of the page to display. It is used only when
               the results are paginated.
@@ -13600,8 +14098,16 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Output Format Flag.  Enter one of the following keywords:
+
+              - JSON = Data model formatted as Javascript Object Notation (default).
+
+              - JSONP = Data model formatted as Javascript Object Notation with Padding.  
+
+              - XML = Data model formatted as Extensible Markup Language.
+            extensible: false
         - *a113
       requests:
         - identity: anonymous<requestBody>
@@ -13647,7 +14153,7 @@ http:
                         summary: Result Columns
                         targetSchema:
                           type: array
-                          name: anonymous<unknown>
+                          name: anonymous<array>
                           elementSchema: &a284
                             type: object
                             name: met2
@@ -13759,8 +14265,16 @@ http:
           required: false
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >-
+              Output Format Flag.  Enter one of the following keywords:
+
+              - JSON = Data model formatted as Javascript Object Notation (default).
+
+              - JSONP = Data model formatted as Javascript Object Notation with Padding.  
+
+              - XML = Data model formatted as Extensible Markup Language.
+            extensible: false
         - *a220
       requests:
         - identity: anonymous<requestBody>
@@ -13794,35 +14308,58 @@ http:
     - *a248
     - *a249
     - *a220
-    - *a239
-    - *a204
+    - *a240
     - *a250
+    - *a239
+    - *a136
+    - *a186
+    - *a204
     - *a251
     - *a252
     - *a253
+    - *a254
+    - *a192
     - *a120
     - *a119
+    - *a215
     - *a199
     - *a210
+    - *a216
     - *a135
+    - *a207
     - *a209
+    - *a142
+    - *a144
+    - *a143
     - *a121
     - *a116
+    - *a200
     - *a125
+    - *a157
     - *a158
+    - *a156
     - *a159
     - *a201
     - *a168
+    - *a167
     - *a208
-    - *a254
+    - *a255
     - *a187
     - *a188
+    - *a145
+    - *a147
+    - *a146
+    - *a150
     - *a212
     - *a124
+    - *a211
     - *a213
     - *a138
+    - *a137
+    - *a171
     - *a149
     - *a128
+    - *a161
     - *a162
     - *a164
     - *a160
@@ -13831,20 +14368,27 @@ http:
     - *a140
     - *a131
     - *a185
+    - *a197
+    - *a166
     - *a130
     - *a193
     - *a194
     - *a195
     - *a170
+    - *a206
     - *a191
+    - *a165
     - *a203
     - *a221
     - *a141
-    - *a255
+    - *a196
+    - *a256
+    - *a148
     - *a129
     - *a180
     - *a214
     - *a202
+    - *a126
     - *a117
     - *a118
     - *a181
@@ -13855,21 +14399,33 @@ http:
     - *a189
     - *a190
     - *a178
+    - *a175
+    - *a177
+    - *a176
     - *a179
+    - *a198
+    - *a151
+    - *a153
     - *a154
+    - *a152
     - *a155
     - *a205
     - *a184
     - *a182
     - *a183
+    - *a132
     - *a169
+    - *a172
+    - *a174
+    - *a173
     - *a123
-    - *a256
+    - *a257
     - *a6
     - *a226
     - *a217
     - *a218
-    - *a257
+    - *a219
+    - *a232
     - *a258
     - *a259
     - *a260
@@ -13877,36 +14433,60 @@ http:
     - *a262
     - *a263
     - *a264
-    - *a113
-    - *a235
-    - *a97
     - *a265
+    - *a113
+    - *a236
     - *a266
+    - *a235
+    - *a29
+    - *a79
+    - *a97
     - *a267
     - *a268
+    - *a269
+    - *a270
+    - *a85
     - *a13
     - *a12
+    - *a108
     - *a92
     - *a103
+    - *a109
     - *a28
+    - *a100
     - *a102
+    - *a35
+    - *a37
+    - *a36
     - *a14
     - *a9
+    - *a93
     - *a18
+    - *a50
     - *a51
+    - *a49
     - *a52
     - *a94
     - *a61
+    - *a60
     - *a101
-    - *a269
+    - *a271
     - *a80
     - *a81
+    - *a38
+    - *a40
+    - *a39
+    - *a43
     - *a105
     - *a17
+    - *a104
     - *a106
     - *a31
+    - *a30
+    - *a64
     - *a42
     - *a21
+    - *a54
     - *a55
     - *a57
     - *a53
@@ -13915,20 +14495,27 @@ http:
     - *a33
     - *a24
     - *a78
+    - *a90
+    - *a59
     - *a23
     - *a86
     - *a87
     - *a88
     - *a63
+    - *a99
     - *a84
+    - *a58
     - *a96
     - *a114
     - *a34
-    - *a270
+    - *a89
+    - *a272
+    - *a41
     - *a22
     - *a73
     - *a107
     - *a95
+    - *a19
     - *a10
     - *a11
     - *a74
@@ -13939,110 +14526,37 @@ http:
     - *a82
     - *a83
     - *a71
+    - *a68
+    - *a70
+    - *a69
     - *a72
+    - *a91
+    - *a44
+    - *a46
     - *a47
+    - *a45
     - *a48
     - *a98
     - *a77
     - *a75
     - *a76
+    - *a25
     - *a62
+    - *a65
+    - *a67
+    - *a66
     - *a16
-    - *a271
+    - *a273
     - *a4
     - *a224
     - *a110
     - *a111
-    - *a272
-    - *a273
-    - *a274
-    - *a275
-    - *a240
-    - *a276
-    - *a136
-    - *a186
-    - *a192
-    - *a215
-    - *a216
-    - *a207
-    - *a142
-    - *a144
-    - *a143
-    - *a200
-    - *a157
-    - *a156
-    - *a167
-    - *a145
-    - *a147
-    - *a146
-    - *a150
-    - *a211
-    - *a137
-    - *a171
-    - *a161
-    - *a197
-    - *a166
-    - *a206
-    - *a165
-    - *a196
-    - *a148
-    - *a126
-    - *a175
-    - *a177
-    - *a176
-    - *a198
-    - *a151
-    - *a153
-    - *a152
-    - *a132
-    - *a172
-    - *a174
-    - *a173
-    - *a219
-    - *a232
-    - *a236
-    - *a277
-    - *a29
-    - *a79
-    - *a85
-    - *a108
-    - *a109
-    - *a100
-    - *a35
-    - *a37
-    - *a36
-    - *a93
-    - *a50
-    - *a49
-    - *a60
-    - *a38
-    - *a40
-    - *a39
-    - *a43
-    - *a104
-    - *a30
-    - *a64
-    - *a54
-    - *a90
-    - *a59
-    - *a99
-    - *a58
-    - *a89
-    - *a41
-    - *a19
-    - *a68
-    - *a70
-    - *a69
-    - *a91
-    - *a44
-    - *a46
-    - *a45
-    - *a25
-    - *a65
-    - *a67
-    - *a66
     - *a112
     - *a229
+    - *a274
+    - *a275
+    - *a276
+    - *a277
 metaData:
   name: U.S. EPA Enforcement and Compliance History Online (ECHO) - Clean Air Act
   contacts:

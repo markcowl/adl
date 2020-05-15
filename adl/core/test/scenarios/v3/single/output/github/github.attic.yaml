@@ -4,60 +4,12 @@ paths:
       parameters:
         - schema:
             default: assigned
-            enum:
-              - assigned
-              - created
-              - mentioned
-              - subscribed
-              - all
         - schema:
             default: open
-            enum:
-              - open
-              - closed
-              - all
         - schema:
             default: created
-            enum:
-              - created
-              - updated
-              - comments
         - schema:
             default: desc
-            enum:
-              - asc
-              - desc
-  "/legacy/issues/search/{owner}/{repository}/{state}/{keyword}":
-    get:
-      parameters:
-        - schema:
-            enum:
-              - open
-              - closed
-  "/legacy/repos/search/{keyword}":
-    get:
-      parameters:
-        - schema:
-            enum:
-              - stars
-              - forks
-              - updated
-        - schema:
-            enum:
-              - asc
-              - desc
-  "/legacy/user/search/{keyword}":
-    get:
-      parameters:
-        - schema:
-            enum:
-              - stars
-              - forks
-              - updated
-        - schema:
-            enum:
-              - asc
-              - desc
   /markdown:
     post:
       requestBody:
@@ -67,39 +19,16 @@ paths:
               properties:
                 mode:
                   default: markdown
-                  enum:
-                    - markdown
-                    - gfm
-  /markdown/raw:
-    post:
-      parameters:
-        - schema:
-            enum:
-              - text/plain; charset=utf-8
   "/marketplace_listing/plans/{plan_id}/accounts":
     get:
       parameters:
         - schema:
             default: created
-            enum:
-              - created
-              - updated
-        - schema:
-            enum:
-              - asc
-              - desc
   "/marketplace_listing/stubbed/plans/{plan_id}/accounts":
     get:
       parameters:
         - schema:
             default: created
-            enum:
-              - created
-              - updated
-        - schema:
-            enum:
-              - asc
-              - desc
   "/orgs/{org}":
     patch:
       requestBody:
@@ -109,28 +38,6 @@ paths:
               properties:
                 default_repository_permission:
                   default: read
-                  enum:
-                    - read
-                    - write
-                    - admin
-                    - none
-                members_allowed_repository_creation_type:
-                  enum:
-                    - all
-                    - private
-                    - none
-  "/orgs/{org}/interaction-limits":
-    put:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                limit:
-                  enum:
-                    - existing_users
-                    - contributors_only
-                    - collaborators_only
   "/orgs/{org}/invitations":
     post:
       requestBody:
@@ -140,52 +47,24 @@ paths:
               properties:
                 role:
                   default: direct_member
-                  enum:
-                    - admin
-                    - direct_member
-                    - billing_manager
   "/orgs/{org}/issues":
     get:
       parameters:
         - schema:
             default: assigned
-            enum:
-              - assigned
-              - created
-              - mentioned
-              - subscribed
-              - all
         - schema:
             default: open
-            enum:
-              - open
-              - closed
-              - all
         - schema:
             default: created
-            enum:
-              - created
-              - updated
-              - comments
         - schema:
             default: desc
-            enum:
-              - asc
-              - desc
   "/orgs/{org}/members":
     get:
       parameters:
         - schema:
             default: all
-            enum:
-              - 2fa_disabled
-              - all
         - schema:
             default: all
-            enum:
-              - all
-              - admin
-              - member
   "/orgs/{org}/memberships/{username}":
     put:
       requestBody:
@@ -195,61 +74,21 @@ paths:
               properties:
                 role:
                   default: member
-                  enum:
-                    - admin
-                    - member
   "/orgs/{org}/outside_collaborators":
     get:
       parameters:
         - schema:
             default: all
-            enum:
-              - 2fa_disabled
-              - all
   "/orgs/{org}/projects":
     get:
       parameters:
         - schema:
             default: open
-            enum:
-              - open
-              - closed
-              - all
   "/orgs/{org}/repos":
     get:
       parameters:
         - schema:
-            enum:
-              - all
-              - public
-              - private
-              - forks
-              - sources
-              - member
-              - internal
-        - schema:
             default: created
-            enum:
-              - created
-              - updated
-              - pushed
-              - full_name
-        - schema:
-            enum:
-              - asc
-              - desc
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                visibility:
-                  enum:
-                    - public
-                    - private
-                    - visibility
-                    - internal
   "/orgs/{org}/teams":
     post:
       requestBody:
@@ -259,14 +98,6 @@ paths:
               properties:
                 permission:
                   default: pull
-                  enum:
-                    - pull
-                    - push
-                    - admin
-                privacy:
-                  enum:
-                    - secret
-                    - closed
   "/orgs/{org}/teams/{team_slug}":
     patch:
       requestBody:
@@ -276,97 +107,21 @@ paths:
               properties:
                 permission:
                   default: pull
-                  enum:
-                    - pull
-                    - push
-                    - admin
-                privacy:
-                  enum:
-                    - secret
-                    - closed
   "/orgs/{org}/teams/{team_slug}/discussions":
     get:
       parameters:
         - schema:
             default: desc
-            enum:
-              - asc
-              - desc
   "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments":
     get:
       parameters:
         - schema:
             default: desc
-            enum:
-              - asc
-              - desc
-  "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions":
-    get:
-      parameters:
-        - schema:
-            enum:
-              - "+1"
-              - "-1"
-              - laugh
-              - confused
-              - heart
-              - hooray
-              - rocket
-              - eyes
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                content:
-                  enum:
-                    - "+1"
-                    - "-1"
-                    - laugh
-                    - confused
-                    - heart
-                    - hooray
-                    - rocket
-                    - eyes
-  "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions":
-    get:
-      parameters:
-        - schema:
-            enum:
-              - "+1"
-              - "-1"
-              - laugh
-              - confused
-              - heart
-              - hooray
-              - rocket
-              - eyes
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                content:
-                  enum:
-                    - "+1"
-                    - "-1"
-                    - laugh
-                    - confused
-                    - heart
-                    - hooray
-                    - rocket
-                    - eyes
   "/orgs/{org}/teams/{team_slug}/members":
     get:
       parameters:
         - schema:
             default: all
-            enum:
-              - member
-              - maintainer
-              - all
   "/orgs/{org}/teams/{team_slug}/memberships/{username}":
     put:
       requestBody:
@@ -376,62 +131,16 @@ paths:
               properties:
                 role:
                   default: member
-                  enum:
-                    - member
-                    - maintainer
-  "/orgs/{org}/teams/{team_slug}/projects/{project_id}":
-    put:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                permission:
-                  enum:
-                    - read
-                    - write
-                    - admin
-  "/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}":
-    put:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                permission:
-                  enum:
-                    - pull
-                    - push
-                    - admin
   "/projects/columns/{column_id}/cards":
     get:
       parameters:
         - schema:
             default: not_archived
-            enum:
-              - all
-              - archived
-              - not_archived
-  "/projects/{project_id}":
-    patch:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                state:
-                  enum:
-                    - open
-                    - closed
   "/projects/{project_id}/collaborators":
     get:
       parameters:
         - schema:
             default: all
-            enum:
-              - outside
-              - direct
-              - all
   "/projects/{project_id}/collaborators/{username}":
     put:
       requestBody:
@@ -441,39 +150,6 @@ paths:
               properties:
                 permission:
                   default: write
-                  enum:
-                    - read
-                    - write
-                    - admin
-  "/repos/{owner}/{repo}":
-    patch:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                visibility:
-                  enum:
-                    - public
-                    - private
-                    - visibility
-                    - internal
-  "/repos/{owner}/{repo}/actions/runs":
-    get:
-      parameters:
-        - schema:
-            enum:
-              - completed
-              - status
-              - conclusion
-  "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs":
-    get:
-      parameters:
-        - schema:
-            enum:
-              - completed
-              - status
-              - conclusion
   "/repos/{owner}/{repo}/check-runs":
     post:
       requestBody:
@@ -481,82 +157,18 @@ paths:
           application/json:
             schema:
               properties:
-                conclusion:
-                  enum:
-                    - success
-                    - failure
-                    - neutral
-                    - cancelled
-                    - timed_out
-                    - action_required
-                output:
-                  properties:
-                    annotations:
-                      items:
-                        properties:
-                          annotation_level:
-                            enum:
-                              - notice
-                              - warning
-                              - failure
                 status:
                   default: queued
-                  enum:
-                    - queued
-                    - in_progress
-                    - completed
-  "/repos/{owner}/{repo}/check-runs/{check_run_id}":
-    patch:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                conclusion:
-                  enum:
-                    - success
-                    - failure
-                    - neutral
-                    - cancelled
-                    - timed_out
-                    - action_required
-                output:
-                  properties:
-                    annotations:
-                      items:
-                        properties:
-                          annotation_level:
-                            enum:
-                              - notice
-                              - warning
-                              - failure
-                status:
-                  enum:
-                    - queued
-                    - in_progress
-                    - completed
   "/repos/{owner}/{repo}/check-suites/{check_suite_id}/check-runs":
     get:
       parameters:
         - schema:
-            enum:
-              - queued
-              - in_progress
-              - completed
-        - schema:
             default: latest
-            enum:
-              - latest
-              - all
   "/repos/{owner}/{repo}/collaborators":
     get:
       parameters:
         - schema:
             default: all
-            enum:
-              - outside
-              - direct
-              - all
   "/repos/{owner}/{repo}/collaborators/{username}":
     put:
       requestBody:
@@ -566,303 +178,39 @@ paths:
               properties:
                 permission:
                   default: push
-                  enum:
-                    - pull
-                    - push
-                    - admin
-  "/repos/{owner}/{repo}/comments/{comment_id}/reactions":
-    get:
-      parameters:
-        - schema:
-            enum:
-              - "+1"
-              - "-1"
-              - laugh
-              - confused
-              - heart
-              - hooray
-              - rocket
-              - eyes
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                content:
-                  enum:
-                    - "+1"
-                    - "-1"
-                    - laugh
-                    - confused
-                    - heart
-                    - hooray
-                    - rocket
-                    - eyes
   "/repos/{owner}/{repo}/commits/{ref}/check-runs":
     get:
       parameters:
         - schema:
-            enum:
-              - queued
-              - in_progress
-              - completed
-        - schema:
             default: latest
-            enum:
-              - latest
-              - all
-  "/repos/{owner}/{repo}/deployments/{deployment_id}/statuses":
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                environment:
-                  enum:
-                    - production
-                    - staging
-                    - qa
-                state:
-                  enum:
-                    - error
-                    - failure
-                    - inactive
-                    - in_progress
-                    - queued
-                    - pending
-                    - success
   "/repos/{owner}/{repo}/forks":
     get:
       parameters:
         - schema:
             default: newest
-            enum:
-              - newest
-              - oldest
-              - stargazers
-  "/repos/{owner}/{repo}/git/tags":
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                type:
-                  enum:
-                    - commit
-                    - tree
-                    - blob
-  "/repos/{owner}/{repo}/git/trees":
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                tree:
-                  items:
-                    properties:
-                      mode:
-                        enum:
-                          - "100644"
-                          - "100755"
-                          - "040000"
-                          - "160000"
-                          - "120000"
-                      type:
-                        enum:
-                          - blob
-                          - tree
-                          - commit
-  "/repos/{owner}/{repo}/git/trees/{tree_sha}":
-    get:
-      parameters:
-        - schema:
-            enum:
-              - 1
-  "/repos/{owner}/{repo}/import":
-    put:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                vcs:
-                  enum:
-                    - subversion
-                    - git
-                    - mercurial
-                    - tfvc
-  "/repos/{owner}/{repo}/import/lfs":
-    patch:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                use_lfs:
-                  enum:
-                    - opt_in
-                    - opt_out
-  "/repos/{owner}/{repo}/interaction-limits":
-    put:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                limit:
-                  enum:
-                    - existing_users
-                    - contributors_only
-                    - collaborators_only
-  "/repos/{owner}/{repo}/invitations/{invitation_id}":
-    patch:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                permissions:
-                  enum:
-                    - read
-                    - write
-                    - admin
   "/repos/{owner}/{repo}/issues":
     get:
       parameters:
         - schema:
             default: open
-            enum:
-              - open
-              - closed
-              - all
         - schema:
             default: created
-            enum:
-              - created
-              - updated
-              - comments
         - schema:
             default: desc
-            enum:
-              - asc
-              - desc
   "/repos/{owner}/{repo}/issues/comments":
     get:
       parameters:
         - schema:
             default: created
-            enum:
-              - created
-              - updated
-        - schema:
-            enum:
-              - asc
-              - desc
-  "/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions":
-    get:
-      parameters:
-        - schema:
-            enum:
-              - "+1"
-              - "-1"
-              - laugh
-              - confused
-              - heart
-              - hooray
-              - rocket
-              - eyes
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                content:
-                  enum:
-                    - "+1"
-                    - "-1"
-                    - laugh
-                    - confused
-                    - heart
-                    - hooray
-                    - rocket
-                    - eyes
-  "/repos/{owner}/{repo}/issues/{issue_number}":
-    patch:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                state:
-                  enum:
-                    - open
-                    - closed
-  "/repos/{owner}/{repo}/issues/{issue_number}/lock":
-    put:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                lock_reason:
-                  enum:
-                    - off-topic
-                    - too heated
-                    - resolved
-                    - spam
-  "/repos/{owner}/{repo}/issues/{issue_number}/reactions":
-    get:
-      parameters:
-        - schema:
-            enum:
-              - "+1"
-              - "-1"
-              - laugh
-              - confused
-              - heart
-              - hooray
-              - rocket
-              - eyes
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                content:
-                  enum:
-                    - "+1"
-                    - "-1"
-                    - laugh
-                    - confused
-                    - heart
-                    - hooray
-                    - rocket
-                    - eyes
   "/repos/{owner}/{repo}/milestones":
     get:
       parameters:
         - schema:
             default: open
-            enum:
-              - open
-              - closed
-              - all
         - schema:
             default: due_on
-            enum:
-              - due_on
-              - completeness
         - schema:
             default: asc
-            enum:
-              - asc
-              - desc
     post:
       requestBody:
         content:
@@ -871,9 +219,6 @@ paths:
               properties:
                 state:
                   default: open
-                  enum:
-                    - open
-                    - closed
   "/repos/{owner}/{repo}/milestones/{milestone_number}":
     patch:
       requestBody:
@@ -883,289 +228,68 @@ paths:
               properties:
                 state:
                   default: open
-                  enum:
-                    - open
-                    - closed
-  "/repos/{owner}/{repo}/pages":
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                source:
-                  properties:
-                    branch:
-                      enum:
-                        - master
-                        - gh-pages
-    put:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                source:
-                  enum:
-                    - '"gh-pages"'
-                    - '"master"'
-                    - '"master /docs"'
   "/repos/{owner}/{repo}/projects":
     get:
       parameters:
         - schema:
             default: open
-            enum:
-              - open
-              - closed
-              - all
   "/repos/{owner}/{repo}/pulls":
     get:
       parameters:
         - schema:
             default: open
-            enum:
-              - open
-              - closed
-              - all
         - schema:
             default: created
-            enum:
-              - created
-              - updated
-              - popularity
-              - long-running
-        - schema:
-            enum:
-              - asc
-              - desc
   "/repos/{owner}/{repo}/pulls/comments":
     get:
       parameters:
         - schema:
             default: created
-            enum:
-              - created
-              - updated
-        - schema:
-            enum:
-              - asc
-              - desc
-  "/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions":
-    get:
-      parameters:
-        - schema:
-            enum:
-              - "+1"
-              - "-1"
-              - laugh
-              - confused
-              - heart
-              - hooray
-              - rocket
-              - eyes
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                content:
-                  enum:
-                    - "+1"
-                    - "-1"
-                    - laugh
-                    - confused
-                    - heart
-                    - hooray
-                    - rocket
-                    - eyes
-  "/repos/{owner}/{repo}/pulls/{pull_number}":
-    patch:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                state:
-                  enum:
-                    - open
-                    - closed
   "/repos/{owner}/{repo}/pulls/{pull_number}/comments":
     get:
       parameters:
         - schema:
             default: created
-            enum:
-              - created
-              - updated
-        - schema:
-            enum:
-              - asc
-              - desc
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                side:
-                  enum:
-                    - LEFT
-                    - RIGHT
-                start_side:
-                  enum:
-                    - LEFT
-                    - RIGHT
-                    - side
-  "/repos/{owner}/{repo}/pulls/{pull_number}/merge":
-    put:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                merge_method:
-                  enum:
-                    - merge
-                    - squash
-                    - rebase
-  "/repos/{owner}/{repo}/pulls/{pull_number}/reviews":
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                event:
-                  enum:
-                    - APPROVE
-                    - REQUEST_CHANGES
-                    - COMMENT
-  "/repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/events":
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                event:
-                  enum:
-                    - APPROVE
-                    - REQUEST_CHANGES
-                    - COMMENT
-  "/repos/{owner}/{repo}/statuses/{sha}":
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                state:
-                  enum:
-                    - error
-                    - failure
-                    - pending
-                    - success
   "/repos/{owner}/{repo}/traffic/clones":
     get:
       parameters:
         - schema:
             default: day
-            enum:
-              - day
-              - week
   "/repos/{owner}/{repo}/traffic/views":
     get:
       parameters:
         - schema:
             default: day
-            enum:
-              - day
-              - week
   /search/code:
     get:
       parameters:
         - schema:
-            enum:
-              - indexed
-        - schema:
             default: desc
-            enum:
-              - desc
-              - asc
   /search/commits:
     get:
       parameters:
         - schema:
-            enum:
-              - author-date
-              - committer-date
-        - schema:
             default: desc
-            enum:
-              - desc
-              - asc
   /search/issues:
     get:
       parameters:
         - schema:
-            enum:
-              - comments
-              - reactions
-              - reactions-+1
-              - reactions--1
-              - reactions-smile
-              - reactions-thinking_face
-              - reactions-heart
-              - reactions-tada
-              - interactions
-              - created
-              - updated
-        - schema:
             default: desc
-            enum:
-              - desc
-              - asc
   /search/labels:
     get:
       parameters:
         - schema:
-            enum:
-              - created
-              - updated
-        - schema:
             default: desc
-            enum:
-              - desc
-              - asc
   /search/repositories:
     get:
       parameters:
         - schema:
-            enum:
-              - stars
-              - forks
-              - help-wanted-issues
-              - updated
-        - schema:
             default: desc
-            enum:
-              - desc
-              - asc
   /search/users:
     get:
       parameters:
         - schema:
-            enum:
-              - followers
-              - repositories
-              - joined
-        - schema:
             default: desc
-            enum:
-              - desc
-              - asc
   "/teams/{team_id}":
     patch:
       requestBody:
@@ -1175,97 +299,21 @@ paths:
               properties:
                 permission:
                   default: pull
-                  enum:
-                    - pull
-                    - push
-                    - admin
-                privacy:
-                  enum:
-                    - secret
-                    - closed
   "/teams/{team_id}/discussions":
     get:
       parameters:
         - schema:
             default: desc
-            enum:
-              - asc
-              - desc
   "/teams/{team_id}/discussions/{discussion_number}/comments":
     get:
       parameters:
         - schema:
             default: desc
-            enum:
-              - asc
-              - desc
-  "/teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions":
-    get:
-      parameters:
-        - schema:
-            enum:
-              - "+1"
-              - "-1"
-              - laugh
-              - confused
-              - heart
-              - hooray
-              - rocket
-              - eyes
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                content:
-                  enum:
-                    - "+1"
-                    - "-1"
-                    - laugh
-                    - confused
-                    - heart
-                    - hooray
-                    - rocket
-                    - eyes
-  "/teams/{team_id}/discussions/{discussion_number}/reactions":
-    get:
-      parameters:
-        - schema:
-            enum:
-              - "+1"
-              - "-1"
-              - laugh
-              - confused
-              - heart
-              - hooray
-              - rocket
-              - eyes
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                content:
-                  enum:
-                    - "+1"
-                    - "-1"
-                    - laugh
-                    - confused
-                    - heart
-                    - hooray
-                    - rocket
-                    - eyes
   "/teams/{team_id}/members":
     get:
       parameters:
         - schema:
             default: all
-            enum:
-              - member
-              - maintainer
-              - all
   "/teams/{team_id}/memberships/{username}":
     put:
       requestBody:
@@ -1275,179 +323,49 @@ paths:
               properties:
                 role:
                   default: member
-                  enum:
-                    - member
-                    - maintainer
-  "/teams/{team_id}/projects/{project_id}":
-    put:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                permission:
-                  enum:
-                    - read
-                    - write
-                    - admin
-  "/teams/{team_id}/repos/{owner}/{repo}":
-    put:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                permission:
-                  enum:
-                    - pull
-                    - push
-                    - admin
   /user/issues:
     get:
       parameters:
         - schema:
             default: assigned
-            enum:
-              - assigned
-              - created
-              - mentioned
-              - subscribed
-              - all
         - schema:
             default: open
-            enum:
-              - open
-              - closed
-              - all
         - schema:
             default: created
-            enum:
-              - created
-              - updated
-              - comments
         - schema:
             default: desc
-            enum:
-              - asc
-              - desc
-  /user/memberships/orgs:
-    get:
-      parameters:
-        - schema:
-            enum:
-              - active
-              - pending
-  "/user/memberships/orgs/{org}":
-    patch:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                state:
-                  enum:
-                    - active
   /user/repos:
     get:
       parameters:
         - schema:
             default: all
-            enum:
-              - all
-              - public
-              - private
         - schema:
             default: all
-            enum:
-              - all
-              - owner
-              - public
-              - private
-              - member
         - schema:
             default: full_name
-            enum:
-              - created
-              - updated
-              - pushed
-              - full_name
-        - schema:
-            enum:
-              - asc
-              - desc
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                visibility:
-                  enum:
-                    - public
-                    - private
-                    - visibility
-                    - internal
   /user/starred:
     get:
       parameters:
         - schema:
             default: created
-            enum:
-              - created
-              - updated
         - schema:
             default: desc
-            enum:
-              - asc
-              - desc
-  "/users/{username}/hovercard":
-    get:
-      parameters:
-        - schema:
-            enum:
-              - organization
-              - repository
-              - issue
-              - pull_request
   "/users/{username}/projects":
     get:
       parameters:
         - schema:
             default: open
-            enum:
-              - open
-              - closed
-              - all
   "/users/{username}/repos":
     get:
       parameters:
         - schema:
             default: owner
-            enum:
-              - all
-              - owner
-              - member
         - schema:
             default: full_name
-            enum:
-              - created
-              - updated
-              - pushed
-              - full_name
-        - schema:
-            enum:
-              - asc
-              - desc
   "/users/{username}/starred":
     get:
       parameters:
         - schema:
             default: created
-            enum:
-              - created
-              - updated
         - schema:
             default: desc
-            enum:
-              - asc
-              - desc
