@@ -1,4 +1,7 @@
-/** @description An value that determines where the API Version identifer will be located in a HTTP request.
+
+/**
+ * 
+ * @description An value that determines where the API Version identifer will be located in a HTTP request.
  * @extensible
  @todo-temporary-reuse-marker */
 export enum versioningScheme {

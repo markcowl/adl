@@ -6,7 +6,7 @@ import { Identity } from '../../../model/name';
 import { Alias } from '../../../model/schema/alias';
 import { ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ReadOnlyConstraint, RegularExpressionConstraint, UniqueElementsConstraint } from '../../../model/schema/constraint';
 import { ServerDefaultValue } from '../../../model/schema/default';
-import { createObjectSchema, Property } from '../../../model/schema/object';
+import { createObjectSchema } from '../../../model/schema/object';
 import { ArraySchema, DictionarySchema } from '../../../model/schema/primitive';
 import { Schema } from '../../../model/schema/schema';
 import { isEnumSchema, isObjectSchema, singleOrDefault } from '../common';
@@ -414,8 +414,7 @@ export async function* processObjectSchema(schema: v2.Schema, $: Context, option
   const schemaName = options?.isAnonymous ? anonymous('object') : nameOf(schema);
 
   // creating an object schema 
-  // const result = new ObjectSchema(schemaName, commonProperties(schema));
-  const result = createObjectSchema($.api,schemaName);
+  const result = createObjectSchema($.api, schemaName, commonProperties(schema));
 
   result.addToAttic('example', (<any>schema).example);
   
@@ -430,7 +429,7 @@ export async function* processObjectSchema(schema: v2.Schema, $: Context, option
   for await ( const schema of schemas) {
     const s= <any>schema;
     if( s.node) {
-      result.parents.add(s);
+      result.parents.push(s);
     }
   }
 
@@ -450,7 +449,7 @@ export async function* processObjectSchema(schema: v2.Schema, $: Context, option
       required = using(schema.required[i], true);
     }
 
-    const p = new Property(propertyName, propSchema, {
+    const p = result.createProperty(propertyName, propSchema, {
       required,
       // in OAI2, we've historically allowed description, readonly (and a few other things)
       // on a property, even if it's a reference

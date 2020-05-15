@@ -1,4 +1,7 @@
-/** @description Specifies for what type of messages sampling settings should not apply.
+
+/**
+ * 
+ * @description Specifies for what type of messages sampling settings should not apply.
  * @extensible
  */
 export enum AlwaysLog {

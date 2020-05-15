@@ -1,4 +1,7 @@
-/** @description Email Template Name Identifier.
+
+/**
+ * 
+ * @description Email Template Name Identifier.
  * @extensible
  */
 export enum TemplateName {

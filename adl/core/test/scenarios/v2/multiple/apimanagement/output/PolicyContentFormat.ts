@@ -1,4 +1,7 @@
-/** @description Format of the policyContent.
+
+/**
+ * 
+ * @description Format of the policyContent.
  * @extensible
  */
 export enum PolicyContentFormat {

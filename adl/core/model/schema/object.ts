@@ -1,34 +1,29 @@
 import { isAnonymous, TargetMap, valueOf } from '@azure-tools/sourcemap';
-import { Identifier, InterfaceDeclaration, PropertyDeclaration } from 'ts-morph';
+import { Identifier, InterfaceDeclaration, PropertySignature } from 'ts-morph';
 import { getPath, TypeDeclaration } from '../../support/typescript';
 import { ApiModel } from '../api-model';
-import { Element, TSElement } from '../element';
-import { Schema, TSSchema } from './schema';
+import { NamedElement, Schema, TSSchema } from './schema';
 
 interface Collection<T> {
-  add(value: T): void;
+  push(value: T): void;
   remove(value: T): void;
   get(): Array<T>;
 }
 
-class AddRemoveGet<TCollectionType,TOwner> implements Collection<TCollectionType> {
-  constructor(owner: TOwner, public add: (value: TCollectionType) => void = (v: TCollectionType) => { }, public remove: (value: TCollectionType) => void = (v: TCollectionType) => { }, public get: () => Array<TCollectionType> = () => []) {
-    this.add = add.bind(owner);
+class CollectionImpl<TCollectionType,TOwner> implements Collection<TCollectionType> {
+  constructor(owner: TOwner, public push: (value: TCollectionType) => void = (v: TCollectionType) => { /* nothing */ }, public remove: (value: TCollectionType) => void = (v: TCollectionType) => { /* nothing */}, public get: () => Array<TCollectionType> = () => []) {
+    this.push = push.bind(owner);
     this.remove = remove.bind(owner);
     this.get = get.bind(owner);
   }
 }
 
-export class Property2 extends TSElement<PropertyDeclaration> { 
-  
-}
-
-export interface ObjectSchema2 extends Schema {
+export interface ObjectSchema extends Schema {
   /** schemas that this object extends */
   readonly parents: Collection<TSSchema<TypeDeclaration>>;
   
   /** the collection of properties that are in this object */
-  readonly properties: Collection<Property2>;
+  readonly properties: Collection<Property>;
   
   /**  maximum number of properties permitted */
   maxProperties?: number;
@@ -36,16 +31,13 @@ export interface ObjectSchema2 extends Schema {
   /**  minimum number of properties permitted */
   minProperties?: number;
 
-
   /** the desired name when generating code */
   clientName?: string;
 
+  createProperty(name: string, schema: Schema, initializer?: Partial<Property>): Property;
 }
 
-const o: ObjectSchema2 = <any>{};
-
-
-export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements ObjectSchema2 {
+export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements ObjectSchema {
   get targetMap(): TargetMap {
     return {
       ...super.targetMap,
@@ -66,12 +58,11 @@ export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements 
     for( const base of this.node.getExtends() ) {
       // todo: how do we identify which base is the one we're removing.
       // have to debug this to find out.
-      debugger;
-      if( false ) {
-        // this is the one, remove it
-        this.node.removeExtends(base);
-        break;
-      }
+      // if( /**??? */ ) {
+      // this is the one, remove it
+      // this.node.removeExtends(base);
+      //  break;
+      // }
     }
 
   }
@@ -82,66 +73,80 @@ export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements 
 
   constructor(node: InterfaceDeclaration) {
     super('object', node);
-    this.parents = new AddRemoveGet(this, this.addParent, this.removeParent, this.getParents);
-    this.properties = new AddRemoveGet(this);
+    this.parents = new CollectionImpl(this, this.addParent, this.removeParent, this.getParents);
+    this.properties = new CollectionImpl(this);
 
   }
   parents: Collection<TSSchema<TypeDeclaration>>;
-  properties: Collection<Property2>;
+  properties: Collection<Property>;
  
   maxProperties?: number;
   minProperties?: number;
   clientName?: string;
+
+  createProperty(name: string, schema: Schema, initializer?: Partial<Property>): Property {
+    
+    const result = new PropertyImpl(this.node.addProperty({
+      //todo: do a better 'fix-the-bad-name' (ie, perks/codegen)
+      name: valueOf(name).replace(/[^\w]+/g, '_'),
+      type: schema instanceof TSSchema ? this.getTypeReference(schema).getName() : 'any',
+    }));
+
+    result.initialize(initializer);
+
+    result.track({
+      $: name,
+      type: schema,
+    });
+
+    return result;
+
+  }
 }
 let counter = 0;
 
-export function createObjectSchema(api: ApiModel, name: Identifier, initializer?: Partial<ObjectSchema2>): ObjectSchema2 {
+export function createObjectSchema(api: ApiModel, name: Identifier, initializer?: Partial<ObjectSchema>): ObjectSchema {
   const file = api.getObjectSchemaFile( valueOf(name));
   const n = isAnonymous(name) ? `object_${counter++}` :<string><any> valueOf(name);
-  return new ObjectSchemaImpl(file.addInterface({
+  const result= new ObjectSchemaImpl(file.addInterface({
     //todo: do a better 'fix-the-bad-name' (ie, perks/codegen)
     name: n.replace(/[^\w]+/g, '_'),
     isExported: true,
-  })).track( {
+  }));
+
+  result.initialize(initializer);
+  
+  result.track( {
     $: name, 
   });
+
+  return result;
 }
 
-export class ObjectSchema extends Schema {
-  /** the collection of properties that are in this object */
-  properties = new Array<Property>();
+export interface Property extends PropertyImpl {
 
-  /**  maximum number of properties permitted */
-  maxProperties?: number;
-
-  /**  minimum number of properties permitted */
-  minProperties?: number;
-
-  /** schemas that this object extends */
-  extends = new Array<Schema>();
-
-  /*
-   * the desired name when generating code
-   */
-  clientName?: string;
-
-  constructor(public name: string, initializer?: Partial<ObjectSchema>) {
-    super('object');
-    this.initialize(initializer);
-  }
 }
 
-
-export class Property extends Element {
+export class PropertyImpl extends NamedElement<PropertySignature> {
   /** indicates the properts is required */
-  required?: boolean;
+  get required(): boolean {
+    return this.node.hasQuestionToken();
+  }
+  set required(value: boolean) {
+    this.node.setHasQuestionToken(value);
+  }
 
   /**
    * Declares the property as "read only".  
    * A property MUST NOT be marked as both readOnly and writeOnly being true. 
    * Default value is false.
    */
-  readonly?: boolean;
+  get readonly(): boolean {
+    return this.node.isReadonly();
+  }
+  set readonly(value: boolean) {
+    this.node.setIsReadonly(value);
+  }
 
   /**
    * Declares the property as "write only". 
@@ -149,21 +154,27 @@ export class Property extends Element {
    * Default value is false.
    * 
    */
-  writeonly?: boolean;
-
-  /**
-   * Description of the property
-   * CommonMark syntax MAY be used for rich text representation.
-   */
-  description?: string;
+  get writeonly(): boolean {
+    // todo: tear apart the property type looking for `& WriteOnly`
+    return false;
+  }
+  set writeonly(value: boolean) {
+    // todo: implement by adding a `& WriteOnly`
+  }
 
   /**
    * the desired name when generating code.
    */
-  clientName?: string;
-
-  constructor(public name: string, public schema: Schema, initializer?: Partial<Property>) {
-    super();
-    this.initialize(initializer);
+  get clientName(): string|undefined {
+    return this.getDocTag('clientName');
   }
+  set clientName(value: string|undefined) {
+    // todo: implement by adding a `& WriteOnly`
+    this.addDocTag('clientName', value);
+  }
+
+  constructor(node: PropertySignature) {
+    super(node);
+  }
+  
 }

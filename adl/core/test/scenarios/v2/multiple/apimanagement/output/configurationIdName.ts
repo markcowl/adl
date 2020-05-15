@@ -1,4 +1,7 @@
-/** @description The identifier of the Git Configuration Operation.
+
+/**
+ * 
+ * @description The identifier of the Git Configuration Operation.
  * @extensible
  */
 export enum configurationIdName {

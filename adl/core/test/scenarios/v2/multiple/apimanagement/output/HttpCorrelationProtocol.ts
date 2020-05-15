@@ -1,4 +1,7 @@
-/** @description Sets correlation protocol to use for Application Insights diagnostics.
+
+/**
+ * 
+ * @description Sets correlation protocol to use for Application Insights diagnostics.
  * @extensible
  */
 export enum HttpCorrelationProtocol {

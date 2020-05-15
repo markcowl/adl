@@ -5,7 +5,7 @@ import { Alias } from '../../../model/schema/alias';
 import { Constant } from '../../../model/schema/constant';
 import { Enum } from '../../../model/schema/enum';
 import { AndSchema, AnyOfSchema, XorSchema } from '../../../model/schema/group';
-import { ObjectSchema, ObjectSchemaImpl } from '../../../model/schema/object';
+import { ObjectSchemaImpl } from '../../../model/schema/object';
 import { AnySchema, ArraySchema, Primitive } from '../../../model/schema/primitive';
 import { header } from './header';
 import { parameter } from './parameter';
@@ -37,7 +37,7 @@ export async function* processComponents(components: v3.Components, $: Context):
       $.api.schemas.aliases.push(schema);
       continue;
     }
-    if (schema instanceof ObjectSchema || schema instanceof ObjectSchemaImpl ) {
+    if (schema instanceof ObjectSchemaImpl ) {
       $.api.schemas.objects.push(schema);
       continue;
     }

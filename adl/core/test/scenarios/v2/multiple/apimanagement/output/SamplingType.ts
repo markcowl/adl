@@ -1,4 +1,7 @@
-/** @description Sampling type.
+
+/**
+ * 
+ * @description Sampling type.
  * @extensible
  */
 export enum SamplingType {

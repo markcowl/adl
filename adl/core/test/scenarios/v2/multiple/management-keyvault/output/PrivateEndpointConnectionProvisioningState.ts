@@ -1,4 +1,7 @@
-/** @description The current provisioning state.
+
+/**
+ * 
+ * @description The current provisioning state.
  * @extensible
  */
 export enum PrivateEndpointConnectionProvisioningState {

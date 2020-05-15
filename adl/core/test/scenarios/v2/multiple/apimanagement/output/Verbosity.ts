@@ -1,4 +1,7 @@
-/** @description The verbosity level applied to traces emitted by trace policies.
+
+/**
+ * 
+ * @description The verbosity level applied to traces emitted by trace policies.
  * @extensible
  */
 export enum Verbosity {

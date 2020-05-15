@@ -1,4 +1,7 @@
-/** @description Type of API.
+
+/**
+ * 
+ * @description Type of API.
  * @extensible
  */
 export enum ApiType {

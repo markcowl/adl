@@ -1,4 +1,7 @@
-/** @description Form of an authorization grant, which the client uses to request the access token.
+
+/**
+ * 
+ * @description Form of an authorization grant, which the client uses to request the access token.
  * @extensible
  */
 export enum bearerTokenSendingMethods {

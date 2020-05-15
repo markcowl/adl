@@ -1,4 +1,7 @@
-/** @description SKU family name
+
+/**
+ * 
+ * @description SKU family name
  * @extensible
  */
 export enum SkuFamily {

@@ -22,6 +22,7 @@ export interface object_221 {
 }
 export interface object_222 {
 }
+/** @description The permissions granted to the access token. The permissions object includes the permission names and their access type. For a complete list of permissions and allowable values, see "[GitHub App permissions](https://developer.github.com/apps/building-github-apps/creating-github-apps-using-url-parameters/#github-app-permissions)." */
 export interface object_223 {
 }
 export interface object_224 {
@@ -158,6 +159,7 @@ export interface object_289 {
 }
 export interface object_290 {
 }
+/** @description The filenames and content of each file in the gist. The keys in the `files` object represent the filename and have the type `string`. */
 export interface object_291 {
 }
 export interface object_292 {
@@ -226,6 +228,7 @@ export interface object_323 {
 }
 export interface object_324 {
 }
+/** @description The filenames and content that make up this gist. */
 export interface object_325 {
 }
 export interface object_326 {
@@ -460,6 +463,7 @@ export interface object_440 {
 }
 export interface object_441 {
 }
+/** @description Key/value pairs to provide settings for this webhook. [These are defined below](https://developer.github.com/v3/orgs/hooks/#create-hook-config-params). */
 export interface object_442 {
 }
 export interface object_443 {
@@ -472,6 +476,7 @@ export interface object_446 {
 }
 export interface object_447 {
 }
+/** @description Key/value pairs to provide settings for this webhook. [These are defined below](https://developer.github.com/v3/orgs/hooks/#update-hook-config-params). */
 export interface object_448 {
 }
 export interface object_449 {
@@ -1062,12 +1067,16 @@ export interface object_741 {
 }
 export interface object_742 {
 }
+/** @description Require at least one approving review on a pull request, before merging. Set to `null` to disable. */
 export interface object_743 {
 }
+/** @description Specify which users and teams can dismiss pull request reviews. Pass an empty `dismissal_restrictions` object to disable. User and team `dismissal_restrictions` are only available for organization-owned repositories. Omit this parameter for personal repositories. */
 export interface object_744 {
 }
+/** @description Require status checks to pass before merging. Set to `null` to disable. */
 export interface object_745 {
 }
+/** @description Restrict who can push to the protected branch. User, app, and team `restrictions` are only available for organization-owned repositories. Set to `null` to disable. */
 export interface object_746 {
 }
 export interface object_747 {
@@ -1116,6 +1125,7 @@ export interface object_768 {
 }
 export interface object_769 {
 }
+/** @description Specify which users and teams can dismiss pull request reviews. Pass an empty `dismissal_restrictions` object to disable. User and team `dismissal_restrictions` are only available for organization-owned repositories. Omit this parameter for personal repositories. */
 export interface object_770 {
 }
 export interface object_771 {
@@ -1192,6 +1202,7 @@ export interface object_806 {
 }
 export interface object_807 {
 }
+/** @description Check runs can accept a variety of data in the `output` object, including a `title` and `summary` and can optionally provide descriptive details about the run. See the [`output` object](https://developer.github.com/v3/checks/runs/#output-object) description. */
 export interface object_808 {
 }
 export interface object_809 {
@@ -1246,6 +1257,7 @@ export interface object_833 {
 }
 export interface object_834 {
 }
+/** @description Check runs can accept a variety of data in the `output` object, including a `title` and `summary` and can optionally provide descriptive details about the run. See the [`output` object](https://developer.github.com/v3/checks/runs/#output-object-1) description. */
 export interface object_835 {
 }
 export interface object_836 {
@@ -1634,8 +1646,10 @@ export interface object_1027 {
 }
 export interface object_1028 {
 }
+/** @description The author of the file. Default: The `committer` or the authenticated user if you omit `committer`. */
 export interface object_1029 {
 }
+/** @description The person that committed the file. Default: the authenticated user. */
 export interface object_1030 {
 }
 export interface object_1031 {
@@ -1676,8 +1690,10 @@ export interface object_1048 {
 }
 export interface object_1049 {
 }
+/** @description object containing information about the author. */
 export interface object_1050 {
 }
+/** @description object containing information about the committer. */
 export interface object_1051 {
 }
 export interface object_1052 {
@@ -1736,6 +1752,7 @@ export interface object_1078 {
 }
 export interface object_1079 {
 }
+/** @description JSON payload with extra information about the webhook event that your action or worklow may use. */
 export interface object_1080 {
 }
 export interface object_1081 {
@@ -1766,8 +1783,10 @@ export interface object_1093 {
 }
 export interface object_1094 {
 }
+/** @description Information about the author of the commit. By default, the `author` will be the authenticated user and the current date. See the `author` and `committer` object below for details. */
 export interface object_1095 {
 }
+/** @description Information about the person who is making the commit. By default, `committer` will use the information set in `author`. See the `author` and `committer` object below for details. */
 export interface object_1096 {
 }
 export interface object_1097 {
@@ -1816,6 +1835,7 @@ export interface object_1118 {
 }
 export interface object_1119 {
 }
+/** @description An object with information about the individual creating the tag. */
 export interface object_1120 {
 }
 export interface object_1121 {
@@ -1854,6 +1874,7 @@ export interface object_1137 {
 }
 export interface object_1138 {
 }
+/** @description Key/value pairs to provide settings for this webhook. [These are defined below](https://developer.github.com/v3/repos/hooks/#create-hook-config-params). */
 export interface object_1139 {
 }
 export interface object_1140 {
@@ -1870,6 +1891,7 @@ export interface object_1145 {
 }
 export interface object_1146 {
 }
+/** @description Key/value pairs to provide settings for this webhook. [These are defined below](https://developer.github.com/v3/repos/hooks/#create-hook-config-params). */
 export interface object_1147 {
 }
 export interface object_1148 {
@@ -2242,6 +2264,7 @@ export interface object_1331 {
 }
 export interface object_1332 {
 }
+/** @description source parameter */
 export interface object_1333 {
 }
 export interface object_1334 {

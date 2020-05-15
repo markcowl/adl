@@ -1,4 +1,7 @@
-/** @description Status of the issue.
+
+/**
+ * 
+ * @description Status of the issue.
  * @extensible
  */
 export enum State {

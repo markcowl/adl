@@ -41,7 +41,7 @@ export class Schema extends Element {
   }
 }
 
-export class TSSchema<TNode extends Node> extends TSElement<TNode> implements Schema {
+export class NamedElement<TNode extends Node> extends TSElement<TNode> {
   get targetMap(): Dictionary<any> {
     return {
       ...super.targetMap,
@@ -55,7 +55,7 @@ export class TSSchema<TNode extends Node> extends TSElement<TNode> implements Sc
     if (Node.isNameableNode(this.node)) {
       result = this.node.getName();
     }
-    return result ?? anonymous(this.type);
+    return result ?? anonymous(this.node.getKindName());
   }
 
   set name(value: Identity) {
@@ -82,6 +82,9 @@ export class TSSchema<TNode extends Node> extends TSElement<TNode> implements Sc
     this.setDocTag('description', value);
   }
 
+}
+
+export class TSSchema<TNode extends Node> extends NamedElement<TNode> implements Schema {
   nullable?: boolean;
 
   constructor(public type: string, node: TNode, initializer?: Partial<Schema>) {

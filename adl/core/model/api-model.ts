@@ -2,7 +2,7 @@ import { exists, isFile, mkdir, rmdir, writeFile } from '@azure-tools/async-io';
 import { Dictionary, values } from '@azure-tools/linq';
 import { isAnonymous, isProxy, Path, SourceMap, TargetMap, use, valueOf } from '@azure-tools/sourcemap';
 import { dirname, join } from 'path';
-import { EnumDeclaration, Identifier, IndentationText, Node, Project, QuoteKind, SourceFile } from 'ts-morph';
+import { EnumDeclaration, Identifier, IndentationText, NewLineKind, Node, Project, QuoteKind, SourceFile } from 'ts-morph';
 import { getNode, referenceTo } from '../support/typescript';
 import { Attic } from './element';
 import { SerializationResult } from './format';
@@ -41,6 +41,7 @@ export class ApiModel  {
     manipulationSettings: {
       indentationText: IndentationText.TwoSpaces,
       insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces: true,
+      newLineKind: NewLineKind.LineFeed,
       quoteKind: QuoteKind.Single,
     },
   });
@@ -104,7 +105,8 @@ export class ApiModel  {
           return;
         }
         each.formatText({
-          indentSize: 2
+          indentSize: 2,
+
         });
       
         const filename = join(path, each.getFilePath());
@@ -113,7 +115,11 @@ export class ApiModel  {
         await mkdir(folder);
 
         await writeFile(filename, each.print().
-          replace(/\*\/\s*\/\*\*\s*/g, ''));
+          replace(/«■»/g, '').
+          replace(/\*\/\s*\/\*\*\s*/g, '').
+          replace(/^(\s*\/\*)/g,'\n$1')
+        );
+         
       }));
   }
 

@@ -1,4 +1,7 @@
-/** @description Determines the type of confirmation e-mail that will be sent to the newly created user.
+
+/**
+ * 
+ * @description Determines the type of confirmation e-mail that will be sent to the newly created user.
  * @extensible
  */
 export enum Confirmation {

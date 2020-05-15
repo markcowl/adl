@@ -1,4 +1,7 @@
-/** @description The private endpoint connection status.
+
+/**
+ * 
+ * @description The private endpoint connection status.
  * @extensible
  */
 export enum PrivateEndpointServiceConnectionStatus {
