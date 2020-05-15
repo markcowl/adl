@@ -10,7 +10,7 @@ import { ObjectSchema, Property } from '../../../model/schema/object';
 import { ArraySchema, DictionarySchema } from '../../../model/schema/primitive';
 import { Schema } from '../../../model/schema/schema';
 import { isEnumSchema, isObjectSchema, push, singleOrDefault } from '../common';
-import { arrayProperties, commonProperties, numberProperties, objectProperties, Options, processAnySchema, processBooleanSchema, processByteArraySchema, processCharSchema, processDateSchema, processDateTimeSchema, processDurationSchema, processEnumSchemaCommon, processFileSchema, processOdataSchema, processPasswordSchema, processTimeSchema, processUriSchema, processUuidSchema, stringProperties } from '../common/schema';
+import { arrayProperties, commonProperties, numberProperties, objectProperties, Options, processAnySchema, processBooleanSchema, processByteArraySchema, processCharSchema, processDateSchema, processDateTimeSchema, processDurationSchema, processEnumSchema, processFileSchema, processOdataSchema, processPasswordSchema, processTimeSchema, processUriSchema, processUuidSchema, stringProperties } from '../common/schema';
 import { Context } from './serializer';
 
 export async function* processInline(schema: v2.Schema | v2.SchemaReference | undefined, $: Context, options?: Options): AsyncGenerator<Schema> {
@@ -37,19 +37,18 @@ async function* getSchemas(schemas: Array<v2.Schema | v2.SchemaReference> | unde
 }
 
 // eslint-disable-next-line require-yield
-export async function* processSillyRef(schema: v2.Schema, $: Context, options?: { isAnonymous?: boolean; forUnderlyingEnumType?: boolean }): AsyncGenerator<Schema> {
+export async function* processSillyRef(schema: v2.Schema, $: Context, options?: { isAnonymous?: boolean }): AsyncGenerator<Schema> {
   throw new Error('TODO: process silly references');
 
 }
 
-export async function* processSchema(schema: v2.Schema, $: Context, options?: { isAnonymous?: boolean; forUnderlyingEnumType?: boolean }): AsyncGenerator<Schema> {
+export async function* processSchema(schema: v2.Schema, $: Context, options?: { isAnonymous?: boolean }): AsyncGenerator<Schema> {
   // mark this used once.
   use(schema.type);
 
   const impl = () => {
     // if enum or x-ms-enum is specified, process as enum
-    // but not if we're already processing the enum and are now processing its underlying type
-    if (!options?.forUnderlyingEnumType && isEnumSchema(schema)) {
+    if (isEnumSchema(schema)) {
       return processEnumSchema(schema, $, options);
     }
 
@@ -474,11 +473,5 @@ export async function* processObjectSchema(schema: v2.Schema, $: Context, option
       result.extends.push(await ds);
     }
   }
-}
-
-export async function* processEnumSchema(schema: v2.Schema, $: Context, options?: Options): AsyncGenerator<Schema> {
-  // not using $.process here because we need to process a node that is already marked
-  const type = await singleOrDefault(processSchema(schema, $, { forUnderlyingEnumType: true })) || $.api.schemas.Any;
-  return yield* processEnumSchemaCommon(schema, $, type, options);
 }
 

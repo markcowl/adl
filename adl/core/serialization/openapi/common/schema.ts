@@ -28,8 +28,6 @@ export type Options = Partial<{
 
   /** note that this is a parameter declaration while processing this schema */
   isParameter: boolean;
-
-  forUnderlyingEnumType: boolean;
 }>;
 
 export function commonProperties(schema: v3.Schema|v2.Schema) {
@@ -157,24 +155,13 @@ export async function* processAnySchema<T extends OAIModel>(schema: v3.Schema|v2
   return yield $.api.schemas.Any;
 }
 
-export async function* processEnumSchemaCommon<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>, type: Schema, options?: Options): AsyncGenerator<Schema> {
-  const schemaEnum = use(schema.enum) ?? [];
+export async function* processEnumSchema<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>, options?: Options): AsyncGenerator<Schema> {
+  const schemaEnum = use(schema.enum, true) ?? [];
   const xmsEnum = use(schema['x-ms-enum']) ?? {};
-  const values: Array<XMSEnumValue> = xmsEnum.values ?? schemaEnum.map(v => ({ value: v }));
+  const values: Array<XMSEnumValue> = use(xmsEnum.values, true) ?? schemaEnum.map(value => ({ value }));
+  const name = use(xmsEnum.name) ?? (options?.isAnonymous ? undefined : nameOf(schema));
+  const description = use(schema.description);
+  const extensible = use(xmsEnum.modelAsString);
 
-  const isanon= xmsEnum.name ? false : options?.isAnonymous;
-
-  const result = createEnum($.api, type, {
-    name: xmsEnum.name || (isanon ? anonymous('enum') : nameOf(schema)),
-    values
-  });
-
-  result.sealed = !xmsEnum.modelAsString;
-  use(xmsEnum.modelAsString);
-
-  // TODO: an enum with only one value should be treated as single constant directly
-  //       but how does this interact with adding a value to an enum?
-
-  yield result;
+  yield createEnum($.api, values, { name, description, extensible, ...commonProperties(schema) });
 }
-
