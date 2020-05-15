@@ -1,10 +1,10 @@
 import { linq } from '@azure-tools/linq';
 import { isAnonymous, valueOf } from '@azure-tools/sourcemap';
-import { AST, CST, Document, stringify } from 'yaml';
+import { AST, CST, Document } from 'yaml';
 import { Schema, YAMLMap } from 'yaml/types';
 import { parseMap } from 'yaml/util';
 import { ApiModel } from '../model/api-model';
-import { Element } from '../model/element';
+import { Element, TSElement } from '../model/element';
 
 const propertyPriority = [
   'type',
@@ -84,6 +84,9 @@ export const elementTag = <Schema.CustomTag>{
       if (v === undefined || v === null || typeof v === 'function' || v === '') {
         continue;
       }
+      if (v instanceof TSElement) {
+        continue;
+      }
 
       if (isAnonymous(v)) {
         v = v.name;
@@ -123,6 +126,7 @@ export const elementTag = <Schema.CustomTag>{
 };
 
 export function serialize(instance: any) {
-  return stringify(instance, { customTags: [elementTag] }).
-    replace(/:$\s*(&a\d*)/gm, ': $1'); // put anchor on declaration line. 
+  return 'not right now';
+  //return stringify(instance, { customTags: [elementTag] }).
+  //   replace(/:$\s*(&a\d*)/gm, ': $1'); // put anchor on declaration line. 
 }

@@ -1,8 +1,11 @@
 import { Path } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
-import { EnumDeclaration, EnumMember, Node, Project, SyntaxList } from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, EnumMember, InterfaceDeclaration, Node, Project, SyntaxList, TypeAliasDeclaration } from 'ts-morph';
 import { ApiModel } from '../model/api-model';
 import { createSandbox } from './sandbox';
+
+
+export type TypeDeclaration = TypeAliasDeclaration | InterfaceDeclaration | ClassDeclaration;
 
 
 const evaluateExpression = createSandbox();
@@ -104,4 +107,8 @@ export function referenceTo<T extends Node>(input: T): T {
 
 export function project<T extends Node>(input: T): ApiModel {
   return (<any>input.getProject()).api;
+}
+
+export function IsTypeDeclaration(node?: Node): node is TypeDeclaration {
+  return node instanceof TypeAliasDeclaration || node instanceof ClassDeclaration || node instanceof InterfaceDeclaration;
 }

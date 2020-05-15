@@ -1,0 +1,3 @@
+import { AuthorizationServerContractBaseProperties } from './AuthorizationServerContractBaseProperties';
+export interface AuthorizationServerUpdateContractProperties extends AuthorizationServerContractBaseProperties {
+}

@@ -2,7 +2,7 @@ import { exists, isFile, mkdir, rmdir, writeFile } from '@azure-tools/async-io';
 import { Dictionary, values } from '@azure-tools/linq';
 import { isAnonymous, isProxy, Path, SourceMap, TargetMap, use, valueOf } from '@azure-tools/sourcemap';
 import { dirname, join } from 'path';
-import { EnumDeclaration, IndentationText, Node, Project, QuoteKind, SourceFile } from 'ts-morph';
+import { EnumDeclaration, Identifier, IndentationText, Node, Project, QuoteKind, SourceFile } from 'ts-morph';
 import { getNode, referenceTo } from '../support/typescript';
 import { Attic } from './element';
 import { SerializationResult } from './format';
@@ -36,7 +36,14 @@ function TypeInfo<U extends new (...args: any) => any>(type: U) {
 */
 
 export class ApiModel  {
-  #project: Project;
+  #project: Project = new Project({
+    useInMemoryFileSystem: true,
+    manipulationSettings: {
+      indentationText: IndentationText.TwoSpaces,
+      insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces: true,
+      quoteKind: QuoteKind.Single,
+    },
+  });
 
   get project() {
     return this.#project;
@@ -55,13 +62,6 @@ export class ApiModel  {
 
 
   constructor() {
-    this.#project  = new Project({
-      useInMemoryFileSystem: true, manipulationSettings: {
-        indentationText: IndentationText.TwoSpaces,
-        insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces: true,
-        quoteKind: QuoteKind.Single,
-      }
-    });
     (<any>this.#project).api = this;
   }
 
@@ -130,6 +130,19 @@ export class ApiModel  {
     }
     const filename = `${name}.ts`;
     return  this.project.getSourceFile(filename) ||  this.project.createSourceFile(filename);
+  }
+
+  models = this.#project.createDirectory('models');
+
+  getObjectSchemaFile(name: Identifier): SourceFile {
+    if (isProxy(this)) {
+      return valueOf(this).getObjectSchemaFile(name);
+    }
+    if (isAnonymous(name)) {
+      return this.anonymousFile;
+    }
+    const filename = `${name}.ts`;
+    return this.models.getSourceFile(filename) || this.models.createSourceFile(filename);
   }
 
   getEnum(name: string ) {

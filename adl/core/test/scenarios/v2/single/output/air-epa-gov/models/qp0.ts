@@ -1,0 +1,2 @@
+export interface qp0 {
+}

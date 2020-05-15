@@ -5,7 +5,7 @@ import { Constraint } from './constraint';
 import { Default } from './default';
 import { Enum } from './enum';
 import { AndSchema, AnyOfSchema, XorSchema } from './group';
-import { ObjectSchema } from './object';
+import { ObjectSchema, ObjectSchemaImpl } from './object';
 import { AnySchema, BooleanPrimitive, ByteArrayPrimitive, CharPrimitive, DatePrimitive, DateTimePrimitive, DoublePrimitive, DurationPrimitive, FilePrimitive, FloatPrimitive, Int32Primitive, Int64Primitive, ODataPrimitive, PasswordPrimitive, Primitive, StringPrimitive, TimePrimitive, UnixTimePrimitive, UnknownSchema, UriPrimitive, UuidPrimitive } from './primitive';
 
 export class Schemas extends Element {
@@ -95,7 +95,7 @@ export class Schemas extends Element {
     return this.#file || (this.addPrimitive(this.#file = new FilePrimitive()));
   }
 
-  objects = new Array<ObjectSchema>();
+  objects = new Array<ObjectSchema|ObjectSchemaImpl>();
   combinations = new Array<AndSchema | XorSchema | AnyOfSchema>();
   constants = new Array<Constant>();
   enums = new Array<Enum>();

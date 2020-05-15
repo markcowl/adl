@@ -1,11 +1,1 @@
-paths:
-  /stats:
-    get:
-      parameters:
-        - schema:
-            default: minute
-components:
-  parameters:
-    filterDirection:
-      schema:
-        default: backwards
+not right now

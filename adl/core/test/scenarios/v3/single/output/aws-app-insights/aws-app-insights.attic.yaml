@@ -1,5 +1,1 @@
-components:
-  schemas:
-    Tier:
-      minLength: 1
-      maxLength: 50
+not right now

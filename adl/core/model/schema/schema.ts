@@ -1,9 +1,10 @@
 import { Dictionary } from '@azure-tools/linq';
 import { anonymous, isAnonymous, valueOf } from '@azure-tools/sourcemap';
 import { Node } from 'ts-morph';
-import { getPath } from '../../support/typescript';
+import { getPath, IsTypeDeclaration, TypeDeclaration } from '../../support/typescript';
 import { Element, TSElement } from '../element';
 import { Identity } from '../name';
+
 
 export class Schema extends Element {
   /** 
@@ -86,6 +87,65 @@ export class TSSchema<TNode extends Node> extends TSElement<TNode> implements Sc
   constructor(public type: string, node: TNode, initializer?: Partial<Schema>) {
     super(node);
     this.initialize(initializer);
+  }
+
+  /**
+   * Gets a type reference for a given schema.
+   * 
+   * This also ensures that the types that are required for the schema are imported into the current sourcefile 
+   * 
+   * @param type the schema that we need imported.
+   */
+  getTypeReference(type: TSSchema<TypeDeclaration>): TypeDeclaration {
+    type = valueOf(type);
+    // get all the imports required for the type 
+    // add them to this file
+    const file = this.node.getSourceFile();
+    const importDecls = file.getImportDeclarations();
+
+    reqdTypes:
+    for( const requiredType of type.requiredTypeDeclarations  ) {
+      
+      const typeFile = requiredType.getSourceFile();
+      const typeName = requiredType.getName();
+
+      if( typeName === undefined || typeFile === undefined || typeFile  === this.node.getSourceFile() ) {
+        // don't need to do anything if it's the same file 
+        continue;
+      }
+
+      for (const importDecl of importDecls) {
+        
+        if( importDecl.getModuleSpecifierSourceFile() === typeFile ) {
+          // we've got imports from that sourcefile 
+          if (importDecl.getNamedImports().find(imp => imp.getName() === typeName )) {
+            // we've already imported this. Go on to the next one.
+            continue reqdTypes;
+          }
+
+          // we've referenced the file, but not imported the type.
+          importDecl.addNamedImport( typeName);
+          continue reqdTypes;
+        }
+        // wasn't in that file
+      } 
+      file.addImportDeclaration({
+        moduleSpecifier: file.getRelativePathAsModuleSpecifierTo(typeFile),
+        namedImports: [ typeName]
+      });
+    }
+    // imported everything we needed. 
+    return type.node;
+  }
+
+  /**
+   * returns the types that the schema needs 
+   * 
+   * this should be overridden in children that need to return something 
+   * other than just themselves (ie, in Array)
+   */
+  get requiredTypeDeclarations(): Array<TypeDeclaration> {
+    return IsTypeDeclaration( this.node )?  [this.node] : [];
   }
 }
 

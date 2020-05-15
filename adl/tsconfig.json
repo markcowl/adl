@@ -27,5 +27,13 @@
     // "name": "typescript-eslint-language-service"
     //}
     //]
-  }
+  },
+  "exclude": [
+    "dist",
+    "test/scenarios/**",
+    "resources",
+    "node_modules/**",
+    "**/*.d.ts",
+    "**/*.adl.ts"
+  ]
 }

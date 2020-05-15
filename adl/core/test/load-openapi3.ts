@@ -13,7 +13,7 @@ import { clean, createHost, formatDuration } from './common';
 import { Errors as AccumulateErrors, Errors } from './errors';
 import { serialize } from './serialization';
 
-require('source-map-support').Install;
+require('source-map-support').install();
 
 const scenarios = `${__dirname}/../../test/scenarios/v3`;
 

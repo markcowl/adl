@@ -6,10 +6,10 @@ import { Identity } from '../../../model/name';
 import { Alias } from '../../../model/schema/alias';
 import { ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ReadOnlyConstraint, RegularExpressionConstraint, UniqueElementsConstraint } from '../../../model/schema/constraint';
 import { ServerDefaultValue } from '../../../model/schema/default';
-import { ObjectSchema, Property } from '../../../model/schema/object';
+import { createObjectSchema, Property } from '../../../model/schema/object';
 import { ArraySchema, DictionarySchema } from '../../../model/schema/primitive';
 import { Schema } from '../../../model/schema/schema';
-import { isEnumSchema, isObjectSchema, push, singleOrDefault } from '../common';
+import { isEnumSchema, isObjectSchema, singleOrDefault } from '../common';
 import { arrayProperties, commonProperties, numberProperties, objectProperties, Options, processAnySchema, processBooleanSchema, processByteArraySchema, processCharSchema, processDateSchema, processDateTimeSchema, processDurationSchema, processEnumSchema, processFileSchema, processOdataSchema, processPasswordSchema, processTimeSchema, processUriSchema, processUuidSchema, stringProperties } from '../common/schema';
 import { Context } from './serializer';
 
@@ -414,7 +414,8 @@ export async function* processObjectSchema(schema: v2.Schema, $: Context, option
   const schemaName = options?.isAnonymous ? anonymous('object') : nameOf(schema);
 
   // creating an object schema 
-  const result = new ObjectSchema(schemaName, commonProperties(schema));
+  // const result = new ObjectSchema(schemaName, commonProperties(schema));
+  const result = createObjectSchema($.api,schemaName);
 
   result.addToAttic('example', (<any>schema).example);
   
@@ -425,7 +426,13 @@ export async function* processObjectSchema(schema: v2.Schema, $: Context, option
 
 
   const schemas = getSchemas(schema.allOf, $);
-  await push(result.extends, schemas);
+  // await push(result.extends, schemas);
+  for await ( const schema of schemas) {
+    const s= <any>schema;
+    if( s.node) {
+      result.parents.add(s);
+    }
+  }
 
   // yeild this as soon as possible in case we recurse.
   yield result;
@@ -455,7 +462,8 @@ export async function* processObjectSchema(schema: v2.Schema, $: Context, option
     p.addToAttic('example', (<any>property).example);
     p.addToAttic('x-ms-client-flatten', (<any>property)['x-ms-client-flatten']);
     $.addVersionInfo(p, property);
-    result.properties.push(p);
+    // result.properties.push(p);
+    //result.properties.add(p);
   }
   use(schema.required);
 
@@ -470,7 +478,7 @@ export async function* processObjectSchema(schema: v2.Schema, $: Context, option
     // if additionalProperties is specified, then the type should
     // be extending the dictionary of <type> 
     for await (const ds of processAdditionalProperties(schema, $, { isAnonymous: true })) {
-      result.extends.push(await ds);
+      // result.extends.push(await ds);
     }
   }
 }
