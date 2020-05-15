@@ -1,4 +1,6 @@
-/** @description Format of the Content in which the API is getting imported.
+/**
+ * Content format
+ * @description Format of the Content in which the API is getting imported.
  * @extensible
  */
 export enum ContentFormat {
