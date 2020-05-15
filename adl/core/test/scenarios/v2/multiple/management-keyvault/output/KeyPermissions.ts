@@ -1,3 +1,4 @@
+/** @extensible */
 export enum KeyPermissions {
     encrypt = 'encrypt',
     decrypt = 'decrypt',

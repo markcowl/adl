@@ -53,13 +53,13 @@ http:
             description: Is used to set specified media type.
             targetSchema: &a1
               type: string
-              name: anonymous<unknown>
+              name: anonymous<string>
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
           schema: &a3
             type: file
-            name: anonymous<unknown>
+            name: anonymous<file>
       responses:
         - name: "200"
           description: OK
@@ -77,7 +77,7 @@ http:
             - name: "[object Object]"
               schema: &a2
                 type: int64
-                name: anonymous<unknown>
+                name: anonymous<int64>
             - name: "[object Object]"
               schema: *a2
             - name: "[object Object]"
@@ -95,7 +95,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: dictionary
-                name: anonymous<unknown>
+                name: anonymous<dictionary>
                 elementSchema:
                   type: alias
                   name: anonymous<string>
@@ -130,7 +130,7 @@ http:
           mediaType: application/json
           schema: &a6
             type: any
-            name: anonymous<unknown>
+            name: anonymous<any>
     - description: List public events.
       parameters:
         - type: header
@@ -181,7 +181,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema: &a75
                   type: object
                   name: event
@@ -245,7 +245,7 @@ http:
                           - name: hireable
                             schema: &a5
                               type: boolean
-                              name: anonymous<unknown>
+                              name: anonymous<boolean>
                           - name: html_url
                             schema: *a1
                           - name: id
@@ -300,8 +300,8 @@ http:
                           - name: type
                             schema:
                               type: enum
-                              name: anonymous<unknown>
-                              sealed: true
+                              name: anonymous<enum>
+                              extensible: false
                           - name: updated_at
                             description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
                             schema:
@@ -586,7 +586,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema:
                   type: object
                   name: anonymous<object>
@@ -773,7 +773,7 @@ http:
                     aliasType: schema
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema:
                         type: object
                         name: anonymous<object>
@@ -801,7 +801,7 @@ http:
                     aliasType: schema
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema:
                         type: object
                         name: anonymous<object>
@@ -1397,7 +1397,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema:
                   type: object
                   name: anonymous<object>
@@ -2258,7 +2258,7 @@ http:
             aliasType: schema
             targetSchema: &a58
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema: *a6
         - name: "403"
           description: >
@@ -2392,8 +2392,12 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >
+              Issues assigned to you / created by you / mentioning you / you're
+
+              subscribed to updates for / All issues the authenticated user can see
+            extensible: false
         - type: query
           name: state
           expandParameterValues: true
@@ -2401,8 +2405,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: query
           name: labels
           description: String list of comma separated Label names. Example - bug,ui,@high.
@@ -2422,8 +2426,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: query
           name: direction
           expandParameterValues: true
@@ -2431,8 +2435,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: query
           name: since
           description: >
@@ -2500,7 +2504,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema:
                   type: object
                   name: anonymous<object>
@@ -2532,7 +2536,7 @@ http:
                     - name: labels
                       schema:
                         type: array
-                        name: anonymous<unknown>
+                        name: anonymous<array>
                         elementSchema:
                           type: object
                           name: anonymous<object>
@@ -2577,8 +2581,8 @@ http:
                           - name: state
                             schema:
                               type: enum
-                              name: anonymous<unknown>
-                              sealed: true
+                              name: anonymous<enum>
+                              extensible: false
                           - name: title
                             schema: *a1
                           - name: url
@@ -2599,8 +2603,8 @@ http:
                     - name: state
                       schema:
                         type: enum
-                        name: anonymous<unknown>
-                        sealed: true
+                        name: anonymous<enum>
+                        extensible: false
                     - name: title
                       schema: *a1
                     - name: updated_at
@@ -2665,8 +2669,10 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: Indicates the state of the issues to return. Can be either open or
+              closed.
+            extensible: false
         - type: path
           name: owner
           expandParameterValues: false
@@ -2736,7 +2742,7 @@ http:
                 - name: issues
                   schema:
                     type: array
-                    name: anonymous<unknown>
+                    name: anonymous<array>
                     elementSchema:
                       type: object
                       name: anonymous<object>
@@ -2754,7 +2760,7 @@ http:
                         - name: labels
                           schema:
                             type: array
-                            name: anonymous<unknown>
+                            name: anonymous<array>
                             elementSchema: *a1
                         - name: number
                           schema: *a2
@@ -2820,8 +2826,10 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: The sort field. if sort param is provided. Can be either asc or
+              desc.
+            extensible: false
         - type: query
           name: language
           description: Filter results by language
@@ -2852,8 +2860,10 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: "The sort field. One of stars, forks, or updated. Default: results
+              are sorted by best match."
+            extensible: false
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -2907,7 +2917,7 @@ http:
                     aliasType: schema
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema: &a12
                         type: object
                         name: repo
@@ -3141,8 +3151,10 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: The sort field. if sort param is provided. Can be either asc or
+              desc.
+            extensible: false
         - type: query
           name: start_page
           description: The page number to fetch
@@ -3162,8 +3174,10 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: "The sort field. One of stars, forks, or updated. Default: results
+              are sorted by best match."
+            extensible: false
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -3217,7 +3231,7 @@ http:
                     aliasType: schema
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema: *a7
         - name: "403"
           description: >
@@ -3451,7 +3465,7 @@ http:
                 - name: git
                   schema:
                     type: array
-                    name: anonymous<unknown>
+                    name: anonymous<array>
                     elementSchema:
                       type: alias
                       name: anonymous<string>
@@ -3462,7 +3476,7 @@ http:
                 - name: hooks
                   schema:
                     type: array
-                    name: anonymous<unknown>
+                    name: anonymous<array>
                     elementSchema:
                       type: alias
                       name: anonymous<string>
@@ -3604,7 +3618,7 @@ http:
           renderStyle: form
           schema:
             type: alias
-            name: anonymous<unknown>
+            name: anonymous<boolean>
             aliasType: schema
             description: True to show notifications marked as read.
             targetSchema: *a5
@@ -3619,7 +3633,7 @@ http:
           renderStyle: form
           schema:
             type: alias
-            name: anonymous<unknown>
+            name: anonymous<boolean>
             aliasType: schema
             description: >
               True to show only notifications in which the user is directly
@@ -4634,8 +4648,12 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >
+              Issues assigned to you / created by you / mentioning you / you're
+
+              subscribed to updates for / All issues the authenticated user can see
+            extensible: false
         - type: query
           name: state
           expandParameterValues: true
@@ -4643,8 +4661,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: query
           name: labels
           description: String list of comma separated Label names. Example - bug,ui,@high.
@@ -4664,8 +4682,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: query
           name: direction
           expandParameterValues: true
@@ -4673,8 +4691,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: query
           name: since
           description: >
@@ -5532,8 +5550,8 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -5582,7 +5600,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema: *a12
         - name: "403"
           description: >
@@ -5661,7 +5679,7 @@ http:
                     false.
                   schema:
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<boolean>
                     aliasType: schema
                     description: True to create an initial commit with empty README. Default is
                       false.
@@ -5686,7 +5704,7 @@ http:
                     them. Default is true.
                   schema:
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<boolean>
                     aliasType: schema
                     description: True to enable downloads for this repository, false to disable
                       them. Default is true.
@@ -5696,7 +5714,7 @@ http:
                     Default is true.
                   schema:
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<boolean>
                     aliasType: schema
                     description: True to enable issues for this repository, false to disable them.
                       Default is true.
@@ -5706,7 +5724,7 @@ http:
                     Default is true.
                   schema:
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<boolean>
                     aliasType: schema
                     description: True to enable the wiki for this repository, false to disable it.
                       Default is true.
@@ -5722,7 +5740,7 @@ http:
                     account.
                   schema:
                     type: alias
-                    name: anonymous<unknown>
+                    name: anonymous<boolean>
                     aliasType: schema
                     description: True to create a private repository, false to create a public one.
                       Creating private repositories requires a paid GitHub
@@ -5852,7 +5870,7 @@ http:
             aliasType: schema
             targetSchema: &a53
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema:
                 type: object
                 name: anonymous<object>
@@ -5940,12 +5958,12 @@ http:
                 - name: permission
                   schema:
                     type: enum
-                    name: anonymous<unknown>
-                    sealed: true
+                    name: anonymous<enum>
+                    extensible: false
                 - name: repo_names
                   schema:
                     type: array
-                    name: anonymous<unknown>
+                    name: anonymous<array>
                     elementSchema: *a1
       responses:
         - name: "201"
@@ -6499,7 +6517,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema: *a7
         - name: "403"
           description: >
@@ -6728,7 +6746,7 @@ http:
             aliasType: schema
             targetSchema:
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema:
                 type: object
                 name: anonymous<object>
@@ -6928,7 +6946,7 @@ http:
                       - name: parents
                         schema:
                           type: array
-                          name: anonymous<unknown>
+                          name: anonymous<array>
                           elementSchema:
                             type: object
                             name: anonymous<object>
@@ -7482,7 +7500,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema:
                   type: object
                   name: anonymous<object>
@@ -8052,7 +8070,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema:
                   type: object
                   name: anonymous<object>
@@ -8116,7 +8134,7 @@ http:
                     - name: parents
                       schema:
                         type: array
-                        name: anonymous<unknown>
+                        name: anonymous<array>
                         elementSchema:
                           type: object
                           name: anonymous<object>
@@ -8243,7 +8261,7 @@ http:
             aliasType: schema
             targetSchema:
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema:
                 type: object
                 name: anonymous<object>
@@ -8261,7 +8279,7 @@ http:
                   - name: statuses
                     schema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema:
                         type: object
                         name: anonymous<object>
@@ -8275,7 +8293,7 @@ http:
                           - name: id
                             schema: &a22
                               type: double
-                              name: anonymous<unknown>
+                              name: anonymous<double>
                           - name: state
                             schema: *a1
                           - name: target_url
@@ -8454,7 +8472,7 @@ http:
                 - name: files
                   schema:
                     type: array
-                    name: anonymous<unknown>
+                    name: anonymous<array>
                     elementSchema:
                       type: object
                       name: anonymous<object>
@@ -8478,7 +8496,7 @@ http:
                 - name: parents
                   schema:
                     type: array
-                    name: anonymous<unknown>
+                    name: anonymous<array>
                     elementSchema:
                       type: object
                       name: anonymous<object>
@@ -8947,7 +8965,7 @@ http:
                       - name: parents
                         schema:
                           type: array
-                          name: anonymous<unknown>
+                          name: anonymous<array>
                           elementSchema:
                             type: object
                             name: anonymous<object>
@@ -8969,7 +8987,7 @@ http:
                     aliasType: schema
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema:
                         type: object
                         name: anonymous<object>
@@ -9021,7 +9039,7 @@ http:
                           - name: parents
                             schema:
                               type: array
-                              name: anonymous<unknown>
+                              name: anonymous<array>
                               elementSchema:
                                 type: object
                                 name: anonymous<object>
@@ -9039,7 +9057,7 @@ http:
                 - name: files
                   schema:
                     type: array
-                    name: anonymous<unknown>
+                    name: anonymous<array>
                     elementSchema:
                       type: object
                       name: anonymous<object>
@@ -9417,7 +9435,7 @@ http:
                       - name: parents
                         schema:
                           type: array
-                          name: anonymous<unknown>
+                          name: anonymous<array>
                           elementSchema:
                             type: object
                             name: anonymous<object>
@@ -9875,7 +9893,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema:
                   type: object
                   name: anonymous<object>
@@ -10155,7 +10173,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema:
                   type: object
                   name: anonymous<object>
@@ -10404,7 +10422,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema: &a23
                   type: object
                   name: download
@@ -10793,8 +10811,8 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -11040,8 +11058,8 @@ http:
                 - name: encoding
                   schema:
                     type: enum
-                    name: anonymous<unknown>
-                    sealed: true
+                    name: anonymous<enum>
+                    extensible: false
                 - name: sha
                   schema: *a1
                 - name: size
@@ -11294,7 +11312,7 @@ http:
                   required: true
                   schema:
                     type: array
-                    name: anonymous<unknown>
+                    name: anonymous<array>
                     elementSchema: *a1
                 - name: tree
                   required: true
@@ -11497,7 +11515,7 @@ http:
                 - name: parents
                   schema:
                     type: array
-                    name: anonymous<unknown>
+                    name: anonymous<array>
                     elementSchema:
                       type: object
                       name: anonymous<object>
@@ -11616,7 +11634,7 @@ http:
             aliasType: schema
             targetSchema:
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema:
                 type: object
                 name: anonymous<object>
@@ -12257,8 +12275,10 @@ http:
                   required: true
                   schema:
                     type: enum
-                    name: anonymous<unknown>
-                    sealed: true
+                    name: anonymous<enum>
+                    description: String of the type of the object we’re tagging. Normally this is a
+                      commit but it can also be a tree or a blob.
+                    extensible: false
       responses:
         - name: "201"
           description: Created
@@ -12310,8 +12330,10 @@ http:
                           but it can also be a tree or a blob.
                         schema:
                           type: enum
-                          name: anonymous<unknown>
-                          sealed: true
+                          name: anonymous<enum>
+                          description: String of the type of the tagged object. Normally this is a commit
+                            but it can also be a tree or a blob.
+                          extensible: false
                       - name: url
                         schema: *a1
                 - name: sha
@@ -12554,44 +12576,44 @@ http:
                   schema: *a1
                 - name: tree
                   schema:
-                    type: alias
-                    name: tree
-                    aliasType: schema
-                    targetSchema:
-                      type: array
-                      name: anonymous<unknown>
-                      elementSchema:
-                        type: object
-                        name: anonymous<object>
-                        properties:
-                          - name: mode
+                    type: array
+                    name: anonymous<array>
+                    elementSchema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: mode
+                          description: One of 100644 for file (blob), 100755 for executable (blob), 040000
+                            for subdirectory (tree), 160000 for submodule
+                            (commit) or 120000 for a blob that specifies the
+                            path of a symlink.
+                          schema:
+                            type: enum
+                            name: anonymous<enum>
                             description: One of 100644 for file (blob), 100755 for executable (blob), 040000
                               for subdirectory (tree), 160000 for submodule
                               (commit) or 120000 for a blob that specifies the
                               path of a symlink.
-                            schema:
-                              type: enum
-                              name: anonymous<unknown>
-                              sealed: true
-                          - name: path
-                            schema: *a1
-                          - name: sha
+                            extensible: false
+                        - name: path
+                          schema: *a1
+                        - name: sha
+                          description: SHA1 checksum ID of the object in the tree.
+                          schema:
+                            type: alias
+                            name: anonymous<string>
+                            aliasType: schema
                             description: SHA1 checksum ID of the object in the tree.
-                            schema:
-                              type: alias
-                              name: anonymous<string>
-                              aliasType: schema
-                              description: SHA1 checksum ID of the object in the tree.
-                              targetSchema: *a1
-                          - name: size
-                            schema: *a2
-                          - name: type
-                            schema:
-                              type: enum
-                              name: anonymous<unknown>
-                              sealed: true
-                          - name: url
-                            schema: *a1
+                            targetSchema: *a1
+                        - name: size
+                          schema: *a2
+                        - name: type
+                          schema:
+                            type: enum
+                            name: anonymous<enum>
+                            extensible: false
+                        - name: url
+                          schema: *a1
                 - name: url
                   schema: *a1
       responses:
@@ -12642,7 +12664,7 @@ http:
                     aliasType: schema
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema: *a27
                 - name: url
                   schema: *a1
@@ -12861,61 +12883,53 @@ http:
             name: schema
             aliasType: schema
             targetSchema: &a28
-              type: alias
-              name: hook
-              aliasType: schema
-              targetSchema:
-                type: array
-                name: anonymous<unknown>
-                elementSchema:
-                  type: object
-                  name: anonymous<object>
-                  properties:
-                    - name: active
-                      schema: *a5
-                    - name: config
-                      schema:
-                        type: object
-                        name: anonymous<object>
-                        properties:
-                          - name: content_type
-                            schema: *a1
-                          - name: url
-                            schema: *a1
-                    - name: created_at
+              type: array
+              name: anonymous<array>
+              elementSchema:
+                type: object
+                name: anonymous<object>
+                properties:
+                  - name: active
+                    schema: *a5
+                  - name: config
+                    schema:
+                      type: object
+                      name: anonymous<object>
+                      properties:
+                        - name: content_type
+                          schema: *a1
+                        - name: url
+                          schema: *a1
+                  - name: created_at
+                    description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                    schema:
+                      type: alias
+                      name: anonymous<string>
+                      aliasType: schema
                       description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
-                      schema:
-                        type: alias
-                        name: anonymous<string>
-                        aliasType: schema
-                        description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
-                        targetSchema: *a1
-                    - name: events
-                      schema:
-                        type: alias
-                        name: events
-                        aliasType: schema
-                        targetSchema:
-                          type: array
-                          name: anonymous<unknown>
-                          elementSchema:
-                            type: enum
-                            name: anonymous<unknown>
-                            sealed: true
-                    - name: id
-                      schema: *a2
-                    - name: name
-                      schema: *a1
-                    - name: updated_at
+                      targetSchema: *a1
+                  - name: events
+                    schema:
+                      type: array
+                      name: anonymous<array>
+                      elementSchema:
+                        type: enum
+                        name: anonymous<enum>
+                        extensible: false
+                  - name: id
+                    schema: *a2
+                  - name: name
+                    schema: *a1
+                  - name: updated_at
+                    description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
+                    schema:
+                      type: alias
+                      name: anonymous<string>
+                      aliasType: schema
                       description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
-                      schema:
-                        type: alias
-                        name: anonymous<string>
-                        aliasType: schema
-                        description: "ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ"
-                        targetSchema: *a1
-                    - name: url
-                      schema: *a1
+                      targetSchema: *a1
+                  - name: url
+                    schema: *a1
         - name: "403"
           description: >
             API rate limit exceeded. See
@@ -13001,7 +13015,7 @@ http:
                 - name: add_events
                   schema:
                     type: array
-                    name: anonymous<unknown>
+                    name: anonymous<array>
                     elementSchema: *a1
       responses:
         - name: "201"
@@ -13540,8 +13554,12 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >
+              Issues assigned to you / created by you / mentioning you / you're
+
+              subscribed to updates for / All issues the authenticated user can see
+            extensible: false
         - type: query
           name: state
           expandParameterValues: true
@@ -13549,8 +13567,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: query
           name: labels
           description: String list of comma separated Label names. Example - bug,ui,@high.
@@ -13570,8 +13588,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: query
           name: direction
           expandParameterValues: true
@@ -13579,8 +13597,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: query
           name: since
           description: >
@@ -13732,7 +13750,7 @@ http:
                 - name: labels
                   schema:
                     type: array
-                    name: anonymous<unknown>
+                    name: anonymous<array>
                     elementSchema: *a1
                 - name: milestone
                   schema: *a22
@@ -13836,8 +13854,8 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: query
           name: since
           description: >
@@ -13905,7 +13923,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema:
                   type: object
                   name: anonymous<object>
@@ -14426,7 +14444,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema: &a32
                   type: object
                   name: issueEvent
@@ -14477,7 +14495,7 @@ http:
                           - name: labels
                             schema:
                               type: array
-                              name: anonymous<unknown>
+                              name: anonymous<array>
                               elementSchema:
                                 type: object
                                 name: anonymous<object>
@@ -14522,8 +14540,8 @@ http:
                                 - name: state
                                   schema:
                                     type: enum
-                                    name: anonymous<unknown>
-                                    sealed: true
+                                    name: anonymous<enum>
+                                    extensible: false
                                 - name: title
                                   schema: *a1
                                 - name: url
@@ -14544,8 +14562,8 @@ http:
                           - name: state
                             schema:
                               type: enum
-                              name: anonymous<unknown>
-                              sealed: true
+                              name: anonymous<enum>
+                              extensible: false
                           - name: title
                             schema: *a1
                           - name: updated_at
@@ -15343,7 +15361,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema:
                   type: object
                   name: anonymous<object>
@@ -15457,7 +15475,7 @@ http:
             aliasType: schema
             targetSchema: &a35
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema: *a1
       responses:
         - name: "201"
@@ -15942,7 +15960,7 @@ http:
             aliasType: schema
             targetSchema:
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema:
                 type: object
                 name: anonymous<object>
@@ -16926,7 +16944,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: dictionary
-                name: anonymous<unknown>
+                name: anonymous<dictionary>
                 elementSchema: *a2
         - name: "403"
           description: >
@@ -17100,7 +17118,7 @@ http:
                 - name: parents
                   schema:
                     type: array
-                    name: anonymous<unknown>
+                    name: anonymous<array>
                     elementSchema:
                       type: object
                       name: anonymous<object>
@@ -17261,8 +17279,9 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: String to filter by state.
+            extensible: false
         - type: query
           name: direction
           description: Ignored without 'sort' parameter.
@@ -17280,8 +17299,8 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -17357,8 +17376,8 @@ http:
                 - name: state
                   schema:
                     type: enum
-                    name: anonymous<unknown>
-                    sealed: true
+                    name: anonymous<enum>
+                    extensible: false
                 - name: title
                   schema: *a1
                 - name: url
@@ -17979,7 +17998,7 @@ http:
           renderStyle: form
           schema:
             type: alias
-            name: anonymous<unknown>
+            name: anonymous<boolean>
             aliasType: schema
             description: True to show notifications marked as read.
             targetSchema: *a5
@@ -17994,7 +18013,7 @@ http:
           renderStyle: form
           schema:
             type: alias
-            name: anonymous<unknown>
+            name: anonymous<boolean>
             aliasType: schema
             description: >
               True to show only notifications in which the user is directly
@@ -18230,8 +18249,9 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: String to filter by state.
+            extensible: false
         - type: query
           name: head
           description: >
@@ -18310,7 +18330,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema:
                   type: object
                   name: anonymous<object>
@@ -18443,8 +18463,8 @@ http:
                     - name: state
                       schema:
                         type: enum
-                        name: anonymous<unknown>
-                        sealed: true
+                        name: anonymous<enum>
+                        extensible: false
                     - name: title
                       schema: *a1
                     - name: updated_at
@@ -18660,8 +18680,8 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: query
           name: since
           description: >
@@ -20484,7 +20504,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema:
                   type: object
                   name: anonymous<object>
@@ -20496,7 +20516,7 @@ http:
                         aliasType: schema
                         targetSchema:
                           type: array
-                          name: anonymous<unknown>
+                          name: anonymous<array>
                           elementSchema:
                             type: object
                             name: anonymous<object>
@@ -20687,7 +20707,7 @@ http:
                     aliasType: schema
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema:
                         type: object
                         name: anonymous<object>
@@ -21538,7 +21558,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema: *a48
         - name: "403"
           description: >
@@ -21738,7 +21758,7 @@ http:
             aliasType: schema
             targetSchema: &a51
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema: *a2
         - name: "403"
           description: >
@@ -21840,7 +21860,7 @@ http:
             aliasType: schema
             targetSchema:
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema:
                 type: object
                 name: anonymous<object>
@@ -21848,7 +21868,7 @@ http:
                   - name: days
                     schema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema: *a2
                   - name: total
                     schema: *a2
@@ -21951,7 +21971,7 @@ http:
             aliasType: schema
             targetSchema:
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema:
                 type: object
                 name: anonymous<object>
@@ -21982,7 +22002,7 @@ http:
                   - name: weeks
                     schema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema:
                         type: object
                         name: anonymous<object>
@@ -22121,12 +22141,12 @@ http:
                 - name: all
                   schema:
                     type: array
-                    name: anonymous<unknown>
+                    name: anonymous<array>
                     elementSchema: *a2
                 - name: owner
                   schema:
                     type: array
-                    name: anonymous<unknown>
+                    name: anonymous<array>
                     elementSchema: *a2
         - name: "403"
           description: >
@@ -22353,7 +22373,7 @@ http:
             aliasType: schema
             targetSchema: &a52
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema:
                 type: object
                 name: anonymous<object>
@@ -23018,7 +23038,7 @@ http:
               aliasType: schema
               targetSchema:
                 type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema: *a26
         - name: "403"
           description: >
@@ -23283,8 +23303,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: path
           name: path
           description: Valid Git reference, defaults to 'master'.
@@ -23468,8 +23488,10 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: The sort field. if sort param is provided. Can be either asc or
+              desc.
+            extensible: false
         - type: query
           name: q
           description: >
@@ -23546,8 +23568,15 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >
+              Can only be 'indexed', which indicates how recently a file has
+              been indexed
+
+              by the GitHub search infrastructure. If not provided, results are sorted
+
+              by best match.
+            extensible: false
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -23601,7 +23630,7 @@ http:
                     aliasType: schema
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema:
                         type: object
                         name: anonymous<object>
@@ -23750,8 +23779,10 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: The sort field. if sort param is provided. Can be either asc or
+              desc.
+            extensible: false
         - type: query
           name: q
           description: "The q search term can also contain any combination of the
@@ -23774,8 +23805,10 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: "The sort field. Can be comments, created, or updated. Default:
+              results are sorted by best match."
+            extensible: false
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -23829,7 +23862,7 @@ http:
                     aliasType: schema
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema:
                         type: object
                         name: anonymous<object>
@@ -23855,7 +23888,7 @@ http:
                           - name: labels
                             schema:
                               type: array
-                              name: anonymous<unknown>
+                              name: anonymous<array>
                               elementSchema:
                                 type: object
                                 name: anonymous<object>
@@ -23933,8 +23966,10 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: The sort field. if sort param is provided. Can be either asc or
+              desc.
+            extensible: false
         - type: query
           name: q
           description: >
@@ -24006,8 +24041,9 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: If not provided, results are sorted by best match.
+            extensible: false
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -24061,7 +24097,7 @@ http:
                     aliasType: schema
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema: *a12
                 - name: total_count
                   schema: *a2
@@ -24101,8 +24137,10 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: The sort field. if sort param is provided. Can be either asc or
+              desc.
+            extensible: false
         - type: query
           name: q
           description: >
@@ -24169,8 +24207,9 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: If not provided, results are sorted by best match.
+            extensible: false
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -24470,8 +24509,8 @@ http:
                 - name: permission
                   schema:
                     type: enum
-                    name: anonymous<unknown>
-                    sealed: true
+                    name: anonymous<enum>
+                    extensible: false
       responses:
         - name: "200"
           description: OK
@@ -24880,7 +24919,7 @@ http:
                 - name: errors
                   schema:
                     type: array
-                    name: anonymous<unknown>
+                    name: anonymous<array>
                     elementSchema:
                       type: object
                       name: anonymous<object>
@@ -25939,7 +25978,7 @@ http:
             aliasType: schema
             targetSchema: &a57
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema: *a1
         - name: "403"
           description: >
@@ -26539,8 +26578,12 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            description: >
+              Issues assigned to you / created by you / mentioning you / you're
+
+              subscribed to updates for / All issues the authenticated user can see
+            extensible: false
         - type: query
           name: state
           expandParameterValues: true
@@ -26548,8 +26591,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: query
           name: labels
           description: String list of comma separated Label names. Example - bug,ui,@high.
@@ -26569,8 +26612,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: query
           name: direction
           expandParameterValues: true
@@ -26578,8 +26621,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: query
           name: since
           description: >
@@ -27080,8 +27123,8 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -27256,8 +27299,8 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -28046,7 +28089,7 @@ http:
             aliasType: schema
             targetSchema:
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema:
                 type: object
                 name: anonymous<object>
@@ -29009,8 +29052,8 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
         - type: header
           name: Accept
           description: Is used to set specified media type.
@@ -29222,8 +29265,8 @@ schemas:
     - *a1
     - *a2
     - *a5
-    - *a6
     - *a22
+    - *a6
     - *a3
   objects:
     - *a4
@@ -29328,7 +29371,6 @@ schemas:
       aliasType: schema
       targetSchema: *a18
     - *a8
-    - *a28
     - *a34
     - *a16
     - *a33

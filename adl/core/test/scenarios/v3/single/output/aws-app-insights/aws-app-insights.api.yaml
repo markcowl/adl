@@ -98,7 +98,7 @@ http:
             required: false
             schema: &a2
               type: string
-              name: anonymous<unknown>
+              name: anonymous<string>
         - name: "1"
           aliasType: parameter
           target: &a8
@@ -160,8 +160,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -197,7 +197,7 @@ http:
                     detected on an application. "
                   schema: &a3
                     type: boolean
-                    name: anonymous<unknown>
+                    name: anonymous<boolean>
                 - name: CWEMonitorEnabled
                   description: " Indicates whether Application Insights can listen to CloudWatch
                     events for the application resources, such as <code>instance
@@ -238,7 +238,7 @@ http:
                         count: 0
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema: &a97
                         type: object
                         name: Tag
@@ -361,7 +361,7 @@ http:
             aliasType: schema
             targetSchema: &a6
               type: any
-              name: anonymous<unknown>
+              name: anonymous<any>
         - name: "481"
           description: ResourceNotFoundException
           mediaType: application/json
@@ -426,8 +426,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -457,7 +457,7 @@ http:
                     aliasType: schema
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema: &a106
                         type: alias
                         name: anonymous<string>
@@ -545,8 +545,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -619,7 +619,7 @@ http:
                   required: true
                   schema: &a17
                     type: int64
-                    name: anonymous<unknown>
+                    name: anonymous<int64>
               summary: CreateLogPatternRequest
       responses:
         - name: "200"
@@ -728,8 +728,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -823,8 +823,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -912,8 +912,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -1013,8 +1013,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -1103,8 +1103,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -1157,7 +1157,6 @@ http:
                         description: The stack tier of the application component.
                         schema: &a20
                           type: enum
-                          name: anonymous<unknown>
                       - name: Monitor
                         description: "Indicates whether the application component is monitored. "
                         schema: *a3
@@ -1219,8 +1218,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -1333,8 +1332,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -1434,8 +1433,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -1534,8 +1533,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -1593,7 +1592,7 @@ http:
                         description: The time when the observation was first detected, in epoch seconds.
                         schema: &a24
                           type: dateTime
-                          name: anonymous<unknown>
+                          name: anonymous<dateTime>
                       - name: EndTime
                         description: The time when the observation ended, in epoch seconds.
                         schema: *a24
@@ -1617,7 +1616,6 @@ http:
                         description: The log filter of the observation.
                         schema: &a38
                           type: enum
-                          name: anonymous<unknown>
                       - name: MetricNamespace
                         description: The namespace of the observation metric.
                         schema: *a2
@@ -1631,7 +1629,7 @@ http:
                         description: The value of the source observation metric.
                         schema: &a34
                           type: double
-                          name: anonymous<unknown>
+                          name: anonymous<double>
                       - name: CloudWatchEventId
                         description: " The ID of the CloudWatch Event-based observation related to the
                           detected problem. "
@@ -1640,7 +1638,6 @@ http:
                         description: " The source of the CloudWatch Event. "
                         schema: &a35
                           type: enum
-                          name: anonymous<unknown>
                       - name: CloudWatchEventDetailType
                         description: " The detail type of the CloudWatch Event-based observation, for
                           example, <code>EC2 Instance State-change
@@ -1763,8 +1760,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -1828,7 +1825,6 @@ http:
                         description: The status of the problem.
                         schema: &a39
                           type: enum
-                          name: anonymous<unknown>
                       - name: AffectedResource
                         description: The resource affected by the problem.
                         schema: *a2
@@ -1842,7 +1838,6 @@ http:
                         description: A measure of the level of impact of the problem.
                         schema: &a40
                           type: enum
-                          name: anonymous<unknown>
                       - name: ResourceGroupName
                         description: The name of the resource group affected by the problem.
                         schema: *a4
@@ -1858,10 +1853,9 @@ http:
                               count: 10
                           targetSchema:
                             type: dictionary
-                            name: anonymous<unknown>
+                            name: anonymous<dictionary>
                             elementSchema: &a37
                               type: enum
-                              name: anonymous<unknown>
         - name: "480"
           description: InternalServerException
           mediaType: application/json
@@ -1917,8 +1911,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -1963,7 +1957,7 @@ http:
                           aliasType: schema
                           targetSchema:
                             type: array
-                            name: anonymous<unknown>
+                            name: anonymous<array>
                             elementSchema: *a26
         - name: "480"
           description: InternalServerException
@@ -2034,8 +2028,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -2088,7 +2082,7 @@ http:
                     aliasType: schema
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema: *a18
                 - name: NextToken
                   description: "The token used to retrieve the next page of results. This value is
@@ -2157,8 +2151,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -2204,7 +2198,7 @@ http:
                     aliasType: schema
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema: *a28
                 - name: NextToken
                   description: The token to request the next page of results.
@@ -2284,8 +2278,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -2312,7 +2306,6 @@ http:
                     include INFO, WARN, and ERROR.
                   schema: &a29
                     type: enum
-                    name: anonymous<unknown>
                 - name: MaxResults
                   description: " The maximum number of results returned by
                     <code>ListConfigurationHistory</code> in paginated output.
@@ -2357,7 +2350,7 @@ http:
                     aliasType: schema
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema: &a95
                         type: object
                         name: ConfigurationEvent
@@ -2375,7 +2368,6 @@ http:
                               configure, for example, CLOUDWATCH_ALARM. "
                             schema: &a36
                               type: enum
-                              name: anonymous<unknown>
                           - name: EventTime
                             description: " The timestamp of the event. "
                             schema: *a24
@@ -2463,8 +2455,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -2513,7 +2505,7 @@ http:
                     aliasType: schema
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema: *a14
                 - name: NextToken
                   description: "The token used to retrieve the next page of results. This value is
@@ -2589,8 +2581,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -2642,7 +2634,7 @@ http:
                     aliasType: schema
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema: *a22
                 - name: NextToken
                   description: "The token used to retrieve the next page of results. This value is
@@ -2718,8 +2710,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -2773,7 +2765,7 @@ http:
                     aliasType: schema
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema: *a30
                 - name: NextToken
                   description: "The token used to retrieve the next page of results. This value is
@@ -2840,8 +2832,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -2943,8 +2935,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -3037,8 +3029,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -3077,7 +3069,7 @@ http:
                         count: 0
                     targetSchema:
                       type: array
-                      name: anonymous<unknown>
+                      name: anonymous<array>
                       elementSchema: *a33
               summary: UntagResourceRequest
       responses:
@@ -3138,8 +3130,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -3247,8 +3239,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -3353,8 +3345,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -3463,8 +3455,8 @@ http:
           required: true
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       requests:
         - identity: anonymous<requestBody>
           mediaType: application/json
@@ -3619,7 +3611,6 @@ schemas:
     - *a36
     - *a37
     - type: enum
-      name: anonymous<unknown>
     - *a38
     - *a39
     - *a40
