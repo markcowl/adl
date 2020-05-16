@@ -98,17 +98,18 @@ export class ApiModel  {
     // ensure folder is created 
     await mkdir(path);
 
+    const format = {
+      indentSize: 2,
+    };
     // print each file and save it.
     await Promise.all(
       this.project.getSourceFiles().map( async (each) => {
         if( each === this.anonymousFile) {
           return;
         }
-        each.formatText({
-          indentSize: 2,
-
-        });
-      
+        each.formatText(format);
+        each.organizeImports(format);
+        each.
         const filename = join(path, each.getFilePath());
 
         const folder = dirname(filename);
@@ -116,7 +117,7 @@ export class ApiModel  {
 
         await writeFile(filename, each.print().
           replace(/«■»/g, '').
-          replace(/\*\/\s*\/\*\*\s*/g, '').
+          //replace(/\*\/\s*\/\*\*\s*/g, '').
           replace(/^(\s*\/\*)/g,'\n$1')
         );
          

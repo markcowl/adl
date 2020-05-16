@@ -4,7 +4,14 @@ import { ClassDeclaration, EnumDeclaration, EnumMember, InterfaceDeclaration, No
 import { ApiModel } from '../model/api-model';
 import { createSandbox } from './sandbox';
 
+// import { createLanguageService, LanguageService } from 'typescript';
 
+// const ls: LanguageService= <any>{};
+// ls.getEditsForRefactor("", { }, "","","", {allowTextChangesInNewFiles:true})
+// ls.getCodeFixesAtPosition()
+
+const p: Project = <any>{};
+p.getLanguageService().getCodeFixesAtPosition();
 export type TypeDeclaration = TypeAliasDeclaration | InterfaceDeclaration | ClassDeclaration;
 
 
