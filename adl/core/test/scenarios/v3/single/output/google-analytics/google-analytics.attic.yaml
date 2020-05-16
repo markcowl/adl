@@ -3,5 +3,3 @@ components:
     alt:
       schema:
         default: atom
-        enum:
-          - atom

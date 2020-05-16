@@ -1,3 +1,4 @@
+/** @extensible */
 export enum CertificatePermissions {
     get = 'get',
     list = 'list',

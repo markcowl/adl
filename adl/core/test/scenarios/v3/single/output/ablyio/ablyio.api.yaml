@@ -31,13 +31,13 @@ http:
       description: The error code.
       schema: &a4
         type: int64
-        name: anonymous<unknown>
+        name: anonymous<int64>
     - &a9
       name: ErrorMessage
       description: The error message.
       schema: &a3
         type: string
-        name: anonymous<unknown>
+        name: anonymous<string>
     - &a5
       name: Link
       description: Links to related resources, in the format defined by [RFC
@@ -81,8 +81,8 @@ http:
             renderStyle: form
             schema:
               type: enum
-              name: anonymous<unknown>
-              sealed: true
+              name: anonymous<enum>
+              extensible: false
         - type: query
           name: limit
           expandParameterValues: true
@@ -93,7 +93,7 @@ http:
             aliasType: schema
             defaults:
               - type: server-default
-                name: anonymous<unknown>
+                name: anonymous<server-default>
                 value: 100
             targetSchema: *a4
         - type: query
@@ -111,8 +111,8 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       responses:
         - name: 2XX
           description: OK
@@ -130,7 +130,7 @@ http:
                 aliasType: schema
                 targetSchema:
                   type: array
-                  name: anonymous<unknown>
+                  name: anonymous<array>
                   elementSchema: &a7
                     type: object
                     name: ChannelDetails
@@ -151,7 +151,7 @@ http:
                           channel.
                         schema:
                           type: alias
-                          name: anonymous<unknown>
+                          name: anonymous<boolean>
                           aliasType: schema
                           description: In events relating to the activity of a channel in a specific
                             region, this optionally identifies whether or not
@@ -159,7 +159,7 @@ http:
                             of the channel.
                           targetSchema: &a6
                             type: boolean
-                            name: anonymous<unknown>
+                            name: anonymous<boolean>
                       - name: region
                         description: In events relating to the activity of a channel in a specific
                           region, this optionally identifies the region.
@@ -185,7 +185,7 @@ http:
                               required: true
                               schema:
                                 type: alias
-                                name: anonymous<unknown>
+                                name: anonymous<boolean>
                                 aliasType: schema
                                 description: A required boolean value indicating whether the channel that is the
                                   subject of the event is active. For events
@@ -251,7 +251,7 @@ http:
                                         to messages.
                                       targetSchema: *a4
               - type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema: *a3
         - name: 2XX
           description: OK
@@ -269,10 +269,10 @@ http:
                 aliasType: schema
                 targetSchema:
                   type: array
-                  name: anonymous<unknown>
+                  name: anonymous<array>
                   elementSchema: *a7
               - type: array
-                name: anonymous<unknown>
+                name: anonymous<array>
                 elementSchema: *a3
         - name: 2XX
           description: OK
@@ -470,7 +470,7 @@ http:
               aliasType: schema
               defaults:
                 - type: server-default
-                  name: anonymous<unknown>
+                  name: anonymous<server-default>
                   value: "100"
               targetSchema: *a4
         - name: "3"
@@ -486,7 +486,7 @@ http:
               aliasType: schema
               defaults:
                 - type: server-default
-                  name: anonymous<unknown>
+                  name: anonymous<server-default>
                   value: now
               targetSchema: *a3
         - name: "4"
@@ -498,8 +498,8 @@ http:
             renderStyle: form
             schema:
               type: enum
-              name: anonymous<unknown>
-              sealed: true
+              name: anonymous<enum>
+              extensible: false
       responses:
         - name: 2XX
           description: OK
@@ -517,7 +517,7 @@ http:
             aliasType: schema
             targetSchema:
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema: &a19
                 type: object
                 name: Message
@@ -716,7 +716,7 @@ http:
             aliasType: schema
             targetSchema:
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema: *a19
         - name: 2XX
           description: OK
@@ -868,7 +868,7 @@ http:
             aliasType: schema
             defaults:
               - type: server-default
-                name: anonymous<unknown>
+                name: anonymous<server-default>
                 value: 100
             targetSchema: *a4
       responses:
@@ -888,7 +888,7 @@ http:
             aliasType: schema
             targetSchema:
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema: &a21
                 type: object
                 name: PresenceMessage
@@ -898,8 +898,9 @@ http:
                     readonly: true
                     schema:
                       type: enum
-                      name: anonymous<unknown>
-                      sealed: true
+                      name: anonymous<enum>
+                      description: The event signified by a PresenceMessage.
+                      extensible: false
                   - name: clientId
                     description: The client ID of the publisher of this presence update.
                     schema:
@@ -978,7 +979,7 @@ http:
             aliasType: schema
             targetSchema:
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema: *a21
         - name: "200"
           description: OK
@@ -1041,7 +1042,7 @@ http:
             aliasType: schema
             targetSchema:
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema: *a21
         - name: 2XX
           description: OK
@@ -1056,7 +1057,7 @@ http:
             aliasType: schema
             targetSchema:
               type: array
-              name: anonymous<unknown>
+              name: anonymous<array>
               elementSchema: *a21
         - name: 2XX
           description: OK
@@ -1335,7 +1336,7 @@ http:
                 maximum: 1000
             defaults:
               - type: server-default
-                name: anonymous<unknown>
+                name: anonymous<server-default>
                 value: 100
             targetSchema: *a4
       responses:
@@ -1370,8 +1371,9 @@ http:
                   description: Form factor of the push device.
                   schema:
                     type: enum
-                    name: anonymous<unknown>
-                    sealed: true
+                    name: anonymous<enum>
+                    description: Form factor of the push device.
+                    extensible: false
                 - name: id
                   description: Unique identifier for the device generated by the device itself.
                   schema:
@@ -1396,8 +1398,9 @@ http:
                   description: Platform of the push device.
                   schema:
                     type: enum
-                    name: anonymous<unknown>
-                    sealed: true
+                    name: anonymous<enum>
+                    description: Platform of the push device.
+                    extensible: false
                 - name: push.recipient
                   schema: &a32
                     type: object
@@ -1442,15 +1445,17 @@ http:
                         description: Defines which push platform is being used.
                         schema:
                           type: enum
-                          name: anonymous<unknown>
-                          sealed: true
+                          name: anonymous<enum>
+                          description: Defines which push platform is being used.
+                          extensible: false
                 - name: push.state
                   description: the current state of the push device.
                   readonly: true
                   schema:
                     type: enum
-                    name: anonymous<unknown>
-                    sealed: true
+                    name: anonymous<enum>
+                    description: the current state of the push device.
+                    extensible: false
         - name: default
           aliasType: response
           target: *a14
@@ -1690,21 +1695,21 @@ http:
           mediaType: application/json
           schema:
             type: array
-            name: anonymous<unknown>
+            name: anonymous<array>
             elementSchema: *a3
         - name: 2XX
           description: OK
           mediaType: application/x-msgpack
           schema:
             type: array
-            name: anonymous<unknown>
+            name: anonymous<array>
             elementSchema: *a3
         - name: 2XX
           description: OK
           mediaType: text/html
           schema:
             type: array
-            name: anonymous<unknown>
+            name: anonymous<array>
             elementSchema: *a3
         - name: default
           aliasType: response
@@ -1754,7 +1759,7 @@ http:
                 maximum: 1000
             defaults:
               - type: server-default
-                name: anonymous<unknown>
+                name: anonymous<server-default>
                 value: 100
             targetSchema: *a4
       responses:
@@ -2263,8 +2268,8 @@ http:
           renderStyle: form
           schema:
             type: enum
-            name: anonymous<unknown>
-            sealed: true
+            name: anonymous<enum>
+            extensible: false
       responses:
         - name: 2XX
           description: OK
@@ -2299,14 +2304,14 @@ http:
           mediaType: application/json
           schema:
             type: array
-            name: anonymous<unknown>
+            name: anonymous<array>
             elementSchema: *a4
         - name: 2XX
           description: OK
           mediaType: application/x-msgpack
           schema:
             type: array
-            name: anonymous<unknown>
+            name: anonymous<array>
             elementSchema: *a4
         - name: 2XX
           description: OK

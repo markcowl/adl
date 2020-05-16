@@ -1,5 +1,5 @@
 import { Dictionary, items } from '@azure-tools/linq';
-import { TrackedTarget, use } from '@azure-tools/sourcemap';
+import { TrackedTarget, use, valueOf } from '@azure-tools/sourcemap';
 import { Node } from 'ts-morph';
 import { project } from '../support/typescript';
 import { InternalData } from './internal-data';
@@ -48,8 +48,6 @@ export class Initializer {
  * Base type for all objects in the model 
  */
 export class Element extends Initializer {
-  node!: Node;
-
   internalData?: Dictionary<InternalData>;
   versionInfo = new Array<VersionInfo>();
   attic?: Attic;
@@ -72,6 +70,13 @@ export class Element extends Initializer {
     this.internalData = this.internalData || {};
     this.internalData[key] = internalData;
   }
+}
+
+export class TSElement<TNode extends Node> extends Element {
+  constructor(public node: TNode, initializer?: Partial<TSElement<TNode>>) {
+    super();
+    this.initialize(initializer);
+  }
 
   /**
    * targetMap is a function that gives back a dictionary of members to Path (how to find the member in the ts project)
@@ -91,5 +96,84 @@ export class Element extends Initializer {
   track(sourceMap: Dictionary<any>) {
     project(this.node).track(this.targetMap, sourceMap);
     return this;
+  }
+
+  private getDoc() {
+    if (Node.isJSDocableNode(this.node)) {
+      for (const each of this.node.getJsDocs()) {
+        if (each) { // strangely we can get undefined docs back
+          return each;
+        }
+      }
+    }
+
+    return undefined;
+  }
+
+  private getOrCreateDoc() {
+    const doc = this.getDoc();
+    if (doc) {
+      return doc;
+    }
+
+    if (!Node.isJSDocableNode(this.node)) {
+      throw new Error('This node cannot have JS documentation');
+    }
+
+    return this.node.addJsDoc({});
+  }
+
+  protected hasDocTag(tagName: string) {
+    return this.getDocTag(tagName) !== undefined;
+  }
+
+  protected addDocTag(tagName: string, text?: string) {
+    this.getOrCreateDoc().addTag({ tagName: valueOf(tagName), text: valueOf(text) });
+  }
+
+  protected getDocTag(tagName: string) {
+    for (const each of this.getDoc()?.getTags() ?? []) {
+      if (each.getTagName() == tagName) {
+        return each.getText();
+      }
+    }
+    return undefined;
+  }
+
+  protected setDocTag(tagName: string, value: string | boolean | undefined) {
+    tagName = valueOf(tagName);
+    value = valueOf(value);
+
+    this.removeTag(tagName);
+    switch (value) {
+      case undefined:
+      case false:
+        break;
+      case true:
+        value = undefined;
+      // fallthrough
+      default:
+        this.addDocTag(tagName, value);
+        break;
+    }
+  }
+
+  protected removeTag(tagName: string) {
+    for (const each of this.getDoc()?.getTags() ?? []) {
+      if (each.getTagName() == tagName) {
+        each.remove();
+      }
+    }
+  }
+
+  protected getDocSummary() {
+    return this.getDoc()?.getDescription();
+  }
+
+  protected setDocSummary(value: string | undefined) {
+    if (!value && !this.getDoc()) {
+      return;
+    }
+    return this.getOrCreateDoc().setDescription(valueOf(value) ?? '');
   }
 }
