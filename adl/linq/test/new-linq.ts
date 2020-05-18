@@ -1,5 +1,5 @@
+import { suite, test } from '@testdeck/mocha';
 import * as assert from 'assert';
-import { suite, test } from 'mocha-typescript';
 import { length, linq } from '../new-linq';
 
 @suite class NewLinq {

@@ -91,6 +91,12 @@
       "projectFolder": "adl/visitor",
       "reviewCategory": "production",
       "shouldPublish": false
+    },
+    {
+      "packageName": "adl-language",
+      "projectFolder": "adl/extension",
+      "reviewCategory": "production",
+      "shouldPublish": false
     }
   ]
 }
