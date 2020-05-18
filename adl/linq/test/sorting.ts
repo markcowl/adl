@@ -1,5 +1,5 @@
+import { suite, test } from '@testdeck/mocha';
 import * as assert from 'assert';
-import { suite, test } from 'mocha-typescript';
 import { sort } from '../sort';
 
 @suite class SortTest {

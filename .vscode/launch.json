@@ -32,5 +32,37 @@
       ],
       "cwd": "${workspaceRoot}/adl/core"
     },
+    {
+      "type": "extensionHost",
+      "request": "launch",
+      "name": "vscode-extension",
+      "runtimeExecutable": "${execPath}",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceRoot}/adl/extension"
+      ],
+      "outFiles": [
+        "${workspaceRoot}/adl/extension/dist/client/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "vscode-server",
+      "port": 6009,
+      "timeout": 100000,
+      "restart": true,
+      "outFiles": [
+        "${workspaceRoot}/adl/extension/dist/server/**/*.js"
+      ]
+    }
+  ],
+  "compounds": [
+    {
+      "name": "VSCode Client+Server",
+      "configurations": [
+        "vscode-extension",
+        "vscode-server"
+      ]
+    }
   ]
 }

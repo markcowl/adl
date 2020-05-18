@@ -80,6 +80,10 @@
     {
       "changeProcessCWD": true,
       "directory": "./adl/linq",
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./adl/extension",
     }
   ],
   "git.ignoreLimitWarning": true,
