@@ -1,7 +1,7 @@
 import { Dictionary, linq } from '@azure-tools/linq';
 import { anonymous, isAnonymous, valueOf } from '@azure-tools/sourcemap';
 import { EnumDeclaration, EnumMember } from 'ts-morph';
-import { quoteForIdentifier } from '../../support/codegen';
+import { normalizeIdentifier } from '../../support/codegen';
 import { getPath } from '../../support/typescript';
 import { ApiModel } from '../api-model';
 import { TSElement } from '../element';
@@ -104,7 +104,7 @@ class GenuineEnum extends TSSchema<EnumDeclaration> implements Enum {
       case 'string':
       case 'number':
         member = this.node.addMember({
-          name: quoteForIdentifier(name),
+          name: normalizeIdentifier(name),
           value: val
         });
         break;

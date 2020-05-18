@@ -35,7 +35,7 @@ function TypeInfo<U extends new (...args: any) => any>(type: U) {
 }
 */
 
-export class ApiModel  {
+export class ApiModel {
   #project: Project = new Project({
     useInMemoryFileSystem: true,
     manipulationSettings: {
@@ -66,9 +66,9 @@ export class ApiModel  {
     (<any>this.#project).api = this;
   }
 
-  track(targetMap: TargetMap, sourceMap: SourceMap ) {
+  track(targetMap: TargetMap, sourceMap: SourceMap) {
     // temporary -- use up everything that we are given in the source map.
-    for( const each of values(sourceMap)) {
+    for (const each of values(sourceMap)) {
       use(each);
     }
   }
@@ -81,7 +81,7 @@ export class ApiModel  {
     // ...
   }
 
-  async saveADL(path: string, cleanDirectory = true)  {
+  async saveADL(path: string, cleanDirectory = true) {
     // save any open files to memory
     await this.project.save();
 
@@ -103,13 +103,13 @@ export class ApiModel  {
     };
     // print each file and save it.
     await Promise.all(
-      this.project.getSourceFiles().map( async (each) => {
-        if( each === this.anonymousFile) {
+      this.project.getSourceFiles().map(async (each) => {
+        if (each === this.anonymousFile) {
           return;
         }
         each.formatText(format);
         each.organizeImports(format);
-        each.
+
         const filename = join(path, each.getFilePath());
 
         const folder = dirname(filename);
@@ -118,13 +118,13 @@ export class ApiModel  {
         await writeFile(filename, each.print().
           replace(/«■»/g, '').
           //replace(/\*\/\s*\/\*\*\s*/g, '').
-          replace(/^(\s*\/\*)/g,'\n$1')
+          replace(/^(\s*\/\*)/g, '\n$1')
         );
-         
+
       }));
   }
 
-  getNode(path: Path): Node|undefined {
+  getNode(path: Path): Node | undefined {
     return getNode(path, this.project);
   }
 
@@ -132,11 +132,11 @@ export class ApiModel  {
     if (isProxy(this)) {
       return valueOf(this).getEnumFile(name);
     }
-    if( isAnonymous(name)) {
+    if (isAnonymous(name)) {
       return this.anonymousFile;
     }
     const filename = `${name}.ts`;
-    return  this.project.getSourceFile(filename) ||  this.project.createSourceFile(filename);
+    return this.project.getSourceFile(filename) || this.project.createSourceFile(filename);
   }
 
   models = this.#project.createDirectory('models');
@@ -152,7 +152,7 @@ export class ApiModel  {
     return this.models.getSourceFile(filename) || this.models.createSourceFile(filename);
   }
 
-  getEnum(name: string ) {
+  getEnum(name: string) {
     name = valueOf(name);
     let result: EnumDeclaration | undefined;
 
@@ -168,12 +168,12 @@ export class ApiModel  {
 
   #aliasFile?: SourceFile;
   getAliasSourceFile(): SourceFile {
-    if( isProxy(this) ) {
+    if (isProxy(this)) {
       return valueOf(this).getAliasSourceFile();
     }
     return this.#aliasFile || (this.#aliasFile = this.project.createSourceFile('aliases.ts'));
   }
-  
+
   #anonymousFile?: SourceFile;
   get anonymousFile(): SourceFile {
     if (isProxy(this)) {
@@ -214,4 +214,5 @@ export class None {
    */
   async __addVersion() {
     throw 'unimplemented';
-  }}
+  }
+}

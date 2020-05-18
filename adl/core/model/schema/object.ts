@@ -1,5 +1,6 @@
 import { isAnonymous, TargetMap, valueOf } from '@azure-tools/sourcemap';
 import { Identifier, InterfaceDeclaration, PropertySignature } from 'ts-morph';
+import { normalizeIdentifier } from '../../support/codegen';
 import { getPath, TypeDeclaration } from '../../support/typescript';
 import { ApiModel } from '../api-model';
 import { NamedElement, Schema, TSSchema } from './schema';
@@ -88,7 +89,7 @@ export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements 
     
     const result = new PropertyImpl(this.node.addProperty({
       //todo: do a better 'fix-the-bad-name' (ie, perks/codegen)
-      name: valueOf(name).replace(/[^\w]+/g, '_'),
+      name: normalizeIdentifier(name),
       type: schema instanceof TSSchema ? this.getTypeReference(schema).getName() : 'any',
     }));
 

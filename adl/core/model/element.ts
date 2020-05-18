@@ -130,7 +130,7 @@ export class TSElement<TNode extends Node> extends Element {
       throw new Error('This node cannot have JS documentation');
     }
 
-    return this.node.addJsDoc('\n«■»');
+    return this.node.addJsDoc('\n');
   }
 
   protected hasDocTag(tagName: string) {

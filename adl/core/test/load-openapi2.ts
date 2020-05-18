@@ -15,7 +15,7 @@ import { serialize } from './serialization';
 
 require('source-map-support').install();
 
-const scenarios = `${__dirname}/../../test/scenarios/v2`;
+const scenarios = `${__dirname}../../../test/scenarios/v2`;
 
 async function checkAttic(api: ApiModel, errors: Errors, atticOutput: string) {
   if (api.attic) {
