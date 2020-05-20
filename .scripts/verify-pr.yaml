@@ -28,4 +28,10 @@ steps:
     npx @microsoft/rush lint
     rc=$?; if [ $rc -ne 0 ]; then exit $rc ; fi
     
+    if [ -n "$(git status --porcelain)" ]; then
+      echo "ERROR: Working directory is dirty. Are there test output files missing from the PR?"
+      git status
+      exit 1
+    fi
+
   displayName: 'Rush install, build and test'
