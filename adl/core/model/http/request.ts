@@ -1,6 +1,6 @@
-import { Identity } from '../name';
 import * as base from '../operation';
 import { Schema } from '../schema/schema';
+import { Identity } from '../types';
 export class Request extends base.Request {
   /**
  * description of the request

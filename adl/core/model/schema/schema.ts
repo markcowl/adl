@@ -3,7 +3,7 @@ import { anonymous, isAnonymous, valueOf } from '@azure-tools/sourcemap';
 import { Node } from 'ts-morph';
 import { getPath, IsTypeDeclaration, project, TypeDeclaration } from '../../support/typescript';
 import { Element, TSElement } from '../element';
-import { Identity } from '../name';
+import { Identity } from '../types';
 
 
 export class Schema extends Element {

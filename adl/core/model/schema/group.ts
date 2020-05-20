@@ -1,4 +1,4 @@
-import { Identity } from '../name';
+import { Identity } from '../types';
 import { Schema } from './schema';
 
 

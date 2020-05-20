@@ -3,10 +3,6 @@ import { Element } from './element';
 import { License } from './license';
 import { Reference } from './reference';
 
-
-export type URL = string;
-
-
 /** Information about the API Surface */
 export class Metadata extends Element {
   /** a short description of the API */

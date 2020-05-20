@@ -1,5 +1,5 @@
 import { Element } from './element';
-import { Identity } from './name';
+import { Identity } from './types';
 
 export class Alias<T> extends Element {
   // 

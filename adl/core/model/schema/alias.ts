@@ -1,4 +1,4 @@
-import { Identity } from '../name';
+import { Identity } from '../types';
 import { Constraint } from './constraint';
 import { Default } from './default';
 import { Schema } from './schema';
