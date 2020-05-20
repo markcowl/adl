@@ -1,8 +1,8 @@
 export interface putSubscription {
-    created_at: any;
-    ignored: any;
+    created_at: string;
+    ignored: boolean;
     reason: {};
-    subscribed: any;
-    thread_url: any;
-    url: any;
+    subscribed: boolean;
+    thread_url: string;
+    url: string;
 }

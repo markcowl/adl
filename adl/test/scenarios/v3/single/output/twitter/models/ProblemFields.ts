@@ -1,5 +1,5 @@
 export interface ProblemFields {
-    detail?: any;
-    title?: any;
-    type?: any;
+    detail?: string;
+    title?: string;
+    type?: string;
 }

@@ -11,6 +11,9 @@ export function normalizeIdentifier(value: string) {
   return /[^\w]/g.exec(value) ? `'${value.replace(/'/g, '\\\'')}'` : value;
 }
 
+export function stringLiteral(value: string) {
+  return JSON.stringify(valueOf(value) || '');
+}
 
 export function normalizeName(value: string ) {
   return valueOf(value).replace(/[^\w]+/g, '_');

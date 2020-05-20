@@ -2,5 +2,5 @@ export interface mergesConflict {
     /**
      * @description Error message
      */
-    message: any;
+    message: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

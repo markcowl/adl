@@ -6,19 +6,19 @@ export interface VaultAccessPolicyParameters {
     /**
      * @description The resource id of the access policy.
      */
-    readonly id: any;
+    readonly id: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The resource name of the access policy.
      */
-    readonly name: any;
+    readonly name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The resource name of the access policy.
      */
-    readonly type: any;
+    readonly type: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The resource type of the access policy.
      */
-    readonly location: any;
+    readonly location: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Properties of the access policy
      */

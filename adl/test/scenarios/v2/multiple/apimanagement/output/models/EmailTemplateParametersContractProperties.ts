@@ -6,13 +6,13 @@ export interface EmailTemplateParametersContractProperties {
     /**
      * @description Template parameter name.
      */
-    name: any;
+    name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Template parameter title.
      */
-    title: any;
+    title: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Template parameter description.
      */
-    description: any;
+    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

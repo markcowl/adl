@@ -6,5 +6,5 @@ export interface RegistrationDelegationSettingsProperties {
     /**
      * @description Enable or disable delegation for user registration.
      */
-    enabled: any;
+    enabled: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

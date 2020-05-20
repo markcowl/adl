@@ -1,4 +1,4 @@
 export interface search_users {
-    items: any;
-    total_count: any;
+    items: unknown /*= (not tsschema -- undefinedusers/undefined ) =*/;
+    total_count: int64;
 }

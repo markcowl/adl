@@ -1,34 +1,34 @@
 export interface pullsComment {
     _links: {
         html: {
-            href: any;
+            href: string;
         };
         pull_request: {
-            href: any;
+            href: string;
         };
         self: {
-            href: any;
+            href: string;
         };
     };
-    body: any;
-    commit_id: any;
+    body: string;
+    commit_id: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: any;
-    id: any;
-    path: any;
-    position: any;
+    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    id: int64;
+    path: string;
+    position: int64;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    updated_at: any;
-    url: any;
+    updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
     user: {
-        avatar_url: any;
-        gravatar_id: any;
-        id: any;
-        login: any;
-        url: any;
+        avatar_url: string;
+        gravatar_id: string;
+        id: int64;
+        login: string;
+        url: string;
     };
 }

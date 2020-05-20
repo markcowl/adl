@@ -6,25 +6,25 @@ export interface EmailTemplateContractProperties {
     /**
      * @description Subject of the Template.
      */
-    subject?: any;
+    subject?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Email Template Body. This should be a valid XDocument
      */
-    body?: any;
+    body?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Title of the Template.
      */
-    title: any;
+    title: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Description of the Email Template.
      */
-    description: any;
+    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Whether the template is the default template provided by Api Management or has been edited.
      */
-    readonly isDefault: any;
+    readonly isDefault: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Email Template Parameter values.
      */
-    parameters: any;
+    parameters: unknown /*= (not tsschema -- undefinedparameters/undefined ) =*/;
 }

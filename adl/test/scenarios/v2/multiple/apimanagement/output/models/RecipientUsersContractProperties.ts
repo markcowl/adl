@@ -6,5 +6,5 @@ export interface RecipientUsersContractProperties {
     /**
      * @description API Management UserId subscribed to notification.
      */
-    userId: any;
+    userId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

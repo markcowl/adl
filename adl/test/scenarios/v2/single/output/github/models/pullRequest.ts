@@ -1,77 +1,77 @@
 export interface pullRequest {
     _links: {
         comments: {
-            href: any;
+            href: string;
         };
         html: {
-            href: any;
+            href: string;
         };
         review_comments: {
-            href: any;
+            href: string;
         };
         self: {
-            href: any;
+            href: string;
         };
     };
-    additions: any;
+    additions: int64;
     base: {
-        label: any;
-        ref: any;
+        label: string;
+        ref: string;
         repo: repo;
-        sha: any;
+        sha: string;
         user: {
-            avatar_url: any;
-            gravatar_id: any;
-            id: any;
-            login: any;
-            url: any;
+            avatar_url: string;
+            gravatar_id: string;
+            id: int64;
+            login: string;
+            url: string;
         };
     };
-    body: any;
-    changed_files: any;
-    closed_at: any;
-    comments: any;
-    commits: any;
-    created_at: any;
-    deletions: any;
-    diff_url: any;
+    body: string;
+    changed_files: int64;
+    closed_at: string;
+    comments: int64;
+    commits: int64;
+    created_at: string;
+    deletions: int64;
+    diff_url: string;
     head: {
-        label: any;
-        ref: any;
+        label: string;
+        ref: string;
         repo: repo;
-        sha: any;
+        sha: string;
         user: {
-            avatar_url: any;
-            gravatar_id: any;
-            id: any;
-            login: any;
-            url: any;
+            avatar_url: string;
+            gravatar_id: string;
+            id: int64;
+            login: string;
+            url: string;
         };
     };
-    html_url: any;
-    issue_url: any;
-    merge_commit_sha: any;
-    mergeable: any;
-    merged: any;
-    merged_at: any;
+    html_url: string;
+    issue_url: string;
+    merge_commit_sha: string;
+    mergeable: boolean;
+    merged: boolean;
+    merged_at: string;
     merged_by: {
-        avatar_url: any;
-        gravatar_id: any;
-        id: any;
-        login: any;
-        url: any;
+        avatar_url: string;
+        gravatar_id: string;
+        id: int64;
+        login: string;
+        url: string;
     };
-    number: any;
-    patch_url: any;
-    state: any;
-    title: any;
-    updated_at: any;
-    url: any;
+    number: int64;
+    patch_url: string;
+    state: string;
+    title: string;
+    updated_at: string;
+    url: string;
     user: {
-        avatar_url: any;
-        gravatar_id: any;
-        id: any;
-        login: any;
-        url: any;
+        avatar_url: string;
+        gravatar_id: string;
+        id: int64;
+        login: string;
+        url: string;
     };
 }

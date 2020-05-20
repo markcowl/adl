@@ -1,30 +1,30 @@
 import { user } from './user';
 export interface mergesSuccessful {
     author: user;
-    comments_url: any;
+    comments_url: string;
     commit: {
         author: {
-            date: any;
-            email: any;
-            name: any;
+            date: string;
+            email: string;
+            name: string;
         };
-        comment_count: any;
+        comment_count: int64;
         committer: {
-            date: any;
-            email: any;
-            name: any;
+            date: string;
+            email: string;
+            name: string;
         };
-        message: any;
+        message: string;
         tree: {
-            sha: any;
-            url: any;
+            sha: string;
+            url: string;
         };
-        url: any;
+        url: string;
     };
     committer: user;
-    merged: any;
-    message: any;
-    parents: any;
-    sha: any;
-    url: any;
+    merged: boolean;
+    message: string;
+    parents: array;
+    sha: string;
+    url: string;
 }

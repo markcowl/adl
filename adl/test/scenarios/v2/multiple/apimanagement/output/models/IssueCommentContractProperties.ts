@@ -6,13 +6,13 @@ export interface IssueCommentContractProperties {
     /**
      * @description Comment text.
      */
-    text?: any;
+    text?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Date and time when the comment was created.
      */
-    createdDate: any;
+    createdDate: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description A resource identifier for the user who left the comment.
      */
-    userId?: any;
+    userId?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

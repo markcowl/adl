@@ -6,9 +6,9 @@ export interface QuotaCounterValueContractProperties {
     /**
      * @description Number of times Counter was called.
      */
-    callsCount: any;
+    callsCount: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Data Transferred in KiloBytes.
      */
-    kbTransferred: any;
+    kbTransferred: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

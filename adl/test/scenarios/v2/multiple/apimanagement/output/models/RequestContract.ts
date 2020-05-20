@@ -6,17 +6,17 @@ export interface RequestContract {
     /**
      * @description Operation request description.
      */
-    description: any;
+    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Collection of operation request query parameters.
      */
-    queryParameters: any;
+    queryParameters: unknown /*= (not tsschema -- undefinedqueryParameters/undefined ) =*/;
     /**
      * @description Collection of operation request headers.
      */
-    headers: any;
+    headers: unknown /*= (not tsschema -- undefinedheaders/undefined ) =*/;
     /**
      * @description Collection of operation request representations.
      */
-    representations: any;
+    representations: unknown /*= (not tsschema -- undefinedrepresentations/undefined ) =*/;
 }

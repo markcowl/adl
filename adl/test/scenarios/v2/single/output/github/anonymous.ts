@@ -2,14 +2,14 @@ import { actor } from './models/actor';
 import { repo } from './models/repo';
 import { user } from './models/user';
 export interface object_0 {
-    collaborators: any;
-    name: any;
-    private_repos: any;
-    space: any;
+    collaborators: int64;
+    name: string;
+    private_repos: int64;
+    space: int64;
 }
 export interface object_1 {
-    html: any;
-    self: any;
+    html: string;
+    self: string;
 }
 export interface object_2 {
     author: user;
@@ -18,97 +18,97 @@ export interface object_2 {
             /**
              * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
              */
-            date: any;
-            email: any;
-            name: any;
+            date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+            email: string;
+            name: string;
         };
         committer: {
             /**
              * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
              */
-            date: any;
-            email: any;
-            name: any;
+            date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+            email: string;
+            name: string;
         };
-        message: any;
+        message: string;
         tree: {
-            sha: any;
-            url: any;
+            sha: string;
+            url: string;
         };
-        url: any;
+        url: string;
     };
     committer: user;
-    parents: any;
-    sha: any;
-    url: any;
+    parents: array;
+    sha: string;
+    url: string;
 }
 export interface object_3 {
     author: {
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        date: any;
-        email: any;
-        name: any;
+        date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        email: string;
+        name: string;
     };
     committer: {
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        date: any;
-        email: any;
-        name: any;
+        date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        email: string;
+        name: string;
     };
-    message: any;
+    message: string;
     tree: {
-        sha: any;
-        url: any;
+        sha: string;
+        url: string;
     };
-    url: any;
+    url: string;
 }
 export interface object_4 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    date: any;
-    email: any;
-    name: any;
+    date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    email: string;
+    name: string;
 }
 export interface object_5 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    date: any;
-    email: any;
-    name: any;
+    date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    email: string;
+    name: string;
 }
 export interface object_6 {
-    sha: any;
-    url: any;
+    sha: string;
+    url: string;
 }
 export interface object_7 {
-    sha: any;
-    url: any;
+    sha: string;
+    url: string;
 }
 export interface object_8 {
     commit: {
-        sha: any;
-        url: any;
+        sha: string;
+        url: string;
     };
-    name: any;
+    name: string;
 }
 export interface object_9 {
-    sha: any;
-    url: any;
+    sha: string;
+    url: string;
 }
 export interface object_10 {
-    body: any;
+    body: string;
     /**
      * @description ISO 8601.
      */
-    created_at: any;
-    id: any;
-    url: any;
+    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    id: int64;
+    url: string;
     user: user;
 }
 export interface object_11 {
@@ -116,68 +116,68 @@ export interface object_11 {
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        date: any;
-        email: any;
-        name: any;
+        date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        email: string;
+        name: string;
     };
     committer: {
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        date: any;
-        email: any;
-        name: any;
+        date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        email: string;
+        name: string;
     };
-    message: any;
+    message: string;
     tree: {
-        sha: any;
-        url: any;
+        sha: string;
+        url: string;
     };
-    url: any;
+    url: string;
 }
 export interface object_12 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    date: any;
-    email: any;
-    name: any;
+    date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    email: string;
+    name: string;
 }
 export interface object_13 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    date: any;
-    email: any;
-    name: any;
+    date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    email: string;
+    name: string;
 }
 export interface object_14 {
-    sha: any;
-    url: any;
+    sha: string;
+    url: string;
 }
 export interface object_15 {
-    additions: any;
-    blob_url: any;
-    changes: any;
-    deletions: any;
-    filename: any;
-    patch: any;
-    raw_url: any;
-    status: any;
+    additions: int64;
+    blob_url: string;
+    changes: int64;
+    deletions: int64;
+    filename: string;
+    patch: string;
+    raw_url: string;
+    status: string;
 }
 export interface object_16 {
-    sha: any;
-    url: any;
+    sha: string;
+    url: string;
 }
 export interface object_17 {
-    additions: any;
-    deletions: any;
-    total: any;
+    additions: int64;
+    deletions: int64;
+    total: int64;
 }
 export interface object_18 {
-    days: any;
-    total: any;
-    week: any;
+    days: array;
+    total: int64;
+    week: int64;
 }
 export interface object_19 {
     author: user;
@@ -186,442 +186,442 @@ export interface object_19 {
             /**
              * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
              */
-            date: any;
-            email: any;
-            name: any;
+            date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+            email: string;
+            name: string;
         };
         committer: {
             /**
              * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
              */
-            date: any;
-            email: any;
-            name: any;
+            date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+            email: string;
+            name: string;
         };
-        message: any;
+        message: string;
         tree: {
-            sha: any;
-            url: any;
+            sha: string;
+            url: string;
         };
-        url: any;
+        url: string;
     };
     committer: user;
-    parents: any;
-    sha: any;
-    url: any;
+    parents: array;
+    sha: string;
+    url: string;
 }
 export interface object_20 {
     author: {
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        date: any;
-        email: any;
-        name: any;
+        date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        email: string;
+        name: string;
     };
     committer: {
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        date: any;
-        email: any;
-        name: any;
+        date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        email: string;
+        name: string;
     };
-    message: any;
+    message: string;
     tree: {
-        sha: any;
-        url: any;
+        sha: string;
+        url: string;
     };
-    url: any;
+    url: string;
 }
 export interface object_21 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    date: any;
-    email: any;
-    name: any;
+    date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    email: string;
+    name: string;
 }
 export interface object_22 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    date: any;
-    email: any;
-    name: any;
+    date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    email: string;
+    name: string;
 }
 export interface object_23 {
-    sha: any;
-    url: any;
+    sha: string;
+    url: string;
 }
 export interface object_24 {
-    sha: any;
-    url: any;
+    sha: string;
+    url: string;
 }
 export interface object_25 {
     author: user;
     commit: {
         author: {
-            date: any;
-            email: any;
-            name: any;
+            date: string;
+            email: string;
+            name: string;
         };
         committer: {
-            date: any;
-            email: any;
-            name: any;
+            date: string;
+            email: string;
+            name: string;
         };
-        message: any;
+        message: string;
         tree: {
-            sha: any;
-            url: any;
+            sha: string;
+            url: string;
         };
-        url: any;
+        url: string;
     };
     committer: user;
-    parents: any;
-    sha: any;
-    url: any;
+    parents: array;
+    sha: string;
+    url: string;
 }
 export interface object_26 {
     author: {
-        date: any;
-        email: any;
-        name: any;
+        date: string;
+        email: string;
+        name: string;
     };
     committer: {
-        date: any;
-        email: any;
-        name: any;
+        date: string;
+        email: string;
+        name: string;
     };
-    message: any;
+    message: string;
     tree: {
-        sha: any;
-        url: any;
+        sha: string;
+        url: string;
     };
-    url: any;
+    url: string;
 }
 export interface object_27 {
-    date: any;
-    email: any;
-    name: any;
+    date: string;
+    email: string;
+    name: string;
 }
 export interface object_28 {
-    date: any;
-    email: any;
-    name: any;
+    date: string;
+    email: string;
+    name: string;
 }
 export interface object_29 {
-    sha: any;
-    url: any;
+    sha: string;
+    url: string;
 }
 export interface object_30 {
-    sha: any;
-    url: any;
+    sha: string;
+    url: string;
 }
 export interface object_31 {
     author: user;
     commit: {
         author: {
-            date: any;
-            email: any;
-            name: any;
+            date: string;
+            email: string;
+            name: string;
         };
         committer: {
-            date: any;
-            email: any;
-            name: any;
+            date: string;
+            email: string;
+            name: string;
         };
-        message: any;
+        message: string;
         tree: {
-            sha: any;
-            url: any;
+            sha: string;
+            url: string;
         };
-        url: any;
+        url: string;
     };
     committer: user;
-    parents: any;
-    sha: any;
-    url: any;
+    parents: array;
+    sha: string;
+    url: string;
 }
 export interface object_32 {
     author: {
-        date: any;
-        email: any;
-        name: any;
+        date: string;
+        email: string;
+        name: string;
     };
     committer: {
-        date: any;
-        email: any;
-        name: any;
+        date: string;
+        email: string;
+        name: string;
     };
-    message: any;
+    message: string;
     tree: {
-        sha: any;
-        url: any;
+        sha: string;
+        url: string;
     };
-    url: any;
+    url: string;
 }
 export interface object_33 {
-    date: any;
-    email: any;
-    name: any;
+    date: string;
+    email: string;
+    name: string;
 }
 export interface object_34 {
-    date: any;
-    email: any;
-    name: any;
+    date: string;
+    email: string;
+    name: string;
 }
 export interface object_35 {
-    sha: any;
-    url: any;
+    sha: string;
+    url: string;
 }
 export interface object_36 {
-    sha: any;
-    url: any;
+    sha: string;
+    url: string;
 }
 export interface object_37 {
-    additions: any;
-    blob_url: any;
-    changes: any;
-    contents_url: any;
-    deletions: any;
-    filename: any;
-    patch: any;
-    raw_url: any;
-    sha: any;
-    status: any;
+    additions: int64;
+    blob_url: string;
+    changes: int64;
+    contents_url: string;
+    deletions: int64;
+    filename: string;
+    patch: string;
+    raw_url: string;
+    sha: string;
+    status: string;
 }
 export interface object_38 {
-    git: any;
-    html: any;
-    self: any;
+    git: string;
+    html: string;
+    self: string;
 }
 export interface object_39 {
     author: {
-        avatar_url: any;
-        gravatar_id: any;
-        id: any;
-        login: any;
-        url: any;
+        avatar_url: string;
+        gravatar_id: string;
+        id: int64;
+        login: string;
+        url: string;
     };
     /**
      * @description The Total number of commits authored by the contributor.
      */
-    total: any;
-    weeks: any;
+    total: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    weeks: array;
 }
 export interface object_40 {
-    avatar_url: any;
-    gravatar_id: any;
-    id: any;
-    login: any;
-    url: any;
+    avatar_url: string;
+    gravatar_id: string;
+    id: int64;
+    login: string;
+    url: string;
 }
 export interface object_41 {
     /**
      * @description Number of additions.
      */
-    a: any;
+    a: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Number of commits.
      */
-    c: any;
+    c: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Number of deletions.
      */
-    d: any;
+    d: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Start of the week.
      */
-    w: any;
+    w: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }
 export interface object_42 {
     author: {
-        date: any;
-        email: any;
-        name: any;
+        date: string;
+        email: string;
+        name: string;
     };
     committer: {
-        date: any;
-        email: any;
-        name: any;
+        date: string;
+        email: string;
+        name: string;
     };
-    html_url: any;
-    message: any;
-    parents: any;
-    sha: any;
+    html_url: string;
+    message: string;
+    parents: array;
+    sha: string;
     tree: {
-        sha: any;
-        url: any;
+        sha: string;
+        url: string;
     };
-    url: any;
+    url: string;
 }
 export interface object_43 {
-    date: any;
-    email: any;
-    name: any;
+    date: string;
+    email: string;
+    name: string;
 }
 export interface object_44 {
-    date: any;
-    email: any;
-    name: any;
+    date: string;
+    email: string;
+    name: string;
 }
 export interface object_45 {
-    html_url: any;
-    sha: any;
-    url: any;
+    html_url: string;
+    sha: string;
+    url: string;
 }
 export interface object_46 {
-    sha: any;
-    url: any;
+    sha: string;
+    url: string;
 }
 export interface object_47 {
     _links: {
-        git: any;
-        html: any;
-        self: any;
+        git: string;
+        html: string;
+        self: string;
     };
-    git_url: any;
-    html_url: any;
-    name: any;
-    path: any;
-    sha: any;
-    size: any;
-    type: any;
-    url: any;
+    git_url: string;
+    html_url: string;
+    name: string;
+    path: string;
+    sha: string;
+    size: int64;
+    type: string;
+    url: string;
 }
 export interface object_48 {
-    git: any;
-    html: any;
-    self: any;
+    git: string;
+    html: string;
+    self: string;
 }
 export interface object_49 {
-    email: any;
-    name: any;
+    email: string;
+    name: string;
 }
 export interface object_50 {
     author: {
-        date: any;
-        email: any;
-        name: any;
+        date: string;
+        email: string;
+        name: string;
     };
     committer: {
-        date: any;
-        email: any;
-        name: any;
+        date: string;
+        email: string;
+        name: string;
     };
-    html_url: any;
-    message: any;
+    html_url: string;
+    message: string;
     parents: {
-        html_url: any;
-        sha: any;
-        url: any;
+        html_url: string;
+        sha: string;
+        url: string;
     };
-    sha: any;
+    sha: string;
     tree: {
-        sha: any;
-        url: any;
+        sha: string;
+        url: string;
     };
-    url: any;
+    url: string;
 }
 export interface object_51 {
-    date: any;
-    email: any;
-    name: any;
+    date: string;
+    email: string;
+    name: string;
 }
 export interface object_52 {
-    date: any;
-    email: any;
-    name: any;
+    date: string;
+    email: string;
+    name: string;
 }
 export interface object_53 {
-    html_url: any;
-    sha: any;
-    url: any;
+    html_url: string;
+    sha: string;
+    url: string;
 }
 export interface object_54 {
-    sha: any;
-    url: any;
+    sha: string;
+    url: string;
 }
 export interface object_55 {
-    email: any;
-    name: any;
+    email: string;
+    name: string;
 }
 export interface object_56 {
-    deploy_user: any;
-    environment: any;
-    room_id: any;
+    deploy_user: string;
+    environment: string;
+    room_id: double;
 }
 export interface object_57 {
-    created_at: any;
+    created_at: string;
     creator: user;
-    description: any;
-    id: any;
-    payload: any;
-    state: any;
-    target_url: any;
-    updated_at: any;
-    url: any;
+    description: string;
+    id: int64;
+    payload: string;
+    state: string;
+    target_url: string;
+    updated_at: string;
+    url: string;
 }
 export interface object_58 {
 }
 export interface object_59 {
 }
 export interface object_60 {
-    id: any;
-    name: any;
-    url: any;
+    id: int64;
+    name: string;
+    url: string;
 }
 export interface object_61 {
     current_user: {
-        href: any;
-        type: any;
+        href: string;
+        type: string;
     };
     current_user_actor: {
-        href: any;
-        type: any;
+        href: string;
+        type: string;
     };
     current_user_organization: {
-        href: any;
-        type: any;
+        href: string;
+        type: string;
     };
     current_user_public: {
-        href: any;
-        type: any;
+        href: string;
+        type: string;
     };
     timeline: {
-        href: any;
-        type: any;
+        href: string;
+        type: string;
     };
     user: {
-        href: any;
-        type: any;
+        href: string;
+        type: string;
     };
 }
 export interface object_62 {
-    href: any;
-    type: any;
+    href: string;
+    type: string;
 }
 export interface object_63 {
-    href: any;
-    type: any;
+    href: string;
+    type: string;
 }
 export interface object_64 {
-    href: any;
-    type: any;
+    href: string;
+    type: string;
 }
 export interface object_65 {
-    href: any;
-    type: any;
+    href: string;
+    type: string;
 }
 export interface object_66 {
-    href: any;
-    type: any;
+    href: string;
+    type: string;
 }
 export interface object_67 {
-    href: any;
-    type: any;
+    href: string;
+    type: string;
 }
 export interface object_68 extends repo {
 }
@@ -629,1023 +629,1023 @@ export interface object_69 extends repo {
 }
 export interface object_70 {
     'ring.erl': {
-        filename: any;
-        raw_url: any;
-        size: any;
+        filename: string;
+        raw_url: string;
+        size: int64;
     };
 }
 export interface object_71 {
-    filename: any;
-    raw_url: any;
-    size: any;
+    filename: string;
+    raw_url: string;
+    size: int64;
 }
 export interface object_72 {
     /**
      * @description Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
      */
-    created_at: any;
-    url: any;
+    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
     user: user;
 }
 export interface object_73 {
     change_status: {
-        additions: any;
-        deletions: any;
-        total: any;
+        additions: int64;
+        deletions: int64;
+        total: int64;
     };
     /**
      * @description Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
      */
-    committed_at: any;
-    url: any;
+    committed_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
     user: user;
-    version: any;
+    version: string;
 }
 export interface object_74 {
-    additions: any;
-    deletions: any;
-    total: any;
+    additions: int64;
+    deletions: int64;
+    total: int64;
 }
 export interface object_75 {
-    comments: any;
-    comments_url: any;
-    created_at: any;
-    description: any;
+    comments: int64;
+    comments_url: string;
+    created_at: string;
+    description: string;
     files: {
         'ring.erl': {
-            filename: any;
-            raw_url: any;
-            size: any;
+            filename: string;
+            raw_url: string;
+            size: int64;
         };
     };
-    git_pull_url: any;
-    git_push_url: any;
-    html_url: any;
-    id: any;
-    public: any;
-    url: any;
+    git_pull_url: string;
+    git_push_url: string;
+    html_url: string;
+    id: string;
+    public: boolean;
+    url: string;
     user: user;
 }
 export interface object_76 {
     'ring.erl': {
-        filename: any;
-        raw_url: any;
-        size: any;
+        filename: string;
+        raw_url: string;
+        size: int64;
     };
 }
 export interface object_77 {
-    filename: any;
-    raw_url: any;
-    size: any;
+    filename: string;
+    raw_url: string;
+    size: int64;
 }
 export interface object_78 {
-    date: any;
-    email: any;
-    name: any;
+    date: string;
+    email: string;
+    name: string;
 }
 export interface object_79 {
-    sha: any;
-    type: any;
-    url: any;
+    sha: string;
+    type: string;
+    url: string;
 }
 export interface object_80 {
-    active: any;
+    active: boolean;
     config: {
-        content_type: any;
-        url: any;
+        content_type: string;
+        url: string;
     };
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: any;
-    events: any;
-    id: any;
-    name: any;
+    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    events: array;
+    id: int64;
+    name: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    updated_at: any;
-    url: any;
+    updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
 }
 export interface object_81 {
-    content_type: any;
-    url: any;
+    content_type: string;
+    url: string;
 }
 export interface object_82 {
     assignee: user;
-    body: any;
+    body: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    closed_at: any;
-    comments: any;
+    closed_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    comments: int64;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: any;
-    html_url: any;
-    labels: any;
+    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    html_url: string;
+    labels: array;
     milestone: {
-        closed_issues: any;
+        closed_issues: int64;
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        created_at: any;
+        created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
         creator: user;
-        description: any;
+        description: string;
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        due_on: any;
-        number: any;
-        open_issues: any;
-        state: any;
-        title: any;
-        url: any;
+        due_on: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        number: int64;
+        open_issues: int64;
+        state: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        title: string;
+        url: string;
     };
-    number: any;
+    number: int64;
     pull_request: {
-        diff_url: any;
-        html_url: any;
-        patch_url: any;
+        diff_url: string;
+        html_url: string;
+        patch_url: string;
     };
-    state: any;
-    title: any;
+    state: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    title: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    updated_at: any;
-    url: any;
+    updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
     user: user;
 }
 export interface object_83 {
-    color: any;
-    name: any;
-    url: any;
+    color: string;
+    name: string;
+    url: string;
 }
 export interface object_84 {
-    closed_issues: any;
+    closed_issues: int64;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: any;
+    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     creator: user;
-    description: any;
+    description: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    due_on: any;
-    number: any;
-    open_issues: any;
-    state: any;
-    title: any;
-    url: any;
+    due_on: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    number: int64;
+    open_issues: int64;
+    state: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    title: string;
+    url: string;
 }
 export interface object_85 {
-    diff_url: any;
-    html_url: any;
-    patch_url: any;
+    diff_url: string;
+    html_url: string;
+    patch_url: string;
 }
 export interface object_86 {
     assignee: user;
-    body: any;
+    body: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    closed_at: any;
-    comments: any;
+    closed_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    comments: int64;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: any;
-    html_url: any;
-    labels: any;
+    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    html_url: string;
+    labels: array;
     milestone: {
-        closed_issues: any;
+        closed_issues: int64;
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        created_at: any;
+        created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
         creator: user;
-        description: any;
+        description: string;
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        due_on: any;
-        number: any;
-        open_issues: any;
-        state: any;
-        title: any;
-        url: any;
+        due_on: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        number: int64;
+        open_issues: int64;
+        state: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        title: string;
+        url: string;
     };
-    number: any;
+    number: int64;
     pull_request: {
-        diff_url: any;
-        html_url: any;
-        patch_url: any;
+        diff_url: string;
+        html_url: string;
+        patch_url: string;
     };
-    state: any;
-    title: any;
+    state: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    title: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    updated_at: any;
-    url: any;
+    updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
     user: user;
 }
 export interface object_87 {
-    color: any;
-    name: any;
-    url: any;
+    color: string;
+    name: string;
+    url: string;
 }
 export interface object_88 {
-    closed_issues: any;
+    closed_issues: int64;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: any;
+    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     creator: user;
-    description: any;
+    description: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    due_on: any;
-    number: any;
-    open_issues: any;
-    state: any;
-    title: any;
-    url: any;
+    due_on: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    number: int64;
+    open_issues: int64;
+    state: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    title: string;
+    url: string;
 }
 export interface object_89 {
-    diff_url: any;
-    html_url: any;
-    patch_url: any;
+    diff_url: string;
+    html_url: string;
+    patch_url: string;
 }
 export interface object_90 {
     _links: {
         html: {
-            href: any;
+            href: string;
         };
         pull_request: {
-            href: any;
+            href: string;
         };
         self: {
-            href: any;
+            href: string;
         };
     };
-    body: any;
-    commit_id: any;
+    body: string;
+    commit_id: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: any;
-    id: any;
-    path: any;
-    position: any;
+    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    id: int64;
+    path: string;
+    position: int64;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    updated_at: any;
-    url: any;
+    updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
     user: user;
 }
 export interface object_91 {
     html: {
-        href: any;
+        href: string;
     };
     pull_request: {
-        href: any;
+        href: string;
     };
     self: {
-        href: any;
+        href: string;
     };
 }
 export interface object_92 {
-    href: any;
+    href: string;
 }
 export interface object_93 {
-    href: any;
+    href: string;
 }
 export interface object_94 {
-    href: any;
+    href: string;
 }
 export interface object_95 {
-    id: any;
-    key: any;
-    title: any;
-    url: any;
+    id: int64;
+    key: string;
+    title: string;
+    url: string;
 }
 export interface object_96 {
-    color: any;
-    name: any;
-    url: any;
+    color: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    name: string;
+    url: string;
 }
 export interface object_97 {
     author: {
-        date: any;
-        email: any;
-        name: any;
+        date: string;
+        email: string;
+        name: string;
     };
-    comment_count: any;
+    comment_count: int64;
     committer: {
-        date: any;
-        email: any;
-        name: any;
+        date: string;
+        email: string;
+        name: string;
     };
-    message: any;
+    message: string;
     tree: {
-        sha: any;
-        url: any;
+        sha: string;
+        url: string;
     };
-    url: any;
+    url: string;
 }
 export interface object_98 {
-    date: any;
-    email: any;
-    name: any;
+    date: string;
+    email: string;
+    name: string;
 }
 export interface object_99 {
-    date: any;
-    email: any;
-    name: any;
+    date: string;
+    email: string;
+    name: string;
 }
 export interface object_100 {
-    sha: any;
-    url: any;
+    sha: string;
+    url: string;
 }
 export interface object_101 {
-    sha: any;
-    url: any;
+    sha: string;
+    url: string;
 }
 export interface object_102 {
-    description: any;
-    fork: any;
-    full_name: any;
-    html_url: any;
-    id: any;
-    name: any;
+    description: string;
+    fork: boolean;
+    full_name: string;
+    html_url: string;
+    id: int64;
+    name: string;
     owner: actor;
-    private: any;
-    url: any;
+    private: boolean;
+    url: string;
 }
 export interface object_103 {
-    latest_comment_url: any;
-    title: any;
-    type: any;
-    url: any;
+    latest_comment_url: string;
+    title: string;
+    type: string;
+    url: string;
 }
 export interface object_104 {
-    code: any;
-    field: any;
-    resource: any;
+    code: string;
+    field: string;
+    resource: string;
 }
 export interface object_105 {
-    'delete_this_file.txt': any;
+    'delete_this_file.txt': string;
     'file1.txt': {
-        content: any;
+        content: string;
     };
     'new_file.txt': {
-        content: any;
+        content: string;
     };
     'old_name.txt': {
-        content: any;
-        filename: any;
+        content: string;
+        filename: string;
     };
 }
 export interface object_106 {
-    content: any;
+    content: string;
 }
 export interface object_107 {
-    content: any;
+    content: string;
 }
 export interface object_108 {
-    content: any;
-    filename: any;
+    content: string;
+    filename: string;
 }
 export interface object_109 {
     'file1.txt': {
-        content: any;
+        content: string;
     };
 }
 export interface object_110 {
-    content: any;
+    content: string;
 }
 export interface object_111 {
     comments: {
-        href: any;
+        href: string;
     };
     html: {
-        href: any;
+        href: string;
     };
     review_comments: {
-        href: any;
+        href: string;
     };
     self: {
-        href: any;
+        href: string;
     };
 }
 export interface object_112 {
-    href: any;
+    href: string;
 }
 export interface object_113 {
-    href: any;
+    href: string;
 }
 export interface object_114 {
-    href: any;
+    href: string;
 }
 export interface object_115 {
-    href: any;
+    href: string;
 }
 export interface object_116 {
-    label: any;
-    ref: any;
+    label: string;
+    ref: string;
     repo: repo;
-    sha: any;
+    sha: string;
     user: {
-        avatar_url: any;
-        gravatar_id: any;
-        id: any;
-        login: any;
-        url: any;
+        avatar_url: string;
+        gravatar_id: string;
+        id: int64;
+        login: string;
+        url: string;
     };
 }
 export interface object_117 {
-    avatar_url: any;
-    gravatar_id: any;
-    id: any;
-    login: any;
-    url: any;
+    avatar_url: string;
+    gravatar_id: string;
+    id: int64;
+    login: string;
+    url: string;
 }
 export interface object_118 {
-    label: any;
-    ref: any;
+    label: string;
+    ref: string;
     repo: repo;
-    sha: any;
+    sha: string;
     user: {
-        avatar_url: any;
-        gravatar_id: any;
-        id: any;
-        login: any;
-        url: any;
+        avatar_url: string;
+        gravatar_id: string;
+        id: int64;
+        login: string;
+        url: string;
     };
 }
 export interface object_119 {
-    avatar_url: any;
-    gravatar_id: any;
-    id: any;
-    login: any;
-    url: any;
+    avatar_url: string;
+    gravatar_id: string;
+    id: int64;
+    login: string;
+    url: string;
 }
 export interface object_120 {
-    avatar_url: any;
-    gravatar_id: any;
-    id: any;
-    login: any;
-    url: any;
+    avatar_url: string;
+    gravatar_id: string;
+    id: int64;
+    login: string;
+    url: string;
 }
 export interface object_121 {
-    avatar_url: any;
-    gravatar_id: any;
-    id: any;
-    login: any;
-    url: any;
+    avatar_url: string;
+    gravatar_id: string;
+    id: int64;
+    login: string;
+    url: string;
 }
 export interface object_122 {
     _links: {
         comments: {
-            href: any;
+            href: string;
         };
         html: {
-            href: any;
+            href: string;
         };
         review_comments: {
-            href: any;
+            href: string;
         };
         self: {
-            href: any;
+            href: string;
         };
     };
     base: {
-        label: any;
-        ref: any;
+        label: string;
+        ref: string;
         repo: repo;
-        sha: any;
+        sha: string;
         user: {
-            avatar_url: any;
-            gravatar_id: any;
-            id: any;
-            login: any;
-            url: any;
+            avatar_url: string;
+            gravatar_id: string;
+            id: int64;
+            login: string;
+            url: string;
         };
     };
-    body: any;
+    body: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    closed_at: any;
+    closed_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: any;
-    diff_url: any;
+    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    diff_url: string;
     head: {
-        label: any;
-        ref: any;
+        label: string;
+        ref: string;
         repo: repo;
-        sha: any;
+        sha: string;
         user: {
-            avatar_url: any;
-            gravatar_id: any;
-            id: any;
-            login: any;
-            url: any;
+            avatar_url: string;
+            gravatar_id: string;
+            id: int64;
+            login: string;
+            url: string;
         };
     };
-    html_url: any;
-    issue_url: any;
+    html_url: string;
+    issue_url: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    merged_at: any;
-    number: any;
-    patch_url: any;
-    state: any;
-    title: any;
+    merged_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    number: int64;
+    patch_url: string;
+    state: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    title: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    updated_at: any;
-    url: any;
+    updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
     user: {
-        avatar_url: any;
-        gravatar_id: any;
-        id: any;
-        login: any;
-        url: any;
+        avatar_url: string;
+        gravatar_id: string;
+        id: int64;
+        login: string;
+        url: string;
     };
 }
 export interface object_123 {
     comments: {
-        href: any;
+        href: string;
     };
     html: {
-        href: any;
+        href: string;
     };
     review_comments: {
-        href: any;
+        href: string;
     };
     self: {
-        href: any;
+        href: string;
     };
 }
 export interface object_124 {
-    href: any;
+    href: string;
 }
 export interface object_125 {
-    href: any;
+    href: string;
 }
 export interface object_126 {
-    href: any;
+    href: string;
 }
 export interface object_127 {
-    href: any;
+    href: string;
 }
 export interface object_128 {
-    label: any;
-    ref: any;
+    label: string;
+    ref: string;
     repo: repo;
-    sha: any;
+    sha: string;
     user: {
-        avatar_url: any;
-        gravatar_id: any;
-        id: any;
-        login: any;
-        url: any;
+        avatar_url: string;
+        gravatar_id: string;
+        id: int64;
+        login: string;
+        url: string;
     };
 }
 export interface object_129 {
-    avatar_url: any;
-    gravatar_id: any;
-    id: any;
-    login: any;
-    url: any;
+    avatar_url: string;
+    gravatar_id: string;
+    id: int64;
+    login: string;
+    url: string;
 }
 export interface object_130 {
-    label: any;
-    ref: any;
+    label: string;
+    ref: string;
     repo: repo;
-    sha: any;
+    sha: string;
     user: {
-        avatar_url: any;
-        gravatar_id: any;
-        id: any;
-        login: any;
-        url: any;
+        avatar_url: string;
+        gravatar_id: string;
+        id: int64;
+        login: string;
+        url: string;
     };
 }
 export interface object_131 {
-    avatar_url: any;
-    gravatar_id: any;
-    id: any;
-    login: any;
-    url: any;
+    avatar_url: string;
+    gravatar_id: string;
+    id: int64;
+    login: string;
+    url: string;
 }
 export interface object_132 {
-    avatar_url: any;
-    gravatar_id: any;
-    id: any;
-    login: any;
-    url: any;
+    avatar_url: string;
+    gravatar_id: string;
+    id: int64;
+    login: string;
+    url: string;
 }
 export interface object_133 {
     html: {
-        href: any;
+        href: string;
     };
     pull_request: {
-        href: any;
+        href: string;
     };
     self: {
-        href: any;
+        href: string;
     };
 }
 export interface object_134 {
-    href: any;
+    href: string;
 }
 export interface object_135 {
-    href: any;
+    href: string;
 }
 export interface object_136 {
-    href: any;
+    href: string;
 }
 export interface object_137 {
-    avatar_url: any;
-    gravatar_id: any;
-    id: any;
-    login: any;
-    url: any;
+    avatar_url: string;
+    gravatar_id: string;
+    id: int64;
+    login: string;
+    url: string;
 }
 export interface object_138 {
     _links: {
         html: {
-            href: any;
+            href: string;
         };
         pull_request: {
-            href: any;
+            href: string;
         };
         self: {
-            href: any;
+            href: string;
         };
     };
-    body: any;
-    commit_id: any;
+    body: string;
+    commit_id: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: any;
-    id: any;
-    path: any;
-    position: any;
+    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    id: int64;
+    path: string;
+    position: int64;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    updated_at: any;
-    url: any;
+    updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
     user: {
-        avatar_url: any;
-        gravatar_id: any;
-        id: any;
-        login: any;
-        url: any;
+        avatar_url: string;
+        gravatar_id: string;
+        id: int64;
+        login: string;
+        url: string;
     };
 }
 export interface object_139 {
     html: {
-        href: any;
+        href: string;
     };
     pull_request: {
-        href: any;
+        href: string;
     };
     self: {
-        href: any;
+        href: string;
     };
 }
 export interface object_140 {
-    href: any;
+    href: string;
 }
 export interface object_141 {
-    href: any;
+    href: string;
 }
 export interface object_142 {
-    href: any;
+    href: string;
 }
 export interface object_143 {
-    avatar_url: any;
-    gravatar_id: any;
-    id: any;
-    login: any;
-    url: any;
+    avatar_url: string;
+    gravatar_id: string;
+    id: int64;
+    login: string;
+    url: string;
 }
 export interface object_144 {
 }
 export interface object_145 {
-    limit: any;
-    remaining: any;
-    reset: any;
+    limit: int64;
+    remaining: int64;
+    reset: int64;
 }
 export interface object_146 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: any;
+    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     creator: {
-        avatar_url: any;
-        gravatar_id: any;
-        id: any;
-        login: any;
-        url: any;
+        avatar_url: string;
+        gravatar_id: string;
+        id: int64;
+        login: string;
+        url: string;
     };
-    description: any;
-    id: any;
-    state: any;
-    target_url: any;
+    description: string;
+    id: int64;
+    state: string;
+    target_url: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    updated_at: any;
-    url: any;
+    updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
 }
 export interface object_147 {
-    avatar_url: any;
-    gravatar_id: any;
-    id: any;
-    login: any;
-    url: any;
+    avatar_url: string;
+    gravatar_id: string;
+    id: int64;
+    login: string;
+    url: string;
 }
 export interface object_148 {
-    commit_url: any;
-    name: any;
-    repository_url: any;
-    sha: any;
-    state: any;
-    statuses: any;
+    commit_url: string;
+    name: string;
+    repository_url: string;
+    sha: string;
+    state: string;
+    statuses: array;
 }
 export interface object_149 {
-    context: any;
-    created_at: any;
-    description: any;
-    id: any;
-    state: any;
-    target_url: any;
-    updated_at: any;
-    url: any;
+    context: string;
+    created_at: string;
+    description: string;
+    id: double;
+    state: string;
+    target_url: string;
+    updated_at: string;
+    url: string;
 }
 export interface object_150 {
     object: {
-        sha: any;
-        type: any;
-        url: any;
+        sha: string;
+        type: string;
+        url: string;
     };
-    ref: any;
-    url: any;
+    ref: string;
+    url: string;
 }
 export interface object_151 {
-    sha: any;
-    type: any;
-    url: any;
+    sha: string;
+    type: string;
+    url: string;
 }
 export interface object_152 {
-    content_type: any;
-    created_at: any;
-    download_count: any;
-    id: any;
-    label: any;
-    name: any;
-    size: any;
-    state: any;
-    updated_at: any;
+    content_type: string;
+    created_at: string;
+    download_count: int64;
+    id: int64;
+    label: string;
+    name: string;
+    size: int64;
+    state: string;
+    updated_at: string;
     uploader: user;
-    url: any;
+    url: string;
 }
 export interface object_153 {
-    assets: any;
-    assets_url: any;
+    assets: unknown /*= (not tsschema -- undefinedassets/undefined ) =*/;
+    assets_url: string;
     author: user;
-    body: any;
-    created_at: any;
-    draft: any;
-    html_url: any;
-    id: any;
-    name: any;
-    prerelease: any;
-    published_at: any;
-    tag_name: any;
-    tarball_url: any;
-    target_commitish: any;
-    upload_url: any;
-    url: any;
-    zipball_url: any;
+    body: string;
+    created_at: string;
+    draft: boolean;
+    html_url: string;
+    id: int64;
+    name: string;
+    prerelease: boolean;
+    published_at: string;
+    tag_name: string;
+    tarball_url: string;
+    target_commitish: string;
+    upload_url: string;
+    url: string;
+    zipball_url: string;
 }
 export interface object_154 {
-    content_type: any;
-    created_at: any;
-    download_count: any;
-    id: any;
-    label: any;
-    name: any;
-    size: any;
-    state: any;
-    updated_at: any;
+    content_type: string;
+    created_at: string;
+    download_count: int64;
+    id: int64;
+    label: string;
+    name: string;
+    size: int64;
+    state: string;
+    updated_at: string;
     uploader: user;
-    url: any;
+    url: string;
 }
 export interface object_155 {
-    created_at: any;
+    created_at: string;
     creator: user;
-    description: any;
-    id: any;
-    payload: any;
-    sha: any;
-    statuses_url: any;
-    updated_at: any;
-    url: any;
+    description: string;
+    id: int64;
+    payload: string;
+    sha: string;
+    statuses_url: string;
+    updated_at: string;
+    url: string;
 }
 export interface object_156 {
-    body: any;
-    commit_id: any;
+    body: string;
+    commit_id: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: any;
-    html_url: any;
-    id: any;
-    line: any;
-    path: any;
-    position: any;
+    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    html_url: string;
+    id: int64;
+    line: int64;
+    path: string;
+    position: int64;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    updated_at: any;
-    url: any;
+    updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
     user: user;
 }
 export interface object_157 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    date: any;
-    email: any;
-    name: any;
+    date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    email: string;
+    name: string;
 }
 export interface object_158 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    date: any;
-    email: any;
-    name: any;
+    date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    email: string;
+    name: string;
 }
 export interface object_159 {
-    sha: any;
-    url: any;
+    sha: string;
+    url: string;
 }
 export interface object_160 {
-    sha: any;
-    url: any;
+    sha: string;
+    url: string;
 }
 export interface object_161 {
-    date: any;
-    email: any;
-    name: any;
+    date: string;
+    email: string;
+    name: string;
 }
 export interface object_162 {
-    git_url: any;
-    html_url: any;
-    name: any;
-    path: any;
+    git_url: string;
+    html_url: string;
+    name: string;
+    path: string;
     repository: {
-        archive_url: any;
-        assignees_url: any;
-        blobs_url: any;
-        branches_url: any;
-        collaborators_url: any;
-        comments_url: any;
-        commits_url: any;
-        compare_url: any;
-        contents_url: any;
-        contributors_url: any;
-        description: any;
-        downloads_url: any;
-        events_url: any;
-        fork: any;
-        forks_url: any;
-        full_name: any;
-        git_commits_url: any;
-        git_refs_url: any;
-        git_tags_url: any;
-        hooks_url: any;
-        html_url: any;
-        id: any;
-        issue_comment_url: any;
-        issue_events_url: any;
-        issues_url: any;
-        keys_url: any;
-        labels_url: any;
-        languages_url: any;
-        merges_url: any;
-        milestones_url: any;
-        name: any;
-        notifications_url: any;
+        archive_url: string;
+        assignees_url: string;
+        blobs_url: string;
+        branches_url: string;
+        collaborators_url: string;
+        comments_url: string;
+        commits_url: string;
+        compare_url: string;
+        contents_url: string;
+        contributors_url: string;
+        description: string;
+        downloads_url: string;
+        events_url: string;
+        fork: boolean;
+        forks_url: string;
+        full_name: string;
+        git_commits_url: string;
+        git_refs_url: string;
+        git_tags_url: string;
+        hooks_url: string;
+        html_url: string;
+        id: int64;
+        issue_comment_url: string;
+        issue_events_url: string;
+        issues_url: string;
+        keys_url: string;
+        labels_url: string;
+        languages_url: string;
+        merges_url: string;
+        milestones_url: string;
+        name: string;
+        notifications_url: string;
         owner: actor;
-        private: any;
-        pulls_url: any;
-        stargazers_url: any;
-        statuses_url: any;
-        subscribers_url: any;
-        subscription_url: any;
-        tags_url: any;
-        teams_url: any;
-        trees_url: any;
-        url: any;
+        private: boolean;
+        pulls_url: string;
+        stargazers_url: string;
+        statuses_url: string;
+        subscribers_url: string;
+        subscription_url: string;
+        tags_url: string;
+        teams_url: string;
+        trees_url: string;
+        url: string;
     };
-    score: any;
-    sha: any;
-    url: any;
+    score: double;
+    sha: string;
+    url: string;
 }
 export interface object_163 {
-    archive_url: any;
-    assignees_url: any;
-    blobs_url: any;
-    branches_url: any;
-    collaborators_url: any;
-    comments_url: any;
-    commits_url: any;
-    compare_url: any;
-    contents_url: any;
-    contributors_url: any;
-    description: any;
-    downloads_url: any;
-    events_url: any;
-    fork: any;
-    forks_url: any;
-    full_name: any;
-    git_commits_url: any;
-    git_refs_url: any;
-    git_tags_url: any;
-    hooks_url: any;
-    html_url: any;
-    id: any;
-    issue_comment_url: any;
-    issue_events_url: any;
-    issues_url: any;
-    keys_url: any;
-    labels_url: any;
-    languages_url: any;
-    merges_url: any;
-    milestones_url: any;
-    name: any;
-    notifications_url: any;
+    archive_url: string;
+    assignees_url: string;
+    blobs_url: string;
+    branches_url: string;
+    collaborators_url: string;
+    comments_url: string;
+    commits_url: string;
+    compare_url: string;
+    contents_url: string;
+    contributors_url: string;
+    description: string;
+    downloads_url: string;
+    events_url: string;
+    fork: boolean;
+    forks_url: string;
+    full_name: string;
+    git_commits_url: string;
+    git_refs_url: string;
+    git_tags_url: string;
+    hooks_url: string;
+    html_url: string;
+    id: int64;
+    issue_comment_url: string;
+    issue_events_url: string;
+    issues_url: string;
+    keys_url: string;
+    labels_url: string;
+    languages_url: string;
+    merges_url: string;
+    milestones_url: string;
+    name: string;
+    notifications_url: string;
     owner: actor;
-    private: any;
-    pulls_url: any;
-    stargazers_url: any;
-    statuses_url: any;
-    subscribers_url: any;
-    subscription_url: any;
-    tags_url: any;
-    teams_url: any;
-    trees_url: any;
-    url: any;
+    private: boolean;
+    pulls_url: string;
+    stargazers_url: string;
+    statuses_url: string;
+    subscribers_url: string;
+    subscription_url: string;
+    tags_url: string;
+    teams_url: string;
+    trees_url: string;
+    url: string;
 }
 export interface object_164 {
     assignee: any;
-    body: any;
+    body: string;
     closed_at: any;
-    comments: any;
-    comments_url: any;
-    created_at: any;
-    events_url: any;
-    html_url: any;
-    id: any;
-    labels: any;
-    labels_url: any;
+    comments: int64;
+    comments_url: string;
+    created_at: string;
+    events_url: string;
+    html_url: string;
+    id: int64;
+    labels: array;
+    labels_url: string;
     milestone: any;
-    number: any;
+    number: int64;
     pull_request: {
         diff_url: any;
         html_url: any;
         patch_url: any;
     };
-    score: any;
-    state: any;
-    title: any;
-    updated_at: any;
-    url: any;
+    score: double;
+    state: string;
+    title: string;
+    updated_at: string;
+    url: string;
     user: user;
 }
 export interface object_165 {
-    color: any;
-    name: any;
-    url: any;
+    color: string;
+    name: string;
+    url: string;
 }
 export interface object_166 {
     diff_url: any;
@@ -1653,92 +1653,92 @@ export interface object_166 {
     patch_url: any;
 }
 export interface object_167 {
-    body: any;
-    comments: any;
-    created_at: any;
-    gravatar_id: any;
-    html_url: any;
-    labels: any;
-    number: any;
-    position: any;
-    state: any;
-    title: any;
-    updated_at: any;
-    user: any;
-    votes: any;
+    body: string;
+    comments: int64;
+    created_at: string;
+    gravatar_id: string;
+    html_url: string;
+    labels: array;
+    number: int64;
+    position: int64;
+    state: string;
+    title: string;
+    updated_at: string;
+    user: string;
+    votes: int64;
 }
 export interface object_168 {
-    sha: any;
+    sha: string;
     /**
      * @description String of the type of the tagged object. Normally this is a commit but it can also be a tree or a blob.
      */
-    type: any;
-    url: any;
+    type: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
 }
 export interface object_169 {
     /**
      * @description Timestamp of when this object was tagged, in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    date: any;
+    date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description String of the email of the author of the tag.
      */
-    email: any;
+    email: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description String of the name of the author of the tag.
      */
-    name: any;
+    name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }
 export interface object_170 {
     /**
      * @description Timestamp of when this object was tagged, in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    date: any;
+    date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description String of the email of the author of the tag.
      */
-    email: any;
+    email: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description String of the name of the author of the tag.
      */
-    name: any;
+    name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }
 export interface object_171 {
-    id: any;
-    name: any;
-    url: any;
+    id: int64;
+    name: string;
+    url: string;
 }
 export interface object_172 {
-    id: any;
-    members_count: any;
-    name: any;
+    id: int64;
+    members_count: int64;
+    name: string;
     organization: {
-        avatar_url: any;
-        id: any;
-        login: any;
-        url: any;
+        avatar_url: string;
+        id: int64;
+        login: string;
+        url: string;
     };
-    permission: any;
-    repos_count: any;
-    url: any;
+    permission: string;
+    repos_count: int64;
+    url: string;
 }
 export interface object_173 {
-    avatar_url: any;
-    id: any;
-    login: any;
-    url: any;
+    avatar_url: string;
+    id: int64;
+    login: string;
+    url: string;
 }
 export interface object_174 {
     /**
      * @description One of 100644 for file (blob), 100755 for executable (blob), 040000 for subdirectory (tree), 160000 for submodule (commit) or 120000 for a blob that specifies the path of a symlink.
      */
-    mode: any;
-    path: any;
+    mode: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    path: string;
     /**
      * @description SHA1 checksum ID of the object in the tree.
      */
-    sha: any;
-    size: any;
-    type: any;
-    url: any;
+    sha: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    size: int64;
+    type: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
 }

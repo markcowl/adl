@@ -6,5 +6,5 @@ export interface PropertyValueContract {
     /**
      * @description This is secret value of the NamedValue entity.
      */
-    value: any;
+    value: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

@@ -6,5 +6,5 @@ export interface PrivateLinkResourceListResult {
     /**
      * @description Array of private link resources
      */
-    value: any;
+    value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
 }

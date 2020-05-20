@@ -6,5 +6,5 @@ export interface UserTokenResult {
     /**
      * @description Shared Access Authorization token for the User.
      */
-    value: any;
+    value: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

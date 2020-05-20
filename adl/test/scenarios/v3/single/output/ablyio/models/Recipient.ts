@@ -6,21 +6,21 @@ export interface Recipient {
     /**
      * @description Client ID of recipient
      */
-    clientId: any;
+    clientId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Client ID of recipient
      */
-    deviceId: any;
+    deviceId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description when using APNs, specifies the required device token.
      */
-    deviceToken: any;
+    deviceToken: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description when using GCM or FCM, specifies the required registration token.
      */
-    registrationToken: any;
+    registrationToken: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Defines which push platform is being used.
      */
-    transportType: any;
+    transportType: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

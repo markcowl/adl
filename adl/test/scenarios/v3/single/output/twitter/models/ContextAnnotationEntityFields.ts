@@ -6,13 +6,13 @@ export interface ContextAnnotationEntityFields {
     /**
      * @description Description of the context annotation entity.
      */
-    description: any;
+    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The unique id for a context annotation entity.
      */
-    id?: any;
+    id?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Name of the context annotation entity.
      */
-    name: any;
+    name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

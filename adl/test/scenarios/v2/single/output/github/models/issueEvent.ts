@@ -1,58 +1,58 @@
 import { actor } from './actor';
 export interface issueEvent {
     actor: actor;
-    commit_id: any;
+    commit_id: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: any;
-    event: any;
+    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    event: string;
     issue: {
         assignee: user;
-        body: any;
+        body: string;
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        closed_at: any;
-        comments: any;
+        closed_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        comments: int64;
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        created_at: any;
-        html_url: any;
-        labels: any;
+        created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        html_url: string;
+        labels: array;
         milestone: {
-            closed_issues: any;
+            closed_issues: int64;
             /**
              * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
              */
-            created_at: any;
+            created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
             creator: user;
-            description: any;
+            description: string;
             /**
              * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
              */
-            due_on: any;
-            number: any;
-            open_issues: any;
-            state: any;
-            title: any;
-            url: any;
+            due_on: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+            number: int64;
+            open_issues: int64;
+            state: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+            title: string;
+            url: string;
         };
-        number: any;
+        number: int64;
         pull_request: {
-            diff_url: any;
-            html_url: any;
-            patch_url: any;
+            diff_url: string;
+            html_url: string;
+            patch_url: string;
         };
-        state: any;
-        title: any;
+        state: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        title: string;
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        updated_at: any;
-        url: any;
+        updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        url: string;
         user: user;
     };
-    url: any;
+    url: string;
 }

@@ -6,9 +6,9 @@ export interface OAuth2AuthenticationSettingsContract {
     /**
      * @description OAuth authorization server identifier.
      */
-    authorizationServerId: any;
+    authorizationServerId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description operations scope.
      */
-    scope: any;
+    scope: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

@@ -1,4 +1,4 @@
-import { ApiType } from '../ApiType';
+import { ApiType } from '../enums/ApiType';
 import { AuthenticationSettingsContract } from './AuthenticationSettingsContract';
 import { SubscriptionKeyParameterNamesContract } from './SubscriptionKeyParameterNamesContract';
 /**
@@ -8,7 +8,7 @@ export interface ApiEntityBaseContract {
     /**
      * @description Description of the API. May include HTML formatting tags.
      */
-    description: any;
+    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Collection of authentication settings included into this API.
      */
@@ -25,33 +25,33 @@ export interface ApiEntityBaseContract {
     /**
      * @description Describes the Revision of the Api. If no value is provided, default revision 1 is created
      */
-    apiRevision: any;
+    apiRevision: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Indicates the Version identifier of the API if the API is versioned
      */
-    apiVersion: any;
+    apiVersion: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Indicates if API revision is current api revision.
      */
-    isCurrent: any;
+    isCurrent: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Indicates if API revision is accessible via the gateway.
      */
-    readonly isOnline: any;
+    readonly isOnline: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Description of the Api Revision.
      */
-    apiRevisionDescription: any;
+    apiRevisionDescription: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Description of the Api Version.
      */
-    apiVersionDescription: any;
+    apiVersionDescription: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description A resource identifier for the related ApiVersionSet.
      */
-    apiVersionSetId: any;
+    apiVersionSetId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Specifies whether an API or Product subscription is required for accessing the API.
      */
-    subscriptionRequired: any;
+    subscriptionRequired: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

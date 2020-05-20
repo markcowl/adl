@@ -1,6 +1,6 @@
 export interface milestoneUpdate {
-    description: any;
-    due_on: any;
-    state: any;
-    title: any;
+    description: string;
+    due_on: string;
+    state: string;
+    title: string;
 }

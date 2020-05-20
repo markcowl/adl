@@ -1,4 +1,4 @@
 export interface organizationAsTeamMember {
-    errors: any;
-    message: any;
+    errors: array;
+    message: string;
 }

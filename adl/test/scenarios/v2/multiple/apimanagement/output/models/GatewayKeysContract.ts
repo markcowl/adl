@@ -6,9 +6,9 @@ export interface GatewayKeysContract {
     /**
      * @description Primary gateway key.
      */
-    primary: any;
+    primary: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Secondary gateway key.
      */
-    secondary: any;
+    secondary: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

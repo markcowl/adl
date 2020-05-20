@@ -6,17 +6,17 @@ export interface UserUpdateParametersProperties extends UserEntityBaseParameters
     /**
      * @description Email address. Must not be empty and must be unique within the service instance.
      */
-    email: any;
+    email: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description User Password.
      */
-    password: any;
+    password: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description First name.
      */
-    firstName: any;
+    firstName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Last name.
      */
-    lastName: any;
+    lastName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

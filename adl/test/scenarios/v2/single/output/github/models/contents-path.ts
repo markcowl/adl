@@ -1,17 +1,17 @@
 export interface contents_path {
     _links: {
-        git: any;
-        html: any;
-        self: any;
+        git: string;
+        html: string;
+        self: string;
     };
-    content: any;
-    encoding: any;
-    git_url: any;
-    html_url: any;
-    name: any;
-    path: any;
-    sha: any;
-    size: any;
-    type: any;
-    url: any;
+    content: string;
+    encoding: string;
+    git_url: string;
+    html_url: string;
+    name: string;
+    path: string;
+    sha: string;
+    size: int64;
+    type: string;
+    url: string;
 }

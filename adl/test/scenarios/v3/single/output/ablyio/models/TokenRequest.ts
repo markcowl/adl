@@ -6,17 +6,17 @@ export interface TokenRequest {
     /**
      * @description The [client ID](https://www.ably.io/documentation/core-features/authentication#identified-clients) to be assosciated with the token. Can be set to * to allow for any client ID to be used.
      */
-    clientId: any;
+    clientId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Name of the key used for the TokenRequest. The keyName comprises of the app ID and key ID on an API Key.
      */
-    keyName?: any;
+    keyName?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description An unquoted, un-escaped random string of at least 16 characters. Used to ensure the Ably TokenRequest cannot be reused.
      */
-    nonce?: any;
+    nonce?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Time of creation of the Ably TokenRequest.
      */
-    timestamp?: any;
+    timestamp?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

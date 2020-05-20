@@ -1,8 +1,8 @@
 export interface release_create {
-    body: any;
-    draft: any;
-    name: any;
-    prerelease: any;
-    tag_name: any;
-    target_commitish: any;
+    body: string;
+    draft: boolean;
+    name: string;
+    prerelease: boolean;
+    tag_name: string;
+    target_commitish: string;
 }

@@ -46,6 +46,12 @@ export class ApiModel {
     },
   });
 
+  #models = this.#project.createDirectory('models');
+  #enums = this.#project.createDirectory('enums');
+  #operations = this.#project.createDirectory('operations');
+  #resources = this.#project.createDirectory('resources');
+
+
   get project() {
     return this.#project;
   }
@@ -116,7 +122,6 @@ export class ApiModel {
         await mkdir(folder);
 
         await writeFile(filename, each.print().
-          replace(/«■»/g, '').
           //replace(/\*\/\s*\/\*\*\s*/g, '').
           replace(/^(\s*\/\*)/g, '\n$1')
         );
@@ -128,6 +133,7 @@ export class ApiModel {
     return getNode(path, this.project);
   }
 
+
   getEnumFile(name: string): SourceFile {
     if (isProxy(this)) {
       return valueOf(this).getEnumFile(name);
@@ -136,10 +142,8 @@ export class ApiModel {
       return this.anonymousFile;
     }
     const filename = `${name}.ts`;
-    return this.project.getSourceFile(filename) || this.project.createSourceFile(filename);
+    return this.#enums.getSourceFile(filename) || this.#enums.createSourceFile(filename);
   }
-
-  models = this.#project.createDirectory('models');
 
   getObjectSchemaFile(name: Identifier): SourceFile {
     if (isProxy(this)) {
@@ -149,7 +153,7 @@ export class ApiModel {
       return this.anonymousFile;
     }
     const filename = `${name}.ts`;
-    return this.models.getSourceFile(filename) || this.models.createSourceFile(filename);
+    return this.#models.getSourceFile(filename) || this.#models.createSourceFile(filename);
   }
 
   getEnum(name: string) {

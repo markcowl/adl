@@ -6,5 +6,5 @@ export interface TagContractProperties {
     /**
      * @description Tag name.
      */
-    displayName?: any;
+    displayName?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

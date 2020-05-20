@@ -6,5 +6,5 @@ export interface PortalSettingValidationKeyContract {
     /**
      * @description This is secret value of the validation key in portal settings.
      */
-    validationKey: any;
+    validationKey: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

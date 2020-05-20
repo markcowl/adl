@@ -6,9 +6,9 @@ export interface UserWithheld {
     /**
      * @description Provides a list of countries where this content is not available.
      */
-    country_codes?: any;
+    country_codes?: unknown /*= (not tsschema -- undefinedcountry_codes/undefined ) =*/;
     /**
      * @description Indicates that the content being withheld is a `user`.
      */
-    scope: any;
+    scope: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

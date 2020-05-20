@@ -6,11 +6,11 @@ export interface OperationEntityBaseContract {
     /**
      * @description Collection of URL template parameters.
      */
-    templateParameters: any;
+    templateParameters: unknown /*= (not tsschema -- undefinedtemplateParameters/undefined ) =*/;
     /**
      * @description Description of the operation. May include HTML formatting tags.
      */
-    description: any;
+    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description An entity containing request details.
      */
@@ -18,9 +18,9 @@ export interface OperationEntityBaseContract {
     /**
      * @description Array of Operation responses.
      */
-    responses: any;
+    responses: unknown /*= (not tsschema -- undefinedresponses/undefined ) =*/;
     /**
      * @description Operation Policies
      */
-    policies: any;
+    policies: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

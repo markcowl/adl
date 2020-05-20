@@ -6,9 +6,9 @@ export interface OperationListResult {
     /**
      * @description List of Storage operations supported by the Storage resource provider.
      */
-    value: any;
+    value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
     /**
      * @description The URL to get the next set of operations.
      */
-    nextLink: any;
+    nextLink: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

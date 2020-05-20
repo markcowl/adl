@@ -6,5 +6,5 @@ export interface DescribeProblemRequest {
     /**
      * @description The ID of the problem.
      */
-    ProblemId?: any;
+    ProblemId?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

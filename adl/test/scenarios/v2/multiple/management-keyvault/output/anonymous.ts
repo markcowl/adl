@@ -6,17 +6,17 @@ export interface object_179 {
     /**
      * @description Service provider: Microsoft Key Vault.
      */
-    provider: any;
+    provider: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Resource on which the operation is performed etc.
      */
-    resource: any;
+    resource: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Type of operation: get, read, delete, etc.
      */
-    operation: any;
+    operation: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Description of operation.
      */
-    description: any;
+    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

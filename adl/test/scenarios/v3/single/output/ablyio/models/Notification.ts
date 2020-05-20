@@ -2,21 +2,21 @@ export interface Notification {
     /**
      * @description Text below title on the expanded notification.
      */
-    body: any;
+    body: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Platform-specific, used to group notifications together.
      */
-    collapseKey: any;
+    collapseKey: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Platform-specific icon for the notification.
      */
-    icon: any;
+    icon: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Platform-specific sound for the notification.
      */
-    sound: any;
+    sound: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Title to display at the notification.
      */
-    title: any;
+    title: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

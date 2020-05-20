@@ -1,4 +1,4 @@
-import { State } from '../State';
+import { State } from '../enums/State';
 /**
  * @description Issue contract Base Properties.
  */
@@ -6,7 +6,7 @@ export interface IssueContractBaseProperties {
     /**
      * @description Date and time when the issue was created.
      */
-    createdDate: any;
+    createdDate: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Status of the issue.
      */
@@ -14,5 +14,5 @@ export interface IssueContractBaseProperties {
     /**
      * @description A resource identifier for the API the issue was created for.
      */
-    apiId: any;
+    apiId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

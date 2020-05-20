@@ -6,13 +6,13 @@ export interface OperationResultLogItemContract {
     /**
      * @description The type of entity contract.
      */
-    objectType: any;
+    objectType: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Action like create/update/delete.
      */
-    action: any;
+    action: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Identifier of the entity being created/updated/deleted.
      */
-    objectKey: any;
+    objectKey: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

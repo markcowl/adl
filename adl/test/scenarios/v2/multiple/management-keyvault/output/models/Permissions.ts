@@ -6,17 +6,17 @@ export interface Permissions {
     /**
      * @description Permissions to keys
      */
-    keys: any;
+    keys: unknown /*= (not tsschema -- undefinedkeys/undefined ) =*/;
     /**
      * @description Permissions to secrets
      */
-    secrets: any;
+    secrets: unknown /*= (not tsschema -- undefinedsecrets/undefined ) =*/;
     /**
      * @description Permissions to certificates
      */
-    certificates: any;
+    certificates: unknown /*= (not tsschema -- undefinedcertificates/undefined ) =*/;
     /**
      * @description Permissions to storage accounts
      */
-    storage: any;
+    storage: unknown /*= (not tsschema -- undefinedstorage/undefined ) =*/;
 }

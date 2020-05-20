@@ -1,4 +1,4 @@
 export interface editTeam {
-    name?: any;
-    permission: any;
+    name?: string;
+    permission: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

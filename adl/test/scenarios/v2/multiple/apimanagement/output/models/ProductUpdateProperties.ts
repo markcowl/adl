@@ -6,5 +6,5 @@ export interface ProductUpdateProperties extends ProductEntityBaseParameters {
     /**
      * @description Product name.
      */
-    displayName: any;
+    displayName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

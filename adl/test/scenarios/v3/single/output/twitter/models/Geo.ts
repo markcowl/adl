@@ -1,7 +1,7 @@
 import { Point } from './Point';
 export interface Geo {
-    bbox?: any;
+    bbox?: unknown /*= (not tsschema -- undefinedbbox/undefined ) =*/;
     geometry: Point;
     properties?: {};
-    type?: any;
+    type?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

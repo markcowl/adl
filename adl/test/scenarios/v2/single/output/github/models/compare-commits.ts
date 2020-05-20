@@ -1,38 +1,38 @@
 export interface compare_commits {
-    ahead_by: any;
+    ahead_by: int64;
     base_commit: {
         author: user;
         commit: {
             author: {
-                date: any;
-                email: any;
-                name: any;
+                date: string;
+                email: string;
+                name: string;
             };
             committer: {
-                date: any;
-                email: any;
-                name: any;
+                date: string;
+                email: string;
+                name: string;
             };
-            message: any;
+            message: string;
             tree: {
-                sha: any;
-                url: any;
+                sha: string;
+                url: string;
             };
-            url: any;
+            url: string;
         };
         committer: user;
-        parents: any;
-        sha: any;
-        url: any;
+        parents: array;
+        sha: string;
+        url: string;
     };
-    behind_by: any;
-    commits: any;
-    diff_url: any;
-    files: any;
-    html_url: any;
-    patch_url: any;
-    permalink_url: any;
-    status: any;
-    total_commits: any;
-    url: any;
+    behind_by: int64;
+    commits: unknown /*= (not tsschema -- undefinedcommits/undefined ) =*/;
+    diff_url: string;
+    files: array;
+    html_url: string;
+    patch_url: string;
+    permalink_url: string;
+    status: string;
+    total_commits: int64;
+    url: string;
 }

@@ -6,21 +6,21 @@ export interface CreateLogPatternRequest {
     /**
      * @description The name of the resource group.
      */
-    ResourceGroupName?: any;
+    ResourceGroupName?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The name of the log pattern set.
      */
-    PatternSetName?: any;
+    PatternSetName?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The name of the log pattern.
      */
-    PatternName?: any;
+    PatternName?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The log pattern.
      */
-    Pattern?: any;
+    Pattern?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Rank of the log pattern.
      */
-    Rank?: any;
+    Rank?: int64;
 }

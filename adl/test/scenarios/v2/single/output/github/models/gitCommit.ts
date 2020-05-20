@@ -1,10 +1,10 @@
 export interface gitCommit {
     author: {
-        date: any;
-        email: any;
-        name: any;
+        date: string;
+        email: string;
+        name: string;
     };
-    message: any;
-    parents: any;
-    tree: any;
+    message: string;
+    parents: string;
+    tree: string;
 }

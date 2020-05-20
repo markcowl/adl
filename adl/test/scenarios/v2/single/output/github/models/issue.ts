@@ -1,7 +1,7 @@
 export interface issue {
-    assignee: any;
-    body: any;
-    labels: any;
-    milestone: any;
-    title: any;
+    assignee: string;
+    body: string;
+    labels: array;
+    milestone: double;
+    title: string;
 }

@@ -1,3 +1,3 @@
 export interface search_users_by_keyword {
-    users: any;
+    users: unknown /*= (not tsschema -- undefinedusers/undefined ) =*/;
 }

@@ -1,4 +1,4 @@
 export interface search_code {
-    items: any;
-    total_count: any;
+    items: unknown /*= (not tsschema -- undefineditems/undefined ) =*/;
+    total_count: int64;
 }

@@ -3,59 +3,59 @@
  * @description A user or organization
  */
 export interface actor {
-    avatar_url: any;
-    bio: any;
+    avatar_url: string;
+    bio: string;
     /**
      * @description The website URL from the profile page
      */
-    blog: any;
-    collaborators: any;
-    company: any;
+    blog: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    collaborators: int64;
+    company: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: any;
-    disk_usage: any;
+    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    disk_usage: int64;
     /**
      * @description Note: The returned email is the user’s publicly visible email address (or null if the user has not specified a public email address in their profile).
      */
-    email: any;
-    followers: any;
-    followers_url: any;
-    following: any;
-    following_url: any;
-    gists_url: any;
-    gravatar_id: any;
-    hireable: any;
-    html_url: any;
-    id: any;
-    location: any;
+    email: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    followers: int64;
+    followers_url: string;
+    following: int64;
+    following_url: string;
+    gists_url: string;
+    gravatar_id: string;
+    hireable: boolean;
+    html_url: string;
+    id: int64;
+    location: string;
     /**
      * @description The account username
      */
-    login: any;
+    login: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The full account name
      */
-    name: any;
-    organizations_url: any;
-    owned_private_repos: any;
+    name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    organizations_url: string;
+    owned_private_repos: int64;
     plan: {
-        collaborators: any;
-        name: any;
-        private_repos: any;
-        space: any;
+        collaborators: int64;
+        name: string;
+        private_repos: int64;
+        space: int64;
     };
-    private_gists: any;
-    public_gists: any;
-    public_repos: any;
-    starred_url: any;
-    subscriptions_url: any;
-    total_private_repos: any;
-    type: any;
+    private_gists: int64;
+    public_gists: int64;
+    public_repos: int64;
+    starred_url: string;
+    subscriptions_url: string;
+    total_private_repos: int64;
+    type: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    updated_at: any;
-    url: any;
+    updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
 }

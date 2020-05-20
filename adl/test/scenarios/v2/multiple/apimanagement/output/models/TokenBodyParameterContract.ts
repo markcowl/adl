@@ -6,9 +6,9 @@ export interface TokenBodyParameterContract {
     /**
      * @description body parameter name.
      */
-    name?: any;
+    name?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description body parameter value.
      */
-    value?: any;
+    value?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

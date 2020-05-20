@@ -6,13 +6,13 @@ export interface DeleteLogPatternRequest {
     /**
      * @description The name of the resource group.
      */
-    ResourceGroupName?: any;
+    ResourceGroupName?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The name of the log pattern set.
      */
-    PatternSetName?: any;
+    PatternSetName?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The name of the log pattern.
      */
-    PatternName?: any;
+    PatternName?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

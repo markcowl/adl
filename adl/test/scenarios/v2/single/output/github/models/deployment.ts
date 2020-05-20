@@ -1,9 +1,9 @@
 export interface deployment {
-    description: any;
+    description: string;
     payload: {
-        deploy_user: any;
-        environment: any;
-        room_id: any;
+        deploy_user: string;
+        environment: string;
+        room_id: double;
     };
-    ref: any;
+    ref: string;
 }

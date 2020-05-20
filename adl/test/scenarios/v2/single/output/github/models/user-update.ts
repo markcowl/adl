@@ -1,9 +1,9 @@
 export interface user_update {
-    bio: any;
-    blog: any;
-    company: any;
-    email: any;
-    hireable: any;
-    location: any;
-    name: any;
+    bio: string;
+    blog: string;
+    company: string;
+    email: string;
+    hireable: boolean;
+    location: string;
+    name: string;
 }

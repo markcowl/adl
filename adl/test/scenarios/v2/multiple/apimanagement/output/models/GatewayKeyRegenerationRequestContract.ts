@@ -1,4 +1,4 @@
-import { KeyType } from '../KeyType';
+import { KeyType } from '../enums/KeyType';
 /**
  * @description Gateway key regeneration request contract properties.
  */

@@ -6,13 +6,13 @@ export interface GatewayHostnameConfigurationContractProperties {
     /**
      * @description Hostname value. Supports valid domain name, partial or full wildcard
      */
-    hostname: any;
+    hostname: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Identifier of Certificate entity that will be used for TLS connection establishment
      */
-    certificateId: any;
+    certificateId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Determines whether gateway requests client certificate
      */
-    negotiateClientCertificate: any;
+    negotiateClientCertificate: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

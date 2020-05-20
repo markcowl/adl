@@ -1,4 +1,4 @@
-import { UserState } from '../UserState';
+import { UserState } from '../enums/UserState';
 /**
  * @description User Entity Base Parameters set.
  */
@@ -10,9 +10,9 @@ export interface UserEntityBaseParameters {
     /**
      * @description Optional note about a user set by the administrator.
      */
-    note: any;
+    note: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Collection of user identities.
      */
-    identities: any;
+    identities: unknown /*= (not tsschema -- undefinedidentities/undefined ) =*/;
 }

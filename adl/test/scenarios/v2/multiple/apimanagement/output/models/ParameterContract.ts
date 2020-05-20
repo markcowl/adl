@@ -6,25 +6,25 @@ export interface ParameterContract {
     /**
      * @description Parameter name.
      */
-    name?: any;
+    name?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Parameter description.
      */
-    description: any;
+    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Parameter type.
      */
-    type?: any;
+    type?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Default parameter value.
      */
-    defaultValue: any;
+    defaultValue: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Specifies whether parameter is required or not.
      */
-    required: any;
+    required: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Parameter values.
      */
-    values: any;
+    values: unknown /*= (not tsschema -- undefinedvalues/undefined ) =*/;
 }

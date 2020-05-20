@@ -6,9 +6,9 @@ export interface qp0 {
     /**
      * @description Query parameter
      */
-    QP?: any;
+    QP?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Query value
      */
-    QV?: any;
+    QV?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

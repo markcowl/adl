@@ -1,5 +1,5 @@
-import { NetworkRuleAction } from '../NetworkRuleAction';
-import { NetworkRuleBypassOptions } from '../NetworkRuleBypassOptions';
+import { NetworkRuleAction } from '../enums/NetworkRuleAction';
+import { NetworkRuleBypassOptions } from '../enums/NetworkRuleBypassOptions';
 /**
  * @description A set of rules governing the network accessibility of a vault.
  */
@@ -15,9 +15,9 @@ export interface NetworkRuleSet {
     /**
      * @description The list of IP address rules.
      */
-    ipRules: any;
+    ipRules: unknown /*= (not tsschema -- undefinedipRules/undefined ) =*/;
     /**
      * @description The list of virtual network rules.
      */
-    virtualNetworkRules: any;
+    virtualNetworkRules: unknown /*= (not tsschema -- undefinedvirtualNetworkRules/undefined ) =*/;
 }

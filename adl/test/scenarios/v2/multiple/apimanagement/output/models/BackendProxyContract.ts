@@ -6,13 +6,13 @@ export interface BackendProxyContract {
     /**
      * @description WebProxy Server AbsoluteUri property which includes the entire URI stored in the Uri instance, including all fragments and query strings.
      */
-    url?: any;
+    url?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Username to connect to the WebProxy server
      */
-    username: any;
+    username: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Password to connect to the WebProxy Server
      */
-    password: any;
+    password: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

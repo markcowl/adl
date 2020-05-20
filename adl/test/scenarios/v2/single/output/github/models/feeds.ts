@@ -1,34 +1,34 @@
 export interface feeds {
     _links: {
         current_user: {
-            href: any;
-            type: any;
+            href: string;
+            type: string;
         };
         current_user_actor: {
-            href: any;
-            type: any;
+            href: string;
+            type: string;
         };
         current_user_organization: {
-            href: any;
-            type: any;
+            href: string;
+            type: string;
         };
         current_user_public: {
-            href: any;
-            type: any;
+            href: string;
+            type: string;
         };
         timeline: {
-            href: any;
-            type: any;
+            href: string;
+            type: string;
         };
         user: {
-            href: any;
-            type: any;
+            href: string;
+            type: string;
         };
     };
-    current_user_actor_url: any;
-    current_user_organization_url: any;
-    current_user_public: any;
-    current_user_url: any;
-    timeline_url: any;
-    user_url: any;
+    current_user_actor_url: string;
+    current_user_organization_url: string;
+    current_user_public: string;
+    current_user_url: string;
+    timeline_url: string;
+    user_url: string;
 }

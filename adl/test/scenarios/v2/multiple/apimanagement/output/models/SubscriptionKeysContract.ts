@@ -6,9 +6,9 @@ export interface SubscriptionKeysContract {
     /**
      * @description Subscription primary key.
      */
-    primaryKey: any;
+    primaryKey: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Subscription secondary key.
      */
-    secondaryKey: any;
+    secondaryKey: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

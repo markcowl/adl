@@ -6,33 +6,33 @@ export interface commit {
             /**
              * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
              */
-            date: any;
-            email: any;
-            name: any;
+            date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+            email: string;
+            name: string;
         };
         committer: {
             /**
              * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
              */
-            date: any;
-            email: any;
-            name: any;
+            date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+            email: string;
+            name: string;
         };
-        message: any;
+        message: string;
         tree: {
-            sha: any;
-            url: any;
+            sha: string;
+            url: string;
         };
-        url: any;
+        url: string;
     };
     committer: user;
-    files: any;
-    parents: any;
-    sha: any;
+    files: array;
+    parents: array;
+    sha: string;
     stats: {
-        additions: any;
-        deletions: any;
-        total: any;
+        additions: int64;
+        deletions: int64;
+        total: int64;
     };
-    url: any;
+    url: string;
 }

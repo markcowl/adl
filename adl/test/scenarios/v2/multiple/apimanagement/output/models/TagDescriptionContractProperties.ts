@@ -6,9 +6,9 @@ export interface TagDescriptionContractProperties extends TagDescriptionBaseProp
     /**
      * @description Identifier of the tag in the form of /tags/{tagId}
      */
-    tagId: any;
+    tagId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Tag name.
      */
-    displayName: any;
+    displayName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

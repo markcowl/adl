@@ -1,9 +1,9 @@
 export interface headBranch {
     object: {
-        sha: any;
-        type: any;
-        url: any;
+        sha: string;
+        type: string;
+        url: string;
     };
-    ref: any;
-    url: any;
+    ref: string;
+    url: string;
 }

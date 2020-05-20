@@ -6,21 +6,21 @@ export interface DeletedVaultProperties {
     /**
      * @description The resource id of the original vault.
      */
-    readonly vaultId: any;
+    readonly vaultId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The location of the original vault.
      */
-    readonly location: any;
+    readonly location: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The deleted date.
      */
-    readonly deletionDate: any;
+    readonly deletionDate: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The scheduled purged date.
      */
-    readonly scheduledPurgeDate: any;
+    readonly scheduledPurgeDate: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Tags of the original vault.
      */
-    readonly tags: any;
+    readonly tags: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

@@ -10,5 +10,5 @@ export interface GatewayContractProperties {
     /**
      * @description Gateway description
      */
-    description: any;
+    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

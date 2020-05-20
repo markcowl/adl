@@ -1,4 +1,4 @@
 export interface subscriptionBody {
-    ignored: any;
-    subscribed: any;
+    ignored: boolean;
+    subscribed: boolean;
 }

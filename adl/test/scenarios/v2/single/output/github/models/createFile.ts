@@ -1,38 +1,38 @@
 export interface createFile {
     commit: {
         author: {
-            date: any;
-            email: any;
-            name: any;
+            date: string;
+            email: string;
+            name: string;
         };
         committer: {
-            date: any;
-            email: any;
-            name: any;
+            date: string;
+            email: string;
+            name: string;
         };
-        html_url: any;
-        message: any;
-        parents: any;
-        sha: any;
+        html_url: string;
+        message: string;
+        parents: array;
+        sha: string;
         tree: {
-            sha: any;
-            url: any;
+            sha: string;
+            url: string;
         };
-        url: any;
+        url: string;
     };
     content: {
         _links: {
-            git: any;
-            html: any;
-            self: any;
+            git: string;
+            html: string;
+            self: string;
         };
-        git_url: any;
-        html_url: any;
-        name: any;
-        path: any;
-        sha: any;
-        size: any;
-        type: any;
-        url: any;
+        git_url: string;
+        html_url: string;
+        name: string;
+        path: string;
+        sha: string;
+        size: int64;
+        type: string;
+        url: string;
     };
 }

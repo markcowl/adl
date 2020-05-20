@@ -1,6 +1,6 @@
 export interface pullsPost {
-    base: any;
-    body: any;
-    head: any;
-    title: any;
+    base: string;
+    body: string;
+    head: string;
+    title: string;
 }

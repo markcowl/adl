@@ -1,5 +1,5 @@
 import { CommonMediaFields } from './CommonMediaFields';
 export interface Photo extends CommonMediaFields {
-    type: any;
-    url: any;
+    type: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
 }

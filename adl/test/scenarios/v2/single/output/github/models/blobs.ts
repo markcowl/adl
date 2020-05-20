@@ -1,3 +1,3 @@
 export interface blobs {
-    sha: any;
+    sha: string;
 }

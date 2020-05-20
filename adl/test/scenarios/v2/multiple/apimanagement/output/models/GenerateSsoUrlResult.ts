@@ -6,5 +6,5 @@ export interface GenerateSsoUrlResult {
     /**
      * @description Redirect Url containing the SSO URL value.
      */
-    value: any;
+    value: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

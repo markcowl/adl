@@ -1,8 +1,8 @@
 export interface createFileBody {
     committer: {
-        email: any;
-        name: any;
+        email: string;
+        name: string;
     };
-    content: any;
-    message: any;
+    content: string;
+    message: string;
 }

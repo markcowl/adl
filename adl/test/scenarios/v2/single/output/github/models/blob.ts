@@ -1,6 +1,6 @@
 export interface blob {
-    content: any;
-    encoding: any;
-    sha: any;
-    size: any;
+    content: string;
+    encoding: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    sha: string;
+    size: int64;
 }

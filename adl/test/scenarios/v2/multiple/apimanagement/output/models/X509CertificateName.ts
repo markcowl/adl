@@ -6,9 +6,9 @@ export interface X509CertificateName {
     /**
      * @description Common Name of the Certificate.
      */
-    name: any;
+    name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Thumbprint for the Issuer of the Certificate.
      */
-    issuerCertificateThumbprint: any;
+    issuerCertificateThumbprint: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

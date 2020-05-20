@@ -6,21 +6,21 @@ export interface Occupancy {
     /**
      * @description The number of connections that are authorised to enter members into the presence channel.
      */
-    presenceConnections: any;
+    presenceConnections: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The number of members currently entered into the presence channel.
      */
-    presenceMembers: any;
+    presenceMembers: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The number of connections that are authorised to subscribe to presence messages.
      */
-    presenceSubscribers: any;
+    presenceSubscribers: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The number of connections attached to the channel that are authorised to publish.
      */
-    publishers: any;
+    publishers: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The number of connections attached that are authorised to subscribe to messages.
      */
-    subscribers: any;
+    subscribers: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

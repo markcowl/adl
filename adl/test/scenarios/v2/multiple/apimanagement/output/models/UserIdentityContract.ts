@@ -6,9 +6,9 @@ export interface UserIdentityContract {
     /**
      * @description Identity provider name.
      */
-    provider: any;
+    provider: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Identifier value within provider.
      */
-    id: any;
+    id: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

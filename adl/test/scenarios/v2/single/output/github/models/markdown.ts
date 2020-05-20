@@ -1,5 +1,5 @@
 export interface markdown {
-    context: any;
-    mode: any;
-    text: any;
+    context: string;
+    mode: string;
+    text: string;
 }

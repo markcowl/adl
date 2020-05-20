@@ -6,5 +6,5 @@ export interface HashtagFields {
     /**
      * @description The text of the Hashtag
      */
-    tag?: any;
+    tag?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

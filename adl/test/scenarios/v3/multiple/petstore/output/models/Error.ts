@@ -1,4 +1,4 @@
 export interface Error {
-    code?: any;
-    message?: any;
+    code?: int32;
+    message?: string;
 }

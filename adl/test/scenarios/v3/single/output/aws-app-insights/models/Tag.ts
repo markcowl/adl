@@ -6,9 +6,9 @@ export interface Tag {
     /**
      * @description One part of a key-value pair that defines a tag. The maximum length of a tag key is 128 characters. The minimum length is 1 character.
      */
-    Key?: any;
+    Key?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The optional part of a key-value pair that defines a tag. The maximum length of a tag value is 256 characters. The minimum length is 0 characters. If you don't want an application to have a specific tag value, don't specify a value for this parameter.
      */
-    Value?: any;
+    Value?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

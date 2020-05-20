@@ -1,4 +1,4 @@
 export interface assetPatch {
-    label: any;
-    name?: any;
+    label: string;
+    name?: string;
 }

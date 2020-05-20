@@ -6,5 +6,5 @@ export interface RelatedObservations {
     /**
      * @description The list of observations related to the problem.
      */
-    ObservationList: any;
+    ObservationList: unknown /*= (not tsschema -- undefinedObservationList/undefined ) =*/;
 }

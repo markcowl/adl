@@ -1,5 +1,5 @@
 export interface Pet {
-    id?: any;
-    name?: any;
-    tag: any;
+    id?: int64;
+    name?: string;
+    tag: string;
 }

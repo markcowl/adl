@@ -6,17 +6,17 @@ export interface AccessInformationContract {
     /**
      * @description Identifier.
      */
-    id: any;
+    id: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
      */
-    primaryKey: any;
+    primaryKey: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
      */
-    secondaryKey: any;
+    secondaryKey: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Determines whether direct access is enabled.
      */
-    enabled: any;
+    enabled: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

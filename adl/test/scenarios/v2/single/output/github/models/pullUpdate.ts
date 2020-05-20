@@ -1,5 +1,5 @@
 export interface pullUpdate {
-    body: any;
-    state: any;
-    title: any;
+    body: string;
+    state: string;
+    title: string;
 }

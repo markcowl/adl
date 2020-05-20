@@ -6,5 +6,5 @@ export interface RecipientEmailContractProperties {
     /**
      * @description User Email subscribed to notification.
      */
-    email: any;
+    email: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

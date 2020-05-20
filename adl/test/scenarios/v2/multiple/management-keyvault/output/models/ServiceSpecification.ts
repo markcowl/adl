@@ -6,5 +6,5 @@ export interface ServiceSpecification {
     /**
      * @description Log specifications of operation.
      */
-    logSpecifications: any;
+    logSpecifications: unknown /*= (not tsschema -- undefinedlogSpecifications/undefined ) =*/;
 }

@@ -1,4 +1,4 @@
 export interface hookBody {
-    active: any;
-    add_events: any;
+    active: boolean;
+    add_events: array;
 }

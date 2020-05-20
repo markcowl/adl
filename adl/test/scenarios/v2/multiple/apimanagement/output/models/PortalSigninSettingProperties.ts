@@ -6,5 +6,5 @@ export interface PortalSigninSettingProperties {
     /**
      * @description Redirect Anonymous users to the Sign-In page.
      */
-    enabled: any;
+    enabled: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

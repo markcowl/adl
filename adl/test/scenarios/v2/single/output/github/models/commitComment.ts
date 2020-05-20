@@ -1,20 +1,20 @@
 import { user } from './user';
 export interface commitComment {
-    body: any;
-    commit_id: any;
+    body: string;
+    commit_id: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: any;
-    html_url: any;
-    id: any;
-    line: any;
-    path: any;
-    position: any;
+    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    html_url: string;
+    id: int64;
+    line: int64;
+    path: string;
+    position: int64;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    updated_at: any;
-    url: any;
+    updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
     user: user;
 }

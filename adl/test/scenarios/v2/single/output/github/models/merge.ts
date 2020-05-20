@@ -1,5 +1,5 @@
 export interface merge {
-    merged: any;
-    message: any;
-    sha: any;
+    merged: boolean;
+    message: string;
+    sha: string;
 }

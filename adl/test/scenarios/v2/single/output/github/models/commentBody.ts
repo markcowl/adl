@@ -1,3 +1,3 @@
 export interface commentBody {
-    body?: any;
+    body?: string;
 }

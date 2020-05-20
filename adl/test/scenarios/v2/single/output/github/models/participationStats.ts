@@ -1,4 +1,4 @@
 export interface participationStats {
-    all: any;
-    owner: any;
+    all: array;
+    owner: array;
 }

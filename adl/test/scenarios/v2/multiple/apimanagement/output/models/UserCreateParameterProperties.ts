@@ -1,5 +1,5 @@
-import { AppType } from '../AppType';
-import { Confirmation } from '../Confirmation';
+import { AppType } from '../enums/AppType';
+import { Confirmation } from '../enums/Confirmation';
 import { UserEntityBaseParameters } from './UserEntityBaseParameters';
 /**
  * @description Parameters supplied to the Create User operation.
@@ -8,19 +8,19 @@ export interface UserCreateParameterProperties extends UserEntityBaseParameters 
     /**
      * @description Email address. Must not be empty and must be unique within the service instance.
      */
-    email?: any;
+    email?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description First name.
      */
-    firstName?: any;
+    firstName?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Last name.
      */
-    lastName?: any;
+    lastName?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description User Password. If no value is provided, a default password is generated.
      */
-    password: any;
+    password: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Determines the type of application which send the create user request. Default is old publisher portal.
      */

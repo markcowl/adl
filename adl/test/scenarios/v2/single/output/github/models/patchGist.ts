@@ -1,16 +1,16 @@
 export interface patchGist {
-    description: any;
+    description: string;
     files: {
-        'delete_this_file.txt': any;
+        'delete_this_file.txt': string;
         'file1.txt': {
-            content: any;
+            content: string;
         };
         'new_file.txt': {
-            content: any;
+            content: string;
         };
         'old_name.txt': {
-            content: any;
-            filename: any;
+            content: string;
+            filename: string;
         };
     };
 }

@@ -6,9 +6,9 @@ export interface NamedValueUpdateParameterProperties extends NamedValueEntityBas
     /**
      * @description Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters.
      */
-    displayName: any;
+    displayName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace.
      */
-    value: any;
+    value: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

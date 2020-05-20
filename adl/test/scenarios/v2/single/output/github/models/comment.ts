@@ -1,3 +1,3 @@
 export interface comment {
-    body: any;
+    body: string;
 }

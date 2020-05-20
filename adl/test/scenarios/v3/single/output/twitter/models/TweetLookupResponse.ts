@@ -1,6 +1,6 @@
 import { Expansions } from './Expansions';
 export interface TweetLookupResponse {
-    data: any;
-    errors: any;
+    data: unknown /*= (not tsschema -- undefineddata/undefined ) =*/;
+    errors: unknown /*= (not tsschema -- undefinederrors/undefined ) =*/;
     includes: Expansions;
 }

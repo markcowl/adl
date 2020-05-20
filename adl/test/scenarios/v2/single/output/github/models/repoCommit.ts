@@ -3,24 +3,24 @@ export interface repoCommit {
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        date: any;
-        email: any;
-        name: any;
+        date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        email: string;
+        name: string;
     };
     committer: {
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        date: any;
-        email: any;
-        name: any;
+        date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        email: string;
+        name: string;
     };
-    message: any;
-    parents: any;
-    sha: any;
+    message: string;
+    parents: array;
+    sha: string;
     tree: {
-        sha: any;
-        url: any;
+        sha: string;
+        url: string;
     };
-    url: any;
+    url: string;
 }

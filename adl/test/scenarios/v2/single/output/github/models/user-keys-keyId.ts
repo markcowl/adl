@@ -1,6 +1,6 @@
 export interface user_keys_keyId {
-    id: any;
-    key: any;
-    title: any;
-    url: any;
+    id: int64;
+    key: string;
+    title: string;
+    url: string;
 }

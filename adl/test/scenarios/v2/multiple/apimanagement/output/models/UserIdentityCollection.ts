@@ -6,13 +6,13 @@ export interface UserIdentityCollection {
     /**
      * @description User Identity values.
      */
-    value: any;
+    value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
     /**
      * @description Total record count number across all pages.
      */
-    count: any;
+    count: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Next page link if any.
      */
-    nextLink: any;
+    nextLink: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

@@ -6,11 +6,11 @@ export interface NotificationContractProperties {
     /**
      * @description Title of the Notification.
      */
-    title?: any;
+    title?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Description of the Notification.
      */
-    description: any;
+    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Recipient Parameter values.
      */

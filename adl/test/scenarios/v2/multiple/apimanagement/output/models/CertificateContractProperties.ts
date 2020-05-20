@@ -6,14 +6,14 @@ export interface CertificateContractProperties {
     /**
      * @description Subject attribute of the certificate.
      */
-    subject?: any;
+    subject?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Thumbprint of the certificate.
      */
-    thumbprint?: any;
+    thumbprint?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
      *
      */
-    expirationDate?: any;
+    expirationDate?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

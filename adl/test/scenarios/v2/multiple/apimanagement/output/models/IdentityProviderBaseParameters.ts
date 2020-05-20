@@ -1,4 +1,4 @@
-import { IdentityProviderType } from '../IdentityProviderType';
+import { IdentityProviderType } from '../enums/IdentityProviderType';
 /**
  * @description Identity Provider Base Parameter Properties.
  */
@@ -10,29 +10,29 @@ export interface IdentityProviderBaseParameters {
     /**
      * @description The TenantId to use instead of Common when logging into Active Directory
      */
-    signinTenant: any;
+    signinTenant: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description List of Allowed Tenants when configuring Azure Active Directory login.
      */
-    allowedTenants: any;
+    allowedTenants: unknown /*= (not tsschema -- undefinedallowedTenants/undefined ) =*/;
     /**
      * @description OpenID Connect discovery endpoint hostname for AAD or AAD B2C.
      */
-    authority: any;
+    authority: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Signup Policy Name. Only applies to AAD B2C Identity Provider.
      */
-    signupPolicyName: any;
+    signupPolicyName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Signin Policy Name. Only applies to AAD B2C Identity Provider.
      */
-    signinPolicyName: any;
+    signinPolicyName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Profile Editing Policy Name. Only applies to AAD B2C Identity Provider.
      */
-    profileEditingPolicyName: any;
+    profileEditingPolicyName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Password Reset Policy Name. Only applies to AAD B2C Identity Provider.
      */
-    passwordResetPolicyName: any;
+    passwordResetPolicyName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

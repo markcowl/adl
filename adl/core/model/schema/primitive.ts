@@ -1,9 +1,17 @@
+import { valueOf } from '@azure-tools/sourcemap';
 import { Schema } from './schema';
 
 export class Primitive extends Schema {
-  constructor(kind: string, initializer?: Partial<Primitive>) {
+  constructor(protected kind: string, initializer?: Partial<Primitive>) {
     super(kind);
     this.initialize(initializer);
+  }
+  get isInline(): boolean {
+    return true;
+  }
+
+  get typeDefinition(): string {
+    return <string>valueOf(this.kind);
   }
 }
 

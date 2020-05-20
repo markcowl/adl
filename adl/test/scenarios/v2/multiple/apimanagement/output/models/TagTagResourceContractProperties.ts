@@ -6,9 +6,9 @@ export interface TagTagResourceContractProperties {
     /**
      * @description Tag identifier
      */
-    id: any;
+    id: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Tag Name
      */
-    name: any;
+    name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

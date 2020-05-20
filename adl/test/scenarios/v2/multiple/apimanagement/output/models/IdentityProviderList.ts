@@ -6,9 +6,9 @@ export interface IdentityProviderList {
     /**
      * @description Identity Provider configuration values.
      */
-    value: any;
+    value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
     /**
      * @description Next page link if any.
      */
-    nextLink: any;
+    nextLink: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

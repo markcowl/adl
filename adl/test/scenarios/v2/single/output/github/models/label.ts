@@ -1,5 +1,5 @@
 export interface label {
-    color: any;
-    name: any;
-    url: any;
+    color: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    name: string;
+    url: string;
 }

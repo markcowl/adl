@@ -6,74 +6,74 @@ export interface air3_Results {
     /**
      * @description Identifies which passed query system identifiers are invalid.
      */
-    BadSystemIDs?: any;
+    BadSystemIDs?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Summary count of the number of CWA facilities or SDWA public drinking water systems with current violations.
      */
-    CVRows?: any;
+    CVRows?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     ClusterOutput: air1_ClusterOutput;
     /**
      * @description Number of clusters returned.
      */
-    ClusterRecords: any;
+    ClusterRecords: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Summary count of the number of facilities with a formal enforcement action in the past five years
      */
-    FEARows?: any;
+    FEARows?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description A complex array of facility information.
      */
-    Facilities: any;
+    Facilities: unknown /*= (not tsschema -- undefinedFacilities/undefined ) =*/;
     /**
      * @description Number of facilities with insp_5yr_flag populated (CWP_DATE_LAST_INSPECTION)
      */
-    INSPRows?: any;
+    INSPRows?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description URL where all the icons are located
      */
-    IconBaseURL?: any;
+    IconBaseURL?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Number of facilities with tribal_flag populated
      */
-    IndianCountryRows?: any;
+    IndianCountryRows?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Number of facilities with infea_5yr_flag populated (INFORMAL_ENF_ACT_COUNT > 0)
      */
-    InfFEARows?: any;
+    InfFEARows?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Field to record messages (typically performance-related) about packet processing
      */
-    Message?: any;
+    Message?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Combine this URL with the PUC to get popup info
      */
-    PopUpBaseURL?: any;
+    PopUpBaseURL?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Sequential number assigned to entire search result
      */
-    QueryID?: any;
+    QueryID?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description A list of submitted query parameters and their values.
      */
-    QueryParameters?: any;
+    QueryParameters?: unknown /*= (not tsschema -- undefinedQueryParameters/undefined ) =*/;
     /**
      * @description Number of query results returned
      */
-    QueryRows?: any;
+    QueryRows?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Number of facilities with curr_sv_flag populated (CWP_STATUS = "Significant Violation")
      */
-    SVRows?: any;
+    SVRows?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The base service URL.
      */
-    ServiceBaseURL?: any;
+    ServiceBaseURL?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The total dollar amount of either assessed or final penalties within the five year time period
      */
-    TotalPenalties?: any;
+    TotalPenalties?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Number of facilities having one or more quarters in non-compliance (QNC) in the last three years
      */
-    V3Rows?: any;
+    V3Rows?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

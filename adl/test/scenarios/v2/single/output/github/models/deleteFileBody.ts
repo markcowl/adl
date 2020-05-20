@@ -1,8 +1,8 @@
 export interface deleteFileBody {
     committer: {
-        email: any;
-        name: any;
+        email: string;
+        name: string;
     };
-    message: any;
-    sha: any;
+    message: string;
+    sha: string;
 }

@@ -3,30 +3,30 @@ export interface PresenceMessage {
     /**
      * @description The event signified by a PresenceMessage.
      */
-    readonly action: any;
+    readonly action: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The client ID of the publisher of this presence update.
      */
-    clientId: any;
+    clientId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The connection ID of the publisher of this presence update.
      */
-    connectionId: any;
+    connectionId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The presence update payload, if provided.
      */
-    data: any;
+    data: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description This will typically be empty as all presence updates received from Ably are automatically decoded client-side using this value. However, if the message encoding cannot be processed, this attribute will contain the remaining transformations not applied to the data payload.
      */
-    encoding: any;
+    encoding: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     extras: Extras;
     /**
      * @description Unique ID assigned by Ably to this presence update.
      */
-    readonly id: any;
+    readonly id: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Timestamp when the presence update was received by Ably, as milliseconds since the epoch.
      */
-    readonly timestamp: any;
+    readonly timestamp: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

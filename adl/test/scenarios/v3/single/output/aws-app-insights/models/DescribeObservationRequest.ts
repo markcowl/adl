@@ -6,5 +6,5 @@ export interface DescribeObservationRequest {
     /**
      * @description The ID of the observation.
      */
-    ObservationId?: any;
+    ObservationId?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

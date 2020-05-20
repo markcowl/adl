@@ -1,5 +1,5 @@
 export interface mergesBody {
-    base: any;
-    commit_message: any;
-    head: any;
+    base: string;
+    commit_message: string;
+    head: string;
 }

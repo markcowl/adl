@@ -1,5 +1,5 @@
-import { ConfigurationEventResourceType } from '../ConfigurationEventResourceType';
-import { ConfigurationEventStatus } from '../ConfigurationEventStatus';
+import { ConfigurationEventResourceType } from '../enums/ConfigurationEventResourceType';
+import { ConfigurationEventStatus } from '../enums/ConfigurationEventStatus';
 /**
  * @description  The event information.
  */
@@ -7,7 +7,7 @@ export interface ConfigurationEvent {
     /**
      * @description  The resource monitored by Application Insights.
      */
-    MonitoredResourceARN: any;
+    MonitoredResourceARN: string;
     /**
      * @description  The status of the configuration update event. Possible values include INFO, WARN, and ERROR.
      */
@@ -19,13 +19,13 @@ export interface ConfigurationEvent {
     /**
      * @description  The timestamp of the event.
      */
-    EventTime: any;
+    EventTime: dateTime;
     /**
      * @description  The details of the event in plain text.
      */
-    EventDetail: any;
+    EventDetail: string;
     /**
      * @description  The name of the resource Application Insights attempted to configure.
      */
-    EventResourceName: any;
+    EventResourceName: string;
 }

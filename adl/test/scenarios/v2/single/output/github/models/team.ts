@@ -1,8 +1,8 @@
 export interface team {
-    id: any;
-    members_count: any;
-    name: any;
-    permission: any;
-    repos_count: any;
-    url: any;
+    id: int64;
+    members_count: int64;
+    name: string;
+    permission: string;
+    repos_count: int64;
+    url: string;
 }

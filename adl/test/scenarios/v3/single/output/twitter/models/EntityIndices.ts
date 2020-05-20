@@ -6,9 +6,9 @@ export interface EntityIndices {
     /**
      * @description Index (zero-based) at which position this entity ends.
      */
-    end?: any;
+    end?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Index (zero-based) at which position this entity starts.
      */
-    start?: any;
+    start?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

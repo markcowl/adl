@@ -6,9 +6,9 @@ export interface IdentityProviderContractProperties extends IdentityProviderBase
     /**
      * @description Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft.
      */
-    clientId?: any;
+    clientId?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
      */
-    clientSecret: any;
+    clientSecret: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

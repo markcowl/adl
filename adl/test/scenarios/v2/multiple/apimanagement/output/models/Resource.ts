@@ -6,13 +6,13 @@ export interface Resource {
     /**
      * @description Resource ID.
      */
-    readonly id: any;
+    readonly id: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Resource name.
      */
-    readonly name: any;
+    readonly name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Resource type for API Management resource.
      */
-    readonly type: any;
+    readonly type: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

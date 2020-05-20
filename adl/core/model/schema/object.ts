@@ -95,12 +95,13 @@ export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements 
     // or it's an anonymous type that gets expanded
     const tr = schema instanceof TSSchema ? this.getTypeReference(schema): undefined;
 
-    const type = schema instanceof TSSchema ? (schema.isInline ? schema.typeDefinition : tr!.getName()) : 'any';
+    const type = tr ? (schema.isInline ? schema.typeDefinition : tr!.getName()) : schema.typeDefinition || 'any';
 
+   
     const result = new PropertyImpl(this.node.addProperty({
       //todo: do a better 'fix-the-bad-name' (ie, perks/codegen)
       name: normalizeIdentifier(name),
-      type,
+      type: isAnonymous(type) ? type.name : type ,
     }));
 
     result.initialize(initializer);

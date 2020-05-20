@@ -6,21 +6,21 @@ export interface ApiTagResourceContractProperties extends ApiEntityBaseContract 
     /**
      * @description API identifier in the form /apis/{apiId}.
      */
-    id: any;
+    id: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description API name.
      */
-    name: any;
+    name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Absolute URL of the backend service implementing this API.
      */
-    serviceUrl: any;
+    serviceUrl: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API.
      */
-    path: any;
+    path: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Describes on which protocols the operations in this API can be invoked.
      */
-    protocols: any;
+    protocols: unknown /*= (not tsschema -- undefinedprotocols/undefined ) =*/;
 }

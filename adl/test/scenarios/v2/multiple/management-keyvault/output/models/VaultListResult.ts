@@ -6,9 +6,9 @@ export interface VaultListResult {
     /**
      * @description The list of vaults.
      */
-    value: any;
+    value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
     /**
      * @description The URL to get the next set of vaults.
      */
-    nextLink: any;
+    nextLink: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

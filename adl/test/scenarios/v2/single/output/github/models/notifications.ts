@@ -1,25 +1,25 @@
 export interface notifications {
-    id: any;
-    last_read_at: any;
-    reason: any;
+    id: int64;
+    last_read_at: string;
+    reason: string;
     repository: {
-        description: any;
-        fork: any;
-        full_name: any;
-        html_url: any;
-        id: any;
-        name: any;
+        description: string;
+        fork: boolean;
+        full_name: string;
+        html_url: string;
+        id: int64;
+        name: string;
         owner: actor;
-        private: any;
-        url: any;
+        private: boolean;
+        url: string;
     };
     subject: {
-        latest_comment_url: any;
-        title: any;
-        type: any;
-        url: any;
+        latest_comment_url: string;
+        title: string;
+        type: string;
+        url: string;
     };
-    unread: any;
-    updated_at: any;
-    url: any;
+    unread: boolean;
+    updated_at: string;
+    url: string;
 }

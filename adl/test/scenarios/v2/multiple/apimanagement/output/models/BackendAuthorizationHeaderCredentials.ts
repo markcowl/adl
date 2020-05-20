@@ -6,9 +6,9 @@ export interface BackendAuthorizationHeaderCredentials {
     /**
      * @description Authentication Scheme name.
      */
-    scheme?: any;
+    scheme?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Authentication Parameter value.
      */
-    parameter?: any;
+    parameter?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

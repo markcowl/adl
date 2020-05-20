@@ -6,9 +6,9 @@ export interface ResourceListResult {
     /**
      * @description The list of vault resources.
      */
-    value: any;
+    value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
     /**
      * @description The URL to get the next set of vault resources.
      */
-    nextLink: any;
+    nextLink: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

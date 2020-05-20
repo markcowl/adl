@@ -6,17 +6,17 @@ export interface air2_MapOutput {
     /**
      * @description URL where all the icons are located
      */
-    IconBaseURL?: any;
+    IconBaseURL?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description An array of facility geospatial information.
      */
-    MapData?: any;
+    MapData?: unknown /*= (not tsschema -- undefinedMapData/undefined ) =*/;
     /**
      * @description Combine this URL with the PUC to get popup info
      */
-    PopUpBaseURL?: any;
+    PopUpBaseURL?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Sequential number assigned to entire search result
      */
-    QueryID?: any;
+    QueryID?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

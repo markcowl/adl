@@ -6,5 +6,5 @@ export interface BodyDiagnosticSettings {
     /**
      * @description Number of request body bytes to log.
      */
-    bytes: any;
+    bytes: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

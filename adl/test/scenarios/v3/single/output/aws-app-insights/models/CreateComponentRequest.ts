@@ -6,13 +6,13 @@ export interface CreateComponentRequest {
     /**
      * @description The name of the resource group.
      */
-    ResourceGroupName?: any;
+    ResourceGroupName?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The name of the component.
      */
-    ComponentName?: any;
+    ComponentName?: string;
     /**
      * @description The list of resource ARNs that belong to the component.
      */
-    ResourceList?: any;
+    ResourceList?: unknown /*= (not tsschema -- undefinedResourceList/undefined ) =*/;
 }

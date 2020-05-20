@@ -43,7 +43,7 @@ export class Schema extends Element {
     return false;
   }
   get typeDefinition(): string {
-    return 'unknown /*= (not tsschema) =*/';
+    return `unknown /*= (not tsschema -- ${Object.getPrototypeOf(this).name}${valueOf(this.name)}/${(<any>this).kind} ) =*/`;
   }
 }
 

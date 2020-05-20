@@ -6,21 +6,21 @@ export interface Error {
     /**
      * @description Error code.
      */
-    code: any;
+    code: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Link to help with error.
      */
-    href: any;
+    href: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Message explaining the error's cause.
      */
-    message: any;
+    message: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Server ID with which error was encountered.
      */
-    serverId: any;
+    serverId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Status error code.
      */
-    statusCode: any;
+    statusCode: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

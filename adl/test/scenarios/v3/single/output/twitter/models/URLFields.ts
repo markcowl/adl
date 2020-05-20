@@ -6,21 +6,21 @@ export interface URLFields {
     /**
      * @description Description of the URL landing page.
      */
-    description: any;
+    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The URL as displayed in the Twitter client.
      */
-    display_url: any;
-    expanded_url: any;
-    images: any;
-    status: any;
+    display_url: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    expanded_url: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    images: unknown /*= (not tsschema -- undefinedimages/undefined ) =*/;
+    status: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Title of the page the URL points to.
      */
-    title: any;
+    title: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Fully resolved url
      */
-    unwound_url: any;
-    url?: any;
+    unwound_url: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

@@ -1,46 +1,46 @@
 import { actor } from './actor';
 import { organization } from './organization';
 export interface repo {
-    clone_url: any;
+    clone_url: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: any;
-    description: any;
-    fork: any;
-    forks: any;
-    forks_count: any;
-    full_name: any;
-    git_url: any;
-    has_downloads: any;
-    has_issues: any;
-    has_wiki: any;
-    homepage: any;
-    html_url: any;
-    id: any;
-    language: any;
-    master_branch: any;
-    mirror_url: any;
-    name: any;
-    open_issues: any;
-    open_issues_count: any;
+    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    description: string;
+    fork: boolean;
+    forks: int64;
+    forks_count: int64;
+    full_name: string;
+    git_url: string;
+    has_downloads: boolean;
+    has_issues: boolean;
+    has_wiki: boolean;
+    homepage: string;
+    html_url: string;
+    id: int64;
+    language: string;
+    master_branch: string;
+    mirror_url: string;
+    name: string;
+    open_issues: int64;
+    open_issues_count: int64;
     organization: organization;
     owner: actor;
     parent: {};
-    private: any;
+    private: boolean;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    pushed_at: any;
-    size: any;
+    pushed_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    size: int64;
     source: {};
-    ssh_url: any;
-    svn_url: any;
+    ssh_url: string;
+    svn_url: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    updated_at: any;
-    url: any;
-    watchers: any;
-    watchers_count: any;
+    updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
+    watchers: int64;
+    watchers_count: int64;
 }

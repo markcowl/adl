@@ -1,5 +1,5 @@
-import { CloudWatchEventSource } from '../CloudWatchEventSource';
-import { LogFilter } from '../LogFilter';
+import { CloudWatchEventSource } from '../enums/CloudWatchEventSource';
+import { LogFilter } from '../enums/LogFilter';
 /**
  * @description Describes an anomaly or error with the application.
  */
@@ -7,35 +7,35 @@ export interface Observation {
     /**
      * @description The ID of the observation type.
      */
-    Id: any;
+    Id: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The time when the observation was first detected, in epoch seconds.
      */
-    StartTime: any;
+    StartTime: dateTime;
     /**
      * @description The time when the observation ended, in epoch seconds.
      */
-    EndTime: any;
+    EndTime: dateTime;
     /**
      * @description The source type of the observation.
      */
-    SourceType: any;
+    SourceType: string;
     /**
      * @description The source resource ARN of the observation.
      */
-    SourceARN: any;
+    SourceARN: string;
     /**
      * @description The log group name.
      */
-    LogGroup: any;
+    LogGroup: string;
     /**
      * @description The timestamp in the CloudWatch Logs that specifies when the matched line occurred.
      */
-    LineTime: any;
+    LineTime: dateTime;
     /**
      * @description The log text of the observation.
      */
-    LogText: any;
+    LogText: string;
     /**
      * @description The log filter of the observation.
      */
@@ -43,23 +43,23 @@ export interface Observation {
     /**
      * @description The namespace of the observation metric.
      */
-    MetricNamespace: any;
+    MetricNamespace: string;
     /**
      * @description The name of the observation metric.
      */
-    MetricName: any;
+    MetricName: string;
     /**
      * @description The unit of the source observation metric.
      */
-    Unit: any;
+    Unit: string;
     /**
      * @description The value of the source observation metric.
      */
-    Value: any;
+    Value: double;
     /**
      * @description  The ID of the CloudWatch Event-based observation related to the detected problem.
      */
-    CloudWatchEventId: any;
+    CloudWatchEventId: string;
     /**
      * @description  The source of the CloudWatch Event.
      */
@@ -67,77 +67,77 @@ export interface Observation {
     /**
      * @description  The detail type of the CloudWatch Event-based observation, for example, <code>EC2 Instance State-change Notification</code>.
      */
-    CloudWatchEventDetailType: any;
+    CloudWatchEventDetailType: string;
     /**
      * @description  The Amazon Resource Name (ARN) of the AWS Health Event-based observation.
      */
-    HealthEventArn: any;
+    HealthEventArn: string;
     /**
      * @description  The service to which the AWS Health Event belongs, such as EC2.
      */
-    HealthService: any;
+    HealthService: string;
     /**
      * @description  The type of the AWS Health event, for example, <code>AWS_EC2_POWER_CONNECTIVITY_ISSUE</code>.
      */
-    HealthEventTypeCode: any;
+    HealthEventTypeCode: string;
     /**
      * @description  The category of the AWS Health event, such as <code>issue</code>.
      */
-    HealthEventTypeCategory: any;
+    HealthEventTypeCategory: string;
     /**
      * @description  The description of the AWS Health event provided by the service, such as Amazon EC2.
      */
-    HealthEventDescription: any;
+    HealthEventDescription: string;
     /**
      * @description  The deployment ID of the CodeDeploy-based observation related to the detected problem.
      */
-    CodeDeployDeploymentId: any;
+    CodeDeployDeploymentId: string;
     /**
      * @description  The deployment group to which the CodeDeploy deployment belongs.
      */
-    CodeDeployDeploymentGroup: any;
+    CodeDeployDeploymentGroup: string;
     /**
      * @description  The status of the CodeDeploy deployment, for example <code>SUCCESS</code> or <code> FAILURE</code>.
      */
-    CodeDeployState: any;
+    CodeDeployState: string;
     /**
      * @description  The CodeDeploy application to which the deployment belongs.
      */
-    CodeDeployApplication: any;
+    CodeDeployApplication: string;
     /**
      * @description  The instance group to which the CodeDeploy instance belongs.
      */
-    CodeDeployInstanceGroupId: any;
+    CodeDeployInstanceGroupId: string;
     /**
      * @description  The state of the instance, such as <code>STOPPING</code> or <code>TERMINATING</code>.
      */
-    Ec2State: any;
+    Ec2State: string;
     /**
      * @description  The X-Ray request fault percentage for this node.
      */
-    XRayFaultPercent: any;
+    XRayFaultPercent: int64;
     /**
      * @description  The X-Ray request throttle percentage for this node.
      */
-    XRayThrottlePercent: any;
+    XRayThrottlePercent: int64;
     /**
      * @description  The X-Ray request error percentage for this node.
      */
-    XRayErrorPercent: any;
+    XRayErrorPercent: int64;
     /**
      * @description  The X-Ray request count for this node.
      */
-    XRayRequestCount: any;
+    XRayRequestCount: int64;
     /**
      * @description  The X-Ray node request average latency for this node.
      */
-    XRayRequestAverageLatency: any;
+    XRayRequestAverageLatency: int64;
     /**
      * @description  The name of the X-Ray node.
      */
-    XRayNodeName: any;
+    XRayNodeName: string;
     /**
      * @description  The type of the X-Ray node.
      */
-    XRayNodeType: any;
+    XRayNodeType: string;
 }

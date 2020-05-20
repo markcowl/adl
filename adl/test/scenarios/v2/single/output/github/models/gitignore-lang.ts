@@ -1,4 +1,4 @@
 export interface gitignore_lang {
-    name: any;
-    source: any;
+    name: string;
+    source: string;
 }

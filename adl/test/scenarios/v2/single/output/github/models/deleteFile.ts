@@ -1,28 +1,28 @@
 export interface deleteFile {
     commit: {
         author: {
-            date: any;
-            email: any;
-            name: any;
+            date: string;
+            email: string;
+            name: string;
         };
         committer: {
-            date: any;
-            email: any;
-            name: any;
+            date: string;
+            email: string;
+            name: string;
         };
-        html_url: any;
-        message: any;
+        html_url: string;
+        message: string;
         parents: {
-            html_url: any;
-            sha: any;
-            url: any;
+            html_url: string;
+            sha: string;
+            url: string;
         };
-        sha: any;
+        sha: string;
         tree: {
-            sha: any;
-            url: any;
+            sha: string;
+            url: string;
         };
-        url: any;
+        url: string;
     };
-    content: any;
+    content: string;
 }

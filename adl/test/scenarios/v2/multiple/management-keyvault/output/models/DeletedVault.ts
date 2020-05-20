@@ -6,15 +6,15 @@ export interface DeletedVault {
     /**
      * @description The resource ID for the deleted key vault.
      */
-    readonly id: any;
+    readonly id: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The name of the key vault.
      */
-    readonly name: any;
+    readonly name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The resource type of the key vault.
      */
-    readonly type: any;
+    readonly type: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Properties of the vault
      */

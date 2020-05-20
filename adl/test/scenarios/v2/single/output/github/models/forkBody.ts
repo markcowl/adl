@@ -1,3 +1,3 @@
 export interface forkBody {
-    organization: any;
+    organization: string;
 }

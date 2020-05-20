@@ -1,9 +1,9 @@
 export interface postGist {
-    description: any;
+    description: string;
     files: {
         'file1.txt': {
-            content: any;
+            content: string;
         };
     };
-    public: any;
+    public: boolean;
 }

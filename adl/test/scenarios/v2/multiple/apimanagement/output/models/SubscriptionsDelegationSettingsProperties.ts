@@ -6,5 +6,5 @@ export interface SubscriptionsDelegationSettingsProperties {
     /**
      * @description Enable or disable delegation for subscriptions.
      */
-    enabled: any;
+    enabled: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

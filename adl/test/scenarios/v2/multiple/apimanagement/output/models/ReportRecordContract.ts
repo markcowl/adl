@@ -6,106 +6,106 @@ export interface ReportRecordContract {
     /**
      * @description Name depending on report endpoint specifies product, API, operation or developer name.
      */
-    name: any;
+    name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Start of aggregation period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
      *
      */
-    timestamp: any;
+    timestamp: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Length of aggregation period.  Interval must be multiple of 15 minutes and may not be zero. The value should be in ISO 8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).
      */
-    interval: any;
+    interval: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Country to which this record data is related.
      */
-    country: any;
+    country: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Country region to which this record data is related.
      */
-    region: any;
+    region: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Zip code to which this record data is related.
      */
-    zip: any;
+    zip: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description User identifier path. /users/{userId}
      */
-    readonly userId: any;
+    readonly userId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Product identifier path. /products/{productId}
      */
-    readonly productId: any;
+    readonly productId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description API identifier path. /apis/{apiId}
      */
-    apiId: any;
+    apiId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Operation identifier path. /apis/{apiId}/operations/{operationId}
      */
-    operationId: any;
+    operationId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description API region identifier.
      */
-    apiRegion: any;
+    apiRegion: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Subscription identifier path. /subscriptions/{subscriptionId}
      */
-    subscriptionId: any;
+    subscriptionId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Number of successful calls. This includes calls returning HttpStatusCode <= 301 and HttpStatusCode.NotModified and HttpStatusCode.TemporaryRedirect
      */
-    callCountSuccess: any;
+    callCountSuccess: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Number of calls blocked due to invalid credentials. This includes calls returning HttpStatusCode.Unauthorized and HttpStatusCode.Forbidden and HttpStatusCode.TooManyRequests
      */
-    callCountBlocked: any;
+    callCountBlocked: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Number of calls failed due to proxy or backend errors. This includes calls returning HttpStatusCode.BadRequest(400) and any Code between HttpStatusCode.InternalServerError (500) and 600
      */
-    callCountFailed: any;
+    callCountFailed: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Number of other calls.
      */
-    callCountOther: any;
+    callCountOther: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Total number of calls.
      */
-    callCountTotal: any;
+    callCountTotal: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Bandwidth consumed.
      */
-    bandwidth: any;
+    bandwidth: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Number of times when content was served from cache policy.
      */
-    cacheHitCount: any;
+    cacheHitCount: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Number of times content was fetched from backend.
      */
-    cacheMissCount: any;
+    cacheMissCount: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Average time it took to process request.
      */
-    apiTimeAvg: any;
+    apiTimeAvg: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Minimum time it took to process request.
      */
-    apiTimeMin: any;
+    apiTimeMin: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Maximum time it took to process request.
      */
-    apiTimeMax: any;
+    apiTimeMax: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Average time it took to process request on backend.
      */
-    serviceTimeAvg: any;
+    serviceTimeAvg: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Minimum time it took to process request on backend.
      */
-    serviceTimeMin: any;
+    serviceTimeMin: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Maximum time it took to process request on backend.
      */
-    serviceTimeMax: any;
+    serviceTimeMax: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

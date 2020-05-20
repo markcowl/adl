@@ -3,14 +3,14 @@ import { organization } from './organization';
 export interface event {
     actor: actor;
     created_at: {};
-    id: any;
+    id: int64;
     org: organization;
     payload: {};
-    public: any;
+    public: boolean;
     repo: {
-        id: any;
-        name: any;
-        url: any;
+        id: int64;
+        name: string;
+        url: string;
     };
-    type: any;
+    type: string;
 }

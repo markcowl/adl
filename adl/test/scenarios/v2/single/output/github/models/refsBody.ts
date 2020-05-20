@@ -1,4 +1,4 @@
 export interface refsBody {
-    ref: any;
-    sha: any;
+    ref: string;
+    sha: string;
 }

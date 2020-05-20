@@ -1,3 +1,3 @@
 export interface search_repositories_by_keyword {
-    repositories: any;
+    repositories: unknown /*= (not tsschema -- undefinedrepositories/undefined ) =*/;
 }

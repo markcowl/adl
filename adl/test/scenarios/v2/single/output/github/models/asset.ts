@@ -1,14 +1,14 @@
 import { user } from './user';
 export interface asset {
-    content_type: any;
-    created_at: any;
-    download_count: any;
-    id: any;
-    label: any;
-    name: any;
-    size: any;
-    state: any;
-    updated_at: any;
+    content_type: string;
+    created_at: string;
+    download_count: double;
+    id: double;
+    label: string;
+    name: string;
+    size: double;
+    state: string;
+    updated_at: string;
     uploader: user;
-    url: any;
+    url: string;
 }

@@ -1,4 +1,4 @@
-import { Tier } from '../Tier';
+import { Tier } from '../enums/Tier';
 /**
  * @description Describes a standalone resource or similarly grouped resources that the application is made up of.
  */
@@ -6,11 +6,11 @@ export interface ApplicationComponent {
     /**
      * @description The name of the component.
      */
-    ComponentName: any;
+    ComponentName: string;
     /**
      * @description The resource type. Supported resource types include EC2 instances, Auto Scaling group, Classic ELB, Application ELB, and SQS Queue.
      */
-    ResourceType: any;
+    ResourceType: string;
     /**
      * @description The stack tier of the application component.
      */
@@ -18,5 +18,5 @@ export interface ApplicationComponent {
     /**
      * @description Indicates whether the application component is monitored.
      */
-    Monitor: any;
+    Monitor: boolean;
 }

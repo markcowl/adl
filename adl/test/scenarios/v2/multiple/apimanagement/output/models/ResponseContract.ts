@@ -6,17 +6,17 @@ export interface ResponseContract {
     /**
      * @description Operation response HTTP status code.
      */
-    statusCode?: any;
+    statusCode?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Operation response description.
      */
-    description: any;
+    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Collection of operation response representations.
      */
-    representations: any;
+    representations: unknown /*= (not tsschema -- undefinedrepresentations/undefined ) =*/;
     /**
      * @description Collection of operation response headers.
      */
-    headers: any;
+    headers: unknown /*= (not tsschema -- undefinedheaders/undefined ) =*/;
 }

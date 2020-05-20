@@ -6,13 +6,13 @@ export interface TermsOfServiceProperties {
     /**
      * @description A terms of service text.
      */
-    text: any;
+    text: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Display terms of service during a sign-up process.
      */
-    enabled: any;
+    enabled: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Ask user for consent to the terms of service.
      */
-    consentRequired: any;
+    consentRequired: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

@@ -1,4 +1,4 @@
 export interface teamMembership {
-    state: any;
-    url: any;
+    state: string;
+    url: string;
 }

@@ -6,13 +6,13 @@ export interface IssueContractProperties extends IssueContractBaseProperties {
     /**
      * @description The issue title.
      */
-    title?: any;
+    title?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description Text describing the issue.
      */
-    description?: any;
+    description?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description A resource identifier for the user created the issue.
      */
-    userId?: any;
+    userId?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
 }

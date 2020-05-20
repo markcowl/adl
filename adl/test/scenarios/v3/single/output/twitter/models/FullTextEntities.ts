@@ -1,6 +1,6 @@
 export interface FullTextEntities {
-    cashtags: any;
-    hashtags: any;
-    mentions: any;
-    urls: any;
+    cashtags: unknown /*= (not tsschema -- undefinedcashtags/undefined ) =*/;
+    hashtags: unknown /*= (not tsschema -- undefinedhashtags/undefined ) =*/;
+    mentions: unknown /*= (not tsschema -- undefinedmentions/undefined ) =*/;
+    urls: unknown /*= (not tsschema -- undefinedurls/undefined ) =*/;
 }

@@ -1,7 +1,7 @@
 export interface branch {
     _links: {
-        html: any;
-        self: any;
+        html: string;
+        self: string;
     };
     commit: {
         author: user;
@@ -10,29 +10,29 @@ export interface branch {
                 /**
                  * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
                  */
-                date: any;
-                email: any;
-                name: any;
+                date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+                email: string;
+                name: string;
             };
             committer: {
                 /**
                  * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
                  */
-                date: any;
-                email: any;
-                name: any;
+                date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+                email: string;
+                name: string;
             };
-            message: any;
+            message: string;
             tree: {
-                sha: any;
-                url: any;
+                sha: string;
+                url: string;
             };
-            url: any;
+            url: string;
         };
         committer: user;
-        parents: any;
-        sha: any;
-        url: any;
+        parents: array;
+        sha: string;
+        url: string;
     };
-    name: any;
+    name: string;
 }
