@@ -1,5 +1,3 @@
-import { object_191 } from './object_191';
-import { object_193 } from './object_193';
 import { UserWithheld } from './UserWithheld';
 /**
  * @description The Twitter User object
@@ -16,7 +14,15 @@ export interface User {
     /**
      * @description A list of metadata found in the user's profile description.
      */
-    entities: object_191;
+    entities: {
+        description: FullTextEntities;
+        /**
+         * @description Expanded details for the URL specified in the user's profile, with start and end indices.
+         */
+        url: {
+            urls: unknown /*= (not tsschema -- undefinedurls/undefined ) =*/;
+        };
+    };
     id?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     /**
      * @description The location specified in the user's profile, if the user provided one. As this is a freeform value, it may not indicate a valid location, but it may be fuzzily evaluated when performing searches with location queries.
@@ -38,7 +44,24 @@ export interface User {
     /**
      * @description A list of metrics for this user
      */
-    public_metrics: object_193;
+    public_metrics: {
+        /**
+         * @description Number of users who are following this user.
+         */
+        followers_count?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        /**
+         * @description Number of users this user is following.
+         */
+        following_count?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        /**
+         * @description The number of lists that include this user.
+         */
+        listed_count?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        /**
+         * @description The number of Tweets (including Retweets) posted by this user.
+         */
+        tweet_count?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    };
     /**
      * @description The URL specified in the user's profile.
      */

@@ -1,6 +1,8 @@
-import { object_49 } from './object_49';
 export interface createFileBody {
-    committer: object_49;
+    committer: {
+        email: string;
+        name: string;
+    };
     content: string;
     message: string;
 }

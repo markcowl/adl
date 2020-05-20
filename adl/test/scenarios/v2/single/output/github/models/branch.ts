@@ -1,7 +1,38 @@
-import { object_1 } from './object_1';
-import { object_2 } from './object_2';
 export interface branch {
-    _links: object_1;
-    commit: object_2;
+    _links: {
+        html: string;
+        self: string;
+    };
+    commit: {
+        author: user;
+        commit: {
+            author: {
+                /**
+                 * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+                 */
+                date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+                email: string;
+                name: string;
+            };
+            committer: {
+                /**
+                 * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+                 */
+                date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+                email: string;
+                name: string;
+            };
+            message: string;
+            tree: {
+                sha: string;
+                url: string;
+            };
+            url: string;
+        };
+        committer: user;
+        parents: array;
+        sha: string;
+        url: string;
+    };
     name: string;
 }

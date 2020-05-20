@@ -1,6 +1,9 @@
-import { object_38 } from './object_38';
 export interface contents_path {
-    _links: object_38;
+    _links: {
+        git: string;
+        html: string;
+        self: string;
+    };
     content: string;
     encoding: string;
     git_url: string;

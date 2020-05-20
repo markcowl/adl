@@ -1,6 +1,9 @@
-import { object_161 } from './object_161';
 export interface repoCommitBody {
-    author: object_161;
+    author: {
+        date: string;
+        email: string;
+        name: string;
+    };
     message?: string;
     parents?: array;
     tree?: string;

@@ -1,6 +1,30 @@
-import { object_61 } from './object_61';
 export interface feeds {
-    _links: object_61;
+    _links: {
+        current_user: {
+            href: string;
+            type: string;
+        };
+        current_user_actor: {
+            href: string;
+            type: string;
+        };
+        current_user_organization: {
+            href: string;
+            type: string;
+        };
+        current_user_public: {
+            href: string;
+            type: string;
+        };
+        timeline: {
+            href: string;
+            type: string;
+        };
+        user: {
+            href: string;
+            type: string;
+        };
+    };
     current_user_actor_url: string;
     current_user_organization_url: string;
     current_user_public: string;

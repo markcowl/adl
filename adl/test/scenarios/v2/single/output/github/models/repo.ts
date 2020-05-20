@@ -1,6 +1,4 @@
 import { actor } from './actor';
-import { object_68 } from './object_68';
-import { object_69 } from './object_69';
 import { organization } from './organization';
 export interface repo {
     clone_url: string;
@@ -28,14 +26,14 @@ export interface repo {
     open_issues_count: int64;
     organization: organization;
     owner: actor;
-    parent: object_68;
+    parent: {};
     private: boolean;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
     pushed_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     size: int64;
-    source: object_69;
+    source: {};
     ssh_url: string;
     svn_url: string;
     /**

@@ -1,7 +1,15 @@
-import { object_133 } from './object_133';
-import { object_137 } from './object_137';
 export interface pullsComment {
-    _links: object_133;
+    _links: {
+        html: {
+            href: string;
+        };
+        pull_request: {
+            href: string;
+        };
+        self: {
+            href: string;
+        };
+    };
     body: string;
     commit_id: string;
     /**
@@ -16,5 +24,11 @@ export interface pullsComment {
      */
     updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     url: string;
-    user: object_137;
+    user: {
+        avatar_url: string;
+        gravatar_id: string;
+        id: int64;
+        login: string;
+        url: string;
+    };
 }

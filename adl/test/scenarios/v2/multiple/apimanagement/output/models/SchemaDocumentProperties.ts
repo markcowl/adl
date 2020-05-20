@@ -1,4 +1,4 @@
-import { object_177 } from './object_177';
+
 /**
  * @description Schema Document Properties.
  */
@@ -10,5 +10,5 @@ export interface SchemaDocumentProperties {
     /**
      * @description Types definitions. Used for Swagger/OpenAPI schemas only, null otherwise.
      */
-    definitions: object_177;
+    definitions: {};
 }

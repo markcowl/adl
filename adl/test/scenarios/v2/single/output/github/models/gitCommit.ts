@@ -1,6 +1,9 @@
-import { object_78 } from './object_78';
 export interface gitCommit {
-    author: object_78;
+    author: {
+        date: string;
+        email: string;
+        name: string;
+    };
     message: string;
     parents: string;
     tree: string;

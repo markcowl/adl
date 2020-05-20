@@ -423,7 +423,6 @@ export async function* processObjectSchema(schema: v2.Schema, $: Context, option
   result.addToAttic('x-ms-azure-resource', schema['x-ms-azure-resource']);
   result.addToAttic('x-ms-external', schema['x-ms-external']);
 
-
   const schemas = getSchemas(schema.allOf, $);
   // await push(result.extends, schemas);
   for await ( const schema of schemas) {

@@ -130,7 +130,8 @@ let counter = 0;
 export function createObjectSchema(api: ApiModel, name: Identity, initializer?: Partial<ObjectSchema>): ObjectSchema {
   
   const n = isAnonymous(name) ? `object_${counter++}` :<string><any> valueOf(name);
-  const file = api.getObjectSchemaFile(n);
+  const file = isAnonymous(name) ? api.getAnonymousFile(n) : api.getObjectSchemaFile(n);
+  
   const result= new ObjectSchemaImpl(file.addInterface({
     //todo: do a better 'fix-the-bad-name' (ie, perks/codegen)
     name: n.replace(/[^\w]+/g, '_'),

@@ -1,4 +1,4 @@
-import { object_185 } from './object_185';
+import { object_197 } from '../anonymous/object_197';
 import { TokenRequest } from './TokenRequest';
-export interface SignedTokenRequest extends TokenRequest, object_185 {
+export interface SignedTokenRequest extends TokenRequest, object_197 {
 }

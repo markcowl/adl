@@ -1,4 +1,3 @@
-import { object_180 } from './object_180';
 import { Recipient } from './Recipient';
 export interface DeviceDetails {
     /**
@@ -20,7 +19,7 @@ export interface DeviceDetails {
     /**
      * @description Optional metadata object for this device. The metadata for a device may only be set by clients with push-admin privileges and will be used more extensively in the future with smart notifications.
      */
-    metadata: object_180;
+    metadata: {};
     /**
      * @description Platform of the push device.
      */

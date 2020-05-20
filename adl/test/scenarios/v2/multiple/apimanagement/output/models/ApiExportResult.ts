@@ -1,5 +1,4 @@
 import { ExportResultFormat } from '../enums/ExportResultFormat';
-import { object_176 } from './object_176';
 /**
  * @description API Export result.
  */
@@ -16,5 +15,10 @@ export interface ApiExportResult {
     /**
      * @description The object defining the schema of the exported Api Detail
      */
-    value: object_176;
+    value: {
+        /**
+         * @description Link to the Storage Blob containing the result of the export operation. The Blob Uri is only valid for 5 minutes.
+         */
+        link: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    };
 }

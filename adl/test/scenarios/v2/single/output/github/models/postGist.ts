@@ -1,6 +1,9 @@
-import { object_109 } from './object_109';
 export interface postGist {
     description: string;
-    files: object_109;
+    files: {
+        'file1.txt': {
+            content: string;
+        };
+    };
     public: boolean;
 }

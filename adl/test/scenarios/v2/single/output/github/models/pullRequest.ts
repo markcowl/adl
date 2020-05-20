@@ -1,12 +1,32 @@
-import { object_111 } from './object_111';
-import { object_116 } from './object_116';
-import { object_118 } from './object_118';
-import { object_120 } from './object_120';
-import { object_121 } from './object_121';
 export interface pullRequest {
-    _links: object_111;
+    _links: {
+        comments: {
+            href: string;
+        };
+        html: {
+            href: string;
+        };
+        review_comments: {
+            href: string;
+        };
+        self: {
+            href: string;
+        };
+    };
     additions: int64;
-    base: object_116;
+    base: {
+        label: string;
+        ref: string;
+        repo: repo;
+        sha: string;
+        user: {
+            avatar_url: string;
+            gravatar_id: string;
+            id: int64;
+            login: string;
+            url: string;
+        };
+    };
     body: string;
     changed_files: int64;
     closed_at: string;
@@ -15,19 +35,43 @@ export interface pullRequest {
     created_at: string;
     deletions: int64;
     diff_url: string;
-    head: object_118;
+    head: {
+        label: string;
+        ref: string;
+        repo: repo;
+        sha: string;
+        user: {
+            avatar_url: string;
+            gravatar_id: string;
+            id: int64;
+            login: string;
+            url: string;
+        };
+    };
     html_url: string;
     issue_url: string;
     merge_commit_sha: string;
     mergeable: boolean;
     merged: boolean;
     merged_at: string;
-    merged_by: object_120;
+    merged_by: {
+        avatar_url: string;
+        gravatar_id: string;
+        id: int64;
+        login: string;
+        url: string;
+    };
     number: int64;
     patch_url: string;
     state: string;
     title: string;
     updated_at: string;
     url: string;
-    user: object_121;
+    user: {
+        avatar_url: string;
+        gravatar_id: string;
+        id: int64;
+        login: string;
+        url: string;
+    };
 }
