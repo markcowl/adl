@@ -1,30 +1,7 @@
+import { object_25 } from './object_25';
 export interface compare_commits {
     ahead_by: int64;
-    base_commit: {
-        author: user;
-        commit: {
-            author: {
-                date: string;
-                email: string;
-                name: string;
-            };
-            committer: {
-                date: string;
-                email: string;
-                name: string;
-            };
-            message: string;
-            tree: {
-                sha: string;
-                url: string;
-            };
-            url: string;
-        };
-        committer: user;
-        parents: array;
-        sha: string;
-        url: string;
-    };
+    base_commit: object_25;
     behind_by: int64;
     commits: unknown /*= (not tsschema -- undefinedcommits/undefined ) =*/;
     diff_url: string;

@@ -1,6 +1,7 @@
 import { ContentFormat } from '../enums/ContentFormat';
 import { SoapApiType } from '../enums/SoapApiType';
 import { ApiContractProperties } from './ApiContractProperties';
+import { object_175 } from './object_175';
 /**
  * @description Api Create or Update Properties.
  */
@@ -16,16 +17,7 @@ export interface ApiCreateOrUpdateProperties extends ApiContractProperties {
     /**
      * @description Criteria to limit import of WSDL to a subset of the document.
      */
-    wsdlSelector: {
-        /**
-         * @description Name of service to import from WSDL
-         */
-        wsdlServiceName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
-        /**
-         * @description Name of endpoint(port) to import from WSDL
-         */
-        wsdlEndpointName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
-    };
+    wsdlSelector: object_175;
     /**
      * @description Type of Api to create.
      *  * `http` creates a SOAP to REST API

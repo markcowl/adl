@@ -1,9 +1,6 @@
+import { object_56 } from './object_56';
 export interface deployment {
     description: string;
-    payload: {
-        deploy_user: string;
-        environment: string;
-        room_id: double;
-    };
+    payload: object_56;
     ref: string;
 }

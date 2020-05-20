@@ -1,4 +1,4 @@
-
+import { object_0 } from './object_0';
 /**
  * @description A user or organization
  */
@@ -40,12 +40,7 @@ export interface actor {
     name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
     organizations_url: string;
     owned_private_repos: int64;
-    plan: {
-        collaborators: int64;
-        name: string;
-        private_repos: int64;
-        space: int64;
-    };
+    plan: object_0;
     private_gists: int64;
     public_gists: int64;
     public_repos: int64;

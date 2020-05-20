@@ -160,12 +160,16 @@ export class TSSchema<TNode extends Node> extends NamedElement<TNode> implements
   }
   
   get isInline(): boolean {
-    return project(this.node).anonymousFile === this.node.getSourceFile();
+    
+    return project(this.node).isFileAnonymous( this.node.getSourceFile() );
   }
 
   get typeDefinition(): string {
-    const v = this.node.getText();
-    return v.substring( v.indexOf('{') );
+    if( this.isInline) {
+      const v = this.node.getText();
+      return v.substring( v.indexOf('{') );
+    } 
+    return <string>this.name;
   }
 }
 

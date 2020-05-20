@@ -1,8 +1,9 @@
 import { isAnonymous, TargetMap, valueOf } from '@azure-tools/sourcemap';
-import { Identifier, InterfaceDeclaration, PropertySignature } from 'ts-morph';
+import { InterfaceDeclaration, PropertySignature } from 'ts-morph';
 import { normalizeIdentifier } from '../../support/codegen';
 import { getPath, TypeDeclaration } from '../../support/typescript';
 import { ApiModel } from '../api-model';
+import { Identity } from '../types';
 import { NamedElement, Schema, TSSchema } from './schema';
 
 interface Collection<T> {
@@ -126,9 +127,10 @@ export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements 
 }
 let counter = 0;
 
-export function createObjectSchema(api: ApiModel, name: Identifier, initializer?: Partial<ObjectSchema>): ObjectSchema {
-  const file = api.getObjectSchemaFile( valueOf(name));
+export function createObjectSchema(api: ApiModel, name: Identity, initializer?: Partial<ObjectSchema>): ObjectSchema {
+  
   const n = isAnonymous(name) ? `object_${counter++}` :<string><any> valueOf(name);
+  const file = api.getObjectSchemaFile(n);
   const result= new ObjectSchemaImpl(file.addInterface({
     //todo: do a better 'fix-the-bad-name' (ie, perks/codegen)
     name: n.replace(/[^\w]+/g, '_'),

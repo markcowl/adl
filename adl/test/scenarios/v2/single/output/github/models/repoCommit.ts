@@ -1,26 +1,12 @@
+import { object_157 } from './object_157';
+import { object_158 } from './object_158';
+import { object_160 } from './object_160';
 export interface repoCommit {
-    author: {
-        /**
-         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
-         */
-        date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
-        email: string;
-        name: string;
-    };
-    committer: {
-        /**
-         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
-         */
-        date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
-        email: string;
-        name: string;
-    };
+    author: object_157;
+    committer: object_158;
     message: string;
     parents: array;
     sha: string;
-    tree: {
-        sha: string;
-        url: string;
-    };
+    tree: object_160;
     url: string;
 }

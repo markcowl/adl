@@ -2,7 +2,7 @@ import { exists, isFile, mkdir, rmdir, writeFile } from '@azure-tools/async-io';
 import { Dictionary, values } from '@azure-tools/linq';
 import { isAnonymous, isProxy, Path, SourceMap, TargetMap, use, valueOf } from '@azure-tools/sourcemap';
 import { dirname, join } from 'path';
-import { EnumDeclaration, Identifier, IndentationText, NewLineKind, Node, Project, QuoteKind, SourceFile } from 'ts-morph';
+import { EnumDeclaration, IndentationText, NewLineKind, Node, Project, QuoteKind, SourceFile } from 'ts-morph';
 import { getNode, referenceTo } from '../support/typescript';
 import { Attic } from './element';
 import { SerializationResult } from './format';
@@ -11,6 +11,7 @@ import { InternalData } from './internal-data';
 import { Metadata } from './metadata';
 import { Resource } from './resource';
 import { Schemas } from './schema/schemas';
+import { Identity } from './types';
 import { VersionInfo } from './version-info';
 
 
@@ -46,6 +47,8 @@ export class ApiModel {
     },
   });
 
+  #anonymous = this.#project.createDirectory('anonymous');
+  #alias = this.#project.createDirectory('aliases');
   #models = this.#project.createDirectory('models');
   #enums = this.#project.createDirectory('enums');
   #operations = this.#project.createDirectory('operations');
@@ -110,8 +113,8 @@ export class ApiModel {
     // print each file and save it.
     await Promise.all(
       this.project.getSourceFiles().map(async (each) => {
-        if (each === this.anonymousFile) {
-          return;
+        if (this.isFileAnonymous(each)) {
+        //  return;
         }
         each.formatText(format);
         each.organizeImports(format);
@@ -139,18 +142,18 @@ export class ApiModel {
       return valueOf(this).getEnumFile(name);
     }
     if (isAnonymous(name)) {
-      return this.anonymousFile;
+      return this.getAnonymousFile(name);
     }
     const filename = `${name}.ts`;
     return this.#enums.getSourceFile(filename) || this.#enums.createSourceFile(filename);
   }
 
-  getObjectSchemaFile(name: Identifier): SourceFile {
+  getObjectSchemaFile(name: Identity): SourceFile {
     if (isProxy(this)) {
       return valueOf(this).getObjectSchemaFile(name);
     }
     if (isAnonymous(name)) {
-      return this.anonymousFile;
+      return this.getAnonymousFile(name.name);
     }
     const filename = `${name}.ts`;
     return this.#models.getSourceFile(filename) || this.#models.createSourceFile(filename);
@@ -170,20 +173,33 @@ export class ApiModel {
     return undefined;
   }
 
-  #aliasFile?: SourceFile;
-  getAliasSourceFile(): SourceFile {
+  getAliasSourceFile(name: string): SourceFile {
     if (isProxy(this)) {
-      return valueOf(this).getAliasSourceFile();
+      return valueOf(this).getAliasSourceFile(name);
     }
-    return this.#aliasFile || (this.#aliasFile = this.project.createSourceFile('aliases.ts'));
+
+    if (isAnonymous(name)) {
+      return this.getAnonymousFile(name);
+    }
+
+    const filename = `${name}.ts`;
+    return this.#alias.getSourceFile(filename) || this.#alias.createSourceFile(filename);
   }
 
-  #anonymousFile?: SourceFile;
-  get anonymousFile(): SourceFile {
+  getAnonymousFile(name: string): SourceFile {
     if (isProxy(this)) {
-      return valueOf(this).anonymousFile;
+      return valueOf(this).getAnonymousFile(name);
+    }  
+
+    const filename = `${name.replace(/[^\w]+/g, '_')}.ts`;
+    return this.#anonymous.getSourceFile(filename) || this.#anonymous.createSourceFile(filename);
+  }
+
+  isFileAnonymous( sourceFile: SourceFile ): boolean{
+    if (isProxy(this)) {
+      return valueOf(this).isFileAnonymous(sourceFile);
     }
-    return this.#anonymousFile || (this.#anonymousFile = this.project.createSourceFile('anonymous.ts'));
+    return this.#anonymous.isAncestorOf(sourceFile);
   }
 
 }
