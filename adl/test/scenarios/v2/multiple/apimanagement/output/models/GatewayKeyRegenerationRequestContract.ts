@@ -1,4 +1,4 @@
-
+import { KeyType } from '../KeyType';
 /**
  * @description Gateway key regeneration request contract properties.
  */

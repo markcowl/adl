@@ -1,5 +1,7 @@
 
-/** DescribeLogPatternRequest */
+/**
+ * DescribeLogPatternRequest
+ */
 export interface DescribeLogPatternRequest {
     /**
      * @description The name of the resource group.

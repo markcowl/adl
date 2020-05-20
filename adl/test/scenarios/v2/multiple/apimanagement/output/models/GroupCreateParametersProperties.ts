@@ -1,4 +1,4 @@
-
+import { GroupType } from '../GroupType';
 /**
  * @description Parameters supplied to the Create Group operation.
  */

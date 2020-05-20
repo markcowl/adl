@@ -1,4 +1,4 @@
-
+import { LoggerType } from '../LoggerType';
 /**
  * @description Parameters supplied to the Update Logger operation.
  */

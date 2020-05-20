@@ -1,4 +1,4 @@
-
+import { IdentityProviderType } from '../IdentityProviderType';
 /**
  * @description Identity Provider Base Parameter Properties.
  */

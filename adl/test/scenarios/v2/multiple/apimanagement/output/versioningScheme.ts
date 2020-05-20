@@ -5,10 +5,16 @@
  */
 /** @todo-temporary-reuse-marker */
 export enum versioningScheme {
-    /** The API Version is passed in a path segment. */
+    /**
+     * The API Version is passed in a path segment.
+     */
     Segment = 'Segment',
-    /** The API Version is passed in a query parameter. */
+    /**
+     * The API Version is passed in a query parameter.
+     */
     Query = 'Query',
-    /** The API Version is passed in a HTTP header. */
+    /**
+     * The API Version is passed in a HTTP header.
+     */
     Header = 'Header'
 }

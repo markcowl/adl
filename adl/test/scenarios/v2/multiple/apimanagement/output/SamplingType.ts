@@ -4,6 +4,8 @@
  * @extensible
  */
 export enum SamplingType {
-    /** Fixed-rate sampling. */
+    /**
+     * Fixed-rate sampling.
+     */
     fixed = 'fixed'
 }

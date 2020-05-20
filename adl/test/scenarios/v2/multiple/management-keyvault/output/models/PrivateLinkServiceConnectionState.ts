@@ -1,4 +1,4 @@
-
+import { PrivateEndpointServiceConnectionStatus } from '../PrivateEndpointServiceConnectionStatus';
 /**
  * @description An object that represents the approval state of the private link connection.
  */

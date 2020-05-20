@@ -1,5 +1,7 @@
 
-/** TagResourceRequest */
+/**
+ * TagResourceRequest
+ */
 export interface TagResourceRequest {
     /**
      * @description The Amazon Resource Name (ARN) of the application that you want to add one or more tags to.

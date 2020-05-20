@@ -82,7 +82,7 @@ export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements 
     this.parents = new CollectionImpl(this, this.addParent, this.removeParent, this.getParents);
     this.properties = new CollectionImpl(this, undefined, undefined,this.getProperties );
   }
-  
+   
   parents: Collection<TSSchema<TypeDeclaration>>;
   properties: Collection<Property>;
  
@@ -91,7 +91,6 @@ export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements 
   clientName?: string;
 
   createProperty(name: string, schema: Schema, initializer?: Partial<Property>): Property {
-    
     // the type is either a reference of a type that we have 
     // or it's an anonymous type that gets expanded
     const tr = schema instanceof TSSchema ? this.getTypeReference(schema): undefined;

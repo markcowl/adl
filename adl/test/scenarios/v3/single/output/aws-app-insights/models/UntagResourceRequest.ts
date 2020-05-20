@@ -1,5 +1,7 @@
 
-/** UntagResourceRequest */
+/**
+ * UntagResourceRequest
+ */
 export interface UntagResourceRequest {
     /**
      * @description The Amazon Resource Name (ARN) of the application that you want to remove one or more tags from.

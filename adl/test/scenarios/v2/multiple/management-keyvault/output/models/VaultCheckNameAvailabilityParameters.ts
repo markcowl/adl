@@ -1,4 +1,4 @@
-
+import { Type } from '../Type';
 /**
  * @description The parameters used to check the availability of the vault name.
  */

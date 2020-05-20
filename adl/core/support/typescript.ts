@@ -4,7 +4,7 @@ import { ClassDeclaration, EnumDeclaration, EnumMember, InterfaceDeclaration, No
 import { ApiModel } from '../model/api-model';
 import { createSandbox } from './sandbox';
 
-export type TypeDeclaration = TypeAliasDeclaration | InterfaceDeclaration | ClassDeclaration;
+export type TypeDeclaration = TypeAliasDeclaration | InterfaceDeclaration | ClassDeclaration | EnumDeclaration;
 
 const evaluateExpression = createSandbox();
 function quote(text: string) {
@@ -108,5 +108,5 @@ export function project<T extends Node>(input: T): ApiModel {
 }
 
 export function IsTypeDeclaration(node?: Node): node is TypeDeclaration {
-  return node instanceof TypeAliasDeclaration || node instanceof ClassDeclaration || node instanceof InterfaceDeclaration;
+  return node instanceof TypeAliasDeclaration || node instanceof ClassDeclaration || node instanceof InterfaceDeclaration || node instanceof EnumDeclaration;
 }

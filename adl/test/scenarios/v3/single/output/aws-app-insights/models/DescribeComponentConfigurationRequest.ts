@@ -1,5 +1,7 @@
 
-/** DescribeComponentConfigurationRequest */
+/**
+ * DescribeComponentConfigurationRequest
+ */
 export interface DescribeComponentConfigurationRequest {
     /**
      * @description The name of the resource group.

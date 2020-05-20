@@ -1,4 +1,5 @@
-
+import { NetworkRuleAction } from '../NetworkRuleAction';
+import { NetworkRuleBypassOptions } from '../NetworkRuleBypassOptions';
 /**
  * @description A set of rules governing the network accessibility of a vault.
  */

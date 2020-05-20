@@ -1,5 +1,7 @@
 
-/** CreateComponentRequest */
+/**
+ * CreateComponentRequest
+ */
 export interface CreateComponentRequest {
     /**
      * @description The name of the resource group.

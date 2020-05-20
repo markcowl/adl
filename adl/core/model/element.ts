@@ -184,7 +184,10 @@ export class TSElement<TNode extends Node> extends Element {
     if (!value && !this.getDoc()) {
       return;
     }
-    return this.getOrCreateDoc().setDescription(valueOf(value) ?? '');
+    if( value ) {
+      return this.getOrCreateDoc().setDescription(`\n${valueOf(value) ?? ''}`);
+    }
+    return this.getOrCreateDoc().setDescription('\n');
   }
 
   

@@ -1,5 +1,7 @@
 
-/** CreateApplicationRequest */
+/**
+ * CreateApplicationRequest
+ */
 export interface CreateApplicationRequest {
     /**
      * @description The name of the resource group.

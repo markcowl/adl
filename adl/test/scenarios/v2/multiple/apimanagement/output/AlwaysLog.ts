@@ -4,6 +4,8 @@
  * @extensible
  */
 export enum AlwaysLog {
-    /** Always log all erroneous request regardless of sampling settings. */
+    /**
+     * Always log all erroneous request regardless of sampling settings.
+     */
     allErrors = 'allErrors'
 }

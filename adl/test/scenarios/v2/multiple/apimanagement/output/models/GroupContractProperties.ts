@@ -1,4 +1,4 @@
-
+import { GroupType } from '../GroupType';
 /**
  * @description Group contract Properties.
  */

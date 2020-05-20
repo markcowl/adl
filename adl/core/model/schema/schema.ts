@@ -114,6 +114,7 @@ export class TSSchema<TNode extends Node> extends NamedElement<TNode> implements
 
     reqdTypes:
     for( const requiredType of type.requiredTypeDeclarations  ) {
+    
       if( requiredType.getSourceFile) {
         const typeFile = requiredType.getSourceFile();
         const typeName = requiredType.getName();

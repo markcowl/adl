@@ -1,4 +1,4 @@
-
+import { Reason } from '../Reason';
 /**
  * @description The CheckNameAvailability operation response.
  */

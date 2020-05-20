@@ -1,5 +1,7 @@
 
-/** ListLogPatternsRequest */
+/**
+ * ListLogPatternsRequest
+ */
 export interface ListLogPatternsRequest {
     /**
      * @description The name of the resource group.

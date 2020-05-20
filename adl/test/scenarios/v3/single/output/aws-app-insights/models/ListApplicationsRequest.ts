@@ -1,5 +1,7 @@
 
-/** ListApplicationsRequest */
+/**
+ * ListApplicationsRequest
+ */
 export interface ListApplicationsRequest {
     /**
      * @description The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value.

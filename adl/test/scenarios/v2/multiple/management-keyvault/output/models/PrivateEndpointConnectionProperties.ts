@@ -1,3 +1,4 @@
+import { PrivateEndpointConnectionProvisioningState } from '../PrivateEndpointConnectionProvisioningState';
 import { PrivateEndpoint } from './PrivateEndpoint';
 import { PrivateLinkServiceConnectionState } from './PrivateLinkServiceConnectionState';
 /**

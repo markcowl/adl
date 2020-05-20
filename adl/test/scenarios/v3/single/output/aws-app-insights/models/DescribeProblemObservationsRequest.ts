@@ -1,5 +1,7 @@
 
-/** DescribeProblemObservationsRequest */
+/**
+ * DescribeProblemObservationsRequest
+ */
 export interface DescribeProblemObservationsRequest {
     /**
      * @description The ID of the problem.

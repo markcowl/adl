@@ -1,5 +1,7 @@
-
-/** ListConfigurationHistoryRequest */
+import { ConfigurationEventStatus } from '../ConfigurationEventStatus';
+/**
+ * ListConfigurationHistoryRequest
+ */
 export interface ListConfigurationHistoryRequest {
     /**
      * @description Resource group to which the application belongs.

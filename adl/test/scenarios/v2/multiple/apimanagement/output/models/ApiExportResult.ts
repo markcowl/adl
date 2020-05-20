@@ -1,4 +1,4 @@
-
+import { ExportResultFormat } from '../ExportResultFormat';
 /**
  * @description API Export result.
  */

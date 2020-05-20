@@ -1,3 +1,4 @@
+import { AsyncOperationStatus } from '../AsyncOperationStatus';
 import { ErrorResponseBody } from './ErrorResponseBody';
 /**
  * @description Operation Result.

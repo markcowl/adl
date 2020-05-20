@@ -1,3 +1,5 @@
+import { AppType } from '../AppType';
+import { Confirmation } from '../Confirmation';
 import { UserEntityBaseParameters } from './UserEntityBaseParameters';
 /**
  * @description Parameters supplied to the Create User operation.

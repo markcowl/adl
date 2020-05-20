@@ -1,3 +1,6 @@
+import { AlwaysLog } from '../AlwaysLog';
+import { HttpCorrelationProtocol } from '../HttpCorrelationProtocol';
+import { Verbosity } from '../Verbosity';
 import { PipelineDiagnosticSettings } from './PipelineDiagnosticSettings';
 import { SamplingSettings } from './SamplingSettings';
 /**

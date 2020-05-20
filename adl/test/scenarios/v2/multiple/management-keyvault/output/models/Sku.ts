@@ -1,4 +1,5 @@
-
+import { SkuFamily } from '../SkuFamily';
+import { SkuName } from '../SkuName';
 /**
  * @description SKU details
  */

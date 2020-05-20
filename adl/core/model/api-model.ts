@@ -99,7 +99,7 @@ export class ApiModel {
     await mkdir(path);
 
     const format = {
-      indentSize: 2,
+      indentSize: 1,
     };
     // print each file and save it.
     await Promise.all(

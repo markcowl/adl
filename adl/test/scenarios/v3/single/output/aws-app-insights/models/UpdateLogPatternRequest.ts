@@ -1,5 +1,7 @@
 
-/** UpdateLogPatternRequest */
+/**
+ * UpdateLogPatternRequest
+ */
 export interface UpdateLogPatternRequest {
     /**
      * @description The name of the resource group.

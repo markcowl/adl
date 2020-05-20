@@ -1,5 +1,7 @@
 
-/** ListProblemsRequest */
+/**
+ * ListProblemsRequest
+ */
 export interface ListProblemsRequest {
     /**
      * @description The name of the resource group.

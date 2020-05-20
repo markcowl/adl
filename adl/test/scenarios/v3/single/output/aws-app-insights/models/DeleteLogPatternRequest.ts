@@ -1,5 +1,7 @@
 
-/** DeleteLogPatternRequest */
+/**
+ * DeleteLogPatternRequest
+ */
 export interface DeleteLogPatternRequest {
     /**
      * @description The name of the resource group.

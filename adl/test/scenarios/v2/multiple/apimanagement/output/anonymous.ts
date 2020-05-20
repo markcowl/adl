@@ -1,4 +1,4 @@
-
+import { ProvisioningState } from './ProvisioningState';
 /**
  * @description Criteria to limit import of WSDL to a subset of the document.
  */

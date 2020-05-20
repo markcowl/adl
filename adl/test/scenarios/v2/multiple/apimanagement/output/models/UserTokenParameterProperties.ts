@@ -1,4 +1,4 @@
-
+import { KeyType } from '../KeyType';
 /**
  * @description Parameters supplied to the Get User Token operation.
  */

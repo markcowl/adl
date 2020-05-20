@@ -1,5 +1,7 @@
-
-/** UpdateComponentConfigurationRequest */
+import { Tier } from '../Tier';
+/**
+ * UpdateComponentConfigurationRequest
+ */
 export interface UpdateComponentConfigurationRequest {
     /**
      * @description The name of the resource group.

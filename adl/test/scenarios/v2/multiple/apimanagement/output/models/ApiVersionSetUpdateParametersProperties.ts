@@ -1,3 +1,4 @@
+import { versioningScheme } from '../versioningScheme';
 import { ApiVersionSetEntityBase } from './ApiVersionSetEntityBase';
 /**
  * @description Properties used to create or update an API Version Set.

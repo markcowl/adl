@@ -1,4 +1,5 @@
-
+import { CloudWatchEventSource } from '../CloudWatchEventSource';
+import { LogFilter } from '../LogFilter';
 /**
  * @description Describes an anomaly or error with the application.
  */

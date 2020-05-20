@@ -1,4 +1,4 @@
-
+import { PolicyContentFormat } from '../PolicyContentFormat';
 /**
  * @description Policy contract Properties.
  */

@@ -1,4 +1,4 @@
-
+import { UserState } from '../UserState';
 /**
  * @description User Entity Base Parameters set.
  */

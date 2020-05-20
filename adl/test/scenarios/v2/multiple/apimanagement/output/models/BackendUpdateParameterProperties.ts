@@ -1,3 +1,4 @@
+import { BackendProtocol } from '../BackendProtocol';
 import { BackendBaseParameters } from './BackendBaseParameters';
 /**
  * @description Parameters supplied to the Update Backend operation.

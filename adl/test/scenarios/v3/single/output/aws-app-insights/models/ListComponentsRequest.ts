@@ -1,5 +1,7 @@
 
-/** ListComponentsRequest */
+/**
+ * ListComponentsRequest
+ */
 export interface ListComponentsRequest {
     /**
      * @description The name of the resource group.

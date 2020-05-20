@@ -1,4 +1,4 @@
-
+import { SubscriptionState } from '../SubscriptionState';
 /**
  * @description Subscription details.
  */

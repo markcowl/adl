@@ -1,4 +1,5 @@
-
+import { ConfigurationEventResourceType } from '../ConfigurationEventResourceType';
+import { ConfigurationEventStatus } from '../ConfigurationEventStatus';
 /**
  * @description  The event information.
  */

@@ -1,4 +1,4 @@
-
+import { SamplingType } from '../SamplingType';
 /**
  * @description Sampling settings for Diagnostic.
  */

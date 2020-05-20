@@ -1,4 +1,4 @@
-
+import { ProductState } from '../ProductState';
 /**
  * @description Product Entity Base Parameters
  */

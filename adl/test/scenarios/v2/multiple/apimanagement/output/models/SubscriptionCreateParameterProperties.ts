@@ -1,4 +1,4 @@
-
+import { SubscriptionState } from '../SubscriptionState';
 /**
  * @description Parameters supplied to the Create subscription operation.
  */

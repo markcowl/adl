@@ -1,5 +1,7 @@
 
-/** DeleteComponentRequest */
+/**
+ * DeleteComponentRequest
+ */
 export interface DeleteComponentRequest {
     /**
      * @description The name of the resource group.

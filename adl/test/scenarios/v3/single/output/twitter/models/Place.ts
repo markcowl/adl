@@ -1,3 +1,4 @@
+import { PlaceType } from '../PlaceType';
 import { Geo } from './Geo';
 export interface Place {
     contained_within: any;

@@ -1,4 +1,5 @@
-
+import { SeverityLevel } from '../SeverityLevel';
+import { Status } from '../Status';
 /**
  * @description Describes a problem that is detected by correlating observations.
  */

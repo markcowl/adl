@@ -1,3 +1,4 @@
+import { ApiType } from '../ApiType';
 import { AuthenticationSettingsContract } from './AuthenticationSettingsContract';
 import { SubscriptionKeyParameterNamesContract } from './SubscriptionKeyParameterNamesContract';
 /**

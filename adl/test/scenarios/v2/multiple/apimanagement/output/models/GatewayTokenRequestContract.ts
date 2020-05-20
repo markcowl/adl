@@ -1,4 +1,4 @@
-
+import { KeyType } from '../KeyType';
 /**
  * @description Gateway token request contract properties.
  */

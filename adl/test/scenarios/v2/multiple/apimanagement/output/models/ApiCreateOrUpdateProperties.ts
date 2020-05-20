@@ -1,3 +1,5 @@
+import { ContentFormat } from '../ContentFormat';
+import { SoapApiType } from '../SoapApiType';
 import { ApiContractProperties } from './ApiContractProperties';
 /**
  * @description Api Create or Update Properties.

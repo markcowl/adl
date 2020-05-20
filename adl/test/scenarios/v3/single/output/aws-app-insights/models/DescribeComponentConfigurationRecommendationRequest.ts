@@ -1,5 +1,7 @@
-
-/** DescribeComponentConfigurationRecommendationRequest */
+import { Tier } from '../Tier';
+/**
+ * DescribeComponentConfigurationRecommendationRequest
+ */
 export interface DescribeComponentConfigurationRecommendationRequest {
     /**
      * @description The name of the resource group.

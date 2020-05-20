@@ -1,4 +1,4 @@
-
+import { Tier } from '../Tier';
 /**
  * @description Describes a standalone resource or similarly grouped resources that the application is made up of.
  */

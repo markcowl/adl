@@ -1,3 +1,4 @@
+import { Tier } from '../Tier';
 export interface DescribeComponentConfigurationResponse {
     /**
      * @description Indicates whether the application component is monitored.

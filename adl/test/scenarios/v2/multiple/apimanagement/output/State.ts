@@ -4,14 +4,24 @@
  * @extensible
  */
 export enum State {
-    /** The issue is proposed. */
+    /**
+     * The issue is proposed.
+     */
     proposed = 'proposed',
-    /** The issue is opened. */
+    /**
+     * The issue is opened.
+     */
     open = 'open',
-    /** The issue was removed. */
+    /**
+     * The issue was removed.
+     */
     removed = 'removed',
-    /** The issue is now resolved. */
+    /**
+     * The issue is now resolved.
+     */
     resolved = 'resolved',
-    /** The issue was closed. */
+    /**
+     * The issue was closed.
+     */
     closed = 'closed'
 }
