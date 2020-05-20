@@ -1,7 +1,7 @@
 import { Contact } from './contact';
 import { Element } from './element';
 import { License } from './license';
-import { Reference } from './Reference';
+import { Reference } from './reference';
 
 
 export type URL = string;

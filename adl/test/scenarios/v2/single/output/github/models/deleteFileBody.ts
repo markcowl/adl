@@ -1,6 +1,8 @@
-import { object_67 } from '../anonymous';
 export interface deleteFileBody {
-    committer: object_67;
+    committer: {
+        email: any;
+        name: any;
+    };
     message: any;
     sha: any;
 }

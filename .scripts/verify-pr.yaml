@@ -9,14 +9,23 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '13.x'
+    versionSpec: '14.x'
   displayName: 'Install Node.js'
 
 - script: |
     npm install -g npm 
+    rc=$?; if [ $rc -ne 0 ]; then exit $rc ; fi
+    
     npx @microsoft/rush update 
+    rc=$?; if [ $rc -ne 0 ]; then exit $rc ; fi
+    
     npx @microsoft/rush rebuild 
+    rc=$?; if [ $rc -ne 0 ]; then exit $rc ; fi
+    
     npx @microsoft/rush test 
+    rc=$?; if [ $rc -ne 0 ]; then exit $rc ; fi
+    
     npx @microsoft/rush lint
+    rc=$?; if [ $rc -ne 0 ]; then exit $rc ; fi
     
   displayName: 'Rush install, build and test'

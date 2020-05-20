@@ -1,4 +1,4 @@
-import { object_12 } from '../anonymous';
+
 /**
  * @description A user or organization
  */
@@ -40,7 +40,12 @@ export interface actor {
     name: any;
     organizations_url: any;
     owned_private_repos: any;
-    plan: object_12;
+    plan: {
+        collaborators: any;
+        name: any;
+        private_repos: any;
+        space: any;
+    };
     private_gists: any;
     public_gists: any;
     public_repos: any;

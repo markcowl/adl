@@ -1,4 +1,3 @@
-import { object_82 } from '../anonymous';
 import { user } from './user';
 export interface gist {
     comments: any;
@@ -8,7 +7,13 @@ export interface gist {
      */
     created_at: any;
     description: any;
-    files: object_82;
+    files: {
+        'ring.erl': {
+            filename: any;
+            raw_url: any;
+            size: any;
+        };
+    };
     forks: any;
     git_pull_url: any;
     git_push_url: any;

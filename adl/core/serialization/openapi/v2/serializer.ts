@@ -16,7 +16,6 @@ import { push, singleOrDefault } from '../common';
 import { processExternalDocs, processInfo, processTag } from '../common/info';
 import { requestBody } from './body-parameter';
 import { parameter } from './parameter';
-import { path } from './path';
 import { processSchema } from './schema';
 import { authentication, authenticationRequirement } from './security';
 import { processServers } from './server';
@@ -131,13 +130,14 @@ async function processRoot(oai2: v2.Model, $: Context) {
     push($.api.http.parameters, $.process(parameter, value));
   }
 
+  /** disable for now 
   for await (const operation of $.processDictionary(path, oai2.paths)) {
     $.api.http.operations.push(operation);
   }
   for await (const operation of $.processDictionary(path, oai2['x-ms-paths'])) {
     $.api.http.operations.push(operation);
   }
-
+*/
   // we don't need this.
   use(oai2.swagger);
   use(oai2.consumes, true);

@@ -1,4 +1,3 @@
-import { object_191 } from '../anonymous';
 import { OperationProperties } from './OperationProperties';
 /**
  * @description Key Vault REST API operation definition.
@@ -11,7 +10,24 @@ export interface Operation {
     /**
      * @description Display metadata associated with the operation.
      */
-    display: object_191;
+    display: {
+        /**
+         * @description Service provider: Microsoft Key Vault.
+         */
+        provider: any;
+        /**
+         * @description Resource on which the operation is performed etc.
+         */
+        resource: any;
+        /**
+         * @description Type of operation: get, read, delete, etc.
+         */
+        operation: any;
+        /**
+         * @description Description of operation.
+         */
+        description: any;
+    };
     /**
      * @description The origin of operations.
      */

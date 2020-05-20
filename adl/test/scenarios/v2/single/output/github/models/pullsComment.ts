@@ -1,6 +1,15 @@
-import { object_145, object_149 } from '../anonymous';
 export interface pullsComment {
-    _links: object_145;
+    _links: {
+        html: {
+            href: any;
+        };
+        pull_request: {
+            href: any;
+        };
+        self: {
+            href: any;
+        };
+    };
     body: any;
     commit_id: any;
     /**
@@ -15,5 +24,11 @@ export interface pullsComment {
      */
     updated_at: any;
     url: any;
-    user: object_149;
+    user: {
+        avatar_url: any;
+        gravatar_id: any;
+        id: any;
+        login: any;
+        url: any;
+    };
 }

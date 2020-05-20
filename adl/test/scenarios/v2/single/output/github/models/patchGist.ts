@@ -1,5 +1,16 @@
-import { object_117 } from '../anonymous';
 export interface patchGist {
     description: any;
-    files: object_117;
+    files: {
+        'delete_this_file.txt': any;
+        'file1.txt': {
+            content: any;
+        };
+        'new_file.txt': {
+            content: any;
+        };
+        'old_name.txt': {
+            content: any;
+            filename: any;
+        };
+    };
 }

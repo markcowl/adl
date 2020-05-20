@@ -1,4 +1,3 @@
-import { object_187 } from '../anonymous';
 import { ApiContractProperties } from './ApiContractProperties';
 /**
  * @description Api Create or Update Properties.
@@ -15,7 +14,16 @@ export interface ApiCreateOrUpdateProperties extends ApiContractProperties {
     /**
      * @description Criteria to limit import of WSDL to a subset of the document.
      */
-    wsdlSelector: object_187;
+    wsdlSelector: {
+        /**
+         * @description Name of service to import from WSDL
+         */
+        wsdlServiceName: any;
+        /**
+         * @description Name of endpoint(port) to import from WSDL
+         */
+        wsdlEndpointName: any;
+    };
     /**
      * @description Type of Api to create.
      *  * `http` creates a SOAP to REST API

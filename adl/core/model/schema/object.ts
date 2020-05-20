@@ -19,6 +19,7 @@ class CollectionImpl<TCollectionType,TOwner> implements Collection<TCollectionTy
   }
 }
 
+
 export interface ObjectSchema extends Schema {
   /** schemas that this object extends */
   readonly parents: Collection<TSSchema<TypeDeclaration>>;
@@ -72,12 +73,16 @@ export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements 
     return this.node.getBaseDeclarations().map( each => new TSSchema<TypeDeclaration>('',each)  );
   }
 
+  getProperties() {
+    return this.node.getProperties( ).map( each => new PropertyImpl(each));
+  } 
+
   constructor(node: InterfaceDeclaration) {
     super('object', node);
     this.parents = new CollectionImpl(this, this.addParent, this.removeParent, this.getParents);
-    this.properties = new CollectionImpl(this);
-
+    this.properties = new CollectionImpl(this, undefined, undefined,this.getProperties );
   }
+  
   parents: Collection<TSSchema<TypeDeclaration>>;
   properties: Collection<Property>;
  
@@ -87,10 +92,16 @@ export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements 
 
   createProperty(name: string, schema: Schema, initializer?: Partial<Property>): Property {
     
+    // the type is either a reference of a type that we have 
+    // or it's an anonymous type that gets expanded
+    const tr = schema instanceof TSSchema ? this.getTypeReference(schema): undefined;
+
+    const type = schema instanceof TSSchema ? (schema.isInline ? schema.typeDefinition : tr!.getName()) : 'any';
+
     const result = new PropertyImpl(this.node.addProperty({
       //todo: do a better 'fix-the-bad-name' (ie, perks/codegen)
       name: normalizeIdentifier(name),
-      type: schema instanceof TSSchema ? this.getTypeReference(schema).getName() : 'any',
+      type,
     }));
 
     result.initialize(initializer);
@@ -102,6 +113,15 @@ export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements 
 
     return result;
 
+  }
+
+  get requiredTypeDeclarations(): Array<TypeDeclaration> {
+    if( this.isInline ) {
+      const x = this.node.getProperties().map(each => each.getType())  ;
+
+      return [...<any>x , this.node];
+    }
+    return [this.node] ;
   }
 }
 let counter = 0;
@@ -125,10 +145,11 @@ export function createObjectSchema(api: ApiModel, name: Identifier, initializer?
 }
 
 export interface Property extends PropertyImpl {
-
+  
 }
 
 export class PropertyImpl extends NamedElement<PropertySignature> {
+   
   /** indicates the properts is required */
   get required(): boolean {
     return this.node.hasQuestionToken();

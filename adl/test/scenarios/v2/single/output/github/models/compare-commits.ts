@@ -1,7 +1,30 @@
-import { object_37 } from '../anonymous';
 export interface compare_commits {
     ahead_by: any;
-    base_commit: object_37;
+    base_commit: {
+        author: user;
+        commit: {
+            author: {
+                date: any;
+                email: any;
+                name: any;
+            };
+            committer: {
+                date: any;
+                email: any;
+                name: any;
+            };
+            message: any;
+            tree: {
+                sha: any;
+                url: any;
+            };
+            url: any;
+        };
+        committer: user;
+        parents: any;
+        sha: any;
+        url: any;
+    };
     behind_by: any;
     commits: any;
     diff_url: any;

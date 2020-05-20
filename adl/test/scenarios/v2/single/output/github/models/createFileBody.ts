@@ -1,6 +1,8 @@
-import { object_61 } from '../anonymous';
 export interface createFileBody {
-    committer: object_61;
+    committer: {
+        email: any;
+        name: any;
+    };
     content: any;
     message: any;
 }

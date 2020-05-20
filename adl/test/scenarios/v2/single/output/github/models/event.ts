@@ -1,13 +1,16 @@
-import { object_70, object_71, object_72 } from '../anonymous';
 import { actor } from './actor';
 import { organization } from './organization';
 export interface event {
     actor: actor;
-    created_at: object_70;
+    created_at: {};
     id: any;
     org: organization;
-    payload: object_71;
+    payload: {};
     public: any;
-    repo: object_72;
+    repo: {
+        id: any;
+        name: any;
+        url: any;
+    };
     type: any;
 }

@@ -1,10 +1,24 @@
-import { object_114, object_115 } from '../anonymous';
 export interface notifications {
     id: any;
     last_read_at: any;
     reason: any;
-    repository: object_114;
-    subject: object_115;
+    repository: {
+        description: any;
+        fork: any;
+        full_name: any;
+        html_url: any;
+        id: any;
+        name: any;
+        owner: actor;
+        private: any;
+        url: any;
+    };
+    subject: {
+        latest_comment_url: any;
+        title: any;
+        type: any;
+        url: any;
+    };
     unread: any;
     updated_at: any;
     url: any;

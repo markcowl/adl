@@ -1,6 +1,9 @@
-import { object_50 } from '../anonymous';
 export interface contents_path {
-    _links: object_50;
+    _links: {
+        git: any;
+        html: any;
+        self: any;
+    };
     content: any;
     encoding: any;
     git_url: any;

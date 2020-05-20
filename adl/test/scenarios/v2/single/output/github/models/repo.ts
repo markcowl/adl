@@ -1,4 +1,3 @@
-import { object_80, object_81 } from '../anonymous';
 import { actor } from './actor';
 import { organization } from './organization';
 export interface repo {
@@ -27,14 +26,14 @@ export interface repo {
     open_issues_count: any;
     organization: organization;
     owner: actor;
-    parent: object_80;
+    parent: {};
     private: any;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
     pushed_at: any;
     size: any;
-    source: object_81;
+    source: {};
     ssh_url: any;
     svn_url: any;
     /**

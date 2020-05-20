@@ -1,9 +1,26 @@
-import { object_109 } from '../anonymous';
 import { user } from './user';
 export interface mergesSuccessful {
     author: user;
     comments_url: any;
-    commit: object_109;
+    commit: {
+        author: {
+            date: any;
+            email: any;
+            name: any;
+        };
+        comment_count: any;
+        committer: {
+            date: any;
+            email: any;
+            name: any;
+        };
+        message: any;
+        tree: {
+            sha: any;
+            url: any;
+        };
+        url: any;
+    };
     committer: user;
     merged: any;
     message: any;

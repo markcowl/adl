@@ -1,32 +1,72 @@
 import { actor } from './models/actor';
 import { repo } from './models/repo';
 import { user } from './models/user';
-export interface object_12 {
+export interface object_0 {
     collaborators: any;
     name: any;
     private_repos: any;
     space: any;
 }
-export interface object_13 {
+export interface object_1 {
     html: any;
     self: any;
 }
-export interface object_14 {
+export interface object_2 {
     author: user;
-    commit: object_15;
+    commit: {
+        author: {
+            /**
+             * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+             */
+            date: any;
+            email: any;
+            name: any;
+        };
+        committer: {
+            /**
+             * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+             */
+            date: any;
+            email: any;
+            name: any;
+        };
+        message: any;
+        tree: {
+            sha: any;
+            url: any;
+        };
+        url: any;
+    };
     committer: user;
     parents: any;
     sha: any;
     url: any;
 }
-export interface object_15 {
-    author: object_16;
-    committer: object_17;
+export interface object_3 {
+    author: {
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         */
+        date: any;
+        email: any;
+        name: any;
+    };
+    committer: {
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         */
+        date: any;
+        email: any;
+        name: any;
+    };
     message: any;
-    tree: object_18;
+    tree: {
+        sha: any;
+        url: any;
+    };
     url: any;
 }
-export interface object_16 {
+export interface object_4 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
@@ -34,7 +74,7 @@ export interface object_16 {
     email: any;
     name: any;
 }
-export interface object_17 {
+export interface object_5 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
@@ -42,23 +82,26 @@ export interface object_17 {
     email: any;
     name: any;
 }
-export interface object_18 {
+export interface object_6 {
     sha: any;
     url: any;
 }
-export interface object_19 {
+export interface object_7 {
     sha: any;
     url: any;
 }
-export interface object_20 {
-    commit: object_21;
+export interface object_8 {
+    commit: {
+        sha: any;
+        url: any;
+    };
     name: any;
 }
-export interface object_21 {
+export interface object_9 {
     sha: any;
     url: any;
 }
-export interface object_22 {
+export interface object_10 {
     body: any;
     /**
      * @description ISO 8601.
@@ -68,14 +111,31 @@ export interface object_22 {
     url: any;
     user: user;
 }
-export interface object_23 {
-    author: object_24;
-    committer: object_25;
+export interface object_11 {
+    author: {
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         */
+        date: any;
+        email: any;
+        name: any;
+    };
+    committer: {
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         */
+        date: any;
+        email: any;
+        name: any;
+    };
     message: any;
-    tree: object_26;
+    tree: {
+        sha: any;
+        url: any;
+    };
     url: any;
 }
-export interface object_24 {
+export interface object_12 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
@@ -83,7 +143,7 @@ export interface object_24 {
     email: any;
     name: any;
 }
-export interface object_25 {
+export interface object_13 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
@@ -91,11 +151,11 @@ export interface object_25 {
     email: any;
     name: any;
 }
-export interface object_26 {
+export interface object_14 {
     sha: any;
     url: any;
 }
-export interface object_27 {
+export interface object_15 {
     additions: any;
     blob_url: any;
     changes: any;
@@ -105,36 +165,76 @@ export interface object_27 {
     raw_url: any;
     status: any;
 }
-export interface object_28 {
+export interface object_16 {
     sha: any;
     url: any;
 }
-export interface object_29 {
+export interface object_17 {
     additions: any;
     deletions: any;
     total: any;
 }
-export interface object_30 {
+export interface object_18 {
     days: any;
     total: any;
     week: any;
 }
-export interface object_31 {
+export interface object_19 {
     author: user;
-    commit: object_32;
+    commit: {
+        author: {
+            /**
+             * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+             */
+            date: any;
+            email: any;
+            name: any;
+        };
+        committer: {
+            /**
+             * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+             */
+            date: any;
+            email: any;
+            name: any;
+        };
+        message: any;
+        tree: {
+            sha: any;
+            url: any;
+        };
+        url: any;
+    };
     committer: user;
     parents: any;
     sha: any;
     url: any;
 }
-export interface object_32 {
-    author: object_33;
-    committer: object_34;
+export interface object_20 {
+    author: {
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         */
+        date: any;
+        email: any;
+        name: any;
+    };
+    committer: {
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         */
+        date: any;
+        email: any;
+        name: any;
+    };
     message: any;
-    tree: object_35;
+    tree: {
+        sha: any;
+        url: any;
+    };
     url: any;
 }
-export interface object_33 {
+export interface object_21 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
@@ -142,10 +242,132 @@ export interface object_33 {
     email: any;
     name: any;
 }
-export interface object_34 {
+export interface object_22 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
+    date: any;
+    email: any;
+    name: any;
+}
+export interface object_23 {
+    sha: any;
+    url: any;
+}
+export interface object_24 {
+    sha: any;
+    url: any;
+}
+export interface object_25 {
+    author: user;
+    commit: {
+        author: {
+            date: any;
+            email: any;
+            name: any;
+        };
+        committer: {
+            date: any;
+            email: any;
+            name: any;
+        };
+        message: any;
+        tree: {
+            sha: any;
+            url: any;
+        };
+        url: any;
+    };
+    committer: user;
+    parents: any;
+    sha: any;
+    url: any;
+}
+export interface object_26 {
+    author: {
+        date: any;
+        email: any;
+        name: any;
+    };
+    committer: {
+        date: any;
+        email: any;
+        name: any;
+    };
+    message: any;
+    tree: {
+        sha: any;
+        url: any;
+    };
+    url: any;
+}
+export interface object_27 {
+    date: any;
+    email: any;
+    name: any;
+}
+export interface object_28 {
+    date: any;
+    email: any;
+    name: any;
+}
+export interface object_29 {
+    sha: any;
+    url: any;
+}
+export interface object_30 {
+    sha: any;
+    url: any;
+}
+export interface object_31 {
+    author: user;
+    commit: {
+        author: {
+            date: any;
+            email: any;
+            name: any;
+        };
+        committer: {
+            date: any;
+            email: any;
+            name: any;
+        };
+        message: any;
+        tree: {
+            sha: any;
+            url: any;
+        };
+        url: any;
+    };
+    committer: user;
+    parents: any;
+    sha: any;
+    url: any;
+}
+export interface object_32 {
+    author: {
+        date: any;
+        email: any;
+        name: any;
+    };
+    committer: {
+        date: any;
+        email: any;
+        name: any;
+    };
+    message: any;
+    tree: {
+        sha: any;
+        url: any;
+    };
+    url: any;
+}
+export interface object_33 {
+    date: any;
+    email: any;
+    name: any;
+}
+export interface object_34 {
     date: any;
     email: any;
     name: any;
@@ -159,72 +381,6 @@ export interface object_36 {
     url: any;
 }
 export interface object_37 {
-    author: user;
-    commit: object_38;
-    committer: user;
-    parents: any;
-    sha: any;
-    url: any;
-}
-export interface object_38 {
-    author: object_39;
-    committer: object_40;
-    message: any;
-    tree: object_41;
-    url: any;
-}
-export interface object_39 {
-    date: any;
-    email: any;
-    name: any;
-}
-export interface object_40 {
-    date: any;
-    email: any;
-    name: any;
-}
-export interface object_41 {
-    sha: any;
-    url: any;
-}
-export interface object_42 {
-    sha: any;
-    url: any;
-}
-export interface object_43 {
-    author: user;
-    commit: object_44;
-    committer: user;
-    parents: any;
-    sha: any;
-    url: any;
-}
-export interface object_44 {
-    author: object_45;
-    committer: object_46;
-    message: any;
-    tree: object_47;
-    url: any;
-}
-export interface object_45 {
-    date: any;
-    email: any;
-    name: any;
-}
-export interface object_46 {
-    date: any;
-    email: any;
-    name: any;
-}
-export interface object_47 {
-    sha: any;
-    url: any;
-}
-export interface object_48 {
-    sha: any;
-    url: any;
-}
-export interface object_49 {
     additions: any;
     blob_url: any;
     changes: any;
@@ -236,27 +392,33 @@ export interface object_49 {
     sha: any;
     status: any;
 }
-export interface object_50 {
+export interface object_38 {
     git: any;
     html: any;
     self: any;
 }
-export interface object_51 {
-    author: object_52;
+export interface object_39 {
+    author: {
+        avatar_url: any;
+        gravatar_id: any;
+        id: any;
+        login: any;
+        url: any;
+    };
     /**
      * @description The Total number of commits authored by the contributor.
      */
     total: any;
     weeks: any;
 }
-export interface object_52 {
+export interface object_40 {
     avatar_url: any;
     gravatar_id: any;
     id: any;
     login: any;
     url: any;
 }
-export interface object_53 {
+export interface object_41 {
     /**
      * @description Number of additions.
      */
@@ -274,37 +436,52 @@ export interface object_53 {
      */
     w: any;
 }
-export interface object_54 {
-    author: object_55;
-    committer: object_56;
+export interface object_42 {
+    author: {
+        date: any;
+        email: any;
+        name: any;
+    };
+    committer: {
+        date: any;
+        email: any;
+        name: any;
+    };
     html_url: any;
     message: any;
     parents: any;
     sha: any;
-    tree: object_58;
+    tree: {
+        sha: any;
+        url: any;
+    };
     url: any;
 }
-export interface object_55 {
+export interface object_43 {
     date: any;
     email: any;
     name: any;
 }
-export interface object_56 {
+export interface object_44 {
     date: any;
     email: any;
     name: any;
 }
-export interface object_57 {
+export interface object_45 {
     html_url: any;
     sha: any;
     url: any;
 }
-export interface object_58 {
+export interface object_46 {
     sha: any;
     url: any;
 }
-export interface object_59 {
-    _links: object_60;
+export interface object_47 {
+    _links: {
+        git: any;
+        html: any;
+        self: any;
+    };
     git_url: any;
     html_url: any;
     name: any;
@@ -314,54 +491,69 @@ export interface object_59 {
     type: any;
     url: any;
 }
-export interface object_60 {
+export interface object_48 {
     git: any;
     html: any;
     self: any;
 }
-export interface object_61 {
+export interface object_49 {
     email: any;
     name: any;
 }
-export interface object_62 {
-    author: object_63;
-    committer: object_64;
+export interface object_50 {
+    author: {
+        date: any;
+        email: any;
+        name: any;
+    };
+    committer: {
+        date: any;
+        email: any;
+        name: any;
+    };
     html_url: any;
     message: any;
-    parents: object_65;
+    parents: {
+        html_url: any;
+        sha: any;
+        url: any;
+    };
     sha: any;
-    tree: object_66;
+    tree: {
+        sha: any;
+        url: any;
+    };
     url: any;
 }
-export interface object_63 {
+export interface object_51 {
     date: any;
     email: any;
     name: any;
 }
-export interface object_64 {
+export interface object_52 {
     date: any;
     email: any;
     name: any;
 }
-export interface object_65 {
+export interface object_53 {
     html_url: any;
     sha: any;
     url: any;
 }
-export interface object_66 {
+export interface object_54 {
     sha: any;
     url: any;
 }
-export interface object_67 {
+export interface object_55 {
     email: any;
     name: any;
 }
-export interface object_68 {
+export interface object_56 {
     deploy_user: any;
     environment: any;
     room_id: any;
 }
-export interface object_69 {
+export interface object_57 {
     created_at: any;
     creator: user;
     description: any;
@@ -372,60 +564,82 @@ export interface object_69 {
     updated_at: any;
     url: any;
 }
-export interface object_70 {
+export interface object_58 {
 }
-export interface object_71 {
+export interface object_59 {
 }
-export interface object_72 {
+export interface object_60 {
     id: any;
     name: any;
     url: any;
 }
-export interface object_73 {
-    current_user: object_74;
-    current_user_actor: object_75;
-    current_user_organization: object_76;
-    current_user_public: object_77;
-    timeline: object_78;
-    user: object_79;
+export interface object_61 {
+    current_user: {
+        href: any;
+        type: any;
+    };
+    current_user_actor: {
+        href: any;
+        type: any;
+    };
+    current_user_organization: {
+        href: any;
+        type: any;
+    };
+    current_user_public: {
+        href: any;
+        type: any;
+    };
+    timeline: {
+        href: any;
+        type: any;
+    };
+    user: {
+        href: any;
+        type: any;
+    };
 }
-export interface object_74 {
+export interface object_62 {
     href: any;
     type: any;
 }
-export interface object_75 {
+export interface object_63 {
     href: any;
     type: any;
 }
-export interface object_76 {
+export interface object_64 {
     href: any;
     type: any;
 }
-export interface object_77 {
+export interface object_65 {
     href: any;
     type: any;
 }
-export interface object_78 {
+export interface object_66 {
     href: any;
     type: any;
 }
-export interface object_79 {
+export interface object_67 {
     href: any;
     type: any;
 }
-export interface object_80 extends repo {
+export interface object_68 extends repo {
 }
-export interface object_81 extends repo {
+export interface object_69 extends repo {
 }
-export interface object_82 {
-    'ring.erl': object_83;
+export interface object_70 {
+    'ring.erl': {
+        filename: any;
+        raw_url: any;
+        size: any;
+    };
 }
-export interface object_83 {
+export interface object_71 {
     filename: any;
     raw_url: any;
     size: any;
 }
-export interface object_84 {
+export interface object_72 {
     /**
      * @description Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
      */
@@ -433,8 +647,12 @@ export interface object_84 {
     url: any;
     user: user;
 }
-export interface object_85 {
-    change_status: object_86;
+export interface object_73 {
+    change_status: {
+        additions: any;
+        deletions: any;
+        total: any;
+    };
     /**
      * @description Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
      */
@@ -443,17 +661,23 @@ export interface object_85 {
     user: user;
     version: any;
 }
-export interface object_86 {
+export interface object_74 {
     additions: any;
     deletions: any;
     total: any;
 }
-export interface object_87 {
+export interface object_75 {
     comments: any;
     comments_url: any;
     created_at: any;
     description: any;
-    files: object_88;
+    files: {
+        'ring.erl': {
+            filename: any;
+            raw_url: any;
+            size: any;
+        };
+    };
     git_pull_url: any;
     git_push_url: any;
     html_url: any;
@@ -462,27 +686,34 @@ export interface object_87 {
     url: any;
     user: user;
 }
-export interface object_88 {
-    'ring.erl': object_89;
+export interface object_76 {
+    'ring.erl': {
+        filename: any;
+        raw_url: any;
+        size: any;
+    };
 }
-export interface object_89 {
+export interface object_77 {
     filename: any;
     raw_url: any;
     size: any;
 }
-export interface object_90 {
+export interface object_78 {
     date: any;
     email: any;
     name: any;
 }
-export interface object_91 {
+export interface object_79 {
     sha: any;
     type: any;
     url: any;
 }
-export interface object_92 {
+export interface object_80 {
     active: any;
-    config: object_93;
+    config: {
+        content_type: any;
+        url: any;
+    };
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
@@ -496,11 +727,11 @@ export interface object_92 {
     updated_at: any;
     url: any;
 }
-export interface object_93 {
+export interface object_81 {
     content_type: any;
     url: any;
 }
-export interface object_94 {
+export interface object_82 {
     assignee: user;
     body: any;
     /**
@@ -514,9 +745,30 @@ export interface object_94 {
     created_at: any;
     html_url: any;
     labels: any;
-    milestone: object_96;
+    milestone: {
+        closed_issues: any;
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         */
+        created_at: any;
+        creator: user;
+        description: any;
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         */
+        due_on: any;
+        number: any;
+        open_issues: any;
+        state: any;
+        title: any;
+        url: any;
+    };
     number: any;
-    pull_request: object_97;
+    pull_request: {
+        diff_url: any;
+        html_url: any;
+        patch_url: any;
+    };
     state: any;
     title: any;
     /**
@@ -526,12 +778,12 @@ export interface object_94 {
     url: any;
     user: user;
 }
-export interface object_95 {
+export interface object_83 {
     color: any;
     name: any;
     url: any;
 }
-export interface object_96 {
+export interface object_84 {
     closed_issues: any;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
@@ -549,12 +801,12 @@ export interface object_96 {
     title: any;
     url: any;
 }
-export interface object_97 {
+export interface object_85 {
     diff_url: any;
     html_url: any;
     patch_url: any;
 }
-export interface object_98 {
+export interface object_86 {
     assignee: user;
     body: any;
     /**
@@ -568,9 +820,30 @@ export interface object_98 {
     created_at: any;
     html_url: any;
     labels: any;
-    milestone: object_100;
+    milestone: {
+        closed_issues: any;
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         */
+        created_at: any;
+        creator: user;
+        description: any;
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         */
+        due_on: any;
+        number: any;
+        open_issues: any;
+        state: any;
+        title: any;
+        url: any;
+    };
     number: any;
-    pull_request: object_101;
+    pull_request: {
+        diff_url: any;
+        html_url: any;
+        patch_url: any;
+    };
     state: any;
     title: any;
     /**
@@ -580,12 +853,12 @@ export interface object_98 {
     url: any;
     user: user;
 }
-export interface object_99 {
+export interface object_87 {
     color: any;
     name: any;
     url: any;
 }
-export interface object_100 {
+export interface object_88 {
     closed_issues: any;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
@@ -603,13 +876,23 @@ export interface object_100 {
     title: any;
     url: any;
 }
-export interface object_101 {
+export interface object_89 {
     diff_url: any;
     html_url: any;
     patch_url: any;
 }
-export interface object_102 {
-    _links: object_103;
+export interface object_90 {
+    _links: {
+        html: {
+            href: any;
+        };
+        pull_request: {
+            href: any;
+        };
+        self: {
+            href: any;
+        };
+    };
     body: any;
     commit_id: any;
     /**
@@ -626,58 +909,75 @@ export interface object_102 {
     url: any;
     user: user;
 }
-export interface object_103 {
-    html: object_104;
-    pull_request: object_105;
-    self: object_106;
+export interface object_91 {
+    html: {
+        href: any;
+    };
+    pull_request: {
+        href: any;
+    };
+    self: {
+        href: any;
+    };
 }
-export interface object_104 {
+export interface object_92 {
     href: any;
 }
-export interface object_105 {
+export interface object_93 {
     href: any;
 }
-export interface object_106 {
+export interface object_94 {
     href: any;
 }
-export interface object_107 {
+export interface object_95 {
     id: any;
     key: any;
     title: any;
     url: any;
 }
-export interface object_108 {
+export interface object_96 {
     color: any;
     name: any;
     url: any;
 }
-export interface object_109 {
-    author: object_110;
+export interface object_97 {
+    author: {
+        date: any;
+        email: any;
+        name: any;
+    };
     comment_count: any;
-    committer: object_111;
+    committer: {
+        date: any;
+        email: any;
+        name: any;
+    };
     message: any;
-    tree: object_112;
+    tree: {
+        sha: any;
+        url: any;
+    };
     url: any;
 }
-export interface object_110 {
+export interface object_98 {
     date: any;
     email: any;
     name: any;
 }
-export interface object_111 {
+export interface object_99 {
     date: any;
     email: any;
     name: any;
 }
-export interface object_112 {
+export interface object_100 {
     sha: any;
     url: any;
 }
-export interface object_113 {
+export interface object_101 {
     sha: any;
     url: any;
 }
-export interface object_114 {
+export interface object_102 {
     description: any;
     fork: any;
     full_name: any;
@@ -688,44 +988,215 @@ export interface object_114 {
     private: any;
     url: any;
 }
-export interface object_115 {
+export interface object_103 {
     latest_comment_url: any;
     title: any;
     type: any;
     url: any;
 }
-export interface object_116 {
+export interface object_104 {
     code: any;
     field: any;
     resource: any;
 }
-export interface object_117 {
+export interface object_105 {
     'delete_this_file.txt': any;
-    'file1.txt': object_118;
-    'new_file.txt': object_119;
-    'old_name.txt': object_120;
+    'file1.txt': {
+        content: any;
+    };
+    'new_file.txt': {
+        content: any;
+    };
+    'old_name.txt': {
+        content: any;
+        filename: any;
+    };
 }
-export interface object_118 {
+export interface object_106 {
     content: any;
 }
-export interface object_119 {
+export interface object_107 {
     content: any;
 }
-export interface object_120 {
+export interface object_108 {
     content: any;
     filename: any;
 }
-export interface object_121 {
-    'file1.txt': object_122;
+export interface object_109 {
+    'file1.txt': {
+        content: any;
+    };
 }
-export interface object_122 {
+export interface object_110 {
     content: any;
 }
+export interface object_111 {
+    comments: {
+        href: any;
+    };
+    html: {
+        href: any;
+    };
+    review_comments: {
+        href: any;
+    };
+    self: {
+        href: any;
+    };
+}
+export interface object_112 {
+    href: any;
+}
+export interface object_113 {
+    href: any;
+}
+export interface object_114 {
+    href: any;
+}
+export interface object_115 {
+    href: any;
+}
+export interface object_116 {
+    label: any;
+    ref: any;
+    repo: repo;
+    sha: any;
+    user: {
+        avatar_url: any;
+        gravatar_id: any;
+        id: any;
+        login: any;
+        url: any;
+    };
+}
+export interface object_117 {
+    avatar_url: any;
+    gravatar_id: any;
+    id: any;
+    login: any;
+    url: any;
+}
+export interface object_118 {
+    label: any;
+    ref: any;
+    repo: repo;
+    sha: any;
+    user: {
+        avatar_url: any;
+        gravatar_id: any;
+        id: any;
+        login: any;
+        url: any;
+    };
+}
+export interface object_119 {
+    avatar_url: any;
+    gravatar_id: any;
+    id: any;
+    login: any;
+    url: any;
+}
+export interface object_120 {
+    avatar_url: any;
+    gravatar_id: any;
+    id: any;
+    login: any;
+    url: any;
+}
+export interface object_121 {
+    avatar_url: any;
+    gravatar_id: any;
+    id: any;
+    login: any;
+    url: any;
+}
+export interface object_122 {
+    _links: {
+        comments: {
+            href: any;
+        };
+        html: {
+            href: any;
+        };
+        review_comments: {
+            href: any;
+        };
+        self: {
+            href: any;
+        };
+    };
+    base: {
+        label: any;
+        ref: any;
+        repo: repo;
+        sha: any;
+        user: {
+            avatar_url: any;
+            gravatar_id: any;
+            id: any;
+            login: any;
+            url: any;
+        };
+    };
+    body: any;
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     */
+    closed_at: any;
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     */
+    created_at: any;
+    diff_url: any;
+    head: {
+        label: any;
+        ref: any;
+        repo: repo;
+        sha: any;
+        user: {
+            avatar_url: any;
+            gravatar_id: any;
+            id: any;
+            login: any;
+            url: any;
+        };
+    };
+    html_url: any;
+    issue_url: any;
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     */
+    merged_at: any;
+    number: any;
+    patch_url: any;
+    state: any;
+    title: any;
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     */
+    updated_at: any;
+    url: any;
+    user: {
+        avatar_url: any;
+        gravatar_id: any;
+        id: any;
+        login: any;
+        url: any;
+    };
+}
 export interface object_123 {
-    comments: object_124;
-    html: object_125;
-    review_comments: object_126;
-    self: object_127;
+    comments: {
+        href: any;
+    };
+    html: {
+        href: any;
+    };
+    review_comments: {
+        href: any;
+    };
+    self: {
+        href: any;
+    };
 }
 export interface object_124 {
     href: any;
@@ -744,7 +1215,13 @@ export interface object_128 {
     ref: any;
     repo: repo;
     sha: any;
-    user: object_129;
+    user: {
+        avatar_url: any;
+        gravatar_id: any;
+        id: any;
+        login: any;
+        url: any;
+    };
 }
 export interface object_129 {
     avatar_url: any;
@@ -758,7 +1235,13 @@ export interface object_130 {
     ref: any;
     repo: repo;
     sha: any;
-    user: object_131;
+    user: {
+        avatar_url: any;
+        gravatar_id: any;
+        id: any;
+        login: any;
+        url: any;
+    };
 }
 export interface object_131 {
     avatar_url: any;
@@ -775,119 +1258,44 @@ export interface object_132 {
     url: any;
 }
 export interface object_133 {
-    avatar_url: any;
-    gravatar_id: any;
-    id: any;
-    login: any;
-    url: any;
+    html: {
+        href: any;
+    };
+    pull_request: {
+        href: any;
+    };
+    self: {
+        href: any;
+    };
 }
 export interface object_134 {
-    _links: object_135;
-    base: object_140;
-    body: any;
-    /**
-     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
-     */
-    closed_at: any;
-    /**
-     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
-     */
-    created_at: any;
-    diff_url: any;
-    head: object_142;
-    html_url: any;
-    issue_url: any;
-    /**
-     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
-     */
-    merged_at: any;
-    number: any;
-    patch_url: any;
-    state: any;
-    title: any;
-    /**
-     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
-     */
-    updated_at: any;
-    url: any;
-    user: object_144;
+    href: any;
 }
 export interface object_135 {
-    comments: object_136;
-    html: object_137;
-    review_comments: object_138;
-    self: object_139;
+    href: any;
 }
 export interface object_136 {
     href: any;
 }
 export interface object_137 {
-    href: any;
+    avatar_url: any;
+    gravatar_id: any;
+    id: any;
+    login: any;
+    url: any;
 }
 export interface object_138 {
-    href: any;
-}
-export interface object_139 {
-    href: any;
-}
-export interface object_140 {
-    label: any;
-    ref: any;
-    repo: repo;
-    sha: any;
-    user: object_141;
-}
-export interface object_141 {
-    avatar_url: any;
-    gravatar_id: any;
-    id: any;
-    login: any;
-    url: any;
-}
-export interface object_142 {
-    label: any;
-    ref: any;
-    repo: repo;
-    sha: any;
-    user: object_143;
-}
-export interface object_143 {
-    avatar_url: any;
-    gravatar_id: any;
-    id: any;
-    login: any;
-    url: any;
-}
-export interface object_144 {
-    avatar_url: any;
-    gravatar_id: any;
-    id: any;
-    login: any;
-    url: any;
-}
-export interface object_145 {
-    html: object_146;
-    pull_request: object_147;
-    self: object_148;
-}
-export interface object_146 {
-    href: any;
-}
-export interface object_147 {
-    href: any;
-}
-export interface object_148 {
-    href: any;
-}
-export interface object_149 {
-    avatar_url: any;
-    gravatar_id: any;
-    id: any;
-    login: any;
-    url: any;
-}
-export interface object_150 {
-    _links: object_151;
+    _links: {
+        html: {
+            href: any;
+        };
+        pull_request: {
+            href: any;
+        };
+        self: {
+            href: any;
+        };
+    };
     body: any;
     commit_id: any;
     /**
@@ -902,42 +1310,60 @@ export interface object_150 {
      */
     updated_at: any;
     url: any;
-    user: object_155;
+    user: {
+        avatar_url: any;
+        gravatar_id: any;
+        id: any;
+        login: any;
+        url: any;
+    };
 }
-export interface object_151 {
-    html: object_152;
-    pull_request: object_153;
-    self: object_154;
+export interface object_139 {
+    html: {
+        href: any;
+    };
+    pull_request: {
+        href: any;
+    };
+    self: {
+        href: any;
+    };
 }
-export interface object_152 {
+export interface object_140 {
     href: any;
 }
-export interface object_153 {
+export interface object_141 {
     href: any;
 }
-export interface object_154 {
+export interface object_142 {
     href: any;
 }
-export interface object_155 {
+export interface object_143 {
     avatar_url: any;
     gravatar_id: any;
     id: any;
     login: any;
     url: any;
 }
-export interface object_156 {
+export interface object_144 {
 }
-export interface object_157 {
+export interface object_145 {
     limit: any;
     remaining: any;
     reset: any;
 }
-export interface object_158 {
+export interface object_146 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
     created_at: any;
-    creator: object_159;
+    creator: {
+        avatar_url: any;
+        gravatar_id: any;
+        id: any;
+        login: any;
+        url: any;
+    };
     description: any;
     id: any;
     state: any;
@@ -948,14 +1374,14 @@ export interface object_158 {
     updated_at: any;
     url: any;
 }
-export interface object_159 {
+export interface object_147 {
     avatar_url: any;
     gravatar_id: any;
     id: any;
     login: any;
     url: any;
 }
-export interface object_160 {
+export interface object_148 {
     commit_url: any;
     name: any;
     repository_url: any;
@@ -963,7 +1389,7 @@ export interface object_160 {
     state: any;
     statuses: any;
 }
-export interface object_161 {
+export interface object_149 {
     context: any;
     created_at: any;
     description: any;
@@ -973,17 +1399,21 @@ export interface object_161 {
     updated_at: any;
     url: any;
 }
-export interface object_162 {
-    object: object_163;
+export interface object_150 {
+    object: {
+        sha: any;
+        type: any;
+        url: any;
+    };
     ref: any;
     url: any;
 }
-export interface object_163 {
+export interface object_151 {
     sha: any;
     type: any;
     url: any;
 }
-export interface object_164 {
+export interface object_152 {
     content_type: any;
     created_at: any;
     download_count: any;
@@ -996,7 +1426,7 @@ export interface object_164 {
     uploader: user;
     url: any;
 }
-export interface object_165 {
+export interface object_153 {
     assets: any;
     assets_url: any;
     author: user;
@@ -1015,7 +1445,7 @@ export interface object_165 {
     url: any;
     zipball_url: any;
 }
-export interface object_166 {
+export interface object_154 {
     content_type: any;
     created_at: any;
     download_count: any;
@@ -1028,7 +1458,7 @@ export interface object_166 {
     uploader: user;
     url: any;
 }
-export interface object_167 {
+export interface object_155 {
     created_at: any;
     creator: user;
     description: any;
@@ -1039,7 +1469,7 @@ export interface object_167 {
     updated_at: any;
     url: any;
 }
-export interface object_168 {
+export interface object_156 {
     body: any;
     commit_id: any;
     /**
@@ -1058,7 +1488,7 @@ export interface object_168 {
     url: any;
     user: user;
 }
-export interface object_169 {
+export interface object_157 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
@@ -1066,7 +1496,7 @@ export interface object_169 {
     email: any;
     name: any;
 }
-export interface object_170 {
+export interface object_158 {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
@@ -1074,30 +1504,74 @@ export interface object_170 {
     email: any;
     name: any;
 }
-export interface object_171 {
+export interface object_159 {
     sha: any;
     url: any;
 }
-export interface object_172 {
+export interface object_160 {
     sha: any;
     url: any;
 }
-export interface object_173 {
+export interface object_161 {
     date: any;
     email: any;
     name: any;
 }
-export interface object_174 {
+export interface object_162 {
     git_url: any;
     html_url: any;
     name: any;
     path: any;
-    repository: object_175;
+    repository: {
+        archive_url: any;
+        assignees_url: any;
+        blobs_url: any;
+        branches_url: any;
+        collaborators_url: any;
+        comments_url: any;
+        commits_url: any;
+        compare_url: any;
+        contents_url: any;
+        contributors_url: any;
+        description: any;
+        downloads_url: any;
+        events_url: any;
+        fork: any;
+        forks_url: any;
+        full_name: any;
+        git_commits_url: any;
+        git_refs_url: any;
+        git_tags_url: any;
+        hooks_url: any;
+        html_url: any;
+        id: any;
+        issue_comment_url: any;
+        issue_events_url: any;
+        issues_url: any;
+        keys_url: any;
+        labels_url: any;
+        languages_url: any;
+        merges_url: any;
+        milestones_url: any;
+        name: any;
+        notifications_url: any;
+        owner: actor;
+        private: any;
+        pulls_url: any;
+        stargazers_url: any;
+        statuses_url: any;
+        subscribers_url: any;
+        subscription_url: any;
+        tags_url: any;
+        teams_url: any;
+        trees_url: any;
+        url: any;
+    };
     score: any;
     sha: any;
     url: any;
 }
-export interface object_175 {
+export interface object_163 {
     archive_url: any;
     assignees_url: any;
     blobs_url: any;
@@ -1142,7 +1616,7 @@ export interface object_175 {
     trees_url: any;
     url: any;
 }
-export interface object_176 {
+export interface object_164 {
     assignee: any;
     body: any;
     closed_at: any;
@@ -1156,7 +1630,11 @@ export interface object_176 {
     labels_url: any;
     milestone: any;
     number: any;
-    pull_request: object_178;
+    pull_request: {
+        diff_url: any;
+        html_url: any;
+        patch_url: any;
+    };
     score: any;
     state: any;
     title: any;
@@ -1164,17 +1642,17 @@ export interface object_176 {
     url: any;
     user: user;
 }
-export interface object_177 {
+export interface object_165 {
     color: any;
     name: any;
     url: any;
 }
-export interface object_178 {
+export interface object_166 {
     diff_url: any;
     html_url: any;
     patch_url: any;
 }
-export interface object_179 {
+export interface object_167 {
     body: any;
     comments: any;
     created_at: any;
@@ -1189,7 +1667,7 @@ export interface object_179 {
     user: any;
     votes: any;
 }
-export interface object_180 {
+export interface object_168 {
     sha: any;
     /**
      * @description String of the type of the tagged object. Normally this is a commit but it can also be a tree or a blob.
@@ -1197,7 +1675,7 @@ export interface object_180 {
     type: any;
     url: any;
 }
-export interface object_181 {
+export interface object_169 {
     /**
      * @description Timestamp of when this object was tagged, in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
@@ -1211,7 +1689,7 @@ export interface object_181 {
      */
     name: any;
 }
-export interface object_182 {
+export interface object_170 {
     /**
      * @description Timestamp of when this object was tagged, in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
@@ -1225,27 +1703,32 @@ export interface object_182 {
      */
     name: any;
 }
-export interface object_183 {
+export interface object_171 {
     id: any;
     name: any;
     url: any;
 }
-export interface object_184 {
+export interface object_172 {
     id: any;
     members_count: any;
     name: any;
-    organization: object_185;
+    organization: {
+        avatar_url: any;
+        id: any;
+        login: any;
+        url: any;
+    };
     permission: any;
     repos_count: any;
     url: any;
 }
-export interface object_185 {
+export interface object_173 {
     avatar_url: any;
     id: any;
     login: any;
     url: any;
 }
-export interface object_186 {
+export interface object_174 {
     /**
      * @description One of 100644 for file (blob), 100755 for executable (blob), 040000 for subdirectory (tree), 160000 for submodule (commit) or 120000 for a blob that specifies the path of a symlink.
      */

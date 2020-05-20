@@ -3,7 +3,7 @@ import { use } from '@azure-tools/sourcemap';
 import { Contact, ContactRole } from '../../../model/contact';
 import { License } from '../../../model/license';
 import { Metadata } from '../../../model/metadata';
-import { Reference } from '../../../model/Reference';
+import { Reference } from '../../../model/reference';
 import { Context, is, OAIModel } from '../../../support/visitor';
 import { addExtensionsToAttic } from '../common';
 

@@ -2,7 +2,7 @@
 /**
  * @description Display metadata associated with the operation.
  */
-export interface object_191 {
+export interface object_179 {
     /**
      * @description Service provider: Microsoft Key Vault.
      */

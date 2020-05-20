@@ -1,6 +1,9 @@
-import { object_90 } from '../anonymous';
 export interface gitCommit {
-    author: object_90;
+    author: {
+        date: any;
+        email: any;
+        name: any;
+    };
     message: any;
     parents: any;
     tree: any;

@@ -1,6 +1,9 @@
-import { object_91 } from '../anonymous';
 export interface headBranch {
-    object: object_91;
+    object: {
+        sha: any;
+        type: any;
+        url: any;
+    };
     ref: any;
     url: any;
 }

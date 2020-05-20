@@ -1,4 +1,7 @@
-import { object_157 } from '../anonymous';
 export interface rate_limit {
-    rate: object_157;
+    rate: {
+        limit: any;
+        remaining: any;
+        reset: any;
+    };
 }

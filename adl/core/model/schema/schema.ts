@@ -1,7 +1,7 @@
 import { Dictionary } from '@azure-tools/linq';
 import { anonymous, isAnonymous, valueOf } from '@azure-tools/sourcemap';
 import { Node } from 'ts-morph';
-import { getPath, IsTypeDeclaration, TypeDeclaration } from '../../support/typescript';
+import { getPath, IsTypeDeclaration, project, TypeDeclaration } from '../../support/typescript';
 import { Element, TSElement } from '../element';
 import { Identity } from '../name';
 
@@ -38,6 +38,12 @@ export class Schema extends Element {
     super();
     this.name = anonymous(type);
     this.initialize(initializer);
+  }
+  get isInline() {
+    return false;
+  }
+  get typeDefinition(): string {
+    return 'unknown /*= (not tsschema) =*/';
   }
 }
 
@@ -108,34 +114,35 @@ export class TSSchema<TNode extends Node> extends NamedElement<TNode> implements
 
     reqdTypes:
     for( const requiredType of type.requiredTypeDeclarations  ) {
-      
-      const typeFile = requiredType.getSourceFile();
-      const typeName = requiredType.getName();
+      if( requiredType.getSourceFile) {
+        const typeFile = requiredType.getSourceFile();
+        const typeName = requiredType.getName();
 
-      if( typeName === undefined || typeFile === undefined || typeFile  === this.node.getSourceFile() ) {
+        if( typeName === undefined || typeFile === undefined || typeFile  === this.node.getSourceFile() ) {
         // don't need to do anything if it's the same file 
-        continue;
-      }
+          continue;
+        }
 
-      for (const importDecl of importDecls) {
+        for (const importDecl of importDecls) {
         
-        if( importDecl.getModuleSpecifierSourceFile() === typeFile ) {
+          if( importDecl.getModuleSpecifierSourceFile() === typeFile ) {
           // we've got imports from that sourcefile 
-          if (importDecl.getNamedImports().find(imp => imp.getName() === typeName )) {
+            if (importDecl.getNamedImports().find(imp => imp.getName() === typeName )) {
             // we've already imported this. Go on to the next one.
+              continue reqdTypes;
+            }
+
+            // we've referenced the file, but not imported the type.
+            importDecl.addNamedImport( typeName);
             continue reqdTypes;
           }
-
-          // we've referenced the file, but not imported the type.
-          importDecl.addNamedImport( typeName);
-          continue reqdTypes;
-        }
         // wasn't in that file
-      } 
-      file.addImportDeclaration({
-        moduleSpecifier: file.getRelativePathAsModuleSpecifierTo(typeFile),
-        namedImports: [ typeName]
-      });
+        } 
+        file.addImportDeclaration({
+          moduleSpecifier: file.getRelativePathAsModuleSpecifierTo(typeFile),
+          namedImports: [ typeName]
+        });
+      }
     }
     // imported everything we needed. 
     return type.node;
@@ -149,6 +156,15 @@ export class TSSchema<TNode extends Node> extends NamedElement<TNode> implements
    */
   get requiredTypeDeclarations(): Array<TypeDeclaration> {
     return IsTypeDeclaration( this.node )?  [this.node] : [];
+  }
+  
+  get isInline(): boolean {
+    return project(this.node).anonymousFile === this.node.getSourceFile();
+  }
+
+  get typeDefinition(): string {
+    const v = this.node.getText();
+    return v.substring( v.indexOf('{') );
   }
 }
 

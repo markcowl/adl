@@ -1,4 +1,4 @@
-import { object_188 } from '../anonymous';
+
 /**
  * @description API Export result.
  */
@@ -15,5 +15,10 @@ export interface ApiExportResult {
     /**
      * @description The object defining the schema of the exported Api Detail
      */
-    value: object_188;
+    value: {
+        /**
+         * @description Link to the Storage Blob containing the result of the export operation. The Blob Uri is only valid for 5 minutes.
+         */
+        link: any;
+    };
 }
