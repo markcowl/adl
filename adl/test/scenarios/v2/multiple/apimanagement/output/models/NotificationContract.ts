@@ -1,5 +1,5 @@
-import { NotificationContractProperties } from './NotificationContractProperties';
 import { Resource } from './Resource';
+import { NotificationContractProperties } from './NotificationContractProperties';
 /**
  * @description Notification details.
  */

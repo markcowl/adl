@@ -1,5 +1,5 @@
-import { ApiReleaseContractProperties } from './ApiReleaseContractProperties';
 import { Resource } from './Resource';
+import { ApiReleaseContractProperties } from './ApiReleaseContractProperties';
 /**
  * @description ApiRelease details.
  */

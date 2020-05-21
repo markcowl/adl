@@ -1,5 +1,5 @@
-import { OperationContractProperties } from './OperationContractProperties';
 import { Resource } from './Resource';
+import { OperationContractProperties } from './OperationContractProperties';
 /**
  * @description Api Operation details.
  */

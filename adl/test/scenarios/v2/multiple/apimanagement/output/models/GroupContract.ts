@@ -1,5 +1,5 @@
-import { GroupContractProperties } from './GroupContractProperties';
 import { Resource } from './Resource';
+import { GroupContractProperties } from './GroupContractProperties';
 /**
  * @description Contract details.
  */

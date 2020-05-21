@@ -1,5 +1,5 @@
-import { ApiVersionSetContractProperties } from './ApiVersionSetContractProperties';
 import { Resource } from './Resource';
+import { ApiVersionSetContractProperties } from './ApiVersionSetContractProperties';
 /**
  * @description Api Version Set Contract details.
  */

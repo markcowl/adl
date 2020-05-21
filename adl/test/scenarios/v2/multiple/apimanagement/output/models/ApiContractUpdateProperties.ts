@@ -1,5 +1,5 @@
-import { Protocol } from '../enums/Protocol';
 import { ApiEntityBaseContract } from './ApiEntityBaseContract';
+import { Protocol } from '../enums/Protocol';
 /**
  * @description API update contract properties.
  */

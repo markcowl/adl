@@ -1,5 +1,5 @@
-import { PrivateEndpointConnectionProperties } from './PrivateEndpointConnectionProperties';
 import { Resource } from './Resource';
+import { PrivateEndpointConnectionProperties } from './PrivateEndpointConnectionProperties';
 /**
  * @description Private endpoint connection resource.
  */

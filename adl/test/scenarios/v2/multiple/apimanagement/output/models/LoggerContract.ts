@@ -1,5 +1,5 @@
-import { LoggerContractProperties } from './LoggerContractProperties';
 import { Resource } from './Resource';
+import { LoggerContractProperties } from './LoggerContractProperties';
 /**
  * @description Logger details.
  */

@@ -1,4 +1,5 @@
 import { tree } from './tree';
+import { tree } from './tree';
 export interface trees {
     base_tree: string;
     /**

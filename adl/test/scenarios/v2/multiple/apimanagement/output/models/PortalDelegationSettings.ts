@@ -1,5 +1,5 @@
-import { PortalDelegationSettingsProperties } from './PortalDelegationSettingsProperties';
 import { Resource } from './Resource';
+import { PortalDelegationSettingsProperties } from './PortalDelegationSettingsProperties';
 /**
  * @description Delegation settings for a developer portal.
  */

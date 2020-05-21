@@ -1,5 +1,5 @@
-import { PortalSignupSettingsProperties } from './PortalSignupSettingsProperties';
 import { Resource } from './Resource';
+import { PortalSignupSettingsProperties } from './PortalSignupSettingsProperties';
 /**
  * @description Sign-Up settings for a developer portal.
  */

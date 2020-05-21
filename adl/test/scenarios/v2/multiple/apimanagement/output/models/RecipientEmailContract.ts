@@ -1,5 +1,5 @@
-import { RecipientEmailContractProperties } from './RecipientEmailContractProperties';
 import { Resource } from './Resource';
+import { RecipientEmailContractProperties } from './RecipientEmailContractProperties';
 /**
  * @description Recipient Email details.
  */

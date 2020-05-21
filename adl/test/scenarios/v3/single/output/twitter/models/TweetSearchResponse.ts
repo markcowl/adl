@@ -1,5 +1,5 @@
-import { Expansions } from './Expansions';
 import { Tweet } from './Tweet';
+import { Expansions } from './Expansions';
 export interface TweetSearchResponse {
     data: Array<Tweet> & MinimumElements<1>;
     errors: Array<unknown /*= (not tsschema -- undefinedProblem/undefined ) =*/> & MinimumElements<1>;

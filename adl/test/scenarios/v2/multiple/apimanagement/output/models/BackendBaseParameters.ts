@@ -1,5 +1,5 @@
-import { BackendCredentialsContract } from './BackendCredentialsContract';
 import { BackendProperties } from './BackendProperties';
+import { BackendCredentialsContract } from './BackendCredentialsContract';
 import { BackendProxyContract } from './BackendProxyContract';
 import { BackendTlsProperties } from './BackendTlsProperties';
 /**

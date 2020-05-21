@@ -1,5 +1,5 @@
-import { BackendReconnectProperties } from './BackendReconnectProperties';
 import { Resource } from './Resource';
+import { BackendReconnectProperties } from './BackendReconnectProperties';
 /**
  * @description Reconnect request parameters.
  */

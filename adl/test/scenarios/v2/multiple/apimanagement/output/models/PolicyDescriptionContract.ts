@@ -1,5 +1,5 @@
-import { PolicyDescriptionContractProperties } from './PolicyDescriptionContractProperties';
 import { Resource } from './Resource';
+import { PolicyDescriptionContractProperties } from './PolicyDescriptionContractProperties';
 /**
  * @description Policy description details.
  */

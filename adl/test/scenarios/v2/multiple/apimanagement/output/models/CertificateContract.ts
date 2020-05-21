@@ -1,5 +1,5 @@
-import { CertificateContractProperties } from './CertificateContractProperties';
 import { Resource } from './Resource';
+import { CertificateContractProperties } from './CertificateContractProperties';
 /**
  * @description Certificate details.
  */

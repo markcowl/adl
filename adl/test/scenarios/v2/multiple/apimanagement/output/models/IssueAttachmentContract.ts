@@ -1,5 +1,5 @@
-import { IssueAttachmentContractProperties } from './IssueAttachmentContractProperties';
 import { Resource } from './Resource';
+import { IssueAttachmentContractProperties } from './IssueAttachmentContractProperties';
 /**
  * @description Issue Attachment Contract details.
  */

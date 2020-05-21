@@ -1,5 +1,5 @@
-import { BackendContractProperties } from './BackendContractProperties';
 import { Resource } from './Resource';
+import { BackendContractProperties } from './BackendContractProperties';
 /**
  * @description Backend details.
  */

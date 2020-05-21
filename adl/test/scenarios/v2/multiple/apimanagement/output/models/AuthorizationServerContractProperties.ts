@@ -1,5 +1,5 @@
-import { GrantType } from '../enums/GrantType';
 import { AuthorizationServerContractBaseProperties } from './AuthorizationServerContractBaseProperties';
+import { GrantType } from '../enums/GrantType';
 /**
  * @description External OAuth authorization server settings Properties.
  */

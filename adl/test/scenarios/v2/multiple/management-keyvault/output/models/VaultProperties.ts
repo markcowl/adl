@@ -1,7 +1,7 @@
+import { Sku } from './Sku';
 import { AccessPolicyEntry } from './AccessPolicyEntry';
 import { NetworkRuleSet } from './NetworkRuleSet';
 import { PrivateEndpointConnectionItem } from './PrivateEndpointConnectionItem';
-import { Sku } from './Sku';
 /**
  * @description Properties of the vault
  */
