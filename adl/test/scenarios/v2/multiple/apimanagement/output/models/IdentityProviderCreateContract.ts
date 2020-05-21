@@ -1,5 +1,5 @@
-import { IdentityProviderCreateContractProperties } from './IdentityProviderCreateContractProperties';
 import { Resource } from './Resource';
+import { IdentityProviderCreateContractProperties } from './IdentityProviderCreateContractProperties';
 /**
  * @description Identity Provider details.
  */

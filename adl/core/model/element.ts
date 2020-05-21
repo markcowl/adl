@@ -100,7 +100,7 @@ export class TSElement<TNode extends Node> extends Element {
    * @param sourceMap 
    */
   track(sourceMap: Dictionary<any>) {
-    project(this.node).track(this.targetMap, sourceMap);
+    this.project.track(this.targetMap, sourceMap);
     return this;
   }
 

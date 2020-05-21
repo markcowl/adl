@@ -1,5 +1,5 @@
-import { AuthorizationServerContractProperties } from './AuthorizationServerContractProperties';
 import { Resource } from './Resource';
+import { AuthorizationServerContractProperties } from './AuthorizationServerContractProperties';
 /**
  * @description External OAuth authorization server settings.
  */

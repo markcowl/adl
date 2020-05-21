@@ -1,5 +1,5 @@
-import { Expansions } from './Expansions';
 import { User } from './User';
+import { Expansions } from './Expansions';
 export interface UserLookupResponse {
     data: Array<User> & MinimumElements<1>;
     errors: Array<unknown /*= (not tsschema -- undefinedProblem/undefined ) =*/> & MinimumElements<1>;

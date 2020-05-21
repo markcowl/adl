@@ -1,6 +1,6 @@
-import { CertificatePermissions } from '../enums/CertificatePermissions';
 import { KeyPermissions } from '../enums/KeyPermissions';
 import { SecretPermissions } from '../enums/SecretPermissions';
+import { CertificatePermissions } from '../enums/CertificatePermissions';
 import { StoragePermissions } from '../enums/StoragePermissions';
 /**
  * @description Permissions the identity has for keys, secrets, certificates and storage.

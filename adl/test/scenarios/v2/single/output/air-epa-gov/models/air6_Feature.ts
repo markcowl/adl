@@ -1,5 +1,5 @@
-import { air6_properties } from './air6_properties';
 import { geo } from './geo';
+import { air6_properties } from './air6_properties';
 /**
  * @description GeoJSON Feature Object
  */

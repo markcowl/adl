@@ -1,5 +1,5 @@
-import { DiagnosticContractProperties } from './DiagnosticContractProperties';
 import { Resource } from './Resource';
+import { DiagnosticContractProperties } from './DiagnosticContractProperties';
 /**
  * @description Diagnostic details.
  */

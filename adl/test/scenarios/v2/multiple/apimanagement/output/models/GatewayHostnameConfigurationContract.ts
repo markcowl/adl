@@ -1,5 +1,5 @@
-import { GatewayHostnameConfigurationContractProperties } from './GatewayHostnameConfigurationContractProperties';
 import { Resource } from './Resource';
+import { GatewayHostnameConfigurationContractProperties } from './GatewayHostnameConfigurationContractProperties';
 /**
  * @description Gateway hostname configuration details.
  */

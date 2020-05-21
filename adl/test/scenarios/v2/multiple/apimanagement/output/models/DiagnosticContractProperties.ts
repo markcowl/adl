@@ -1,5 +1,5 @@
-import { PipelineDiagnosticSettings } from './PipelineDiagnosticSettings';
 import { SamplingSettings } from './SamplingSettings';
+import { PipelineDiagnosticSettings } from './PipelineDiagnosticSettings';
 /**
  * @description Diagnostic Entity Properties
  */

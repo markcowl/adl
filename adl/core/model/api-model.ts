@@ -15,27 +15,12 @@ import { Schemas } from './schema/schemas';
 import { Folders, Identity } from './types';
 import { VersionInfo } from './version-info';
 
-
 export interface FileInfo {
   filename: string;
-
 }
 
 export type Version = string;
 
-/*
-function TypeInfo<U extends new (...args: any) => any>(type: U) {
-  return <ySchema.CustomTag> {
-    identify: (v: any) => v instanceof type,
-    tag: `!${type.name}`,
-    resolve: (doc: Document, cst: CST.Node): AST.Node => { 
-      
-     },
-    stringify: (item: AST.Node, ctx: ySchema.StringifyContext, onComment?: () => void, onChompKeep?: () => void): string => { return <any>undefined; }
-
-  };// (`!${type.name}`, { kind: 'mapping', instanceOf: type, construct: (i) => Object.setPrototypeOf(i, type.prototype) });
-}
-*/
 
 export class ApiModel {
   #project: Project = new Project({
@@ -57,15 +42,14 @@ export class ApiModel {
     enum : this.#project.createDirectory('enums'),
     group: this.#project.createDirectory('operations'),
     resource: this.#project.createDirectory('resources'),
-
   }
+
   #anonymous = this.#project.createDirectory('anonymous');
   #alias = this.#project.createDirectory('aliases');
   #models = this.#project.createDirectory('models');
   #enums = this.#project.createDirectory('enums');
   #operations = this.#project.createDirectory('operations');
   #resources = this.#project.createDirectory('resources');
-
 
   get project() {
     return this.#project;
@@ -79,8 +63,6 @@ export class ApiModel {
   schemas = new Schemas();
 
   http: HttpProtocol = new HttpProtocol();
-
-  // aggregate: Aggregation;
 
 
   constructor() {
@@ -123,13 +105,14 @@ export class ApiModel {
       indentSize: 1,
     };
     // print each file and save it.
-    await Promise.all(
+    return (await Promise.all(
       this.project.getSourceFiles().map(async (each) => {
         if (this.isFileAnonymous(each)) {
-        //  return;
+          return;
         }
-        each.formatText(format);
-        each.organizeImports(format);
+        // disabled: format/organize imports
+        // each.formatText(format);
+        // each.organizeImports(format);
 
         const filename = join(path, each.getFilePath());
 
@@ -140,8 +123,7 @@ export class ApiModel {
           //replace(/\*\/\s*\/\*\*\s*/g, '').
           replace(/^(\s*\/\*)/g, '\n$1')
         );
-
-      }));
+      }))).length;
   }
 
   getNode(path: Path): Node | undefined {
@@ -160,22 +142,6 @@ export class ApiModel {
     return this.#folders[type].getSourceFile(filename) || this.#folders[type].createSourceFile(filename);
   }
 
-  getEnumFile(name: string): SourceFile {
-    if (isProxy(this)) {
-      return valueOf(this).getEnumFile(name);
-    }
-    const filename = `${name}.ts`;
-    return this.#enums.getSourceFile(filename) || this.#enums.createSourceFile(filename);
-  }
-
-  getObjectSchemaFile(name: string): SourceFile {
-    if (isProxy(this)) {
-      return valueOf(this).getObjectSchemaFile(name);
-    }
-    const filename = `${name}.ts`;
-    return this.#models.getSourceFile(filename) || this.#models.createSourceFile(filename);
-  }
-
   getEnum(name: string) {
     name = valueOf(name);
     let result: EnumDeclaration | undefined;
@@ -186,33 +152,10 @@ export class ApiModel {
         return referenceTo(result);
       }
     }
-
     return undefined;
   }
 
-  getAliasSourceFile(name: string): SourceFile {
-    if (isProxy(this)) {
-      return valueOf(this).getAliasSourceFile(name);
-    }
-
-    if (isAnonymous(name)) {
-      return this.getAnonymousFile(name);
-    }
-
-    const filename = `${name}.ts`;
-    return this.#alias.getSourceFile(filename) || this.#alias.createSourceFile(filename);
-  }
-
-  getAnonymousFile(name: string): SourceFile {
-    if (isProxy(this)) {
-      return valueOf(this).getAnonymousFile(name);
-    }  
-
-    const filename = `${name.replace(/[^\w]+/g, '_')}.ts`;
-    return this.#anonymous.getSourceFile(filename) || this.#anonymous.createSourceFile(filename);
-  }
-
-  isFileAnonymous( sourceFile: SourceFile ): boolean{
+  isFileAnonymous(sourceFile: SourceFile): boolean {
     if (isProxy(this)) {
       return valueOf(this).isFileAnonymous(sourceFile);
     }
@@ -221,10 +164,10 @@ export class ApiModel {
 
   getNameAndFile(identity: Identity, type: keyof Folders) {
     const name = isAnonymous(identity) ? `${type}_${this.counter++}` : <string><any>valueOf(identity).replace(/[^\w]+/g, '_');
-    const file = isAnonymous(identity) ? this.getAnonymousFile(name) : this.getFile(name, type);
+    const file = isAnonymous(identity) ? this.getFile(name,'anonymous') : this.getFile(name, type);
 
     return { name, file };
-  }
+  } 
 
   /**
    * Gets a type reference for a given schema.
@@ -242,12 +185,11 @@ export class ApiModel {
 
     reqdTypes:
     for (const requiredType of schema.requiredTypeDeclarations) {
-
       if (requiredType.getSourceFile && requiredType.getName ) {
         const typeFile = requiredType.getSourceFile();
         const typeName = requiredType.getName();
 
-        if (typeName === undefined || typeFile === undefined || typeFile === targetSourceFile) {
+        if (typeName === undefined || typeFile === undefined || typeFile === targetSourceFile || this.isFileAnonymous(typeFile)) {
           // don't need to do anything if it's the same file 
           continue;
         }
@@ -260,7 +202,7 @@ export class ApiModel {
               // we've already imported this. Go on to the next one.
               continue reqdTypes;
             }
-
+            
             // we've referenced the file, but not imported the type.
             importDecl.addNamedImport(typeName);
             continue reqdTypes;

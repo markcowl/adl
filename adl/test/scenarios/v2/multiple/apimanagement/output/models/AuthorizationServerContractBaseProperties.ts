@@ -1,7 +1,7 @@
 import { AuthorizationMethod } from '../enums/AuthorizationMethod';
-import { BearerTokenSendingMethod } from '../enums/BearerTokenSendingMethod';
 import { ClientAuthenticationMethod } from '../enums/ClientAuthenticationMethod';
 import { TokenBodyParameterContract } from './TokenBodyParameterContract';
+import { BearerTokenSendingMethod } from '../enums/BearerTokenSendingMethod';
 /**
  * @description External OAuth authorization server Update settings contract.
  */

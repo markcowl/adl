@@ -1,5 +1,5 @@
-import { GroupContractProperties } from './GroupContractProperties';
 import { UserEntityBaseParameters } from './UserEntityBaseParameters';
+import { GroupContractProperties } from './GroupContractProperties';
 /**
  * @description User profile.
  */

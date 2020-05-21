@@ -52,7 +52,9 @@ describe('Load Single OAI2 files', () => {
       const adlOutput = resolve(`${outputRoot}/${name}`);
       
       // clean the folder and write out ts files
-      await api.saveADL(adlOutput, true);
+      const stopwatch = new Stopwatch();
+      const n = await api.saveADL(adlOutput, true);
+      console.log(chalk.cyan(`      save ADL: '${file}' - ${n} files saved - ${formatDuration(stopwatch.time)} `));
       const apiOutput = resolve(`${adlOutput}/${file.replace(/.yaml$/ig, '.api.yaml')}`);
       const atticOutput = resolve(`${adlOutput}/${file.replace(/.yaml$/ig, '.attic.yaml')}`);
 
@@ -61,7 +63,8 @@ describe('Load Single OAI2 files', () => {
       await clean(apiOutput, atticOutput);
       await checkAttic(api, errors, atticOutput);
 
-      const stopwatch = new Stopwatch();
+      // reset timer
+      stopwatch.time;
       const content = serialize(api.valueOf());
       console.log(chalk.cyan(`      serialize: '${file}' ${formatDuration(stopwatch.time)} `));
       // write out yaml 

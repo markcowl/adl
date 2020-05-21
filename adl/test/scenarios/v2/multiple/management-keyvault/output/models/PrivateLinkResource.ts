@@ -1,5 +1,5 @@
-import { PrivateLinkResourceProperties } from './PrivateLinkResourceProperties';
 import { Resource } from './Resource';
+import { PrivateLinkResourceProperties } from './PrivateLinkResourceProperties';
 /**
  * @description A private link resource
  */

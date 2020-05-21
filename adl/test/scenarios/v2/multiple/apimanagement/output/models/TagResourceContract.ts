@@ -1,7 +1,7 @@
+import { TagTagResourceContractProperties } from './TagTagResourceContractProperties';
 import { ApiTagResourceContractProperties } from './ApiTagResourceContractProperties';
 import { OperationTagResourceContractProperties } from './OperationTagResourceContractProperties';
 import { ProductTagResourceContractProperties } from './ProductTagResourceContractProperties';
-import { TagTagResourceContractProperties } from './TagTagResourceContractProperties';
 /**
  * @description TagResource contract properties.
  */
