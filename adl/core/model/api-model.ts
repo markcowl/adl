@@ -2,7 +2,7 @@ import { exists, isFile, mkdir, rmdir, writeFile } from '@azure-tools/async-io';
 import { Dictionary, values } from '@azure-tools/linq';
 import { isAnonymous, isProxy, Path, SourceMap, TargetMap, use, valueOf } from '@azure-tools/sourcemap';
 import { dirname, join } from 'path';
-import { EnumDeclaration, IndentationText, Node, Project, QuoteKind, SourceFile } from 'ts-morph';
+import { EnumDeclaration, IndentationText, NewLineKind, Node, Project, QuoteKind, SourceFile } from 'ts-morph';
 import { getNode, referenceTo } from '../support/typescript';
 import { Attic } from './element';
 import { SerializationResult } from './format';
@@ -10,7 +10,9 @@ import { HttpProtocol } from './http/protocol';
 import { InternalData } from './internal-data';
 import { Metadata } from './metadata';
 import { Resource } from './resource';
+import { Schema } from './schema/schema';
 import { Schemas } from './schema/schemas';
+import { Folders, Identity } from './types';
 import { VersionInfo } from './version-info';
 
 
@@ -35,8 +37,35 @@ function TypeInfo<U extends new (...args: any) => any>(type: U) {
 }
 */
 
-export class ApiModel  {
-  #project: Project;
+export class ApiModel {
+  #project: Project = new Project({
+    useInMemoryFileSystem: true,
+    manipulationSettings: {
+      indentationText: IndentationText.TwoSpaces,
+      insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces: true,
+      newLineKind: NewLineKind.LineFeed,
+      quoteKind: QuoteKind.Single,
+    },
+  });
+
+  counter = 0;
+
+  #folders = <Folders>{
+    anonymous: this.#project.createDirectory('anonymous'),
+    alias: this.#project.createDirectory('aliases'),
+    model: this.#project.createDirectory('models'),
+    enum : this.#project.createDirectory('enums'),
+    group: this.#project.createDirectory('operations'),
+    resource: this.#project.createDirectory('resources'),
+
+  }
+  #anonymous = this.#project.createDirectory('anonymous');
+  #alias = this.#project.createDirectory('aliases');
+  #models = this.#project.createDirectory('models');
+  #enums = this.#project.createDirectory('enums');
+  #operations = this.#project.createDirectory('operations');
+  #resources = this.#project.createDirectory('resources');
+
 
   get project() {
     return this.#project;
@@ -55,19 +84,12 @@ export class ApiModel  {
 
 
   constructor() {
-    this.#project  = new Project({
-      useInMemoryFileSystem: true, manipulationSettings: {
-        indentationText: IndentationText.TwoSpaces,
-        insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces: true,
-        quoteKind: QuoteKind.Single,
-      }
-    });
     (<any>this.#project).api = this;
   }
 
-  track(targetMap: TargetMap, sourceMap: SourceMap ) {
+  track(targetMap: TargetMap, sourceMap: SourceMap) {
     // temporary -- use up everything that we are given in the source map.
-    for( const each of values(sourceMap)) {
+    for (const each of values(sourceMap)) {
       use(each);
     }
   }
@@ -80,7 +102,7 @@ export class ApiModel  {
     // ...
   }
 
-  async saveADL(path: string, cleanDirectory = true)  {
+  async saveADL(path: string, cleanDirectory = true) {
     // save any open files to memory
     await this.project.save();
 
@@ -97,42 +119,70 @@ export class ApiModel  {
     // ensure folder is created 
     await mkdir(path);
 
+    const format = {
+      indentSize: 1,
+    };
     // print each file and save it.
     await Promise.all(
-      this.project.getSourceFiles().map( async (each) => {
-        if( each === this.anonymousFile) {
-          return;
+      this.project.getSourceFiles().map(async (each) => {
+        if (this.isFileAnonymous(each)) {
+        //  return;
         }
-        each.formatText({
-          indentSize: 2
-        });
-      
+        each.formatText(format);
+        each.organizeImports(format);
+
         const filename = join(path, each.getFilePath());
 
         const folder = dirname(filename);
         await mkdir(folder);
 
         await writeFile(filename, each.print().
-          replace(/\*\/\s*\/\*\*\s*/g, ''));
+          //replace(/\*\/\s*\/\*\*\s*/g, '').
+          replace(/^(\s*\/\*)/g, '\n$1')
+        );
+
       }));
   }
 
-  getNode(path: Path): Node|undefined {
+  getNode(path: Path): Node | undefined {
     return getNode(path, this.project);
+  }
+
+  getFile(identity: Identity, type: keyof Folders ): SourceFile {
+    if (isProxy(this)) {
+      return valueOf(this).getFile(identity, type);
+    }
+    if (isAnonymous(identity) ) {
+      identity = identity.name;
+      type = 'anonymous';
+    }
+    const filename = `${(<string>identity).replace(/[^\w]+/g, '_')}.ts`;
+    return this.#folders[type].getSourceFile(filename) || this.#folders[type].createSourceFile(filename);
   }
 
   getEnumFile(name: string): SourceFile {
     if (isProxy(this)) {
       return valueOf(this).getEnumFile(name);
     }
-    if( isAnonymous(name)) {
-      return this.anonymousFile;
+    if (isAnonymous(name)) {
+      return this.getAnonymousFile(name);
     }
     const filename = `${name}.ts`;
-    return  this.project.getSourceFile(filename) ||  this.project.createSourceFile(filename);
+    return this.#enums.getSourceFile(filename) || this.#enums.createSourceFile(filename);
   }
 
-  getEnum(name: string ) {
+  getObjectSchemaFile(name: Identity): SourceFile {
+    if (isProxy(this)) {
+      return valueOf(this).getObjectSchemaFile(name);
+    }
+    if (isAnonymous(name)) {
+      return this.getAnonymousFile(name.name);
+    }
+    const filename = `${name}.ts`;
+    return this.#models.getSourceFile(filename) || this.#models.createSourceFile(filename);
+  }
+
+  getEnum(name: string) {
     name = valueOf(name);
     let result: EnumDeclaration | undefined;
 
@@ -146,22 +196,94 @@ export class ApiModel  {
     return undefined;
   }
 
-  #aliasFile?: SourceFile;
-  getAliasSourceFile(): SourceFile {
-    if( isProxy(this) ) {
-      return valueOf(this).getAliasSourceFile();
-    }
-    return this.#aliasFile || (this.#aliasFile = this.project.createSourceFile('aliases.ts'));
-  }
-  
-  #anonymousFile?: SourceFile;
-  get anonymousFile(): SourceFile {
+  getAliasSourceFile(name: string): SourceFile {
     if (isProxy(this)) {
-      return valueOf(this).anonymousFile;
+      return valueOf(this).getAliasSourceFile(name);
     }
-    return this.#anonymousFile || (this.#anonymousFile = this.project.createSourceFile('anonymous.ts'));
+
+    if (isAnonymous(name)) {
+      return this.getAnonymousFile(name);
+    }
+
+    const filename = `${name}.ts`;
+    return this.#alias.getSourceFile(filename) || this.#alias.createSourceFile(filename);
   }
 
+  getAnonymousFile(name: string): SourceFile {
+    if (isProxy(this)) {
+      return valueOf(this).getAnonymousFile(name);
+    }  
+
+    const filename = `${name.replace(/[^\w]+/g, '_')}.ts`;
+    return this.#anonymous.getSourceFile(filename) || this.#anonymous.createSourceFile(filename);
+  }
+
+  isFileAnonymous( sourceFile: SourceFile ): boolean{
+    if (isProxy(this)) {
+      return valueOf(this).isFileAnonymous(sourceFile);
+    }
+    return this.#anonymous.isAncestorOf(sourceFile);
+  }
+
+  getNameAndFile(identity: Identity, type: keyof Folders) {
+    const name = isAnonymous(identity) ? `${type}_${this.counter++}` : <string><any>valueOf(identity).replace(/[^\w]+/g, '_');
+    const file = isAnonymous(identity) ? this.getAnonymousFile(name) : this.getFile(name, type);
+
+    return { name, file };
+  }
+
+  /**
+   * Gets a type reference for a given schema.
+   * 
+   * This also ensures that the types that are required for the schema are imported into the current sourcefile 
+   * 
+   * @param schema the schema that we need imported.
+   */
+  getTypeReference(schema: Schema, targetSourceFile: SourceFile): string {
+    schema = valueOf(schema);
+    
+    // get all the imports required for the type 
+    // add them to this file
+    const importDecls = targetSourceFile.getImportDeclarations();
+
+    reqdTypes:
+    for (const requiredType of schema.requiredTypeDeclarations) {
+
+      if (requiredType.getSourceFile && requiredType.getName ) {
+        const typeFile = requiredType.getSourceFile();
+        const typeName = requiredType.getName();
+
+        if (typeName === undefined || typeFile === undefined || typeFile === targetSourceFile) {
+          // don't need to do anything if it's the same file 
+          continue;
+        }
+
+        for (const importDecl of importDecls) {
+
+          if (importDecl.getModuleSpecifierSourceFile() === typeFile) {
+            // we've got imports from that sourcefile 
+            if (importDecl.getNamedImports().find(imp => imp.getName() === typeName)) {
+              // we've already imported this. Go on to the next one.
+              continue reqdTypes;
+            }
+
+            // we've referenced the file, but not imported the type.
+            importDecl.addNamedImport(typeName);
+            continue reqdTypes;
+          }
+          // wasn't in that file
+        }
+        targetSourceFile.addImportDeclaration({
+          moduleSpecifier: targetSourceFile.getRelativePathAsModuleSpecifierTo(typeFile),
+          namedImports: [typeName]
+        });
+      }
+    }
+    // imported everything we needed. 
+    //return schema.node.getName();
+    
+    return schema.typeDefinition;
+  }
 }
 
 export class None {
@@ -194,4 +316,5 @@ export class None {
    */
   async __addVersion() {
     throw 'unimplemented';
-  }}
+  }
+}

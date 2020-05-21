@@ -1,5 +1,0 @@
-components:
-  parameters:
-    alt:
-      schema:
-        default: atom

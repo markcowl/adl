@@ -1,6 +1,6 @@
 import { Alias } from '../alias';
 import * as base from '../operation';
-import { Reference } from '../Reference';
+import { Reference } from '../reference';
 import { Parameter } from './parameter';
 import { AuthenticationRequirement, Connection } from './protocol';
 import { Request } from './request';

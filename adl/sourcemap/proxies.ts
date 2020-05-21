@@ -417,6 +417,7 @@ export class TrackedTarget<T extends Object> {
         return undefined;
 
       case 'project':
+      case 'node':
         return (<any>this.instance)[property];        
     }
     const value = actual[property];

@@ -1,9 +1,10 @@
 import { Dictionary } from '@azure-tools/linq';
 import { anonymous, isAnonymous, valueOf } from '@azure-tools/sourcemap';
 import { Node } from 'ts-morph';
-import { getPath } from '../../support/typescript';
+import { getPath, IsTypeDeclaration, project, TypeDeclaration } from '../../support/typescript';
 import { Element, TSElement } from '../element';
-import { Identity } from '../name';
+import { Identity } from '../types';
+
 
 export class Schema extends Element {
   /** 
@@ -38,9 +39,18 @@ export class Schema extends Element {
     this.name = anonymous(type);
     this.initialize(initializer);
   }
+  get isInline() {
+    return false;
+  }
+  get typeDefinition(): string {
+    return `unknown /*= (not tsschema -- ${Object.getPrototypeOf(this).name}${valueOf(this.name)}/${(<any>this).kind} ) =*/`;
+  }
+  get requiredTypeDeclarations(): Array<TypeDeclaration> {
+    return [];
+  }
 }
 
-export class TSSchema<TNode extends Node> extends TSElement<TNode> implements Schema {
+export class NamedElement<TNode extends Node> extends TSElement<TNode> {
   get targetMap(): Dictionary<any> {
     return {
       ...super.targetMap,
@@ -51,10 +61,11 @@ export class TSSchema<TNode extends Node> extends TSElement<TNode> implements Sc
 
   get name(): Identity {
     let result: Identity | undefined = undefined;
-    if (Node.isNameableNode(this.node)) {
+
+    if (Node.isNamedNode(this.node)) {
       result = this.node.getName();
     }
-    return result ?? anonymous(this.type);
+    return result ?? anonymous(this.node.getKindName());
   }
 
   set name(value: Identity) {
@@ -80,12 +91,39 @@ export class TSSchema<TNode extends Node> extends TSElement<TNode> implements Sc
   set description(value: string | undefined) {
     this.setDocTag('description', value);
   }
+  
 
+}
+
+export class TSSchema<TNode extends Node> extends NamedElement<TNode> implements Schema {
   nullable?: boolean;
 
   constructor(public type: string, node: TNode, initializer?: Partial<Schema>) {
     super(node);
     this.initialize(initializer);
+  }
+
+  
+  /**
+   * returns the types that the schema needs 
+   * 
+   * this should be overridden in children that need to return something 
+   * other than just themselves (ie, in Array)
+   */
+  get requiredTypeDeclarations(): Array<TypeDeclaration> {
+    return this.isInline && IsTypeDeclaration( this.node ) ?  [this.node] : [];
+  }
+  
+  get isInline(): boolean {
+    return project(this.node).isFileAnonymous( this.node.getSourceFile() );
+  }
+
+  get typeDefinition(): string {
+    if( this.isInline) {
+      const v = this.node.getText();
+      return v.substring( v.indexOf('{') );
+    } 
+    return <string>this.name;
   }
 }
 

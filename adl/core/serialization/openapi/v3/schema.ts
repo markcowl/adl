@@ -2,15 +2,15 @@ import { items, length, values } from '@azure-tools/linq';
 import { IntegerFormat, NumberFormat, StringFormat, v3 } from '@azure-tools/openapi';
 import { anonymous, isUsed, nameOf, unusedMembers, use, using } from '@azure-tools/sourcemap';
 import { Alias as GenericAlias } from '../../../model/alias';
-import { Identity } from '../../../model/name';
-import { Alias } from '../../../model/schema/alias';
+import { createAlias } from '../../../model/schema/alias';
 import { ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, RegularExpressionConstraint, UniqueElementsConstraint } from '../../../model/schema/constraint';
 import { ServerDefaultValue } from '../../../model/schema/default';
 import { AndSchema, AnyOfSchema, XorSchema } from '../../../model/schema/group';
-import { ObjectSchema, Property } from '../../../model/schema/object';
+import { createObjectSchema } from '../../../model/schema/object';
 import { ArraySchema, DictionarySchema } from '../../../model/schema/primitive';
 import { Schema } from '../../../model/schema/schema';
-import { isEnumSchema, isObjectSchema, isPrimitiveSchema, push, singleOrDefault, toArray } from '../common';
+import { Identity } from '../../../model/types';
+import { isEnumSchema, isObjectSchema, isPrimitiveSchema, singleOrDefault, toArray } from '../common';
 import { arrayProperties, commonProperties, numberProperties, objectProperties, Options, processAnySchema, processBooleanSchema, processByteArraySchema, processCharSchema, processDateSchema, processDateTimeSchema, processDurationSchema, processEnumSchema, processFileSchema, processOdataSchema, processPasswordSchema, processTimeSchema, processUriSchema, processUuidSchema, stringProperties } from '../common/schema';
 import { Context } from './serializer';
 
@@ -24,7 +24,7 @@ export async function* processInline(schema: v3.Schema | v3.SchemaReference | un
           // if this was anonymous, we just want back the target object 
           yield result instanceof GenericAlias ? result.target : result;
         } else {
-          yield result instanceof GenericAlias ? new Alias(result.name, result.target, commonProperties(<any>schema)) : result;
+          yield result instanceof GenericAlias ? createAlias($.api,result.name, result.target, commonProperties(<any>schema)) : result;
         }
       }
     }
@@ -283,7 +283,7 @@ export async function* processStringSchema(schema: v3.Schema, $: Context): Async
   }
 
   // otherwise, we have to get the standard string and make an alias for it with the adornments. 
-  const alias = new Alias(anonymous('string'), $.api.schemas.String, commonProperties(schema));
+  const alias = createAlias($.api,anonymous('string'), $.api.schemas.String, commonProperties(schema));
 
   if (schema.default) {
     alias.defaults.push(new ServerDefaultValue(schema.default));
@@ -369,7 +369,7 @@ function constrainNumericSchema(schema: v3.Schema, $: Context, target: Schema): 
   }
 
   // gonna need an alias
-  const alias = new Alias(anonymous('number'), target, commonProperties(schema));
+  const alias = createAlias($.api,anonymous('number'), target, commonProperties(schema));
 
   if (schema.default) {
     alias.defaults.push(new ServerDefaultValue(schema.default));
@@ -413,7 +413,7 @@ export async function* processArraySchema(schema: v3.Schema, $: Context, options
     return yield result;
   }
 
-  const alias = new Alias(anonymous('array'), result, {
+  const alias = createAlias($.api,anonymous('array'), result, {
     name: schemaName,
     ...common
   });
@@ -451,7 +451,7 @@ export async function* processAdditionalProperties(schema: v3.Schema, $: Context
   if (length(common) > 0 || schema.maxProperties !== undefined || schema.minProperties !== undefined) {
     const result = new DictionarySchema(dictionaryType);
 
-    const alias = new Alias(anonymous('dictionary'), result, {
+    const alias = createAlias($.api,anonymous('dictionary'), result, {
       name: schemaName,
       ...common
     });
@@ -489,12 +489,18 @@ export async function* processObjectSchema(schema: v3.Schema, $: Context, option
   const schemaName = options?.isAnonymous ? anonymous('object') : nameOf(schema);
 
   // creating an object schema 
-  const result = new ObjectSchema(schemaName, commonProperties(schema));
+  
+  const result = createObjectSchema($.api,schemaName, commonProperties(schema));
 
   result.addToAttic('example', (<any>schema).example);
 
   const schemas = getSchemas(schema.allOf, $);
-  await push(result.extends, schemas);
+  for await (const schema of schemas) {
+    const s = <any> schema;
+    if (s.node) {
+      result.parents.push(s);
+    }
+  }
 
   // yeild this as soon as possible in case we recurse.
   yield result;
@@ -511,13 +517,11 @@ export async function* processObjectSchema(schema: v3.Schema, $: Context, option
       const i = schema.required.indexOf(propertyName);
       required = using(schema.required[i], true);
     }
-
-    const p = new Property(propertyName, propSchema, {
+    const p = result.createProperty(propertyName, propSchema, {
       required,
       description: property.description,
       writeonly: property.writeOnly,
       readonly: property.readOnly,
-
     });
     p.addToAttic('example', (<any>property).example);
     $.addVersionInfo(p, property);
@@ -536,7 +540,7 @@ export async function* processObjectSchema(schema: v3.Schema, $: Context, option
     // if additionalProperties is specified, then the type should
     // be extending the dictionary of <type> 
     for await (const ds of processAdditionalProperties(schema, $, { isAnonymous: true })) {
-      result.extends.push(await ds);
+      // result.extends.push(await ds);
     }
   }
 }

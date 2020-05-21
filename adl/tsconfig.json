@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "alwaysStrict": true,
-    "forceConsistentCasingInFileNames": false,
+    "forceConsistentCasingInFileNames": true,
     "module": "commonjs",
     "noEmitOnError": true,
     "noImplicitAny": true,
@@ -21,11 +21,14 @@
       "es2019"
     ],
     "experimentalDecorators": true,
-    "newLine": "LF",
-    //"plugins": [
-    //{
-    // "name": "typescript-eslint-language-service"
-    //}
-    //]
-  }
+    "newLine": "LF"
+  },
+  "exclude": [
+    "dist",
+    "test/scenarios/**",
+    "resources",
+    "node_modules/**",
+    "**/*.d.ts",
+    "**/*.adl.ts"
+  ]
 }

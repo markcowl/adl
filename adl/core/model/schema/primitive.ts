@@ -1,9 +1,18 @@
-import { Schema } from './schema';
+import { valueOf } from '@azure-tools/sourcemap';
+import { TypeDeclaration } from '../../support/typescript';
+import { Schema, TSSchema } from './schema';
 
 export class Primitive extends Schema {
-  constructor(kind: string, initializer?: Partial<Primitive>) {
+  constructor(protected kind: string, initializer?: Partial<Primitive>) {
     super(kind);
     this.initialize(initializer);
+  }
+  get isInline(): boolean {
+    return true;
+  }
+
+  get typeDefinition(): string {
+    return <string>valueOf(this.kind);
   }
 }
 
@@ -12,12 +21,24 @@ export class ArraySchema extends Primitive {
     super('array');
     this.initialize(initializer);
   }
+  get typeDefinition(): string {
+    return `Array<${this.elementSchema.typeDefinition}>`;
+  }
+  get requiredTypeDeclarations(): Array<TypeDeclaration> {
+    return this.elementSchema instanceof TSSchema ? [this.elementSchema.node] : [];
+  }
 }
 
 export class DictionarySchema extends Primitive {
   constructor(public elementSchema: Schema, initializer?: Partial<DictionarySchema>) {
     super('dictionary');
     this.initialize(initializer);
+  }
+  get typeDefinition(): string {
+    return `Dictionary<${this.elementSchema.typeDefinition}>`;
+  }
+  get requiredTypeDeclarations(): Array<TypeDeclaration> {
+    return this.elementSchema instanceof TSSchema ? [this.elementSchema.node] : [];
   }
 }
 

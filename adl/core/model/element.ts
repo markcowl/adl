@@ -10,22 +10,28 @@ export interface Attic extends Dictionary<any> {
 
 }
 
-function clean(this: any, key: string, value: any): any {
-  return value === undefined || value === null ? value : value.valueOf();
-}
-
 /** inheriting from Initializer adds an apply<T> method to the class, allowing you to accept an object initalizer, and applying it to the class in the constructor. */
 export class Initializer {
   initialize<T>(initializer?: Partial<T>) {
+    const isBackedByTS = 'node' in this;
+
+    if (isBackedByTS) {
+      // autotrack
+      (<any>this).track(initializer);
+    }
+
     for (const [key, value] of items(initializer)) {
       // copy the true value of the items to the object
       // (use the proxy)
-      const proxy = (<any>TrackedTarget.track(this));
-      const targetProperty = proxy[key];
+        
+      const proxy = isBackedByTS ? <any>this : (<any>TrackedTarget.track(this));
+      
 
       if (value !== undefined) {
         const rawValue = (<any>value).valueOf();
-        if (Array.isArray(targetProperty)) {
+        
+        const targetProperty = proxy[key];
+        if (targetProperty && targetProperty.push ) {
           if (rawValue[Symbol.iterator]) {
             // copy elements to target
             for (const each of rawValue) {
@@ -120,7 +126,7 @@ export class TSElement<TNode extends Node> extends Element {
       throw new Error('This node cannot have JS documentation');
     }
 
-    return this.node.addJsDoc({});
+    return this.node.addJsDoc('\n');
   }
 
   protected hasDocTag(tagName: string) {
@@ -174,6 +180,21 @@ export class TSElement<TNode extends Node> extends Element {
     if (!value && !this.getDoc()) {
       return;
     }
-    return this.getOrCreateDoc().setDescription(valueOf(value) ?? '');
+    if( value ) {
+      return this.getOrCreateDoc().setDescription(`\n${valueOf(value) ?? ''}`);
+    }
+    return this.getOrCreateDoc().setDescription('\n');
+  }
+
+  protected get project() {
+    return project(this.node);
+  }
+
+  protected get sourceFile() {
+    return this.node.getSourceFile();
+  }
+
+  protected getTypeReference(schema: any) {
+    return this.project.getTypeReference(schema, this.sourceFile);
   }
 }
