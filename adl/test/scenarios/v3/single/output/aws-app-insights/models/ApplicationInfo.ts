@@ -6,7 +6,7 @@ export interface ApplicationInfo {
     /**
      * @description The name of the resource group used for the application.
      */
-    ResourceGroupName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    ResourceGroupName: string & MaxLength<256> & MinLength<1> & RegularExpression<"[a-zA-Z0-9\\.\\-_]*">;
     /**
      * @description The lifecycle of the application.
      */
@@ -14,7 +14,7 @@ export interface ApplicationInfo {
     /**
      * @description  The SNS topic provided to Application Insights that is associated to the created opsItems to receive SNS notifications for opsItem updates.
      */
-    OpsItemSNSTopicArn: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    OpsItemSNSTopicArn: string & MaxLength<300> & MinLength<20>;
     /**
      * @description  Indicates whether Application Insights will create opsItems for any problem detected by Application Insights for an application.
      */

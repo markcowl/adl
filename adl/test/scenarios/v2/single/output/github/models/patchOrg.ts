@@ -2,12 +2,12 @@ export interface patchOrg {
     /**
      * @description Billing email address. This address is not publicized.
      */
-    billing_email: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    billing_email: string;
     company: string;
     /**
      * @description Publicly visible email address.
      */
-    email: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    email: string;
     location: string;
     name: string;
 }

@@ -1,4 +1,4 @@
-
+import { RequestReportRecordContract } from './RequestReportRecordContract';
 /**
  * @description Paged Report records list representation.
  */
@@ -6,9 +6,9 @@ export interface RequestReportCollection {
     /**
      * @description Page values.
      */
-    value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
+    value: Array<RequestReportRecordContract>;
     /**
      * @description Total record count number across all pages.
      */
-    count: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    count: int64;
 }

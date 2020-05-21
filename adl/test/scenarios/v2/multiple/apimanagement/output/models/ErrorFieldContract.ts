@@ -6,13 +6,13 @@ export interface ErrorFieldContract {
     /**
      * @description Property level error code.
      */
-    code: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    code: string;
     /**
      * @description Human-readable representation of property-level error.
      */
-    message: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    message: string;
     /**
      * @description Property name.
      */
-    target: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    target: string;
 }

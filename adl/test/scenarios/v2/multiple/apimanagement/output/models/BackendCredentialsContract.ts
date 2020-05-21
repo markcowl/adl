@@ -6,15 +6,15 @@ export interface BackendCredentialsContract {
     /**
      * @description List of Client Certificate Thumbprint.
      */
-    certificate: unknown /*= (not tsschema -- undefinedcertificate/undefined ) =*/;
+    certificate: Array<string> & MaximumElements<32>;
     /**
      * @description Query Parameter description.
      */
-    query: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    query: Dictionary<Array<string>>;
     /**
      * @description Header Parameter description.
      */
-    header: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    header: Dictionary<Array<string>>;
     /**
      * @description Authorization header authentication
      */

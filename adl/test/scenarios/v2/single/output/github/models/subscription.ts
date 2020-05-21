@@ -2,7 +2,7 @@ export interface subscription {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    created_at: string;
     ignored: boolean;
     reason: string;
     repository_url: string;

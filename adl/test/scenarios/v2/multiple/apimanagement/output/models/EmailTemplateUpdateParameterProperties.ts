@@ -1,4 +1,4 @@
-
+import { EmailTemplateParametersContractProperties } from './EmailTemplateParametersContractProperties';
 /**
  * @description Email Template Update Contract properties.
  */
@@ -6,21 +6,21 @@ export interface EmailTemplateUpdateParameterProperties {
     /**
      * @description Subject of the Template.
      */
-    subject: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    subject: string & MaxLength<1000> & MinLength<1>;
     /**
      * @description Title of the Template.
      */
-    title: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    title: string;
     /**
      * @description Description of the Email Template.
      */
-    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    description: string;
     /**
      * @description Email Template Body. This should be a valid XDocument
      */
-    body: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    body: string & MinLength<1>;
     /**
      * @description Email Template Parameter values.
      */
-    parameters: unknown /*= (not tsschema -- undefinedparameters/undefined ) =*/;
+    parameters: Array<EmailTemplateParametersContractProperties>;
 }

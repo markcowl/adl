@@ -1,4 +1,4 @@
 export interface meta {
-    git: array;
-    hooks: array;
+    git: Array<string>;
+    hooks: Array<string>;
 }

@@ -1,4 +1,6 @@
+import { ParameterContract } from './ParameterContract';
 import { RequestContract } from './RequestContract';
+import { ResponseContract } from './ResponseContract';
 /**
  * @description Api Operation Entity Base Contract details.
  */
@@ -6,11 +8,11 @@ export interface OperationEntityBaseContract {
     /**
      * @description Collection of URL template parameters.
      */
-    templateParameters: unknown /*= (not tsschema -- undefinedtemplateParameters/undefined ) =*/;
+    templateParameters: Array<ParameterContract>;
     /**
      * @description Description of the operation. May include HTML formatting tags.
      */
-    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    description: string & MaxLength<1000>;
     /**
      * @description An entity containing request details.
      */
@@ -18,9 +20,9 @@ export interface OperationEntityBaseContract {
     /**
      * @description Array of Operation responses.
      */
-    responses: unknown /*= (not tsschema -- undefinedresponses/undefined ) =*/;
+    responses: Array<ResponseContract>;
     /**
      * @description Operation Policies
      */
-    policies: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    policies: string;
 }

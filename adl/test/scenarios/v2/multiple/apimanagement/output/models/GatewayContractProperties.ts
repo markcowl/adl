@@ -10,5 +10,5 @@ export interface GatewayContractProperties {
     /**
      * @description Gateway description
      */
-    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    description: string & MaxLength<1000>;
 }

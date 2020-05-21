@@ -4,5 +4,5 @@ export interface DescribeComponentResponse {
     /**
      * @description The list of resource ARNs that belong to the component.
      */
-    ResourceList: unknown /*= (not tsschema -- undefinedResourceList/undefined ) =*/;
+    ResourceList: Array<string & MaxLength<1011> & MinLength<1>>;
 }

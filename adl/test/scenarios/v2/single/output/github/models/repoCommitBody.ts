@@ -5,6 +5,6 @@ export interface repoCommitBody {
         name: string;
     };
     message?: string;
-    parents?: array;
+    parents?: Array<string>;
     tree?: string;
 }

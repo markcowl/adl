@@ -6,11 +6,11 @@ export interface SecretPatchProperties {
     /**
      * @description The value of the secret.
      */
-    value: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    value: string;
     /**
      * @description The content type of the secret.
      */
-    contentType: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    contentType: string;
     /**
      * @description The attributes of the secret.
      */

@@ -6,7 +6,7 @@ export interface VaultPatchParameters {
     /**
      * @description The tags that will be assigned to the key vault.
      */
-    tags: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    tags: Dictionary<string>;
     /**
      * @description Properties of the vault
      */

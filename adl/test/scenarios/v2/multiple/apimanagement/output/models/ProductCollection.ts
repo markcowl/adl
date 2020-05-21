@@ -1,4 +1,4 @@
-
+import { ProductContract } from './ProductContract';
 /**
  * @description Paged Products list representation.
  */
@@ -6,9 +6,9 @@ export interface ProductCollection {
     /**
      * @description Page values.
      */
-    value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
+    value: Array<ProductContract>;
     /**
      * @description Next page link if any.
      */
-    nextLink: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    nextLink: string;
 }

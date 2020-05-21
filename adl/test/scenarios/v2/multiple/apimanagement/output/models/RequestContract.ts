@@ -1,4 +1,5 @@
-
+import { ParameterContract } from './ParameterContract';
+import { RepresentationContract } from './RepresentationContract';
 /**
  * @description Operation request details.
  */
@@ -6,17 +7,17 @@ export interface RequestContract {
     /**
      * @description Operation request description.
      */
-    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    description: string;
     /**
      * @description Collection of operation request query parameters.
      */
-    queryParameters: unknown /*= (not tsschema -- undefinedqueryParameters/undefined ) =*/;
+    queryParameters: Array<ParameterContract>;
     /**
      * @description Collection of operation request headers.
      */
-    headers: unknown /*= (not tsschema -- undefinedheaders/undefined ) =*/;
+    headers: Array<ParameterContract>;
     /**
      * @description Collection of operation request representations.
      */
-    representations: unknown /*= (not tsschema -- undefinedrepresentations/undefined ) =*/;
+    representations: Array<RepresentationContract>;
 }

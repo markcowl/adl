@@ -6,9 +6,9 @@ export interface ProductTagResourceContractProperties extends ProductEntityBaseP
     /**
      * @description Identifier of the product in the form of /products/{productId}
      */
-    id: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    id: string;
     /**
      * @description Product name.
      */
-    name?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    name?: string & MaxLength<300> & MinLength<1>;
 }

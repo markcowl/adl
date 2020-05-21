@@ -45,6 +45,9 @@ export class Schema extends Element {
   get typeDefinition(): string {
     return `unknown /*= (not tsschema -- ${Object.getPrototypeOf(this).name}${valueOf(this.name)}/${(<any>this).kind} ) =*/`;
   }
+  get requiredTypeDeclarations(): Array<TypeDeclaration> {
+    return [];
+  }
 }
 
 export class NamedElement<TNode extends Node> extends TSElement<TNode> {
@@ -58,7 +61,8 @@ export class NamedElement<TNode extends Node> extends TSElement<TNode> {
 
   get name(): Identity {
     let result: Identity | undefined = undefined;
-    if (Node.isNameableNode(this.node)) {
+
+    if (Node.isNamedNode(this.node)) {
       result = this.node.getName();
     }
     return result ?? anonymous(this.node.getKindName());
@@ -87,6 +91,7 @@ export class NamedElement<TNode extends Node> extends TSElement<TNode> {
   set description(value: string | undefined) {
     this.setDocTag('description', value);
   }
+  
 
 }
 
@@ -98,57 +103,7 @@ export class TSSchema<TNode extends Node> extends NamedElement<TNode> implements
     this.initialize(initializer);
   }
 
-  /**
-   * Gets a type reference for a given schema.
-   * 
-   * This also ensures that the types that are required for the schema are imported into the current sourcefile 
-   * 
-   * @param type the schema that we need imported.
-   */
-  getTypeReference(type: TSSchema<TypeDeclaration>): TypeDeclaration {
-    type = valueOf(type);
-    // get all the imports required for the type 
-    // add them to this file
-    const file = this.node.getSourceFile();
-    const importDecls = file.getImportDeclarations();
-
-    reqdTypes:
-    for( const requiredType of type.requiredTypeDeclarations  ) {
-    
-      if( requiredType.getSourceFile) {
-        const typeFile = requiredType.getSourceFile();
-        const typeName = requiredType.getName();
-
-        if( typeName === undefined || typeFile === undefined || typeFile  === this.node.getSourceFile() ) {
-        // don't need to do anything if it's the same file 
-          continue;
-        }
-
-        for (const importDecl of importDecls) {
-        
-          if( importDecl.getModuleSpecifierSourceFile() === typeFile ) {
-          // we've got imports from that sourcefile 
-            if (importDecl.getNamedImports().find(imp => imp.getName() === typeName )) {
-            // we've already imported this. Go on to the next one.
-              continue reqdTypes;
-            }
-
-            // we've referenced the file, but not imported the type.
-            importDecl.addNamedImport( typeName);
-            continue reqdTypes;
-          }
-        // wasn't in that file
-        } 
-        file.addImportDeclaration({
-          moduleSpecifier: file.getRelativePathAsModuleSpecifierTo(typeFile),
-          namedImports: [ typeName]
-        });
-      }
-    }
-    // imported everything we needed. 
-    return type.node;
-  }
-
+  
   /**
    * returns the types that the schema needs 
    * 
@@ -156,11 +111,10 @@ export class TSSchema<TNode extends Node> extends NamedElement<TNode> implements
    * other than just themselves (ie, in Array)
    */
   get requiredTypeDeclarations(): Array<TypeDeclaration> {
-    return IsTypeDeclaration( this.node )?  [this.node] : [];
+    return this.isInline && IsTypeDeclaration( this.node ) ?  [this.node] : [];
   }
   
   get isInline(): boolean {
-    
     return project(this.node).isFileAnonymous( this.node.getSourceFile() );
   }
 

@@ -6,15 +6,15 @@ export interface ListLogPatternsRequest {
     /**
      * @description The name of the resource group.
      */
-    ResourceGroupName?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    ResourceGroupName?: string & MaxLength<256> & MinLength<1> & RegularExpression<"[a-zA-Z0-9\\.\\-_]*">;
     /**
      * @description The name of the log pattern set.
      */
-    PatternSetName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    PatternSetName: string & MaxLength<30> & MinLength<1> & RegularExpression<"[a-zA-Z0-9\\.\\-_]*">;
     /**
      * @description The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value.
      */
-    MaxResults: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    MaxResults: int64 & Minimum<1> & Maximum<40>;
     /**
      * @description The token to request the next page of results.
      */

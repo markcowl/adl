@@ -6,13 +6,13 @@ export interface PrivateLinkResourceProperties {
     /**
      * @description Group identifier of private link resource.
      */
-    readonly groupId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    readonly groupId: string & ;
     /**
      * @description Required member names of private link resource.
      */
-    readonly requiredMembers: unknown /*= (not tsschema -- undefinedrequiredMembers/undefined ) =*/;
+    readonly requiredMembers: Array<string> & ;
     /**
      * @description Required DNS zone names of the the private link resource.
      */
-    requiredZoneNames: unknown /*= (not tsschema -- undefinedrequiredZoneNames/undefined ) =*/;
+    requiredZoneNames: Array<string>;
 }

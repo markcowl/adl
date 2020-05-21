@@ -6,13 +6,13 @@ export interface OperationUpdateContractProperties extends OperationEntityBaseCo
     /**
      * @description Operation Name.
      */
-    displayName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    displayName: string & MaxLength<300> & MinLength<1>;
     /**
      * @description A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them.
      */
-    method: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    method: string;
     /**
      * @description Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}
      */
-    urlTemplate: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    urlTemplate: string & MaxLength<1000> & MinLength<1>;
 }

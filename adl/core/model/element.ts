@@ -10,10 +10,6 @@ export interface Attic extends Dictionary<any> {
 
 }
 
-function clean(this: any, key: string, value: any): any {
-  return value === undefined || value === null ? value : value.valueOf();
-}
-
 /** inheriting from Initializer adds an apply<T> method to the class, allowing you to accept an object initalizer, and applying it to the class in the constructor. */
 export class Initializer {
   initialize<T>(initializer?: Partial<T>) {
@@ -190,5 +186,15 @@ export class TSElement<TNode extends Node> extends Element {
     return this.getOrCreateDoc().setDescription('\n');
   }
 
-  
+  protected get project() {
+    return project(this.node);
+  }
+
+  protected get sourceFile() {
+    return this.node.getSourceFile();
+  }
+
+  protected getTypeReference(schema: any) {
+    return this.project.getTypeReference(schema, this.sourceFile);
+  }
 }

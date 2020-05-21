@@ -1,5 +1,4 @@
-import { SkuFamily } from '../enums/SkuFamily';
-import { SkuName } from '../enums/SkuName';
+
 /**
  * @description SKU details
  */

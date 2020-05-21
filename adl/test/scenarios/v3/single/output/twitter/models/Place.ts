@@ -1,15 +1,14 @@
-import { PlaceType } from '../enums/PlaceType';
 import { Geo } from './Geo';
 export interface Place {
-    contained_within: unknown /*= (not tsschema -- undefinedcontained_within/undefined ) =*/;
+    contained_within: Array<string> & MinimumElements<1>;
     country: string;
-    country_code: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    country_code: string & RegularExpression<"^[A-Z]{2}$">;
     full_name?: string;
     geo: Geo;
-    id?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    id?: string;
     /**
      * @description The human readable name of this place.
      */
-    name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    name: string;
     place_type: PlaceType;
 }

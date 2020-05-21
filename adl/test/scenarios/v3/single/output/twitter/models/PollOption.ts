@@ -6,13 +6,13 @@ export interface PollOption {
     /**
      * @description The text of a poll choice.
      */
-    label?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    label?: string;
     /**
      * @description Position of this choice in the poll.
      */
-    position?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    position?: int64;
     /**
      * @description Number of users who voted for this choice.
      */
-    votes?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    votes?: int64;
 }

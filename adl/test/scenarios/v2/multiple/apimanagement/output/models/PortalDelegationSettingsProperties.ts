@@ -7,11 +7,11 @@ export interface PortalDelegationSettingsProperties {
     /**
      * @description A delegation Url.
      */
-    url: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
     /**
      * @description A base64-encoded validation key to validate, that a request is coming from Azure API Management.
      */
-    validationKey: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    validationKey: string;
     /**
      * @description Subscriptions delegation settings.
      */

@@ -4,13 +4,13 @@ export interface milestone {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    created_at: string;
     creator: user;
     description: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    due_on: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    due_on: string;
     number: int64;
     open_issues: int64;
     state: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;

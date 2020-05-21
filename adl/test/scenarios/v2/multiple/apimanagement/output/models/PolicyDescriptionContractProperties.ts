@@ -6,9 +6,9 @@ export interface PolicyDescriptionContractProperties {
     /**
      * @description Policy description.
      */
-    readonly description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    readonly description: string & ;
     /**
      * @description Binary OR value of the Snippet scope.
      */
-    readonly scope: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    readonly scope: int64;
 }

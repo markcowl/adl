@@ -6,7 +6,7 @@ export interface CreateComponentRequest {
     /**
      * @description The name of the resource group.
      */
-    ResourceGroupName?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    ResourceGroupName?: string & MaxLength<256> & MinLength<1> & RegularExpression<"[a-zA-Z0-9\\.\\-_]*">;
     /**
      * @description The name of the component.
      */
@@ -14,5 +14,5 @@ export interface CreateComponentRequest {
     /**
      * @description The list of resource ARNs that belong to the component.
      */
-    ResourceList?: unknown /*= (not tsschema -- undefinedResourceList/undefined ) =*/;
+    ResourceList?: Array<string & MaxLength<1011> & MinLength<1>>;
 }

@@ -9,5 +9,5 @@ export interface air6_Feature {
     /**
      * @description Static marker indicating object is a GeoJSON Feature.
      */
-    type?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    type?: string;
 }

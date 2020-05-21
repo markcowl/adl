@@ -5,7 +5,7 @@ export interface issueEvent {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    created_at: string;
     event: string;
     issue: {
         assignee: user;
@@ -13,26 +13,30 @@ export interface issueEvent {
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        closed_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        closed_at: string;
         comments: int64;
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        created_at: string;
         html_url: string;
-        labels: array;
+        labels: Array<{
+            color: string;
+            name: string;
+            url: string;
+        }>;
         milestone: {
             closed_issues: int64;
             /**
              * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
              */
-            created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+            created_at: string;
             creator: user;
             description: string;
             /**
              * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
              */
-            due_on: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+            due_on: string;
             number: int64;
             open_issues: int64;
             state: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
@@ -50,7 +54,7 @@ export interface issueEvent {
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        updated_at: string;
         url: string;
         user: user;
     };

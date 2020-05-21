@@ -6,11 +6,11 @@ export interface VaultCreateOrUpdateParameters {
     /**
      * @description The supported Azure location where the key vault should be created.
      */
-    location?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    location?: string;
     /**
      * @description The tags that will be assigned to the key vault.
      */
-    tags: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    tags: Dictionary<string>;
     /**
      * @description Properties of the vault
      */

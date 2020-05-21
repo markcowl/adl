@@ -1,24 +1,10 @@
-import { isAnonymous, TargetMap, valueOf } from '@azure-tools/sourcemap';
+import { TargetMap } from '@azure-tools/sourcemap';
 import { InterfaceDeclaration, PropertySignature } from 'ts-morph';
 import { normalizeIdentifier } from '../../support/codegen';
 import { getPath, TypeDeclaration } from '../../support/typescript';
 import { ApiModel } from '../api-model';
-import { Identity } from '../types';
+import { Collection, CollectionImpl, Identity } from '../types';
 import { NamedElement, Schema, TSSchema } from './schema';
-
-interface Collection<T> {
-  push(value: T): void;
-  remove(value: T): void;
-  get(): Array<T>;
-}
-
-class CollectionImpl<TCollectionType,TOwner> implements Collection<TCollectionType> {
-  constructor(owner: TOwner, public push: (value: TCollectionType) => void = (v: TCollectionType) => { /* nothing */ }, public remove: (value: TCollectionType) => void = (v: TCollectionType) => { /* nothing */}, public get: () => Array<TCollectionType> = () => []) {
-    this.push = push.bind(owner);
-    this.remove = remove.bind(owner);
-    this.get = get.bind(owner);
-  }
-}
 
 
 export interface ObjectSchema extends Schema {
@@ -40,6 +26,11 @@ export interface ObjectSchema extends Schema {
   createProperty(name: string, schema: Schema, initializer?: Partial<Property>): Property;
 }
 
+export interface PropInitializer extends Partial<Property> {
+  name: string;
+  schema: Schema;
+}
+
 export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements ObjectSchema {
   get targetMap(): TargetMap {
     return {
@@ -48,14 +39,15 @@ export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements 
     };
   }
 
-  addParent(parent: TSSchema<TypeDeclaration> ) {
+  addParent(...parents: Array<TSSchema<TypeDeclaration>> ) {
     // ensure we have an import to the type
     // and add it to the list
-    const ref = this.getTypeReference(parent);
-    
 
-    this.node.addExtends(ref.getName()!);
+    for(const parent of parents) {
+      this.node.addExtends(this.getTypeReference(parent));
+    }
   }
+
   removeParent(parent: TSSchema<TypeDeclaration>) {
     // remove the parent from the schema
     for( const base of this.node.getExtends() ) {
@@ -92,17 +84,15 @@ export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements 
   clientName?: string;
 
   createProperty(name: string, schema: Schema, initializer?: Partial<Property>): Property {
+    
     // the type is either a reference of a type that we have 
     // or it's an anonymous type that gets expanded
-    const tr = schema instanceof TSSchema ? this.getTypeReference(schema): undefined;
+    const type = this.project.getTypeReference(schema,this.node.getSourceFile()) || 'any';
 
-    const type = tr ? (schema.isInline ? schema.typeDefinition : tr!.getName()) : schema.typeDefinition || 'any';
-
-   
     const result = new PropertyImpl(this.node.addProperty({
       //todo: do a better 'fix-the-bad-name' (ie, perks/codegen)
       name: normalizeIdentifier(name),
-      type: isAnonymous(type) ? type.name : type ,
+      type
     }));
 
     result.initialize(initializer);
@@ -113,35 +103,34 @@ export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements 
     });
 
     return result;
-
   }
 
   get requiredTypeDeclarations(): Array<TypeDeclaration> {
     if( this.isInline ) {
       const x = this.node.getProperties().map(each => each.getType())  ;
-
       return [...<any>x , this.node];
     }
     return [this.node] ;
   }
 }
-let counter = 0;
+//let counter = 0;
 
-export function createObjectSchema(api: ApiModel, name: Identity, initializer?: Partial<ObjectSchema>): ObjectSchema {
+export function createObjectSchema(api: ApiModel, identity: Identity, initializer?: Partial<ObjectSchema>): ObjectSchema {
   
-  const n = isAnonymous(name) ? `object_${counter++}` :<string><any> valueOf(name);
-  const file = isAnonymous(name) ? api.getAnonymousFile(n) : api.getObjectSchemaFile(n);
+  // const n = isAnonymous(name) ? `object_${counter++}` :<string><any> valueOf(name);
+  // const file = isAnonymous(name) ? api.getAnonymousFile(n) : api.getObjectSchemaFile(n);
+  const {name, file} = api.getNameAndFile(identity, 'model');
   
   const result= new ObjectSchemaImpl(file.addInterface({
     //todo: do a better 'fix-the-bad-name' (ie, perks/codegen)
-    name: n.replace(/[^\w]+/g, '_'),
+    name,
     isExported: true,
   }));
 
   result.initialize(initializer);
   
   result.track( {
-    $: name, 
+    $: identity, 
   });
 
   return result;
@@ -186,11 +175,11 @@ export class PropertyImpl extends NamedElement<PropertySignature> {
   set writeonly(value: boolean) {
     // todo: implement by adding a `& WriteOnly`
   }
-
+ 
   /**
    * the desired name when generating code.
    */
-  get clientName(): string|undefined {
+  get clientName(): string|undefined {    
     return this.getDocTag('clientName');
   }
   set clientName(value: string|undefined) {

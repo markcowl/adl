@@ -1,4 +1,4 @@
-
+import { GatewayHostnameConfigurationContract } from './GatewayHostnameConfigurationContract';
 /**
  * @description Paged Gateway hostname configuration list representation.
  */
@@ -6,9 +6,9 @@ export interface GatewayHostnameConfigurationCollection {
     /**
      * @description Page values.
      */
-    readonly value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
+    readonly value: Array<GatewayHostnameConfigurationContract> & ;
     /**
      * @description Next page link if any.
      */
-    readonly nextLink: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    readonly nextLink: string & ;
 }

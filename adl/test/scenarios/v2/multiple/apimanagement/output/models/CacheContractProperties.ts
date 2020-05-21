@@ -6,13 +6,13 @@ export interface CacheContractProperties {
     /**
      * @description Cache description
      */
-    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    description: string & MaxLength<2000>;
     /**
      * @description Runtime connection string to cache
      */
-    connectionString?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    connectionString?: string & MaxLength<300>;
     /**
      * @description Original uri of entity in external system cache points to
      */
-    resourceId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    resourceId: string & MaxLength<2000>;
 }

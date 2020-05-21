@@ -4,7 +4,7 @@ import { isVendorExtension, ParameterLocation } from '@azure-tools/openapi/dist/
 import { use } from '@azure-tools/sourcemap';
 import { Alias as GenericAlias } from '../../../model/alias';
 import { ApiModel } from '../../../model/api-model';
-import { Alias } from '../../../model/schema/alias';
+import { Alias, createAlias } from '../../../model/schema/alias';
 import { Constant } from '../../../model/schema/constant';
 import { Enum } from '../../../model/schema/enum';
 import { AndSchema, AnyOfSchema, XorSchema } from '../../../model/schema/group';
@@ -78,7 +78,7 @@ async function processRoot(oai2: v2.Model, $: Context) {
     if (schema instanceof GenericAlias) {
       // this happens when we get a top-level alias 
       // just sub in a schema alias for it
-      $.api.schemas.aliases.push(new Alias(schema.name,schema.target));
+      $.api.schemas.aliases.push(createAlias($.api,schema.name,schema.target));
       continue;
     }
     if (schema instanceof Alias) {

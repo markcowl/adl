@@ -10,41 +10,41 @@ export interface air1_MapData {
      * S - High Priority Violation
      * U - Undetermined
      */
-    CAAstatus?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    CAAstatus?: string;
     /**
      * @description The number of formal enforcement actions that have been taken against the facility
      */
-    FormalCount?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    FormalCount?: string;
     /**
      * @description Name of each individual icon file within the URL base
      */
-    ICON?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    ICON?: string;
     /**
      * @description The number of informal enforcement actions that have been taken against the facility
      */
-    InformalCount?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    InformalCount?: string;
     /**
      * @description The latitude of the facility in degrees, to four decimal places
      */
-    LAT?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    LAT?: string;
     /**
      * @description The longitude of the facility in degrees, to four decimal places
      */
-    LON?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    LON?: string;
     /**
      * @description The unique identifier for the last inspection
      */
-    LastInsp?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    LastInsp?: string;
     /**
      * @description For DFR, this is the Facility name. The name corresponds to the TYPE value
      */
-    NAME?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    NAME?: string;
     /**
      * @description Pop up value. Combine with PopUpBaseURL to give the popup for the facility
      */
-    PUV?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    PUV?: string;
     /**
      * @description For DFR, this is always facility
      */
-    TYPE?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    TYPE?: string;
 }

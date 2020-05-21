@@ -6,7 +6,7 @@ export interface commit {
             /**
              * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
              */
-            date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+            date: string;
             email: string;
             name: string;
         };
@@ -14,7 +14,7 @@ export interface commit {
             /**
              * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
              */
-            date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+            date: string;
             email: string;
             name: string;
         };
@@ -26,8 +26,20 @@ export interface commit {
         url: string;
     };
     committer: user;
-    files: array;
-    parents: array;
+    files: Array<{
+        additions: int64;
+        blob_url: string;
+        changes: int64;
+        deletions: int64;
+        filename: string;
+        patch: string;
+        raw_url: string;
+        status: string;
+    }>;
+    parents: Array<{
+        sha: string;
+        url: string;
+    }>;
     sha: string;
     stats: {
         additions: int64;

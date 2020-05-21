@@ -1,4 +1,4 @@
-
+import { Secret } from './Secret';
 /**
  * @description List of secrets
  */
@@ -6,9 +6,9 @@ export interface SecretListResult {
     /**
      * @description The list of secrets.
      */
-    value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
+    value: Array<Secret>;
     /**
      * @description The URL to get the next set of secrets.
      */
-    nextLink: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    nextLink: string;
 }

@@ -1,4 +1,5 @@
-
+import { ParameterContract } from './ParameterContract';
+import { RepresentationContract } from './RepresentationContract';
 /**
  * @description Operation response details.
  */
@@ -6,17 +7,17 @@ export interface ResponseContract {
     /**
      * @description Operation response HTTP status code.
      */
-    statusCode?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    statusCode?: int32;
     /**
      * @description Operation response description.
      */
-    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    description: string;
     /**
      * @description Collection of operation response representations.
      */
-    representations: unknown /*= (not tsschema -- undefinedrepresentations/undefined ) =*/;
+    representations: Array<RepresentationContract>;
     /**
      * @description Collection of operation response headers.
      */
-    headers: unknown /*= (not tsschema -- undefinedheaders/undefined ) =*/;
+    headers: Array<ParameterContract>;
 }

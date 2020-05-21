@@ -1,5 +1,4 @@
-import { SeverityLevel } from '../enums/SeverityLevel';
-import { Status } from '../enums/Status';
+import { FeedbackValue } from '../enums/FeedbackValue';
 /**
  * @description Describes a problem that is detected by correlating observations.
  */
@@ -7,7 +6,7 @@ export interface Problem {
     /**
      * @description The ID of the problem.
      */
-    Id: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    Id: string & MaxLength<38> & MinLength<38> & RegularExpression<"p-[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}">;
     /**
      * @description The name of the problem.
      */
@@ -39,9 +38,9 @@ export interface Problem {
     /**
      * @description The name of the resource group affected by the problem.
      */
-    ResourceGroupName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    ResourceGroupName: string & MaxLength<256> & MinLength<1> & RegularExpression<"[a-zA-Z0-9\\.\\-_]*">;
     /**
      * @description Feedback provided by the user about the problem.
      */
-    Feedback: unknown /*= (not tsschema -- undefinedFeedback/undefined ) =*/;
+    Feedback: Dictionary<FeedbackValue> & MaximumProperties<10>;
 }

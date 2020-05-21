@@ -5,7 +5,7 @@ export interface commitComment {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    created_at: string;
     html_url: string;
     id: int64;
     line: int64;
@@ -14,7 +14,7 @@ export interface commitComment {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    updated_at: string;
     url: string;
     user: user;
 }

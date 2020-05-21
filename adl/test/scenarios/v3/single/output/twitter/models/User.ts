@@ -6,11 +6,11 @@ export interface User {
     /**
      * @description Creation time of this user.
      */
-    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    created_at: dateTime;
     /**
      * @description The text of this user's profile description (also known as bio), if the user provided one.
      */
-    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    description: string;
     /**
      * @description A list of metadata found in the user's profile description.
      */
@@ -20,27 +20,27 @@ export interface User {
          * @description Expanded details for the URL specified in the user's profile, with start and end indices.
          */
         url: {
-            urls: unknown /*= (not tsschema -- undefinedurls/undefined ) =*/;
+            urls: Array<UrlEntity> & MinimumElements<1>;
         };
     };
-    id?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    id?: string & RegularExpression<"^[0-9]{1,19}$">;
     /**
      * @description The location specified in the user's profile, if the user provided one. As this is a freeform value, it may not indicate a valid location, but it may be fuzzily evaluated when performing searches with location queries.
      */
-    location: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    location: string;
     /**
      * @description The friendly name of this user, as shown on their profile.
      */
-    name?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
-    pinned_tweet_id: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    name?: string;
+    pinned_tweet_id: string & RegularExpression<"^[0-9]{1,19}$">;
     /**
      * @description The URL to the profile image for this user.
      */
-    profile_image_url: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    profile_image_url: string;
     /**
      * @description Indicates if this user has chosen to protect their Tweets (in other words, if this user's Tweets are private).
      */
-    protected: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    protected: boolean;
     /**
      * @description A list of metrics for this user
      */
@@ -48,28 +48,28 @@ export interface User {
         /**
          * @description Number of users who are following this user.
          */
-        followers_count?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        followers_count?: int64;
         /**
          * @description Number of users this user is following.
          */
-        following_count?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        following_count?: int64;
         /**
          * @description The number of lists that include this user.
          */
-        listed_count?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        listed_count?: int64;
         /**
          * @description The number of Tweets (including Retweets) posted by this user.
          */
-        tweet_count?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        tweet_count?: int64;
     };
     /**
      * @description The URL specified in the user's profile.
      */
-    url: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
-    username?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    url: string;
+    username?: string & RegularExpression<"^[A-Za-z0-9_]{1,15}$">;
     /**
      * @description Indicate if this user is a verified Twitter User.
      */
-    verified: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    verified: boolean;
     withheld: UserWithheld;
 }

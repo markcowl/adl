@@ -1,4 +1,4 @@
-
+import { air2_Facilities } from './air2_Facilities';
 /**
  * @description Results Object
  */
@@ -6,21 +6,21 @@ export interface air5_Results {
     /**
      * @description A complex array of facility information.
      */
-    Facilities?: unknown /*= (not tsschema -- undefinedFacilities/undefined ) =*/;
+    Facilities?: Array<air2_Facilities>;
     /**
      * @description Field to record messages (typically performance-related) about packet processing
      */
-    Message?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    Message?: string;
     /**
      * @description The number of pages of results returned
      */
-    PageNo?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    PageNo?: string;
     /**
      * @description Sequential number assigned to entire search result
      */
-    QueryID?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    QueryID?: string;
     /**
      * @description Number of query results returned
      */
-    QueryRows?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    QueryRows?: string;
 }

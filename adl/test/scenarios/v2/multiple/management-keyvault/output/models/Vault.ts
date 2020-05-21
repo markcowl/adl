@@ -6,23 +6,23 @@ export interface Vault {
     /**
      * @description Fully qualified identifier of the key vault resource.
      */
-    readonly id: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    readonly id: string & ;
     /**
      * @description Name of the key vault resource.
      */
-    readonly name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    readonly name: string & ;
     /**
      * @description Resource type of the key vault resource.
      */
-    readonly type: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    readonly type: string & ;
     /**
      * @description Azure location of the key vault resource.
      */
-    location: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    location: string;
     /**
      * @description Tags assigned to the key vault resource.
      */
-    tags: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    tags: Dictionary<string>;
     /**
      * @description Properties of the vault
      */

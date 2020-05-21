@@ -1,4 +1,4 @@
-
+import { NotificationContract } from './NotificationContract';
 /**
  * @description Paged Notification list representation.
  */
@@ -6,9 +6,9 @@ export interface NotificationCollection {
     /**
      * @description Page values.
      */
-    value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
+    value: Array<NotificationContract>;
     /**
      * @description Next page link if any.
      */
-    nextLink: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    nextLink: string;
 }

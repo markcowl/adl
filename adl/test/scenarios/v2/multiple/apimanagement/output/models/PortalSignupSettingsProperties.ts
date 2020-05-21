@@ -6,7 +6,7 @@ export interface PortalSignupSettingsProperties {
     /**
      * @description Allow users to sign up on a developer portal.
      */
-    enabled: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    enabled: boolean;
     /**
      * @description Terms of service contract properties.
      */

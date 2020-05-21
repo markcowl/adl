@@ -5,7 +5,7 @@ export interface repo {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    created_at: string;
     description: string;
     fork: boolean;
     forks: int64;
@@ -31,7 +31,7 @@ export interface repo {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    pushed_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    pushed_at: string;
     size: int64;
     source: {};
     ssh_url: string;
@@ -39,7 +39,7 @@ export interface repo {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    updated_at: string;
     url: string;
     watchers: int64;
     watchers_count: int64;

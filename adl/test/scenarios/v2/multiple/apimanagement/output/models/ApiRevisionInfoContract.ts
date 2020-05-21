@@ -6,15 +6,15 @@ export interface ApiRevisionInfoContract {
     /**
      * @description Resource identifier of API to be used to create the revision from.
      */
-    sourceApiId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    sourceApiId: string;
     /**
      * @description Version identifier for the new API Version.
      */
-    apiVersionName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    apiVersionName: string & MaxLength<100>;
     /**
      * @description Description of new API Revision.
      */
-    apiRevisionDescription: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    apiRevisionDescription: string & MaxLength<256>;
     /**
      * @description Version set details
      */

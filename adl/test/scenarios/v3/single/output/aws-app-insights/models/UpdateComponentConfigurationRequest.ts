@@ -1,4 +1,4 @@
-import { Tier } from '../enums/Tier';
+
 /**
  * UpdateComponentConfigurationRequest
  */
@@ -6,7 +6,7 @@ export interface UpdateComponentConfigurationRequest {
     /**
      * @description The name of the resource group.
      */
-    ResourceGroupName?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    ResourceGroupName?: string & MaxLength<256> & MinLength<1> & RegularExpression<"[a-zA-Z0-9\\.\\-_]*">;
     /**
      * @description The name of the component.
      */
@@ -22,5 +22,5 @@ export interface UpdateComponentConfigurationRequest {
     /**
      * @description The configuration settings of the component. The value is the escaped JSON of the configuration. For more information about the JSON format, see <a href="https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/working-with-json.html">Working with JSON</a>. You can send a request to <code>DescribeComponentConfigurationRecommendation</code> to see the recommended configuration for a component. For the complete format of the component configuration file, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/component-config.html">Component Configuration</a>.
      */
-    ComponentConfiguration: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    ComponentConfiguration: string & MaxLength<10000> & MinLength<1>;
 }

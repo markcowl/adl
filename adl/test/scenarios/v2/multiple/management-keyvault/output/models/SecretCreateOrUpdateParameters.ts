@@ -6,7 +6,7 @@ export interface SecretCreateOrUpdateParameters {
     /**
      * @description The tags that will be assigned to the secret.
      */
-    tags: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    tags: Dictionary<string>;
     /**
      * @description Properties of the secret
      */

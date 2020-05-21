@@ -1,7 +1,11 @@
+import { Place } from './Place';
+import { Poll } from './Poll';
+import { Tweet } from './Tweet';
+import { User } from './User';
 export interface Expansions {
-    media: unknown /*= (not tsschema -- undefinedmedia/undefined ) =*/;
-    places: unknown /*= (not tsschema -- undefinedplaces/undefined ) =*/;
-    polls: unknown /*= (not tsschema -- undefinedpolls/undefined ) =*/;
-    tweets: unknown /*= (not tsschema -- undefinedtweets/undefined ) =*/;
-    users: unknown /*= (not tsschema -- undefinedusers/undefined ) =*/;
+    media: Array<unknown /*= (not tsschema -- undefinedMedia/undefined ) =*/> & MinimumElements<1>;
+    places: Array<Place> & MinimumElements<1>;
+    polls: Array<Poll> & MinimumElements<1>;
+    tweets: Array<Tweet> & MinimumElements<1>;
+    users: Array<User> & MinimumElements<1>;
 }

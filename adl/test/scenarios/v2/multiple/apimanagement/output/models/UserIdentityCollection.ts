@@ -1,4 +1,4 @@
-
+import { UserIdentityContract } from './UserIdentityContract';
 /**
  * @description List of Users Identity list representation.
  */
@@ -6,13 +6,13 @@ export interface UserIdentityCollection {
     /**
      * @description User Identity values.
      */
-    value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
+    value: Array<UserIdentityContract>;
     /**
      * @description Total record count number across all pages.
      */
-    count: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    count: int64;
     /**
      * @description Next page link if any.
      */
-    nextLink: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    nextLink: string;
 }

@@ -8,18 +8,18 @@ export interface actor {
     /**
      * @description The website URL from the profile page
      */
-    blog: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    blog: string;
     collaborators: int64;
     company: string;
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    created_at: string;
     disk_usage: int64;
     /**
      * @description Note: The returned email is the user’s publicly visible email address (or null if the user has not specified a public email address in their profile).
      */
-    email: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    email: string;
     followers: int64;
     followers_url: string;
     following: int64;
@@ -33,11 +33,11 @@ export interface actor {
     /**
      * @description The account username
      */
-    login: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    login: string;
     /**
      * @description The full account name
      */
-    name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    name: string;
     organizations_url: string;
     owned_private_repos: int64;
     plan: {
@@ -56,6 +56,6 @@ export interface actor {
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */
-    updated_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    updated_at: string;
     url: string;
 }

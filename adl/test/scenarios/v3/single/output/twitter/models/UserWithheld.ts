@@ -6,7 +6,7 @@ export interface UserWithheld {
     /**
      * @description Provides a list of countries where this content is not available.
      */
-    country_codes?: unknown /*= (not tsschema -- undefinedcountry_codes/undefined ) =*/;
+    country_codes?: Array<string & RegularExpression<"^[A-Z]{2}$">> & MinimumElements<1> & UniqueElements;
     /**
      * @description Indicates that the content being withheld is a `user`.
      */

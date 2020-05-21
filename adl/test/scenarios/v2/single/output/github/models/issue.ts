@@ -1,7 +1,7 @@
 export interface issue {
     assignee: string;
     body: string;
-    labels: array;
+    labels: Array<string>;
     milestone: double;
     title: string;
 }

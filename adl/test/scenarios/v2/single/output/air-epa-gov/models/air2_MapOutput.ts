@@ -1,4 +1,4 @@
-
+import { air1_MapData } from './air1_MapData';
 /**
  * @description Map Output Object
  */
@@ -6,17 +6,17 @@ export interface air2_MapOutput {
     /**
      * @description URL where all the icons are located
      */
-    IconBaseURL?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    IconBaseURL?: string;
     /**
      * @description An array of facility geospatial information.
      */
-    MapData?: unknown /*= (not tsschema -- undefinedMapData/undefined ) =*/;
+    MapData?: Array<air1_MapData>;
     /**
      * @description Combine this URL with the PUC to get popup info
      */
-    PopUpBaseURL?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    PopUpBaseURL?: string;
     /**
      * @description Sequential number assigned to entire search result
      */
-    QueryID?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    QueryID?: string;
 }

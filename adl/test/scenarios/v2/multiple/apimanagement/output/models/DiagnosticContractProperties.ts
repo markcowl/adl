@@ -1,6 +1,3 @@
-import { AlwaysLog } from '../enums/AlwaysLog';
-import { HttpCorrelationProtocol } from '../enums/HttpCorrelationProtocol';
-import { Verbosity } from '../enums/Verbosity';
 import { PipelineDiagnosticSettings } from './PipelineDiagnosticSettings';
 import { SamplingSettings } from './SamplingSettings';
 /**
@@ -14,7 +11,7 @@ export interface DiagnosticContractProperties {
     /**
      * @description Resource Id of a target logger.
      */
-    loggerId?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    loggerId?: string;
     /**
      * @description Sampling settings for Diagnostic.
      */
@@ -30,7 +27,7 @@ export interface DiagnosticContractProperties {
     /**
      * @description Log the ClientIP. Default is false.
      */
-    logClientIp: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    logClientIp: boolean;
     /**
      * @description Sets correlation protocol to use for Application Insights diagnostics.
      */

@@ -6,13 +6,13 @@ export interface EmailTemplateParametersContractProperties {
     /**
      * @description Template parameter name.
      */
-    name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    name: string & MaxLength<256> & MinLength<1> & RegularExpression<"^[A-Za-z0-9-._]+$">;
     /**
      * @description Template parameter title.
      */
-    title: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    title: string & MaxLength<4096> & MinLength<1>;
     /**
      * @description Template parameter description.
      */
-    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    description: string & MaxLength<256> & MinLength<1> & RegularExpression<"^[A-Za-z0-9-._]+$">;
 }

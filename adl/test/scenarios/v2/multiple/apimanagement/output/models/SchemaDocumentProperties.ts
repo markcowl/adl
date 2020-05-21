@@ -6,7 +6,7 @@ export interface SchemaDocumentProperties {
     /**
      * @description Json escaped string defining the document representing the Schema. Used for schemas other than Swagger/OpenAPI.
      */
-    value: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    value: string;
     /**
      * @description Types definitions. Used for Swagger/OpenAPI schemas only, null otherwise.
      */

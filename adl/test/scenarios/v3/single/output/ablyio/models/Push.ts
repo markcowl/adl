@@ -9,7 +9,7 @@ export interface Push {
     /**
      * @description Arbitrary [key-value string-to-string payload](https://www.ably.io/documentation/general/push/publish#channel-broadcast-example).
      */
-    data: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    data: string;
     /**
      * @description Extends and overrides generic values when delivering via GCM/FCM. [See examples](https://www.ably.io/documentation/general/push/publish#payload-structure)
      */

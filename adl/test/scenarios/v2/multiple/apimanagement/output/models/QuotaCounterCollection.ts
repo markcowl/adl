@@ -1,4 +1,4 @@
-
+import { QuotaCounterContract } from './QuotaCounterContract';
 /**
  * @description Paged Quota Counter list representation.
  */
@@ -6,13 +6,13 @@ export interface QuotaCounterCollection {
     /**
      * @description Quota counter values.
      */
-    value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
+    value: Array<QuotaCounterContract>;
     /**
      * @description Total record count number across all pages.
      */
-    count: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    count: int64;
     /**
      * @description Next page link if any.
      */
-    nextLink: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    nextLink: string;
 }

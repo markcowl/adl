@@ -1,6 +1,10 @@
+import { CashtagEntity } from './CashtagEntity';
+import { HashtagEntity } from './HashtagEntity';
+import { MentionEntity } from './MentionEntity';
+import { UrlEntity } from './UrlEntity';
 export interface FullTextEntities {
-    cashtags: unknown /*= (not tsschema -- undefinedcashtags/undefined ) =*/;
-    hashtags: unknown /*= (not tsschema -- undefinedhashtags/undefined ) =*/;
-    mentions: unknown /*= (not tsschema -- undefinedmentions/undefined ) =*/;
-    urls: unknown /*= (not tsschema -- undefinedurls/undefined ) =*/;
+    cashtags: Array<CashtagEntity> & MinimumElements<1>;
+    hashtags: Array<HashtagEntity> & MinimumElements<1>;
+    mentions: Array<MentionEntity> & MinimumElements<1>;
+    urls: Array<UrlEntity> & MinimumElements<1>;
 }

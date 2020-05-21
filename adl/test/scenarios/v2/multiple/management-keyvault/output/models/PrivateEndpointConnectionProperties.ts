@@ -1,4 +1,3 @@
-import { PrivateEndpointConnectionProvisioningState } from '../enums/PrivateEndpointConnectionProvisioningState';
 import { PrivateEndpoint } from './PrivateEndpoint';
 import { PrivateLinkServiceConnectionState } from './PrivateLinkServiceConnectionState';
 /**

@@ -1,4 +1,4 @@
-
+import { CertificateContract } from './CertificateContract';
 /**
  * @description Paged Certificates list representation.
  */
@@ -6,9 +6,9 @@ export interface CertificateCollection {
     /**
      * @description Page values.
      */
-    value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
+    value: Array<CertificateContract>;
     /**
      * @description Next page link if any.
      */
-    nextLink: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    nextLink: string;
 }

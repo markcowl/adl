@@ -6,13 +6,13 @@ export interface RegionContract {
     /**
      * @description Region name.
      */
-    readonly name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    readonly name: string & ;
     /**
      * @description whether Region is the master region.
      */
-    isMasterRegion: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    isMasterRegion: boolean;
     /**
      * @description whether Region is deleted.
      */
-    isDeleted: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    isDeleted: boolean;
 }

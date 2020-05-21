@@ -3,7 +3,7 @@ export interface repoCommit {
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        date: string;
         email: string;
         name: string;
     };
@@ -11,12 +11,15 @@ export interface repoCommit {
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        date: string;
         email: string;
         name: string;
     };
     message: string;
-    parents: array;
+    parents: Array<{
+        sha: string;
+        url: string;
+    }>;
     sha: string;
     tree: {
         sha: string;

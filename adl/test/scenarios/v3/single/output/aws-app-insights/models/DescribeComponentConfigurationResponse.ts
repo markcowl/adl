@@ -1,4 +1,3 @@
-import { Tier } from '../enums/Tier';
 export interface DescribeComponentConfigurationResponse {
     /**
      * @description Indicates whether the application component is monitored.
@@ -11,5 +10,5 @@ export interface DescribeComponentConfigurationResponse {
     /**
      * @description The configuration settings of the component. The value is the escaped JSON of the configuration.
      */
-    ComponentConfiguration: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    ComponentConfiguration: string & MaxLength<10000> & MinLength<1>;
 }

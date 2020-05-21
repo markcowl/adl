@@ -1,5 +1,4 @@
-import { ConfigurationEventResourceType } from '../enums/ConfigurationEventResourceType';
-import { ConfigurationEventStatus } from '../enums/ConfigurationEventStatus';
+
 /**
  * @description  The event information.
  */

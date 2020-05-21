@@ -1,4 +1,4 @@
-
+import { ApiContract } from './ApiContract';
 /**
  * @description Paged Api list representation.
  */
@@ -6,9 +6,9 @@ export interface ApiCollection {
     /**
      * @description Page values.
      */
-    readonly value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
+    readonly value: Array<ApiContract> & ;
     /**
      * @description Next page link if any.
      */
-    readonly nextLink: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    readonly nextLink: string & ;
 }

@@ -2,7 +2,7 @@ export interface tag {
     /**
      * @description String of the tag message.
      */
-    message: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    message: string;
     object: {
         sha: string;
         /**
@@ -15,20 +15,20 @@ export interface tag {
     /**
      * @description The tag's name. This is typically a version (e.g., "v0.0.1").
      */
-    tag: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    tag: string;
     tagger: {
         /**
          * @description Timestamp of when this object was tagged, in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
          */
-        date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        date: string;
         /**
          * @description String of the email of the author of the tag.
          */
-        email: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        email: string;
         /**
          * @description String of the name of the author of the tag.
          */
-        name: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        name: string;
     };
     url: string;
 }

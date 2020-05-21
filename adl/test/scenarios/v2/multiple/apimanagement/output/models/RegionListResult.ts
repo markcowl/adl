@@ -1,4 +1,4 @@
-
+import { RegionContract } from './RegionContract';
 /**
  * @description Lists Regions operation response details.
  */
@@ -6,13 +6,13 @@ export interface RegionListResult {
     /**
      * @description Lists of Regions.
      */
-    value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
+    value: Array<RegionContract>;
     /**
      * @description Total record count number across all pages.
      */
-    count: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    count: int64;
     /**
      * @description Next page link if any.
      */
-    nextLink: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    nextLink: string;
 }

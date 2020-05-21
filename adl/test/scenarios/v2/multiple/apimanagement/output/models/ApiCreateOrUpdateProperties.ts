@@ -1,5 +1,3 @@
-import { ContentFormat } from '../enums/ContentFormat';
-import { SoapApiType } from '../enums/SoapApiType';
 import { ApiContractProperties } from './ApiContractProperties';
 /**
  * @description Api Create or Update Properties.
@@ -8,7 +6,7 @@ export interface ApiCreateOrUpdateProperties extends ApiContractProperties {
     /**
      * @description Content value when Importing an API.
      */
-    value: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    value: string;
     /**
      * @description Format of the Content in which the API is getting imported.
      */
@@ -20,11 +18,11 @@ export interface ApiCreateOrUpdateProperties extends ApiContractProperties {
         /**
          * @description Name of service to import from WSDL
          */
-        wsdlServiceName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        wsdlServiceName: string;
         /**
          * @description Name of endpoint(port) to import from WSDL
          */
-        wsdlEndpointName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        wsdlEndpointName: string;
     };
     /**
      * @description Type of Api to create.

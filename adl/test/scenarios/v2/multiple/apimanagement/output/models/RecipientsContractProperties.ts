@@ -6,9 +6,9 @@ export interface RecipientsContractProperties {
     /**
      * @description List of Emails subscribed for the notification.
      */
-    emails: unknown /*= (not tsschema -- undefinedemails/undefined ) =*/;
+    emails: Array<string>;
     /**
      * @description List of Users subscribed for the notification.
      */
-    users: unknown /*= (not tsschema -- undefinedusers/undefined ) =*/;
+    users: Array<string>;
 }

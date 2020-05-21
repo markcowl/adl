@@ -6,5 +6,5 @@ export interface VirtualNetworkRule {
     /**
      * @description Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'.
      */
-    id?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    id?: string;
 }

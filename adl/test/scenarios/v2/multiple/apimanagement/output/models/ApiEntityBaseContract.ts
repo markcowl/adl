@@ -1,4 +1,3 @@
-import { ApiType } from '../enums/ApiType';
 import { AuthenticationSettingsContract } from './AuthenticationSettingsContract';
 import { SubscriptionKeyParameterNamesContract } from './SubscriptionKeyParameterNamesContract';
 /**
@@ -8,7 +7,7 @@ export interface ApiEntityBaseContract {
     /**
      * @description Description of the API. May include HTML formatting tags.
      */
-    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    description: string;
     /**
      * @description Collection of authentication settings included into this API.
      */
@@ -25,33 +24,33 @@ export interface ApiEntityBaseContract {
     /**
      * @description Describes the Revision of the Api. If no value is provided, default revision 1 is created
      */
-    apiRevision: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    apiRevision: string & MaxLength<100> & MinLength<1>;
     /**
      * @description Indicates the Version identifier of the API if the API is versioned
      */
-    apiVersion: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    apiVersion: string & MaxLength<100>;
     /**
      * @description Indicates if API revision is current api revision.
      */
-    isCurrent: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    isCurrent: boolean;
     /**
      * @description Indicates if API revision is accessible via the gateway.
      */
-    readonly isOnline: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    readonly isOnline: boolean & ;
     /**
      * @description Description of the Api Revision.
      */
-    apiRevisionDescription: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    apiRevisionDescription: string & MaxLength<256>;
     /**
      * @description Description of the Api Version.
      */
-    apiVersionDescription: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    apiVersionDescription: string & MaxLength<256>;
     /**
      * @description A resource identifier for the related ApiVersionSet.
      */
-    apiVersionSetId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    apiVersionSetId: string;
     /**
      * @description Specifies whether an API or Product subscription is required for accessing the API.
      */
-    subscriptionRequired: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    subscriptionRequired: boolean;
 }

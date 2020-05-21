@@ -6,21 +6,21 @@ export interface OpenidConnectProviderUpdateContractProperties {
     /**
      * @description User-friendly OpenID Connect Provider name.
      */
-    displayName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    displayName: string & MaxLength<50>;
     /**
      * @description User-friendly description of OpenID Connect Provider.
      */
-    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    description: string;
     /**
      * @description Metadata endpoint URI.
      */
-    metadataEndpoint: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    metadataEndpoint: string;
     /**
      * @description Client ID of developer console which is the client application.
      */
-    clientId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    clientId: string;
     /**
      * @description Client Secret of developer console which is the client application.
      */
-    clientSecret: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    clientSecret: string;
 }

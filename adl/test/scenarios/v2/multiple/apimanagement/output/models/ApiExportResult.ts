@@ -1,4 +1,4 @@
-import { ExportResultFormat } from '../enums/ExportResultFormat';
+
 /**
  * @description API Export result.
  */
@@ -6,7 +6,7 @@ export interface ApiExportResult {
     /**
      * @description ResourceId of the API which was exported.
      */
-    id: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    id: string;
     /**
      * @description Format in which the Api Details are exported to the Storage Blob with Sas Key valid for 5 minutes.
      * @clientName ExportResultFormat
@@ -19,6 +19,6 @@ export interface ApiExportResult {
         /**
          * @description Link to the Storage Blob containing the result of the export operation. The Blob Uri is only valid for 5 minutes.
          */
-        link: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        link: string;
     };
 }

@@ -12,7 +12,11 @@ export interface createFile {
         };
         html_url: string;
         message: string;
-        parents: array;
+        parents: Array<{
+            html_url: string;
+            sha: string;
+            url: string;
+        }>;
         sha: string;
         tree: {
             sha: string;

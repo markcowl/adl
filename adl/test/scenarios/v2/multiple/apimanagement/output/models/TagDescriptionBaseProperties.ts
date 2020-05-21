@@ -6,13 +6,13 @@ export interface TagDescriptionBaseProperties {
     /**
      * @description Description of the Tag.
      */
-    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    description: string;
     /**
      * @description Absolute URL of external resources describing the tag.
      */
-    externalDocsUrl: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    externalDocsUrl: string & MaxLength<2000>;
     /**
      * @description Description of the external resources describing the tag.
      */
-    externalDocsDescription: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    externalDocsDescription: string;
 }

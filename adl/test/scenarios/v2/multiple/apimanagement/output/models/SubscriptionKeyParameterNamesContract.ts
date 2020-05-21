@@ -6,9 +6,9 @@ export interface SubscriptionKeyParameterNamesContract {
     /**
      * @description Subscription key header name.
      */
-    header: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    header: string;
     /**
      * @description Subscription key query string parameter name.
      */
-    query: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    query: string;
 }

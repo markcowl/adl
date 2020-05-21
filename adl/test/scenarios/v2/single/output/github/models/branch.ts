@@ -10,7 +10,7 @@ export interface branch {
                 /**
                  * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
                  */
-                date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+                date: string;
                 email: string;
                 name: string;
             };
@@ -18,7 +18,7 @@ export interface branch {
                 /**
                  * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
                  */
-                date: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+                date: string;
                 email: string;
                 name: string;
             };
@@ -30,7 +30,10 @@ export interface branch {
             url: string;
         };
         committer: user;
-        parents: array;
+        parents: Array<{
+            sha: string;
+            url: string;
+        }>;
         sha: string;
         url: string;
     };

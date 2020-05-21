@@ -9,15 +9,15 @@ export interface BackendBaseParameters {
     /**
      * @description Backend Title.
      */
-    title: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    title: string & MaxLength<300> & MinLength<1>;
     /**
      * @description Backend Description.
      */
-    description: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    description: string & MaxLength<2000> & MinLength<1>;
     /**
      * @description Management Uri of the Resource in External System. This url can be the Arm Resource Id of Logic Apps, Function Apps or Api Apps.
      */
-    resourceId: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    resourceId: string & MaxLength<2000> & MinLength<1>;
     /**
      * @description Backend Properties contract
      */

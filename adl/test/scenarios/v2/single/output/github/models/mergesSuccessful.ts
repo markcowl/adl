@@ -24,7 +24,10 @@ export interface mergesSuccessful {
     committer: user;
     merged: boolean;
     message: string;
-    parents: array;
+    parents: Array<{
+        sha: string;
+        url: string;
+    }>;
     sha: string;
     url: string;
 }

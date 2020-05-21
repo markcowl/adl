@@ -1,4 +1,4 @@
-
+import { LoggerContract } from './LoggerContract';
 /**
  * @description Paged Logger list representation.
  */
@@ -6,13 +6,13 @@ export interface LoggerCollection {
     /**
      * @description Logger values.
      */
-    value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
+    value: Array<LoggerContract>;
     /**
      * @description Total record count number across all pages.
      */
-    count: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    count: int64;
     /**
      * @description Next page link if any.
      */
-    nextLink: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    nextLink: string;
 }

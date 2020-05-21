@@ -2,21 +2,21 @@ export interface TokenDetails {
     /**
      * @description Regular expression representation of the capabilities of the token.
      */
-    capability: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    capability: string;
     /**
      * @description Timestamp of token expiration.
      */
-    expires: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    expires: int64;
     /**
      * @description Timestamp of token creation.
      */
-    issued: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    issued: int64;
     /**
      * @description Name of the key used to create the token
      */
-    keyName: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    keyName: string;
     /**
      * @description The Ably Token.
      */
-    token: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    token: string;
 }

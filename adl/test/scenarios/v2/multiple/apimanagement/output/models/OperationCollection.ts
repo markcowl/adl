@@ -1,4 +1,4 @@
-
+import { OperationContract } from './OperationContract';
 /**
  * @description Paged Operation list representation.
  */
@@ -6,9 +6,9 @@ export interface OperationCollection {
     /**
      * @description Page values.
      */
-    readonly value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
+    readonly value: Array<OperationContract> & ;
     /**
      * @description Next page link if any.
      */
-    readonly nextLink: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    readonly nextLink: string & ;
 }

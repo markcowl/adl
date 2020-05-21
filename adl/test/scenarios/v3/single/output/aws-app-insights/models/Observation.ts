@@ -1,5 +1,4 @@
-import { CloudWatchEventSource } from '../enums/CloudWatchEventSource';
-import { LogFilter } from '../enums/LogFilter';
+
 /**
  * @description Describes an anomaly or error with the application.
  */
@@ -7,7 +6,7 @@ export interface Observation {
     /**
      * @description The ID of the observation type.
      */
-    Id: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    Id: string & MaxLength<38> & MinLength<38> & RegularExpression<"o-[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}">;
     /**
      * @description The time when the observation was first detected, in epoch seconds.
      */

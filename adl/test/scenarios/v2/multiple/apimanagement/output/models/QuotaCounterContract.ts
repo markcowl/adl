@@ -6,21 +6,21 @@ export interface QuotaCounterContract {
     /**
      * @description The Key value of the Counter. Must not be empty.
      */
-    counterKey?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    counterKey?: string & MinLength<1>;
     /**
      * @description Identifier of the Period for which the counter was collected. Must not be empty.
      */
-    periodKey?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    periodKey?: string & MinLength<1>;
     /**
      * @description The date of the start of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
      *
      */
-    periodStartTime?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    periodStartTime?: dateTime;
     /**
      * @description The date of the end of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
      *
      */
-    periodEndTime?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    periodEndTime?: dateTime;
     /**
      * @description Quota Value Properties
      */

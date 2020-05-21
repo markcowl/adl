@@ -1,7 +1,7 @@
 import { v2, v3, XMSEnumValue } from '@azure-tools/openapi';
 import { anonymous, nameOf, use } from '@azure-tools/sourcemap';
-import { Alias } from '../../../model/schema/alias';
-import { ReadOnlyConstraint } from '../../../model/schema/constraint';
+import { createAlias } from '../../../model/schema/alias';
+import { NullableModifier, ReadOnlyModifier } from '../../../model/schema/constraint';
 import { ServerDefaultValue } from '../../../model/schema/default';
 import { createEnum } from '../../../model/schema/enum';
 import { Schema } from '../../../model/schema/schema';
@@ -132,14 +132,18 @@ export async function* processByteArraySchema<T extends OAIModel>(schema: v3.Sch
 
 export function addAliasWithDefault<T extends OAIModel>(schema: v3.Schema | v2.Schema, resultSchema: Schema, $: Context<T>) {
   if (schema.default || schema.description || schema.title || (<any>schema).nullable || schema['x-nullable'] || (<any>schema).readOnly) {
-    const alias = new Alias(anonymous(resultSchema.name), resultSchema, commonProperties(schema));
+    const alias = createAlias($.api, anonymous(resultSchema.name), resultSchema, commonProperties(schema));
     if (schema.default) {
       alias.defaults.push(new ServerDefaultValue(schema.default));
     }
     use(schema.default, true);
 
     if ((<any>schema).readOnly) {
-      alias.constraints.push(new ReadOnlyConstraint((<any>schema).readOnly));
+      alias.constraints.push(new ReadOnlyModifier());
+    }
+
+    if ((<any>schema).nullable || schema['x-nullable'] ) {
+      alias.constraints.push(new NullableModifier((<any>schema).readOnly));
     }
     return alias;
   }

@@ -2,8 +2,8 @@ import { items, length, values } from '@azure-tools/linq';
 import { IntegerFormat, NumberFormat, StringFormat, v2 } from '@azure-tools/openapi';
 import { anonymous, isUsed, nameOf, unusedMembers, use, using } from '@azure-tools/sourcemap';
 import { Alias as GenericAlias } from '../../../model/alias';
-import { Alias } from '../../../model/schema/alias';
-import { ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ReadOnlyConstraint, RegularExpressionConstraint, UniqueElementsConstraint } from '../../../model/schema/constraint';
+import { createAlias } from '../../../model/schema/alias';
+import { ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ReadOnlyModifier, RegularExpressionConstraint, UniqueElementsConstraint } from '../../../model/schema/constraint';
 import { ServerDefaultValue } from '../../../model/schema/default';
 import { createObjectSchema } from '../../../model/schema/object';
 import { ArraySchema, DictionarySchema } from '../../../model/schema/primitive';
@@ -21,7 +21,7 @@ export async function* processInline(schema: v2.Schema | v2.SchemaReference | un
           // if this was anonymous, we just want back the target object 
           yield result instanceof GenericAlias ? result.target : result;
         } else {
-          yield result instanceof GenericAlias ? new Alias(result.name, result.target, commonProperties(<any>schema)) : result;
+          yield result instanceof GenericAlias ? createAlias($.api, result.name, result.target, commonProperties(<any>schema)) : result;
         }
       }
     }
@@ -182,14 +182,14 @@ export async function* processStringSchema(schema: v2.Schema, $: Context): Async
   }
 
   // otherwise, we have to get the standard string and make an alias for it with the adornments. 
-  const alias = new Alias(anonymous('string'), $.api.schemas.String, commonProperties(schema));
+  const alias = createAlias($.api,anonymous('string'), $.api.schemas.String, commonProperties(schema));
 
   if (schema.default) {
     alias.defaults.push(new ServerDefaultValue(schema.default));
   }
 
   if (schema.readOnly) {
-    alias.constraints.push(new ReadOnlyConstraint(schema.readOnly));
+    alias.constraints.push(new ReadOnlyModifier());
   }
 
   if (schema.maxLength) {
@@ -276,7 +276,7 @@ function constrainNumericSchema(schema: v2.Schema, $: Context, target: Schema): 
   }
 
   // gonna need an alias
-  const alias = new Alias(anonymous('number'), target, commonProperties(schema));
+  const alias = createAlias($.api,anonymous('number'), target, commonProperties(schema));
 
   if (schema.default) {
     alias.defaults.push(new ServerDefaultValue(schema.default));
@@ -325,7 +325,7 @@ export async function* processArraySchema(schema: v2.Schema, $: Context, options
     return yield result;
   }
 
-  const alias = new Alias(anonymous('array'), result, {
+  const alias = createAlias($.api,anonymous('array'), result, {
     name: schemaName,
     ...common
   });
@@ -336,7 +336,7 @@ export async function* processArraySchema(schema: v2.Schema, $: Context, options
   }
 
   if (schema.readOnly) {
-    alias.constraints.push(new ReadOnlyConstraint(schema.readOnly));
+    alias.constraints.push(new ReadOnlyModifier());
   }
   if (schema.maxItems !== undefined) {
     alias.constraints.push(new MaximumElementsConstraint(schema.maxItems));
@@ -370,7 +370,7 @@ export async function* processAdditionalProperties(schema: v2.Schema, $: Context
   if (length(common) > 0 || schema.maxProperties !== undefined || schema.minProperties !== undefined) {
     const result = new DictionarySchema(dictionaryType);
 
-    const alias = new Alias(anonymous('dictionary'), result, {
+    const alias = createAlias($.api,anonymous('dictionary'), result, {
       name: schemaName,
       ...common
     });
@@ -382,7 +382,7 @@ export async function* processAdditionalProperties(schema: v2.Schema, $: Context
       alias.constraints.push(new MinimumPropertiesConstraint(schema.minProperties));
     }
     if (schema.readOnly) {
-      alias.constraints.push(new ReadOnlyConstraint(schema.readOnly));
+      alias.constraints.push(new ReadOnlyModifier());
     }
     if (schema.default) {
       alias.defaults.push(new ServerDefaultValue(schema.default));

@@ -6,9 +6,9 @@ export interface geo {
     /**
      * @description Array of coordinate values in longitude, latitude format.
      */
-    coordinates?: unknown /*= (not tsschema -- undefinedcoordinates/undefined ) =*/;
+    coordinates?: Array<double>;
     /**
      * @description Indicator of the geometry represented in the GeoJSON Feature, for Echo will always be "Point".
      */
-    type?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    type?: string;
 }

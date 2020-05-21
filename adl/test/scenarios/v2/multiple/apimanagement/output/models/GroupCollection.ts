@@ -1,4 +1,4 @@
-
+import { GroupContract } from './GroupContract';
 /**
  * @description Paged Group list representation.
  */
@@ -6,9 +6,9 @@ export interface GroupCollection {
     /**
      * @description Page values.
      */
-    value: unknown /*= (not tsschema -- undefinedvalue/undefined ) =*/;
+    value: Array<GroupContract>;
     /**
      * @description Next page link if any.
      */
-    nextLink: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    nextLink: string;
 }

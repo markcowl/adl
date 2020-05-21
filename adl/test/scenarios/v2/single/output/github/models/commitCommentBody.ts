@@ -3,21 +3,21 @@ export interface commitCommentBody {
     /**
      * @description Deprecated - Use position parameter instead.
      */
-    line: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    line: string;
     /**
      * @description Line number in the file to comment on. Defaults to null.
      */
-    number: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    number: string;
     /**
      * @description Relative path of the file to comment on.
      */
-    path: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    path: string;
     /**
      * @description Line index in the diff to comment on.
      */
-    position: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    position: int64;
     /**
      * @description SHA of the commit to comment on.
      */
-    sha?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    sha?: string;
 }

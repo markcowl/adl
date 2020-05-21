@@ -5,7 +5,7 @@ export interface gist {
     /**
      * @description Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
      */
-    created_at: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    created_at: string;
     description: string;
     files: {
         'ring.erl': {
@@ -14,10 +14,30 @@ export interface gist {
             size: int64;
         };
     };
-    forks: unknown /*= (not tsschema -- undefinedforks/undefined ) =*/;
+    forks: Array<{
+        /**
+         * @description Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
+         */
+        created_at: string;
+        url: string;
+        user: user;
+    }>;
     git_pull_url: string;
     git_push_url: string;
-    history: unknown /*= (not tsschema -- undefinedhistory/undefined ) =*/;
+    history: Array<{
+        change_status: {
+            additions: int64;
+            deletions: int64;
+            total: int64;
+        };
+        /**
+         * @description Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
+         */
+        committed_at: string;
+        url: string;
+        user: user;
+        version: string;
+    }>;
     html_url: string;
     id: string;
     public: boolean;

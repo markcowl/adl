@@ -1,5 +1,5 @@
-import { AsyncOperationStatus } from '../enums/AsyncOperationStatus';
 import { ErrorResponseBody } from './ErrorResponseBody';
+import { OperationResultLogItemContract } from './OperationResultLogItemContract';
 /**
  * @description Operation Result.
  */
@@ -7,7 +7,7 @@ export interface OperationResultContract {
     /**
      * @description Operation result identifier.
      */
-    id: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    id: string;
     /**
      * @description Status of an async operation.
      */
@@ -16,16 +16,16 @@ export interface OperationResultContract {
      * @description Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
      *
      */
-    started: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    started: dateTime;
     /**
      * @description Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
      *
      */
-    updated: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    updated: dateTime;
     /**
      * @description Optional result info.
      */
-    resultInfo: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    resultInfo: string;
     /**
      * @description Error Body Contract
      */
@@ -33,5 +33,5 @@ export interface OperationResultContract {
     /**
      * @description This property if only provided as part of the TenantConfiguration_Validate operation. It contains the log the entities which will be updated/created/deleted as part of the TenantConfiguration_Deploy operation.
      */
-    readonly actionLog: unknown /*= (not tsschema -- undefinedactionLog/undefined ) =*/;
+    readonly actionLog: Array<OperationResultLogItemContract> & ;
 }

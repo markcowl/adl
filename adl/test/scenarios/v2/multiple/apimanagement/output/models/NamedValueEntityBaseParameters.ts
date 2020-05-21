@@ -6,9 +6,9 @@ export interface NamedValueEntityBaseParameters {
     /**
      * @description Optional tags that when provided can be used to filter the NamedValue list.
      */
-    tags: unknown /*= (not tsschema -- undefinedtags/undefined ) =*/;
+    tags: Array<string> & MaximumElements<32>;
     /**
      * @description Determines whether the value is a secret and should be encrypted or not. Default value is false.
      */
-    secret: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    secret: boolean;
 }
