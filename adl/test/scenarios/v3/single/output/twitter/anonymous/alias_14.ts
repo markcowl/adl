@@ -1,1 +1,1 @@
-export type alias_14 = Array<string> & MinimumElements<1>;
+export type alias_14 = string & RegularExpression<"^[A-Z]{2}$">;

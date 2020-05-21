@@ -1,7 +1,7 @@
 
 /**
- * @description Identity Provider Type identifier.
  * @extensible
+ * @description Identity Provider Type identifier.
  */
 /** @todo-temporary-reuse-marker */
 export enum IdentityProviderType {

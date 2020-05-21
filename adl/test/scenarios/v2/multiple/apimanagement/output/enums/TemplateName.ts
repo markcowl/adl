@@ -1,7 +1,7 @@
 
 /**
- * @description Email Template Name Identifier.
  * @extensible
+ * @description Email Template Name Identifier.
  */
 export enum TemplateName {
     applicationApprovedNotificationMessage = 'applicationApprovedNotificationMessage',

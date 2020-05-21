@@ -1,2 +1,2 @@
-import { ResponseContract } from '../models/ResponseContract';
-export type alias_316 = Array<ResponseContract>;
+import { ParameterContract } from '../models/ParameterContract';
+export type alias_316 = Array<ParameterContract>;

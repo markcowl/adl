@@ -1,5 +1,18 @@
 export interface model_52 {
-    date: string;
-    email: string;
-    name: string;
+    author: {
+        date: string;
+        email: string;
+        name: string;
+    };
+    committer: {
+        date: string;
+        email: string;
+        name: string;
+    };
+    message: string;
+    tree: {
+        sha: string;
+        url: string;
+    };
+    url: string;
 }

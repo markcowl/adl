@@ -1,1 +1,2 @@
-export type alias_302 = string & MaxLength<1000>;
+import { ParameterContract } from '../models/ParameterContract';
+export type alias_302 = Array<ParameterContract>;

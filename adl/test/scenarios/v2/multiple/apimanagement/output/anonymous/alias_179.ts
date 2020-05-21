@@ -1,1 +1,1 @@
-export type alias_179 = int32 & Maximum<8192>;
+export type alias_179 = string & MaxLength<2000> & MinLength<1>;

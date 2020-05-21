@@ -1,1 +1,1 @@
-export type alias_351 = boolean;
+export type alias_351 = string;

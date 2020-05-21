@@ -1,1 +1,1 @@
-export type alias_531 = string;
+export type alias_531 = double;

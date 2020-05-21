@@ -52,7 +52,7 @@ export interface actor {
     starred_url: string;
     subscriptions_url: string;
     total_private_repos: int64;
-    type: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    type: "User" | "Organization";
     /**
      * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
      */

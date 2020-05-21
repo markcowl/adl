@@ -1,2 +1,1 @@
-import { CacheContract } from '../models/CacheContract';
-export type alias_183 = Array<CacheContract>;
+export type alias_183 = string & MaxLength<2000>;

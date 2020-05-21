@@ -1,1 +1,1 @@
-export type alias_453 = dateTime &  /* modifier ReadOnlyModifier */;
+export type alias_453 = string & MaxLength<100> & MinLength<0>;

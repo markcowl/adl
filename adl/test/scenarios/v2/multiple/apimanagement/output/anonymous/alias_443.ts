@@ -1,1 +1,1 @@
-export type alias_443 = string;
+export type alias_443 = int64;

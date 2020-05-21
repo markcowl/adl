@@ -1,1 +1,1 @@
-export type alias_425 = string &  /* modifier ReadOnlyModifier */;
+export type alias_425 = string;

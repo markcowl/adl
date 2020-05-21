@@ -1,7 +1,7 @@
 
 /**
- * @description Logger type.
  * @extensible
+ * @description Logger type.
  */
 /** @todo-temporary-reuse-marker */
 export enum LoggerType {

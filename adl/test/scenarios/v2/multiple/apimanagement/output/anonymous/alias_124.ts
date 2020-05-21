@@ -1,2 +1,1 @@
-import { ApiVersionSetContract } from '../models/ApiVersionSetContract';
-export type alias_124 = Array<ApiVersionSetContract>;
+export type alias_124 = string & MaxLength<100> & MinLength<1>;

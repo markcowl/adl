@@ -1,2 +1,1 @@
-import { ContextAnnotation } from '../models/ContextAnnotation';
-export type alias_31 = Array<ContextAnnotation> & MinimumElements<1>;
+export type alias_31 = string & RegularExpression<"^[0-9]{1,19}$">;

@@ -1,14 +1,22 @@
-import { user } from '../models/user';
 export interface model_251 {
-    content_type: string;
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     */
     created_at: string;
-    download_count: int64;
+    creator: {
+        avatar_url: string;
+        gravatar_id: string;
+        id: int64;
+        login: string;
+        url: string;
+    };
+    description: string;
     id: int64;
-    label: string;
-    name: string;
-    size: int64;
     state: string;
+    target_url: string;
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     */
     updated_at: string;
-    uploader: user;
     url: string;
 }

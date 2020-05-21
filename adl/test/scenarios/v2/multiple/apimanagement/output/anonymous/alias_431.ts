@@ -1,1 +1,1 @@
-export type alias_431 = int32;
+export type alias_431 = string;

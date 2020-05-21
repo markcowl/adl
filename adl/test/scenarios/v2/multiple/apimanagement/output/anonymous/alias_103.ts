@@ -1,1 +1,1 @@
-export type alias_103 = string &  /* modifier ReadOnlyModifier */;
+export type alias_103 = string &  & MaxLength<256> /* modifier ReadOnlyModifier */;

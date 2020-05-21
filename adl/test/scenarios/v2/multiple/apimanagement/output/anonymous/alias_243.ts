@@ -1,2 +1,1 @@
-import { IdentityProviderContract } from '../models/IdentityProviderContract';
-export type alias_243 = Array<IdentityProviderContract>;
+export type alias_243 = string & MinLength<1>;

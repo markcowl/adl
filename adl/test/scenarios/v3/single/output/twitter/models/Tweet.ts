@@ -65,7 +65,7 @@ export interface Tweet {
      */
     referenced_tweets: Array<{
         id?: string & RegularExpression<"^[0-9]{1,19}$">;
-        type?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        type?: "retweeted" | "quoted" | "replied_to";
     }> & MinimumElements<1>;
     /**
      * @description The name of the app the user Tweeted from.

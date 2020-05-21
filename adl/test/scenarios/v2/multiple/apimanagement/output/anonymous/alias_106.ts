@@ -1,2 +1,1 @@
-import { ApiRevisionContract } from '../models/ApiRevisionContract';
-export type alias_106 = Array<ApiRevisionContract> &  /* modifier ReadOnlyModifier */;
+export type alias_106 = boolean &  /* modifier ReadOnlyModifier */;

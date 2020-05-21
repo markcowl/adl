@@ -1,4 +1,5 @@
 export interface model_54 {
-    sha: string;
-    url: string;
+    date: string;
+    email: string;
+    name: string;
 }

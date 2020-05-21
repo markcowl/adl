@@ -7,5 +7,5 @@ export interface InvalidRequestProblem extends ProblemFields {
         message: string;
         parameters: Dictionary<Array<string>>;
     }>;
-    type: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    type: "https://api.twitter.com/labs/2/problems/invalid-request";
 }

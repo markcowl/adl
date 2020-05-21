@@ -1,1 +1,1 @@
-export type alias_497 = dateTime;
+export type alias_497 = boolean;

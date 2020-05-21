@@ -1,1 +1,1 @@
-export type alias_81 = Dictionary<Array<string>>;
+export type alias_81 = string;

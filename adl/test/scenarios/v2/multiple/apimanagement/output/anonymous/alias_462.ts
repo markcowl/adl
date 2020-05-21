@@ -1,2 +1,1 @@
-import { SubscriptionContract } from '../models/SubscriptionContract';
-export type alias_462 = Array<SubscriptionContract>;
+export type alias_462 = boolean;

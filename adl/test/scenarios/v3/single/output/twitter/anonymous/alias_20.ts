@@ -1,2 +1,1 @@
-import { Place } from '../models/Place';
-export type alias_20 = Array<Place> & MinimumElements<1>;
+export type alias_20 = Array<unknown /*= (not tsschema -- undefinedMedia/undefined ) =*/> & MinimumElements<1>;

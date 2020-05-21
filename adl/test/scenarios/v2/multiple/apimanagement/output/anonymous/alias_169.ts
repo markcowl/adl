@@ -1,1 +1,1 @@
-export type alias_169 = string & MaxLength<2000> & MinLength<1>;
+export type alias_169 = Dictionary<Array<string>>;

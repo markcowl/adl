@@ -1,1 +1,1 @@
-export type alias_346 = int64;
+export type alias_346 = string &  /* modifier ReadOnlyModifier */;

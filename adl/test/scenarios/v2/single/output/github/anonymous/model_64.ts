@@ -1,31 +1,12 @@
 export interface model_64 {
-    author: {
-        avatar_url: string;
-        gravatar_id: string;
-        id: int64;
-        login: string;
-        url: string;
-    };
-    /**
-     * @description The Total number of commits authored by the contributor.
-     */
-    total: int64;
-    weeks: Array<{
-        /**
-         * @description Number of additions.
-         */
-        a: int64;
-        /**
-         * @description Number of commits.
-         */
-        c: int64;
-        /**
-         * @description Number of deletions.
-         */
-        d: int64;
-        /**
-         * @description Start of the week.
-         */
-        w: string;
-    }>;
+    additions: int64;
+    blob_url: string;
+    changes: int64;
+    contents_url: string;
+    deletions: int64;
+    filename: string;
+    patch: string;
+    raw_url: string;
+    sha: string;
+    status: string;
 }

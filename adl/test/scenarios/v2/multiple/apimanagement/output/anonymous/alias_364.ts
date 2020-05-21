@@ -1,2 +1,1 @@
-import { ProductContract } from '../models/ProductContract';
-export type alias_364 = Array<ProductContract>;
+export type alias_364 = string & MaxLength<300> & MinLength<1>;

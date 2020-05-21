@@ -1,2 +1,2 @@
-import { ClientAuthenticationMethod } from '../enums/ClientAuthenticationMethod';
-export type alias_129 = Array<ClientAuthenticationMethod>;
+import { AuthorizationMethod } from '../enums/AuthorizationMethod';
+export type alias_129 = Array<AuthorizationMethod>;

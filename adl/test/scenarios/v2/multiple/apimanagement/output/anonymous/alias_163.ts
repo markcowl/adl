@@ -1,1 +1,1 @@
-export type alias_163 = string;
+export type alias_163 = Array<string>;

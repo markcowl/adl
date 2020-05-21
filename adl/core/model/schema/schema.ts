@@ -78,8 +78,7 @@ export class NamedElement<TNode extends Node> extends TSElement<TNode> {
 
   get name(): Identity {
     let result: Identity | undefined = undefined;
-
-    if (Node.isNamedNode(this.node)) {
+    if (Node.isNamedNode(this.node) || Node.isNameableNode(this.node)) {
       result = this.node.getName();
     }
     return result ?? anonymous(this.node.getKindName());
@@ -142,4 +141,3 @@ export class TSSchema<TNode extends Node> extends NamedElement<TNode> implements
     return <string>this.name;
   }
 }
-

@@ -160,17 +160,6 @@ export class ApiModel {
     return this.#folders[type].getSourceFile(filename) || this.#folders[type].createSourceFile(filename);
   }
 
-  getEnumFile(name: string): SourceFile {
-    if (isProxy(this)) {
-      return valueOf(this).getEnumFile(name);
-    }
-    if (isAnonymous(name)) {
-      return this.getFile(name,'anonymous');
-    }
-    const filename = `${name}.ts`;
-    return this.#enums.getSourceFile(filename) || this.#enums.createSourceFile(filename);
-  }
-
   getEnum(name: string) {
     name = valueOf(name);
     let result: EnumDeclaration | undefined;
@@ -181,7 +170,6 @@ export class ApiModel {
         return referenceTo(result);
       }
     }
-
     return undefined;
   }
 

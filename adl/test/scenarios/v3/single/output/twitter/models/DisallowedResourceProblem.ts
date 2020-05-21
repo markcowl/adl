@@ -4,7 +4,7 @@ import { ProblemFields } from './ProblemFields';
  */
 export interface DisallowedResourceProblem extends ProblemFields {
     resource_id?: string;
-    resource_type?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
-    section?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
-    type: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    resource_type?: "tweet";
+    section?: "data" | "includes";
+    type: "https://api.twitter.com/labs/2/problems/disallowed-resource";
 }

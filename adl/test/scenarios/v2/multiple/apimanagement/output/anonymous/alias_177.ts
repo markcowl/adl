@@ -1,1 +1,1 @@
-export type alias_177 = duration;
+export type alias_177 = string;
