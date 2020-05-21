@@ -163,9 +163,11 @@ export async function* processEnumSchema<T extends OAIModel>(schema: v3.Schema |
   const schemaEnum = use(schema.enum, true) ?? [];
   const xmsEnum = use(schema['x-ms-enum']) ?? {};
   const values: Array<XMSEnumValue> = use(xmsEnum.values, true) ?? schemaEnum.map(value => ({ value }));
-  const name = use(xmsEnum.name) ?? (options?.isAnonymous ? undefined : nameOf(schema));
-  const description = use(schema.description);
+  const name = use(xmsEnum.name) ?? (options?.isAnonymous ? anonymous('enum') : nameOf(schema));
   const extensible = use(xmsEnum.modelAsString);
 
-  yield createEnum($.api, values, { name, description, extensible, ...commonProperties(schema) });
+  yield createEnum($.api, name, values, { 
+    extensible, 
+    ...commonProperties(schema) 
+  });
 }

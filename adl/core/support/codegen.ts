@@ -11,8 +11,22 @@ export function normalizeIdentifier(value: string) {
   return /[^\w]/g.exec(value) ? `'${value.replace(/'/g, '\\\'')}'` : value;
 }
 
+export function literal(value: string | number | boolean | null | undefined) {
+  if (value === null) {
+    return 'null';
+  }
+  if (value === undefined) {
+    return 'undefined';
+  }
+  if (typeof value == 'string') {
+    return stringLiteral(value);
+  }
+  return value.toString();
+}
+
 export function stringLiteral(value: string) {
   return JSON.stringify(valueOf(value) || '');
+
 }
 
 export function normalizeName(value: string ) {
