@@ -1,1 +1,2 @@
-export type alias_534 = string &  /* modifier ReadOnlyModifier */;
+import { GatewayContract } from '../models/GatewayContract';
+export type alias_534 = Array<GatewayContract> &  /* modifier ReadOnlyModifier */;

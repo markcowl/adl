@@ -1,7 +1,7 @@
 
 /**
- * @description Backend communication protocol.
  * @extensible
+ * @description Backend communication protocol.
  */
 /** @todo-temporary-reuse-marker */
 export enum BackendProtocol {

@@ -1,1 +1,1 @@
-export type alias_181 = string & MaxLength<300>;
+export type alias_181 = string & MaxLength<2000>;

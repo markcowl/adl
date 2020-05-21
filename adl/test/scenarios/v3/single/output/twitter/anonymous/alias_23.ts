@@ -1,1 +1,1 @@
-export type alias_23 = int64;
+export type alias_23 = double & Minimum<-180> & Maximum<180>;

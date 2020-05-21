@@ -1,2 +1,2 @@
-import { UserContract } from '../models/UserContract';
-export type alias_508 = Array<UserContract>;
+import { GroupContractProperties } from '../models/GroupContractProperties';
+export type alias_508 = Array<GroupContractProperties> &  /* modifier ReadOnlyModifier */;

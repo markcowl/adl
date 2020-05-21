@@ -1,7 +1,7 @@
 
 /**
- * @description SKU family name
  * @extensible
+ * @description SKU family name
  */
 export enum SkuFamily {
     A = 'A'

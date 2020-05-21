@@ -1,4 +1,26 @@
 export interface model_99 {
-    href: string;
-    type: string;
+    current_user: {
+        href: string;
+        type: string;
+    };
+    current_user_actor: {
+        href: string;
+        type: string;
+    };
+    current_user_organization: {
+        href: string;
+        type: string;
+    };
+    current_user_public: {
+        href: string;
+        type: string;
+    };
+    timeline: {
+        href: string;
+        type: string;
+    };
+    user: {
+        href: string;
+        type: string;
+    };
 }

@@ -1,1 +1,2 @@
-export type alias_312 = int32;
+import { RepresentationContract } from '../models/RepresentationContract';
+export type alias_312 = Array<RepresentationContract>;

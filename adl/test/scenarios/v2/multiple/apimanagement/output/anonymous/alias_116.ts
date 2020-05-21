@@ -1,1 +1,2 @@
-export type alias_116 = string & MaxLength<300> & MinLength<1>;
+import { Protocol } from '../enums/Protocol';
+export type alias_116 = Array<Protocol>;

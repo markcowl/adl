@@ -1,1 +1,2 @@
-export type alias_146 = int64;
+import { AuthorizationServerContract } from '../models/AuthorizationServerContract';
+export type alias_146 = Array<AuthorizationServerContract>;

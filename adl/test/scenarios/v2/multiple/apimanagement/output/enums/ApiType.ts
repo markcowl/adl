@@ -1,7 +1,7 @@
 
 /**
- * @description Type of API.
  * @extensible
+ * @description Type of API.
  */
 export enum ApiType {
     http = 'http',

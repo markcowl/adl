@@ -1,1 +1,2 @@
-export type alias_386 = int64;
+import { QuotaCounterContract } from '../models/QuotaCounterContract';
+export type alias_386 = Array<QuotaCounterContract>;

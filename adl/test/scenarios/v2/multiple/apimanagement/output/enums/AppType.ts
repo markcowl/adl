@@ -1,7 +1,7 @@
 
 /**
- * @description Determines the type of application which send the create user request. Default is old publisher portal.
  * @extensible
+ * @description Determines the type of application which send the create user request. Default is old publisher portal.
  */
 export enum AppType {
     /**

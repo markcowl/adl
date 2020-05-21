@@ -14,5 +14,5 @@ export interface TweetWithheld {
     /**
      * @description Indicates whether the content being withheld is the `tweet` or a `user`.
      */
-    scope: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    scope: enum_73;
 }

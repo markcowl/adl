@@ -1,4 +1,2 @@
-export type alias_56 = Array<{
-    id?: string & RegularExpression<"^[0-9]{1,19}$">;
-    type?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
-}> & MinimumElements<1>;
+import { UrlEntity } from '../models/UrlEntity';
+export type alias_56 = Array<UrlEntity> & MinimumElements<1>;

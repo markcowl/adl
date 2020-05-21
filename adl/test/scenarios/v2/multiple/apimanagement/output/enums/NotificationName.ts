@@ -1,7 +1,7 @@
 
 /**
- * @description Notification Name Identifier.
  * @extensible
+ * @description Notification Name Identifier.
  */
 export enum NotificationName {
     /**

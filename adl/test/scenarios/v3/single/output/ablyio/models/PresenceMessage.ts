@@ -3,7 +3,7 @@ export interface PresenceMessage {
     /**
      * @description The event signified by a PresenceMessage.
      */
-    readonly action: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    readonly action: enum_42;
     /**
      * @description The client ID of the publisher of this presence update.
      */

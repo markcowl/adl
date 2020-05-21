@@ -1,1 +1,2 @@
-export type alias_272 = int64;
+import { LoggerContract } from '../models/LoggerContract';
+export type alias_272 = Array<LoggerContract>;

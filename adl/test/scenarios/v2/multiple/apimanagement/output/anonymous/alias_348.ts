@@ -1,1 +1,2 @@
-export type alias_348 = int64;
+import { PolicyDescriptionContract } from '../models/PolicyDescriptionContract';
+export type alias_348 = Array<PolicyDescriptionContract>;

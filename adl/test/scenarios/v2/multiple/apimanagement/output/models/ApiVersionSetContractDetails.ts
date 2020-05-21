@@ -18,7 +18,7 @@ export interface ApiVersionSetContractDetails {
     /**
      * @description An value that determines where the API Version identifer will be located in a HTTP request.
      */
-    versioningScheme: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    versioningScheme: enum_81;
     /**
      * @description Name of query parameter that indicates the API Version if versioningScheme is set to `query`.
      */

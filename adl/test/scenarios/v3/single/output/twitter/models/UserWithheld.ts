@@ -10,5 +10,5 @@ export interface UserWithheld {
     /**
      * @description Indicates that the content being withheld is a `user`.
      */
-    scope: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    scope: enum_92;
 }

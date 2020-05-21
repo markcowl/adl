@@ -1,3 +1,5 @@
 export interface model_197 {
-    href: string;
+    'file1.txt': {
+        content: string;
+    };
 }

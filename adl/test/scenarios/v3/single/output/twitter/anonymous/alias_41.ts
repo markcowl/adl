@@ -1,2 +1,1 @@
-import { URLImage } from '../models/URLImage';
-export type alias_41 = Array<URLImage> & MinimumElements<1>;
+export type alias_41 = string & RegularExpression<"^[0-9]{1,19}$">;

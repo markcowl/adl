@@ -1,1 +1,1 @@
-export type alias_469 = boolean;
+export type alias_469 = string & MaxLength<256> & MinLength<1>;

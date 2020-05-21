@@ -1,1 +1,1 @@
-export type alias_384 = double;
+export type alias_384 = int32;

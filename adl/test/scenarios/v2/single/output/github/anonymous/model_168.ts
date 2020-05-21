@@ -1,5 +1,6 @@
 export interface model_168 {
-    date: string;
-    email: string;
-    name: string;
+    id: int64;
+    key: string;
+    title: string;
+    url: string;
 }

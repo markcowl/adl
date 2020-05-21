@@ -1,3 +1,11 @@
 export interface model_234 {
-    href: string;
+    html: {
+        href: string;
+    };
+    pull_request: {
+        href: string;
+    };
+    self: {
+        href: string;
+    };
 }

@@ -1,1 +1,1 @@
-export type alias_173 = Array<string>;
+export type alias_173 = Dictionary<int64>;

@@ -1,2 +1,2 @@
-import { ParameterContract } from '../models/ParameterContract';
-export type alias_315 = Array<ParameterContract>;
+import { RepresentationContract } from '../models/RepresentationContract';
+export type alias_315 = Array<RepresentationContract>;

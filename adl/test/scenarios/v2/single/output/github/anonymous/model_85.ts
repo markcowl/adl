@@ -1,4 +1,5 @@
 export interface model_85 {
-    email: string;
-    name: string;
+    html_url: string;
+    sha: string;
+    url: string;
 }

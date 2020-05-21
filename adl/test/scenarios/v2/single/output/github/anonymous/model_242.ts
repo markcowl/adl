@@ -1,7 +1,11 @@
 export interface model_242 {
-    avatar_url: string;
-    gravatar_id: string;
-    id: int64;
-    login: string;
-    url: string;
+    html: {
+        href: string;
+    };
+    pull_request: {
+        href: string;
+    };
+    self: {
+        href: string;
+    };
 }
