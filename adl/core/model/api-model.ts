@@ -185,7 +185,6 @@ export class ApiModel {
 
     reqdTypes:
     for (const requiredType of schema.requiredTypeDeclarations) {
-      
       if (requiredType.getSourceFile && requiredType.getName ) {
         const typeFile = requiredType.getSourceFile();
         const typeName = requiredType.getName();
