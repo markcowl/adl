@@ -4,7 +4,10 @@ import { ClassDeclaration, EnumDeclaration, EnumMember, InterfaceDeclaration, No
 import { ApiModel } from '../model/api-model';
 import { createSandbox } from './sandbox';
 
-export type TypeDeclaration = TypeAliasDeclaration | InterfaceDeclaration | ClassDeclaration | EnumDeclaration;
+/**
+ * A ts-morph type declaration node (used when trying to import things between files)
+ */
+export type TypeDeclaration = TypeAliasDeclaration | InterfaceDeclaration | ClassDeclaration | EnumDeclaration | ClassDeclaration;
 
 const evaluateExpression = createSandbox();
 function quote(text: string) {

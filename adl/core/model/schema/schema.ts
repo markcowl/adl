@@ -1,7 +1,7 @@
 import { Dictionary } from '@azure-tools/linq';
 import { anonymous, isAnonymous, valueOf } from '@azure-tools/sourcemap';
 import { Node } from 'ts-morph';
-import { getPath, IsTypeDeclaration, project, TypeDeclaration } from '../../support/typescript';
+import { getPath, IsTypeDeclaration, TypeDeclaration } from '../../support/typescript';
 import { Element, TSElement } from '../element';
 import { Identity } from '../types';
 
@@ -39,12 +39,29 @@ export class Schema extends Element {
     this.name = anonymous(type);
     this.initialize(initializer);
   }
+
+  /** 
+   * Indicates that this schema is not indended to be written to a file, and should be used inline.
+   */
   get isInline() {
     return false;
   }
+
+  /**
+   * gets the literal type definition for this schema, as the consumer would be using.
+   * 
+   * ie, so primitive types return thigs like 'string', 'int32', 'datetime' etc 
+   * object types will return their type unless they are 'inline' at which point they should
+   * return the defintion as it would be used. 
+   */
   get typeDefinition(): string {
     return `unknown /*= (not tsschema -- ${Object.getPrototypeOf(this).name}${valueOf(this.name)}/${(<any>this).kind} ) =*/`;
   }
+
+  /**
+   * returns the type declarations (references to the actual type declaration) for types that
+   * are being used. 
+   */
   get requiredTypeDeclarations(): Array<TypeDeclaration> {
     return [];
   }
@@ -103,7 +120,6 @@ export class TSSchema<TNode extends Node> extends NamedElement<TNode> implements
     this.initialize(initializer);
   }
 
-  
   /**
    * returns the types that the schema needs 
    * 
@@ -115,7 +131,7 @@ export class TSSchema<TNode extends Node> extends NamedElement<TNode> implements
   }
   
   get isInline(): boolean {
-    return project(this.node).isFileAnonymous( this.node.getSourceFile() );
+    return this.project.isFileAnonymous( this.node.getSourceFile() );
   }
 
   get typeDefinition(): string {

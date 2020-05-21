@@ -165,21 +165,10 @@ export class ApiModel {
       return valueOf(this).getEnumFile(name);
     }
     if (isAnonymous(name)) {
-      return this.getAnonymousFile(name);
+      return this.getFile(name,'anonymous');
     }
     const filename = `${name}.ts`;
     return this.#enums.getSourceFile(filename) || this.#enums.createSourceFile(filename);
-  }
-
-  getObjectSchemaFile(name: Identity): SourceFile {
-    if (isProxy(this)) {
-      return valueOf(this).getObjectSchemaFile(name);
-    }
-    if (isAnonymous(name)) {
-      return this.getAnonymousFile(name.name);
-    }
-    const filename = `${name}.ts`;
-    return this.#models.getSourceFile(filename) || this.#models.createSourceFile(filename);
   }
 
   getEnum(name: string) {
@@ -196,29 +185,7 @@ export class ApiModel {
     return undefined;
   }
 
-  getAliasSourceFile(name: string): SourceFile {
-    if (isProxy(this)) {
-      return valueOf(this).getAliasSourceFile(name);
-    }
-
-    if (isAnonymous(name)) {
-      return this.getAnonymousFile(name);
-    }
-
-    const filename = `${name}.ts`;
-    return this.#alias.getSourceFile(filename) || this.#alias.createSourceFile(filename);
-  }
-
-  getAnonymousFile(name: string): SourceFile {
-    if (isProxy(this)) {
-      return valueOf(this).getAnonymousFile(name);
-    }  
-
-    const filename = `${name.replace(/[^\w]+/g, '_')}.ts`;
-    return this.#anonymous.getSourceFile(filename) || this.#anonymous.createSourceFile(filename);
-  }
-
-  isFileAnonymous( sourceFile: SourceFile ): boolean{
+  isFileAnonymous(sourceFile: SourceFile): boolean {
     if (isProxy(this)) {
       return valueOf(this).isFileAnonymous(sourceFile);
     }
@@ -227,7 +194,7 @@ export class ApiModel {
 
   getNameAndFile(identity: Identity, type: keyof Folders) {
     const name = isAnonymous(identity) ? `${type}_${this.counter++}` : <string><any>valueOf(identity).replace(/[^\w]+/g, '_');
-    const file = isAnonymous(identity) ? this.getAnonymousFile(name) : this.getFile(name, type);
+    const file = isAnonymous(identity) ? this.getFile(name,'anonymous') : this.getFile(name, type);
 
     return { name, file };
   }

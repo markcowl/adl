@@ -46,7 +46,6 @@ export class Alias extends TSSchema<TypeAliasDeclaration> {
     }
     return this.node.getName();
   }
-  
 
   get requiredTypeDeclarations(): Array<TypeDeclaration> {
     if (this.isInline) {
@@ -57,7 +56,6 @@ export class Alias extends TSSchema<TypeAliasDeclaration> {
         const types = decl.getModuleSpecifierSourceFile()?.getDescendants().filter( (each: any) => each.getName && names.indexOf(each.getName()) > -1 ) || []; 
         return types;
       }).flat();
-      
     }
     return [this.node];
   }
