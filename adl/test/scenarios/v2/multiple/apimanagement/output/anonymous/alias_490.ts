@@ -1,2 +1,1 @@
-import { TagResourceContract } from '../models/TagResourceContract';
-export type alias_490 = Array<TagResourceContract>;
+export type alias_490 = string & MaxLength<160> & MinLength<1>;

@@ -1,1 +1,2 @@
-export type alias_184 = string;
+import { CacheContract } from '../models/CacheContract';
+export type alias_184 = Array<CacheContract>;

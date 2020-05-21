@@ -1,4 +1,5 @@
 export interface model_126 {
-    content_type: string;
-    url: string;
+    date: string;
+    email: string;
+    name: string;
 }

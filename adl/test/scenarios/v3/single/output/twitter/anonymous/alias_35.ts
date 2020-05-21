@@ -1,2 +1,2 @@
-import { HashtagEntity } from '../models/HashtagEntity';
-export type alias_35 = Array<HashtagEntity> & MinimumElements<1>;
+import { PollOption } from '../models/PollOption';
+export type alias_35 = Array<PollOption> & MaximumElements<4> & MinimumElements<2>;

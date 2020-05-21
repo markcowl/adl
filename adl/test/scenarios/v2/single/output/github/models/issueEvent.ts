@@ -39,7 +39,7 @@ export interface issueEvent {
             due_on: string;
             number: int64;
             open_issues: int64;
-            state: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+            state: "open" | "closed";
             title: string;
             url: string;
         };
@@ -49,7 +49,7 @@ export interface issueEvent {
             html_url: string;
             patch_url: string;
         };
-        state: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+        state: "open" | "closed";
         title: string;
         /**
          * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ

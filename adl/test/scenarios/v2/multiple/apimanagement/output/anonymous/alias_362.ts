@@ -1,1 +1,1 @@
-export type alias_362 = int32;
+export type alias_362 = boolean;

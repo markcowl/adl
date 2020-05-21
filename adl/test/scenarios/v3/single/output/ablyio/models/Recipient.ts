@@ -22,5 +22,5 @@ export interface Recipient {
     /**
      * @description Defines which push platform is being used.
      */
-    transportType: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    transportType: enum_19;
 }

@@ -4,5 +4,5 @@
  */
 export interface Point {
     coordinates?: Array<double> & MaximumElements<2> & MinimumElements<2>;
-    type?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    type?: "Point";
 }

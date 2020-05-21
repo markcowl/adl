@@ -1,1 +1,2 @@
-export type alias_30 = string & RegularExpression<"^[0-9]{1,19}$">;
+import { Place } from '../models/Place';
+export type alias_30 = Array<Place> & MinimumElements<1>;

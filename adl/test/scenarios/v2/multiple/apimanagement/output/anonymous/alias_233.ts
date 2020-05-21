@@ -1,1 +1,1 @@
-export type alias_233 = Array<string> & MaximumElements<32>;
+export type alias_233 = string;

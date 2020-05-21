@@ -1,5 +1,7 @@
 export interface model_123 {
-    date: string;
-    email: string;
-    name: string;
+    'ring.erl': {
+        filename: string;
+        raw_url: string;
+        size: int64;
+    };
 }

@@ -1,1 +1,2 @@
-export type alias_213 = string;
+import { EmailTemplateContract } from '../models/EmailTemplateContract';
+export type alias_213 = Array<EmailTemplateContract>;

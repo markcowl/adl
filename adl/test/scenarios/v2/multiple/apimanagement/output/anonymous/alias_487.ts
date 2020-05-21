@@ -1,1 +1,2 @@
-export type alias_487 = string;
+import { TagDescriptionContract } from '../models/TagDescriptionContract';
+export type alias_487 = Array<TagDescriptionContract>;

@@ -7,5 +7,5 @@ export interface Poll {
     end_datetime: dateTime;
     id?: string & RegularExpression<"^[0-9]{1,19}$">;
     options?: Array<PollOption> & MaximumElements<4> & MinimumElements<2>;
-    voting_status: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    voting_status: "open" | "closed";
 }

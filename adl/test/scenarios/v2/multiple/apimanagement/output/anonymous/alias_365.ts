@@ -1,1 +1,2 @@
-export type alias_365 = string;
+import { ProductContract } from '../models/ProductContract';
+export type alias_365 = Array<ProductContract>;

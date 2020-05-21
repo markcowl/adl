@@ -1,1 +1,1 @@
-export type alias_276 = boolean;
+export type alias_276 = Dictionary<string>;

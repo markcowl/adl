@@ -1,1 +1,1 @@
-export type alias_165 = Dictionary<int64>;
+export type alias_165 = string;

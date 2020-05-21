@@ -1,1 +1,2 @@
-export type alias_120 = string;
+import { Protocol } from '../enums/Protocol';
+export type alias_120 = Array<Protocol>;

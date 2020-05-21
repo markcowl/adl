@@ -28,5 +28,5 @@ export interface tagBody {
     /**
      * @description String of the type of the object we’re tagging. Normally this is a commit but it can also be a tree or a blob.
      */
-    type?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    type?: enum_305;
 }

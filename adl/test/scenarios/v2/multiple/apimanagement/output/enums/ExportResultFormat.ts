@@ -1,7 +1,7 @@
 
 /**
- * @description Format in which the Api Details are exported to the Storage Blob with Sas Key valid for 5 minutes.
  * @extensible
+ * @description Format in which the Api Details are exported to the Storage Blob with Sas Key valid for 5 minutes.
  */
 export enum ExportResultFormat {
     /**

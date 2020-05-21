@@ -1,2 +1,1 @@
-import { Protocol } from '../enums/Protocol';
-export type alias_119 = Array<Protocol>;
+export type alias_119 = string & MaxLength<400> & MinLength<0>;

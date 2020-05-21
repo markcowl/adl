@@ -1,1 +1,1 @@
-export type alias_200 = boolean;
+export type alias_200 = Array<string>;

@@ -1,1 +1,1 @@
-export type alias_377 = string & MaxLength<256> & MinLength<1> & RegularExpression<"^[A-Za-z0-9-._]+$">;
+export type alias_377 = string & MaxLength<4096> & MinLength<1>;

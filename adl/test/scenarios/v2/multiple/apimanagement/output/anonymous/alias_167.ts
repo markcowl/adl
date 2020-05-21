@@ -1,1 +1,1 @@
-export type alias_167 = Dictionary<Array<string>>;
+export type alias_167 = Array<string> & MaximumElements<32>;

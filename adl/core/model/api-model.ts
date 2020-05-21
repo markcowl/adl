@@ -164,19 +164,13 @@ export class ApiModel {
     if (isProxy(this)) {
       return valueOf(this).getEnumFile(name);
     }
-    if (isAnonymous(name)) {
-      return this.getAnonymousFile(name);
-    }
     const filename = `${name}.ts`;
     return this.#enums.getSourceFile(filename) || this.#enums.createSourceFile(filename);
   }
 
-  getObjectSchemaFile(name: Identity): SourceFile {
+  getObjectSchemaFile(name: string): SourceFile {
     if (isProxy(this)) {
       return valueOf(this).getObjectSchemaFile(name);
-    }
-    if (isAnonymous(name)) {
-      return this.getAnonymousFile(name.name);
     }
     const filename = `${name}.ts`;
     return this.#models.getSourceFile(filename) || this.#models.createSourceFile(filename);

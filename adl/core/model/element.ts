@@ -116,7 +116,7 @@ export class TSElement<TNode extends Node> extends Element {
     return undefined;
   }
 
-  private getOrCreateDoc() {
+  protected getOrCreateDoc() {
     const doc = this.getDoc();
     if (doc) {
       return doc;

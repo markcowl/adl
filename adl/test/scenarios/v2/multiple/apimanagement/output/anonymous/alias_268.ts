@@ -1,1 +1,1 @@
-export type alias_268 = Dictionary<string>;
+export type alias_268 = string & MaxLength<256>;

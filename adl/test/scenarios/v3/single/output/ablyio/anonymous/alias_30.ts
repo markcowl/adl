@@ -1,0 +1,1 @@
+export type alias_30 = string;

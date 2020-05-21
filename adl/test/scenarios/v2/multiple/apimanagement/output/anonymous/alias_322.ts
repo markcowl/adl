@@ -1,1 +1,2 @@
-export type alias_322 = string &  /* modifier ReadOnlyModifier */;
+import { OperationContract } from '../models/OperationContract';
+export type alias_322 = Array<OperationContract> &  /* modifier ReadOnlyModifier */;

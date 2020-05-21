@@ -6,7 +6,6 @@ import { ApiModel } from '../api-model';
 import { Collection, CollectionImpl, Identity } from '../types';
 import { NamedElement, Schema, TSSchema } from './schema';
 
-
 export interface ObjectSchema extends Schema {
   /** schemas that this object extends */
   readonly parents: Collection<TSSchema<TypeDeclaration>>;
@@ -113,12 +112,8 @@ export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements 
     return [this.node] ;
   }
 }
-//let counter = 0;
 
 export function createObjectSchema(api: ApiModel, identity: Identity, initializer?: Partial<ObjectSchema>): ObjectSchema {
-  
-  // const n = isAnonymous(name) ? `object_${counter++}` :<string><any> valueOf(name);
-  // const file = isAnonymous(name) ? api.getAnonymousFile(n) : api.getObjectSchemaFile(n);
   const {name, file} = api.getNameAndFile(identity, 'model');
   
   const result= new ObjectSchemaImpl(file.addInterface({
@@ -190,5 +185,5 @@ export class PropertyImpl extends NamedElement<PropertySignature> {
   constructor(node: PropertySignature) {
     super(node);
   }
-  
 }
+

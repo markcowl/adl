@@ -4,8 +4,8 @@ import { ProblemFields } from './ProblemFields';
  */
 export interface ResourceNotFoundProblem extends ProblemFields {
     parameter?: string & MinLength<1>;
-    resource_type?: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
-    type: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    resource_type?: "user" | "tweet";
+    type: "https://api.twitter.com/labs/2/problems/resource-not-found";
     /**
      * @description Value will match the schema of the field.
      */

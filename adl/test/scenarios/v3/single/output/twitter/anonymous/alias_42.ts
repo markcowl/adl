@@ -1,1 +1,2 @@
-export type alias_42 = int64 & Minimum<100> & Maximum<599>;
+import { ContextAnnotation } from '../models/ContextAnnotation';
+export type alias_42 = Array<ContextAnnotation> & MinimumElements<1>;

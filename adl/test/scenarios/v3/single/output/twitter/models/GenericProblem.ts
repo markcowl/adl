@@ -4,5 +4,5 @@ import { ProblemFields } from './ProblemFields';
  */
 export interface GenericProblem extends ProblemFields {
     status?: int64;
-    type: unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/;
+    type: "about:blank";
 }
