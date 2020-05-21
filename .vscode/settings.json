@@ -92,7 +92,7 @@
     "source.organizeImports": true
   },
   "eslint.format.enable": true,
-  "mochaExplorer.files": "./adl/core/dist/test/**/*.js",
+  "mochaExplorer.files": "./adl/*/dist/test/**/*.js",
   "mochaExplorer.cwd": "./adl/core",
   "mochaExplorer.mochaPath": "./adl/core/node_modules/mocha",
   "mochaExplorer.timeout": 500000,
