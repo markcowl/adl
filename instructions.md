@@ -1,10 +1,19 @@
 # Build Instructions
 
-## Globally Install packages:
- - `npm install -g @microsoft/rush` -- rush.js is used by this repository
+Prerequisites: 
+1. [Node.js](https://nodejs.org/en/download/) (>=10.13.0 <15.0.0)
 
-## Local install
- - `rush update` - install modules packages
+2. [Rush](https://rushjs.io/pages/intro/welcome/) 
+
+```
+npm install -g @microsoft/rush
+```
+
+## Preparation
+The first time (or after pulling from upstream) use Rush to install modules packages.
+```
+rush update 
+```
 
 ## Building code
  - `rush rebuild` to build the modules
