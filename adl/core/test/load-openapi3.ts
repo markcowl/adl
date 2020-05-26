@@ -49,6 +49,9 @@ describe('Load Single OAI3 files', () => {
   const files = linq.values(readdirSync(inputRoot)).where(each => statSync(`${inputRoot}/${each}`).isFile()).toArray();
 
   for (const file of files) {
+    if( file.startsWith('_')) {
+      continue;
+    }
     it(`Processes '${file}'`, async () => {
       console.log('\n');
       const host = createHost(inputRoot);
