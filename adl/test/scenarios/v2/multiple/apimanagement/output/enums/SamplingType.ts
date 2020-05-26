@@ -1,11 +1,6 @@
 
-/**
- * @extensible
- * @description Sampling type.
- */
+/** @since 2019-12-01 */
 export enum SamplingType {
-    /**
-     * Fixed-rate sampling.
-     */
+    /** Fixed-rate sampling. */
     fixed = 'fixed'
 }
