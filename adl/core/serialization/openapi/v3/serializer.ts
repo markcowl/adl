@@ -6,6 +6,7 @@ import { Context as Ctx, Visitor } from '../../../support/visitor';
 import { consume, singleOrDefault } from '../common';
 import { processExternalDocs, processInfo, processTag } from '../common/info';
 import { processComponents } from './components';
+import { path } from './path';
 import { authenticationRequirement } from './security';
 import { processServer } from './server';
 
@@ -65,7 +66,7 @@ async function processRoot(oai3: v3.Model, $: Context) {
     $.api.http.authenticationRequirements.push(security);
   }
 
-  /** disable for now
+  
   // paths second to last
   for await (const operation of $.processDictionary(path, oai3.paths)) {
     $.api.http.operations.push(operation);
@@ -73,7 +74,7 @@ async function processRoot(oai3: v3.Model, $: Context) {
   for await (const operation of $.processDictionary(path, oai3['x-ms-paths'])) {
     $.api.http.operations.push(operation);
   }
-*/
+
   // we don't need this.
   use(oai3.openapi);
 

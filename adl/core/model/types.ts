@@ -27,3 +27,9 @@ export interface Folders {
   group: Directory;
   resource: Directory;
 }
+
+export interface FileInfo {
+  filename: string;
+}
+
+export type Version = string;

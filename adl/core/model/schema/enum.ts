@@ -1,7 +1,8 @@
-import { Dictionary, linq } from '@azure-tools/linq';
+import { Dictionary } from '@azure-tools/linq';
 import { isAnonymous, valueOf } from '@azure-tools/sourcemap';
 import { EnumDeclaration, EnumMember } from 'ts-morph';
 import { literal, normalizeIdentifier } from '../../support/codegen';
+import { appendTag, getFirstDoc, hasTag, setTag } from '../../support/doc-tag';
 import { getPath } from '../../support/typescript';
 import { ApiModel } from '../api-model';
 import { TSElement } from '../element';
@@ -41,10 +42,10 @@ class EnumValueImpl extends TSElement<EnumMember> implements EnumValue {
   }
 
   get description(): string | undefined {
-    return this.getDocSummary();
+    return getFirstDoc(this.node).getDescription();
   }
   set description(value: string | undefined) {
-    this.setDocSummary(value);
+    getFirstDoc(this.node).setDescription(valueOf(value) || '\n');
   }
 }
 
@@ -57,29 +58,31 @@ class EnumImpl extends TSSchema<EnumDeclaration> implements Enum {
   }
 
   get extensible() {
-    return this.hasDocTag('extensible');
+    return hasTag(this.node, 'extensible');
   }
   set extensible(value: boolean) {
-    this.setDocTag('extensible', value);
+    if( value) {
+      setTag(this.node, 'extensible', '');
+    } 
   }
 
-  get isInline() {
+  /* get isInline() {
     // can be inlined at use case as union of literal types if all we have are
     // values and no names or descriptions.
     return this.anonymous && !this.description && !this.summary &&
       !linq.values(this.values.get()).any(
         v => !!v.description || v.name != normalizeIdentifier(v.value.toString()));
-  }
+  }*/
 
   readonly values: Collection<EnumValue>;
 
   private addValue(value: EnumValue) {
     const name = valueOf(value.name) ?? value.value.toString();
-    const val = valueOf(value.value);
+    let val = valueOf(value.value);
     
     if (typeof val !== 'string' && typeof val !== 'number') {
       // TODO: how would we represent enum of non-string, non-number?
-      throw new Error('Cannot add non-string, non-numeric value to enum');
+      val = `/* ${typeof val} */${val}`;
     }
     
     const member = this.node.addMember({
@@ -125,7 +128,7 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
     const existing = api.getEnum(name);
     if (existing) {
       // TODO: This should be made reusable, determine that the definitions are fully the same, then emit nothing.
-      existing.addJsDoc({ tags: [{ tagName: 'todo-temporary-reuse-marker' }] });
+      appendTag(existing, 'todo', 'temporary-reuse-marker');
       return new EnumImpl(existing, false);
     }
   }

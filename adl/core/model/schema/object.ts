@@ -1,6 +1,7 @@
 import { TargetMap } from '@azure-tools/sourcemap';
 import { InterfaceDeclaration, PropertySignature } from 'ts-morph';
 import { normalizeIdentifier } from '../../support/codegen';
+import { getTagValue, setTag } from '../../support/doc-tag';
 import { getPath, TypeDeclaration } from '../../support/typescript';
 import { ApiModel } from '../api-model';
 import { Collection, CollectionImpl, Identity } from '../types';
@@ -175,11 +176,10 @@ export class PropertyImpl extends NamedElement<PropertySignature> {
    * the desired name when generating code.
    */
   get clientName(): string|undefined {    
-    return this.getDocTag('clientName');
+    return getTagValue( this.node, 'clientName');
   }
   set clientName(value: string|undefined) {
-    // todo: implement by adding a `& WriteOnly`
-    this.addDocTag('clientName', value);
+    setTag(this.node, 'clientName', value);
   }
 
   constructor(node: PropertySignature) {

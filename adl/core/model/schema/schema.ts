@@ -1,6 +1,7 @@
 import { Dictionary } from '@azure-tools/linq';
 import { anonymous, isAnonymous, valueOf } from '@azure-tools/sourcemap';
 import { Node } from 'ts-morph';
+import { getFirstDoc, getTagValue, setTag } from '../../support/doc-tag';
 import { getPath, IsTypeDeclaration, TypeDeclaration } from '../../support/typescript';
 import { Element, TSElement } from '../element';
 import { Identity } from '../types';
@@ -95,20 +96,18 @@ export class NamedElement<TNode extends Node> extends TSElement<TNode> {
   }
 
   get summary() {
-    return this.getDocSummary();
+    return getFirstDoc(this.node).getDescription();
   }
   set summary(value: string | undefined) {
-    this.setDocSummary(value);
+    getFirstDoc(this.node).setDescription(valueOf(value)||'\n');
   }
 
   get description() {
-    return this.getDocTag('description');
+    return getTagValue(this.node, 'description');
   }
   set description(value: string | undefined) {
-    this.setDocTag('description', value);
+    setTag(this.node,'description', valueOf(value));
   }
-  
-
 }
 
 export class TSSchema<TNode extends Node> extends NamedElement<TNode> implements Schema {
