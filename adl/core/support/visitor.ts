@@ -8,7 +8,6 @@ import { parse } from 'yaml';
 import { Alias } from '../model/alias';
 import { ApiModel } from '../model/api-model';
 import { Element } from '../model/element';
-import { VersionInfo } from '../model/version-info';
 import { Host } from './file-system';
 import { Stopwatch } from './stopwatch';
 
@@ -317,11 +316,11 @@ export class Context<TSourceModel extends OAIModel> {
           if (result.versionInfo.length === 0) {
             // only add this if we haven't added it before
             // when a result is returned up the chain more than once
-            result.versionInfo.push(new VersionInfo({
+            result.addVersionInfo({
               // deprecated isn't on everything, but this is safe when it's not there
               deprecated: use((<any>value).deprecated) ? this.apiVersion : undefined,
               added: this.apiVersion,
-            }));
+            });
             result.addInternalData(this.visitor.inputType, { preferredFile: getSourceFile(value) });
           }
 
@@ -336,11 +335,11 @@ export class Context<TSourceModel extends OAIModel> {
     if (result.versionInfo.length === 0) {
       // only add this if we haven't added it before
       // when a result is returned up the chain more than once
-      result.versionInfo.push(new VersionInfo({
+      result.addVersionInfo({
         // deprecated isn't on everything, but this is safe when it's not there
         deprecated: use((<any>value).deprecated) ? this.apiVersion : undefined,
         added: this.apiVersion,
-      }));
+      });
       result.addInternalData(this.visitor.inputType, { preferredFile: getSourceFile(value) });
     }
   }
@@ -418,11 +417,11 @@ export class Context<TSourceModel extends OAIModel> {
         // track it so we don't redo it if asked for it again later.
         this.visitor.$refs.set(ref, [result]);
 
-        result.versionInfo.push(new VersionInfo({
+        result.addVersionInfo({
           // deprecated isn't on everything, but this is safe when it's not there
           deprecated: using((<any>value).deprecated, this.apiVersion),
           added: this.apiVersion,
-        }));
+        });
         result.addInternalData(this.visitor.inputType, { preferredFile: getSourceFile(value) });
 
         return result;

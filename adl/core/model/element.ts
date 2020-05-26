@@ -1,7 +1,8 @@
 import { Dictionary, items } from '@azure-tools/linq';
-import { TrackedTarget, use, valueOf } from '@azure-tools/sourcemap';
+import { TrackedTarget, use } from '@azure-tools/sourcemap';
 import { Node } from 'ts-morph';
-import { project } from '../support/typescript';
+import { setTag } from '../support/doc-tag';
+import { getPath, project } from '../support/typescript';
 import { InternalData } from './internal-data';
 import { VersionInfo } from './version-info';
 
@@ -76,13 +77,60 @@ export class Element extends Initializer {
     this.internalData = this.internalData || {};
     this.internalData[key] = internalData;
   }
+
+  addVersionInfo(info: VersionInfo) { 
+    this.versionInfo.push(info);
+  }
 }
 
-export class TSElement<TNode extends Node> extends Element {
+export class TSElement<TNode extends Node> extends Initializer implements Element  {
   constructor(public node: TNode, initializer?: Partial<TSElement<TNode>>) {
     super();
     this.initialize(initializer);
   }
+
+  get internalData() {
+    const pv =  this.project.getPrivateData(getPath(this.node));
+    if(!pv.internalData) {
+      pv.internalData = {};
+    }
+    return pv.internalData;
+  }
+  
+  get versionInfo(): Array<VersionInfo> {
+    // get versions back from doctags.
+    return [];
+  }
+  
+  get attic(): Attic  {
+    const pv = this.project.getPrivateData(getPath(this.node));
+    if (!pv.attic) {
+      pv.attic = {};
+    }
+    return pv.attic;
+  }
+
+  addToAttic(name: string, value: any): this {
+    use(value, true);
+    if (value) {
+      this.attic[name] = value.valueOf();
+    }
+    return this;
+  }
+  
+  addInternalData(key: string, internalData: InternalData): void {
+    this.internalData[key] = internalData;
+  }
+
+  addVersionInfo(info: VersionInfo) {
+    if(info.added) {
+      setTag(this.node, 'since', info.added);
+    }
+    if (info.deprecated ) {
+      setTag(this.node, 'deprecated', info.deprecated);
+    }
+  }
+
 
   /**
    * targetMap is a function that gives back a dictionary of members to Path (how to find the member in the ts project)
@@ -104,87 +152,6 @@ export class TSElement<TNode extends Node> extends Element {
     return this;
   }
 
-  private getDoc() {
-    if (Node.isJSDocableNode(this.node)) {
-      for (const each of this.node.getJsDocs()) {
-        if (each) { // strangely we can get undefined docs back
-          return each;
-        }
-      }
-    }
-
-    return undefined;
-  }
-
-  protected getOrCreateDoc() {
-    const doc = this.getDoc();
-    if (doc) {
-      return doc;
-    }
-
-    if (!Node.isJSDocableNode(this.node)) {
-      throw new Error('This node cannot have JS documentation');
-    }
-
-    return this.node.addJsDoc('\n');
-  }
-
-  protected hasDocTag(tagName: string) {
-    return this.getDocTag(tagName) !== undefined;
-  }
-
-  protected addDocTag(tagName: string, text?: string) {
-    this.getOrCreateDoc().addTag({ tagName: valueOf(tagName), text: valueOf(text) });
-  }
-
-  protected getDocTag(tagName: string) {
-    for (const each of this.getDoc()?.getTags() ?? []) {
-      if (each.getTagName() == tagName) {
-        return each.getText();
-      }
-    }
-    return undefined;
-  }
-
-  protected setDocTag(tagName: string, value: string | boolean | undefined) {
-    tagName = valueOf(tagName);
-    value = valueOf(value);
-
-    this.removeTag(tagName);
-    switch (value) {
-      case undefined:
-      case false:
-        break;
-      case true:
-        value = undefined;
-      // fallthrough
-      default:
-        this.addDocTag(tagName, value);
-        break;
-    }
-  }
-
-  protected removeTag(tagName: string) {
-    for (const each of this.getDoc()?.getTags() ?? []) {
-      if (each.getTagName() == tagName) {
-        each.remove();
-      }
-    }
-  }
-
-  protected getDocSummary() {
-    return this.getDoc()?.getDescription();
-  }
-
-  protected setDocSummary(value: string | undefined) {
-    if (!value && !this.getDoc()) {
-      return;
-    }
-    if( value ) {
-      return this.getOrCreateDoc().setDescription(`\n${valueOf(value) ?? ''}`);
-    }
-    return this.getOrCreateDoc().setDescription('\n');
-  }
 
   protected get project() {
     return project(this.node);

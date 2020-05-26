@@ -15,13 +15,6 @@ import { Schemas } from './schema/schemas';
 import { Folders, Identity } from './types';
 import { VersionInfo } from './version-info';
 
-export interface FileInfo {
-  filename: string;
-}
-
-export type Version = string;
-
-
 export class ApiModel {
   #project: Project = new Project({
     useInMemoryFileSystem: true,
@@ -51,11 +44,25 @@ export class ApiModel {
   #operations = this.#project.createDirectory('operations');
   #resources = this.#project.createDirectory('resources');
 
+  privateData = new Map<string,any>();
+
   get project() {
     return this.#project;
   }
+  getPrivateData(path: Path): Dictionary<any> {
+    if (isProxy(this)) {
+      return valueOf(this).getPrivateData(path);
+    }
+    const p = path.join('/');
+    let v = this.privateData.get(p);
+    if( !v ) {
+      this.privateData.set(p, v = {});
+    }
+    return v;
+  }
+  
   internalData: Dictionary<InternalData> = {};
-
+  
   metaData = new Metadata('');
 
   resources = new Array<Resource>();
