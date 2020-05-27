@@ -42,7 +42,8 @@
     "@typescript-eslint/parser": "2.28.0",
     "eslint": "6.8.0",
     "@types/semver": "~7.2.0",
-    "chalk": "~4.0.0"
+    "chalk": "~4.0.0",
+    "@testdeck/mocha": "~0.1.0"
   },
   "dependencies": {
     "ee-ts": "~1.0.1",

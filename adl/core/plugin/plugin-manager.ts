@@ -4,16 +4,40 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { exists, isDirectory, isFile, mkdir, readdir, readFile, rmdir, writeFile } from '@azure-tools/async-io';
-import { CriticalSection, Delay, Mutex, SharedLock } from '@azure-tools/tasks';
+import { Delay } from '@azure-tools/tasks';
 import { ChildProcess, spawn, SpawnOptions } from 'child_process';
 import { EventEmitter } from 'ee-ts';
-import { mkdtempSync, promises, readFileSync } from 'fs';
+import { promises, readFileSync } from 'fs';
 import { resolve as npmResolvePackage } from 'npm-package-arg';
 import { tmpdir } from 'os';
 import * as pacote from 'pacote';
 import { basename, delimiter, dirname, extname, isAbsolute, join, normalize, resolve } from 'path';
 import * as semver from 'semver';
 import { Stopwatch } from '../support/stopwatch';
+
+const copyFile = promises.copyFile;
+
+async function copy(source: string, destination: string) {
+  if (!await isDirectory(source)) {
+    throw new Error(`Source ${source} is not a folder.`);
+  }
+  if (await isFile(destination)) {
+    throw new Error(`Destination ${destination} is a file.`);
+  }
+  if (!await isDirectory(destination)) {
+    await mkdir(destination);
+  }
+  const all = (await readdir(source)).map(async each => {
+    const src = join(source, each);
+    const dest = join(destination, each);
+    if (await isFile(src)) {
+      return copyFile(src, dest);
+    }
+    return copy(src, dest);
+  });
+
+  await Promise.all(all);
+}
 
 const rename = promises.rename;
 
@@ -103,7 +127,7 @@ export class Package {
   }
 
   get id(): string {
-    return this.packageMetadata._id;
+    return this.packageMetadata._from;
   }
 
   get name(): string {
@@ -143,13 +167,13 @@ export class Extension extends Package {
    * The installed location of the package.
    */
   public get location(): string {
-    return normalize(`${this.installationPath}/${this.id.replace('/', '_')}`);
+    return normalize(`${this.installationPath}/${this.name}`);
   }
   /**
    * The path to the installed npm package (internal to 'location')
    */
   public get modulePath(): string {
-    return normalize(`${this.location}/node_modules/${this.name}`);
+    return normalize(`${this.location}`);
   }
 
   /**
@@ -280,7 +304,7 @@ function execute(command: string, cmdlineargs: Array<string>, options: MoreOptio
 }
 
 async function yarn(folder: string, cmd: string, ...args: Array<string>) {
-  const output = await execute(process.execPath, [
+  const cmdline = [
     await cli(),
     '--no-node-version-check',
     '--no-lockfile',
@@ -291,43 +315,30 @@ async function yarn(folder: string, cmd: string, ...args: Array<string>) {
     'https://registry.npmjs.org',
     cmd,
     ...args
-  ], { cwd: folder });
-
-  return output;
+  ];
+  return execute(process.execPath, cmdline, { cwd: folder });
 }
 
-async function install(directory: string, pkgName: string, pkgIdentity: string) {
+async function install(rootFolder: string, directory: string, pkgName: string, pkgIdentity: string) {
   // install uses Yarn to install the package to a temporary folder
   // and then we move the package folder to the target location
   // and the rest (dependencies) to the target/node_modules folder
-  
-  const tmpFolder =mkdtempSync('pkg');
-  const installFolder = join(tmpFolder,'install');
-  const baseFolder = directory.replace(/\\/g, '/');
-  
+  const targetFolder = directory.replace(/\\/g, '/');
+  const installFolder = join(directory, 'node_modules');
+  await mkdir(installFolder);
+
   const output = await yarn(directory,
     '--no-bin-links',
-    '--cwd', tmpFolder,
+    '--cwd', installFolder,
     '--modules-folder', installFolder,
-
+    'add',
     pkgIdentity);
-
 
   if (output.error) {
     throw Error(`Failed to install package '${pkgName}':'${pkgIdentity}' -- ${output.error}`);
   }
-  const primaryFolder = join(installFolder, pkgName);
-  const targetFolder = join(baseFolder, pkgName);
-  const depsFolder = join(primaryFolder, 'node_modules');
-
-  await mkdir(baseFolder);
-
-  // move the primary folder
-  await rename(primaryFolder, targetFolder);
-  
-  // move the dependencies
-  for( const dep of readdir() )
-  
+  const desiredPackage = join(installFolder, pkgName);
+  await copy(desiredPackage, targetFolder);
 }
 
 async function fetchPackageMetadata(spec: string): Promise<any> {
@@ -359,7 +370,7 @@ interface Events {
 export class ExtensionManager extends EventEmitter<Events> {
   stopwatch = new Stopwatch();
 
-  progress(message: string, value: number){
+  progress(message: string, value: number) {
     this.emit('progress', message, value, this.stopwatch.total);
   }
 
@@ -377,51 +388,32 @@ export class ExtensionManager extends EventEmitter<Events> {
     if (!await isDirectory(installationPath)) {
       throw new Error(`Extension folder '${installationPath}' is not a valid directory`);
     }
-    const lock = new SharedLock(installationPath);
-
-    return new ExtensionManager(installationPath, lock, await lock.acquire());
+    return new ExtensionManager(installationPath);
   }
 
-  public async dispose() {
-    await this.disposeLock();
-    this.disposeLock = async () => { /* nothing */ };
-    this.sharedLock = null;
-  }
-
-  public async reset() {
-    if (!this.sharedLock) {
-      throw new Error('Extension manager has been disposed.');
-    }
-
-    // get the exclusive lock
-    const release = await this.sharedLock.exclusive();
-
+  async reset() {
     try {
+      const flushCache = yarn(this.rootFolder, 'cache', 'clean', '--force');
       // nuke the folder
-      await rmdir(this.installationPath);
+      await rmdir(this.rootFolder);
 
-      // recreate the folder
-      await mkdir(this.installationPath);
-
-      await yarn(this.installationPath, 'cache', 'clean', '--force');
+      await flushCache;
     } catch (e) {
-      throw new Error(`Package Folder Locked ${this.installationPath}`);
-    } finally {
-      // drop the lock
-      await release();
-    }
+      throw new Error(`Reset Error ${this.rootFolder} - ${e.message}`);
+    } 
   }
 
-  private constructor(private installationPath: string, private sharedLock: SharedLock | null, private disposeLock: () => Promise<void>) {
+  private constructor(private rootFolder: string) {
     super();
   }
 
-  public async getPackageVersions(name: string): Promise<Array<string>> {
-    const versions = await yarn(process.cwd(), 'info', name, 'versions');
-    return Array<string>(JSON.parse(versions.stdout).data).sort((b, a) => semver.compare(a, b));
+  async getPackageVersions(name: string): Promise<Array<string>> {
+    const output = await yarn(process.cwd(), 'info', name, 'versions');
+    const data =<Array<string>> JSON.parse(output.stdout).data;
+    return data.sort((b, a) => semver.compare(a, b));
   }
 
-  public async findPackage(name: string, version = 'latest'): Promise<Package> {
+  async findPackage(name: string, version = 'latest'): Promise<Package> {
     if (version.endsWith('.tgz')) {
       // get the package metadata
       const pm = await fetchPackageMetadata(version);
@@ -442,10 +434,10 @@ export class ExtensionManager extends EventEmitter<Events> {
     // get the package metadata
     const pm = await fetchPackageMetadata(resolvedName);
     return new Package(resolved, pm, this);
-    
+
   }
 
-  public async getInstalledExtension(name: string, version: string): Promise<Extension | null> {
+  async getInstalledExtension(name: string, version: string): Promise<Extension | null> {
     if (!semver.validRange(version)) {
       // if they asked for something that isn't a valid range, we have to find out what version
       // the target package actually is.
@@ -462,33 +454,26 @@ export class ExtensionManager extends EventEmitter<Events> {
     return null;
   }
 
-  public async getInstalledExtensions(): Promise<Array<Extension>> {
+  async getInstalledExtensions(): Promise<Array<Extension>> {
     const results = new Array<Extension>();
 
     // iterate thru the folders.
     // the folder name should have the pattern @ORG#NAME@VER or NAME@VER
-    for (const folder of await readdir(this.installationPath)) {
-      const fullpath = join(this.installationPath, folder);
+    for (const folder of await readdir(this.rootFolder)) {
+      const fullpath = normalize(join(this.rootFolder, folder));
       if (await isDirectory(fullpath)) {
-
-        const split = /((@.+)_)?(.+)@(.+)/.exec(folder);
-        if (split) {
-          try {
-            const org = split[2];
-            const name = split[3];
-            const version = split[4];
-
-            const actualPath = org ? normalize(`${fullpath}/node_modules/${org}/${name}`) : normalize(`${fullpath}/node_modules/${name}`);
-            const pm = await fetchPackageMetadata(actualPath);
-            const ext = new Extension(new Package(null, pm, this), this.installationPath);
-            if (fullpath !== ext.location) {
-              console.trace(`WARNING: Not reporting '${fullpath}' since its package.json claims it should be at '${ext.location}' (probably symlinked once and modified later)`);
-              continue;
-            }
-            results.push(ext);
-          } catch (e) {
-            // ignore things that don't look right.
+        try {
+          // const actualPath = org ? normalize(`${fullpath}/node_modules/${org}/${name}`) : normalize(`${fullpath}/node_modules/${name}`);
+          
+          const pm = await fetchPackageMetadata(fullpath);
+          const ext = new Extension(new Package(null, pm, this), this.rootFolder);
+          if (fullpath !== ext.location) {
+            console.trace(`WARNING: Not reporting '${fullpath}' since its package.json claims it should be at '${ext.location}' (probably symlinked once and modified later)`);
+            continue;
           }
+          results.push(ext);
+        } catch (e) {
+          // ignore things that don't look right.
         }
       }
     }
@@ -498,31 +483,18 @@ export class ExtensionManager extends EventEmitter<Events> {
     return results;
   }
 
-  private static criticalSection = new CriticalSection();
+  async installPackage(pkg: Package, force?: boolean, maxWait: number = 5 * 60 * 1000): Promise<Extension> {
+    this.progress(`Starting Installation ${pkg.name}`, 0);
 
-  public async installPackage(pkg: Package, force?: boolean, maxWait: number = 5 * 60 * 1000): Promise<Extension> {
-    if (!this.sharedLock) {
-      throw new Error('Extension manager has been disposed.');
-    }
-    this.progress(`Starting Installation ${pkg.name}`,0);
-
-    // will throw if the CriticalSection lock can't be acquired.
-    // we need this so that only one extension at a time can start installing
-    // in this process (since to use NPM right, we have to do a change dir before runinng it)
-    // if we ran NPM out-of-proc, this probably wouldn't be necessary.
-    const extensionRelease = await ExtensionManager.criticalSection.acquire(maxWait);
-
-    if (!await exists(this.installationPath)) {
-      await mkdir(this.installationPath);
+    if (!await exists(this.rootFolder)) {
+      await mkdir(this.rootFolder);
     }
 
-    const extension = new Extension(pkg, this.installationPath);
-    const release = await new Mutex(extension.location).acquire(maxWait / 2);
-    const cwd = process.cwd();
+    const extension = new Extension(pkg, this.rootFolder);
 
     try {
       // change directory
-      process.chdir(this.installationPath);
+      process.chdir(this.rootFolder);
       this.progress(`Folder creation ${pkg.name}`, 25);
 
 
@@ -536,7 +508,7 @@ export class ExtensionManager extends EventEmitter<Events> {
         // force removal first
         try {
           this.message(`Removing existing extension ${extension.location}`);
-          await Delay(100);
+          await Delay(10);
           await rmdir(extension.location);
         } catch (e) {
           // no worries.
@@ -549,11 +521,7 @@ export class ExtensionManager extends EventEmitter<Events> {
       // run YARN ADD for the package.
       this.message(`Installing ${pkg.name}, ${pkg.version}`);
 
-      const results = install(extension.location, pkg.name, pkg.packageMetadata._resolved);
-
-      await extensionRelease();
-
-      await results;
+      await install(this.rootFolder, extension.location, pkg.name, pkg.packageMetadata._resolved);
       this.message(`Package Install completed ${pkg.name}, ${pkg.version}`);
 
       return extension;
@@ -565,26 +533,31 @@ export class ExtensionManager extends EventEmitter<Events> {
       // clean up the attempted install directory
       if (await isDirectory(extension.location)) {
         this.message(`Cleaning up failed installation: ${extension.location}`);
-        await Delay(100);
+        await Delay(10);
         await rmdir(extension.location);
       }
 
       throw new Error(`Package Installation Error ${pkg.name}:${pkg.version} -- ${e.message}\n${e.stack}`);
     } finally {
-      this.progress('Completed',100);
-      await Promise.all([extensionRelease(), release()]);
+      this.progress('Completed', 100);
     }
   }
 
-  public async removeExtension(extension: Extension): Promise<void> {
+  async removeExtension(extension: Extension): Promise<void> {
     if (await isDirectory(extension.location)) {
-      const release = await new Mutex(extension.location).acquire();
       await rmdir(extension.location);
-      await release();
     }
   }
 
-  public async start(extension: Extension, enableDebugger = false): Promise<ChildProcess> {
+  /**
+   * Loads an extension in-proc using node's 'require' 
+   * @param extension the extension to load (in-proc)
+   */
+  load(extension: Extension ): any {
+    return require(extension.modulePath);
+  }
+
+  async start(extension: Extension, enableDebugger = false): Promise<ChildProcess> {
     const PathVar = getPathVariableName();
     if (!extension.definition.scripts) {
       throw new Error(`Extension Missing Start Command: ${extension}`);
@@ -602,7 +575,7 @@ export class ExtensionManager extends EventEmitter<Events> {
       throw new Error(`Extension Missing Start Command: ${extension}`);
     }
     // add each engine into the front of the path.
-    const env = {...process.env};
+    const env = { ...process.env };
 
     // add potential .bin folders (depends on platform and npm version)
     env[PathVar] = `${join(extension.modulePath, 'node_modules', '.bin')}${delimiter}${env[PathVar]}`;
