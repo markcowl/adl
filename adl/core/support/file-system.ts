@@ -3,9 +3,6 @@ import { EventEmitter } from 'ee-ts';
 import { relative, resolve } from 'path';
 import { Stopwatch } from './stopwatch';
 
-
-export type MessageEvent = (message: string, offendingNode: any) => void;
-
 interface Events {
   warning(message: string, offendingNode: any, msec: number): void;
   error(message: string, offendingNode: any, msec: number): void;
