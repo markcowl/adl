@@ -24,31 +24,22 @@
   - [Nelson] - initial integrated linting support
 
 
-## Nelson Timeline [initial swag]:
+## Nelson Timeline:
 
-Nelson's project is going to be improving the authoring and reviewing experience in [langauge-server-compatible] editors (ie, VSCode) 
+Improve the authoring and reviewing experience of ADL by designing and developing:
+- Support for creating and executing linting rules and auto-fixers.
+- Visual Studio Code extension that provides diagnostics, navigation, refactoring and intellisense.
 
-- add support for creating 'linting' rules that can be applied to ADL 
-  (if possible, it'd be nice to be able to get that based on the AM, so any input)
-- extend the design of the plugin support so that linting rules come with the typings/extension library
-- create a vscode extension that can offer by enhanced intellisense around ADL constructs (ie,context-aware completion ).
-
-
-### Jun 1 
-  - Investigation:
-    - experiment with ESLint framework and vscode language service
-    - determine if ADL should provide it's own linter or extend ESLint (does ESLint support project-wide linting)
-    - identify feaures for language service (navigation, intellisense, etc)
-    - Design ADL linting service, including pluggability of additional rules [Azure,ARM,Etc]
-### Jun 15
-  - Implement a representative set of linting rules, encapsulated in an ADL extension
-### Jun 29
-  - initial integrated linting support
-### Jul 6
-  - Prototype VSCode language extension 
-### Jul 20 
-### Aug 3 (Done)
-  - Full integrated linting (api-wide)
-  - Extension for Authoring with VSCode, with enhanced navigation, intellisense, etc.
-
- 
+### June 5th. Investigation
+- Experiment with Visual Studio Code language server.
+- Identify language server features.
+- Design ADL linting service, rules and extensibility (e.g. ARM, Azure rules) .
+### June 19th. Engine Internals
+- ADL basic linting engine internal functional.
+- Implement a set of 20 linting rules encapsulated in ADL extension.
+### June 26th. Implement a Github template repository for rules creation.
+### July 10th. VS Code extension support for ADL rule engine.  At this point it should show errors inline and do fixes.
+### July 24th. Advanced features (e.g. navigation, refactoring, intellisense)
+### August 7th.
+- Fully integrated linting (i.e. API Wide)
+- Extension complete with navigation, intellisense, error checking and refactoring.
