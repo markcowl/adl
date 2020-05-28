@@ -24,7 +24,7 @@ export function getLastDoc(target: Node | JSDocs | JSDoc): JSDoc{
 
 export function *getTags(target: Node|JSDocs|JSDoc, tagName? : string ): Iterable<JSDocTag> {
   for( const each of getDocs(target) )  {
-    yield * (tagName? each.getTags().filter( tag => tag.getTagName()) : each.getTags());
+    yield * (tagName? each.getTags().filter( tag => tag.getTagName() == tagName) : each.getTags());
   }
 }
 
@@ -42,7 +42,7 @@ export function* getTagValues(target: Node | JSDocs | JSDoc, tagName? : string):
 }
 
 export function hasTag(target: Node | JSDocs | JSDoc, tagName: string ) {
-  for( const each of getTags(target) ) {
+  for( const each of getTags(target, tagName) ) {
     return true;
   }
   return false;
