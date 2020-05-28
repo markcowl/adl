@@ -1,10 +1,22 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description Error Field contract.
+ * @since 2019-12-01
+ */
 export interface ErrorFieldContract {
-    /** @since 2019-12-01 */
+    /**
+     * @description Property level error code.
+     * @since 2019-12-01
+     */
     code: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Human-readable representation of property-level error.
+     * @since 2019-12-01
+     */
     message: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Property name.
+     * @since 2019-12-01
+     */
     target: string;
 }

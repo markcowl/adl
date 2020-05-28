@@ -1,5 +1,8 @@
 import { ProblemFields } from './ProblemFields';
-/** @since 2.3 */
+/**
+ * @description A problem that indicates you are not allowed to see a particular Tweet, User, etc.
+ * @since 2.3
+ */
 export interface ResourceUnauthorizedProblem extends ProblemFields {
     /**
      * @since 2.3

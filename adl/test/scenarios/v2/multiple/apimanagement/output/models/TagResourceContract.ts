@@ -2,14 +2,29 @@ import { TagTagResourceContractProperties } from './TagTagResourceContractProper
 import { ApiTagResourceContractProperties } from './ApiTagResourceContractProperties';
 import { OperationTagResourceContractProperties } from './OperationTagResourceContractProperties';
 import { ProductTagResourceContractProperties } from './ProductTagResourceContractProperties';
-/** @since 2019-12-01 */
+/**
+ * @description TagResource contract properties.
+ * @since 2019-12-01
+ */
 export interface TagResourceContract {
-    /** @since 2019-12-01 */
+    /**
+     * @description Tag associated with the resource.
+     * @since 2019-12-01
+     */
     tag?: TagTagResourceContractProperties;
-    /** @since 2019-12-01 */
+    /**
+     * @description Api associated with the tag.
+     * @since 2019-12-01
+     */
     api: ApiTagResourceContractProperties;
-    /** @since 2019-12-01 */
+    /**
+     * @description Operation associated with the tag.
+     * @since 2019-12-01
+     */
     operation: OperationTagResourceContractProperties;
-    /** @since 2019-12-01 */
+    /**
+     * @description Product associated with the tag.
+     * @since 2019-12-01
+     */
     product: ProductTagResourceContractProperties;
 }

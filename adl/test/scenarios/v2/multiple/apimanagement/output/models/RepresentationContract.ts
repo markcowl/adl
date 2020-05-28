@@ -1,14 +1,32 @@
 import { ParameterContract } from './ParameterContract';
-/** @since 2019-12-01 */
+/**
+ * @description Operation request/response representation details.
+ * @since 2019-12-01
+ */
 export interface RepresentationContract {
-    /** @since 2019-12-01 */
+    /**
+     * @description Specifies a registered or custom content type for this representation, e.g. application/xml.
+     * @since 2019-12-01
+     */
     contentType?: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description An example of the representation.
+     * @since 2019-12-01
+     */
     sample: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Schema identifier. Applicable only if 'contentType' value is neither 'application/x-www-form-urlencoded' nor 'multipart/form-data'.
+     * @since 2019-12-01
+     */
     schemaId: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Type name defined by the schema. Applicable only if 'contentType' value is neither 'application/x-www-form-urlencoded' nor 'multipart/form-data'.
+     * @since 2019-12-01
+     */
     typeName: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Collection of form parameters. Required if 'contentType' value is either 'application/x-www-form-urlencoded' or 'multipart/form-data'..
+     * @since 2019-12-01
+     */
     formParameters: Array<ParameterContract>;
 }

@@ -1,5 +1,9 @@
 
-/** @since 2019-12-01 */
+/**
+ * @extensible
+ * @description The verbosity level applied to traces emitted by trace policies.
+ * @since 2019-12-01
+ */
 export enum Verbosity {
     /** All the traces emitted by trace policies will be sent to the logger attached to this diagnostic instance. */
     verbose = 'verbose',

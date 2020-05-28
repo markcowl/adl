@@ -1,5 +1,8 @@
 
-/** @since 2019-09-01 */
+/**
+ * @extensible
+ * @since 2019-09-01
+ */
 export enum KeyPermissions {
     /**
      *

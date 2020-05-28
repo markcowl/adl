@@ -1,5 +1,9 @@
 
-/** @since 2019-12-01 */
+/**
+ * @extensible
+ * @description Notification Name Identifier.
+ * @since 2019-12-01
+ */
 export enum NotificationName {
     /** The following email recipients and users will receive email notifications about subscription requests for API products requiring approval. */
     RequestPublisherNotificationMessage = 'RequestPublisherNotificationMessage',

@@ -1,6 +1,12 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description Get User Token response details.
+ * @since 2019-12-01
+ */
 export interface UserTokenResult {
-    /** @since 2019-12-01 */
+    /**
+     * @description Shared Access Authorization token for the User.
+     * @since 2019-12-01
+     */
     value: string;
 }

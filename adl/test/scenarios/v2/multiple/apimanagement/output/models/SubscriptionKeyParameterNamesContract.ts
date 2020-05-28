@@ -1,8 +1,17 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description Subscription key parameter names details.
+ * @since 2019-12-01
+ */
 export interface SubscriptionKeyParameterNamesContract {
-    /** @since 2019-12-01 */
+    /**
+     * @description Subscription key header name.
+     * @since 2019-12-01
+     */
     header: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Subscription key query string parameter name.
+     * @since 2019-12-01
+     */
     query: string;
 }

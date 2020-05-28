@@ -1,10 +1,22 @@
 import { LoggerContract } from './LoggerContract';
-/** @since 2019-12-01 */
+/**
+ * @description Paged Logger list representation.
+ * @since 2019-12-01
+ */
 export interface LoggerCollection {
-    /** @since 2019-12-01 */
+    /**
+     * @description Logger values.
+     * @since 2019-12-01
+     */
     value: Array<LoggerContract>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Total record count number across all pages.
+     * @since 2019-12-01
+     */
     count: int64;
-    /** @since 2019-12-01 */
+    /**
+     * @description Next page link if any.
+     * @since 2019-12-01
+     */
     nextLink: string;
 }

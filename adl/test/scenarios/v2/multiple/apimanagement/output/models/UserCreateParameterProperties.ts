@@ -1,16 +1,37 @@
 import { UserEntityBaseParameters } from './UserEntityBaseParameters';
-/** @since 2019-12-01 */
+/**
+ * @description Parameters supplied to the Create User operation.
+ * @since 2019-12-01
+ */
 export interface UserCreateParameterProperties extends UserEntityBaseParameters {
-    /** @since 2019-12-01 */
+    /**
+     * @description Email address. Must not be empty and must be unique within the service instance.
+     * @since 2019-12-01
+     */
     email?: string & MaxLength<254> & MinLength<1>;
-    /** @since 2019-12-01 */
+    /**
+     * @description First name.
+     * @since 2019-12-01
+     */
     firstName?: string & MaxLength<100> & MinLength<1>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Last name.
+     * @since 2019-12-01
+     */
     lastName?: string & MaxLength<100> & MinLength<1>;
-    /** @since 2019-12-01 */
+    /**
+     * @description User Password. If no value is provided, a default password is generated.
+     * @since 2019-12-01
+     */
     password: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Determines the type of application which send the create user request. Default is old publisher portal.
+     * @since 2019-12-01
+     */
     appType: AppType;
-    /** @since 2019-12-01 */
+    /**
+     * @description Determines the type of confirmation e-mail that will be sent to the newly created user.
+     * @since 2019-12-01
+     */
     confirmation: Confirmation;
 }

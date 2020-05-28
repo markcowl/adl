@@ -1,6 +1,12 @@
 import { GroupUpdateParametersProperties } from './GroupUpdateParametersProperties';
-/** @since 2019-12-01 */
+/**
+ * @description Parameters supplied to the Update Group operation.
+ * @since 2019-12-01
+ */
 export interface GroupUpdateParameters {
-    /** @since 2019-12-01 */
+    /**
+     * @description Group entity update contract properties.
+     * @since 2019-12-01
+     */
     properties: GroupUpdateParametersProperties;
 }

@@ -1,20 +1,47 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description Identity Provider Base Parameter Properties.
+ * @since 2019-12-01
+ */
 export interface IdentityProviderBaseParameters {
-    /** @since 2019-12-01 */
+    /**
+     * @description Identity Provider Type identifier.
+     * @since 2019-12-01
+     */
     type: IdentityProviderType;
-    /** @since 2019-12-01 */
+    /**
+     * @description The TenantId to use instead of Common when logging into Active Directory
+     * @since 2019-12-01
+     */
     signinTenant: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description List of Allowed Tenants when configuring Azure Active Directory login.
+     * @since 2019-12-01
+     */
     allowedTenants: Array<string> & MaximumElements<32>;
-    /** @since 2019-12-01 */
+    /**
+     * @description OpenID Connect discovery endpoint hostname for AAD or AAD B2C.
+     * @since 2019-12-01
+     */
     authority: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Signup Policy Name. Only applies to AAD B2C Identity Provider.
+     * @since 2019-12-01
+     */
     signupPolicyName: string & MinLength<1>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Signin Policy Name. Only applies to AAD B2C Identity Provider.
+     * @since 2019-12-01
+     */
     signinPolicyName: string & MinLength<1>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Profile Editing Policy Name. Only applies to AAD B2C Identity Provider.
+     * @since 2019-12-01
+     */
     profileEditingPolicyName: string & MinLength<1>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Password Reset Policy Name. Only applies to AAD B2C Identity Provider.
+     * @since 2019-12-01
+     */
     passwordResetPolicyName: string & MinLength<1>;
 }

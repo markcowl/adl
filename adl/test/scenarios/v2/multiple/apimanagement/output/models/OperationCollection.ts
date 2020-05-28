@@ -1,8 +1,17 @@
 import { OperationContract } from './OperationContract';
-/** @since 2019-12-01 */
+/**
+ * @description Paged Operation list representation.
+ * @since 2019-12-01
+ */
 export interface OperationCollection {
-    /** @since 2019-12-01 */
+    /**
+     * @description Page values.
+     * @since 2019-12-01
+     */
     readonly value: Array<OperationContract> & ;
-    /** @since 2019-12-01 */
+    /**
+     * @description Next page link if any.
+     * @since 2019-12-01
+     */
     readonly nextLink: string & ;
 }

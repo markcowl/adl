@@ -1,8 +1,17 @@
 import { TermsOfServiceProperties } from './TermsOfServiceProperties';
-/** @since 2019-12-01 */
+/**
+ * @description Sign-up settings contract properties.
+ * @since 2019-12-01
+ */
 export interface PortalSignupSettingsProperties {
-    /** @since 2019-12-01 */
+    /**
+     * @description Allow users to sign up on a developer portal.
+     * @since 2019-12-01
+     */
     enabled: boolean;
-    /** @since 2019-12-01 */
+    /**
+     * @description Terms of service contract properties.
+     * @since 2019-12-01
+     */
     termsOfService: TermsOfServiceProperties;
 }

@@ -8,7 +8,10 @@ export interface repo {
      * @since v3
      */
     clone_url: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -98,7 +101,10 @@ export interface repo {
      * @since v3
      */
     private: boolean;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     pushed_at: string;
     /**
      * @since v3
@@ -116,7 +122,10 @@ export interface repo {
      * @since v3
      */
     svn_url: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3

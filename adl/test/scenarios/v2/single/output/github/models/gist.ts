@@ -11,7 +11,10 @@ export interface gist {
      * @since v3
      */
     comments_url: string;
-    /** @since v3 */
+    /**
+     * @description Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -43,7 +46,10 @@ export interface gist {
      * @since v3
      */
     forks: Array<{
-        /** @since v3 */
+        /**
+         * @description Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
+         * @since v3
+         */
         created_at: string;
         /**
          * @since v3
@@ -83,7 +89,10 @@ export interface gist {
              */
             total: int64;
         };
-        /** @since v3 */
+        /**
+         * @description Timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
+         * @since v3
+         */
         committed_at: string;
         /**
          * @since v3

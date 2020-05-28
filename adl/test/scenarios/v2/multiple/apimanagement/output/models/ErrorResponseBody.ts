@@ -1,10 +1,22 @@
 import { ErrorFieldContract } from './ErrorFieldContract';
-/** @since 2019-12-01 */
+/**
+ * @description Error Body contract.
+ * @since 2019-12-01
+ */
 export interface ErrorResponseBody {
-    /** @since 2019-12-01 */
+    /**
+     * @description Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response.
+     * @since 2019-12-01
+     */
     code: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Human-readable representation of the error.
+     * @since 2019-12-01
+     */
     message: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description The list of invalid fields send in request, in case of validation error.
+     * @since 2019-12-01
+     */
     details: Array<ErrorFieldContract>;
 }

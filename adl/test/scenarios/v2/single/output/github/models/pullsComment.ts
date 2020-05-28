@@ -43,7 +43,10 @@ export interface pullsComment {
      * @since v3
      */
     commit_id: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -57,7 +60,10 @@ export interface pullsComment {
      * @since v3
      */
     position: int64;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3

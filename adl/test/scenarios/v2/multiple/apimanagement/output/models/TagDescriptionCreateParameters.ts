@@ -1,6 +1,12 @@
 import { TagDescriptionBaseProperties } from './TagDescriptionBaseProperties';
-/** @since 2019-12-01 */
+/**
+ * @description Parameters supplied to the Create TagDescription operation.
+ * @since 2019-12-01
+ */
 export interface TagDescriptionCreateParameters {
-    /** @since 2019-12-01 */
+    /**
+     * @description Properties supplied to Create TagDescription operation.
+     * @since 2019-12-01
+     */
     properties: TagDescriptionBaseProperties;
 }

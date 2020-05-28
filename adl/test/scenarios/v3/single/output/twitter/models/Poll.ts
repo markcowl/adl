@@ -1,5 +1,8 @@
 import { PollOption } from './PollOption';
-/** @since 2.3 */
+/**
+ * @description Represent a Poll attached to a Tweet
+ * @since 2.3
+ */
 export interface Poll {
     /**
      * @since 2.3

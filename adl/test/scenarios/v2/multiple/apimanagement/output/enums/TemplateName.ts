@@ -1,5 +1,9 @@
 
-/** @since 2019-12-01 */
+/**
+ * @extensible
+ * @description Email Template Name Identifier.
+ * @since 2019-12-01
+ */
 export enum TemplateName {
     /**
      *

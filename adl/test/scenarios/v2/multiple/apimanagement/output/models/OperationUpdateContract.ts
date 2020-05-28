@@ -1,6 +1,12 @@
 import { OperationUpdateContractProperties } from './OperationUpdateContractProperties';
-/** @since 2019-12-01 */
+/**
+ * @description Api Operation Update Contract details.
+ * @since 2019-12-01
+ */
 export interface OperationUpdateContract {
-    /** @since 2019-12-01 */
+    /**
+     * @description Properties of the API Operation entity that can be updated.
+     * @since 2019-12-01
+     */
     properties: OperationUpdateContractProperties;
 }

@@ -1,12 +1,27 @@
 import { UserEntityBaseParameters } from './UserEntityBaseParameters';
-/** @since 2019-12-01 */
+/**
+ * @description Parameters supplied to the Update User operation.
+ * @since 2019-12-01
+ */
 export interface UserUpdateParametersProperties extends UserEntityBaseParameters {
-    /** @since 2019-12-01 */
+    /**
+     * @description Email address. Must not be empty and must be unique within the service instance.
+     * @since 2019-12-01
+     */
     email: string & MaxLength<254> & MinLength<1>;
-    /** @since 2019-12-01 */
+    /**
+     * @description User Password.
+     * @since 2019-12-01
+     */
     password: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description First name.
+     * @since 2019-12-01
+     */
     firstName: string & MaxLength<100> & MinLength<1>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Last name.
+     * @since 2019-12-01
+     */
     lastName: string & MaxLength<100> & MinLength<1>;
 }

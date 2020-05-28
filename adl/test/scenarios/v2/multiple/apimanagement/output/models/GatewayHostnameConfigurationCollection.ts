@@ -1,8 +1,17 @@
 import { GatewayHostnameConfigurationContract } from './GatewayHostnameConfigurationContract';
-/** @since 2019-12-01 */
+/**
+ * @description Paged Gateway hostname configuration list representation.
+ * @since 2019-12-01
+ */
 export interface GatewayHostnameConfigurationCollection {
-    /** @since 2019-12-01 */
+    /**
+     * @description Page values.
+     * @since 2019-12-01
+     */
     readonly value: Array<GatewayHostnameConfigurationContract> & ;
-    /** @since 2019-12-01 */
+    /**
+     * @description Next page link if any.
+     * @since 2019-12-01
+     */
     readonly nextLink: string & ;
 }

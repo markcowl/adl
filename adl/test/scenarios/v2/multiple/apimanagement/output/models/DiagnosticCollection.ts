@@ -1,8 +1,17 @@
 import { DiagnosticContract } from './DiagnosticContract';
-/** @since 2019-12-01 */
+/**
+ * @description Paged Diagnostic list representation.
+ * @since 2019-12-01
+ */
 export interface DiagnosticCollection {
-    /** @since 2019-12-01 */
+    /**
+     * @description Page values.
+     * @since 2019-12-01
+     */
     value: Array<DiagnosticContract>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Next page link if any.
+     * @since 2019-12-01
+     */
     nextLink: string;
 }

@@ -1,10 +1,22 @@
 
-/** @since 2.3 */
+/**
+ * @description Indicates withholding details for [withheld content](https://help.twitter.com/en/rules-and-policies/tweet-withheld-by-country).
+ * @since 2.3
+ */
 export interface TweetWithheld {
-    /** @since 2.3 */
+    /**
+     * @description Indicates if the content is being withheld for on the basis of copyright infringement.
+     * @since 2.3
+     */
     copyright?: boolean;
-    /** @since 2.3 */
+    /**
+     * @description Provides a list of countries where this content is not available.
+     * @since 2.3
+     */
     country_codes?: Array<string & RegularExpression<"^[A-Z]{2}$">> & MinimumElements<1> & UniqueElements;
-    /** @since 2.3 */
+    /**
+     * @description Indicates whether the content being withheld is the `tweet` or a `user`.
+     * @since 2.3
+     */
     scope: "tweet" | "user";
 }

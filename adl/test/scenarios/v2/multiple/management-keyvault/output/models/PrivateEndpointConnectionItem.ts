@@ -1,6 +1,12 @@
 import { PrivateEndpointConnectionProperties } from './PrivateEndpointConnectionProperties';
-/** @since 2019-09-01 */
+/**
+ * @description Private endpoint connection item.
+ * @since 2019-09-01
+ */
 export interface PrivateEndpointConnectionItem {
-    /** @since 2019-09-01 */
+    /**
+     * @description Private endpoint connection properties.
+     * @since 2019-09-01
+     */
     properties: PrivateEndpointConnectionProperties;
 }

@@ -1,14 +1,32 @@
 import { SecretAttributes } from './SecretAttributes';
-/** @since 2019-09-01 */
+/**
+ * @description Properties of the secret
+ * @since 2019-09-01
+ */
 export interface SecretProperties {
-    /** @since 2019-09-01 */
+    /**
+     * @description The value of the secret. NOTE: 'value' will never be returned from the service, as APIs using this model are is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets.
+     * @since 2019-09-01
+     */
     value: string;
-    /** @since 2019-09-01 */
+    /**
+     * @description The content type of the secret.
+     * @since 2019-09-01
+     */
     contentType: string;
-    /** @since 2019-09-01 */
+    /**
+     * @description The attributes of the secret.
+     * @since 2019-09-01
+     */
     attributes: SecretAttributes;
-    /** @since 2019-09-01 */
+    /**
+     * @description The URI to retrieve the current version of the secret.
+     * @since 2019-09-01
+     */
     readonly secretUri: string & ;
-    /** @since 2019-09-01 */
+    /**
+     * @description The URI to retrieve the specific version of the secret.
+     * @since 2019-09-01
+     */
     readonly secretUriWithVersion: string & ;
 }

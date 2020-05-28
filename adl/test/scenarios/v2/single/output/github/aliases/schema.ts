@@ -302,7 +302,10 @@ export type schema = Array<{
      * @since v3
      */
     body: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601.
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -333,13 +336,19 @@ export type schema = Array<{
      * @since v3
      */
     body: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     closed_at: string;
     /**
      * @since v3
      */
     comments: int64;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -370,7 +379,10 @@ export type schema = Array<{
          * @since v3
          */
         closed_issues: int64;
-        /** @since v3 */
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         * @since v3
+         */
         created_at: string;
         /**
          * @since v3
@@ -380,7 +392,10 @@ export type schema = Array<{
          * @since v3
          */
         description: string;
-        /** @since v3 */
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         * @since v3
+         */
         due_on: string;
         /**
          * @since v3
@@ -432,7 +447,10 @@ export type schema = Array<{
      * @since v3
      */
     title: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3
@@ -469,13 +487,19 @@ export type schema = Array<{
      * @since v3
      */
     body: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     closed_at: string;
     /**
      * @since v3
      */
     comments: int64;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -506,7 +530,10 @@ export type schema = Array<{
          * @since v3
          */
         closed_issues: int64;
-        /** @since v3 */
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         * @since v3
+         */
         created_at: string;
         /**
          * @since v3
@@ -516,7 +543,10 @@ export type schema = Array<{
          * @since v3
          */
         description: string;
-        /** @since v3 */
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         * @since v3
+         */
         due_on: string;
         /**
          * @since v3
@@ -568,7 +598,10 @@ export type schema = Array<{
      * @since v3
      */
     title: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3
@@ -635,7 +668,10 @@ export type schema = Array<{
      * @since v3
      */
     commit_id: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -657,7 +693,10 @@ export type schema = Array<{
      * @since v3
      */
     position: int64;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3
@@ -684,7 +723,10 @@ export type schema = Array<{
          * @since v3
          */
         author: {
-            /** @since v3 */
+            /**
+             * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+             * @since v3
+             */
             date: string;
             /**
              * @since v3
@@ -699,7 +741,10 @@ export type schema = Array<{
          * @since v3
          */
         committer: {
-            /** @since v3 */
+            /**
+             * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+             * @since v3
+             */
             date: string;
             /**
              * @since v3
@@ -827,7 +872,10 @@ export type schema = Array<{
      * @since v3
      */
     commit_id: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -849,7 +897,10 @@ export type schema = Array<{
      * @since v3
      */
     position: int64;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3
@@ -1016,7 +1067,10 @@ export type schema = Array<{
          */
         url: string;
     };
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -1030,7 +1084,10 @@ export type schema = Array<{
      * @since v3
      */
     name: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3
@@ -1056,7 +1113,10 @@ export type schema = Array<{
          */
         url: string;
     };
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -1070,7 +1130,10 @@ export type schema = Array<{
      * @since v3
      */
     name: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3
@@ -1095,7 +1158,10 @@ export type schema = Array<{
          */
         url: string;
     };
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -1109,7 +1175,10 @@ export type schema = Array<{
      * @since v3
      */
     name: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3
@@ -1135,7 +1204,10 @@ export type schema = Array<{
          */
         url: string;
     };
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -1149,7 +1221,10 @@ export type schema = Array<{
      * @since v3
      */
     name: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3
@@ -1165,13 +1240,19 @@ export type schema = Array<{
      * @since v3
      */
     body: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     closed_at: string;
     /**
      * @since v3
      */
     comments: int64;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -1202,7 +1283,10 @@ export type schema = Array<{
          * @since v3
          */
         closed_issues: int64;
-        /** @since v3 */
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         * @since v3
+         */
         created_at: string;
         /**
          * @since v3
@@ -1212,7 +1296,10 @@ export type schema = Array<{
          * @since v3
          */
         description: string;
-        /** @since v3 */
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         * @since v3
+         */
         due_on: string;
         /**
          * @since v3
@@ -1264,7 +1351,10 @@ export type schema = Array<{
      * @since v3
      */
     title: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3
@@ -1318,7 +1408,10 @@ export type schema = Array<{
      * @since v3
      */
     commit_id: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -1332,7 +1425,10 @@ export type schema = Array<{
      * @since v3
      */
     position: int64;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3
@@ -1392,7 +1488,10 @@ export type schema = Array<{
      * @since v3
      */
     commit_id: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -1406,7 +1505,10 @@ export type schema = Array<{
      * @since v3
      */
     position: int64;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3
@@ -1597,9 +1699,15 @@ export type schema = Array<{
      * @since v3
      */
     body: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     closed_at: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -1659,7 +1767,10 @@ export type schema = Array<{
      * @since v3
      */
     issue_url: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     merged_at: string;
     /**
      * @since v3
@@ -1677,7 +1788,10 @@ export type schema = Array<{
      * @since v3
      */
     title: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3
@@ -1802,9 +1916,15 @@ export type schema = Array<{
      * @since v3
      */
     body: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     closed_at: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -1864,7 +1984,10 @@ export type schema = Array<{
      * @since v3
      */
     issue_url: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     merged_at: string;
     /**
      * @since v3
@@ -1882,7 +2005,10 @@ export type schema = Array<{
      * @since v3
      */
     title: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3
@@ -1955,7 +2081,10 @@ export type schema = Array<{
      * @since v3
      */
     commit_id: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -1969,7 +2098,10 @@ export type schema = Array<{
      * @since v3
      */
     position: int64;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3
@@ -2002,7 +2134,10 @@ export type schema = Array<{
          * @since v3
          */
         author: {
-            /** @since v3 */
+            /**
+             * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+             * @since v3
+             */
             date: string;
             /**
              * @since v3
@@ -2017,7 +2152,10 @@ export type schema = Array<{
          * @since v3
          */
         committer: {
-            /** @since v3 */
+            /**
+             * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+             * @since v3
+             */
             date: string;
             /**
              * @since v3
@@ -2168,9 +2306,15 @@ export type schema = Array<{
      * @since v3
      */
     body: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     closed_at: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -2230,7 +2374,10 @@ export type schema = Array<{
      * @since v3
      */
     issue_url: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     merged_at: string;
     /**
      * @since v3
@@ -2248,7 +2395,10 @@ export type schema = Array<{
      * @since v3
      */
     title: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3
@@ -2450,26 +2600,44 @@ export type schema = Array<{
          */
         url: string;
     };
-    /** @since v3 */
+    /**
+     * @description The Total number of commits authored by the contributor.
+     * @since v3
+     */
     total: int64;
     /**
      * @since v3
      */
     weeks: Array<{
-        /** @since v3 */
+        /**
+         * @description Number of additions.
+         * @since v3
+         */
         a: int64;
-        /** @since v3 */
+        /**
+         * @description Number of commits.
+         * @since v3
+         */
         c: int64;
-        /** @since v3 */
+        /**
+         * @description Number of deletions.
+         * @since v3
+         */
         d: int64;
-        /** @since v3 */
+        /**
+         * @description Start of the week.
+         * @since v3
+         */
         w: string;
     }>;
 }>;
 export type schema = participationStats;
 export type schema = Array<int64>;
 export type schema = Array<{
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -2512,7 +2680,10 @@ export type schema = Array<{
      * @since v3
      */
     target_url: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3
@@ -2521,7 +2692,10 @@ export type schema = Array<{
 }>;
 export type schema = headBranch;
 export type schema = Array<{
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -2564,7 +2738,10 @@ export type schema = Array<{
      * @since v3
      */
     target_url: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3
@@ -2622,13 +2799,19 @@ export type schema = Array<{
      * @since v3
      */
     body: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     closed_at: string;
     /**
      * @since v3
      */
     comments: int64;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -2659,7 +2842,10 @@ export type schema = Array<{
          * @since v3
          */
         closed_issues: int64;
-        /** @since v3 */
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         * @since v3
+         */
         created_at: string;
         /**
          * @since v3
@@ -2669,7 +2855,10 @@ export type schema = Array<{
          * @since v3
          */
         description: string;
-        /** @since v3 */
+        /**
+         * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+         * @since v3
+         */
         due_on: string;
         /**
          * @since v3
@@ -2721,7 +2910,10 @@ export type schema = Array<{
      * @since v3
      */
     title: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3

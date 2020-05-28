@@ -1,6 +1,12 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description Client or app secret used in IdentityProviders, Aad, OpenID or OAuth.
+ * @since 2019-12-01
+ */
 export interface PropertyValueContract {
-    /** @since 2019-12-01 */
+    /**
+     * @description This is secret value of the NamedValue entity.
+     * @since 2019-12-01
+     */
     value: string;
 }

@@ -1,10 +1,22 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description Region profile.
+ * @since 2019-12-01
+ */
 export interface RegionContract {
-    /** @since 2019-12-01 */
+    /**
+     * @description Region name.
+     * @since 2019-12-01
+     */
     readonly name: string & ;
-    /** @since 2019-12-01 */
+    /**
+     * @description whether Region is the master region.
+     * @since 2019-12-01
+     */
     isMasterRegion: boolean;
-    /** @since 2019-12-01 */
+    /**
+     * @description whether Region is deleted.
+     * @since 2019-12-01
+     */
     isDeleted: boolean;
 }

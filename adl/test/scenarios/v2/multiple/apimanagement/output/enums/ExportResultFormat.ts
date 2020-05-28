@@ -1,5 +1,9 @@
 
-/** @since 2019-12-01 */
+/**
+ * @extensible
+ * @description Format in which the Api Details are exported to the Storage Blob with Sas Key valid for 5 minutes.
+ * @since 2019-12-01
+ */
 export enum ExportResultFormat {
     /** The Api Definition is exported in OpenApi Specification 2.0 format to the Storage Blob. */
     Swagger = 'swagger-link-json',

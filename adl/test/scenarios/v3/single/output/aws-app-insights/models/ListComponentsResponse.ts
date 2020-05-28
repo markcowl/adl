@@ -3,8 +3,14 @@ import { ApplicationComponent } from './ApplicationComponent';
  * @since 2018-11-25
  */
 export interface ListComponentsResponse {
-    /** @since 2018-11-25 */
+    /**
+     * @description The list of application components.
+     * @since 2018-11-25
+     */
     ApplicationComponentList: Array<ApplicationComponent>;
-    /** @since 2018-11-25 */
+    /**
+     * @description The token to request the next page of results.
+     * @since 2018-11-25
+     */
     NextToken: string;
 }

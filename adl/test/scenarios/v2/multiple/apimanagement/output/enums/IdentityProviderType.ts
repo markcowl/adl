@@ -1,5 +1,10 @@
 
-/** @since 2019-12-01 */
+/**
+ * @extensible
+ * @description Identity Provider Type identifier.
+ * @todo temporary-reuse-marker
+ * @since 2019-12-01
+ */
 export enum IdentityProviderType {
     /** Facebook as Identity provider. */
     facebook = 'facebook',

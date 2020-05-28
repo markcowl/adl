@@ -1,8 +1,17 @@
 import { BodyDiagnosticSettings } from './BodyDiagnosticSettings';
-/** @since 2019-12-01 */
+/**
+ * @description Http message diagnostic settings.
+ * @since 2019-12-01
+ */
 export interface HttpMessageDiagnostic {
-    /** @since 2019-12-01 */
+    /**
+     * @description Array of HTTP Headers to log.
+     * @since 2019-12-01
+     */
     headers: Array<string>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Body logging settings.
+     * @since 2019-12-01
+     */
     body: BodyDiagnosticSettings;
 }

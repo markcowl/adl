@@ -1,7 +1,13 @@
 import { Resource } from './Resource';
 import { PolicyContractProperties } from './PolicyContractProperties';
-/** @since 2019-12-01 */
+/**
+ * @description Policy Contract details.
+ * @since 2019-12-01
+ */
 export interface PolicyContract extends Resource {
-    /** @since 2019-12-01 */
+    /**
+     * @description Properties of the Policy.
+     * @since 2019-12-01
+     */
     properties: PolicyContractProperties;
 }

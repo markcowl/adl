@@ -1,6 +1,12 @@
 import { ServiceSpecification } from './ServiceSpecification';
-/** @since 2019-09-01 */
+/**
+ * @description Properties of operation, include metric specifications.
+ * @since 2019-09-01
+ */
 export interface OperationProperties {
-    /** @since 2019-09-01 */
+    /**
+     * @description One property of operation, include metric specifications.
+     * @since 2019-09-01
+     */
     serviceSpecification: ServiceSpecification;
 }

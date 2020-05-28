@@ -1,38 +1,92 @@
 
-/** @since 0.0.0 */
+/**
+ * @description Cluster Data Object
+ * @since 0.0.0
+ */
 export interface air1_ClusterData {
-    /** @since 0.0.0 */
+    /**
+     * @description Summary count of the number of CWA facilities or SDWA public drinking water systems with current violations.
+     * @since 0.0.0
+     */
     CVRows?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description The number of facilities or cases in the cluster.
+     * @since 0.0.0
+     */
     ClusterCount?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description The icon file used to reprsent the cluster.
+     * @since 0.0.0
+     */
     ClusterIcon?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description The latitude in decimal degrees expressed using the NAD83 horizontal datum.
+     * @since 0.0.0
+     */
     ClusterLatitude?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description The longitude in decimal degrees expressed using the NAD83 horizontal datum.
+     * @since 0.0.0
+     */
     ClusterLongitude?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description THe name or the identifier of the geographic area used for clustering.  Examples:  Alaska, Fairfax County, 22314
+     * @since 0.0.0
+     */
     ClusterName?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description The representative geographic area used for clustering.  Examples:  State, County, Zip Code
+     * @since 0.0.0
+     */
     ClusterType?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description The value, internal to the database report object, that represents this cluster, like a state abbreviation, zip code, or county FIPS code.  Examples: AK, 22314, 50011
+     * @since 0.0.0
+     */
     ClusterValue?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description The EPA region where the facility is located. EPA has 10 regional offices that execute programs within several states and territories
+     * @since 0.0.0
+     */
     EPARegionCode?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description Summary count of the number of facilities with a formal enforcement action in the past five years
+     * @since 0.0.0
+     */
     FEARows?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description Number of facilities with insp_5yr_flag populated (CWP_DATE_LAST_INSPECTION)
+     * @since 0.0.0
+     */
     INSPRows?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description Number of facilities with tribal_flag populated
+     * @since 0.0.0
+     */
     IndianCountryRows?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description Number of facilities with infea_5yr_flag populated (INFORMAL_ENF_ACT_COUNT > 0)
+     * @since 0.0.0
+     */
     InfFEARows?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description Sequential number assigned to each facility or cluster returned.
+     * @since 0.0.0
+     */
     ObjectId?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description Number of facilities with curr_sv_flag populated (CWP_STATUS = "Significant Violation")
+     * @since 0.0.0
+     */
     SVRows?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description The total dollar amount of either assessed or final penalties within the five year time period
+     * @since 0.0.0
+     */
     TotalPenalties?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description Number of facilities having one or more quarters in non-compliance (QNC) in the last three years
+     * @since 0.0.0
+     */
     V3Rows?: string;
 }

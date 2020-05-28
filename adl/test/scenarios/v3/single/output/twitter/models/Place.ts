@@ -27,7 +27,10 @@ export interface Place {
      * @since 2.3
      */
     id?: string;
-    /** @since 2.3 */
+    /**
+     * @description The human readable name of this place.
+     * @since 2.3
+     */
     name: string;
     /**
      * @since 2.3

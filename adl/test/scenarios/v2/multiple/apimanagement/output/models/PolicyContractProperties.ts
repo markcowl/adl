@@ -1,8 +1,17 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description Policy contract Properties.
+ * @since 2019-12-01
+ */
 export interface PolicyContractProperties {
-    /** @since 2019-12-01 */
+    /**
+     * @description Contents of the Policy as defined by the format.
+     * @since 2019-12-01
+     */
     value?: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Format of the policyContent.
+     * @since 2019-12-01
+     */
     format: PolicyContentFormat;
 }

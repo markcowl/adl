@@ -3,19 +3,34 @@
  * @since v3
  */
 export interface postRepo {
-    /** @since v3 */
+    /**
+     * @description True to create an initial commit with empty README. Default is false.
+     * @since v3
+     */
     auto_init: boolean;
     /**
      * @since v3
      */
     description: string;
-    /** @since v3 */
+    /**
+     * @description Desired language or platform .gitignore template to apply. Use the name of the template without the extension. For example, "Haskell" Ignored if auto_init parameter is not provided.
+     * @since v3
+     */
     gitignore_template: string;
-    /** @since v3 */
+    /**
+     * @description True to enable downloads for this repository, false to disable them. Default is true.
+     * @since v3
+     */
     has_downloads: boolean;
-    /** @since v3 */
+    /**
+     * @description True to enable issues for this repository, false to disable them. Default is true.
+     * @since v3
+     */
     has_issues: boolean;
-    /** @since v3 */
+    /**
+     * @description True to enable the wiki for this repository, false to disable it. Default is true.
+     * @since v3
+     */
     has_wiki: boolean;
     /**
      * @since v3
@@ -25,8 +40,14 @@ export interface postRepo {
      * @since v3
      */
     name?: string;
-    /** @since v3 */
+    /**
+     * @description True to create a private repository, false to create a public one. Creating private repositories requires a paid GitHub account.
+     * @since v3
+     */
     private: boolean;
-    /** @since v3 */
+    /**
+     * @description The id of the team that will be granted access to this repository. This is only valid when creating a repo in an organization.
+     * @since v3
+     */
     team_id: int64;
 }

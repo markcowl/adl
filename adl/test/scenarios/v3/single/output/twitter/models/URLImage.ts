@@ -1,5 +1,8 @@
 
-/** @since 2.3 */
+/**
+ * @description Represent the information for the URL image
+ * @since 2.3
+ */
 export interface URLImage {
     /**
      * @since 2.3

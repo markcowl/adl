@@ -1,46 +1,103 @@
 import { air1_ClusterOutput } from './air1_ClusterOutput';
 import { air3_Facilities } from './air3_Facilities';
 import { qp0 } from './qp0';
-/** @since 0.0.0 */
+/**
+ * @description Results Object
+ * @since 0.0.0
+ */
 export interface air3_Results {
-    /** @since 0.0.0 */
+    /**
+     * @description Identifies which passed query system identifiers are invalid.
+     * @since 0.0.0
+     */
     BadSystemIDs?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description Summary count of the number of CWA facilities or SDWA public drinking water systems with current violations.
+     * @since 0.0.0
+     */
     CVRows?: string;
     /**
      * @since 0.0.0
      */
     ClusterOutput: air1_ClusterOutput;
-    /** @since 0.0.0 */
+    /**
+     * @description Number of clusters returned.
+     * @since 0.0.0
+     */
     ClusterRecords: string;
-    /** @since 0.0.0 */
+    /**
+     * @description Summary count of the number of facilities with a formal enforcement action in the past five years
+     * @since 0.0.0
+     */
     FEARows?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description A complex array of facility information.
+     * @since 0.0.0
+     */
     Facilities: Array<air3_Facilities>;
-    /** @since 0.0.0 */
+    /**
+     * @description Number of facilities with insp_5yr_flag populated (CWP_DATE_LAST_INSPECTION)
+     * @since 0.0.0
+     */
     INSPRows?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description URL where all the icons are located
+     * @since 0.0.0
+     */
     IconBaseURL?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description Number of facilities with tribal_flag populated
+     * @since 0.0.0
+     */
     IndianCountryRows?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description Number of facilities with infea_5yr_flag populated (INFORMAL_ENF_ACT_COUNT > 0)
+     * @since 0.0.0
+     */
     InfFEARows?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description Field to record messages (typically performance-related) about packet processing
+     * @since 0.0.0
+     */
     Message?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description Combine this URL with the PUC to get popup info
+     * @since 0.0.0
+     */
     PopUpBaseURL?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description Sequential number assigned to entire search result
+     * @since 0.0.0
+     */
     QueryID?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description A list of submitted query parameters and their values.
+     * @since 0.0.0
+     */
     QueryParameters?: Array<qp0>;
-    /** @since 0.0.0 */
+    /**
+     * @description Number of query results returned
+     * @since 0.0.0
+     */
     QueryRows?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description Number of facilities with curr_sv_flag populated (CWP_STATUS = "Significant Violation")
+     * @since 0.0.0
+     */
     SVRows?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description The base service URL.
+     * @since 0.0.0
+     */
     ServiceBaseURL?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description The total dollar amount of either assessed or final penalties within the five year time period
+     * @since 0.0.0
+     */
     TotalPenalties?: string;
-    /** @since 0.0.0 */
+    /**
+     * @description Number of facilities having one or more quarters in non-compliance (QNC) in the last three years
+     * @since 0.0.0
+     */
     V3Rows?: string;
 }

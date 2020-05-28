@@ -32,7 +32,10 @@ export interface branch {
              * @since v3
              */
             author: {
-                /** @since v3 */
+                /**
+                 * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+                 * @since v3
+                 */
                 date: string;
                 /**
                  * @since v3
@@ -47,7 +50,10 @@ export interface branch {
              * @since v3
              */
             committer: {
-                /** @since v3 */
+                /**
+                 * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+                 * @since v3
+                 */
                 date: string;
                 /**
                  * @since v3

@@ -1,10 +1,22 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description The Resource definition.
+ * @since 2019-12-01
+ */
 export interface Resource {
-    /** @since 2019-12-01 */
+    /**
+     * @description Resource ID.
+     * @since 2019-12-01
+     */
     readonly id: string & ;
-    /** @since 2019-12-01 */
+    /**
+     * @description Resource name.
+     * @since 2019-12-01
+     */
     readonly name: string & ;
-    /** @since 2019-12-01 */
+    /**
+     * @description Resource type for API Management resource.
+     * @since 2019-12-01
+     */
     readonly type: string & ;
 }

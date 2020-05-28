@@ -1,6 +1,12 @@
 import { EmailTemplateUpdateParameterProperties } from './EmailTemplateUpdateParameterProperties';
-/** @since 2019-12-01 */
+/**
+ * @description Email Template update Parameters.
+ * @since 2019-12-01
+ */
 export interface EmailTemplateUpdateParameters {
-    /** @since 2019-12-01 */
+    /**
+     * @description Email Template Update contract properties.
+     * @since 2019-12-01
+     */
     properties: EmailTemplateUpdateParameterProperties;
 }

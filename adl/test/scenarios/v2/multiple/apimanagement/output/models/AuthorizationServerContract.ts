@@ -1,7 +1,13 @@
 import { Resource } from './Resource';
 import { AuthorizationServerContractProperties } from './AuthorizationServerContractProperties';
-/** @since 2019-12-01 */
+/**
+ * @description External OAuth authorization server settings.
+ * @since 2019-12-01
+ */
 export interface AuthorizationServerContract extends Resource {
-    /** @since 2019-12-01 */
+    /**
+     * @description Properties of the External OAuth authorization server Contract.
+     * @since 2019-12-01
+     */
     properties: AuthorizationServerContractProperties;
 }

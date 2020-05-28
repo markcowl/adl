@@ -3,13 +3,19 @@
  * @since v3
  */
 export interface patchOrg {
-    /** @since v3 */
+    /**
+     * @description Billing email address. This address is not publicized.
+     * @since v3
+     */
     billing_email: string;
     /**
      * @since v3
      */
     company: string;
-    /** @since v3 */
+    /**
+     * @description Publicly visible email address.
+     * @since v3
+     */
     email: string;
     /**
      * @since v3

@@ -3,6 +3,9 @@ import { RelatedObservations } from './RelatedObservations';
  * @since 2018-11-25
  */
 export interface DescribeProblemObservationsResponse {
-    /** @since 2018-11-25 */
+    /**
+     * @description Observations related to the problem.
+     * @since 2018-11-25
+     */
     RelatedObservations: RelatedObservations;
 }

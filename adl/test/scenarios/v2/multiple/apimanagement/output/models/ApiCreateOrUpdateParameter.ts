@@ -1,6 +1,12 @@
 import { ApiCreateOrUpdateProperties } from './ApiCreateOrUpdateProperties';
-/** @since 2019-12-01 */
+/**
+ * @description API Create or Update Parameters.
+ * @since 2019-12-01
+ */
 export interface ApiCreateOrUpdateParameter {
-    /** @since 2019-12-01 */
+    /**
+     * @description Api entity create of update properties.
+     * @since 2019-12-01
+     */
     properties: ApiCreateOrUpdateProperties;
 }

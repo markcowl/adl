@@ -1,12 +1,27 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description Tenant access information contract of the API Management service.
+ * @since 2019-12-01
+ */
 export interface AccessInformationContract {
-    /** @since 2019-12-01 */
+    /**
+     * @description Identifier.
+     * @since 2019-12-01
+     */
     id: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
+     * @since 2019-12-01
+     */
     primaryKey: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
+     * @since 2019-12-01
+     */
     secondaryKey: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Determines whether direct access is enabled.
+     * @since 2019-12-01
+     */
     enabled: boolean;
 }

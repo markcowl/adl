@@ -1,6 +1,8 @@
 
 /**
  * Content format
+ * @extensible
+ * @description Format of the Content in which the API is getting imported.
  * @since 2019-12-01
  */
 export enum ContentFormat {

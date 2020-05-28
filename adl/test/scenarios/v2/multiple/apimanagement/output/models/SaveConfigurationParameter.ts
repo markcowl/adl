@@ -1,6 +1,12 @@
 import { SaveConfigurationParameterProperties } from './SaveConfigurationParameterProperties';
-/** @since 2019-12-01 */
+/**
+ * @description Save Tenant Configuration Contract details.
+ * @since 2019-12-01
+ */
 export interface SaveConfigurationParameter {
-    /** @since 2019-12-01 */
+    /**
+     * @description Properties of the Save Configuration Parameters.
+     * @since 2019-12-01
+     */
     properties: SaveConfigurationParameterProperties;
 }

@@ -1,6 +1,12 @@
 import { PrivateLinkResource } from './PrivateLinkResource';
-/** @since 2019-09-01 */
+/**
+ * @description A list of private link resources
+ * @since 2019-09-01
+ */
 export interface PrivateLinkResourceListResult {
-    /** @since 2019-09-01 */
+    /**
+     * @description Array of private link resources
+     * @since 2019-09-01
+     */
     value: Array<PrivateLinkResource>;
 }

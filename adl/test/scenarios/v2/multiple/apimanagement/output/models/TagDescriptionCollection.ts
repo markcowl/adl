@@ -1,8 +1,17 @@
 import { TagDescriptionContract } from './TagDescriptionContract';
-/** @since 2019-12-01 */
+/**
+ * @description Paged TagDescription list representation.
+ * @since 2019-12-01
+ */
 export interface TagDescriptionCollection {
-    /** @since 2019-12-01 */
+    /**
+     * @description Page values.
+     * @since 2019-12-01
+     */
     value: Array<TagDescriptionContract>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Next page link if any.
+     * @since 2019-12-01
+     */
     nextLink: string;
 }

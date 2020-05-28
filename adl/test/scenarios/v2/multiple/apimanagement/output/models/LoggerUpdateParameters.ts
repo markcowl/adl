@@ -1,12 +1,27 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description Parameters supplied to the Update Logger operation.
+ * @since 2019-12-01
+ */
 export interface LoggerUpdateParameters {
-    /** @since 2019-12-01 */
+    /**
+     * @description Logger type.
+     * @since 2019-12-01
+     */
     loggerType: LoggerType;
-    /** @since 2019-12-01 */
+    /**
+     * @description Logger description.
+     * @since 2019-12-01
+     */
     description: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Logger credentials.
+     * @since 2019-12-01
+     */
     credentials: Dictionary<string>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Whether records are buffered in the logger before publishing. Default is assumed to be true.
+     * @since 2019-12-01
+     */
     isBuffered: boolean;
 }

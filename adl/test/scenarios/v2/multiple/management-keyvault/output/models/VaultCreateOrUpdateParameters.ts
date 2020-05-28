@@ -1,10 +1,22 @@
 import { VaultProperties } from './VaultProperties';
-/** @since 2019-09-01 */
+/**
+ * @description Parameters for creating or updating a vault
+ * @since 2019-09-01
+ */
 export interface VaultCreateOrUpdateParameters {
-    /** @since 2019-09-01 */
+    /**
+     * @description The supported Azure location where the key vault should be created.
+     * @since 2019-09-01
+     */
     location?: string;
-    /** @since 2019-09-01 */
+    /**
+     * @description The tags that will be assigned to the key vault.
+     * @since 2019-09-01
+     */
     tags: Dictionary<string>;
-    /** @since 2019-09-01 */
+    /**
+     * @description Properties of the vault
+     * @since 2019-09-01
+     */
     properties?: VaultProperties;
 }

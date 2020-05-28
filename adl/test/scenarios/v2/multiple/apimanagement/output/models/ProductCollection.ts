@@ -1,8 +1,17 @@
 import { ProductContract } from './ProductContract';
-/** @since 2019-12-01 */
+/**
+ * @description Paged Products list representation.
+ * @since 2019-12-01
+ */
 export interface ProductCollection {
-    /** @since 2019-12-01 */
+    /**
+     * @description Page values.
+     * @since 2019-12-01
+     */
     value: Array<ProductContract>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Next page link if any.
+     * @since 2019-12-01
+     */
     nextLink: string;
 }

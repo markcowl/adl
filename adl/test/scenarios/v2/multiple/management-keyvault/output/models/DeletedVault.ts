@@ -1,12 +1,27 @@
 import { DeletedVaultProperties } from './DeletedVaultProperties';
-/** @since 2019-09-01 */
+/**
+ * @description Deleted vault information with extended details.
+ * @since 2019-09-01
+ */
 export interface DeletedVault {
-    /** @since 2019-09-01 */
+    /**
+     * @description The resource ID for the deleted key vault.
+     * @since 2019-09-01
+     */
     readonly id: string & ;
-    /** @since 2019-09-01 */
+    /**
+     * @description The name of the key vault.
+     * @since 2019-09-01
+     */
     readonly name: string & ;
-    /** @since 2019-09-01 */
+    /**
+     * @description The resource type of the key vault.
+     * @since 2019-09-01
+     */
     readonly type: string & ;
-    /** @since 2019-09-01 */
+    /**
+     * @description Properties of the vault
+     * @since 2019-09-01
+     */
     properties: DeletedVaultProperties;
 }

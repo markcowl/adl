@@ -1,8 +1,17 @@
 import { TagResourceContract } from './TagResourceContract';
-/** @since 2019-12-01 */
+/**
+ * @description Paged Tag list representation.
+ * @since 2019-12-01
+ */
 export interface TagResourceCollection {
-    /** @since 2019-12-01 */
+    /**
+     * @description Page values.
+     * @since 2019-12-01
+     */
     value: Array<TagResourceContract>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Next page link if any.
+     * @since 2019-12-01
+     */
     nextLink: string;
 }

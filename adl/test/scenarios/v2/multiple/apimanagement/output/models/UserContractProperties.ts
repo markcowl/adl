@@ -1,15 +1,33 @@
 import { UserEntityBaseParameters } from './UserEntityBaseParameters';
 import { GroupContractProperties } from './GroupContractProperties';
-/** @since 2019-12-01 */
+/**
+ * @description User profile.
+ * @since 2019-12-01
+ */
 export interface UserContractProperties extends UserEntityBaseParameters {
-    /** @since 2019-12-01 */
+    /**
+     * @description First name.
+     * @since 2019-12-01
+     */
     firstName: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Last name.
+     * @since 2019-12-01
+     */
     lastName: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Email address.
+     * @since 2019-12-01
+     */
     email: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
+     * @since 2019-12-01
+     */
     registrationDate: dateTime;
-    /** @since 2019-12-01 */
+    /**
+     * @description Collection of groups user is part of.
+     * @since 2019-12-01
+     */
     readonly groups: Array<GroupContractProperties> & ;
 }
