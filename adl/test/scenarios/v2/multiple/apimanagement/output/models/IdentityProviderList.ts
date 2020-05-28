@@ -1,8 +1,17 @@
 import { IdentityProviderContract } from './IdentityProviderContract';
-/** @since 2019-12-01 */
+/**
+ * @description List of all the Identity Providers configured on the service instance.
+ * @since 2019-12-01
+ */
 export interface IdentityProviderList {
-    /** @since 2019-12-01 */
+    /**
+     * @description Identity Provider configuration values.
+     * @since 2019-12-01
+     */
     value: Array<IdentityProviderContract>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Next page link if any.
+     * @since 2019-12-01
+     */
     nextLink: string;
 }

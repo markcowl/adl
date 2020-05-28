@@ -1,6 +1,12 @@
 import { ApiContractUpdateProperties } from './ApiContractUpdateProperties';
-/** @since 2019-12-01 */
+/**
+ * @description API update contract details.
+ * @since 2019-12-01
+ */
 export interface ApiUpdateContract {
-    /** @since 2019-12-01 */
+    /**
+     * @description Properties of the API entity that can be updated.
+     * @since 2019-12-01
+     */
     properties: ApiContractUpdateProperties;
 }

@@ -1,14 +1,32 @@
 
-/** @since 1.1.0 */
+/**
+ * @description Returned error from failed REST.
+ * @since 1.1.0
+ */
 export interface Error {
-    /** @since 1.1.0 */
+    /**
+     * @description Error code.
+     * @since 1.1.0
+     */
     code: int64;
-    /** @since 1.1.0 */
+    /**
+     * @description Link to help with error.
+     * @since 1.1.0
+     */
     href: string;
-    /** @since 1.1.0 */
+    /**
+     * @description Message explaining the error's cause.
+     * @since 1.1.0
+     */
     message: string;
-    /** @since 1.1.0 */
+    /**
+     * @description Server ID with which error was encountered.
+     * @since 1.1.0
+     */
     serverId: string;
-    /** @since 1.1.0 */
+    /**
+     * @description Status error code.
+     * @since 1.1.0
+     */
     statusCode: int64;
 }

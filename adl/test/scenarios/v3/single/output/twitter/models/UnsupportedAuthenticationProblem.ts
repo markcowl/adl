@@ -1,5 +1,8 @@
 import { ProblemFields } from './ProblemFields';
-/** @since 2.3 */
+/**
+ * @description A problem that indicates that the authentication used is not supported.
+ * @since 2.3
+ */
 export interface UnsupportedAuthenticationProblem extends ProblemFields {
     /**
      * @since 2.3

@@ -1,6 +1,12 @@
 import { air1_ClusterData } from './air1_ClusterData';
-/** @since 0.0.0 */
+/**
+ * @description Cluster Output Object
+ * @since 0.0.0
+ */
 export interface air1_ClusterOutput {
-    /** @since 0.0.0 */
+    /**
+     * @description An array of state, county, or zip code cluster information
+     * @since 0.0.0
+     */
     ClusterData: Array<air1_ClusterData>;
 }

@@ -1,8 +1,17 @@
 import { bearerTokenSendingMethods } from '../enums/bearerTokenSendingMethods';
-/** @since 2019-12-01 */
+/**
+ * @description API OAuth2 Authentication settings details.
+ * @since 2019-12-01
+ */
 export interface OpenIdAuthenticationSettingsContract {
-    /** @since 2019-12-01 */
+    /**
+     * @description OAuth authorization server identifier.
+     * @since 2019-12-01
+     */
     openidProviderId: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description How to send token to the server.
+     * @since 2019-12-01
+     */
     bearerTokenSendingMethods: Array<bearerTokenSendingMethods>;
 }

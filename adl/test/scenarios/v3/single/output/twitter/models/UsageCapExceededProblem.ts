@@ -1,5 +1,8 @@
 import { ProblemFields } from './ProblemFields';
-/** @since 2.3 */
+/**
+ * @description A problem that indicates that a usage cap has been exceeded.
+ * @since 2.3
+ */
 export interface UsageCapExceededProblem extends ProblemFields {
     /**
      * @since 2.3

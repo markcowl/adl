@@ -1,10 +1,22 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description Issue Comment contract Properties.
+ * @since 2019-12-01
+ */
 export interface IssueCommentContractProperties {
-    /** @since 2019-12-01 */
+    /**
+     * @description Comment text.
+     * @since 2019-12-01
+     */
     text?: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Date and time when the comment was created.
+     * @since 2019-12-01
+     */
     createdDate: dateTime;
-    /** @since 2019-12-01 */
+    /**
+     * @description A resource identifier for the user who left the comment.
+     * @since 2019-12-01
+     */
     userId?: string;
 }

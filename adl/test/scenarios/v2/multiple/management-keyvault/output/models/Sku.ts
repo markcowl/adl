@@ -1,8 +1,17 @@
 
-/** @since 2019-09-01 */
+/**
+ * @description SKU details
+ * @since 2019-09-01
+ */
 export interface Sku {
-    /** @since 2019-09-01 */
+    /**
+     * @description SKU family name
+     * @since 2019-09-01
+     */
     family?: SkuFamily;
-    /** @since 2019-09-01 */
+    /**
+     * @description SKU name to specify whether the key vault is a standard vault or a premium vault.
+     * @since 2019-09-01
+     */
     name?: SkuName;
 }

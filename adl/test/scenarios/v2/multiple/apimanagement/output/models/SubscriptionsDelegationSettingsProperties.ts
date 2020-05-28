@@ -1,6 +1,12 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description Subscriptions delegation settings properties.
+ * @since 2019-12-01
+ */
 export interface SubscriptionsDelegationSettingsProperties {
-    /** @since 2019-12-01 */
+    /**
+     * @description Enable or disable delegation for subscriptions.
+     * @since 2019-12-01
+     */
     enabled: boolean;
 }

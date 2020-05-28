@@ -1,8 +1,17 @@
 import { IssueAttachmentContract } from './IssueAttachmentContract';
-/** @since 2019-12-01 */
+/**
+ * @description Paged Issue Attachment list representation.
+ * @since 2019-12-01
+ */
 export interface IssueAttachmentCollection {
-    /** @since 2019-12-01 */
+    /**
+     * @description Issue Attachment values.
+     * @since 2019-12-01
+     */
     readonly value: Array<IssueAttachmentContract> & ;
-    /** @since 2019-12-01 */
+    /**
+     * @description Next page link if any.
+     * @since 2019-12-01
+     */
     readonly nextLink: string & ;
 }

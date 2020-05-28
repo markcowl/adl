@@ -1,10 +1,22 @@
 
-/** @since 2019-09-01 */
+/**
+ * @description Log specification of operation.
+ * @since 2019-09-01
+ */
 export interface LogSpecification {
-    /** @since 2019-09-01 */
+    /**
+     * @description Name of log specification.
+     * @since 2019-09-01
+     */
     name: string;
-    /** @since 2019-09-01 */
+    /**
+     * @description Display name of log specification.
+     * @since 2019-09-01
+     */
     displayName: string;
-    /** @since 2019-09-01 */
+    /**
+     * @description Blob duration of specification.
+     * @since 2019-09-01
+     */
     blobDuration: string;
 }

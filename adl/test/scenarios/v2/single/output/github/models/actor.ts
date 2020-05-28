@@ -1,5 +1,8 @@
 
-/** @since v3 */
+/**
+ * @description A user or organization
+ * @since v3
+ */
 export interface actor {
     /**
      * @since v3
@@ -9,7 +12,10 @@ export interface actor {
      * @since v3
      */
     bio: string;
-    /** @since v3 */
+    /**
+     * @description The website URL from the profile page
+     * @since v3
+     */
     blog: string;
     /**
      * @since v3
@@ -19,13 +25,19 @@ export interface actor {
      * @since v3
      */
     company: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
      */
     disk_usage: int64;
-    /** @since v3 */
+    /**
+     * @description Note: The returned email is the user’s publicly visible email address (or null if the user has not specified a public email address in their profile).
+     * @since v3
+     */
     email: string;
     /**
      * @since v3
@@ -67,9 +79,15 @@ export interface actor {
      * @since v3
      */
     location: string;
-    /** @since v3 */
+    /**
+     * @description The account username
+     * @since v3
+     */
     login: string;
-    /** @since v3 */
+    /**
+     * @description The full account name
+     * @since v3
+     */
     name: string;
     /**
      * @since v3
@@ -128,7 +146,10 @@ export interface actor {
      * @since v3
      */
     type: "User" | "Organization";
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3

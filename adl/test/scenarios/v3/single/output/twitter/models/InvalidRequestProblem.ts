@@ -1,5 +1,8 @@
 import { ProblemFields } from './ProblemFields';
-/** @since 2.3 */
+/**
+ * @description A problem that indicates this request is invalid.
+ * @since 2.3
+ */
 export interface InvalidRequestProblem extends ProblemFields {
     /**
      * @since 2.3

@@ -1,21 +1,49 @@
 import { OperationProperties } from './OperationProperties';
-/** @since 2019-09-01 */
+/**
+ * @description Key Vault REST API operation definition.
+ * @since 2019-09-01
+ */
 export interface Operation {
-    /** @since 2019-09-01 */
+    /**
+     * @description Operation name: {provider}/{resource}/{operation}
+     * @since 2019-09-01
+     */
     name: string;
-    /** @since 2019-09-01 */
+    /**
+     * @description Display metadata associated with the operation.
+     * @since 2019-09-01
+     */
     display: {
-        /** @since 2019-09-01 */
+        /**
+         * @description Service provider: Microsoft Key Vault.
+         * @since 2019-09-01
+         */
         provider: string;
-        /** @since 2019-09-01 */
+        /**
+         * @description Resource on which the operation is performed etc.
+         * @since 2019-09-01
+         */
         resource: string;
-        /** @since 2019-09-01 */
+        /**
+         * @description Type of operation: get, read, delete, etc.
+         * @since 2019-09-01
+         */
         operation: string;
-        /** @since 2019-09-01 */
+        /**
+         * @description Description of operation.
+         * @since 2019-09-01
+         */
         description: string;
     };
-    /** @since 2019-09-01 */
+    /**
+     * @description The origin of operations.
+     * @since 2019-09-01
+     */
     origin: string;
-    /** @since 2019-09-01 */
+    /**
+     * @description Properties of operation, include metric specifications.
+     * @clientName OperationProperties
+     * @since 2019-09-01
+     */
     properties: OperationProperties;
 }

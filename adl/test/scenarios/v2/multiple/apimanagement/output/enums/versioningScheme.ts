@@ -1,5 +1,10 @@
 
-/** @since 2019-12-01 */
+/**
+ * @extensible
+ * @description An value that determines where the API Version identifer will be located in a HTTP request.
+ * @todo temporary-reuse-marker
+ * @since 2019-12-01
+ */
 export enum versioningScheme {
     /** The API Version is passed in a path segment. */
     Segment = 'Segment',

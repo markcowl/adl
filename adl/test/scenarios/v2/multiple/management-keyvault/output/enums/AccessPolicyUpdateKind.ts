@@ -1,5 +1,9 @@
 
-/** @since 2019-09-01 */
+/**
+ * @extensible
+ * @description Name of the operation
+ * @since 2019-09-01
+ */
 export enum AccessPolicyUpdateKind {
     /**
      *

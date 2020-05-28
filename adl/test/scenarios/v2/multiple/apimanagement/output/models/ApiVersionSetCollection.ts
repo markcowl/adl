@@ -1,8 +1,17 @@
 import { ApiVersionSetContract } from './ApiVersionSetContract';
-/** @since 2019-12-01 */
+/**
+ * @description Paged Api Version Set list representation.
+ * @since 2019-12-01
+ */
 export interface ApiVersionSetCollection {
-    /** @since 2019-12-01 */
+    /**
+     * @description Page values.
+     * @since 2019-12-01
+     */
     value: Array<ApiVersionSetContract>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Next page link if any.
+     * @since 2019-12-01
+     */
     nextLink: string;
 }

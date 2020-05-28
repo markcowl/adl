@@ -1,8 +1,17 @@
 import { NamedValueContract } from './NamedValueContract';
-/** @since 2019-12-01 */
+/**
+ * @description Paged NamedValue list representation.
+ * @since 2019-12-01
+ */
 export interface NamedValueCollection {
-    /** @since 2019-12-01 */
+    /**
+     * @description Page values.
+     * @since 2019-12-01
+     */
     value: Array<NamedValueContract>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Next page link if any.
+     * @since 2019-12-01
+     */
     nextLink: string;
 }

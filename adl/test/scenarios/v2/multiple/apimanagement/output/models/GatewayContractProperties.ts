@@ -1,8 +1,17 @@
 import { ResourceLocationDataContract } from './ResourceLocationDataContract';
-/** @since 2019-12-01 */
+/**
+ * @description Properties of the Gateway contract.
+ * @since 2019-12-01
+ */
 export interface GatewayContractProperties {
-    /** @since 2019-12-01 */
+    /**
+     * @description Gateway location.
+     * @since 2019-12-01
+     */
     locationData: ResourceLocationDataContract;
-    /** @since 2019-12-01 */
+    /**
+     * @description Gateway description
+     * @since 2019-12-01
+     */
     description: string & MaxLength<1000>;
 }

@@ -1,10 +1,22 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description Issue contract Base Properties.
+ * @since 2019-12-01
+ */
 export interface IssueContractBaseProperties {
-    /** @since 2019-12-01 */
+    /**
+     * @description Date and time when the issue was created.
+     * @since 2019-12-01
+     */
     createdDate: dateTime;
-    /** @since 2019-12-01 */
+    /**
+     * @description Status of the issue.
+     * @since 2019-12-01
+     */
     state: State;
-    /** @since 2019-12-01 */
+    /**
+     * @description A resource identifier for the API the issue was created for.
+     * @since 2019-12-01
+     */
     apiId: string;
 }

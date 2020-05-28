@@ -20,13 +20,25 @@ export interface TweetSearchResponse {
      * @since 2.3
      */
     meta: {
-        /** @since 2.3 */
+        /**
+         * @description Most recent Tweet Id returned by search query
+         * @since 2.3
+         */
         newest_id: string & RegularExpression<"^[0-9]{1,19}$">;
-        /** @since 2.3 */
+        /**
+         * @description This value is used to get the next 'page' of results by providing it to the next_token parameter.
+         * @since 2.3
+         */
         next_token: string;
-        /** @since 2.3 */
+        /**
+         * @description Oldest Tweet Id returned by search query
+         * @since 2.3
+         */
         oldest_id: string & RegularExpression<"^[0-9]{1,19}$">;
-        /** @since 2.3 */
+        /**
+         * @description Number of search query results
+         * @since 2.3
+         */
         result_count: int32;
     };
 }

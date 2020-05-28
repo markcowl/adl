@@ -1,12 +1,27 @@
 import { BackendAuthorizationHeaderCredentials } from './BackendAuthorizationHeaderCredentials';
-/** @since 2019-12-01 */
+/**
+ * @description Details of the Credentials used to connect to Backend.
+ * @since 2019-12-01
+ */
 export interface BackendCredentialsContract {
-    /** @since 2019-12-01 */
+    /**
+     * @description List of Client Certificate Thumbprint.
+     * @since 2019-12-01
+     */
     certificate: Array<string> & MaximumElements<32>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Query Parameter description.
+     * @since 2019-12-01
+     */
     query: Dictionary<Array<string>>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Header Parameter description.
+     * @since 2019-12-01
+     */
     header: Dictionary<Array<string>>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Authorization header authentication
+     * @since 2019-12-01
+     */
     authorization: BackendAuthorizationHeaderCredentials;
 }

@@ -5,11 +5,20 @@ import { TweetWithheld } from './TweetWithheld';
  * @since 2.3
  */
 export interface Tweet {
-    /** @since 2.3 */
+    /**
+     * @description Specifies the type of attachments (if any) present in this Tweet.
+     * @since 2.3
+     */
     attachments: {
-        /** @since 2.3 */
+        /**
+         * @description A list of Media Keys for each one of the media attachments (if media are attached).
+         * @since 2.3
+         */
         media_keys: Array<string & RegularExpression<"^([0-9]+)_([0-9]+)$">> & MinimumElements<1>;
-        /** @since 2.3 */
+        /**
+         * @description A list of poll IDs (if polls are attached).
+         * @since 2.3
+         */
         poll_ids: Array<string & RegularExpression<"^[0-9]{1,19}$">> & MinimumElements<1>;
     };
     /**
@@ -20,13 +29,19 @@ export interface Tweet {
      * @since 2.3
      */
     context_annotations: Array<ContextAnnotation> & MinimumElements<1>;
-    /** @since 2.3 */
+    /**
+     * @description Creation time of the Tweet.
+     * @since 2.3
+     */
     created_at: dateTime;
     /**
      * @since 2.3
      */
     entities: FullTextEntities;
-    /** @since 2.3 */
+    /**
+     * @description The location tagged on the Tweet, if the user provided one.
+     * @since 2.3
+     */
     geo: {
         /**
          * @since 2.3
@@ -45,22 +60,46 @@ export interface Tweet {
      * @since 2.3
      */
     in_reply_to_user_id: string & RegularExpression<"^[0-9]{1,19}$">;
-    /** @since 2.3 */
+    /**
+     * @description Language of the Tweet, if detected by Twitter. Returned as a BCP47 language tag.
+     * @since 2.3
+     */
     lang: string;
-    /** @since 2.3 */
+    /**
+     * @description Indicates if this Tweet contains URLs marked as sensitive, for example content suitable for mature audiences.
+     * @since 2.3
+     */
     possibly_sensitive: boolean;
-    /** @since 2.3 */
+    /**
+     * @description Engagement metrics for the Tweet at the time of the request.
+     * @since 2.3
+     */
     public_metrics: {
-        /** @since 2.3 */
+        /**
+         * @description Number of times this Tweet has been liked.
+         * @since 2.3
+         */
         like_count?: int64;
-        /** @since 2.3 */
+        /**
+         * @description Number of times this Tweet has been quoted.
+         * @since 2.3
+         */
         quote_count: int64;
-        /** @since 2.3 */
+        /**
+         * @description Number of times this Tweet has been replied to.
+         * @since 2.3
+         */
         reply_count?: int64;
-        /** @since 2.3 */
+        /**
+         * @description Number of times this Tweet has been Retweeted.
+         * @since 2.3
+         */
         retweet_count?: int64;
     };
-    /** @since 2.3 */
+    /**
+     * @description A list of Tweets this Tweet refers to. For example, if the parent Tweet is a Retweet, a Quoted Tweet or a Reply, it will include the related Tweet referenced to by its parent.
+     * @since 2.3
+     */
     referenced_tweets: Array<{
         /**
          * @since 2.3
@@ -71,9 +110,15 @@ export interface Tweet {
          */
         type?: "retweeted" | "quoted" | "replied_to";
     }> & MinimumElements<1>;
-    /** @since 2.3 */
+    /**
+     * @description The name of the app the user Tweeted from.
+     * @since 2.3
+     */
     source: string;
-    /** @since 2.3 */
+    /**
+     * @description The content of the Tweet.
+     * @since 2.3
+     */
     text?: string;
     /**
      * @since 2.3

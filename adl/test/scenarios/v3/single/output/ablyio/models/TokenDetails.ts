@@ -3,14 +3,29 @@
  * @since 1.1.0
  */
 export interface TokenDetails {
-    /** @since 1.1.0 */
+    /**
+     * @description Regular expression representation of the capabilities of the token.
+     * @since 1.1.0
+     */
     capability: string;
-    /** @since 1.1.0 */
+    /**
+     * @description Timestamp of token expiration.
+     * @since 1.1.0
+     */
     expires: int64;
-    /** @since 1.1.0 */
+    /**
+     * @description Timestamp of token creation.
+     * @since 1.1.0
+     */
     issued: int64;
-    /** @since 1.1.0 */
+    /**
+     * @description Name of the key used to create the token
+     * @since 1.1.0
+     */
     keyName: string;
-    /** @since 1.1.0 */
+    /**
+     * @description The Ably Token.
+     * @since 1.1.0
+     */
     token: string;
 }

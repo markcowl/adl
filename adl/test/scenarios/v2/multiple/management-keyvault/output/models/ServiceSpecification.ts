@@ -1,6 +1,12 @@
 import { LogSpecification } from './LogSpecification';
-/** @since 2019-09-01 */
+/**
+ * @description One property of operation, include log specifications.
+ * @since 2019-09-01
+ */
 export interface ServiceSpecification {
-    /** @since 2019-09-01 */
+    /**
+     * @description Log specifications of operation.
+     * @since 2019-09-01
+     */
     logSpecifications: Array<LogSpecification>;
 }

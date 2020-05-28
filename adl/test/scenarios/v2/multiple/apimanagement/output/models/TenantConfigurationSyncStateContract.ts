@@ -1,18 +1,42 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description Tenant Configuration Synchronization State.
+ * @since 2019-12-01
+ */
 export interface TenantConfigurationSyncStateContract {
-    /** @since 2019-12-01 */
+    /**
+     * @description The name of Git branch.
+     * @since 2019-12-01
+     */
     branch: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description The latest commit Id.
+     * @since 2019-12-01
+     */
     commitId: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description value indicating if last sync was save (true) or deploy (false) operation.
+     * @since 2019-12-01
+     */
     isExport: boolean;
-    /** @since 2019-12-01 */
+    /**
+     * @description value indicating if last synchronization was later than the configuration change.
+     * @since 2019-12-01
+     */
     isSynced: boolean;
-    /** @since 2019-12-01 */
+    /**
+     * @description value indicating whether Git configuration access is enabled.
+     * @since 2019-12-01
+     */
     isGitEnabled: boolean;
-    /** @since 2019-12-01 */
+    /**
+     * @description The date of the latest synchronization. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
+     * @since 2019-12-01
+     */
     syncDate: dateTime;
-    /** @since 2019-12-01 */
+    /**
+     * @description The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
+     * @since 2019-12-01
+     */
     configurationChangeDate: dateTime;
 }

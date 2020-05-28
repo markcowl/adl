@@ -1,8 +1,17 @@
 import { IssueCommentContract } from './IssueCommentContract';
-/** @since 2019-12-01 */
+/**
+ * @description Paged Issue Comment list representation.
+ * @since 2019-12-01
+ */
 export interface IssueCommentCollection {
-    /** @since 2019-12-01 */
+    /**
+     * @description Issue Comment values.
+     * @since 2019-12-01
+     */
     readonly value: Array<IssueCommentContract> & ;
-    /** @since 2019-12-01 */
+    /**
+     * @description Next page link if any.
+     * @since 2019-12-01
+     */
     readonly nextLink: string & ;
 }

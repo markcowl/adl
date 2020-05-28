@@ -1,5 +1,8 @@
 import { ProblemFields } from './ProblemFields';
-/** @since 2.3 */
+/**
+ * @description A problem that indicates that a given Tweet, User, etc. does not exist.
+ * @since 2.3
+ */
 export interface ResourceNotFoundProblem extends ProblemFields {
     /**
      * @since 2.3
@@ -13,6 +16,9 @@ export interface ResourceNotFoundProblem extends ProblemFields {
      * @since 2.3
      */
     type: "https://api.twitter.com/labs/2/problems/resource-not-found";
-    /** @since 2.3 */
+    /**
+     * @description Value will match the schema of the field.
+     * @since 2.3
+     */
     value?: any;
 }

@@ -1,8 +1,17 @@
 import { EmailTemplateContract } from './EmailTemplateContract';
-/** @since 2019-12-01 */
+/**
+ * @description Paged email template list representation.
+ * @since 2019-12-01
+ */
 export interface EmailTemplateCollection {
-    /** @since 2019-12-01 */
+    /**
+     * @description Page values.
+     * @since 2019-12-01
+     */
     value: Array<EmailTemplateContract>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Next page link if any.
+     * @since 2019-12-01
+     */
     nextLink: string;
 }

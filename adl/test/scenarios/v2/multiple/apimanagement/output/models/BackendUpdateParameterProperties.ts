@@ -1,8 +1,17 @@
 import { BackendBaseParameters } from './BackendBaseParameters';
-/** @since 2019-12-01 */
+/**
+ * @description Parameters supplied to the Update Backend operation.
+ * @since 2019-12-01
+ */
 export interface BackendUpdateParameterProperties extends BackendBaseParameters {
-    /** @since 2019-12-01 */
+    /**
+     * @description Runtime Url of the Backend.
+     * @since 2019-12-01
+     */
     url: string & MaxLength<2000> & MinLength<1>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Backend communication protocol.
+     * @since 2019-12-01
+     */
     protocol: BackendProtocol;
 }

@@ -1,14 +1,34 @@
 
-/** @since 2019-09-01 */
+/**
+ * @description The object attributes managed by the KeyVault service.
+ * @since 2019-09-01
+ */
 export interface Attributes {
-    /** @since 2019-09-01 */
+    /**
+     * @description Determines whether the object is enabled.
+     * @since 2019-09-01
+     */
     enabled: boolean;
-    /** @since 2019-09-01 */
+    /**
+     * @description Not before date in seconds since 1970-01-01T00:00:00Z.
+     * @clientName NotBefore
+     * @since 2019-09-01
+     */
     nbf: time;
-    /** @since 2019-09-01 */
+    /**
+     * @description Expiry date in seconds since 1970-01-01T00:00:00Z.
+     * @clientName Expires
+     * @since 2019-09-01
+     */
     exp: time;
-    /** @since 2019-09-01 */
+    /**
+     * @description Creation time in seconds since 1970-01-01T00:00:00Z.
+     * @since 2019-09-01
+     */
     readonly created: time;
-    /** @since 2019-09-01 */
+    /**
+     * @description Last updated time in seconds since 1970-01-01T00:00:00Z.
+     * @since 2019-09-01
+     */
     readonly updated: time;
 }

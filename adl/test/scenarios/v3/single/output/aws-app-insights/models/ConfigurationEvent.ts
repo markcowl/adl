@@ -1,16 +1,37 @@
 
-/** @since 2018-11-25 */
+/**
+ * @description  The event information.
+ * @since 2018-11-25
+ */
 export interface ConfigurationEvent {
-    /** @since 2018-11-25 */
+    /**
+     * @description  The resource monitored by Application Insights.
+     * @since 2018-11-25
+     */
     MonitoredResourceARN: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The status of the configuration update event. Possible values include INFO, WARN, and ERROR.
+     * @since 2018-11-25
+     */
     EventStatus: ConfigurationEventStatus;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The resource type that Application Insights attempted to configure, for example, CLOUDWATCH_ALARM.
+     * @since 2018-11-25
+     */
     EventResourceType: ConfigurationEventResourceType;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The timestamp of the event.
+     * @since 2018-11-25
+     */
     EventTime: dateTime;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The details of the event in plain text.
+     * @since 2018-11-25
+     */
     EventDetail: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The name of the resource Application Insights attempted to configure.
+     * @since 2018-11-25
+     */
     EventResourceName: string;
 }

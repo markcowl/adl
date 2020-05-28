@@ -1,22 +1,46 @@
 import { Extras } from './Extras';
-/** @since 1.1.0 */
+/**
+ * @description Message object.
+ * @since 1.1.0
+ */
 export interface Message {
-    /** @since 1.1.0 */
+    /**
+     * @description The [client ID](https://www.ably.io/documentation/core-features/authentication#identified-clients) of the publisher of this message.
+     * @since 1.1.0
+     */
     clientId: string;
-    /** @since 1.1.0 */
+    /**
+     * @description The connection ID of the publisher of this message.
+     * @since 1.1.0
+     */
     connectionId: string;
-    /** @since 1.1.0 */
+    /**
+     * @description The string encoded payload, with the encoding specified below.
+     * @since 1.1.0
+     */
     data: string;
-    /** @since 1.1.0 */
+    /**
+     * @description This will typically be empty as all messages received from Ably are automatically decoded client-side using this value. However, if the message encoding cannot be processed, this attribute will contain the remaining transformations not applied to the data payload.
+     * @since 1.1.0
+     */
     encoding: string;
     /**
      * @since 1.1.0
      */
     extras: Extras;
-    /** @since 1.1.0 */
+    /**
+     * @description A Unique ID that can be specified by the publisher for [idempotent publishing](https://www.ably.io/documentation/rest/messages#idempotent).
+     * @since 1.1.0
+     */
     readonly id: string;
-    /** @since 1.1.0 */
+    /**
+     * @description The event name, if provided.
+     * @since 1.1.0
+     */
     name: string;
-    /** @since 1.1.0 */
+    /**
+     * @description Timestamp when the message was received by the Ably, as milliseconds since the epoch.
+     * @since 1.1.0
+     */
     readonly timestamp: int64;
 }

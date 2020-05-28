@@ -1,8 +1,17 @@
 import { VaultPatchProperties } from './VaultPatchProperties';
-/** @since 2019-09-01 */
+/**
+ * @description Parameters for creating or updating a vault
+ * @since 2019-09-01
+ */
 export interface VaultPatchParameters {
-    /** @since 2019-09-01 */
+    /**
+     * @description The tags that will be assigned to the key vault.
+     * @since 2019-09-01
+     */
     tags: Dictionary<string>;
-    /** @since 2019-09-01 */
+    /**
+     * @description Properties of the vault
+     * @since 2019-09-01
+     */
     properties: VaultPatchProperties;
 }

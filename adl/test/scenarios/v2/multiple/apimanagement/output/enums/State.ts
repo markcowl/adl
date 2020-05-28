@@ -1,5 +1,9 @@
 
-/** @since 2019-12-01 */
+/**
+ * @extensible
+ * @description Status of the issue.
+ * @since 2019-12-01
+ */
 export enum State {
     /** The issue is proposed. */
     proposed = 'proposed',

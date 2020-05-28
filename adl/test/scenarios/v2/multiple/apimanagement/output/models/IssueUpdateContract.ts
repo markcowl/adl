@@ -1,6 +1,12 @@
 import { IssueUpdateContractProperties } from './IssueUpdateContractProperties';
-/** @since 2019-12-01 */
+/**
+ * @description Issue update Parameters.
+ * @since 2019-12-01
+ */
 export interface IssueUpdateContract {
-    /** @since 2019-12-01 */
+    /**
+     * @description Issue entity Update contract properties.
+     * @since 2019-12-01
+     */
     properties: IssueUpdateContractProperties;
 }

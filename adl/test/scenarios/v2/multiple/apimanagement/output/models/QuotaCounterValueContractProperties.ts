@@ -1,8 +1,17 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description Quota counter value details.
+ * @since 2019-12-01
+ */
 export interface QuotaCounterValueContractProperties {
-    /** @since 2019-12-01 */
+    /**
+     * @description Number of times Counter was called.
+     * @since 2019-12-01
+     */
     callsCount: int32;
-    /** @since 2019-12-01 */
+    /**
+     * @description Data Transferred in KiloBytes.
+     * @since 2019-12-01
+     */
     kbTransferred: double;
 }

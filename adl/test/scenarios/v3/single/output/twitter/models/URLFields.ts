@@ -1,9 +1,18 @@
 import { URLImage } from './URLImage';
-/** @since 2.3 */
+/**
+ * @description Represent the portion of text recognized as a URL.
+ * @since 2.3
+ */
 export interface URLFields {
-    /** @since 2.3 */
+    /**
+     * @description Description of the URL landing page.
+     * @since 2.3
+     */
     description: string;
-    /** @since 2.3 */
+    /**
+     * @description The URL as displayed in the Twitter client.
+     * @since 2.3
+     */
     display_url: string;
     /**
      * @since 2.3
@@ -17,9 +26,15 @@ export interface URLFields {
      * @since 2.3
      */
     status: int64 & Minimum<100> & Maximum<599>;
-    /** @since 2.3 */
+    /**
+     * @description Title of the page the URL points to.
+     * @since 2.3
+     */
     title: string;
-    /** @since 2.3 */
+    /**
+     * @description Fully resolved url
+     * @since 2.3
+     */
     unwound_url: string;
     /**
      * @since 2.3

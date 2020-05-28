@@ -1,14 +1,32 @@
 import { VaultAccessPolicyProperties } from './VaultAccessPolicyProperties';
-/** @since 2019-09-01 */
+/**
+ * @description Parameters for updating the access policy in a vault
+ * @since 2019-09-01
+ */
 export interface VaultAccessPolicyParameters {
-    /** @since 2019-09-01 */
+    /**
+     * @description The resource id of the access policy.
+     * @since 2019-09-01
+     */
     readonly id: string & ;
-    /** @since 2019-09-01 */
+    /**
+     * @description The resource name of the access policy.
+     * @since 2019-09-01
+     */
     readonly name: string & ;
-    /** @since 2019-09-01 */
+    /**
+     * @description The resource name of the access policy.
+     * @since 2019-09-01
+     */
     readonly type: string & ;
-    /** @since 2019-09-01 */
+    /**
+     * @description The resource type of the access policy.
+     * @since 2019-09-01
+     */
     readonly location: string & ;
-    /** @since 2019-09-01 */
+    /**
+     * @description Properties of the access policy
+     * @since 2019-09-01
+     */
     properties?: VaultAccessPolicyProperties;
 }

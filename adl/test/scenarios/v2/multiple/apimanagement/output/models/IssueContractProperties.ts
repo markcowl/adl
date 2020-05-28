@@ -1,10 +1,22 @@
 import { IssueContractBaseProperties } from './IssueContractBaseProperties';
-/** @since 2019-12-01 */
+/**
+ * @description Issue contract Properties.
+ * @since 2019-12-01
+ */
 export interface IssueContractProperties extends IssueContractBaseProperties {
-    /** @since 2019-12-01 */
+    /**
+     * @description The issue title.
+     * @since 2019-12-01
+     */
     title?: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Text describing the issue.
+     * @since 2019-12-01
+     */
     description?: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description A resource identifier for the user created the issue.
+     * @since 2019-12-01
+     */
     userId?: string;
 }

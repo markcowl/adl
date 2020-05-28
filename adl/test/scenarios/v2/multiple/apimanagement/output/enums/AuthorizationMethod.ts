@@ -1,5 +1,8 @@
 
-/** @since 2019-12-01 */
+/**
+ * @extensible
+ * @since 2019-12-01
+ */
 export enum AuthorizationMethod {
     /**
      *

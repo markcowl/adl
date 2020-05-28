@@ -3,7 +3,10 @@
  * @since v3
  */
 export interface subscription {
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3

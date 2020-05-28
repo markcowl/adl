@@ -1,5 +1,9 @@
 
-/** @since 2019-12-01 */
+/**
+ * @extensible
+ * @todo temporary-reuse-marker
+ * @since 2019-12-01
+ */
 export enum GrantType {
     /** Authorization Code Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.1. */
     authorizationCode = 'authorizationCode',

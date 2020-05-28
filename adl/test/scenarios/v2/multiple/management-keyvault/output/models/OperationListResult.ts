@@ -1,8 +1,17 @@
 import { Operation } from './Operation';
-/** @since 2019-09-01 */
+/**
+ * @description Result of the request to list Storage operations. It contains a list of operations and a URL link to get the next set of results.
+ * @since 2019-09-01
+ */
 export interface OperationListResult {
-    /** @since 2019-09-01 */
+    /**
+     * @description List of Storage operations supported by the Storage resource provider.
+     * @since 2019-09-01
+     */
     value: Array<Operation>;
-    /** @since 2019-09-01 */
+    /**
+     * @description The URL to get the next set of operations.
+     * @since 2019-09-01
+     */
     nextLink: string;
 }

@@ -1,21 +1,48 @@
 import { SamplingSettings } from './SamplingSettings';
 import { PipelineDiagnosticSettings } from './PipelineDiagnosticSettings';
-/** @since 2019-12-01 */
+/**
+ * @description Diagnostic Entity Properties
+ * @since 2019-12-01
+ */
 export interface DiagnosticContractProperties {
-    /** @since 2019-12-01 */
+    /**
+     * @description Specifies for what type of messages sampling settings should not apply.
+     * @since 2019-12-01
+     */
     alwaysLog: AlwaysLog;
-    /** @since 2019-12-01 */
+    /**
+     * @description Resource Id of a target logger.
+     * @since 2019-12-01
+     */
     loggerId?: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Sampling settings for Diagnostic.
+     * @since 2019-12-01
+     */
     sampling: SamplingSettings;
-    /** @since 2019-12-01 */
+    /**
+     * @description Diagnostic settings for incoming/outgoing HTTP messages to the Gateway.
+     * @since 2019-12-01
+     */
     frontend: PipelineDiagnosticSettings;
-    /** @since 2019-12-01 */
+    /**
+     * @description Diagnostic settings for incoming/outgoing HTTP messages to the Backend
+     * @since 2019-12-01
+     */
     backend: PipelineDiagnosticSettings;
-    /** @since 2019-12-01 */
+    /**
+     * @description Log the ClientIP. Default is false.
+     * @since 2019-12-01
+     */
     logClientIp: boolean;
-    /** @since 2019-12-01 */
+    /**
+     * @description Sets correlation protocol to use for Application Insights diagnostics.
+     * @since 2019-12-01
+     */
     httpCorrelationProtocol: HttpCorrelationProtocol;
-    /** @since 2019-12-01 */
+    /**
+     * @description The verbosity level applied to traces emitted by trace policies.
+     * @since 2019-12-01
+     */
     verbosity: Verbosity;
 }

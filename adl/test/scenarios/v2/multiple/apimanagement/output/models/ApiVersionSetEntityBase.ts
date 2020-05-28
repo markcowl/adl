@@ -1,10 +1,22 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description Api Version set base parameters
+ * @since 2019-12-01
+ */
 export interface ApiVersionSetEntityBase {
-    /** @since 2019-12-01 */
+    /**
+     * @description Description of API Version Set.
+     * @since 2019-12-01
+     */
     description: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Name of query parameter that indicates the API Version if versioningScheme is set to `query`.
+     * @since 2019-12-01
+     */
     versionQueryName: string & MaxLength<100> & MinLength<1>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Name of HTTP header parameter that indicates the API Version if versioningScheme is set to `header`.
+     * @since 2019-12-01
+     */
     versionHeaderName: string & MaxLength<100> & MinLength<1>;
 }

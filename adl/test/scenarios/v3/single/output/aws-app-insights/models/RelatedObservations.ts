@@ -1,6 +1,12 @@
 import { Observation } from './Observation';
-/** @since 2018-11-25 */
+/**
+ * @description Describes observations related to the problem.
+ * @since 2018-11-25
+ */
 export interface RelatedObservations {
-    /** @since 2018-11-25 */
+    /**
+     * @description The list of observations related to the problem.
+     * @since 2018-11-25
+     */
     ObservationList: Array<Observation>;
 }

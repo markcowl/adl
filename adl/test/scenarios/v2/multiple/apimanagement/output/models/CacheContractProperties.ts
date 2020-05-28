@@ -1,10 +1,22 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description Properties of the Cache contract.
+ * @since 2019-12-01
+ */
 export interface CacheContractProperties {
-    /** @since 2019-12-01 */
+    /**
+     * @description Cache description
+     * @since 2019-12-01
+     */
     description: string & MaxLength<2000>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Runtime connection string to cache
+     * @since 2019-12-01
+     */
     connectionString?: string & MaxLength<300>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Original uri of entity in external system cache points to
+     * @since 2019-12-01
+     */
     resourceId: string & MaxLength<2000>;
 }

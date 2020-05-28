@@ -1,5 +1,9 @@
 
-/** @since 2019-12-01 */
+/**
+ * @extensible
+ * @description Status of an async operation.
+ * @since 2019-12-01
+ */
 export enum AsyncOperationStatus {
     /**
      *

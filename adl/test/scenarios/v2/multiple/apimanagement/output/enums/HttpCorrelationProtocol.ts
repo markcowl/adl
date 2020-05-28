@@ -1,5 +1,9 @@
 
-/** @since 2019-12-01 */
+/**
+ * @extensible
+ * @description Sets correlation protocol to use for Application Insights diagnostics.
+ * @since 2019-12-01
+ */
 export enum HttpCorrelationProtocol {
     /** Do not read and inject correlation headers. */
     None = 'None',

@@ -7,7 +7,10 @@ export interface issuesComment {
      * @since v3
      */
     body: string;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     created_at: string;
     /**
      * @since v3
@@ -17,7 +20,10 @@ export interface issuesComment {
      * @since v3
      */
     id: int64;
-    /** @since v3 */
+    /**
+     * @description ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+     * @since v3
+     */
     updated_at: string;
     /**
      * @since v3

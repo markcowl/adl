@@ -1,5 +1,9 @@
 
-/** @since 2019-12-01 */
+/**
+ * @extensible
+ * @description Format of the policyContent.
+ * @since 2019-12-01
+ */
 export enum PolicyContentFormat {
     /** The contents are inline and Content type is an XML document. */
     xml = 'xml',

@@ -1,8 +1,17 @@
 import { GatewayContract } from './GatewayContract';
-/** @since 2019-12-01 */
+/**
+ * @description Paged Gateway list representation.
+ * @since 2019-12-01
+ */
 export interface GatewayCollection {
-    /** @since 2019-12-01 */
+    /**
+     * @description Page values.
+     * @since 2019-12-01
+     */
     readonly value: Array<GatewayContract> & ;
-    /** @since 2019-12-01 */
+    /**
+     * @description Next page link if any.
+     * @since 2019-12-01
+     */
     readonly nextLink: string & ;
 }

@@ -1,14 +1,32 @@
 import { EmailTemplateParametersContractProperties } from './EmailTemplateParametersContractProperties';
-/** @since 2019-12-01 */
+/**
+ * @description Email Template Update Contract properties.
+ * @since 2019-12-01
+ */
 export interface EmailTemplateUpdateParameterProperties {
-    /** @since 2019-12-01 */
+    /**
+     * @description Subject of the Template.
+     * @since 2019-12-01
+     */
     subject: string & MaxLength<1000> & MinLength<1>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Title of the Template.
+     * @since 2019-12-01
+     */
     title: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Description of the Email Template.
+     * @since 2019-12-01
+     */
     description: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Email Template Body. This should be a valid XDocument
+     * @since 2019-12-01
+     */
     body: string & MinLength<1>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Email Template Parameter values.
+     * @since 2019-12-01
+     */
     parameters: Array<EmailTemplateParametersContractProperties>;
 }

@@ -1,8 +1,17 @@
 import { ProductEntityBaseParameters } from './ProductEntityBaseParameters';
-/** @since 2019-12-01 */
+/**
+ * @description Product profile.
+ * @since 2019-12-01
+ */
 export interface ProductTagResourceContractProperties extends ProductEntityBaseParameters {
-    /** @since 2019-12-01 */
+    /**
+     * @description Identifier of the product in the form of /products/{productId}
+     * @since 2019-12-01
+     */
     id: string;
-    /** @since 2019-12-01 */
+    /**
+     * @description Product name.
+     * @since 2019-12-01
+     */
     name?: string & MaxLength<300> & MinLength<1>;
 }

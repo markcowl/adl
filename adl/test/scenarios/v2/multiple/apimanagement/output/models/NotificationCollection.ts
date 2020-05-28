@@ -1,8 +1,17 @@
 import { NotificationContract } from './NotificationContract';
-/** @since 2019-12-01 */
+/**
+ * @description Paged Notification list representation.
+ * @since 2019-12-01
+ */
 export interface NotificationCollection {
-    /** @since 2019-12-01 */
+    /**
+     * @description Page values.
+     * @since 2019-12-01
+     */
     value: Array<NotificationContract>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Next page link if any.
+     * @since 2019-12-01
+     */
     nextLink: string;
 }

@@ -1,10 +1,22 @@
 import { AuthorizationServerContract } from './AuthorizationServerContract';
-/** @since 2019-12-01 */
+/**
+ * @description Paged OAuth2 Authorization Servers list representation.
+ * @since 2019-12-01
+ */
 export interface AuthorizationServerCollection {
-    /** @since 2019-12-01 */
+    /**
+     * @description Page values.
+     * @since 2019-12-01
+     */
     value: Array<AuthorizationServerContract>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Total record count number across all pages.
+     * @since 2019-12-01
+     */
     count: int64;
-    /** @since 2019-12-01 */
+    /**
+     * @description Next page link if any.
+     * @since 2019-12-01
+     */
     nextLink: string;
 }

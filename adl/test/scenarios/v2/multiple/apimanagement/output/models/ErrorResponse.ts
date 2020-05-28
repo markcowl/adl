@@ -1,6 +1,12 @@
 import { ErrorResponseBody } from './ErrorResponseBody';
-/** @since 2019-12-01 */
+/**
+ * @description Error Response.
+ * @since 2019-12-01
+ */
 export interface ErrorResponse {
-    /** @since 2019-12-01 */
+    /**
+     * @description Properties of the Error Response.
+     * @since 2019-12-01
+     */
     error: ErrorResponseBody;
 }

@@ -1,72 +1,177 @@
 
-/** @since 2018-11-25 */
+/**
+ * @description Describes an anomaly or error with the application.
+ * @since 2018-11-25
+ */
 export interface Observation {
-    /** @since 2018-11-25 */
+    /**
+     * @description The ID of the observation type.
+     * @since 2018-11-25
+     */
     Id: string & MaxLength<38> & MinLength<38> & RegularExpression<"o-[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}">;
-    /** @since 2018-11-25 */
+    /**
+     * @description The time when the observation was first detected, in epoch seconds.
+     * @since 2018-11-25
+     */
     StartTime: dateTime;
-    /** @since 2018-11-25 */
+    /**
+     * @description The time when the observation ended, in epoch seconds.
+     * @since 2018-11-25
+     */
     EndTime: dateTime;
-    /** @since 2018-11-25 */
+    /**
+     * @description The source type of the observation.
+     * @since 2018-11-25
+     */
     SourceType: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description The source resource ARN of the observation.
+     * @since 2018-11-25
+     */
     SourceARN: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description The log group name.
+     * @since 2018-11-25
+     */
     LogGroup: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description The timestamp in the CloudWatch Logs that specifies when the matched line occurred.
+     * @since 2018-11-25
+     */
     LineTime: dateTime;
-    /** @since 2018-11-25 */
+    /**
+     * @description The log text of the observation.
+     * @since 2018-11-25
+     */
     LogText: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description The log filter of the observation.
+     * @since 2018-11-25
+     */
     LogFilter: LogFilter;
-    /** @since 2018-11-25 */
+    /**
+     * @description The namespace of the observation metric.
+     * @since 2018-11-25
+     */
     MetricNamespace: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description The name of the observation metric.
+     * @since 2018-11-25
+     */
     MetricName: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description The unit of the source observation metric.
+     * @since 2018-11-25
+     */
     Unit: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description The value of the source observation metric.
+     * @since 2018-11-25
+     */
     Value: double;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The ID of the CloudWatch Event-based observation related to the detected problem.
+     * @since 2018-11-25
+     */
     CloudWatchEventId: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The source of the CloudWatch Event.
+     * @since 2018-11-25
+     */
     CloudWatchEventSource: CloudWatchEventSource;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The detail type of the CloudWatch Event-based observation, for example, <code>EC2 Instance State-change Notification</code>.
+     * @since 2018-11-25
+     */
     CloudWatchEventDetailType: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The Amazon Resource Name (ARN) of the AWS Health Event-based observation.
+     * @since 2018-11-25
+     */
     HealthEventArn: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The service to which the AWS Health Event belongs, such as EC2.
+     * @since 2018-11-25
+     */
     HealthService: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The type of the AWS Health event, for example, <code>AWS_EC2_POWER_CONNECTIVITY_ISSUE</code>.
+     * @since 2018-11-25
+     */
     HealthEventTypeCode: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The category of the AWS Health event, such as <code>issue</code>.
+     * @since 2018-11-25
+     */
     HealthEventTypeCategory: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The description of the AWS Health event provided by the service, such as Amazon EC2.
+     * @since 2018-11-25
+     */
     HealthEventDescription: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The deployment ID of the CodeDeploy-based observation related to the detected problem.
+     * @since 2018-11-25
+     */
     CodeDeployDeploymentId: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The deployment group to which the CodeDeploy deployment belongs.
+     * @since 2018-11-25
+     */
     CodeDeployDeploymentGroup: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The status of the CodeDeploy deployment, for example <code>SUCCESS</code> or <code> FAILURE</code>.
+     * @since 2018-11-25
+     */
     CodeDeployState: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The CodeDeploy application to which the deployment belongs.
+     * @since 2018-11-25
+     */
     CodeDeployApplication: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The instance group to which the CodeDeploy instance belongs.
+     * @since 2018-11-25
+     */
     CodeDeployInstanceGroupId: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The state of the instance, such as <code>STOPPING</code> or <code>TERMINATING</code>.
+     * @since 2018-11-25
+     */
     Ec2State: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The X-Ray request fault percentage for this node.
+     * @since 2018-11-25
+     */
     XRayFaultPercent: int64;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The X-Ray request throttle percentage for this node.
+     * @since 2018-11-25
+     */
     XRayThrottlePercent: int64;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The X-Ray request error percentage for this node.
+     * @since 2018-11-25
+     */
     XRayErrorPercent: int64;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The X-Ray request count for this node.
+     * @since 2018-11-25
+     */
     XRayRequestCount: int64;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The X-Ray node request average latency for this node.
+     * @since 2018-11-25
+     */
     XRayRequestAverageLatency: int64;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The name of the X-Ray node.
+     * @since 2018-11-25
+     */
     XRayNodeName: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description  The type of the X-Ray node.
+     * @since 2018-11-25
+     */
     XRayNodeType: string;
 }

@@ -1,8 +1,17 @@
 import { RecipientEmailContract } from './RecipientEmailContract';
-/** @since 2019-12-01 */
+/**
+ * @description Paged Recipient User list representation.
+ * @since 2019-12-01
+ */
 export interface RecipientEmailCollection {
-    /** @since 2019-12-01 */
+    /**
+     * @description Page values.
+     * @since 2019-12-01
+     */
     value: Array<RecipientEmailContract>;
-    /** @since 2019-12-01 */
+    /**
+     * @description Next page link if any.
+     * @since 2019-12-01
+     */
     nextLink: string;
 }

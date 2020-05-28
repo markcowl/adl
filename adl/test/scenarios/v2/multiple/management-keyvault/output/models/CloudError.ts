@@ -1,5 +1,8 @@
 import { CloudErrorBody } from './CloudErrorBody';
-/** @since 2019-09-01 */
+/**
+ * @description An error response from Key Vault resource provider
+ * @since 2019-09-01
+ */
 export interface CloudError {
     /**
      * @since 2019-09-01

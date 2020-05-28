@@ -1,8 +1,17 @@
 
-/** @since 2019-12-01 */
+/**
+ * @description Sampling settings for Diagnostic.
+ * @since 2019-12-01
+ */
 export interface SamplingSettings {
-    /** @since 2019-12-01 */
+    /**
+     * @description Sampling type.
+     * @since 2019-12-01
+     */
     samplingType: SamplingType;
-    /** @since 2019-12-01 */
+    /**
+     * @description Rate of sampling for fixed-rate sampling.
+     * @since 2019-12-01
+     */
     percentage: double & Minimum<0> & Maximum<100>;
 }

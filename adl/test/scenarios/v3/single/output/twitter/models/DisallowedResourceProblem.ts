@@ -1,5 +1,8 @@
 import { ProblemFields } from './ProblemFields';
-/** @since 2.3 */
+/**
+ * @description A problem that indicates that the resource requested violates the precepts of this API.
+ * @since 2.3
+ */
 export interface DisallowedResourceProblem extends ProblemFields {
     /**
      * @since 2.3

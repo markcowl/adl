@@ -1,12 +1,27 @@
 
-/** @since 2018-11-25 */
+/**
+ * @description Describes a standalone resource or similarly grouped resources that the application is made up of.
+ * @since 2018-11-25
+ */
 export interface ApplicationComponent {
-    /** @since 2018-11-25 */
+    /**
+     * @description The name of the component.
+     * @since 2018-11-25
+     */
     ComponentName: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description The resource type. Supported resource types include EC2 instances, Auto Scaling group, Classic ELB, Application ELB, and SQS Queue.
+     * @since 2018-11-25
+     */
     ResourceType: string;
-    /** @since 2018-11-25 */
+    /**
+     * @description The stack tier of the application component.
+     * @since 2018-11-25
+     */
     Tier: Tier;
-    /** @since 2018-11-25 */
+    /**
+     * @description Indicates whether the application component is monitored.
+     * @since 2018-11-25
+     */
     Monitor: boolean;
 }

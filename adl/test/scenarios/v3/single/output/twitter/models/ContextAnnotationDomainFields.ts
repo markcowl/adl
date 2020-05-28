@@ -1,10 +1,22 @@
 
-/** @since 2.3 */
+/**
+ * @description Represents the data for the context annotation domain.
+ * @since 2.3
+ */
 export interface ContextAnnotationDomainFields {
-    /** @since 2.3 */
+    /**
+     * @description Description of the context annotation domain.
+     * @since 2.3
+     */
     description: string;
-    /** @since 2.3 */
+    /**
+     * @description The unique id for a context annotation domain.
+     * @since 2.3
+     */
     id?: string & RegularExpression<"^[0-9]{1,19}$">;
-    /** @since 2.3 */
+    /**
+     * @description Name of the context annotation domain.
+     * @since 2.3
+     */
     name: string;
 }
