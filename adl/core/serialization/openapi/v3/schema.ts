@@ -523,15 +523,6 @@ export async function* processObjectSchema(schema: v3.Schema, $: Context, option
     $.addVersionInfo(p, property);
     result.properties.push(p);
   }
-  
-  /*
-  if (!isUsed(schema.required)) {
-    for (const each of unusedMembers(schema.required)) {
-      $.error(`Schema '${nameOf(schema)}' has required for property named '${(<any>schema.required)[each]}' `, schema);
-    }
-    throw new Error('fatal error');
-  }
-  */
 
   if (schema.additionalProperties) {
     // if additionalProperties is specified, then the type should
