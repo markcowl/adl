@@ -6,7 +6,7 @@ export interface Service {
      * @tag Status
      * @since 1.1.0
      */
-    getMetadataOfAllChannels(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>, limit?: Http.Query<int64>, prefix?: Http.Query<string>, by?: Http.Query<"value" | "id">);
+    getMetadataOfAllChannels(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, limit?: Http.Query<int64>, prefix?: Http.Query<string>, by?: Http.Query<"value" | "id">);
     /**
      * Get metadata of a channel
      * @description Get metadata of a channel
@@ -14,7 +14,7 @@ export interface Service {
      * @tag Status
      * @since 1.1.0
      */
-    getMetadataOfChannel(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>, _0: Http.Path<string, 'channel_id'>);
+    getMetadataOfChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>);
     /**
      * Get message history for a channel
      * @description Get message history for a channel
@@ -22,7 +22,7 @@ export interface Service {
      * @tag History
      * @since 1.1.0
      */
-    getMessagesByChannel(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>, _0: Http.Path<string, 'channel_id'>, _1?: Http.Query<string, 'start'>, _2?: Http.Query<int64, 'limit'>, _3?: Http.Query<string, 'end'>, _4?: Http.Query<"forwards" | "backwards", 'direction'>);
+    getMessagesByChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>, start?: Http.Query<string>, limit?: Http.Query<int64>, end?: Http.Query<string>, direction?: Http.Query<"forwards" | "backwards">);
     /**
      * Publish a message to a channel
      * @description Publish a message to the specified channel
@@ -30,7 +30,7 @@ export interface Service {
      * @tag Publishing
      * @since 1.1.0
      */
-    publishMessagesToChannel(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>, _0: Http.Path<string, 'channel_id'>);
+    publishMessagesToChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>);
     /**
      * Get presence of a channel
      * @description Get presence on a channel
@@ -38,7 +38,7 @@ export interface Service {
      * @tag Status
      * @since 1.1.0
      */
-    getPresenceOfChannel(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>, _0: Http.Path<string, 'channel_id'>, clientId?: Http.Query<string>, connectionId?: Http.Query<string>, limit?: Http.Query<int64>);
+    getPresenceOfChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>, clientId?: Http.Query<string>, connectionId?: Http.Query<string>, limit?: Http.Query<int64>);
     /**
      * Get presence history of a channel
      * @description Get presence on a channel
@@ -46,7 +46,7 @@ export interface Service {
      * @tag History
      * @since 1.1.0
      */
-    getPresenceHistoryOfChannel(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>, _0: Http.Path<string, 'channel_id'>, _1?: Http.Query<string, 'start'>, _2?: Http.Query<int64, 'limit'>, _3?: Http.Query<string, 'end'>, _4?: Http.Query<"forwards" | "backwards", 'direction'>);
+    getPresenceHistoryOfChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>, start?: Http.Query<string>, limit?: Http.Query<int64>, end?: Http.Query<string>, direction?: Http.Query<"forwards" | "backwards">);
     /**
      * Request an access token
      * @description This is the means by which clients obtain access tokens to use the service. You can see how to construct an Ably TokenRequest in the [Ably TokenRequest spec](https://www.ably.io/documentation/rest-api/token-request-spec) documentation, although we recommend you use an Ably SDK rather to create a TokenRequest, as the construction of a TokenRequest is complex. The resulting token response object contains the token properties as defined in Ably TokenRequest spec. Authentication is not required if using a Signed TokenRequest.
@@ -54,7 +54,7 @@ export interface Service {
      * @tag Authentication
      * @since 1.1.0
      */
-    requestAccessToken(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>, _0: Http.Path<string, 'keyName'>);
+    requestAccessToken(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, keyName: Http.Path<string>);
     /**
      * List channel subscriptions
      * @description Get a list of push notification subscriptions to channels.
@@ -62,7 +62,7 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    getPushSubscriptionsOnChannels(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>, channel?: Http.Query<string>, deviceId?: Http.Query<string>, clientId?: Http.Query<string>, limit?: Http.Query<int64 & Maximum<1000>>);
+    getPushSubscriptionsOnChannels(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel?: Http.Query<string>, deviceId?: Http.Query<string>, clientId?: Http.Query<string>, limit?: Http.Query<int64 & Maximum<1000>>);
     /**
      * Subscribe a device to a channel
      * @description Subscribe either a single device or all devices associated with a client ID to receive push notifications from messages sent to a channel.
@@ -70,7 +70,7 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    subscribePushDeviceToChannel(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>);
+    subscribePushDeviceToChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">);
     /**
      * Delete a registered device's update token
      * @description Delete a device details object.
@@ -78,7 +78,7 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    deletePushDeviceDetails(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>, channel?: Http.Query<string>, deviceId?: Http.Query<string>, clientId?: Http.Query<string>);
+    deletePushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel?: Http.Query<string>, deviceId?: Http.Query<string>, clientId?: Http.Query<string>);
     /**
      * List all channels with at least one subscribed device
      * @description Returns a paginated response of channel names.
@@ -86,7 +86,7 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    getChannelsWithPushSubscribers(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>);
+    getChannelsWithPushSubscribers(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">);
     /**
      * List devices registered for receiving push notifications
      * @description List of device details of devices registed for push notifications.
@@ -94,7 +94,7 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    getRegisteredPushDevices(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>, deviceId?: Http.Query<string>, clientId?: Http.Query<string>, limit?: Http.Query<int64 & Maximum<1000>>);
+    getRegisteredPushDevices(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, deviceId?: Http.Query<string>, clientId?: Http.Query<string>, limit?: Http.Query<int64 & Maximum<1000>>);
     /**
      * Register a device for receiving push notifications
      * @description Register a device’s details, including the information necessary to deliver push notifications to it. Requires "push-admin" capability.
@@ -102,7 +102,7 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    registerPushDevice(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>);
+    registerPushDevice(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">);
     /**
      * Unregister matching devices for push notifications
      * @description Unregisters devices. All their subscriptions for receiving push notifications through channels will also be deleted.
@@ -110,7 +110,7 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    unregisterAllPushDevices(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>, deviceId?: Http.Query<string>, clientId?: Http.Query<string>);
+    unregisterAllPushDevices(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, deviceId?: Http.Query<string>, clientId?: Http.Query<string>);
     /**
      * Get a device registration
      * @description Get the full details of a device.
@@ -118,7 +118,7 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    getPushDeviceDetails(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>, _0: Http.Path<string, 'device_id'>);
+    getPushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>);
     /**
      * Update a device registration
      * @description Device registrations can be upserted (the existing registration is replaced entirely) with a PUT operation. Only clientId, metadata and push.recipient are mutable.
@@ -126,7 +126,7 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    putPushDeviceDetails(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>, _0: Http.Path<string, 'device_id'>);
+    putPushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>);
     /**
      * Unregister a single device for push notifications
      * @description Unregisters a single device by its device ID. All its subscriptions for receiving push notifications through channels will also be deleted.
@@ -134,7 +134,7 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    unregisterPushDevice(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>, _0: Http.Path<string, 'device_id'>);
+    unregisterPushDevice(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>);
     /**
      * Update a device registration
      * @description Specific attributes of an existing registration can be updated. Only clientId, metadata and push.recipient are mutable.
@@ -142,7 +142,7 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    patchPushDeviceDetails(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>, _0: Http.Path<string, 'device_id'>);
+    patchPushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>);
     /**
      * Reset a registered device's update token
      * @description Gets an updated device details object.
@@ -150,7 +150,7 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    updatePushDeviceDetails(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>, _0: Http.Path<string, 'device_id'>);
+    updatePushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>);
     /**
      * Publish a push notification to device(s)
      * @description A convenience endpoint to deliver a push notification payload to a single device or set of devices identified by their client identifier.
@@ -158,7 +158,7 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    publishPushNotificationToDevices(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>);
+    publishPushNotificationToDevices(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">);
     /**
      * Retrieve usage statistics for an application
      * @description The Ably system can be queried to obtain usage statistics for a given application, and results are provided aggregated across all channels in use in the application in the specified period. Stats may be used to track usage against account quotas.
@@ -166,7 +166,7 @@ export interface Service {
      * @tag Stats
      * @since 1.1.0
      */
-    getStats(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>, _0?: Http.Query<string, 'start'>, _1?: Http.Query<int64, 'limit'>, _2?: Http.Query<string, 'end'>, _3?: Http.Query<"forwards" | "backwards", 'direction'>, unit?: Http.Query<"minute" | "hour" | "day" | "month">);
+    getStats(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, start?: Http.Query<string>, limit?: Http.Query<int64>, end?: Http.Query<string>, direction?: Http.Query<"forwards" | "backwards">, unit?: Http.Query<"minute" | "hour" | "day" | "month">);
     /**
      * Get the service time
      * @description This returns the service time in milliseconds since the epoch.
@@ -174,5 +174,5 @@ export interface Service {
      * @tag Stats
      * @since 1.1.0
      */
-    getTime(_0?: Http.Header<string, 'X-Ably-Version'>, _1?: Http.Query<"json" | "jsonp" | "msgpack" | "html", 'format'>);
+    getTime(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">);
 }

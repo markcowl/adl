@@ -139,7 +139,7 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
     for (let each of parameters) {
       each = valueOf(each);
       const parameter = each instanceof Alias ? each.target : each;
-      const name = normalizeName(each.name);
+      const name = normalizeName(parameter.name);
       const type = this.getParameterType(parameter, name);
 
       structures.push({
