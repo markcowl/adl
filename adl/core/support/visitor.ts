@@ -122,7 +122,7 @@ export class Visitor<TSourceModel extends OAIModel> {
 
 
   api: ApiModel;
-  tracker: Tracker;
+  // tracker: Tracker;
 
   constructor(
     api: ApiModel,
@@ -130,10 +130,11 @@ export class Visitor<TSourceModel extends OAIModel> {
     public inputType: 'oai3' | 'oai2',
     ...sourceFiles: Array<string>) {
     // the source location tracker
-    this.tracker = new Tracker();
+    // this.tracker = new Tracker();
 
     // enable target tracking on the output modle
-    this.api = TrackedTarget.track(api, [], this.tracker);
+    // this.api = TrackedTarget.track(api, [], this.tracker);
+    this.api = api;
 
     // the source files are going to be YAML/JSON files for this 
     // so we can speed up the process and grab them all and hold onto them
@@ -431,6 +432,7 @@ export class Context<TSourceModel extends OAIModel> {
   }
 
   normalizeReference(ref: string) {
+    
     const split = /(.*?)#(.*)/g.exec(ref);
     if (!split) {
       throw new Error(`$ref '${ref}' not legal`);
@@ -442,7 +444,8 @@ export class Context<TSourceModel extends OAIModel> {
     }
     // is the file pointing to this file?
     if (file === '' || file === '.' || file === './') {
-      file = getSourceFile(ref)?.filename || fail(`unable to get filename of $ref ${ref}`);
+      // file = getSourceFile(ref)?.filename || fail(`unable to get filename of $ref ${ref}`);
+      file = this.sourceFile;
     } else {
       file = this.visitor.host.fileSystem.resolve(file);
     }

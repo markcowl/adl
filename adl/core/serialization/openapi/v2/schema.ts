@@ -1,6 +1,6 @@
 import { items, length, values } from '@azure-tools/linq';
 import { IntegerFormat, NumberFormat, StringFormat, v2 } from '@azure-tools/openapi';
-import { anonymous, isUsed, nameOf, unusedMembers, use, using } from '@azure-tools/sourcemap';
+import { anonymous, nameOf, use, using } from '@azure-tools/sourcemap';
 import { Alias as GenericAlias } from '../../../model/alias';
 import { createAlias } from '../../../model/schema/alias';
 import { ExclusiveMaximumConstraint, ExclusiveMinimumConstraint, MaximumConstraint, MaximumElementsConstraint, MaximumPropertiesConstraint, MaxLengthConstraint, MinimumConstraint, MinimumElementsConstraint, MinimumPropertiesConstraint, MinLengthConstraint, MultipleOfConstraint, ReadOnlyModifier, RegularExpressionConstraint, UniqueElementsConstraint } from '../../../model/schema/constraint';
@@ -58,10 +58,10 @@ export async function* processSchema(schema: v2.Schema, $: Context, options?: { 
       //  
       // or a back-door way to $ref 
       if (length(schema.allOf) === 1) {
-        if (!schema.properties) {
-          // no properties, but inheritance,
-          return processSillyRef(schema, $, options);
-        }
+        // if (!schema.properties) {
+        // no properties, but inheritance,
+        // return processSillyRef(schema, $, options);
+        // }
       }
       // process schemas with allOf as objects 
       return processObjectSchema(schema, $, options);
@@ -177,30 +177,30 @@ export async function* processStringSchema(schema: v2.Schema, $: Context): Async
 
   // we're going to treat it as a standard string schema
   // if this is just a plain string with no adornments, just return the common string instance. 
-  if (length(unusedMembers(schema)) === 0) {
+  if (!(schema.default !== undefined || schema.readOnly !== undefined || schema.minLength !== undefined || schema.maxLength !== undefined || schema.pattern !== undefined)) {
     return yield $.api.schemas.String;
   }
-
+  
   // otherwise, we have to get the standard string and make an alias for it with the adornments. 
   const alias = createAlias($.api,anonymous('string'), $.api.schemas.String, commonProperties(schema));
 
-  if (schema.default) {
+  if (schema.default !== undefined) {
     alias.defaults.push(new ServerDefaultValue(schema.default));
   }
 
-  if (schema.readOnly) {
+  if (schema.readOnly !== undefined) {
     alias.constraints.push(new ReadOnlyModifier());
   }
 
-  if (schema.maxLength) {
+  if (schema.maxLength !== undefined) {
     alias.constraints.push(new MaxLengthConstraint(schema.maxLength));
   }
 
-  if (schema.minLength) {
+  if (schema.minLength !== undefined) {
     alias.constraints.push(new MinLengthConstraint(schema.minLength));
   }
 
-  if (schema.pattern) {
+  if (schema.pattern !== undefined) {
     alias.constraints.push(new RegularExpressionConstraint(schema.pattern));
   }
 
@@ -271,7 +271,7 @@ export async function* processNumberSchema(schema: v2.Schema, $: Context): Async
 
 function constrainNumericSchema(schema: v2.Schema, $: Context, target: Schema): Schema {
   // if this is just a number with no adornments, just return the common instance
-  if (length(unusedMembers(schema)) === 0) {
+  if (!(schema.default !== undefined || schema.exclusiveMaximum !== undefined || schema.exclusiveMinimum !== undefined || schema.minimum !== undefined || schema.maximum !== undefined || schema.multipleOf)) {
     return target;
   }
 
@@ -282,21 +282,21 @@ function constrainNumericSchema(schema: v2.Schema, $: Context, target: Schema): 
     alias.defaults.push(new ServerDefaultValue(schema.default));
   }
 
-  if (schema.minimum) {
+  if (schema.minimum !== undefined ) {
     if (schema.exclusiveMinimum) {
       alias.constraints.push(new ExclusiveMinimumConstraint(schema.minimum));
     } else {
       alias.constraints.push(new MinimumConstraint(schema.minimum));
     }
   }
-  if (schema.maximum) {
+  if (schema.maximum !== undefined ) {
     if (schema.exclusiveMaximum) {
       alias.constraints.push(new ExclusiveMaximumConstraint(schema.maximum));
     } else { 
       alias.constraints.push(new MaximumConstraint(schema.maximum));
     }
   }
-  if (schema.multipleOf) {
+  if (schema.multipleOf !== undefined ) {
     alias.constraints.push(new MultipleOfConstraint(schema.multipleOf));
   }
 
@@ -321,7 +321,7 @@ export async function* processArraySchema(schema: v2.Schema, $: Context, options
 
   const result = new ArraySchema(elementSchema);
 
-  if (length(unusedMembers(schema)) === 0) {
+  if (!(schema.default !== undefined || schema.maxItems !== undefined || schema.minItems !== undefined || schema.uniqueItems !== undefined)) {
     return yield result;
   }
 
@@ -465,12 +465,14 @@ export async function* processObjectSchema(schema: v2.Schema, $: Context, option
   }
   use(schema.required);
 
+  /*
   if (!isUsed(schema.required)) {
     for (const each of unusedMembers(schema.required)) {
       $.error(`Schema '${nameOf(schema)}' has required for property named '${(<any>schema.required)[each]}' `, schema);
     }
     throw new Error('fatal error');
   }
+  */
 
   if (schema.additionalProperties) {
     // if additionalProperties is specified, then the type should

@@ -106,7 +106,7 @@ async function processRoot(oai2: v2.Model, $: Context) {
       continue;
     }
 
-    throw new Error('Should not get here.');
+    throw new Error(`Should not get here. '${schema.name}' is of type ${Object.getPrototypeOf(schema).name}`);
   }
 
 
