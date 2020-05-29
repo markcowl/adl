@@ -1,5 +1,5 @@
 import { v3 } from '@azure-tools/openapi';
-import { anonymous, nameOf, refTo, use } from '@azure-tools/sourcemap';
+import { anonymous, nameOf, use } from '@azure-tools/sourcemap';
 import { Header } from '../../../model/http/header';
 import { singleOrDefault } from '../common';
 import { processInline } from './schema';
@@ -27,11 +27,6 @@ export async function* header(header: v3.Header, $: Context, options?: { isAnony
     // set the style value
     style: use(header.style),
   });
-
-  // best practice - put this into the $refs collection early 
-  if (!options?.isAnonymous) {
-    visitor.$refs.set(refTo(header), [httpHeader]);
-  }
 
   // preserve data that we're not using
   httpHeader.addToAttic('example', use(header.example));
