@@ -1,9 +1,10 @@
 import { v3 } from '@azure-tools/openapi';
-import { anonymous, nameOf, refTo } from '@azure-tools/sourcemap';
+import { anonymous, nameOf } from '@azure-tools/sourcemap';
 import { Header } from '../../../model/http/header';
 import { singleOrDefault } from '../common';
 import { processInline } from './schema';
 import { Context } from './serializer';
+
 
 export async function* header(header: v3.Header, $: Context, options?: { isAnonymous?: boolean }): AsyncGenerator<Header> {
   const { api, visitor } = $;
@@ -27,11 +28,6 @@ export async function* header(header: v3.Header, $: Context, options?: { isAnony
     // set the style value
     style: header.style,
   });
-
-  // best practice - put this into the $refs collection early 
-  if (!options?.isAnonymous) {
-    visitor.$refs.set(refTo(header), [httpHeader]);
-  }
 
   // preserve data that we're not using
   httpHeader.addToAttic('example', header.example);

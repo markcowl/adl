@@ -25,10 +25,37 @@ export interface SourceFile<TSourceModel extends OAIModel> {
   visitor: Visitor<TSourceModel>;
 }
 
+class RefMap {
+  private map = new Map<string, Map<string, Array<any>>>();
+
+  get(type: string, ref: string): Array<any> | undefined {
+    const map2 = this.map.get(type);
+    if (!map2) {
+      return undefined;
+    }
+
+    const values = map2.get(ref);
+    if (!values) {
+      return undefined;
+    }
+
+    return values;
+  }
+
+  set(type: string, ref: string, values: Array<any>): void {
+    let map2 = this.map.get(type);
+    if (!map2) {
+      map2 = new Map<string, Array<any>>();
+      this.map.set(type, map2);
+    }
+    map2.set(ref, values);
+  }
+}
+
 export class Visitor<TSourceModel extends OAIModel> {
   key = '';
   sourceFiles = new Map<string, Promise<Context<TSourceModel>>>();
-  $refs = new Map<string, Array<any>>();
+  $refs = new RefMap();
 
   constructor(
     public api: ApiModel,
@@ -185,7 +212,7 @@ export class Context<TSourceModel extends OAIModel> {
       // see if we've processed this node before.
       // todo: hmmm. $refs can only return a single value? This may need rethinking...
       const ref = refTo(value);
-      const refResult = this.visitor.$refs.get(ref);
+      const refResult = this.visitor.$refs.get(action.name, ref);
       if (refResult) {
         for (const each of refResult) {
           yield each;
@@ -200,7 +227,7 @@ export class Context<TSourceModel extends OAIModel> {
           // we got back a value for that.
 
           // track it so we don't redo it if asked for it again later.
-          this.visitor.$refs.set(ref, results);
+          this.visitor.$refs.set(action.name, ref, results);
           results.push(result);
           if (result.versionInfo.length === 0) {
             // only add this if we haven't added it before
@@ -245,7 +272,7 @@ export class Context<TSourceModel extends OAIModel> {
 
         const { $ref, file, path } = this.normalizeReference(value.$ref);
 
-        const targets = <Array<TOut>>this.visitor.$refs.get($ref);
+        const targets = <Array<TOut>>this.visitor.$refs.get(action.name, $ref);
         if (targets) {
           // already processed?
           for (const target of targets) {
@@ -286,19 +313,19 @@ export class Context<TSourceModel extends OAIModel> {
 
       // see if we've processed this node before.
       const ref = refTo(value);
-      let result = <TOutput | undefined>this.visitor.$refs.get(ref);
-      if (result) {
-        return result;
+      const results = this.visitor.$refs.get(action.name, ref);
+      if (results) {
+        return results[0];
       }
 
       // ok, call the action
-      result = await action(value!, this, options);
+      const result = await action(value!, this, options);
 
       if (result !== undefined) {
         // we got back a value for that.
 
         // track it so we don't redo it if asked for it again later.
-        this.visitor.$refs.set(ref, [result]);
+        this.visitor.$refs.set(action.name, ref, [result]);
 
         result.addVersionInfo({
           // deprecated isn't on everything, but this is safe when it's not there
