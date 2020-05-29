@@ -34,12 +34,8 @@ enum SpecialProperties {
   RefToHere = '##RefToHere', // gets the JSON Reference to the tracked source
 }
 
-export function use<T>(value: T, recursive = false): T {
-  return value;
-}
-
 /** marks a member in a tracked source model as 'used' */
-export function _use<T>(value: T, recursive = false): T {
+export function use<T>(value: T, recursive = false): T {
   if (value === undefined || value === null || typeof value === 'function') {
     return value;
   }
@@ -57,7 +53,7 @@ export function _use<T>(value: T, recursive = false): T {
   return value;
 }
 
-export function _unusedMembers<T>(value: T) {
+export function unusedMembers<T>(value: T) {
   if (value === undefined || value === null || typeof valueOf(value) !== 'object') {
     return [];
   }
