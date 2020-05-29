@@ -1,5 +1,4 @@
 import { common } from '@azure-tools/openapi';
-import { use } from '@azure-tools/sourcemap';
 import { Contact, ContactRole } from '../../../model/contact';
 import { License } from '../../../model/license';
 import { Metadata } from '../../../model/metadata';
@@ -57,9 +56,6 @@ export async function *processInfo<TModel extends OAIModel>(info: common.Info, $
   // add remaining extensions to attic. 
   await addExtensionsToAttic(metadata, info);
 
-  // we handled version much earler.
-  use(info.version);
-
   yield metadata;
 }
 
@@ -84,7 +80,6 @@ export async function *processTag<TModel extends OAIModel>(tag: common.Tag, $: C
     location: tag.externalDocs ? tag.externalDocs.url : undefined,
     description: tag.externalDocs ? tag.externalDocs.description : undefined,
   });
-  use(tag.externalDocs);
 
   await addExtensionsToAttic(reference, tag);
 

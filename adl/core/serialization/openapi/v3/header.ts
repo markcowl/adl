@@ -1,5 +1,5 @@
 import { v3 } from '@azure-tools/openapi';
-import { anonymous, nameOf, refTo, use } from '@azure-tools/sourcemap';
+import { anonymous, nameOf, refTo } from '@azure-tools/sourcemap';
 import { Header } from '../../../model/http/header';
 import { singleOrDefault } from '../common';
 import { processInline } from './schema';
@@ -10,8 +10,8 @@ export async function* header(header: v3.Header, $: Context, options?: { isAnony
   const name = options?.isAnonymous ? anonymous('header') : nameOf(header);
 
   // these are in the OAI schema, but should not be in headers - freakout if they are used
-  use(header.explode) && $.error('header definitions must not contain property \'explode\'', header.explode);
-  use(header.required) && $.warn('header definitions should not contain property \'required\'', header.required);
+  header.explode && $.error('header definitions must not contain property \'explode\'', header.explode);
+  header.required && $.warn('header definitions should not contain property \'required\'', header.required);
 
   // get the schema for the header 
   const schema = await singleOrDefault(processInline(header.schema, $, { isAnonymous: true }));
@@ -25,7 +25,7 @@ export async function* header(header: v3.Header, $: Context, options?: { isAnony
     // set a specific value 
     description: header.description,
     // set the style value
-    style: use(header.style),
+    style: header.style,
   });
 
   // best practice - put this into the $refs collection early 
@@ -34,7 +34,7 @@ export async function* header(header: v3.Header, $: Context, options?: { isAnony
   }
 
   // preserve data that we're not using
-  httpHeader.addToAttic('example', use(header.example));
+  httpHeader.addToAttic('example', header.example);
 
   yield httpHeader;
 }

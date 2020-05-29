@@ -1,8 +1,7 @@
-import { Dictionary } from '@azure-tools/linq';
 import { anonymous, isAnonymous } from '@azure-tools/sourcemap';
 import { Node } from 'ts-morph';
 import { getFirstDoc, getTagValue, setTag } from '../../support/doc-tag';
-import { getPath, IsTypeDeclaration, TypeDeclaration } from '../../support/typescript';
+import { IsTypeDeclaration, TypeDeclaration } from '../../support/typescript';
 import { Element, TSElement } from '../element';
 import { Identity } from '../types';
 
@@ -69,14 +68,6 @@ export class Schema extends Element {
 }
 
 export class NamedElement<TNode extends Node> extends TSElement<TNode> {
-  get targetMap(): Dictionary<any> {
-    return {
-      ...super.targetMap,
-      summary: getPath(this.node, /* path to summary jsdoc */),
-      description: getPath(this.node, /* path to description jsdoc */),
-    };
-  }
-
   get name(): Identity {
     let result: Identity | undefined = undefined;
     if (Node.isNamedNode(this.node) || Node.isNameableNode(this.node)) {

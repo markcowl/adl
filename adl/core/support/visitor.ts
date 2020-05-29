@@ -292,7 +292,6 @@ export class Context<TSourceModel extends OAIModel> {
       for await (const result of action(value!, this, options)) {
         if (result !== undefined) {
           // we got back a value for that.
-          //result = TrackedTarget.track(result);
 
           // track it so we don't redo it if asked for it again later.
           this.visitor.$refs.set(ref, results);
@@ -390,7 +389,6 @@ export class Context<TSourceModel extends OAIModel> {
       result = await action(value!, this, options);
 
       if (result !== undefined) {
-        //result = TrackedTarget.track(result);
         // we got back a value for that.
 
         // track it so we don't redo it if asked for it again later.

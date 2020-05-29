@@ -1,9 +1,7 @@
-import { Dictionary } from '@azure-tools/linq';
 import { isAnonymous } from '@azure-tools/sourcemap';
 import { EnumDeclaration, EnumMember } from 'ts-morph';
 import { literal, normalizeIdentifier } from '../../support/codegen';
 import { appendTag, getFirstDoc, hasTag, setTag } from '../../support/doc-tag';
-import { getPath } from '../../support/typescript';
 import { ApiModel } from '../api-model';
 import { TSElement } from '../element';
 import { Collection, CollectionImpl, Identity } from '../types';
@@ -21,14 +19,6 @@ export interface EnumValue {
 }
 
 class EnumValueImpl extends TSElement<EnumMember> implements EnumValue {
-  get targetMap() {
-    return {
-      ...super.targetMap,
-      $: getPath(this.node),
-      value: getPath(this.node, 'getValue')
-    };
-  }
-
   constructor(node: EnumMember) {
     super(node);
   }
@@ -50,13 +40,6 @@ class EnumValueImpl extends TSElement<EnumMember> implements EnumValue {
 }
 
 class EnumImpl extends TSSchema<EnumDeclaration> implements Enum {
-  get targetMap(): Dictionary<any> {
-    return {
-      ...super.targetMap,
-      $: getPath(this.node),
-    };
-  }
-
   get extensible() {
     return hasTag(this.node, 'extensible');
   }
@@ -91,10 +74,7 @@ class EnumImpl extends TSSchema<EnumDeclaration> implements Enum {
     });
     const result = new EnumValueImpl(member);
     result.description = value.description;
-    result.track({
-      $: name,
-      value: val
-    });
+    
     return result;
   }
 
@@ -146,9 +126,6 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
   }
 
   result.initialize(initializer);
-  result.track({
-    $: name
-  });
-
+ 
   return result;
 }

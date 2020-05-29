@@ -1,6 +1,6 @@
 import { exists, isFile, mkdir, rmdir, writeFile } from '@azure-tools/async-io';
-import { Dictionary, values } from '@azure-tools/linq';
-import { isAnonymous, Path, SourceMap, TargetMap, use, valueOf } from '@azure-tools/sourcemap';
+import { Dictionary } from '@azure-tools/linq';
+import { isAnonymous, Path, valueOf } from '@azure-tools/sourcemap';
 import { dirname, join } from 'path';
 import { EnumDeclaration, IndentationText, NewLineKind, Node, Project, QuoteKind, SourceFile } from 'ts-morph';
 import { getNode, referenceTo } from '../support/typescript';
@@ -36,14 +36,7 @@ export class ApiModel {
     group: this.#project.createDirectory('operations'),
     resource: this.#project.createDirectory('resources'),
   }
-
-  #anonymous = this.#project.createDirectory('anonymous');
-  #alias = this.#project.createDirectory('aliases');
-  #models = this.#project.createDirectory('models');
-  #enums = this.#project.createDirectory('enums');
-  #operations = this.#project.createDirectory('operations');
-  #resources = this.#project.createDirectory('resources');
-
+  
   privateData = new Map<string,any>();
 
   get project() {
@@ -68,16 +61,8 @@ export class ApiModel {
 
   http: HttpProtocol = new HttpProtocol();
 
-
   constructor() {
     (<any>this.#project).api = this;
-  }
-
-  track(targetMap: TargetMap, sourceMap: SourceMap) {
-    // temporary -- use up everything that we are given in the source map.
-    for (const each of values(sourceMap)) {
-      use(each);
-    }
   }
 
   versionInfo = new Array<VersionInfo>();
@@ -157,7 +142,7 @@ export class ApiModel {
   }
 
   isFileAnonymous(sourceFile: SourceFile): boolean {
-    return this.#anonymous.isAncestorOf(sourceFile);
+    return this.#folders.anonymous.isAncestorOf(sourceFile);
   }
 
   getNameAndFile(identity: Identity, type: keyof Folders) {
