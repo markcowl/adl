@@ -34,8 +34,12 @@ enum SpecialProperties {
   RefToHere = '##RefToHere', // gets the JSON Reference to the tracked source
 }
 
-/** marks a member in a tracked source model as 'used' */
 export function use<T>(value: T, recursive = false): T {
+  return value;
+}
+
+/** marks a member in a tracked source model as 'used' */
+export function _use<T>(value: T, recursive = false): T {
   if (value === undefined || value === null || typeof value === 'function') {
     return value;
   }
@@ -53,7 +57,7 @@ export function use<T>(value: T, recursive = false): T {
   return value;
 }
 
-export function unusedMembers<T>(value: T) {
+export function _unusedMembers<T>(value: T) {
   if (value === undefined || value === null || typeof valueOf(value) !== 'object') {
     return [];
   }
@@ -97,7 +101,8 @@ export function isUsed<T>(value: T): boolean {
     return true;
   }
   // ask the proxy if the isUsed is set.
-  return (<any>value)[SpecialProperties.IsUsed] === true;
+  /// return (<any>value)[SpecialProperties.IsUsed] === true;
+  return true;
 }
 
 export function getSourceFile(value: any): SourceFile | undefined {
@@ -271,7 +276,8 @@ export class TrackedSource<T extends Object, instanceType> {
     }
     
     const value = (<any>this.instance)[property];
-    if (value === undefined || value === null) {
+    // if (value === undefined || value === null) {
+    if( typeof value !== 'object') {
       return value;
     }
     switch (typeof value) {
