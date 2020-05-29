@@ -1,6 +1,6 @@
 import { exists, isFile, mkdir, rmdir, writeFile } from '@azure-tools/async-io';
 import { Dictionary, values } from '@azure-tools/linq';
-import { isAnonymous, isProxy, Path, SourceMap, TargetMap, use, valueOf } from '@azure-tools/sourcemap';
+import { isAnonymous, Path, SourceMap, TargetMap, use, valueOf } from '@azure-tools/sourcemap';
 import { dirname, join } from 'path';
 import { EnumDeclaration, IndentationText, NewLineKind, Node, Project, QuoteKind, SourceFile } from 'ts-morph';
 import { getNode, referenceTo } from '../support/typescript';
@@ -50,9 +50,6 @@ export class ApiModel {
     return this.#project;
   }
   getPrivateData(path: Path): Dictionary<any> {
-    if (isProxy(this)) {
-      return valueOf(this).getPrivateData(path);
-    }
     const p = path.join('/');
     let v = this.privateData.get(p);
     if( !v ) {
@@ -138,9 +135,6 @@ export class ApiModel {
   }
 
   getFile(identity: Identity, type: keyof Folders ): SourceFile {
-    if (isProxy(this)) {
-      return valueOf(this).getFile(identity, type);
-    }
     if (isAnonymous(identity) ) {
       identity = identity.name;
       type = 'anonymous';
@@ -163,9 +157,6 @@ export class ApiModel {
   }
 
   isFileAnonymous(sourceFile: SourceFile): boolean {
-    if (isProxy(this)) {
-      return valueOf(this).isFileAnonymous(sourceFile);
-    }
     return this.#anonymous.isAncestorOf(sourceFile);
   }
 
@@ -185,7 +176,7 @@ export class ApiModel {
    */
   getTypeReference(schema: Schema, targetSourceFile: SourceFile): string {
     schema = valueOf(schema);
-    
+
     // get all the imports required for the type 
     // add them to this file
     const importDecls = targetSourceFile.getImportDeclarations();

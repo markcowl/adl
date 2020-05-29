@@ -1,6 +1,6 @@
 import { items } from '@azure-tools/linq';
 import { JsonReference, v2 } from '@azure-tools/openapi';
-import { getSourceFile, nameOf, use, valueOf } from '@azure-tools/sourcemap';
+import { getSourceFile, nameOf, use } from '@azure-tools/sourcemap';
 import { ApiKeyAuthentication, AuthenticationReference, AuthenticationRequirement, AuthorizationCodeOAuth2Flow, ClientCredentialsOAuth2Flow, HttpAuthentication, ImplicitOAuth2Flow, OAuth2Authentication, OAuth2Flow, OAuth2Flows, OAuth2Scope, ParameterLocation, PasswordOAuth2Flow } from '../../../model/http/protocol';
 import { addExtensionsToAttic, single } from '../common';
 import { Context } from './serializer';
@@ -27,7 +27,7 @@ export async function* authenticationRequirement(securityRequirement: v2.Securit
 }
 
 export async function* authentication(scheme: v2.SecurityScheme, $: Context) {
-  switch (valueOf(use(scheme.type))) {
+  switch (use(scheme.type)) {
     case 'apiKey':
       return yield *apiKeyAuthentication(<v2.ApiKeySecurityScheme>scheme, $);
     case 'basic':
@@ -42,7 +42,7 @@ export async function* authentication(scheme: v2.SecurityScheme, $: Context) {
 function *apiKeyAuthentication(scheme: v2.ApiKeySecurityScheme, $: Context) {
   let location: ParameterLocation;
 
-  switch (valueOf(use(scheme.in))) {
+  switch (use(scheme.in)) {
     case 'header':
       location = ParameterLocation.Header;
       break;
@@ -69,7 +69,7 @@ function *oauth2Authentication(scheme: v2.OAuthSecurityBase, $: Context) {
   let flow: OAuth2Flow;
   const flows = new OAuth2Flows();
 
-  switch (valueOf(use(scheme.flow))) {
+  switch (use(scheme.flow)) {
     case 'password': {
       const password = <v2.OAuth2PasswordSecurityScheme>scheme;
       flow = flows.password = new PasswordOAuth2Flow(password.tokenUrl);

@@ -1,5 +1,5 @@
 import { Dictionary } from '@azure-tools/linq';
-import { anonymous, isAnonymous, valueOf } from '@azure-tools/sourcemap';
+import { anonymous, isAnonymous } from '@azure-tools/sourcemap';
 import { Node } from 'ts-morph';
 import { getFirstDoc, getTagValue, setTag } from '../../support/doc-tag';
 import { getPath, IsTypeDeclaration, TypeDeclaration } from '../../support/typescript';
@@ -56,7 +56,7 @@ export class Schema extends Element {
    * return the defintion as it would be used. 
    */
   get typeDefinition(): string {
-    return `unknown /*= (not tsschema -- ${Object.getPrototypeOf(this).name}${valueOf(this.name)}/${(<any>this).kind} ) =*/`;
+    return `unknown /*= (not tsschema -- ${Object.getPrototypeOf(this).name}${this.name}/${(<any>this).kind} ) =*/`;
   }
 
   /**
@@ -92,21 +92,21 @@ export class NamedElement<TNode extends Node> extends TSElement<TNode> {
     if (!Node.isRenameableNode(this.node)) {
       throw new Error('This node cannot be renamed.');
     }
-    this.node.rename(valueOf(value));
+    this.node.rename(value);
   }
 
   get summary() {
     return getFirstDoc(this.node).getDescription();
   }
   set summary(value: string | undefined) {
-    getFirstDoc(this.node).setDescription(valueOf(value)||'\n');
+    getFirstDoc(this.node).setDescription(value||'\n');
   }
 
   get description() {
     return getTagValue(this.node, 'description');
   }
   set description(value: string | undefined) {
-    setTag(this.node,'description', valueOf(value));
+    setTag(this.node,'description', value);
   }
 }
 

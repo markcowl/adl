@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { items, keys, length, values } from '@azure-tools/linq';
 import { common, Dictionary, Info, isReference, isVendorExtension, JsonReference } from '@azure-tools/openapi';
-import { anonymous, getSourceFile, isAnonymous, isUsed, nameOf, Path, refTo, TrackedSource, TrackedTarget, Tracker, use, using, valueOf } from '@azure-tools/sourcemap';
+import { anonymous, getSourceFile, isAnonymous, isUsed, nameOf, Path, refTo, TrackedSource } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
 import { parse } from 'yaml';
 import { Alias } from '../model/alias';
@@ -10,7 +10,6 @@ import { ApiModel } from '../model/api-model';
 import { Element } from '../model/element';
 import { Host } from './file-system';
 import { Stopwatch } from './stopwatch';
-
 
 export interface Options {
   isAnonymous?: boolean;
@@ -62,7 +61,6 @@ export function isObjectClean(obj: any): boolean {
 
 export interface SourceFile<TSourceModel extends OAIModel> {
   sourceModel: TSourceModel;
-  tracker: Tracker;
   sourceFile: string;
   visitor: Visitor<TSourceModel>;
 }
@@ -75,7 +73,7 @@ function addUnusedTo(target: any, source: any) {
   if (Array.isArray(source) && Array.isArray(target)) {
     for (const value of <any>source) {
       if (!isUsed(value)) {
-        const raw = valueOf(value);
+        const raw = value;
 
         if (typeof raw === 'object') {
           const v = Array.isArray(value) ? [] : {};
@@ -86,7 +84,7 @@ function addUnusedTo(target: any, source: any) {
           }
         }
         else {
-          target.push(valueOf(raw));
+          target.push(raw);
         }
       }
     }
@@ -99,7 +97,7 @@ function addUnusedTo(target: any, source: any) {
     }
 
     if (!isUsed(value)) {
-      const raw = valueOf(<any>value);
+      const raw = <any>value;
       if (typeof raw === 'object') {
         const v = Array.isArray(value) ? [] : {};
 
@@ -120,22 +118,11 @@ export class Visitor<TSourceModel extends OAIModel> {
   sourceFiles = new Map<string, Promise<Context<TSourceModel>>>();
   $refs = new Map<string, Array<any>>();
 
-
-  api: ApiModel;
-  // tracker: Tracker;
-
   constructor(
-    api: ApiModel,
+    public api: ApiModel,
     public host: Host,
     public inputType: 'oai3' | 'oai2',
     ...sourceFiles: Array<string>) {
-    // the source location tracker
-    // this.tracker = new Tracker();
-
-    // enable target tracking on the output modle
-    // this.api = TrackedTarget.track(api, [], this.tracker);
-    this.api = api;
-
     // the source files are going to be YAML/JSON files for this 
     // so we can speed up the process and grab them all and hold onto them
     for (const each of new Set(sourceFiles)) {
@@ -167,8 +154,8 @@ export class Visitor<TSourceModel extends OAIModel> {
 
       this.api.attic = this.api.attic || {};
       // add unused parts of the source to the attic.
-      addUnusedTo(this.api.attic, ctx.sourceModel);
-      this.host.attic(ctx.sourceFile, watch.time);
+      // addUnusedTo(this.api.attic, ctx.sourceModel);
+      // this.host.attic(ctx.sourceFile, watch.time);
     }
     return this.api;
   }
@@ -176,7 +163,7 @@ export class Visitor<TSourceModel extends OAIModel> {
   findNode(path: Path, graph: any): any {
     const [member, ...rest] = path;
     if (member && !isAnonymous(member)) {
-      const node = graph[member.valueOf()];
+      const node = graph[member];
       if (node) {
         return rest.length > 0 ? this.findNode(rest, node) : node;
       }
@@ -250,7 +237,7 @@ export class Context<TSourceModel extends OAIModel> {
     return this.visitor.host;
   }
   get apiVersion() {
-    return valueOf(this.sourceModel.info.version);
+    return this.sourceModel.info.version;
   }
   error(text: string, offendingNode: any) {
     this.host.error(text, offendingNode);
@@ -280,7 +267,7 @@ export class Context<TSourceModel extends OAIModel> {
   async *processArray<TInput, TOutput extends Element, TOptions extends Options>(action: fnAction<TSourceModel, TInput, TOutput, TOptions>, value: Array<TInput> | undefined, options?: TOptions): AsyncGenerator<TOutput> {
     if (value) {
       for (const each of value) {
-        use(value);
+      
         yield* this.process(action, each);
       }
     }
@@ -302,14 +289,10 @@ export class Context<TSourceModel extends OAIModel> {
 
       const results = new Array<TOutput>();
       // ok, call the action
-      for await (let result of action(value!, this, options)) {
-        // we're going to mark the original value as used
-        // note: does not mark the children as used. 
-        use(value);
-
+      for await (const result of action(value!, this, options)) {
         if (result !== undefined) {
           // we got back a value for that.
-          result = TrackedTarget.track(result);
+          //result = TrackedTarget.track(result);
 
           // track it so we don't redo it if asked for it again later.
           this.visitor.$refs.set(ref, results);
@@ -319,7 +302,7 @@ export class Context<TSourceModel extends OAIModel> {
             // when a result is returned up the chain more than once
             result.addVersionInfo({
               // deprecated isn't on everything, but this is safe when it's not there
-              deprecated: use((<any>value).deprecated) ? this.apiVersion : undefined,
+              deprecated: (<any>value).deprecated ? this.apiVersion : undefined,
               added: this.apiVersion,
             });
             result.addInternalData(this.visitor.inputType, { preferredFile: getSourceFile(value) });
@@ -338,7 +321,7 @@ export class Context<TSourceModel extends OAIModel> {
       // when a result is returned up the chain more than once
       result.addVersionInfo({
         // deprecated isn't on everything, but this is safe when it's not there
-        deprecated: use((<any>value).deprecated) ? this.apiVersion : undefined,
+        deprecated: (<any>value).deprecated ? this.apiVersion : undefined,
         added: this.apiVersion,
       });
       result.addInternalData(this.visitor.inputType, { preferredFile: getSourceFile(value) });
@@ -356,7 +339,6 @@ export class Context<TSourceModel extends OAIModel> {
         const name = options?.isAnonymous ? anonymous(action.name) : nameOf(value);
 
         const { $ref, file, path } = this.normalizeReference(value.$ref);
-        use(value.$ref);
 
         const targets = <Array<TOut>>this.visitor.$refs.get($ref);
         if (targets) {
@@ -407,12 +389,8 @@ export class Context<TSourceModel extends OAIModel> {
       // ok, call the action
       result = await action(value!, this, options);
 
-      // we're going to mark the original value as used
-      // note: does not mark the children as used. 
-      use(value);
-
       if (result !== undefined) {
-        result = TrackedTarget.track(result);
+        //result = TrackedTarget.track(result);
         // we got back a value for that.
 
         // track it so we don't redo it if asked for it again later.
@@ -420,7 +398,7 @@ export class Context<TSourceModel extends OAIModel> {
 
         result.addVersionInfo({
           // deprecated isn't on everything, but this is safe when it's not there
-          deprecated: using((<any>value).deprecated, this.apiVersion),
+          deprecated: (<any>value).deprecated ? this.apiVersion: undefined,
           added: this.apiVersion,
         });
         result.addInternalData(this.visitor.inputType, { preferredFile: getSourceFile(value) });

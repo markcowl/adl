@@ -93,7 +93,6 @@ export async function* processUriSchema<T extends OAIModel>(schema: v3.Schema|v2
   if ($.forbiddenProperties(schema, ...<any>notPrimitiveProperties)) {
     return;
   }
-  use(schema.example);
 
   return yield addAliasWithDefault(schema, $.api.schemas.Uri, $);
 }
@@ -136,7 +135,6 @@ export function addAliasWithDefault<T extends OAIModel>(schema: v3.Schema | v2.S
     if (schema.default) {
       alias.defaults.push(new ServerDefaultValue(schema.default));
     }
-    use(schema.default, true);
 
     if ((<any>schema).readOnly) {
       alias.constraints.push(new ReadOnlyModifier());

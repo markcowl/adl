@@ -29,7 +29,7 @@ export class Initializer {
       
 
       if (value !== undefined) {
-        const rawValue = (<any>value).valueOf();
+        const rawValue = (<any>value);
         
         const targetProperty = proxy[key];
         if (targetProperty && targetProperty.push ) {
@@ -68,7 +68,7 @@ export class Element extends Initializer {
     use(value, true);
     if (value) {
       this.attic = this.attic || {};
-      this.attic[name] = value.valueOf();
+      this.attic[name] = value;
     }
     return this;
   }
@@ -113,7 +113,7 @@ export class TSElement<TNode extends Node> extends Initializer implements Elemen
   addToAttic(name: string, value: any): this {
     use(value, true);
     if (value) {
-      this.attic[name] = value.valueOf();
+      this.attic[name] = value;
     }
     return this;
   }

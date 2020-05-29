@@ -1,6 +1,6 @@
 import { length } from '@azure-tools/linq';
 import { common, StringFormat, v2, v3, vendorExtensions } from '@azure-tools/openapi';
-import { use, valueOf } from '@azure-tools/sourcemap';
+import { use } from '@azure-tools/sourcemap';
 import { Element } from '../../model/element';
 
 export async function toArray<T>(g: AsyncGenerator<T>) {
@@ -55,7 +55,7 @@ export function isObjectSchema(schema: v3.Schema| v2.Schema) {
 }
 
 export function isPrimitiveSchema(schema: v3.Schema | v2.Schema) {
-  switch (valueOf(schema.type)) {
+  switch (schema.type) {
     case common.JsonType.String:
       // file format generally means a blob body
       if (schema.format == StringFormat.File) {
