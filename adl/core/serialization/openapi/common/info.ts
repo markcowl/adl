@@ -3,7 +3,7 @@ import { Contact, ContactRole } from '../../../model/contact';
 import { License } from '../../../model/license';
 import { Metadata } from '../../../model/metadata';
 import { Reference } from '../../../model/reference';
-import { Context, is, OAIModel } from '../../../support/visitor';
+import { Context, OAIModel } from '../../../support/visitor';
 import { addExtensionsToAttic } from '../common';
 
 async function *processContact<TModel extends OAIModel>(contact: common.Contact, $: Context<TModel>) {
@@ -38,7 +38,7 @@ export async function *processInfo<TModel extends OAIModel>(info: common.Info, $
   });
 
   // add the author contact
-  if (is(info.contact)) {
+  if (info.contact !== undefined) {
     for await (const c of $.process(processContact, info.contact)) {
       metadata.contacts.push(c)  ;
     }
@@ -46,7 +46,7 @@ export async function *processInfo<TModel extends OAIModel>(info: common.Info, $
   }
 
   // add license
-  if (is(info.license)) {
+  if (info.license !== undefined) {
     for await (const l of $.process(processLicense, info.license) ) {
       metadata.licenses.push(l);
     }

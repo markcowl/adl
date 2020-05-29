@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
-import { items, keys, length, values } from '@azure-tools/linq';
+import { items, keys, values } from '@azure-tools/linq';
 import { common, Dictionary, Info, isReference, isVendorExtension, JsonReference } from '@azure-tools/openapi';
-import { anonymous, getSourceFile, isAnonymous, isUsed, nameOf, Path, refTo, TrackedSource } from '@azure-tools/sourcemap';
+import { anonymous, getSourceFile, isAnonymous, nameOf, Path, refTo, TrackedSource } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
 import { parse } from 'yaml';
 import { Alias } from '../model/alias';
@@ -19,98 +19,10 @@ export interface OAIModel {
   info: Info;
 }
 
-export function is<T extends Object>(instance: any): instance is T {
-  if (instance === undefined || instance === null || typeof instance !== 'object') {
-    return false;
-  }
-
-  for (const each of values(instance)) {
-    if (typeof each === 'object') {
-      if (is(each)) {
-        return true;
-      }
-      // the child is empty, so this doesn't make it real yet.
-      continue;
-    }
-
-    if (each !== undefined && each !== null) {
-      // it has a member that's not undefined or null
-      // it's a viable object
-      return true;
-    }
-  }
-  // didn't have any members with data.
-  return false;
-}
-
-export function isObjectClean(obj: any): boolean {
-  if (obj && typeof obj === 'object') {
-
-    for (const each of values(obj)) {
-      if (each !== undefined && typeof each === 'object') {
-        if (!isObjectClean(each)) {
-          return false;
-        }
-        continue;
-      }
-      return false;
-    }
-  }
-  return true;
-}
-
 export interface SourceFile<TSourceModel extends OAIModel> {
   sourceModel: TSourceModel;
   sourceFile: string;
   visitor: Visitor<TSourceModel>;
-}
-
-function addUnusedTo(target: any, source: any) {
-  if (isUsed(source)) {
-    return;
-  }
-
-  if (Array.isArray(source) && Array.isArray(target)) {
-    for (const value of <any>source) {
-      if (!isUsed(value)) {
-        const raw = value;
-
-        if (typeof raw === 'object') {
-          const v = Array.isArray(value) ? [] : {};
-
-          addUnusedTo(v, value);
-          if (length(v) !== 0) {
-            target.push(v);
-          }
-        }
-        else {
-          target.push(raw);
-        }
-      }
-    }
-    return;
-  }
-
-  for (const [key, value] of items(<any>source)) {
-    if (value === undefined || value === null) {
-      continue;
-    }
-
-    if (!isUsed(value)) {
-      const raw = <any>value;
-      if (typeof raw === 'object') {
-        const v = Array.isArray(value) ? [] : {};
-
-        addUnusedTo(v, value);
-        if (length(v) !== 0) {
-          target[key] = v;
-        }
-      }
-      else {
-        target[key] = raw;
-      }
-    }
-  }
 }
 
 export class Visitor<TSourceModel extends OAIModel> {
@@ -144,18 +56,12 @@ export class Visitor<TSourceModel extends OAIModel> {
   }
 
   async process<TOutput, TOptions extends Options = Options>(action: fnActionOnRoot<TSourceModel, TSourceModel, TOutput, TOptions>) {
-
     for (const value of values(this.sourceFiles)) {
       const ctx = await value;
       const watch = new Stopwatch();
 
       await action(<NonNullable<TSourceModel>>ctx.sourceModel, ctx);
       this.host.processed(ctx.sourceFile, watch.time);
-
-      this.api.attic = this.api.attic || {};
-      // add unused parts of the source to the attic.
-      // addUnusedTo(this.api.attic, ctx.sourceModel);
-      // this.host.attic(ctx.sourceFile, watch.time);
     }
     return this.api;
   }

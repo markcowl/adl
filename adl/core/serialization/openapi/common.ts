@@ -78,7 +78,7 @@ export function isEnumSchema(schema: v3.Schema | v2.Schema) {
 
 export function addExtensionsToAttic<T extends Element>(element: T, input: any) {
   for (const [ key, value] of vendorExtensions(input)) {
-    element.addToAttic(key, value, true);
+    element.addToAttic(key, value);
   }
   return element;
 }

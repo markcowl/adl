@@ -27,7 +27,7 @@ export async function* authenticationRequirement(securityRequirement: v2.Securit
 }
 
 export async function* authentication(scheme: v2.SecurityScheme, $: Context) {
-  switch (scheme.type) {
+  switch ((<any>scheme).type) {
     case 'apiKey':
       return yield *apiKeyAuthentication(<v2.ApiKeySecurityScheme>scheme, $);
     case 'basic':

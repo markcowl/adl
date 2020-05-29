@@ -27,7 +27,7 @@ export async function* authenticationRequirement(securityRequirement: v3.Securit
 }
 
 export async function* authentication(scheme: v3.SecurityScheme, $: Context): AsyncGenerator<Authentication> {
-  switch (scheme.type) {
+  switch ((<any>scheme).type) {
     case v3.SecurityType.ApiKey:
       return yield *apiKeyAuthentication(<v3.ApiKeySecurityScheme>scheme, $);
 
