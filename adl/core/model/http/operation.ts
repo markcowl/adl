@@ -1,4 +1,3 @@
-import { valueOf } from '@azure-tools/sourcemap';
 import { InterfaceDeclaration, MethodSignature, ParameterDeclarationStructure, StructureKind } from 'ts-morph';
 import { normalizeIdentifier, normalizeName } from '../../support/codegen';
 import { appendTag, getTagValue, setTag } from '../../support/doc-tag';
@@ -94,7 +93,7 @@ export function createOperation(
 class OperationImpl extends NamedElement<MethodSignature> implements Operation {
   readonly tags: CollectionImpl<string, this>;
   readonly parameters: CollectionImpl<Parameter | Alias<Parameter>, this>;
-  readonly requests = new ArrayCollectionImpl<Request>();
+  readonly requests: CollectionImpl<Request | Alias<Request>, this>;
   readonly responses = new ArrayCollectionImpl<Response | Alias<Response>>();
   readonly references = new ArrayCollectionImpl<Reference>();
   readonly authenticationRequirements = new ArrayCollectionImpl<AuthenticationRequirement>();
@@ -103,6 +102,7 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
   constructor(node: MethodSignature, initializer?: Partial<Operation>) {
     super(node);
     this.parameters = new CollectionImpl(this, this.pushParameters, undefined!, undefined!);
+    this.requests = new CollectionImpl(this, this.pushRequests, undefined!, undefined!);
     this.tags = new CollectionImpl(this, this.pushTags, undefined!, undefined!);
     this.initialize(initializer);
   }
@@ -128,16 +128,14 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
   }
   
   private pushTags(...tags: Array<string>) {
-    for (let each of tags) {
-      each = valueOf(each);
+    for (const each of tags) {
       appendTag(this.node, 'tag', each);
     }
   }
     
   private pushParameters(...parameters: Array<Parameter | Alias<Parameter>>) {
     const structures = new Array<ParameterDeclarationStructure>();
-    for (let each of parameters) {
-      each = valueOf(each);
+    for (const each of parameters) {
       const parameter = each instanceof Alias ? each.target : each;
       const name = normalizeName(parameter.name);
       const type = this.getParameterType(parameter, name);
@@ -155,12 +153,12 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
 
   private getParameterType(parameter: Parameter, chosenName: string) {
     const innerType = this.project.getTypeReference(parameter.schema, this.node.getSourceFile());
-    const outerType = this.getOuterType(parameter.type);
+    const outerType = this.getOuterParameterType(parameter.type);
     const nameArg = parameter.name == chosenName ? '' : `, '${parameter.name}'`;
     return `${outerType}<${innerType}${nameArg}>`;
   }
 
-  private getOuterType(parameterType: ParameterType) {
+  private getOuterParameterType(parameterType: ParameterType) {
     switch (parameterType) {
       case ParameterType.Cookie:
         return 'Http.Cookie';
@@ -176,4 +174,30 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
         throw new Error(`Invalid parameter type '${parameterType}'`);
     }
   }
+
+  private pushRequests(...requests: Array<Request | Alias<Request>>) {
+    const structures = new Array<ParameterDeclarationStructure>();
+    for (const each of requests) {
+      const request = each instanceof Alias ? each.target : each;
+      const name = normalizeName(request.name ?? 'body');
+      const type = this.getRequestType(request, name);
+      
+      structures.push({
+        kind: StructureKind.Parameter,
+        hasQuestionToken: !request.required,
+        name,
+        type,
+      });
+    }
+    
+    this.node.addParameters(structures);
+  }
+  
+  private getRequestType(request: Request, chosenName: string) {
+    const innerType = this.project.getTypeReference(request.schema, this.node.getSourceFile());
+    const outerType = 'Http.Body';
+    const mediaTypeArg = `, '${request.mediaType}'`;
+    const nameArg = (!request.name || request.name == chosenName) ? '' : `, '${request.name}'`;
+    return `${outerType}<${innerType}${mediaTypeArg}${nameArg}>`;
+  } 
 }

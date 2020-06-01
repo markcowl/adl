@@ -1,3 +1,4 @@
+import { schema } from '../aliases/schema';
 export interface Service {
     /**
      * Enumerate all active channels of the application
@@ -30,7 +31,7 @@ export interface Service {
      * @tag Publishing
      * @since 1.1.0
      */
-    publishMessagesToChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>);
+    publishMessagesToChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>, body?: Http.Body<schema, 'application/json'>, body?: Http.Body<schema, 'application/x-msgpack'>, body?: Http.Body<schema, 'application/x-www-form-urlencoded'>);
     /**
      * Get presence of a channel
      * @description Get presence on a channel
@@ -54,7 +55,7 @@ export interface Service {
      * @tag Authentication
      * @since 1.1.0
      */
-    requestAccessToken(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, keyName: Http.Path<string>);
+    requestAccessToken(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, keyName: Http.Path<string>, body?: Http.Body<unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/, 'application/json'>);
     /**
      * List channel subscriptions
      * @description Get a list of push notification subscriptions to channels.
@@ -70,7 +71,7 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    subscribePushDeviceToChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">);
+    subscribePushDeviceToChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, body?: Http.Body<unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/, 'application/json'>, body?: Http.Body<unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/, 'application/x-msgpack'>, body?: Http.Body<unknown /*= (not tsschema -- undefined[object Object]/undefined ) =*/, 'application/x-www-form-urlencoded'>);
     /**
      * Delete a registered device's update token
      * @description Delete a device details object.
@@ -102,7 +103,7 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    registerPushDevice(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">);
+    registerPushDevice(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, body?: Http.Body<schema, 'application/json'>, body?: Http.Body<schema, 'application/x-msgpack'>);
     /**
      * Unregister matching devices for push notifications
      * @description Unregisters devices. All their subscriptions for receiving push notifications through channels will also be deleted.
@@ -126,7 +127,7 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    putPushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>);
+    putPushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>, body?: Http.Body<schema, 'application/json'>, body?: Http.Body<schema, 'application/x-msgpack'>, body?: Http.Body<schema, 'application/x-www-form-urlencoded'>);
     /**
      * Unregister a single device for push notifications
      * @description Unregisters a single device by its device ID. All its subscriptions for receiving push notifications through channels will also be deleted.
@@ -142,7 +143,7 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    patchPushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>);
+    patchPushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>, body?: Http.Body<schema, 'application/json'>, body?: Http.Body<schema, 'application/x-msgpack'>, body?: Http.Body<schema, 'application/x-www-form-urlencoded'>);
     /**
      * Reset a registered device's update token
      * @description Gets an updated device details object.
@@ -158,7 +159,34 @@ export interface Service {
      * @tag Push
      * @since 1.1.0
      */
-    publishPushNotificationToDevices(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">);
+    publishPushNotificationToDevices(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, body?: Http.Body<{
+        /**
+         * @since 1.1.0
+         */
+        push: Push;
+        /**
+         * @since 1.1.0
+         */
+        recipient?: Recipient;
+    }, 'application/json'>, body?: Http.Body<{
+        /**
+         * @since 1.1.0
+         */
+        push: Push;
+        /**
+         * @since 1.1.0
+         */
+        recipient?: Recipient;
+    }, 'application/x-msgpack'>, body?: Http.Body<{
+        /**
+         * @since 1.1.0
+         */
+        push: Push;
+        /**
+         * @since 1.1.0
+         */
+        recipient?: Recipient;
+    }, 'application/x-www-form-urlencoded'>);
     /**
      * Retrieve usage statistics for an application
      * @description The Ably system can be queried to obtain usage statistics for a given application, and results are provided aggregated across all channels in use in the application in the specified period. Stats may be used to track usage against account quotas.

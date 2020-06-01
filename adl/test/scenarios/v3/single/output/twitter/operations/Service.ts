@@ -40,7 +40,12 @@ export interface Service {
      * @tag Tweets
      * @since 2.3
      */
-    hideReplyById(id: Http.Path<schema>);
+    hideReplyById(id: Http.Path<schema>, body?: Http.Body<{
+        /**
+         * @since 2.3
+         */
+        hidden: "/* boolean */true";
+    }, 'application/json'>);
     /**
      * Return details for the specified users
      * @description This endpoint returns information about users. Specify users by their ID.

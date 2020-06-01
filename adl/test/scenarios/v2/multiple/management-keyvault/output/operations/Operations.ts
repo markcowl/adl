@@ -5,5 +5,5 @@ export interface Operations {
      * @tag Operations
      * @since 2019-09-01
      */
-    List(api_version: Http.Query<string, 'api-version'>);
+    List(body?: Http.Body<file, 'application/json'>, api_version: Http.Query<string, 'api-version'>);
 }
