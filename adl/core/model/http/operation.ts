@@ -1,3 +1,4 @@
+import { isAnonymous } from '@azure-tools/sourcemap';
 import { InterfaceDeclaration, MethodSignature, ParameterDeclarationStructure, StructureKind } from 'ts-morph';
 import { normalizeIdentifier, normalizeName } from '../../support/codegen';
 import { appendTag, getTagValue, setTag } from '../../support/doc-tag';
@@ -94,7 +95,7 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
   readonly tags: CollectionImpl<string, this>;
   readonly parameters: CollectionImpl<Parameter | Alias<Parameter>, this>;
   readonly requests: CollectionImpl<Request | Alias<Request>, this>;
-  readonly responses = new ArrayCollectionImpl<Response | Alias<Response>>();
+  readonly responses: CollectionImpl<Response | Alias<Response>, this>;
   readonly references = new ArrayCollectionImpl<Reference>();
   readonly authenticationRequirements = new ArrayCollectionImpl<AuthenticationRequirement>();
   readonly connections = new ArrayCollectionImpl<Connection>();
@@ -103,6 +104,7 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
     super(node);
     this.parameters = new CollectionImpl(this, this.pushParameters, undefined!, undefined!);
     this.requests = new CollectionImpl(this, this.pushRequests, undefined!, undefined!);
+    this.responses = new CollectionImpl(this, this.pushResponses, undefined!, undefined!);
     this.tags = new CollectionImpl(this, this.pushTags, undefined!, undefined!);
     this.initialize(initializer);
   }
@@ -200,4 +202,36 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
     const nameArg = (!request.name || request.name == chosenName) ? '' : `, '${request.name}'`;
     return `${outerType}<${innerType}${mediaTypeArg}${nameArg}>`;
   } 
+
+  private pushResponses(...responses: Array<Response | Alias<Response>>) {
+    let returnType = this.node.getReturnType().getText();
+
+    if (returnType == 'any') {
+      returnType = '';
+    }
+
+    for (const each of responses) {
+      if (returnType != '') {
+        returnType += ' | ';
+      }
+      const response = each instanceof Alias ? each.target : each;
+      returnType += this.getResponseType(response);
+    }
+
+    this.node.setReturnType(returnType);
+  }
+
+  private getResponseType(response: Response) {
+    const outerType = response.isException ? 'Http.Exception' : 'Http.Response';
+    const statusArg = this.getStatusArg(response);
+    const schema = response.schema ? this.project.getTypeReference(response.schema, this.node.getSourceFile()) : undefined;
+    const schemaArg = schema ? `, ${schema}` : response.mediaType ? ', none' : '';
+    const mediaTypeArg = response.mediaType ? `, '${response.mediaType}'` : '';
+    return `${outerType}<${statusArg}${schemaArg}${mediaTypeArg}>`;
+  }
+
+  private getStatusArg(response: Response) {
+    const status = isAnonymous(response.name) ? 'default' : response.name;
+    return status == 'default' ? 'Http.Default' : `'${status}'`;
+  }
 }
