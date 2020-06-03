@@ -39,7 +39,7 @@ export interface Operation extends base.Operation {
   /** A name for this operation within its group. */
   name: string;
 
-  /** The HTTP method used and the path operated upon. */ 
+  /** The HTTP method used and the path operated upon. */
   path: Path;
 
   /** parameters common to all the requests(overloads) for this operation */
@@ -66,23 +66,17 @@ export interface Operation extends base.Operation {
 }
 
 export function createOperation(
-  api: ApiModel, 
-  path: Path, 
-  group: string, 
-  name: string, 
+  api: ApiModel,
+  path: Path,
+  group: string,
+  name: string,
   initializer: Partial<Operation>
-): Operation { 
+): Operation {
 
   let groupNode = api.getGroup(group);
-  if (!groupNode){
+  if (!groupNode) {
     const file = api.getFile(group, 'group');
     groupNode = file.addInterface({ name: group, isExported: true });
-  }
-
-  let count = 1;
-  const baseName = name;
-  while (groupNode.getMethod(name)){
-    name = `${baseName}${count++}`;
   }
 
   const operationNode = groupNode.addMethod({ name: normalizeIdentifier(name) });
@@ -99,7 +93,7 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
   readonly references = new ArrayCollectionImpl<Reference>();
   readonly authenticationRequirements = new ArrayCollectionImpl<AuthenticationRequirement>();
   readonly connections = new ArrayCollectionImpl<Connection>();
-  
+
   constructor(node: MethodSignature, initializer?: Partial<Operation>) {
     super(node);
     this.parameters = new CollectionImpl(this, this.pushParameters, undefined!, undefined!);
@@ -122,19 +116,19 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
 
   get path(): Path {
     const tag = getTagValue(this.node, 'http')!;
-    const  [method, path] = tag.split(' ', 2);
-    return {method: Method[<keyof typeof Method>method], path};
+    const [method, path] = tag.split(' ', 2);
+    return { method: Method[<keyof typeof Method>method], path };
   }
   set path(path: Path) {
     setTag(this.node, 'http', `${path.method.toUpperCase()} ${path.path}`);
   }
-  
+
   private pushTags(...tags: Array<string>) {
     for (const each of tags) {
       appendTag(this.node, 'tag', each);
     }
   }
-    
+
   private pushParameters(...parameters: Array<Parameter | Alias<Parameter>>) {
     const structures = new Array<ParameterDeclarationStructure>();
     for (const each of parameters) {
@@ -149,7 +143,7 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
         type,
       });
     }
-    
+
     this.node.addParameters(structures);
   }
 
@@ -183,7 +177,7 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
       const request = each instanceof Alias ? each.target : each;
       const name = normalizeName(request.name ?? 'body');
       const type = this.getRequestType(request, name);
-      
+
       structures.push({
         kind: StructureKind.Parameter,
         hasQuestionToken: !request.required,
@@ -191,17 +185,17 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
         type,
       });
     }
-    
+
     this.node.addParameters(structures);
   }
-  
+
   private getRequestType(request: Request, chosenName: string) {
     const innerType = this.project.getTypeReference(request.schema, this.node.getSourceFile());
     const outerType = 'Http.Body';
     const mediaTypeArg = `, '${request.mediaType}'`;
     const nameArg = (!request.name || request.name == chosenName) ? '' : `, '${request.name}'`;
     return `${outerType}<${innerType}${mediaTypeArg}${nameArg}>`;
-  } 
+  }
 
   private pushResponses(...responses: Array<Response | Alias<Response>>) {
     let returnType = this.node.getReturnType().getText();
