@@ -6,19 +6,19 @@ export interface Service {
      * @tag pets
      * @since 1.0.0
      */
-    listPets(limit?: Http.Query<int32>): Http.Response<Http.Default, schema, 'application/json'>;
+    listPets(limit?: Http.Query<int32>): Http.Response<'200', schema, 'application/json'> | Http.Response<Http.Default, schema, 'application/json'>;
     /**
      * Create a pet
      * @http POST /pets
      * @tag pets
      * @since 1.0.0
      */
-    createPets(): Http.Response<Http.Default, schema, 'application/json'>;
+    createPets(): Http.Response<'201'> | Http.Response<Http.Default, schema, 'application/json'>;
     /**
      * Info for a specific pet
      * @http GET /pets/{petId}
      * @tag pets
      * @since 1.0.0
      */
-    showPetById(petId: Http.Path<string>): Http.Response<Http.Default, schema, 'application/json'>;
+    showPetById(petId: Http.Path<string>): Http.Response<'200', schema, 'application/json'> | Http.Response<Http.Default, schema, 'application/json'>;
 }

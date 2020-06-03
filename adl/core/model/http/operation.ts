@@ -204,11 +204,7 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
   } 
 
   private pushResponses(...responses: Array<Response | Alias<Response>>) {
-    let returnType = this.node.getReturnType().getText();
-
-    if (returnType == 'any') {
-      returnType = '';
-    }
+    let returnType = this.node.getReturnTypeNode()?.getText() ?? '';
 
     for (const each of responses) {
       if (returnType != '') {

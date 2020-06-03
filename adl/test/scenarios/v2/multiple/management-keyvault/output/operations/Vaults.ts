@@ -13,28 +13,28 @@ export interface Vaults {
      * @tag Vaults
      * @since 2019-09-01
      */
-    CreateOrUpdate(resourceGroupName: Http.Path<string>, vaultName: Http.Path<string & RegularExpression<"^[a-zA-Z0-9-]{3,24}$">>, api_version: Http.Query<string, 'api-version'>, subscriptionId: Http.Path<string>, parameters: Http.Body<schema, 'application/json'>): Http.Response<'201', schema, 'application/json'>;
+    CreateOrUpdate(resourceGroupName: Http.Path<string>, vaultName: Http.Path<string & RegularExpression<"^[a-zA-Z0-9-]{3,24}$">>, api_version: Http.Query<string, 'api-version'>, subscriptionId: Http.Path<string>, parameters: Http.Body<schema, 'application/json'>): Http.Response<'200', schema, 'application/json'> | Http.Response<'201', schema, 'application/json'>;
     /**
      * @description Deletes the specified Azure key vault.
      * @http DELETE /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
      * @tag Vaults
      * @since 2019-09-01
      */
-    Delete(body?: Http.Body<file, 'application/json'>, resourceGroupName: Http.Path<string>, vaultName: Http.Path<string>, api_version: Http.Query<string, 'api-version'>, subscriptionId: Http.Path<string>): Http.Response<'204', any, 'application/json'>;
+    Delete(body?: Http.Body<file, 'application/json'>, resourceGroupName: Http.Path<string>, vaultName: Http.Path<string>, api_version: Http.Query<string, 'api-version'>, subscriptionId: Http.Path<string>): Http.Response<'200', any, 'application/json'> | Http.Response<'204', any, 'application/json'>;
     /**
      * @description Update a key vault in the specified subscription.
      * @http PATCH /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
      * @tag Vaults
      * @since 2019-09-01
      */
-    Update(resourceGroupName: Http.Path<string>, vaultName: Http.Path<string & RegularExpression<"^[a-zA-Z0-9-]{3,24}$">>, api_version: Http.Query<string, 'api-version'>, subscriptionId: Http.Path<string>, parameters: Http.Body<schema, 'application/json'>): Http.Response<'201', schema, 'application/json'>;
+    Update(resourceGroupName: Http.Path<string>, vaultName: Http.Path<string & RegularExpression<"^[a-zA-Z0-9-]{3,24}$">>, api_version: Http.Query<string, 'api-version'>, subscriptionId: Http.Path<string>, parameters: Http.Body<schema, 'application/json'>): Http.Response<'200', schema, 'application/json'> | Http.Response<'201', schema, 'application/json'>;
     /**
      * @description Update access policies in a key vault in the specified subscription.
      * @http PUT /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/accessPolicies/{operationKind}
      * @tag Vaults
      * @since 2019-09-01
      */
-    UpdateAccessPolicy(resourceGroupName: Http.Path<string>, vaultName: Http.Path<string & RegularExpression<"^[a-zA-Z0-9-]{3,24}$">>, operationKind: Http.Path<AccessPolicyUpdateKind>, api_version: Http.Query<string, 'api-version'>, subscriptionId: Http.Path<string>, parameters: Http.Body<schema, 'application/json'>): Http.Response<'201', schema, 'application/json'>;
+    UpdateAccessPolicy(resourceGroupName: Http.Path<string>, vaultName: Http.Path<string & RegularExpression<"^[a-zA-Z0-9-]{3,24}$">>, operationKind: Http.Path<AccessPolicyUpdateKind>, api_version: Http.Query<string, 'api-version'>, subscriptionId: Http.Path<string>, parameters: Http.Body<schema, 'application/json'>): Http.Response<'200', schema, 'application/json'> | Http.Response<'201', schema, 'application/json'>;
     /**
      * @description The List operation gets information about the vaults associated with the subscription and within the specified resource group.
      * @http GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults
@@ -69,7 +69,7 @@ export interface Vaults {
      * @tag Vaults
      * @since 2019-09-01
      */
-    PurgeDeleted(body?: Http.Body<file, 'application/json'>, vaultName: Http.Path<string>, location: Http.Path<string>, api_version: Http.Query<string, 'api-version'>, subscriptionId: Http.Path<string>): Http.Response<'202', any, 'application/json'>;
+    PurgeDeleted(body?: Http.Body<file, 'application/json'>, vaultName: Http.Path<string>, location: Http.Path<string>, api_version: Http.Query<string, 'api-version'>, subscriptionId: Http.Path<string>): Http.Response<'200', any, 'application/json'> | Http.Response<'202', any, 'application/json'>;
     /**
      * @description The List operation gets information about the vaults associated with the subscription.
      * @http GET /subscriptions/{subscriptionId}/resources
