@@ -1,7 +1,7 @@
 import { isAnonymous } from '@azure-tools/sourcemap';
-import { InterfaceDeclaration, MethodSignature, ParameterDeclarationStructure, StructureKind } from 'ts-morph';
+import { InterfaceDeclaration, JSDocTagStructure, MethodSignature, ParameterDeclarationStructure, StructureKind } from 'ts-morph';
 import { normalizeIdentifier, normalizeName } from '../../support/codegen';
-import { appendTag, getTagValue, setTag } from '../../support/doc-tag';
+import { appendTag, getLastDoc, getTagValue, setTag } from '../../support/doc-tag';
 import { Alias } from '../alias';
 import { ApiModel } from '../api-model';
 import * as base from '../operation';
@@ -136,21 +136,33 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
   }
     
   private pushParameters(...parameters: Array<Parameter | Alias<Parameter>>) {
-    const structures = new Array<ParameterDeclarationStructure>();
+    const parameterStructures = new Array<ParameterDeclarationStructure>();
+    const tagStructures = new Array<JSDocTagStructure>();
+
     for (const each of parameters) {
       const parameter = each instanceof Alias ? each.target : each;
       const name = normalizeName(parameter.name);
       const type = this.getParameterType(parameter, name);
 
-      structures.push({
+      parameterStructures.push({
         kind: StructureKind.Parameter,
         hasQuestionToken: !parameter.required,
         name,
         type,
       });
+
+      if (parameter.description) {
+        const doc = `${name} - ${parameter.description}`;
+        tagStructures.push({
+          kind: StructureKind.JSDocTag,
+          tagName: 'param',
+          text: doc,
+        });
+      }
     }
     
-    this.node.addParameters(structures);
+    this.node.addParameters(parameterStructures);
+    getLastDoc(this.node).addTags(tagStructures);
   }
 
   private getParameterType(parameter: Parameter, chosenName: string) {
@@ -178,21 +190,33 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
   }
 
   private pushRequests(...requests: Array<Request | Alias<Request>>) {
-    const structures = new Array<ParameterDeclarationStructure>();
+    const parameterStructures = new Array<ParameterDeclarationStructure>();
+    const tagStructures = new Array<JSDocTagStructure>();
+
     for (const each of requests) {
       const request = each instanceof Alias ? each.target : each;
       const name = normalizeName(request.name ?? 'body');
       const type = this.getRequestType(request, name);
       
-      structures.push({
+      parameterStructures.push({
         kind: StructureKind.Parameter,
         hasQuestionToken: !request.required,
         name,
         type,
       });
+
+      if (request.description) {
+        const doc = `${name} - ${request.description}`;
+        tagStructures.push({
+          kind: StructureKind.JSDocTag,
+          tagName: 'param',
+          text: doc,
+        });
+      }
     }
     
-    this.node.addParameters(structures);
+    this.node.addParameters(parameterStructures);
+    getLastDoc(this.node).addTags(tagStructures);
   }
   
   private getRequestType(request: Request, chosenName: string) {
@@ -205,16 +229,29 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
 
   private pushResponses(...responses: Array<Response | Alias<Response>>) {
     let returnType = this.node.getReturnTypeNode()?.getText() ?? '';
+    const tagStructures = new Array<JSDocTagStructure>();
 
     for (const each of responses) {
       if (returnType != '') {
         returnType += ' | ';
       }
       const response = each instanceof Alias ? each.target : each;
-      returnType += this.getResponseType(response);
+      const type = this.getResponseType(response);
+
+      if (response.description) {
+        const doc = `${response.name} - ${response.description}`;
+        tagStructures.push({
+          kind: StructureKind.JSDocTag,
+          tagName: 'return',
+          text: doc,
+        });
+      }
+
+      returnType += type;
     }
 
     this.node.setReturnType(returnType);
+    getLastDoc(this.node).addTags(tagStructures);
   }
 
   private getResponseType(response: Response) {
