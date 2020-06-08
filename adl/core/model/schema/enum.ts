@@ -59,23 +59,23 @@ class EnumImpl extends TSSchema<EnumDeclaration> implements Enum {
 
   readonly values: Collection<EnumValue>;
 
-  private addValue(value: EnumValue) {
-    const name = value.name ?? value.value.toString();
-    let val = value.value;
+  private pushValues(...values: Array<EnumValue>) {
+    for (const value of values) {
+      const name = value.name ?? value.value.toString();
+      let val = value.value;
     
-    if (typeof val !== 'string' && typeof val !== 'number') {
-      // TODO: how would we represent enum of non-string, non-number?
-      val = `/* ${typeof val} */${val}`;
+      if (typeof val !== 'string' && typeof val !== 'number') {
+        // TODO: how would we represent enum of non-string, non-number?
+        val = `/* ${typeof val} */${val}`;
+      }
+    
+      const member = this.node.addMember({
+        name: normalizeIdentifier(name),
+        value: val
+      });
+      const result = new EnumValueImpl(member);
+      result.description = value.description;
     }
-    
-    const member = this.node.addMember({
-      name: normalizeIdentifier(name),
-      value: val
-    });
-    const result = new EnumValueImpl(member);
-    result.description = value.description;
-    
-    return result;
   }
 
   private removeValue(value: EnumValue) {
@@ -97,7 +97,7 @@ class EnumImpl extends TSSchema<EnumDeclaration> implements Enum {
 
   constructor(node: EnumDeclaration, private anonymous: boolean) {
     super('enum', node);
-    this.values = new CollectionImpl(this, this.addValue, this.removeValue, this.getValues);
+    this.values = new CollectionImpl(this, this.pushValues, this.removeValue, this.getValues);
   }
 }
 
