@@ -1,17 +1,11 @@
+import { items } from '@azure-tools/linq';
 import { v3 } from '@azure-tools/openapi';
-import { Alias as GenericAlias } from '../../../model/alias';
 import { Element } from '../../../model/element';
-import { Alias } from '../../../model/schema/alias';
-import { Constant } from '../../../model/schema/constant';
-import { Enum } from '../../../model/schema/enum';
-import { AndSchema, AnyOfSchema, XorSchema } from '../../../model/schema/group';
-import { ObjectSchemaImpl } from '../../../model/schema/object';
-import { AnySchema, ArraySchema, Primitive } from '../../../model/schema/primitive';
 import { header } from './header';
 import { parameter } from './parameter';
 import { requestBody } from './request-body';
 import { response } from './response';
-import { processSchema } from './schema';
+import { newProcessSchema } from './schema';
 import { authentication } from './security';
 import { Context } from './serializer';
 
@@ -26,38 +20,12 @@ export async function* processComponents(components: v3.Components, $: Context):
 
   }
 
-  // definitely, schemas first, since so much will $ref them
-  // await consume($.process(processSchemas, components.schemas));
-  for await (const schema of $.processDictionary(processSchema, components.schemas)) {
-    // we have to split up where schemas go 
-    if (schema instanceof GenericAlias) {
-      throw new Error('schemas have their own alias type');
-    }
-    if (schema instanceof Alias) {
-      $.api.schemas.aliases.push(schema);
-      continue;
-    }
-    if (schema instanceof ObjectSchemaImpl ) {
-      $.api.schemas.objects.push(schema);
-      continue;
-    }
-    if (schema.type === 'enum') {
-      $.api.schemas.enums.push(<Enum>schema);
-      continue;
-    }
-    if (schema instanceof Constant) {
-      $.api.schemas.constants.push(schema);
-      continue;
-    }
-    if (schema instanceof AndSchema || schema instanceof XorSchema || schema instanceof AnyOfSchema) {
-      $.api.schemas.combinations.push(schema);
-      continue;
-    }
-    if (schema instanceof AnySchema || schema instanceof ArraySchema || schema instanceof Primitive) {
-      continue;
-    }
+  for (const [key, value] of items(components.schemas)) {
+    // process each item in the collection
+    const typeRef = await newProcessSchema(value, $);
 
-    throw new Error('Should not get here.');
+    // add the type ref to the references
+    // $.visitor.references.schema.set(key, typeRef);
   }
 
   // if there are vendor extensions in the dictionary, they should be handled like this:

@@ -1,5 +1,5 @@
 import * as base from '../operation';
-import { Schema } from '../schema/schema';
+import { TypeReference } from '../schema/type';
 import { Identity } from '../types';
 export class Request extends base.Request {
   /**
@@ -20,7 +20,7 @@ export class Request extends base.Request {
    * @param schema the schema type to use for this payload
    * @param initializer an object initializer
    */
-  constructor(public identity: Identity, public mediaType: string, public schema: Schema, initializer?: Partial<Request>) {
+  constructor(public identity: Identity, public mediaType: string, public schema: TypeReference, initializer?: Partial<Request>) {
     super();
     this.initialize(initializer);
   }

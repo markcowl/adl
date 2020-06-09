@@ -1,14 +1,7 @@
 import { items } from '@azure-tools/linq';
 import { Dictionary, isReference, JsonReference, v2, vendorExtensions } from '@azure-tools/openapi';
 import { isVendorExtension, ParameterLocation } from '@azure-tools/openapi/dist/v2';
-import { Alias as GenericAlias } from '../../../model/alias';
 import { ApiModel } from '../../../model/api-model';
-import { Alias, createAlias } from '../../../model/schema/alias';
-import { Constant } from '../../../model/schema/constant';
-import { Enum } from '../../../model/schema/enum';
-import { AndSchema, AnyOfSchema, XorSchema } from '../../../model/schema/group';
-import { ObjectSchemaImpl } from '../../../model/schema/object';
-import { AnySchema, ArraySchema, Primitive } from '../../../model/schema/primitive';
 import { Host } from '../../../support/file-system';
 import { Context as Ctx, Visitor } from '../../../support/visitor';
 import { push, singleOrDefault } from '../common';
@@ -16,7 +9,7 @@ import { processExternalDocs, processInfo, processTag } from '../common/info';
 import { requestBody } from './body-parameter';
 import { parameter } from './parameter';
 import { path } from './path';
-import { processSchema } from './schema';
+import { newProcessSchema } from './schema';
 import { authentication, authenticationRequirement } from './security';
 import { processServers } from './server';
 
@@ -71,43 +64,13 @@ async function processRoot(oai2: v2.Model, $: Context) {
     $.api.http.authenticationRequirements.push(requirement);
   }
 
-  // definitely, schemas first, since so much will $ref them
-  // await consume($.process(processSchemas, components.schemas));
-  for await (const schema of $.processDictionary(processSchema, oai2.definitions)) {
-    // we have to split up where schemas go 
-    if (schema instanceof GenericAlias) {
-      // this happens when we get a top-level alias 
-      // just sub in a schema alias for it
-      $.api.schemas.aliases.push(createAlias($.api,schema.name,schema.target));
-      continue;
-    }
-    if (schema instanceof Alias) {
-      $.api.schemas.aliases.push(schema);
-      continue;
-    }
-    if (schema instanceof ObjectSchemaImpl) {
-      $.api.schemas.objects.push(schema);
-      continue;
-    }
-    if (schema.type === 'enum' ) {
-      $.api.schemas.enums.push(<Enum>schema);
-      continue;
-    }
-    if (schema instanceof Constant) {
-      $.api.schemas.constants.push(schema);
-      continue;
-    }
-    if (schema instanceof AndSchema || schema instanceof XorSchema || schema instanceof AnyOfSchema) {
-      $.api.schemas.combinations.push(schema);
-      continue;
-    }
-    if (schema instanceof AnySchema || schema instanceof ArraySchema || schema instanceof Primitive) {
-      continue;
-    }
+  for( const [key,value] of items(oai2.definitions)) {
+    // process each item in the collection
+    const typeRef = await newProcessSchema(value, $ );
 
-    throw new Error(`Should not get here. '${schema.name}' is of type ${Object.getPrototypeOf(schema).name}`);
+    // add the type ref to the references
+    // $.visitor.references.schema.set(key, typeRef);
   }
-
 
   for (const [key, value] of items(oai2.parameters)) {
     if (isVendorExtension(key)) {
@@ -115,7 +78,7 @@ async function processRoot(oai2: v2.Model, $: Context) {
     }
 
     if (isReference(value)) {
-      const r = await $.resolveReference(value.$ref);
+      const r = (await $.resolveReference(value.$ref)).node;
       if (r.in == ParameterLocation.Body) {
         push($.api.http.requests, $.processInline(requestBody, <JsonReference<v2.BodyParameter>>value ));
         continue;
