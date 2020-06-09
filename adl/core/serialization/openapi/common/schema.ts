@@ -1,9 +1,9 @@
 import { IntegerFormat, NumberFormat, v2, v3, XMSEnumValue } from '@azure-tools/openapi';
 import { anonymous, nameOf } from '@azure-tools/sourcemap';
-import { newCreateTypeAlias } from '../../../model/schema/alias';
+import { createTypeAlias } from '../../../model/schema/alias';
 import { addEncoding, EncodingReference } from '../../../model/schema/constraint';
 import { addDefault } from '../../../model/schema/default';
-import { newCreateEnum } from '../../../model/schema/enum';
+import { createEnum } from '../../../model/schema/enum';
 import { TypeReference } from '../../../model/schema/type';
 import { Context, OAIModel } from '../../../support/visitor';
 
@@ -119,7 +119,7 @@ export async function processByteArraySchema<T extends OAIModel>(schema: v3.Sche
 
 export function wrapWithAliasIfNeeded<T extends OAIModel>(schema: v3.Schema | v2.Schema, type: TypeReference, $: Context<T>, encoding?: EncodingReference) {
   if (schema.default || schema.description || schema.title || (<any>schema).nullable || schema['x-nullable'] || (<any>schema).readOnly || encoding) {
-    let alias = newCreateTypeAlias($.api, anonymous(nameOf(schema)), type, commonProperties(schema));
+    let alias = createTypeAlias($.api, anonymous(nameOf(schema)), type, commonProperties(schema));
     
     if( encoding) {
       alias = addEncoding(alias, encoding);
@@ -194,7 +194,7 @@ export async function processEnumSchema<T extends OAIModel>(schema: v3.Schema | 
 
   // enums are a bit funny -- they can define their name inside the x-ms-enum declaration 
   // which means there can be multiple declarations for the same enum 
-  const result = newCreateEnum($.api, name, values, {
+  const result = createEnum($.api, name, values, {
     extensible,
     ...commonProperties(schema),
     ...versionInfo($, schema),

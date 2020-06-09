@@ -87,7 +87,7 @@ export class RegularExpressionConstraint extends Constraint {
     this.initialize(initializer);
   }
   get typeDefinition() {
-    return `RegularExpression<'${stringLiteral(this.expression)}'>`;
+    return `RegularExpression<${stringLiteral(this.expression)}'>`;
   }
 }
 

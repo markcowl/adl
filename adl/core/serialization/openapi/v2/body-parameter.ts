@@ -2,7 +2,7 @@ import { values } from '@azure-tools/linq';
 import { v2 } from '@azure-tools/openapi';
 import { anonymous, nameOf } from '@azure-tools/sourcemap';
 import { Request } from '../../../model/http/request';
-import { newProcessSchema } from './schema';
+import { processSchema } from './schema';
 import { Context } from './serializer';
 
 export async function* requestBody(body: v2.BodyParameter, $: Context, options?: { isAnonymous?: boolean; operation: v2.Operation }): AsyncGenerator<Request> {
@@ -14,7 +14,7 @@ export async function* requestBody(body: v2.BodyParameter, $: Context, options?:
   const consumes = operation?.consumes || $.sourceModel.consumes || [];
 
   for (const mediaType of values(consumes)) {
-    const typeref = await newProcessSchema(<v2.Schema>body.schema, $, {isAnonymous: true});
+    const typeref = await processSchema(<v2.Schema>body.schema, $, {isAnonymous: true});
     const request = new Request(bodyName, mediaType, typeref, {
       description: body.description,
       required: body.required,

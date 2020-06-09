@@ -18,7 +18,7 @@ export interface EnumValue {
 }
 
 
-export function newCreateEnum(api: ApiModel, identity: Identity, values: Array<EnumValue>, initializer?: Partial<Enum>): TypeReference {
+export function createEnum(api: ApiModel, identity: Identity, values: Array<EnumValue>, initializer?: Partial<Enum>): TypeReference {
   if (!isAnonymous(identity)) {
     const { name, file } = api.getNameAndFile(identity, 'enum');
 
@@ -27,7 +27,6 @@ export function newCreateEnum(api: ApiModel, identity: Identity, values: Array<E
       // enums are a bit funny -- they can define their name inside the x-ms-enum declaration 
       // which means there can be multiple declarations for the same enum 
       // so, we just return the existing enum by name 
-      // (this won't happen with )
       return {
         declaration: existing.getName(),
         sourceFile: file,

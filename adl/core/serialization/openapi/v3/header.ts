@@ -1,7 +1,7 @@
 import { v3 } from '@azure-tools/openapi';
 import { anonymous, nameOf } from '@azure-tools/sourcemap';
 import { Header } from '../../../model/http/header';
-import { newProcessSchema } from '../v3/schema';
+import { processSchema } from '../v3/schema';
 import { Context } from './serializer';
 
 
@@ -14,7 +14,7 @@ export async function* header(header: v3.Header, $: Context, options?: { isAnony
   header.required && $.warn('header definitions should not contain property \'required\'', header.required);
 
   // get the schema for the header 
-  const typeref = await newProcessSchema(header.schema, $, { isAnonymous: true });
+  const typeref = await processSchema(header.schema, $, { isAnonymous: true });
 
   // create the http header object and track it. 
   const httpHeader = new Header({

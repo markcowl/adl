@@ -1,6 +1,6 @@
 import { v2 } from '@azure-tools/openapi';
 import { FormDataParameter, HeaderParameter, PathParameter, QueryParameter, RenderStyle } from '../../../model/http/parameter';
-import { newProcessSchema } from './schema';
+import { processSchema } from './schema';
 import { Context } from './serializer';
 
 export async function* parameter(parameter: v2.Parameter, $: Context, options?: { isAnonymous?: boolean }) {
@@ -24,7 +24,7 @@ export async function* parameter(parameter: v2.Parameter, $: Context, options?: 
 
 
 export async function* processPathParameter(parameter: v2.PathParameter, $: Context, options?: { isAnonymous?: boolean }) {
-  const typeref = await newProcessSchema(<v2.Schema><unknown>parameter, $, { isAnonymous: true });
+  const typeref = await processSchema(<v2.Schema><unknown>parameter, $, { isAnonymous: true });
   const result = new PathParameter(parameter.name, typeref, false, {
     description: parameter.description,
     required: parameter.required,
@@ -36,7 +36,7 @@ export async function* processPathParameter(parameter: v2.PathParameter, $: Cont
 
 
 export async function* processQueryParameter(parameter: v2.QueryParameter, $: Context, options?: { isAnonymous?: boolean }) {
-  const typeref = await newProcessSchema(<v2.Schema>parameter, $, {isAnonymous: true});
+  const typeref = await processSchema(<v2.Schema>parameter, $, {isAnonymous: true});
   const renderStyle =  RenderStyle.Form;
   const result = new QueryParameter(parameter.name, typeref, true, {
     description: parameter.description,
@@ -50,7 +50,7 @@ export async function* processQueryParameter(parameter: v2.QueryParameter, $: Co
 }
 
 export async function* processFormDataParameter(parameter: v2.FormDataParameter, $: Context, options?: { isAnonymous?: boolean }) {
-  const typeref = await newProcessSchema(<v2.Schema>parameter, $, { isAnonymous: true });
+  const typeref = await processSchema(<v2.Schema>parameter, $, { isAnonymous: true });
   const renderStyle = RenderStyle.Form;
   const result = new FormDataParameter(parameter.name, typeref, true, {
     description: parameter.description,
@@ -63,7 +63,7 @@ export async function* processFormDataParameter(parameter: v2.FormDataParameter,
 }
 
 export async function* processHeaderParameter(parameter: v2.HeaderParameter, $: Context, options?: { isAnonymous?: boolean }) {
-  const typeref = await newProcessSchema(<v2.Schema>parameter, $, { isAnonymous: true });
+  const typeref = await processSchema(<v2.Schema>parameter, $, { isAnonymous: true });
   const result = new HeaderParameter(parameter.name, typeref, false, {
     description: parameter.description,
     required: parameter.required,

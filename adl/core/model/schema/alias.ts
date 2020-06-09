@@ -6,7 +6,7 @@ import { Collection, CollectionImpl, Identity } from '../types';
 import { Constraint } from './constraint';
 import { Default } from './default';
 import { SchemaInitializer } from './object';
-import { Schema, TSSchema } from './schema';
+import { TSSchema } from './schema';
 import { TypeReference } from './type';
 
 
@@ -16,9 +16,7 @@ export class Alias extends TSSchema<TypeAliasDeclaration> {
   defaults: Collection<Default>;
   
   addConstraint(...constraint: Array<Constraint>) {
-    //todo
-    this.node.setType(`${this.node.getTypeNode()?.getText()} & ${constraint.map( c => c.typeDefinition ).join('&')}` );
-    
+    // todo
   }
   removeConstraint(constraint: Constraint) {
     //todo
@@ -64,24 +62,9 @@ export class Alias extends TSSchema<TypeAliasDeclaration> {
   }
 }
 
-export function createAlias(api: ApiModel, identity: Identity, targetSchema: Schema, initializer?: Partial<Alias>): Alias {
-  const { name, file } = api.getNameAndFile(identity, 'alias');
-  const type = api.getTypeReference(targetSchema, file);
-
-  const result = new Alias(file.addTypeAlias({
-    name,
-    type,
-    isExported: true,
-  }));
-
-  return result;
-}
-export interface TypeAliasInitializer extends SchemaInitializer {
-
-}
-export function newCreateTypeAlias(api: ApiModel, identity: Identity, typeReference: TypeReference, initializer?: Partial<TypeAliasInitializer>): TypeReference {
+export function createTypeAlias(api: ApiModel, identity: Identity, typeReference: TypeReference, initializer?: Partial<SchemaInitializer>): TypeReference {
   if (isAnonymous(identity)) {
-    // if it doesn't have a name, just  return the type reference instead?
+    // if it doesn't have a name, just return the type reference instead.
     return typeReference;
   }
   const { name, file } = api.getNameAndFile(identity, 'alias');

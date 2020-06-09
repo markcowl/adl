@@ -5,7 +5,7 @@ import { header } from './header';
 import { parameter } from './parameter';
 import { requestBody } from './request-body';
 import { response } from './response';
-import { newProcessSchema } from './schema';
+import { processSchema } from './schema';
 import { authentication } from './security';
 import { Context } from './serializer';
 
@@ -22,10 +22,7 @@ export async function* processComponents(components: v3.Components, $: Context):
 
   for (const [key, value] of items(components.schemas)) {
     // process each item in the collection
-    const typeRef = await newProcessSchema(value, $);
-
-    // add the type ref to the references
-    // $.visitor.references.schema.set(key, typeRef);
+    await processSchema(value, $);
   }
 
   // if there are vendor extensions in the dictionary, they should be handled like this:

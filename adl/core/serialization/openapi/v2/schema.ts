@@ -2,17 +2,17 @@ import { items, length } from '@azure-tools/linq';
 import { isReference, StringFormat, v2 } from '@azure-tools/openapi';
 import { anonymous, nameOf, refTo } from '@azure-tools/sourcemap';
 import { PropertySignatureStructure } from 'ts-morph';
-import { newCreateTypeAlias } from '../../../model/schema/alias';
+import { createTypeAlias } from '../../../model/schema/alias';
 import { addConstraint, addEncoding, Constraints, Encodings } from '../../../model/schema/constraint';
 import { addDefault } from '../../../model/schema/default';
-import { createArray, createDictionary, newCreateObjectSchema, newCreateProperty } from '../../../model/schema/object';
+import { createArray, createDictionary, createInterface, createPropertySignature } from '../../../model/schema/object';
 import { TypeReference } from '../../../model/schema/type';
 import { Identity } from '../../../model/types';
 import { Context } from '../../../support/visitor';
 import { isEnumSchema, isObjectSchema } from '../common';
 import { arrayProperties, commonProperties, numberProperties, objectProperties, Options, processBooleanSchema, processByteArraySchema, processCharSchema, processDateSchema, processDateTimeSchema, processDurationSchema, processEnumSchema, processFileSchema, processIntegerSchema, processNumberSchema, processOdataSchema, processPasswordSchema, processTimeSchema, processUriSchema, processUuidSchema, stringProperties, versionInfo } from '../common/schema';
 
-export async function newProcessSchema(schema: v2.Schema|v2.SchemaReference, $: Context<v2.Model>, options?: { isAnonymous?: boolean }): Promise<TypeReference> {
+export async function processSchema(schema: v2.Schema|v2.SchemaReference, $: Context<v2.Model>, options?: { isAnonymous?: boolean }): Promise<TypeReference> {
   const here = $.normalizeReference(refTo(schema)).$ref;
 
   // did we already process this because we went thru a $ref earlier?
@@ -30,12 +30,12 @@ export async function newProcessSchema(schema: v2.Schema|v2.SchemaReference, $: 
       if( !typeRef )  {
         // nope, not handled yet.
         const resolvedReference = await $.resolveReference(schema.$ref);
-        typeRef = await newProcessSchema(resolvedReference.node, resolvedReference.context);
+        typeRef = await processSchema(resolvedReference.node, resolvedReference.context);
       }
 
       if( !options?.isAnonymous) {
         // it has a name (which means it is intended to be a type alias at the top level) 
-        typeRef = newCreateTypeAlias($.api, nameOf(schema), typeRef, commonProperties(<v2.Schema>schema));
+        typeRef = createTypeAlias($.api, nameOf(schema), typeRef, commonProperties(<v2.Schema>schema));
       }
       
       // return the target.
@@ -157,7 +157,7 @@ function constrainNumericSchema(schema: v2.Schema, $: Context<v2.Model>, options
   // we'll have to come back to xml
   // alias.addToAttic('xml', schema.xml);
   
-  return options?.isAnonymous ? target : newCreateTypeAlias($.api,nameOf(schema),target, commonProperties(schema));
+  return options?.isAnonymous ? target : createTypeAlias($.api,nameOf(schema),target, commonProperties(schema));
 }
 
 
@@ -211,7 +211,7 @@ export async function processStringSchema(schema: v2.Schema, $: Context<v2.Model
   }
 
   // otherwise, we have to get the standard string and make an alias for it with the adornments. 
-  let alias = newCreateTypeAlias($.api, anonymous('string'), $.api.schemas.primitives.string, commonProperties(schema));
+  let alias = createTypeAlias($.api, anonymous('string'), $.api.schemas.primitives.string, commonProperties(schema));
 
   if (schema.default !== undefined) {
     // alias.defaults.push(new ServerDefaultValue(schema.default));
@@ -239,7 +239,7 @@ export async function processStringSchema(schema: v2.Schema, $: Context<v2.Model
   if (options?.isAnonymous) {
     return alias;
   }
-  return newCreateTypeAlias($.api, nameOf(schema), alias, commonProperties(schema));
+  return createTypeAlias($.api, nameOf(schema), alias, commonProperties(schema));
   
 }
 
@@ -272,8 +272,8 @@ export async function processObjectSchema(schema: v2.Schema, $: Context<v2.Model
   // process the properties
   const properties = new Array<PropertySignatureStructure>();
   for( const [propertyName, property] of items(schema.properties) ) {
-    const pTypeRef = await newProcessSchema(property, $, { isAnonymous: true });
-    const prop = newCreateProperty(propertyName, pTypeRef, {
+    const pTypeRef = await processSchema(property, $, { isAnonymous: true });
+    const prop = createPropertySignature(propertyName, pTypeRef, {
       ...commonProperties(<v2.Schema>property),
       ...versionInfo($, property),
       required: schema.required && schema.required.indexOf(propertyName) > -1,
@@ -284,17 +284,17 @@ export async function processObjectSchema(schema: v2.Schema, $: Context<v2.Model
 
     
   const parents = schema.allOf ? await Promise.all( schema.allOf.map( async parent => {
-    const result = await newProcessSchema(parent, $, {isAnonymous: true});
+    const result = await processSchema(parent, $, {isAnonymous: true});
     requiredReferences.push(result);
     return result;
   })): [];
   if( schema.additionalProperties ) {
     // true means type == any
-    const elementTypeRef = schema.additionalProperties == true ? $.api.schemas.primitives.any : await newProcessSchema(schema.additionalProperties!, $, { isAnonymous: true });
+    const elementTypeRef = schema.additionalProperties == true ? $.api.schemas.primitives.any : await processSchema(schema.additionalProperties!, $, { isAnonymous: true });
     parents.push(createDictionary(elementTypeRef));
   }
   // creating an object schema 
-  result = newCreateObjectSchema($.api, schemaName, {
+  result = createInterface($.api, schemaName, {
     ...commonProperties(schema),
     properties,
     parents,
@@ -325,7 +325,7 @@ function addObjectConstraints(schemaName: string, schema: v2.Schema, $: Context<
       type = addDefault(type, schema.default);
     }
 
-    return newCreateTypeAlias($.api, schemaName, type);
+    return createTypeAlias($.api, schemaName, type);
   } 
   return type;
 }
@@ -339,9 +339,9 @@ export async function processAdditionalProperties(schema: v2.Schema, $: Context<
   const common = schema.properties ? {} : commonProperties(schema);
 
   // true means type == any
-  const elementTypeRef = schema.additionalProperties == true ? $.api.schemas.primitives.any : await newProcessSchema(schema.additionalProperties!, $, {isAnonymous: true});
+  const elementTypeRef = schema.additionalProperties == true ? $.api.schemas.primitives.any : await processSchema(schema.additionalProperties!, $, {isAnonymous: true});
   
-  let alias = newCreateTypeAlias($.api, schemaName, createDictionary(elementTypeRef), common);
+  let alias = createTypeAlias($.api, schemaName, createDictionary(elementTypeRef), common);
   // todo: come back and handle attic -- we'll have to come back to xml
   // alias.addToAttic('xml', schema.xml);
 
@@ -365,10 +365,10 @@ export async function processArraySchema(schema: v2.Schema, $: Context<v2.Model>
   // if this isn't anonymous or a property or parameter, things like descriptions belong to this declaration
   const common = (!options?.isAnonymous && !options?.isParameter && !options?.isProperty) ? commonProperties(schema) : {};
 
-  const elementType = schema.items ? await newProcessSchema(schema.items, $, { isAnonymous: true }) :  $.api.schemas.primitives.any;
+  const elementType = schema.items ? await processSchema(schema.items, $, { isAnonymous: true }) :  $.api.schemas.primitives.any;
   $.assertNoForbiddenProperties(schema, ...stringProperties, ...numberProperties);
 
-  let alias = createArray(elementType);// newCreateTypeAlias($.api, anonymous('array'), createArray(elementType), common);
+  let alias = createArray(elementType);
 
   if ((schema.default !== undefined || schema.maxItems !== undefined || schema.minItems !== undefined || schema.uniqueItems !== undefined)) {
 
@@ -391,5 +391,5 @@ export async function processArraySchema(schema: v2.Schema, $: Context<v2.Model>
   }
   // we'll have to come back to xml
   // alias.addToAttic('xml', schema.xml);
-  return options?.isAnonymous ? alias : newCreateTypeAlias($.api, schemaName, alias, commonProperties(schema));
+  return options?.isAnonymous ? alias : createTypeAlias($.api, schemaName, alias, commonProperties(schema));
 }

@@ -105,7 +105,7 @@ export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements 
   }
 }
 
-export function newCreateProperty(name: string, typeReference: TypeReference, initializer?: PropertyInitializer): PropertySignatureStructure {
+export function createPropertySignature(name: string, typeReference: TypeReference, initializer?: PropertyInitializer): PropertySignatureStructure {
   return {
     kind: StructureKind.PropertySignature,
     //todo: do a better 'fix-the-bad-name' (ie, perks/codegen)
@@ -143,7 +143,7 @@ export interface ObjectSchemaInitializer extends SchemaInitializer {
   requiredReferences: Array<TypeReference>;
 }
 
-export function newCreateObjectSchema(api: ApiModel, identity: Identity, initializer?: Partial<ObjectSchemaInitializer> ): TypeReference {
+export function createInterface(api: ApiModel, identity: Identity, initializer?: Partial<ObjectSchemaInitializer> ): TypeReference {
   const { name, file } = api.getNameAndFile(identity, 'model');
 
   const iface = file.addInterface( {

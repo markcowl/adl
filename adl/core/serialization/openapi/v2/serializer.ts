@@ -9,7 +9,7 @@ import { processExternalDocs, processInfo, processTag } from '../common/info';
 import { requestBody } from './body-parameter';
 import { parameter } from './parameter';
 import { path } from './path';
-import { newProcessSchema } from './schema';
+import { processSchema } from './schema';
 import { authentication, authenticationRequirement } from './security';
 import { processServers } from './server';
 
@@ -66,10 +66,7 @@ async function processRoot(oai2: v2.Model, $: Context) {
 
   for( const [key,value] of items(oai2.definitions)) {
     // process each item in the collection
-    const typeRef = await newProcessSchema(value, $ );
-
-    // add the type ref to the references
-    // $.visitor.references.schema.set(key, typeRef);
+    await processSchema(value, $ );
   }
 
   for (const [key, value] of items(oai2.parameters)) {
@@ -92,7 +89,6 @@ async function processRoot(oai2: v2.Model, $: Context) {
     }
     push($.api.http.parameters, $.process(parameter, value));
   }
-
   
   for await (const operation of $.processDictionary(path, oai2.paths)) {
     $.api.http.operations.push(operation);

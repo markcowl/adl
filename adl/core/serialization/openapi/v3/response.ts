@@ -4,7 +4,7 @@ import { anonymous, nameOf } from '@azure-tools/sourcemap';
 import { Response } from '../../../model/http/response';
 import { addExtensionsToAttic } from '../common';
 import { header } from './header';
-import { newProcessSchema } from './schema';
+import { processSchema } from './schema';
 import { Context } from './serializer';
 
 
@@ -28,7 +28,7 @@ export async function* response(response: v3.Response, $: Context, options?: { i
   for (const [mediaType, type] of items(response.content)) {
     const result = new Response(responseName, mediaType, {
       description: response.description,
-      typeref:  type.schema ? await newProcessSchema(type.schema, $, {isAnonymous: true}) : undefined,
+      typeref:  type.schema ? await processSchema(type.schema, $, {isAnonymous: true}) : undefined,
     });
 
     for (const value of values(response.headers)) {
