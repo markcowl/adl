@@ -21,7 +21,7 @@ export async function* header(header: v3.Header, $: Context, options?: { isAnony
     // maintain the key
     name: name.toString(),
     // use the schema
-    schema: typeref,
+    typeRef: typeref,
     // set a specific value 
     description: header.description,
     // set the style value

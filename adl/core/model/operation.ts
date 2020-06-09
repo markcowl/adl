@@ -51,7 +51,7 @@ export class Parameter extends Element {
    */
   required?: boolean;
 
-  constructor(public name: string, public schema: TypeReference, initializer?: Partial<Parameter>) {
+  constructor(public name: string, public typeRef: TypeReference, initializer?: Partial<Parameter>) {
     super();
     this.initialize(initializer);
   }

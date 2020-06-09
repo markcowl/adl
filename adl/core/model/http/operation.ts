@@ -160,7 +160,7 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
   }
 
   private getParameterType(parameter: Parameter, chosenName: string) {
-    const innerType = parameter.schema;
+    const innerType = parameter.typeRef;
     const outerType = this.getOuterParameterType(parameter.type);
     const nameArg = parameter.name == chosenName ? '' : `, '${parameter.name}'`;
     return `${outerType}<${innerType.declaration}${nameArg}>`;
@@ -214,7 +214,7 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
   }
   
   private getRequestType(request: Request, chosenName: string) {
-    const innerType = request.schema;
+    const innerType = request.typeRef;
     const outerType = 'Http.Body';
     const mediaTypeArg = `, '${request.mediaType}'`;
     const nameArg = (!request.name || request.name == chosenName) ? '' : `, '${request.name}'`;

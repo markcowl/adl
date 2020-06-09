@@ -12,7 +12,7 @@ export class Header extends Element {
   style: any;
 
   /** the schema for the header */
-  schema?: TypeReference;
+  typeRef?: TypeReference;
 
   constructor(initializer?: Partial<Header>) {
     super();
