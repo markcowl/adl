@@ -1,4 +1,3 @@
-import { schema } from '../aliases/schema';
 export interface PrivateLinkResources {
     /**
      * @description Gets the private link resources supported for the key vault.
@@ -12,5 +11,5 @@ export interface PrivateLinkResources {
      * @return default - Error response describing why the operation failed.
      * @since 2019-09-01
      */
-    ListByVault(subscriptionId: Http.Path<string>, resourceGroupName: Http.Path<string>, vaultName: Http.Path<string & RegularExpression<"^[a-zA-Z0-9-]{3,24}$">>, api_version: Http.Query<string, 'api-version'>): Http.Response<'200', schema, 'application/json'> | Http.Response<Http.Default, schema, 'application/json'>;
+    ListByVault(subscriptionId: Http.Path<string>, resourceGroupName: Http.Path<string>, vaultName: Http.Path<string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>>, api_version: Http.Query<string, 'api-version'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<Http.Default, [object, Object], 'application/json'>;
 }
