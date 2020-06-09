@@ -1,4 +1,3 @@
-import { schema } from '../aliases/schema';
 export interface Service {
     /**
      * List all pets
@@ -9,7 +8,7 @@ export interface Service {
      * @return default - unexpected error
      * @since 1.0.0
      */
-    listPets(limit?: Http.Query<int32>): Http.Response<'200', schema, 'application/json'> | Http.Response<Http.Default, schema, 'application/json'>;
+    listPets(limit?: Http.Query<int32>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<Http.Default, [object, Object], 'application/json'>;
     /**
      * Create a pet
      * @http POST /pets
@@ -18,7 +17,7 @@ export interface Service {
      * @return default - unexpected error
      * @since 1.0.0
      */
-    createPets(): Http.Response<'201'> | Http.Response<Http.Default, schema, 'application/json'>;
+    createPets(): Http.Response<'201'> | Http.Response<Http.Default, [object, Object], 'application/json'>;
     /**
      * Info for a specific pet
      * @http GET /pets/{petId}
@@ -28,5 +27,5 @@ export interface Service {
      * @return default - unexpected error
      * @since 1.0.0
      */
-    showPetById(petId: Http.Path<string>): Http.Response<'200', schema, 'application/json'> | Http.Response<Http.Default, schema, 'application/json'>;
+    showPetById(petId: Http.Path<string>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<Http.Default, [object, Object], 'application/json'>;
 }

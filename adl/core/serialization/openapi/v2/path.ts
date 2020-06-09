@@ -52,7 +52,7 @@ export async function* operation(path: Path, operation: v2.Operation, shared: v2
   // OAI2 parameters are all in the operation
   for (const p of values(shared.parameters)) {
     if (isReference(p)) {
-      const r = await $.resolveReference(p.$ref);
+      const r = (await $.resolveReference(p.$ref)).node;
       if (r.in == ParameterLocation.Body || r.in == ParameterLocation.FormData) {
         push(result.requests, $.processInline(requestBody, <JsonReference<v2.BodyParameter>> p, { isAnonymous: true, operation }));
         continue;
@@ -71,14 +71,14 @@ export async function* operation(path: Path, operation: v2.Operation, shared: v2
     // they specified a body content type, but no actual body parameter, which means
     // they get an anonymous one added 
     for( const mediaType of consumes ) {
-      result.requests.push( new Request(anonymous('requestBody'),mediaType,$.api.schemas.File));
+      result.requests.push( new Request(anonymous('requestBody'),mediaType,$.api.schemas.primitives.file));
     }
   }
 
   for (const p of values(operation.parameters)) {
     // create each parameter in the operation 
     if (isReference(p)) {
-      const r = await $.resolveReference(p.$ref);
+      const r = (await $.resolveReference(p.$ref)).node;
       if (r.in == ParameterLocation.Body) {
         push(result.requests, $.processInline(requestBody, <JsonReference<v2.BodyParameter>>p, { isAnonymous: true, operation }));
         continue;

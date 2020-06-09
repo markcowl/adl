@@ -1,4 +1,3 @@
-import { schema } from '../aliases/schema';
 export interface Operations {
     /**
      * @description Lists all of the available Key Vault Rest API operations.
@@ -8,5 +7,5 @@ export interface Operations {
      * @return 200 - OK. The request has succeeded.
      * @since 2019-09-01
      */
-    List(body?: Http.Body<file, 'application/json'>, api_version: Http.Query<string, 'api-version'>): Http.Response<'200', schema, 'application/json'>;
+    List(body?: Http.Body<[object, Object], 'application/json'>, api_version: Http.Query<string, 'api-version'>): Http.Response<'200', [object, Object], 'application/json'>;
 }

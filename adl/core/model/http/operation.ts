@@ -160,10 +160,10 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
   }
 
   private getParameterType(parameter: Parameter, chosenName: string) {
-    const innerType = this.project.getTypeReference(parameter.schema, this.node.getSourceFile());
+    const innerType = parameter.typeRef;
     const outerType = this.getOuterParameterType(parameter.type);
     const nameArg = parameter.name == chosenName ? '' : `, '${parameter.name}'`;
-    return `${outerType}<${innerType}${nameArg}>`;
+    return `${outerType}<${innerType.declaration}${nameArg}>`;
   }
 
   private getOuterParameterType(parameterType: ParameterType) {
@@ -214,7 +214,7 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
   }
   
   private getRequestType(request: Request, chosenName: string) {
-    const innerType = this.project.getTypeReference(request.schema, this.node.getSourceFile());
+    const innerType = request.typeRef;
     const outerType = 'Http.Body';
     const mediaTypeArg = `, '${request.mediaType}'`;
     const nameArg = (!request.name || request.name == chosenName) ? '' : `, '${request.name}'`;
@@ -251,7 +251,7 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
   private getResponseType(response: Response) {
     const outerType = response.isException ? 'Http.Exception' : 'Http.Response';
     const statusArg = this.getStatusArg(response);
-    const schema = response.schema ? this.project.getTypeReference(response.schema, this.node.getSourceFile()) : undefined;
+    const schema = response.typeref;
     const schemaArg = schema ? `, ${schema}` : response.mediaType ? ', none' : '';
     const mediaTypeArg = response.mediaType ? `, '${response.mediaType}'` : '';
     return `${outerType}<${statusArg}${schemaArg}${mediaTypeArg}>`;
