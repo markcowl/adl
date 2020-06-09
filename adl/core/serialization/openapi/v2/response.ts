@@ -30,7 +30,7 @@ export async function* response(response: v2.Response, $: Context, options?: { i
   for (const mediaType of values(produces)) {
     const result = new Response(responseName, mediaType, {
       description: response.description,
-      typeref: response.schema ? (await processSchema(response.schema, $)) : undefined,
+      typeref: response.schema ? (await processSchema(response.schema, $, {isAnonymous: true})) : undefined,
     });
 
     for (const value of values(response.headers)) {

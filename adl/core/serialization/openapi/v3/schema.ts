@@ -120,7 +120,7 @@ export async function processSchema(schema: v3.Schema|v3.SchemaReference, $: Con
 
         if (schema.pattern || schema.maxLength !== undefined || schema.minLength !== undefined) {
           // these only apply to strings
-          return processStringSchema(schema, $);
+          return processStringSchema(schema, $,options);
         }
 
         if (schema.minimum !== undefined || schema.maximum !== undefined || schema.exclusiveMaximum !== undefined || schema.exclusiveMinimum !== undefined || schema.multipleOf !== undefined) {
