@@ -25,7 +25,7 @@ export async function processSchema(schema: v2.Schema|v2.SchemaReference, $: Con
     if( isReference(schema) ) {
       // this is a type reference, we need to process the target first.
 
-      typeRef = await $.visitor.references.schema.get($.normalizeReference(schema.$ref).$ref);
+      typeRef = $.visitor.references.schema.get($.normalizeReference(schema.$ref).$ref);
       // have we already got a reference for the target?
       if( !typeRef )  {
         // nope, not handled yet.
@@ -33,7 +33,7 @@ export async function processSchema(schema: v2.Schema|v2.SchemaReference, $: Con
         typeRef = await processSchema(resolvedReference.node, resolvedReference.context);
       }
 
-      if( !options?.isAnonymous) {
+      if( !(options?.isAnonymous)) {
         // it has a name (which means it is intended to be a type alias at the top level) 
         typeRef = createTypeAlias($.api, nameOf(schema), typeRef, commonProperties(<v2.Schema>schema));
       }
