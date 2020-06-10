@@ -316,7 +316,6 @@ export class Context<TSourceModel extends OAIModel> {
     }
   }
 
-
   async *processDictionary<TInput, TOutput extends Element, TOptions extends Options>(action: fnAction<TSourceModel, TInput, TOutput, TOptions>, dictionary: Dictionary<TInput | JsonReference<TInput>> | undefined, options?: TOptions): AsyncGenerator<TOutput | Alias<TOutput>> {
     for (const [key, value] of items(dictionary)) {
       if (isVendorExtension(key)) {

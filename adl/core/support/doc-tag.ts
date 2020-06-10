@@ -95,7 +95,7 @@ export interface Documentation {
   extensible?: boolean;
 }
 
-export function createDocs(documentationIntializer?: Documentation): Array<JSDocStructure> {
+export function createDocs(documentationIntializer?: Documentation, additionalTags?: Array<JSDocTagStructure>): Array<JSDocStructure> {
   if( documentationIntializer) {
     const tags = new Array<JSDocTagStructure>();
     if (documentationIntializer.extensible) {
@@ -139,6 +139,10 @@ export function createDocs(documentationIntializer?: Documentation): Array<JSDoc
       });
     }
 
+    if (additionalTags) {
+      tags.push(...additionalTags);
+    }
+  
     return [{
       kind: StructureKind.JSDoc,
       description: documentationIntializer.summary || (tags.length< 2?  '\n': ''),

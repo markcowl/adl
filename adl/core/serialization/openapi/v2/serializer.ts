@@ -6,9 +6,9 @@ import { Host } from '../../../support/file-system';
 import { Context as Ctx, Visitor } from '../../../support/visitor';
 import { push, singleOrDefault } from '../common';
 import { processExternalDocs, processInfo, processTag } from '../common/info';
+import { processPaths } from '../v2/path';
 import { requestBody } from './body-parameter';
 import { parameter } from './parameter';
-import { path } from './path';
 import { processSchema } from './schema';
 import { authentication, authenticationRequirement } from './security';
 import { processServers } from './server';
@@ -89,13 +89,8 @@ async function processRoot(oai2: v2.Model, $: Context) {
     }
     push($.api.http.parameters, $.process(parameter, value));
   }
-  
-  for await (const operation of $.processDictionary(path, oai2.paths)) {
-    $.api.http.operations.push(operation);
-  }
-  for await (const operation of $.processDictionary(path, oai2['x-ms-paths'])) {
-    $.api.http.operations.push(operation);
-  }
+
+  processPaths([oai2.paths, oai2['x-ms-paths']], $);
 
   return $.api;
 }
