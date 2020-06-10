@@ -233,10 +233,10 @@ function createResponseStructures(responses?: Array<Response | Alias<Response>>,
 }
 
 function getParameterType(parameter: Parameter, chosenName: string) {
-  const innerType = parameter.typeRef;
+  const innerType = parameter.typeRef.declaration;
   const outerType = getOuterParameterType(parameter.type);
   const nameArg = parameter.name == chosenName ? '' : `, '${parameter.name}'`;
-  return `${outerType}<${innerType.declaration}${nameArg}>`;
+  return `${outerType}<${innerType}${nameArg}>`;
 }
 
 function getOuterParameterType(parameterType: ParameterType) {
@@ -257,7 +257,7 @@ function getOuterParameterType(parameterType: ParameterType) {
 }
 
 function getRequestType(request: Request, chosenName: string) {
-  const innerType = request.typeRef;
+  const innerType = request.typeRef.declaration;
   const outerType = 'Http.Body';
   const mediaTypeArg = `, '${request.mediaType}'`;
   const nameArg = (!request.name || request.name == chosenName) ? '' : `, '${request.name}'`;

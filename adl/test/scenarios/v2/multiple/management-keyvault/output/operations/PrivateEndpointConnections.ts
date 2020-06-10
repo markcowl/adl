@@ -27,7 +27,7 @@ export interface PrivateEndpointConnections {
      * @return 200 - The state of private endpoint connection was updated successfully.
      * @return default - Error response describing why the operation failed.
      */
-    Put(subscriptionId: Http.Path<string>, resourceGroupName: Http.Path<string>, vaultName: Http.Path<string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>>, privateEndpointConnectionName: Http.Path<string>, api_version: Http.Query<string, 'api-version'>, properties: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<Http.Default, [object, Object], 'application/json'>;
+    Put(subscriptionId: Http.Path<string>, resourceGroupName: Http.Path<string>, vaultName: Http.Path<string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>>, privateEndpointConnectionName: Http.Path<string>, api_version: Http.Query<string, 'api-version'>, properties: Http.Body<PrivateEndpointConnection, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<Http.Default, [object, Object], 'application/json'>;
     /**
      * @description Deletes the specified private endpoint connection associated with the key vault.
      * @since 2019-09-01

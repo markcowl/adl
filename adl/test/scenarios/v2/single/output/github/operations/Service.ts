@@ -9,7 +9,7 @@ export interface Service {
      * for details.
      *
      */
-    emojis(Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    emojis(Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List public events.
      * @since v3
@@ -20,7 +20,7 @@ export interface Service {
      * for details.
      *
      */
-    events(Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    events(Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List Feeds.
      * GitHub provides several timeline resources in Atom format. The Feeds API
@@ -34,7 +34,7 @@ export interface Service {
      * for details.
      *
      */
-    feeds(Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    feeds(Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List the authenticated user's gists or if called anonymously, this will
      * return all public gists.
@@ -50,7 +50,7 @@ export interface Service {
      * for details.
      *
      */
-    gists(since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    gists(since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a gist.
      * @since v3
@@ -61,7 +61,7 @@ export interface Service {
      * for details.
      *
      */
-    gists(Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    gists(Accept?: Http.Header<string>, body: Http.Body<postGist, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List all public gists.
      * @since v3
@@ -75,7 +75,7 @@ export interface Service {
      * for details.
      *
      */
-    public(since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    public(since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List the authenticated user's starred gists.
      * @since v3
@@ -89,7 +89,7 @@ export interface Service {
      * for details.
      *
      */
-    starred(since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    starred(since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a single gist.
      * @since v3
@@ -101,7 +101,7 @@ export interface Service {
      * for details.
      *
      */
-    gists(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    gists(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete a gist.
      * @since v3
@@ -114,7 +114,7 @@ export interface Service {
      * for details.
      *
      */
-    gists(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    gists(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Edit a gist.
      * @since v3
@@ -126,7 +126,7 @@ export interface Service {
      * for details.
      *
      */
-    gists(id: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    gists(id: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<patchGist, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List comments on a gist.
      * @since v3
@@ -138,7 +138,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a commen
      * @since v3
@@ -150,7 +150,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(id: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(id: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<commentBody, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a single comment.
      * @since v3
@@ -163,7 +163,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(id: Http.Path<int64>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(id: Http.Path<int64>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete a comment.
      * @since v3
@@ -177,7 +177,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(id: Http.Path<int64>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(id: Http.Path<int64>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Edit a comment.
      * @since v3
@@ -190,7 +190,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(id: Http.Path<int64>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(id: Http.Path<int64>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<comment, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Fork a gist.
      * @since v3
@@ -203,7 +203,7 @@ export interface Service {
      *
      * @return 404 - Not exists.
      */
-    forks(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
+    forks(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
     /**
      * @description Check if a gist is starred.
      * @since v3
@@ -216,7 +216,7 @@ export interface Service {
      *
      * @return 404 - Not exists.
      */
-    star(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
+    star(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
     /**
      * @description Star a gist.
      * @since v3
@@ -228,7 +228,7 @@ export interface Service {
      * for details.
      *
      */
-    star(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    star(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Unstar a gist.
      * @since v3
@@ -240,7 +240,7 @@ export interface Service {
      * for details.
      *
      */
-    star(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    star(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Listing available templates.
      * List all templates available to pass as an option when creating a repository.
@@ -253,7 +253,7 @@ export interface Service {
      * for details.
      *
      */
-    templates(Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    templates(Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a single template.
      * @since v3
@@ -264,7 +264,7 @@ export interface Service {
      * for details.
      *
      */
-    templates(language: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    templates(language: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List issues.
      * List all issues across all the authenticated user's visible repositories.
@@ -284,7 +284,7 @@ export interface Service {
      * for details.
      *
      */
-    issues(filter: Http.Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state: Http.Query<"open" | "closed">, labels: Http.Query<string>, sort: Http.Query<"created" | "updated" | "comments">, direction: Http.Query<"asc" | "desc">, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    issues(filter: Http.Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state: Http.Query<"open" | "closed">, labels: Http.Query<string>, sort: Http.Query<"created" | "updated" | "comments">, direction: Http.Query<"asc" | "desc">, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Find issues by state and keyword.
      * @since v3
@@ -298,7 +298,7 @@ export interface Service {
      * for details.
      *
      */
-    search(keyword: Http.Path<string>, state: Http.Path<"open" | "closed">, owner: Http.Path<string>, repository: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    search(keyword: Http.Path<string>, state: Http.Path<"open" | "closed">, owner: Http.Path<string>, repository: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Find repositories by keyword. Note, this legacy method does not follow the v3 pagination pattern. This method returns up to 100 results per page and pages can be fetched using the start_page parameter.
      * @since v3
@@ -315,7 +315,7 @@ export interface Service {
      * for details.
      *
      */
-    search(keyword: Http.Path<string>, order?: Http.Query<"desc" | "asc">, language?: Http.Query<string>, start_page?: Http.Query<string>, sort?: Http.Query<"updated" | "stars" | "forks">, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    search(keyword: Http.Path<string>, order?: Http.Query<"desc" | "asc">, language?: Http.Query<string>, start_page?: Http.Query<string>, sort?: Http.Query<"updated" | "stars" | "forks">, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description This API call is added for compatibility reasons only.
      * @since v3
@@ -328,7 +328,7 @@ export interface Service {
      * for details.
      *
      */
-    email(email: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    email(email: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Find users by keyword.
      * @since v3
@@ -344,7 +344,7 @@ export interface Service {
      * for details.
      *
      */
-    search(keyword: Http.Path<string>, order?: Http.Query<"desc" | "asc">, start_page?: Http.Query<string>, sort?: Http.Query<"updated" | "stars" | "forks">, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    search(keyword: Http.Path<string>, order?: Http.Query<"desc" | "asc">, start_page?: Http.Query<string>, sort?: Http.Query<"updated" | "stars" | "forks">, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Render an arbitrary Markdown document
      * @since v3
@@ -355,7 +355,7 @@ export interface Service {
      * for details.
      *
      */
-    markdown(Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', none, 'text/html'> | Http.Response<'403', none, 'text/html'>;
+    markdown(Accept?: Http.Header<string>, body: Http.Body<markdown, 'application/json'>): Http.Response<'200', none, 'text/html'> | Http.Response<'403', none, 'text/html'>;
     /**
      * @description Render a Markdown document in raw mode
      * @since v3
@@ -366,7 +366,7 @@ export interface Service {
      * for details.
      *
      */
-    raw(Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'text/plain'>): Http.Response<'200', none, 'text/html'> | Http.Response<'403', none, 'text/html'>;
+    raw(Accept?: Http.Header<string>, body?: Http.Body<file, 'text/plain'>): Http.Response<'200', none, 'text/html'> | Http.Response<'403', none, 'text/html'>;
     /**
      * @description This gives some information about GitHub.com, the service.
      * @since v3
@@ -377,7 +377,7 @@ export interface Service {
      * for details.
      *
      */
-    meta(Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    meta(Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List public events for a network of repositories.
      * @since v3
@@ -390,7 +390,7 @@ export interface Service {
      * for details.
      *
      */
-    events(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    events(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List your notifications.
      * List all notifications for the current user, grouped by repository.
@@ -410,7 +410,7 @@ export interface Service {
      * for details.
      *
      */
-    notifications(all?: Http.Query<boolean>, participating?: Http.Query<boolean>, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    notifications(all?: Http.Query<boolean>, participating?: Http.Query<boolean>, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Mark as read.
      * Marking a notification as "read" removes it from the default view on GitHub.com.
@@ -423,7 +423,7 @@ export interface Service {
      * for details.
      *
      */
-    notifications(Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'205', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    notifications(Accept?: Http.Header<string>, body: Http.Body<notificationMarkRead, 'application/json'>): Http.Response<'205', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description View a single thread.
      * @since v3
@@ -435,7 +435,7 @@ export interface Service {
      * for details.
      *
      */
-    threads(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    threads(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Mark a thread as read
      * @since v3
@@ -447,7 +447,7 @@ export interface Service {
      * for details.
      *
      */
-    threads(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'205', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    threads(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'205', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a Thread Subscription.
      * @since v3
@@ -459,7 +459,7 @@ export interface Service {
      * for details.
      *
      */
-    subscription(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    subscription(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Set a Thread Subscription.
      * This lets you subscribe to a thread, or ignore it. Subscribing to a thread
@@ -475,7 +475,7 @@ export interface Service {
      * for details.
      *
      */
-    subscription(id: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    subscription(id: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<putSubscription, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete a Thread Subscription.
      * @since v3
@@ -488,7 +488,7 @@ export interface Service {
      * for details.
      *
      */
-    subscription(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    subscription(id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get an Organization.
      * @since v3
@@ -500,7 +500,7 @@ export interface Service {
      * for details.
      *
      */
-    orgs(org: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    orgs(org: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Edit an Organization.
      * @since v3
@@ -512,7 +512,7 @@ export interface Service {
      * for details.
      *
      */
-    orgs(org: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    orgs(org: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<patchOrg, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List public events for an organization.
      * @since v3
@@ -524,7 +524,7 @@ export interface Service {
      * for details.
      *
      */
-    events(org: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    events(org: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List issues.
      * List all issues for a given organization for the authenticated user.
@@ -545,7 +545,7 @@ export interface Service {
      * for details.
      *
      */
-    issues(org: Http.Path<string>, filter: Http.Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state: Http.Query<"open" | "closed">, labels: Http.Query<string>, sort: Http.Query<"created" | "updated" | "comments">, direction: Http.Query<"asc" | "desc">, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    issues(org: Http.Path<string>, filter: Http.Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state: Http.Query<"open" | "closed">, labels: Http.Query<string>, sort: Http.Query<"created" | "updated" | "comments">, direction: Http.Query<"asc" | "desc">, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Members list.
      * List all users who are members of an organization. A member is a user tha
@@ -564,7 +564,7 @@ export interface Service {
      * for details.
      *
      */
-    members(org: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'302', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    members(org: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'302', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Check if a user is, publicly or privately, a member of the organization.
      * @since v3
@@ -584,7 +584,7 @@ export interface Service {
      * b. Response if requester is not an organization member and is inquiring about themselves
      *
      */
-    members(org: Http.Path<string>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'302', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
+    members(org: Http.Path<string>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'302', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
     /**
      * @description Remove a member.
      * Removing a user from this list will remove them from all teams and they
@@ -601,7 +601,7 @@ export interface Service {
      * for details.
      *
      */
-    members(org: Http.Path<string>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    members(org: Http.Path<string>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Public members list.
      * Members of an organization can choose to have their membership publicized
@@ -616,7 +616,7 @@ export interface Service {
      * for details.
      *
      */
-    public_members(org: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    public_members(org: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Check public membership.
      * @since v3
@@ -630,7 +630,7 @@ export interface Service {
      *
      * @return 404 - User is not a public member.
      */
-    public_members(org: Http.Path<string>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
+    public_members(org: Http.Path<string>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
     /**
      * @description Publicize a user's membership.
      * @since v3
@@ -643,7 +643,7 @@ export interface Service {
      * for details.
      *
      */
-    public_members(org: Http.Path<string>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    public_members(org: Http.Path<string>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Conceal a user's membership.
      * @since v3
@@ -656,7 +656,7 @@ export interface Service {
      * for details.
      *
      */
-    public_members(org: Http.Path<string>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    public_members(org: Http.Path<string>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List repositories for the specified org.
      * @since v3
@@ -668,7 +668,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(org: Http.Path<string>, type?: Http.Query<"all" | "public" | "private" | "forks" | "sources" | "member">, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    repos(org: Http.Path<string>, type?: Http.Query<"all" | "public" | "private" | "forks" | "sources" | "member">, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a new repository for the authenticated user. OAuth users must supply
      * repo scope.
@@ -682,7 +682,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(org: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    repos(org: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<postRepo, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List teams.
      * @since v3
@@ -694,7 +694,7 @@ export interface Service {
      * for details.
      *
      */
-    teams(org: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    teams(org: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create team.
      * In order to create a team, the authenticated user must be an owner of organization.
@@ -708,7 +708,7 @@ export interface Service {
      * for details.
      *
      */
-    teams(org: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    teams(org: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<orgTeamsPost, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get your current rate limit status
      * Note: Accessing this endpoint does not count against your rate limit.
@@ -721,7 +721,7 @@ export interface Service {
      * for details.
      *
      */
-    rate_limit(Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    rate_limit(Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get repository.
      * @since v3
@@ -734,7 +734,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    repos(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete a Repository.
      * Deleting a repository requires admin access. If OAuth is used, the delete_repo
@@ -750,7 +750,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    repos(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Edit repository.
      * @since v3
@@ -763,7 +763,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    repos(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<repoEdit, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List assignees.
      * This call lists all the available assignees (owner + collaborators) to which
@@ -779,7 +779,7 @@ export interface Service {
      * for details.
      *
      */
-    assignees(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    assignees(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Check assignee.
      * You may also check to see if a particular user is an assignee for a repository.
@@ -796,7 +796,7 @@ export interface Service {
      *
      * @return 404 - User isn't an assignee.
      */
-    assignees(owner: Http.Path<string>, repo: Http.Path<string>, assignee: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
+    assignees(owner: Http.Path<string>, repo: Http.Path<string>, assignee: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
     /**
      * @description Get list of branches
      * @since v3
@@ -809,7 +809,7 @@ export interface Service {
      * for details.
      *
      */
-    branches(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    branches(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get Branch
      * @since v3
@@ -823,7 +823,7 @@ export interface Service {
      * for details.
      *
      */
-    branches(owner: Http.Path<string>, repo: Http.Path<string>, branch: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    branches(owner: Http.Path<string>, repo: Http.Path<string>, branch: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List.
      * When authenticating as an organization owner of an organization-owned
@@ -841,7 +841,7 @@ export interface Service {
      * for details.
      *
      */
-    collaborators(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    collaborators(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Check if user is a collaborator
      * @since v3
@@ -856,7 +856,7 @@ export interface Service {
      *
      * @return 404 - User is not a collaborator.
      */
-    collaborators(owner: Http.Path<string>, repo: Http.Path<string>, user: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
+    collaborators(owner: Http.Path<string>, repo: Http.Path<string>, user: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
     /**
      * @description Add collaborator.
      * @since v3
@@ -870,7 +870,7 @@ export interface Service {
      * for details.
      *
      */
-    collaborators(owner: Http.Path<string>, repo: Http.Path<string>, user: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    collaborators(owner: Http.Path<string>, repo: Http.Path<string>, user: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Remove collaborator.
      * @since v3
@@ -884,7 +884,7 @@ export interface Service {
      * for details.
      *
      */
-    collaborators(owner: Http.Path<string>, repo: Http.Path<string>, user: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    collaborators(owner: Http.Path<string>, repo: Http.Path<string>, user: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List commit comments for a repository.
      * Comments are ordered by ascending ID.
@@ -899,7 +899,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a single commit comment.
      * @since v3
@@ -913,7 +913,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete a commit comment
      * @since v3
@@ -928,7 +928,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Update a commit comment.
      * @since v3
@@ -942,7 +942,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<commentBody, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List commits on a repository.
      * @since v3
@@ -962,7 +962,7 @@ export interface Service {
      * for details.
      *
      */
-    commits(owner: Http.Path<string>, repo: Http.Path<string>, since?: Http.Query<string>, sha?: Http.Query<string>, path?: Http.Query<string>, author?: Http.Query<string>, until?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    commits(owner: Http.Path<string>, repo: Http.Path<string>, since?: Http.Query<string>, sha?: Http.Query<string>, path?: Http.Query<string>, author?: Http.Query<string>, until?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get the combined Status for a specific Ref
      * The Combined status endpoint is currently available for developers to preview. During the preview period, the API may change without advance notice. Please see the blog post for full details.
@@ -979,7 +979,7 @@ export interface Service {
      * for details.
      *
      */
-    status(owner: Http.Path<string>, repo: Http.Path<string>, ref: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    status(owner: Http.Path<string>, repo: Http.Path<string>, ref: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a single commit.
      * @since v3
@@ -993,7 +993,7 @@ export interface Service {
      * for details.
      *
      */
-    commits(owner: Http.Path<string>, repo: Http.Path<string>, shaCode: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    commits(owner: Http.Path<string>, repo: Http.Path<string>, shaCode: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List comments for a single commitList comments for a single commit.
      * @since v3
@@ -1007,7 +1007,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, shaCode: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, shaCode: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a commit comment.
      * @since v3
@@ -1021,7 +1021,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, shaCode: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, shaCode: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<commitCommentBody, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Compare two commits
      * @since v3
@@ -1034,7 +1034,7 @@ export interface Service {
      * for details.
      *
      */
-    '...'(owner: Http.Path<string>, repo: Http.Path<string>, baseId: Http.Path<string>, headId: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    '...'(owner: Http.Path<string>, repo: Http.Path<string>, baseId: Http.Path<string>, headId: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get contents.
      * This method returns the contents of a file or directory in a repository.
@@ -1055,7 +1055,7 @@ export interface Service {
      * for details.
      *
      */
-    contents(owner: Http.Path<string>, repo: Http.Path<string>, path: Http.Path<string>, path?: Http.Query<string>, ref?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    contents(owner: Http.Path<string>, repo: Http.Path<string>, path: Http.Path<string>, path?: Http.Query<string>, ref?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a file.
      * @since v3
@@ -1068,7 +1068,7 @@ export interface Service {
      * for details.
      *
      */
-    contents(owner: Http.Path<string>, repo: Http.Path<string>, path: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    contents(owner: Http.Path<string>, repo: Http.Path<string>, path: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<createFileBody, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete a file.
      * This method deletes a file in a repository.
@@ -1083,7 +1083,7 @@ export interface Service {
      * for details.
      *
      */
-    contents(owner: Http.Path<string>, repo: Http.Path<string>, path: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    contents(owner: Http.Path<string>, repo: Http.Path<string>, path: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<deleteFileBody, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get list of contributors.
      * @since v3
@@ -1097,7 +1097,7 @@ export interface Service {
      * for details.
      *
      */
-    contributors(owner: Http.Path<string>, repo: Http.Path<string>, anon: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    contributors(owner: Http.Path<string>, repo: Http.Path<string>, anon: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Users with pull access can view deployments for a repository
      * @since v3
@@ -1110,7 +1110,7 @@ export interface Service {
      * for details.
      *
      */
-    deployments(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    deployments(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Users with push access can create a deployment for a given ref
      * @since v3
@@ -1123,7 +1123,7 @@ export interface Service {
      * for details.
      *
      */
-    deployments(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    deployments(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<deployment, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Users with pull access can view deployment statuses for a deployment
      * @since v3
@@ -1137,7 +1137,7 @@ export interface Service {
      * for details.
      *
      */
-    statuses(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    statuses(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a Deployment Status
      * Users with push access can create deployment statuses for a given deployment:
@@ -1153,7 +1153,7 @@ export interface Service {
      * for details.
      *
      */
-    statuses(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    statuses(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<deployment_statuses_create, 'application/json'>): Http.Response<'201', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Deprecated. List downloads for a repository.
      * @since v3
@@ -1167,7 +1167,7 @@ export interface Service {
      * for details.
      *
      */
-    downloads(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    downloads(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Deprecated. Get a single download.
      * @since v3
@@ -1182,7 +1182,7 @@ export interface Service {
      * for details.
      *
      */
-    downloads(owner: Http.Path<string>, repo: Http.Path<string>, downloadId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    downloads(owner: Http.Path<string>, repo: Http.Path<string>, downloadId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Deprecated. Delete a download.
      * @since v3
@@ -1198,7 +1198,7 @@ export interface Service {
      * for details.
      *
      */
-    downloads(owner: Http.Path<string>, repo: Http.Path<string>, downloadId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    downloads(owner: Http.Path<string>, repo: Http.Path<string>, downloadId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get list of repository events.
      * @since v3
@@ -1211,7 +1211,7 @@ export interface Service {
      * for details.
      *
      */
-    events(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    events(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List forks.
      * @since v3
@@ -1224,7 +1224,7 @@ export interface Service {
      * for details.
      *
      */
-    forks(owner: Http.Path<string>, repo: Http.Path<string>, sort?: Http.Query<"newes" | "oldes" | "watchers">, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    forks(owner: Http.Path<string>, repo: Http.Path<string>, sort?: Http.Query<"newes" | "oldes" | "watchers">, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a fork.
      * Forking a Repository happens asynchronously. Therefore, you may have to wai
@@ -1241,7 +1241,7 @@ export interface Service {
      * for details.
      *
      */
-    forks(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    forks(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<forkBody, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a Blob.
      * @since v3
@@ -1254,7 +1254,7 @@ export interface Service {
      * for details.
      *
      */
-    blobs(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    blobs(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<blob, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a Blob.
      * Since blobs can be any arbitrary binary data, the input and responses for
@@ -1273,7 +1273,7 @@ export interface Service {
      * for details.
      *
      */
-    blobs(owner: Http.Path<string>, repo: Http.Path<string>, shaCode: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    blobs(owner: Http.Path<string>, repo: Http.Path<string>, shaCode: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a Commit.
      * @since v3
@@ -1286,7 +1286,7 @@ export interface Service {
      * for details.
      *
      */
-    commits(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    commits(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<repoCommitBody, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a Commit.
      * @since v3
@@ -1300,7 +1300,7 @@ export interface Service {
      * for details.
      *
      */
-    commits(owner: Http.Path<string>, repo: Http.Path<string>, shaCode: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    commits(owner: Http.Path<string>, repo: Http.Path<string>, shaCode: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get all References
      * @since v3
@@ -1313,7 +1313,7 @@ export interface Service {
      * for details.
      *
      */
-    refs(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    refs(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a Reference
      * @since v3
@@ -1326,7 +1326,7 @@ export interface Service {
      * for details.
      *
      */
-    refs(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    refs(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<refsBody, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a Reference
      * @since v3
@@ -1339,7 +1339,7 @@ export interface Service {
      * for details.
      *
      */
-    refs(owner: Http.Path<string>, repo: Http.Path<string>, ref: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    refs(owner: Http.Path<string>, repo: Http.Path<string>, ref: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete a Reference
      * Example: Deleting a branch: DELETE /repos/octocat/Hello-World/git/refs/heads/feature-a
@@ -1355,7 +1355,7 @@ export interface Service {
      * for details.
      *
      */
-    refs(owner: Http.Path<string>, repo: Http.Path<string>, ref: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    refs(owner: Http.Path<string>, repo: Http.Path<string>, ref: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Update a Reference
      * @since v3
@@ -1368,7 +1368,7 @@ export interface Service {
      * for details.
      *
      */
-    refs(owner: Http.Path<string>, repo: Http.Path<string>, ref: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    refs(owner: Http.Path<string>, repo: Http.Path<string>, ref: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<gitRefPatch, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a Tag Object.
      * Note that creating a tag object does not create the reference that makes a
@@ -1387,7 +1387,7 @@ export interface Service {
      * for details.
      *
      */
-    tags(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    tags(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<tagBody, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a Tag.
      * @since v3
@@ -1400,7 +1400,7 @@ export interface Service {
      * for details.
      *
      */
-    tags(owner: Http.Path<string>, repo: Http.Path<string>, shaCode: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    tags(owner: Http.Path<string>, repo: Http.Path<string>, shaCode: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a Tree.
      * The tree creation API will take nested entries as well. If both a tree and
@@ -1417,7 +1417,7 @@ export interface Service {
      * for details.
      *
      */
-    trees(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    trees(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<tree, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a Tree.
      * @since v3
@@ -1432,7 +1432,7 @@ export interface Service {
      * for details.
      *
      */
-    trees(owner: Http.Path<string>, repo: Http.Path<string>, shaCode: Http.Path<string>, recursive?: Http.Query<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    trees(owner: Http.Path<string>, repo: Http.Path<string>, shaCode: Http.Path<string>, recursive?: Http.Query<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get list of hooks.
      * @since v3
@@ -1445,7 +1445,7 @@ export interface Service {
      * for details.
      *
      */
-    hooks(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    hooks(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a hook.
      * @since v3
@@ -1458,7 +1458,7 @@ export interface Service {
      * for details.
      *
      */
-    hooks(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    hooks(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<hookBody, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get single hook.
      * @since v3
@@ -1472,7 +1472,7 @@ export interface Service {
      * for details.
      *
      */
-    hooks(owner: Http.Path<string>, repo: Http.Path<string>, hookId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    hooks(owner: Http.Path<string>, repo: Http.Path<string>, hookId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete a hook.
      * @since v3
@@ -1487,7 +1487,7 @@ export interface Service {
      * for details.
      *
      */
-    hooks(owner: Http.Path<string>, repo: Http.Path<string>, hookId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    hooks(owner: Http.Path<string>, repo: Http.Path<string>, hookId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Edit a hook.
      * @since v3
@@ -1501,7 +1501,7 @@ export interface Service {
      * for details.
      *
      */
-    hooks(owner: Http.Path<string>, repo: Http.Path<string>, hookId: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    hooks(owner: Http.Path<string>, repo: Http.Path<string>, hookId: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<hookBody, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Test a push hook.
      * This will trigger the hook with the latest push to the current repository
@@ -1521,7 +1521,7 @@ export interface Service {
      * for details.
      *
      */
-    tests(owner: Http.Path<string>, repo: Http.Path<string>, hookId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    tests(owner: Http.Path<string>, repo: Http.Path<string>, hookId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List issues for a repository.
      * @since v3
@@ -1541,7 +1541,7 @@ export interface Service {
      * for details.
      *
      */
-    issues(owner: Http.Path<string>, repo: Http.Path<string>, filter: Http.Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state: Http.Query<"open" | "closed">, labels: Http.Query<string>, sort: Http.Query<"created" | "updated" | "comments">, direction: Http.Query<"asc" | "desc">, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    issues(owner: Http.Path<string>, repo: Http.Path<string>, filter: Http.Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state: Http.Query<"open" | "closed">, labels: Http.Query<string>, sort: Http.Query<"created" | "updated" | "comments">, direction: Http.Query<"asc" | "desc">, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create an issue.
      * Any user with pull access to a repository can create an issue.
@@ -1556,7 +1556,7 @@ export interface Service {
      * for details.
      *
      */
-    issues(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    issues(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<issue, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List comments in a repository.
      * @since v3
@@ -1573,7 +1573,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, direction?: Http.Query<string>, sort?: Http.Query<"created" | "updated">, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, direction?: Http.Query<string>, sort?: Http.Query<"created" | "updated">, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a single comment.
      * @since v3
@@ -1587,7 +1587,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete a comment.
      * @since v3
@@ -1602,7 +1602,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Edit a comment.
      * @since v3
@@ -1616,7 +1616,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<commentBody, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List issue events for a repository.
      * @since v3
@@ -1629,7 +1629,7 @@ export interface Service {
      * for details.
      *
      */
-    events(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    events(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a single event.
      * @since v3
@@ -1643,7 +1643,7 @@ export interface Service {
      * for details.
      *
      */
-    events(owner: Http.Path<string>, repo: Http.Path<string>, eventId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    events(owner: Http.Path<string>, repo: Http.Path<string>, eventId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a single issue
      * @since v3
@@ -1657,7 +1657,7 @@ export interface Service {
      * for details.
      *
      */
-    issues(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    issues(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Edit an issue.
      * Issue owners and users with push access can edit an issue.
@@ -1673,7 +1673,7 @@ export interface Service {
      * for details.
      *
      */
-    issues(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    issues(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<issue, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List comments on an issue.
      * @since v3
@@ -1687,7 +1687,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a comment.
      * @since v3
@@ -1701,7 +1701,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<commentBody, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List events for an issue.
      * @since v3
@@ -1715,7 +1715,7 @@ export interface Service {
      * for details.
      *
      */
-    events(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    events(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List labels on an issue.
      * @since v3
@@ -1729,7 +1729,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    labels(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Replace all labels for an issue.
      * Sending an empty array ([]) will remove all Labels from the Issue.
@@ -1745,7 +1745,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    labels(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<emailsPost, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Add labels to an issue.
      * @since v3
@@ -1759,7 +1759,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    labels(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<emailsPost, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Remove all labels from an issue.
      * @since v3
@@ -1774,7 +1774,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    labels(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Remove a label from an issue.
      * @since v3
@@ -1789,7 +1789,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, name: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    labels(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, name: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get list of keys.
      * @since v3
@@ -1802,7 +1802,7 @@ export interface Service {
      * for details.
      *
      */
-    keys(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    keys(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a key.
      * @since v3
@@ -1815,7 +1815,7 @@ export interface Service {
      * for details.
      *
      */
-    keys(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    keys(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<user_keys_post, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a key
      * @since v3
@@ -1829,7 +1829,7 @@ export interface Service {
      * for details.
      *
      */
-    keys(owner: Http.Path<string>, repo: Http.Path<string>, keyId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    keys(owner: Http.Path<string>, repo: Http.Path<string>, keyId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete a key.
      * @since v3
@@ -1844,7 +1844,7 @@ export interface Service {
      * for details.
      *
      */
-    keys(owner: Http.Path<string>, repo: Http.Path<string>, keyId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    keys(owner: Http.Path<string>, repo: Http.Path<string>, keyId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List all labels for this repository.
      * @since v3
@@ -1857,7 +1857,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    labels(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a label.
      * @since v3
@@ -1870,7 +1870,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    labels(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<emailsPost, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a single label.
      * @since v3
@@ -1884,7 +1884,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: Http.Path<string>, repo: Http.Path<string>, name: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    labels(owner: Http.Path<string>, repo: Http.Path<string>, name: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete a label.
      * @since v3
@@ -1899,7 +1899,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: Http.Path<string>, repo: Http.Path<string>, name: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    labels(owner: Http.Path<string>, repo: Http.Path<string>, name: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Update a label.
      * @since v3
@@ -1913,7 +1913,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: Http.Path<string>, repo: Http.Path<string>, name: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    labels(owner: Http.Path<string>, repo: Http.Path<string>, name: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<emailsPost, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List languages.
      * List languages for the specified repository. The value on the right of a
@@ -1929,7 +1929,7 @@ export interface Service {
      * for details.
      *
      */
-    languages(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    languages(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Perform a merge.
      * @since v3
@@ -1945,7 +1945,7 @@ export interface Service {
      * @return 404 - Missing base response or missing head response
      * @return 409 - Merge conflict response.
      */
-    merges(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', [object, Object], 'application/json'> | Http.Response<'409', [object, Object], 'application/json'>;
+    merges(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<mergesBody, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', [object, Object], 'application/json'> | Http.Response<'409', [object, Object], 'application/json'>;
     /**
      * @description List milestones for a repository.
      * @since v3
@@ -1960,7 +1960,7 @@ export interface Service {
      * for details.
      *
      */
-    milestones(owner: Http.Path<string>, repo: Http.Path<string>, state?: Http.Query<"open" | "closed">, direction?: Http.Query<string>, sort?: Http.Query<"due_date" | "completeness">, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    milestones(owner: Http.Path<string>, repo: Http.Path<string>, state?: Http.Query<"open" | "closed">, direction?: Http.Query<string>, sort?: Http.Query<"due_date" | "completeness">, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a milestone.
      * @since v3
@@ -1973,7 +1973,7 @@ export interface Service {
      * for details.
      *
      */
-    milestones(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    milestones(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<milestoneUpdate, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a single milestone.
      * @since v3
@@ -1987,7 +1987,7 @@ export interface Service {
      * for details.
      *
      */
-    milestones(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    milestones(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete a milestone.
      * @since v3
@@ -2002,7 +2002,7 @@ export interface Service {
      * for details.
      *
      */
-    milestones(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    milestones(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Update a milestone.
      * @since v3
@@ -2016,7 +2016,7 @@ export interface Service {
      * for details.
      *
      */
-    milestones(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    milestones(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<milestoneUpdate, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get labels for every issue in a milestone.
      * @since v3
@@ -2030,7 +2030,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    labels(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List your notifications in a repository
      * List all notifications for the current user.
@@ -2052,7 +2052,7 @@ export interface Service {
      * for details.
      *
      */
-    notifications(owner: Http.Path<string>, repo: Http.Path<string>, all?: Http.Query<boolean>, participating?: Http.Query<boolean>, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    notifications(owner: Http.Path<string>, repo: Http.Path<string>, all?: Http.Query<boolean>, participating?: Http.Query<boolean>, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Mark notifications as read in a repository.
      * Marking all notifications in a repository as "read" removes them from the
@@ -2068,7 +2068,7 @@ export interface Service {
      * for details.
      *
      */
-    notifications(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'205', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    notifications(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<notificationMarkRead, 'application/json'>): Http.Response<'205', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List pull requests.
      * @since v3
@@ -2086,7 +2086,7 @@ export interface Service {
      * for details.
      *
      */
-    pulls(owner: Http.Path<string>, repo: Http.Path<string>, state?: Http.Query<"open" | "closed">, head?: Http.Query<string>, base?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    pulls(owner: Http.Path<string>, repo: Http.Path<string>, state?: Http.Query<"open" | "closed">, head?: Http.Query<string>, base?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a pull request.
      * @since v3
@@ -2099,7 +2099,7 @@ export interface Service {
      * for details.
      *
      */
-    pulls(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    pulls(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<pullsPost, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List comments in a repository.
      * By default, Review Comments are ordered by ascending ID.
@@ -2118,7 +2118,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, direction?: Http.Query<string>, sort?: Http.Query<"created" | "updated">, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, direction?: Http.Query<string>, sort?: Http.Query<"created" | "updated">, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a single comment.
      * @since v3
@@ -2132,7 +2132,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete a comment.
      * @since v3
@@ -2147,7 +2147,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Edit a comment.
      * @since v3
@@ -2161,7 +2161,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, commentId: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<commentBody, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a single pull request.
      * @since v3
@@ -2175,7 +2175,7 @@ export interface Service {
      * for details.
      *
      */
-    pulls(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    pulls(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Update a pull request.
      * @since v3
@@ -2189,7 +2189,7 @@ export interface Service {
      * for details.
      *
      */
-    pulls(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    pulls(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<pullUpdate, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List comments on a pull request.
      * @since v3
@@ -2203,7 +2203,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a comment.
      *   #TODO Alternative input ( http://developer.github.com/v3/pulls/comments/ )
@@ -2228,7 +2228,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    comments(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<pullsCommentPost, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List commits on a pull request.
      * @since v3
@@ -2242,7 +2242,7 @@ export interface Service {
      * for details.
      *
      */
-    commits(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    commits(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List pull requests files.
      * @since v3
@@ -2256,7 +2256,7 @@ export interface Service {
      * for details.
      *
      */
-    files(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    files(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get if a pull request has been merged.
      * @since v3
@@ -2271,7 +2271,7 @@ export interface Service {
      *
      * @return 404 - Pull request has not been merged.
      */
-    merge(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
+    merge(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
     /**
      * @description Merge a pull request (Merge Button's)
      * @since v3
@@ -2286,7 +2286,7 @@ export interface Service {
      *
      * @return 405 - Response if merge cannot be performed.
      */
-    merge(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'405', [object, Object], 'application/json'>;
+    merge(owner: Http.Path<string>, repo: Http.Path<string>, number: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<mergePullBody, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'405', [object, Object], 'application/json'>;
     /**
      * @description Get the README.
      * This method returns the preferred README for a repository.
@@ -2302,7 +2302,7 @@ export interface Service {
      * for details.
      *
      */
-    readme(owner: Http.Path<string>, repo: Http.Path<string>, ref?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    readme(owner: Http.Path<string>, repo: Http.Path<string>, ref?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Users with push access to the repository will receive all releases (i.e., published releases and draft releases). Users with pull access will receive published releases only
      * @since v3
@@ -2315,7 +2315,7 @@ export interface Service {
      * for details.
      *
      */
-    releases(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    releases(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a release
      * Users with push access to the repository can create a release.
@@ -2330,7 +2330,7 @@ export interface Service {
      * for details.
      *
      */
-    releases(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    releases(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<release_create, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a single release asset
      * @since v3
@@ -2343,7 +2343,7 @@ export interface Service {
      * for details.
      *
      */
-    assets(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    assets(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete a release asset
      * @since v3
@@ -2356,7 +2356,7 @@ export interface Service {
      * for details.
      *
      */
-    assets(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    assets(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Edit a release asset
      * Users with push access to the repository can edit a release asset.
@@ -2371,7 +2371,7 @@ export interface Service {
      * for details.
      *
      */
-    assets(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    assets(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<assetPatch, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a single release
      * @since v3
@@ -2384,7 +2384,7 @@ export interface Service {
      * for details.
      *
      */
-    releases(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    releases(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Users with push access to the repository can delete a release.
      * @since v3
@@ -2397,7 +2397,7 @@ export interface Service {
      * for details.
      *
      */
-    releases(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    releases(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Users with push access to the repository can edit a release
      * @since v3
@@ -2410,7 +2410,7 @@ export interface Service {
      * for details.
      *
      */
-    releases(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    releases(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<release_create, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List assets for a release
      * @since v3
@@ -2423,7 +2423,7 @@ export interface Service {
      * for details.
      *
      */
-    assets(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    assets(owner: Http.Path<string>, repo: Http.Path<string>, id: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List Stargazers.
      * @since v3
@@ -2436,7 +2436,7 @@ export interface Service {
      * for details.
      *
      */
-    stargazers(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    stargazers(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get the number of additions and deletions per week.
      * Returns a weekly aggregate of the number of additions and deletions pushed
@@ -2452,7 +2452,7 @@ export interface Service {
      * for details.
      *
      */
-    code_frequency(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    code_frequency(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get the last year of commit activity data.
      * Returns the last year of commit activity grouped by week. The days array
@@ -2468,7 +2468,7 @@ export interface Service {
      * for details.
      *
      */
-    commit_activity(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    commit_activity(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get contributors list with additions, deletions, and commit counts.
      * @since v3
@@ -2481,7 +2481,7 @@ export interface Service {
      * for details.
      *
      */
-    contributors(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    contributors(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get the weekly commit count for the repo owner and everyone else.
      * @since v3
@@ -2494,7 +2494,7 @@ export interface Service {
      * for details.
      *
      */
-    participation(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    participation(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get the number of commits per hour in each day.
      * Each array contains the day number, hour number, and number of commits
@@ -2516,7 +2516,7 @@ export interface Service {
      * for details.
      *
      */
-    punch_card(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    punch_card(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List Statuses for a specific Ref.
      * @since v3
@@ -2531,7 +2531,7 @@ export interface Service {
      * for details.
      *
      */
-    statuses(owner: Http.Path<string>, repo: Http.Path<string>, ref: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    statuses(owner: Http.Path<string>, repo: Http.Path<string>, ref: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a Status.
      * @since v3
@@ -2546,7 +2546,7 @@ export interface Service {
      * for details.
      *
      */
-    statuses(owner: Http.Path<string>, repo: Http.Path<string>, ref: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    statuses(owner: Http.Path<string>, repo: Http.Path<string>, ref: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<headBranch, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List watchers.
      * @since v3
@@ -2559,7 +2559,7 @@ export interface Service {
      * for details.
      *
      */
-    subscribers(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    subscribers(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a Repository Subscription.
      * @since v3
@@ -2572,7 +2572,7 @@ export interface Service {
      * for details.
      *
      */
-    subscription(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    subscription(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Set a Repository Subscription
      * @since v3
@@ -2585,7 +2585,7 @@ export interface Service {
      * for details.
      *
      */
-    subscription(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    subscription(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body: Http.Body<subscriptionBody, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete a Repository Subscription.
      * @since v3
@@ -2599,7 +2599,7 @@ export interface Service {
      * for details.
      *
      */
-    subscription(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    subscription(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get list of tags.
      * @since v3
@@ -2612,7 +2612,7 @@ export interface Service {
      * for details.
      *
      */
-    tags(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    tags(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get list of teams
      * @since v3
@@ -2625,7 +2625,7 @@ export interface Service {
      * for details.
      *
      */
-    teams(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    teams(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List Stargazers. New implementation.
      * @since v3
@@ -2638,7 +2638,7 @@ export interface Service {
      * for details.
      *
      */
-    watchers(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    watchers(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get archive link.
      * This method will return a 302 to a URL to download a tarball or zipball
@@ -2658,7 +2658,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(owner: Http.Path<string>, repo: Http.Path<string>, archive_format: Http.Path<"tarball" | "zipball">, path: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'302', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    repos(owner: Http.Path<string>, repo: Http.Path<string>, archive_format: Http.Path<"tarball" | "zipball">, path: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'302', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List all public repositories.
      * This provides a dump of every public repository, in the order that they
@@ -2677,7 +2677,7 @@ export interface Service {
      * for details.
      *
      */
-    repositories(since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    repositories(since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Search code.
      * @since v3
@@ -2707,7 +2707,7 @@ export interface Service {
      * for details.
      *
      */
-    code(order?: Http.Query<"desc" | "asc">, q: Http.Query<string>, sort?: Http.Query<"indexed">, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    code(order?: Http.Query<"desc" | "asc">, q: Http.Query<string>, sort?: Http.Query<"indexed">, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Find issues by state and keyword. (This method returns up to 100 results per page.)
      * @since v3
@@ -2721,7 +2721,7 @@ export interface Service {
      * for details.
      *
      */
-    issues(order?: Http.Query<"desc" | "asc">, q: Http.Query<string>, sort?: Http.Query<"updated" | "created" | "comments">, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    issues(order?: Http.Query<"desc" | "asc">, q: Http.Query<string>, sort?: Http.Query<"updated" | "created" | "comments">, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Search repositories.
      * @since v3
@@ -2748,7 +2748,7 @@ export interface Service {
      * for details.
      *
      */
-    repositories(order?: Http.Query<"desc" | "asc">, q: Http.Query<string>, sort?: Http.Query<"stars" | "forks" | "updated">, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    repositories(order?: Http.Query<"desc" | "asc">, q: Http.Query<string>, sort?: Http.Query<"stars" | "forks" | "updated">, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Search users.
      * @since v3
@@ -2774,7 +2774,7 @@ export interface Service {
      * for details.
      *
      */
-    users(order?: Http.Query<"desc" | "asc">, q: Http.Query<string>, sort?: Http.Query<"followers" | "repositories" | "joined">, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    users(order?: Http.Query<"desc" | "asc">, q: Http.Query<string>, sort?: Http.Query<"followers" | "repositories" | "joined">, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get team.
      * @since v3
@@ -2786,7 +2786,7 @@ export interface Service {
      * for details.
      *
      */
-    teams(teamId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    teams(teamId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete team.
      * In order to delete a team, the authenticated user must be an owner of the
@@ -2802,7 +2802,7 @@ export interface Service {
      * for details.
      *
      */
-    teams(teamId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    teams(teamId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Edit team.
      * In order to edit a team, the authenticated user must be an owner of the org
@@ -2817,7 +2817,7 @@ export interface Service {
      * for details.
      *
      */
-    teams(teamId: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    teams(teamId: Http.Path<int64>, Accept?: Http.Header<string>, body: Http.Body<editTeam, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List team members.
      * In order to list members in a team, the authenticated user must be a member
@@ -2832,7 +2832,7 @@ export interface Service {
      * for details.
      *
      */
-    members(teamId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    members(teamId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description The "Get team member" API is deprecated and is scheduled for removal in the next major version of the API. We recommend using the Get team membership API instead. It allows you to get both active and pending memberships.
      *
@@ -2852,7 +2852,7 @@ export interface Service {
      *
      * @return 404 - User is not a member.
      */
-    members(teamId: Http.Path<int64>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
+    members(teamId: Http.Path<int64>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
     /**
      * @description The API (described below) is deprecated and is scheduled for removal in the next major version of the API. We recommend using the Add team membership API instead. It allows you to invite new organization members to your teams.
      *
@@ -2873,7 +2873,7 @@ export interface Service {
      *
      * @return 422 - If you attempt to add an organization to a team, you will get this.
      */
-    members(teamId: Http.Path<int64>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'422', [object, Object], 'application/json'>;
+    members(teamId: Http.Path<int64>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'422', [object, Object], 'application/json'>;
     /**
      * @description The "Remove team member" API is deprecated and is scheduled for removal in the next major version of the API. We recommend using the Remove team membership API instead. It allows you to remove both active and pending memberships.
      *
@@ -2894,7 +2894,7 @@ export interface Service {
      * for details.
      *
      */
-    members(teamId: Http.Path<int64>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    members(teamId: Http.Path<int64>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get team membership.
      * In order to get a user's membership with a team, the authenticated user must be a member of the team or an owner of the team's organization.
@@ -2910,7 +2910,7 @@ export interface Service {
      *
      * @return 404 - User has no membership with team
      */
-    memberships(teamId: Http.Path<int64>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
+    memberships(teamId: Http.Path<int64>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
     /**
      * @description Add team membership.
      * In order to add a membership between a user and a team, the authenticated user must have 'admin' permissions to the team or be an owner of the organization that the team is associated with.
@@ -2930,7 +2930,7 @@ export interface Service {
      *
      * @return 422 - If you attempt to add an organization to a team, you will get this.
      */
-    memberships(teamId: Http.Path<int64>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'422', [object, Object], 'application/json'>;
+    memberships(teamId: Http.Path<int64>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'422', [object, Object], 'application/json'>;
     /**
      * @description Remove team membership.
      * In order to remove a membership between a user and a team, the authenticated user must have 'admin' permissions to the team or be an owner of the organization that the team is associated with. NOTE: This does not delete the user, it just removes their membership from the team.
@@ -2945,7 +2945,7 @@ export interface Service {
      * for details.
      *
      */
-    memberships(teamId: Http.Path<int64>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    memberships(teamId: Http.Path<int64>, username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List team repos
      * @since v3
@@ -2957,7 +2957,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(teamId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    repos(teamId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Check if a team manages a repository
      * @since v3
@@ -2970,7 +2970,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(teamId: Http.Path<int64>, owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'403', none, 'application/json'>;
+    repos(teamId: Http.Path<int64>, owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'403', none, 'application/json'>;
     /**
      * @description In order to add a repository to a team, the authenticated user must be an owner of the org that the team is associated with. Also, the repository must be owned by the organization, or a direct fork of a repository owned by the organization.
      * @since v3
@@ -2983,7 +2983,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(teamId: Http.Path<int64>, owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'403', none, 'application/json'>;
+    repos(teamId: Http.Path<int64>, owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'403', none, 'application/json'>;
     /**
      * @description In order to remove a repository from a team, the authenticated user must be an owner of the org that the team is associated with. NOTE: This does not delete the repository, it just removes it from the team.
      * @since v3
@@ -2998,7 +2998,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(teamId: Http.Path<int64>, owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    repos(teamId: Http.Path<int64>, owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get the authenticated user.
      * @since v3
@@ -3009,7 +3009,7 @@ export interface Service {
      * for details.
      *
      */
-    user(Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    user(Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Update the authenticated user.
      * @since v3
@@ -3020,7 +3020,7 @@ export interface Service {
      * for details.
      *
      */
-    user(Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    user(Accept?: Http.Header<string>, body: Http.Body<user_update, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List email addresses for a user.
      * In the final version of the API, this method will return an array of hashes
@@ -3037,7 +3037,7 @@ export interface Service {
      * for details.
      *
      */
-    emails(Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/vnd.github.v3'> | Http.Response<'403', none, 'application/vnd.github.v3'>;
+    emails(Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/vnd.github.v3'> | Http.Response<'403', none, 'application/vnd.github.v3'>;
     /**
      * @description Add email address(es).
      * You can post a single email address or an array of addresses.
@@ -3049,7 +3049,7 @@ export interface Service {
      * for details.
      *
      */
-    emails(Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'403', none, 'application/json'>;
+    emails(Accept?: Http.Header<string>, body: Http.Body<emailsPost, 'application/json'>): Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete email address(es).
      * You can include a single email address or an array of addresses.
@@ -3063,7 +3063,7 @@ export interface Service {
      * for details.
      *
      */
-    emails(Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    emails(Accept?: Http.Header<string>, body: Http.Body<user_emails, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List the authenticated user's followers
      * @since v3
@@ -3074,7 +3074,7 @@ export interface Service {
      * for details.
      *
      */
-    followers(Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    followers(Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List who the authenticated user is following.
      * @since v3
@@ -3085,7 +3085,7 @@ export interface Service {
      * for details.
      *
      */
-    following(Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    following(Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Check if you are following a user.
      * @since v3
@@ -3098,7 +3098,7 @@ export interface Service {
      *
      * @return 404 - Response if you are not following this user.
      */
-    following(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
+    following(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
     /**
      * @description Follow a user.
      * Following a user requires the user to be logged in and authenticated with
@@ -3113,7 +3113,7 @@ export interface Service {
      * for details.
      *
      */
-    following(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    following(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Unfollow a user.
      * Unfollowing a user requires the user to be logged in and authenticated with
@@ -3128,7 +3128,7 @@ export interface Service {
      * for details.
      *
      */
-    following(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    following(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List issues.
      * List all issues across owned and member repositories for the authenticated
@@ -3149,7 +3149,7 @@ export interface Service {
      * for details.
      *
      */
-    issues(filter: Http.Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state: Http.Query<"open" | "closed">, labels: Http.Query<string>, sort: Http.Query<"created" | "updated" | "comments">, direction: Http.Query<"asc" | "desc">, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    issues(filter: Http.Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state: Http.Query<"open" | "closed">, labels: Http.Query<string>, sort: Http.Query<"created" | "updated" | "comments">, direction: Http.Query<"asc" | "desc">, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List your public keys.
      * Lists the current user's keys. Management of public keys via the API requires
@@ -3163,7 +3163,7 @@ export interface Service {
      * for details.
      *
      */
-    keys(Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    keys(Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a public key.
      * @since v3
@@ -3174,7 +3174,7 @@ export interface Service {
      * for details.
      *
      */
-    keys(Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    keys(Accept?: Http.Header<string>, body: Http.Body<user_keys_post, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a single public key.
      * @since v3
@@ -3186,7 +3186,7 @@ export interface Service {
      * for details.
      *
      */
-    keys(keyId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    keys(keyId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Delete a public key. Removes a public key. Requires that you are authenticated via Basic Auth or via OAuth with at least admin:public_key scope.
      * @since v3
@@ -3199,7 +3199,7 @@ export interface Service {
      * for details.
      *
      */
-    keys(keyId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    keys(keyId: Http.Path<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List public and private organizations for the authenticated user.
      * @since v3
@@ -3210,7 +3210,7 @@ export interface Service {
      * for details.
      *
      */
-    orgs(Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    orgs(Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List repositories for the authenticated user. Note that this does not include
      * repositories owned by organizations which the user can access. You can lis
@@ -3224,7 +3224,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(type?: Http.Query<"all" | "public" | "private" | "forks" | "sources" | "member">, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    repos(type?: Http.Query<"all" | "public" | "private" | "forks" | "sources" | "member">, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Create a new repository for the authenticated user. OAuth users must supply
      * repo scope.
@@ -3237,7 +3237,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(Accept?: Http.Header<string>, body: Http.Body<[object, Object], 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    repos(Accept?: Http.Header<string>, body: Http.Body<postRepo, 'application/json'>): Http.Response<'201', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List repositories being starred by the authenticated user.
      * @since v3
@@ -3249,7 +3249,7 @@ export interface Service {
      * for details.
      *
      */
-    starred(direction?: Http.Query<string>, sort?: Http.Query<"created" | "updated">, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    starred(direction?: Http.Query<string>, sort?: Http.Query<"created" | "updated">, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Check if you are starring a repository.
      * @since v3
@@ -3263,7 +3263,7 @@ export interface Service {
      *
      * @return 404 - This repository is not starred by you.
      */
-    starred(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
+    starred(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
     /**
      * @description Star a repository.
      * @since v3
@@ -3276,7 +3276,7 @@ export interface Service {
      * for details.
      *
      */
-    starred(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    starred(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Unstar a repository
      * @since v3
@@ -3289,7 +3289,7 @@ export interface Service {
      * for details.
      *
      */
-    starred(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    starred(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List repositories being watched by the authenticated user.
      * @since v3
@@ -3300,7 +3300,7 @@ export interface Service {
      * for details.
      *
      */
-    subscriptions(Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    subscriptions(Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Check if you are watching a repository.
      * @since v3
@@ -3315,7 +3315,7 @@ export interface Service {
      *
      * @return 404 - Repository is not watched by you.
      */
-    subscriptions(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
+    subscriptions(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
     /**
      * @description Watch a repository.
      * @since v3
@@ -3329,7 +3329,7 @@ export interface Service {
      * for details.
      *
      */
-    subscriptions(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    subscriptions(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Stop watching a repository
      * @since v3
@@ -3343,7 +3343,7 @@ export interface Service {
      * for details.
      *
      */
-    subscriptions(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    subscriptions(owner: Http.Path<string>, repo: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List all of the teams across all of the organizations to which the authenticated user belongs. This method requires user or repo scope when authenticating via OAuth.
      * @since v3
@@ -3354,7 +3354,7 @@ export interface Service {
      * for details.
      *
      */
-    teams(Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    teams(Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get all users.
      * This provides a dump of every user, in the order that they signed up for GitHub.
@@ -3370,7 +3370,7 @@ export interface Service {
      * for details.
      *
      */
-    users(since?: Http.Query<int64>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    users(since?: Http.Query<int64>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Get a single user.
      * @since v3
@@ -3382,7 +3382,7 @@ export interface Service {
      * for details.
      *
      */
-    users(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    users(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description If you are authenticated as the given user, you will see your private events. Otherwise, you'll only see public events.
      * @since v3
@@ -3393,7 +3393,7 @@ export interface Service {
      * for details.
      *
      */
-    events(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'403', none, 'application/json'>;
+    events(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'403', none, 'application/json'>;
     /**
      * @description This is the user's organization dashboard. You must be authenticated as the user to view this.
      * @since v3
@@ -3404,7 +3404,7 @@ export interface Service {
      * for details.
      *
      */
-    orgs(username: Http.Path<string>, org: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'403', none, 'application/json'>;
+    orgs(username: Http.Path<string>, org: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'403', none, 'application/json'>;
     /**
      * @description List a user's followers
      * @since v3
@@ -3416,7 +3416,7 @@ export interface Service {
      * for details.
      *
      */
-    followers(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    followers(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description Check if one user follows another.
      * @since v3
@@ -3430,7 +3430,7 @@ export interface Service {
      *
      * @return 404 - Response if user does not follow target user.
      */
-    following(username: Http.Path<string>, targetUser: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
+    following(username: Http.Path<string>, targetUser: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'204', none, 'application/json'> | Http.Response<'403', none, 'application/json'> | Http.Response<'404', none, 'application/json'>;
     /**
      * @description List a users gists.
      * @since v3
@@ -3445,7 +3445,7 @@ export interface Service {
      * for details.
      *
      */
-    gists(username: Http.Path<string>, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    gists(username: Http.Path<string>, since?: Http.Query<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List public keys for a user.
      * Lists the verified public keys for a user. This is accessible by anyone.
@@ -3459,7 +3459,7 @@ export interface Service {
      * for details.
      *
      */
-    keys(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    keys(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List all public organizations for a user.
      * @since v3
@@ -3471,7 +3471,7 @@ export interface Service {
      * for details.
      *
      */
-    orgs(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    orgs(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description These are events that you'll only see public events.
      * @since v3
@@ -3482,7 +3482,7 @@ export interface Service {
      * for details.
      *
      */
-    received_events(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'403', none, 'application/json'>;
+    received_events(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'403', none, 'application/json'>;
     /**
      * @description List public events that a user has received
      * @since v3
@@ -3493,7 +3493,7 @@ export interface Service {
      * for details.
      *
      */
-    public(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'403', none, 'application/json'>;
+    public(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'403', none, 'application/json'>;
     /**
      * @description List public repositories for the specified user.
      * @since v3
@@ -3505,7 +3505,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(username: Http.Path<string>, type?: Http.Query<"all" | "public" | "private" | "forks" | "sources" | "member">, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
+    repos(username: Http.Path<string>, type?: Http.Query<"all" | "public" | "private" | "forks" | "sources" | "member">, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'403', none, 'application/json'>;
     /**
      * @description List repositories being starred by a user.
      * @since v3
@@ -3516,7 +3516,7 @@ export interface Service {
      * for details.
      *
      */
-    starred(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'403', none, 'application/json'>;
+    starred(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'403', none, 'application/json'>;
     /**
      * @description List repositories being watched by a user.
      * @since v3
@@ -3527,5 +3527,5 @@ export interface Service {
      * for details.
      *
      */
-    subscriptions(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'403', none, 'application/json'>;
+    subscriptions(username: Http.Path<string>, Accept?: Http.Header<string>, body?: Http.Body<file, 'application/json'>): Http.Response<'403', none, 'application/json'>;
 }

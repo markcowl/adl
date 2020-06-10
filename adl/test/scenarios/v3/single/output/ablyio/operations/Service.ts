@@ -63,7 +63,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    publishMessagesToChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>, body?: Http.Body<[object, Object], 'application/json'>, body?: Http.Body<[object, Object], 'application/x-msgpack'>, body?: Http.Body<[object, Object], 'application/x-www-form-urlencoded'>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    publishMessagesToChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>, body?: Http.Body<Message, 'application/json'>, body?: Http.Body<Message, 'application/x-msgpack'>, body?: Http.Body<Message, 'application/x-www-form-urlencoded'>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
     /**
      * Get presence of a channel
      * @description Get presence on a channel
@@ -113,7 +113,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    requestAccessToken(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, keyName: Http.Path<string>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    requestAccessToken(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, keyName: Http.Path<string>, body?: Http.Body<Xor<TokenRequest, SignedTokenRequest>, 'application/json'>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
     /**
      * List channel subscriptions
      * @description Get a list of push notification subscriptions to channels.
@@ -145,7 +145,73 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    subscribePushDeviceToChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, body?: Http.Body<[object, Object], 'application/json'>, body?: Http.Body<[object, Object], 'application/x-msgpack'>, body?: Http.Body<[object, Object], 'application/x-www-form-urlencoded'>): Http.Response<'2XX'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    subscribePushDeviceToChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, body?: Http.Body<Xor<{
+        /**
+         * @description Channel name.
+         * @since 1.1.0
+         */
+        channel?: string;
+        /**
+         * @description Must be set when clientId is empty, cannot be used with clientId.
+         * @since 1.1.0
+         */
+        deviceId?: string;
+    }, {
+        /**
+         * @description Channel name.
+         * @since 1.1.0
+         */
+        channel?: string;
+        /**
+         * @description Must be set when deviceId is empty, cannot be used with deviceId.
+         * @since 1.1.0
+         */
+        clientId?: string;
+    }>, 'application/json'>, body?: Http.Body<Xor<{
+        /**
+         * @description Channel name.
+         * @since 1.1.0
+         */
+        channel?: string;
+        /**
+         * @description Must be set when clientId is empty, cannot be used with clientId.
+         * @since 1.1.0
+         */
+        deviceId?: string;
+    }, {
+        /**
+         * @description Channel name.
+         * @since 1.1.0
+         */
+        channel?: string;
+        /**
+         * @description Must be set when deviceId is empty, cannot be used with deviceId.
+         * @since 1.1.0
+         */
+        clientId?: string;
+    }>, 'application/x-msgpack'>, body?: Http.Body<Xor<{
+        /**
+         * @description Channel name.
+         * @since 1.1.0
+         */
+        channel?: string;
+        /**
+         * @description Must be set when clientId is empty, cannot be used with clientId.
+         * @since 1.1.0
+         */
+        deviceId?: string;
+    }, {
+        /**
+         * @description Channel name.
+         * @since 1.1.0
+         */
+        channel?: string;
+        /**
+         * @description Must be set when deviceId is empty, cannot be used with deviceId.
+         * @since 1.1.0
+         */
+        clientId?: string;
+    }>, 'application/x-www-form-urlencoded'>): Http.Response<'2XX'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
     /**
      * Delete a registered device's update token
      * @description Delete a device details object.
@@ -213,7 +279,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    registerPushDevice(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, body?: Http.Body<[object, Object], 'application/json'>, body?: Http.Body<[object, Object], 'application/x-msgpack'>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    registerPushDevice(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, body?: Http.Body<DeviceDetails, 'application/json'>, body?: Http.Body<DeviceDetails, 'application/x-msgpack'>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
     /**
      * Unregister matching devices for push notifications
      * @description Unregisters devices. All their subscriptions for receiving push notifications through channels will also be deleted.
@@ -263,7 +329,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    putPushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>, body?: Http.Body<[object, Object], 'application/json'>, body?: Http.Body<[object, Object], 'application/x-msgpack'>, body?: Http.Body<[object, Object], 'application/x-www-form-urlencoded'>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    putPushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>, body?: Http.Body<DeviceDetails, 'application/json'>, body?: Http.Body<DeviceDetails, 'application/x-msgpack'>, body?: Http.Body<DeviceDetails, 'application/x-www-form-urlencoded'>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
     /**
      * Unregister a single device for push notifications
      * @description Unregisters a single device by its device ID. All its subscriptions for receiving push notifications through channels will also be deleted.
@@ -295,7 +361,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    patchPushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>, body?: Http.Body<[object, Object], 'application/json'>, body?: Http.Body<[object, Object], 'application/x-msgpack'>, body?: Http.Body<[object, Object], 'application/x-www-form-urlencoded'>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    patchPushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>, body?: Http.Body<DeviceDetails, 'application/json'>, body?: Http.Body<DeviceDetails, 'application/x-msgpack'>, body?: Http.Body<DeviceDetails, 'application/x-www-form-urlencoded'>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
     /**
      * Reset a registered device's update token
      * @description Gets an updated device details object.
@@ -326,7 +392,40 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    publishPushNotificationToDevices(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, body?: Http.Body<[object, Object], 'application/json'>, body?: Http.Body<[object, Object], 'application/x-msgpack'>, body?: Http.Body<[object, Object], 'application/x-www-form-urlencoded'>): Http.Response<'2XX'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    publishPushNotificationToDevices(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, body?: Http.Body<{
+        /**
+         *
+         * @since 1.1.0
+         */
+        push?: Push;
+        /**
+         *
+         * @since 1.1.0
+         */
+        recipient: Recipient;
+    }, 'application/json'>, body?: Http.Body<{
+        /**
+         *
+         * @since 1.1.0
+         */
+        push?: Push;
+        /**
+         *
+         * @since 1.1.0
+         */
+        recipient: Recipient;
+    }, 'application/x-msgpack'>, body?: Http.Body<{
+        /**
+         *
+         * @since 1.1.0
+         */
+        push?: Push;
+        /**
+         *
+         * @since 1.1.0
+         */
+        recipient: Recipient;
+    }, 'application/x-www-form-urlencoded'>): Http.Response<'2XX'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
     /**
      * Retrieve usage statistics for an application
      * @description The Ably system can be queried to obtain usage statistics for a given application, and results are provided aggregated across all channels in use in the application in the specified period. Stats may be used to track usage against account quotas.

@@ -80,7 +80,13 @@ export interface Service {
      * @return HttpErrorResponse - The request has failed.
      * @return HttpErrorResponse - The request has failed.
      */
-    hideReplyById(id: Http.Path<TweetID>, body?: Http.Body<[object, Object], 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'HttpErrorResponse', [object, Object], 'application/json'> | Http.Response<'HttpErrorResponse', [object, Object], 'application/problem+json'>;
+    hideReplyById(id: Http.Path<TweetID>, body?: Http.Body<{
+        /**
+         *
+         * @since 2.3
+         */
+        hidden?: true;
+    }, 'application/json'>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'HttpErrorResponse', [object, Object], 'application/json'> | Http.Response<'HttpErrorResponse', [object, Object], 'application/problem+json'>;
     /**
      * Return details for the specified users
      * @description This endpoint returns information about users. Specify users by their ID.
