@@ -13,9 +13,9 @@
 ### Jun 26
   - project metadata (`project.adl` )
   - simple CLI functions
-  - TS Project loading (data from project file, generate tsconfig, restore packages)
   - extension loading from project, 
-
+  - TS Project loading (data from project file, generate tsconfig, restore packages)
+  
 ### Jul 3 
   - ALPHA ADL Consumer API (load/save/manipulate models, eventing)
 
