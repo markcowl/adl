@@ -1,6 +1,7 @@
 import { exists, isFile, mkdir, rmdir, writeFile } from '@azure-tools/async-io';
 import { Dictionary } from '@azure-tools/linq';
 import { isAnonymous, Path, valueOf } from '@azure-tools/sourcemap';
+import { fail } from 'assert';
 import { dirname, join } from 'path';
 import { EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Node, Project, QuoteKind, SourceFile } from 'ts-morph';
 import { getNode, referenceTo } from '../support/typescript';
@@ -11,11 +12,66 @@ import { InternalData } from './internal-data';
 import { Metadata } from './metadata';
 import { Resource } from './resource';
 import { Schema } from './schema/schema';
-import { Schemas } from './schema/schemas';
+import { InterfaceModel, Schemas } from './schema/schemas';
 import { Folders, Identity } from './types';
 import { VersionInfo } from './version-info';
 
-export class ApiModel {
+export function isResource(declaration: InterfaceDeclaration) {
+  return false;
+}
+
+export function isOperationGroup(declaration: InterfaceDeclaration) {
+  return false;
+}
+
+export function isResult(declaration: InterfaceDeclaration) {
+  return false;
+}
+
+export function isContentMap(declaration: InterfaceDeclaration) {
+  return false;
+}
+
+export function isResponse(declaration: InterfaceDeclaration)  {
+  return false;
+}
+
+export function isModelInterface(declaration: InterfaceDeclaration) {
+  // model interfaces should
+  // - may have constructors (used for versioning)
+  // - may not have methods 
+  if( declaration.getMethods().length > 0 ) {
+    return false;
+  }
+  // - should not be a response, result, opgroup, contentmap
+  return !(isOperationGroup(declaration) || isResource(declaration) || isResult(declaration) || isContentMap(declaration) || isResponse(declaration));
+}
+
+export class Files { 
+  readonly api: ApiModel;
+  readonly files: Array<SourceFile>;
+
+  protected constructor(  api?: ApiModel, sourceFiles?: Array<SourceFile> ) {
+    this.api = api || (this instanceof ApiModel ? this : fail('requires api model in constructor' ));
+    this.files = sourceFiles || this.api.files;
+  }
+
+  where(predicate: (file: SourceFile) => boolean ): Files {
+    return new Files(this.api, this.files.filter(predicate));
+  }
+
+  get interfaces() {
+    return this.files.map(each => each.getInterfaces().filter(isModelInterface)).flat().map( each => new InterfaceModel(each));
+  }
+
+  get enums();
+  get typeAliases();
+
+  get operationGroups();
+  get resources();
+}
+
+export class ApiModel extends Files {
   #project: Project = new Project({
     useInMemoryFileSystem: true,
     manipulationSettings: {
@@ -62,6 +118,7 @@ export class ApiModel {
   http: HttpProtocol = new HttpProtocol();
 
   constructor() {
+    super();
     (<any>this.#project).api = this;
   }
 
