@@ -267,7 +267,7 @@ function getRequestType(request: Request, chosenName: string) {
 function getResponseType(response: Response) {
   const outerType = response.isException ? 'Http.Exception' : 'Http.Response';
   const statusArg = getStatusArg(response);
-  const schema = response.typeref;
+  const schema = response.typeref?.declaration;
   const schemaArg = schema ? `, ${schema}` : response.mediaType ? ', none' : '';
   const mediaTypeArg = response.mediaType ? `, '${response.mediaType}'` : '';
   return `${outerType}<${statusArg}${schemaArg}${mediaTypeArg}>`;

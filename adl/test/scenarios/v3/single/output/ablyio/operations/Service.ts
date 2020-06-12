@@ -16,7 +16,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    getMetadataOfAllChannels(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, limit?: Http.Query<int64 /* todo: add defaultValue '100' */>, prefix?: Http.Query<string>, by?: Http.Query<"value" | "id">): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    getMetadataOfAllChannels(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, limit?: Http.Query<int64 /* todo: add defaultValue '100' */>, prefix?: Http.Query<string>, by?: Http.Query<"value" | "id">): Http.Response<'2XX', Xor<Array<ChannelDetails>, Array<string>>, 'application/json'> | Http.Response<'2XX', Xor<Array<ChannelDetails>, Array<string>>, 'application/x-msgpack'> | Http.Response<'2XX', string, 'text/html'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * Get metadata of a channel
      * @description Get metadata of a channel
@@ -31,7 +31,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    getMetadataOfChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    getMetadataOfChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>): Http.Response<'200', ChannelDetails, 'application/json'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * Get message history for a channel
      * @description Get message history for a channel
@@ -46,7 +46,7 @@ export interface Service {
      * @return 2XX - OK
      * @return default - Error
      */
-    getMessagesByChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>, start?: Http.Query<string>, limit?: Http.Query<int64 /* todo: add defaultValue '"100"' */>, end?: Http.Query<string /* todo: add defaultValue '"now"' */>, direction?: Http.Query<"forwards" | "backwards">): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<Http.Default>;
+    getMessagesByChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>, start?: Http.Query<string>, limit?: Http.Query<int64 /* todo: add defaultValue '"100"' */>, end?: Http.Query<string /* todo: add defaultValue '"now"' */>, direction?: Http.Query<"forwards" | "backwards">): Http.Response<'2XX', Array<Message>, 'application/json'> | Http.Response<'2XX', Array<Message>, 'application/x-msgpack'> | Http.Response<'2XX', string, 'text/html'> | Http.Response<Http.Default>;
     /**
      * Publish a message to a channel
      * @description Publish a message to the specified channel
@@ -63,7 +63,40 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    publishMessagesToChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>, body?: Http.Body<Message, 'application/json'>, body?: Http.Body<Message, 'application/x-msgpack'>, body?: Http.Body<Message, 'application/x-www-form-urlencoded'>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    publishMessagesToChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>, body?: Http.Body<Message, 'application/json'>, body?: Http.Body<Message, 'application/x-msgpack'>, body?: Http.Body<Message, 'application/x-www-form-urlencoded'>): Http.Response<'2XX', {
+        /**
+         *
+         * @since 1.1.0
+         */
+        channel?: string;
+        /**
+         *
+         * @since 1.1.0
+         */
+        messageId?: string;
+    }, 'application/json'> | Http.Response<'2XX', {
+        /**
+         *
+         * @since 1.1.0
+         */
+        channel?: string;
+        /**
+         *
+         * @since 1.1.0
+         */
+        messageId?: string;
+    }, 'application/x-msgpack'> | Http.Response<'2XX', {
+        /**
+         *
+         * @since 1.1.0
+         */
+        channel?: string;
+        /**
+         *
+         * @since 1.1.0
+         */
+        messageId?: string;
+    }, 'text/html'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * Get presence of a channel
      * @description Get presence on a channel
@@ -80,7 +113,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    getPresenceOfChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>, clientId?: Http.Query<string>, connectionId?: Http.Query<string>, limit?: Http.Query<int64 /* todo: add defaultValue '100' */>): Http.Response<'200', [object, Object], 'application/json'> | Http.Response<'200', [object, Object], 'application/x-msgpack'> | Http.Response<'200', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    getPresenceOfChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>, clientId?: Http.Query<string>, connectionId?: Http.Query<string>, limit?: Http.Query<int64 /* todo: add defaultValue '100' */>): Http.Response<'200', Array<PresenceMessage>, 'application/json'> | Http.Response<'200', Array<PresenceMessage>, 'application/x-msgpack'> | Http.Response<'200', string, 'text/html'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * Get presence history of a channel
      * @description Get presence on a channel
@@ -97,7 +130,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    getPresenceHistoryOfChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>, start?: Http.Query<string>, limit?: Http.Query<int64 /* todo: add defaultValue '"100"' */>, end?: Http.Query<string /* todo: add defaultValue '"now"' */>, direction?: Http.Query<"forwards" | "backwards">): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    getPresenceHistoryOfChannel(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel_id: Http.Path<string>, start?: Http.Query<string>, limit?: Http.Query<int64 /* todo: add defaultValue '"100"' */>, end?: Http.Query<string /* todo: add defaultValue '"now"' */>, direction?: Http.Query<"forwards" | "backwards">): Http.Response<'2XX', Array<PresenceMessage>, 'application/json'> | Http.Response<'2XX', Array<PresenceMessage>, 'application/x-msgpack'> | Http.Response<'2XX', string, 'text/html'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * Request an access token
      * @description This is the means by which clients obtain access tokens to use the service. You can see how to construct an Ably TokenRequest in the [Ably TokenRequest spec](https://www.ably.io/documentation/rest-api/token-request-spec) documentation, although we recommend you use an Ably SDK rather to create a TokenRequest, as the construction of a TokenRequest is complex. The resulting token response object contains the token properties as defined in Ably TokenRequest spec. Authentication is not required if using a Signed TokenRequest.
@@ -113,7 +146,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    requestAccessToken(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, keyName: Http.Path<string>, body?: Http.Body<Xor<TokenRequest, SignedTokenRequest>, 'application/json'>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    requestAccessToken(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, keyName: Http.Path<string>, body?: Http.Body<Xor<TokenRequest, SignedTokenRequest>, 'application/json'>): Http.Response<'2XX', TokenDetails, 'application/json'> | Http.Response<'2XX', TokenDetails, 'application/x-msgpack'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * List channel subscriptions
      * @description Get a list of push notification subscriptions to channels.
@@ -131,7 +164,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    getPushSubscriptionsOnChannels(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel?: Http.Query<string>, deviceId?: Http.Query<string>, clientId?: Http.Query<string>, limit?: Http.Query<int64 /* todo: add defaultValue '100' */ & Maximum<1000>>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    getPushSubscriptionsOnChannels(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel?: Http.Query<string>, deviceId?: Http.Query<string>, clientId?: Http.Query<string>, limit?: Http.Query<int64 /* todo: add defaultValue '100' */ & Maximum<1000>>): Http.Response<'2XX', DeviceDetails, 'application/json'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * Subscribe a device to a channel
      * @description Subscribe either a single device or all devices associated with a client ID to receive push notifications from messages sent to a channel.
@@ -211,7 +244,7 @@ export interface Service {
          * @since 1.1.0
          */
         clientId?: string;
-    }>, 'application/x-www-form-urlencoded'>): Http.Response<'2XX'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    }>, 'application/x-www-form-urlencoded'>): Http.Response<'2XX'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * Delete a registered device's update token
      * @description Delete a device details object.
@@ -228,7 +261,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    deletePushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel?: Http.Query<string>, deviceId?: Http.Query<string>, clientId?: Http.Query<string>): Http.Response<'2XX'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    deletePushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, channel?: Http.Query<string>, deviceId?: Http.Query<string>, clientId?: Http.Query<string>): Http.Response<'2XX'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * List all channels with at least one subscribed device
      * @description Returns a paginated response of channel names.
@@ -244,7 +277,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    getChannelsWithPushSubscribers(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    getChannelsWithPushSubscribers(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">): Http.Response<'2XX', Array<string>, 'application/json'> | Http.Response<'2XX', Array<string>, 'application/x-msgpack'> | Http.Response<'2XX', Array<string>, 'text/html'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * List devices registered for receiving push notifications
      * @description List of device details of devices registed for push notifications.
@@ -263,7 +296,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    getRegisteredPushDevices(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, deviceId?: Http.Query<string>, clientId?: Http.Query<string>, limit?: Http.Query<int64 /* todo: add defaultValue '100' */ & Maximum<1000>>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    getRegisteredPushDevices(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, deviceId?: Http.Query<string>, clientId?: Http.Query<string>, limit?: Http.Query<int64 /* todo: add defaultValue '100' */ & Maximum<1000>>): Http.Response<'2XX', DeviceDetails, 'application/json'> | Http.Response<'2XX', DeviceDetails, 'application/x-msgpack'> | Http.Response<'2XX', DeviceDetails, 'text/html'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * Register a device for receiving push notifications
      * @description Register a device’s details, including the information necessary to deliver push notifications to it. Requires "push-admin" capability.
@@ -279,7 +312,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    registerPushDevice(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, body?: Http.Body<DeviceDetails, 'application/json'>, body?: Http.Body<DeviceDetails, 'application/x-msgpack'>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    registerPushDevice(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, body?: Http.Body<DeviceDetails, 'application/json'>, body?: Http.Body<DeviceDetails, 'application/x-msgpack'>): Http.Response<'2XX', DeviceDetails, 'application/json'> | Http.Response<'2XX', DeviceDetails, 'application/x-msgpack'> | Http.Response<'2XX', DeviceDetails, 'text/html'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * Unregister matching devices for push notifications
      * @description Unregisters devices. All their subscriptions for receiving push notifications through channels will also be deleted.
@@ -295,7 +328,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    unregisterAllPushDevices(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, deviceId?: Http.Query<string>, clientId?: Http.Query<string>): Http.Response<'2XX'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    unregisterAllPushDevices(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, deviceId?: Http.Query<string>, clientId?: Http.Query<string>): Http.Response<'2XX'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * Get a device registration
      * @description Get the full details of a device.
@@ -312,7 +345,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    getPushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    getPushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>): Http.Response<'2XX', DeviceDetails, 'application/json'> | Http.Response<'2XX', DeviceDetails, 'application/x-msgpack'> | Http.Response<'2XX', DeviceDetails, 'text/html'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * Update a device registration
      * @description Device registrations can be upserted (the existing registration is replaced entirely) with a PUT operation. Only clientId, metadata and push.recipient are mutable.
@@ -329,7 +362,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    putPushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>, body?: Http.Body<DeviceDetails, 'application/json'>, body?: Http.Body<DeviceDetails, 'application/x-msgpack'>, body?: Http.Body<DeviceDetails, 'application/x-www-form-urlencoded'>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    putPushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>, body?: Http.Body<DeviceDetails, 'application/json'>, body?: Http.Body<DeviceDetails, 'application/x-msgpack'>, body?: Http.Body<DeviceDetails, 'application/x-www-form-urlencoded'>): Http.Response<'2XX', DeviceDetails, 'application/json'> | Http.Response<'2XX', DeviceDetails, 'application/x-msgpack'> | Http.Response<'2XX', DeviceDetails, 'text/html'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * Unregister a single device for push notifications
      * @description Unregisters a single device by its device ID. All its subscriptions for receiving push notifications through channels will also be deleted.
@@ -344,7 +377,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    unregisterPushDevice(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>): Http.Response<'2XX'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    unregisterPushDevice(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>): Http.Response<'2XX'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * Update a device registration
      * @description Specific attributes of an existing registration can be updated. Only clientId, metadata and push.recipient are mutable.
@@ -361,7 +394,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    patchPushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>, body?: Http.Body<DeviceDetails, 'application/json'>, body?: Http.Body<DeviceDetails, 'application/x-msgpack'>, body?: Http.Body<DeviceDetails, 'application/x-www-form-urlencoded'>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    patchPushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>, body?: Http.Body<DeviceDetails, 'application/json'>, body?: Http.Body<DeviceDetails, 'application/x-msgpack'>, body?: Http.Body<DeviceDetails, 'application/x-www-form-urlencoded'>): Http.Response<'2XX', DeviceDetails, 'application/json'> | Http.Response<'2XX', DeviceDetails, 'application/x-msgpack'> | Http.Response<'2XX', DeviceDetails, 'text/html'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * Reset a registered device's update token
      * @description Gets an updated device details object.
@@ -378,7 +411,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    updatePushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    updatePushDeviceDetails(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, device_id: Http.Path<string>): Http.Response<'2XX', DeviceDetails, 'application/json'> | Http.Response<'2XX', DeviceDetails, 'application/x-msgpack'> | Http.Response<'2XX', DeviceDetails, 'text/html'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * Publish a push notification to device(s)
      * @description A convenience endpoint to deliver a push notification payload to a single device or set of devices identified by their client identifier.
@@ -425,7 +458,7 @@ export interface Service {
          * @since 1.1.0
          */
         recipient: Recipient;
-    }, 'application/x-www-form-urlencoded'>): Http.Response<'2XX'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    }, 'application/x-www-form-urlencoded'>): Http.Response<'2XX'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * Retrieve usage statistics for an application
      * @description The Ably system can be queried to obtain usage statistics for a given application, and results are provided aggregated across all channels in use in the application in the specified period. Stats may be used to track usage against account quotas.
@@ -440,7 +473,7 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    getStats(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, start?: Http.Query<string>, limit?: Http.Query<int64 /* todo: add defaultValue '"100"' */>, end?: Http.Query<string /* todo: add defaultValue '"now"' */>, direction?: Http.Query<"forwards" | "backwards">, unit?: Http.Query<"minute" | "hour" | "day" | "month">): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    getStats(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">, start?: Http.Query<string>, limit?: Http.Query<int64 /* todo: add defaultValue '"100"' */>, end?: Http.Query<string /* todo: add defaultValue '"now"' */>, direction?: Http.Query<"forwards" | "backwards">, unit?: Http.Query<"minute" | "hour" | "day" | "month">): Http.Response<'2XX', {}, 'application/json'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
     /**
      * Get the service time
      * @description This returns the service time in milliseconds since the epoch.
@@ -456,5 +489,5 @@ export interface Service {
      * @return Error - Error
      * @return Error - Error
      */
-    getTime(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">): Http.Response<'2XX', [object, Object], 'application/json'> | Http.Response<'2XX', [object, Object], 'application/x-msgpack'> | Http.Response<'2XX', [object, Object], 'text/html'> | Http.Response<'Error', [object, Object], 'application/json'> | Http.Response<'Error', [object, Object], 'application/x-msgpack'> | Http.Response<'Error', [object, Object], 'text/html'>;
+    getTime(X_Ably_Version?: Http.Header<string, 'X-Ably-Version'>, format?: Http.Query<"json" | "jsonp" | "msgpack" | "html">): Http.Response<'2XX', Array<int64>, 'application/json'> | Http.Response<'2XX', Array<int64>, 'application/x-msgpack'> | Http.Response<'2XX', string, 'text/html'> | Http.Response<'Error', Error, 'application/json'> | Http.Response<'Error', Error, 'application/x-msgpack'> | Http.Response<'Error', Error, 'text/html'>;
 }
