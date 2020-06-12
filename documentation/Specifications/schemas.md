@@ -256,13 +256,6 @@ Using JSDoc comments, we can provide very rich documentation on schema types.
  * @deprecated 2019-06-06  - it was deprecated at this API version
  * @deleted 2020-01-01 - This field should absolutely not be present past this version
  * 
- * @example {
- *   name: 'MyResource',
- *   description: 'The Big Resource',
- *   color: 'blue',
- *   borderColor: 'green',
- *   companyAddress: '...',
- * }
  */
 export interface ResourceProperties {
   /** 
@@ -305,10 +298,8 @@ It's ok to use any `@jsdoc` tags, but the ones that have significance on schema 
 |`@since`| the API version that this member or schema was added to the API |
 |`@deprecated`| the API version that this member or schema was deprecated |
 |`@deleted`| the API version that this member or schema was removed to the API |
-|`@replacedBy`| the member that replaces this member when it is deleted or deprecated |
-|`@default`| the literal value that will be assumed if a value is not passed from the client |
-|`@clientDefault`| the value the client should use as a default value.  |
-|`@example`| an example payload for this schema |
+|`@renamed`| the member that replaces this member when it is deleted or deprecated |
+
 
 ### Renaming a property between API versions
 Rarely, a property in a schema needs to be renamed. This can be noted by marking the original property `@deleted` adding a `@replacedBy` 
@@ -394,9 +385,4 @@ The following are the currently supported validation constraints:
 |`MaxItems<number value>`|`Array<T>`|The maximum number of items in the array   |
 |`MinItems<number value>`| `Array<T>` |The minimum number of items in the array  |
 |`Unique`| `Array<T>` | the items in the array must be unique |
-|`WriteOnly` | anything| the property is only writable and will not be returned to the client |
-|`Version<???>`|anything| constraint applies to the api version specified. |
 
-
-### Constraints changing between versions
-[Coming Soon]
