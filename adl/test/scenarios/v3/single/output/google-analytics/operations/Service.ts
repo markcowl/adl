@@ -1,6 +1,7 @@
 export interface Service {
     /**
      * @description Returns Analytics report data for a view (profile).
+     * @since v2.4
      * @http GET /data
      * @tag data
      * @param alt - Data format for the response.
@@ -21,11 +22,11 @@ export interface Service {
      * @param sort - A comma-separated list of dimensions or metrics that determine the sort order for the report data.
      * @param start_index - An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
      * @return 200 - Successful response
-     * @since v2.4
      */
     'analytics.data.get'(alt?: Http.Query<"atom">, fields?: Http.Query<string>, key?: Http.Query<string>, oauth_token?: Http.Query<string>, prettyPrint?: Http.Query<boolean>, quotaUser?: Http.Query<string>, userIp?: Http.Query<string>, ids: Http.Query<string>, start_date: Http.Query<string, 'start-date'>, end_date: Http.Query<string, 'end-date'>, metrics: Http.Query<string>, dimensions?: Http.Query<string>, filters?: Http.Query<string>, max_results?: Http.Query<int64, 'max-results'>, segment?: Http.Query<string>, sort?: Http.Query<string>, start_index?: Http.Query<int64 & Minimum<1>, 'start-index'>): Http.Response<'200'>;
     /**
      * @description Lists all accounts to which the user has access.
+     * @since v2.4
      * @http GET /management/accounts
      * @tag management
      * @param alt - Data format for the response.
@@ -38,11 +39,11 @@ export interface Service {
      * @param max_results - The maximum number of accounts to include in this response.
      * @param start_index - An index of the first account to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
      * @return 200 - Successful response
-     * @since v2.4
      */
     'analytics.management.accounts.list'(alt?: Http.Query<"atom">, fields?: Http.Query<string>, key?: Http.Query<string>, oauth_token?: Http.Query<string>, prettyPrint?: Http.Query<boolean>, quotaUser?: Http.Query<string>, userIp?: Http.Query<string>, max_results?: Http.Query<int64, 'max-results'>, start_index?: Http.Query<int64 & Minimum<1>, 'start-index'>): Http.Response<'200'>;
     /**
      * @description Lists web properties to which the user has access.
+     * @since v2.4
      * @http GET /management/accounts/{accountId}/webproperties
      * @tag management
      * @param alt - Data format for the response.
@@ -56,11 +57,11 @@ export interface Service {
      * @param max_results - The maximum number of web properties to include in this response.
      * @param start_index - An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
      * @return 200 - Successful response
-     * @since v2.4
      */
     'analytics.management.webproperties.list'(alt?: Http.Query<"atom">, fields?: Http.Query<string>, key?: Http.Query<string>, oauth_token?: Http.Query<string>, prettyPrint?: Http.Query<boolean>, quotaUser?: Http.Query<string>, userIp?: Http.Query<string>, accountId: Http.Path<string>, max_results?: Http.Query<int64, 'max-results'>, start_index?: Http.Query<int64 & Minimum<1>, 'start-index'>): Http.Response<'200'>;
     /**
      * @description Lists views (profiles) to which the user has access.
+     * @since v2.4
      * @http GET /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles
      * @tag management
      * @param alt - Data format for the response.
@@ -75,11 +76,11 @@ export interface Service {
      * @param max_results - The maximum number of views (profiles) to include in this response.
      * @param start_index - An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
      * @return 200 - Successful response
-     * @since v2.4
      */
     'analytics.management.profiles.list'(alt?: Http.Query<"atom">, fields?: Http.Query<string>, key?: Http.Query<string>, oauth_token?: Http.Query<string>, prettyPrint?: Http.Query<boolean>, quotaUser?: Http.Query<string>, userIp?: Http.Query<string>, accountId: Http.Path<string>, webPropertyId: Http.Path<string>, max_results?: Http.Query<int64, 'max-results'>, start_index?: Http.Query<int64 & Minimum<1>, 'start-index'>): Http.Response<'200'>;
     /**
      * @description Lists goals to which the user has access.
+     * @since v2.4
      * @http GET /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals
      * @tag management
      * @param alt - Data format for the response.
@@ -95,11 +96,11 @@ export interface Service {
      * @param max_results - The maximum number of goals to include in this response.
      * @param start_index - An index of the first goal to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
      * @return 200 - Successful response
-     * @since v2.4
      */
     'analytics.management.goals.list'(alt?: Http.Query<"atom">, fields?: Http.Query<string>, key?: Http.Query<string>, oauth_token?: Http.Query<string>, prettyPrint?: Http.Query<boolean>, quotaUser?: Http.Query<string>, userIp?: Http.Query<string>, accountId: Http.Path<string>, webPropertyId: Http.Path<string>, profileId: Http.Path<string>, max_results?: Http.Query<int64, 'max-results'>, start_index?: Http.Query<int64 & Minimum<1>, 'start-index'>): Http.Response<'200'>;
     /**
      * @description Lists advanced segments to which the user has access.
+     * @since v2.4
      * @http GET /management/segments
      * @tag management
      * @param alt - Data format for the response.
@@ -112,7 +113,6 @@ export interface Service {
      * @param max_results - The maximum number of advanced segments to include in this response.
      * @param start_index - An index of the first advanced segment to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
      * @return 200 - Successful response
-     * @since v2.4
      */
     'analytics.management.segments.list'(alt?: Http.Query<"atom">, fields?: Http.Query<string>, key?: Http.Query<string>, oauth_token?: Http.Query<string>, prettyPrint?: Http.Query<boolean>, quotaUser?: Http.Query<string>, userIp?: Http.Query<string>, max_results?: Http.Query<int64, 'max-results'>, start_index?: Http.Query<int64 & Minimum<1>, 'start-index'>): Http.Response<'200'>;
 }
