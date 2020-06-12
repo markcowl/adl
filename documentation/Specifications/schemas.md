@@ -365,7 +365,7 @@ interface ContactInfo {
 
   description: Array<string> & MinItems<1>
   
-  password: Credential & WriteOnly;
+  password: Credential ;
 }
 
 ```
