@@ -98,13 +98,13 @@ export function isModelInterface(declaration: InterfaceDeclaration) {
   // - are not a response, result, operation-group or contentmap
   return !(isOperationGroup(declaration) || isResource(declaration) || isResult(declaration) || isContentMap(declaration) || isResponse(declaration) );
 }
-
+/*
 type Queryable<T extends string,TResult >  = {
   readonly [key in T]: Array<TResult>;
 }
 const someFiles = <Files><any>{};
 const x = someFiles.query<ModelType>('interfaces');
-
+*/
 export class Files {
   readonly api: ApiModel;
   readonly files: Array<SourceFile>;
