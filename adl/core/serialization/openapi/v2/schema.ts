@@ -2,10 +2,11 @@ import { items, length } from '@azure-tools/linq';
 import { isReference, StringFormat, v2 } from '@azure-tools/openapi';
 import { anonymous, nameOf, refTo } from '@azure-tools/sourcemap';
 import { PropertySignatureStructure } from 'ts-morph';
-import { createTypeAlias } from '../../../model/schema/alias';
+import { createAliasType } from '../../../model/schema/alias';
 import { addConstraint, addEncoding, Constraints, Encodings } from '../../../model/schema/constraint';
 import { addDefault } from '../../../model/schema/default';
-import { createArray, createDictionary, createInterface, createPropertySignature } from '../../../model/schema/object';
+import { createArray, createDictionary, createInterface } from '../../../model/schema/object';
+import { createPropertySignature } from '../../../model/schema/property';
 import { TypeReference } from '../../../model/schema/type';
 import { Identity } from '../../../model/types';
 import { Context } from '../../../support/visitor';
@@ -35,7 +36,7 @@ export async function processSchema(schema: v2.Schema|v2.SchemaReference, $: Con
 
       if( !(options?.isAnonymous)) {
         // it has a name (which means it is intended to be a type alias at the top level) 
-        typeRef = createTypeAlias($.api, nameOf(schema), typeRef, commonProperties(<v2.Schema>schema));
+        typeRef = createAliasType($.api, nameOf(schema), typeRef, commonProperties(<v2.Schema>schema));
       }
       
       // return the target.
@@ -157,7 +158,7 @@ function constrainNumericSchema(schema: v2.Schema, $: Context<v2.Model>, options
   // we'll have to come back to xml
   // alias.addToAttic('xml', schema.xml);
   
-  return options?.isAnonymous ? target : createTypeAlias($.api,nameOf(schema),target, commonProperties(schema));
+  return options?.isAnonymous ? target : createAliasType($.api,nameOf(schema),target, commonProperties(schema));
 }
 
 
@@ -211,7 +212,7 @@ export async function processStringSchema(schema: v2.Schema, $: Context<v2.Model
   }
 
   // otherwise, we have to get the standard string and make an alias for it with the adornments. 
-  let alias = createTypeAlias($.api, anonymous('string'), $.api.schemas.primitives.string, commonProperties(schema));
+  let alias = createAliasType($.api, anonymous('string'), $.api.schemas.primitives.string, commonProperties(schema));
 
   if (schema.default !== undefined) {
     // alias.defaults.push(new ServerDefaultValue(schema.default));
@@ -239,7 +240,7 @@ export async function processStringSchema(schema: v2.Schema, $: Context<v2.Model
   if (options?.isAnonymous) {
     return alias;
   }
-  return createTypeAlias($.api, nameOf(schema), alias, commonProperties(schema));
+  return createAliasType($.api, nameOf(schema), alias, commonProperties(schema));
   
 }
 
@@ -325,7 +326,7 @@ function addObjectConstraints(schemaName: string, schema: v2.Schema, $: Context<
       type = addDefault(type, schema.default);
     }
 
-    return createTypeAlias($.api, schemaName, type);
+    return createAliasType($.api, schemaName, type);
   } 
   return type;
 }
@@ -341,7 +342,7 @@ export async function processAdditionalProperties(schema: v2.Schema, $: Context<
   // true means type == any
   const elementTypeRef = schema.additionalProperties == true ? $.api.schemas.primitives.any : await processSchema(schema.additionalProperties!, $, {isAnonymous: true});
   
-  let alias = createTypeAlias($.api, schemaName, createDictionary(elementTypeRef), common);
+  let alias = createAliasType($.api, schemaName, createDictionary(elementTypeRef), common);
   // todo: come back and handle attic -- we'll have to come back to xml
   // alias.addToAttic('xml', schema.xml);
 
@@ -391,5 +392,5 @@ export async function processArraySchema(schema: v2.Schema, $: Context<v2.Model>
   }
   // we'll have to come back to xml
   // alias.addToAttic('xml', schema.xml);
-  return options?.isAnonymous ? alias : createTypeAlias($.api, schemaName, alias, commonProperties(schema));
+  return options?.isAnonymous ? alias : createAliasType($.api, schemaName, alias, commonProperties(schema));
 }

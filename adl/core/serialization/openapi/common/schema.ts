@@ -1,6 +1,6 @@
 import { IntegerFormat, NumberFormat, v2, v3, XMSEnumValue } from '@azure-tools/openapi';
 import { anonymous, nameOf } from '@azure-tools/sourcemap';
-import { createTypeAlias } from '../../../model/schema/alias';
+import { createAliasType } from '../../../model/schema/alias';
 import { addEncoding, EncodingReference } from '../../../model/schema/constraint';
 import { addDefault } from '../../../model/schema/default';
 import { createEnum } from '../../../model/schema/enum';
@@ -119,7 +119,7 @@ export async function processByteArraySchema<T extends OAIModel>(schema: v3.Sche
 
 export function wrapWithAliasIfNeeded<T extends OAIModel>(schema: v3.Schema | v2.Schema, type: TypeReference, $: Context<T>, encoding?: EncodingReference) {
   if (schema.default || schema.description || schema.title || (<any>schema).nullable || schema['x-nullable'] || (<any>schema).readOnly || encoding) {
-    let alias = createTypeAlias($.api, anonymous(nameOf(schema)), type, commonProperties(schema));
+    let alias = createAliasType($.api, anonymous(nameOf(schema)), type, commonProperties(schema));
     
     if( encoding) {
       alias = addEncoding(alias, encoding);
@@ -130,11 +130,11 @@ export function wrapWithAliasIfNeeded<T extends OAIModel>(schema: v3.Schema | v2
     }
 
     if ((<any>schema).readOnly) {
-
+      //todo?
     }
 
     if ((<any>schema).nullable || schema['x-nullable']) {
-
+      //todo?
     }
     return alias;
   }

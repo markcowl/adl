@@ -1,9 +1,11 @@
 import { isAnonymous } from '@azure-tools/sourcemap';
+import { EnumDeclaration, EnumMember } from 'ts-morph';
 import { literal, normalizeIdentifier } from '../../support/codegen';
 import { createDocs } from '../../support/doc-tag';
 import { ApiModel } from '../api-model';
 import { Collection, Identity } from '../types';
-import { SchemaInitializer } from './object';
+import { NamedElement } from '../typescript/named-element';
+import { SchemaInitializer } from './schema';
 import { TypeReference } from './type';
 
 export interface EnumInitializer extends SchemaInitializer {
@@ -62,4 +64,33 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
     declaration: values.map(v => literal(v.value)).join(' | '),
     requiredReferences: [],
   };
+}
+
+
+export class EnumElement extends NamedElement<EnumMember> {
+  constructor(node: EnumMember) {
+    super(node);
+  }
+}
+
+export class EnumType extends NamedElement<EnumDeclaration> implements TypeReference {
+  readonly isInline = false;
+  readonly requiredReferences = [];
+
+  constructor(node: EnumDeclaration) {
+    super(node);
+  }
+
+  get declaration() {
+    return this.node.getName();
+  }
+
+  get values(): Array<EnumElement> {
+    return this.node.getMembers().map(each => new EnumElement(each));
+  }
+
+  createValue() {
+    // shh
+  }
+
 }

@@ -1,8 +1,5 @@
-import { EnumDeclaration, EnumMember, InterfaceDeclaration, PropertySignature } from 'ts-morph';
 import { ApiModel } from '../api-model';
 import { Element } from '../element';
-import { NamedElement } from '../typescript/named-element';
-import { TypeReference } from './type';
 
 function createPrimitiveSchema(declaration: string) {
   return {
@@ -11,71 +8,7 @@ function createPrimitiveSchema(declaration: string) {
   };
 }
 
-
-export class PropertyElement extends NamedElement<PropertySignature> {
-  constructor(node: PropertySignature) {
-    super(node);
-  }
-
-  get type(): TypeReference {
-    return <TypeReference><any>{};
-  }
-
-  set type(typeReference: TypeReference) {
-    // shh
-  }
-}
  
-
-export class InterfaceType extends NamedElement<InterfaceDeclaration> implements TypeReference {
-  readonly isInline = false;
-  readonly requiredReferences = [];
-
-  constructor(node: InterfaceDeclaration) {
-    super(node);
-  }
-  get declaration() {
-    return this.node.getName();
-  }
-
-  getProperties(): Iterable<PropertyElement> {
-    return this.node.getProperties().map(each => new PropertyElement(each));
-  }
-
-  createProperty(name: string) {
-    //ssh
-  }
-
-}
-
-export class EnumElement extends NamedElement<EnumMember> {
-  constructor(node: EnumMember) {
-    super(node);
-  }
-}
-
-export class EnumType extends NamedElement<EnumDeclaration> implements TypeReference {
-  readonly isInline = false;
-  readonly requiredReferences = [];
-
-  constructor(node: EnumDeclaration) {
-    super(node);
-  }
-
-  get declaration() {
-    return this.node.getName();
-  }
-
-  get values(): Array<EnumElement> {
-    return this.node.getMembers().map(each => new EnumElement(each));
-  }
-
-  createValue() {
-    // shh
-  }
-
-}
-
 export class Schemas extends Element {
   primitives = {
     any: createPrimitiveSchema('any'),

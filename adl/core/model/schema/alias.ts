@@ -4,7 +4,7 @@ import { addImportsTo } from '../../support/typescript';
 import { ApiModel } from '../api-model';
 import { Identity } from '../types';
 import { NamedElement } from '../typescript/named-element';
-import { SchemaInitializer } from './object';
+import { SchemaInitializer } from './schema';
 import { TypeReference } from './type';
 
 
@@ -19,7 +19,7 @@ export class AliasType extends NamedElement<TypeAliasDeclaration> implements Typ
   }
 }
 
-export function createTypeAlias(api: ApiModel, identity: Identity, typeReference: TypeReference, initializer?: Partial<SchemaInitializer>): TypeReference {
+export function createAliasType(api: ApiModel, identity: Identity, typeReference: TypeReference, initializer?: Partial<SchemaInitializer>): TypeReference {
   if (isAnonymous(identity)) {
     // if it doesn't have a name, just return the type reference instead.
     return typeReference;

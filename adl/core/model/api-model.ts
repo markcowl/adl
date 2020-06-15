@@ -13,7 +13,9 @@ import { InternalData } from './internal-data';
 import { Metadata } from './metadata';
 import { OperationGroup, ParameterElement, ResponseCollection, ResponseElement, ResultElement } from './operation';
 import { AliasType } from './schema/alias';
-import { EnumType, InterfaceType, Schemas } from './schema/schemas';
+import { EnumType } from './schema/enum';
+import { ModelType } from './schema/object';
+import { Schemas } from './schema/schemas';
 import { Folders, Identity } from './types';
 import { VersionInfo } from './version-info';
 
@@ -101,7 +103,7 @@ type Queryable<T extends string,TResult >  = {
   readonly [key in T]: Array<TResult>;
 }
 const someFiles = <Files><any>{};
-const x = someFiles.query<InterfaceType>('interfaces');
+const x = someFiles.query<ModelType>('interfaces');
 
 export class Files {
   readonly api: ApiModel;
@@ -127,7 +129,7 @@ export class Files {
   }
 
   get interfaces() {
-    return this.files.map(each => each.getInterfaces().filter(isModelInterface)).flat().map(each => new InterfaceType(each));
+    return this.files.map(each => each.getInterfaces().filter(isModelInterface)).flat().map(each => new ModelType(each));
   }
 
   get enums() {
