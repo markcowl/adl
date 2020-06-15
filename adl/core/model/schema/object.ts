@@ -1,110 +1,13 @@
 import { Dictionary, values } from '@azure-tools/linq';
 import { isAnonymous } from '@azure-tools/sourcemap';
-import { InterfaceDeclaration, PropertySignature, PropertySignatureStructure, StructureKind } from 'ts-morph';
+import { PropertySignature, PropertySignatureStructure, StructureKind } from 'ts-morph';
 import { normalizeIdentifier } from '../../support/codegen';
 import { createDocs, getTagValue, setTag } from '../../support/doc-tag';
-import { addImportsTo, addNullable, getInnerText, TypeDeclaration } from '../../support/typescript';
+import { addImportsTo, addNullable, getInnerText } from '../../support/typescript';
 import { ApiModel } from '../api-model';
-import { Collection, CollectionImpl, Identity, ReadOnlyCollection, ReadOnlyCollectionImpl } from '../types';
-import { NamedElement } from './NamedElement';
-import { Schema, TSSchema } from './schema';
+import { Identity } from '../types';
+import { NamedElement } from '../typescript/named-element';
 import { TypeReference } from './type';
-
-export interface ObjectSchema extends Schema {
-  /** schemas that this object extends */
-  readonly parents: Collection<TSSchema<TypeDeclaration>>;
-  
-  /** the collection of properties that are in this object< */
-  readonly properties: ReadOnlyCollection<Property>;
-  
-  /**  maximum number of properties permitted */
-  maxProperties?: number;
-
-  /**  minimum number of properties permitted */
-  minProperties?: number;
-
-  /** the desired name when generating code */
-  clientName?: string;
-
-  createProperty(name: string, schema: Schema, initializer?: Partial<Property>): Property;
-}
-
-export interface PropInitializer extends Partial<Property> {
-  name: string;
-  schema: Schema;
-}
-
-export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements ObjectSchema {
-  addParent(...parents: Array<TSSchema<TypeDeclaration>> ) {
-    // ensure we have an import to the type
-    // and add it to the list
-
-    for(const parent of parents) {
-      this.node.addExtends(this.getTypeReference(parent));
-    }
-  }
-
-  removeParent(parent: TSSchema<TypeDeclaration>) {
-    // remove the parent from the schema
-    for( const base of this.node.getExtends() ) {
-      // todo: how do we identify which base is the one we're removing.
-      // have to debug this to find out.
-      // if( /**??? */ ) {
-      // this is the one, remove it
-      // this.node.removeExtends(base);
-      //  break;
-      // }
-      throw new Error('remove not implemented');
-    }
-
-  }
-  getParents(): Array<TSSchema<TypeDeclaration>> {
-    // return a wrapper object for each typedecl
-    return this.node.getBaseDeclarations().map( each => new TSSchema<TypeDeclaration>('',each)  );
-  }
-
-  getProperties() {
-    return this.node.getProperties( ).map( each => new PropertyImpl(each));
-  } 
-
-  constructor(node: InterfaceDeclaration) {
-    super('object', node);
-    this.parents = new CollectionImpl(this, this.addParent, this.removeParent, this.getParents);
-    this.properties = new ReadOnlyCollectionImpl(this, this.getProperties);
-  }
-   
-  parents: Collection<TSSchema<TypeDeclaration>>;
-  properties: ReadOnlyCollection<Property>;
- 
-  maxProperties?: number;
-  minProperties?: number;
-  clientName?: string;
-
-  createProperty(name: string, schema: Schema, initializer?: Partial<Property>): Property {
-    
-    // the type is either a reference of a type that we have 
-    // or it's an anonymous type that gets expanded
-    const type = this.project.getTypeReference(schema,this.node.getSourceFile()) || 'any';
-
-    const result = new PropertyImpl(this.node.addProperty({
-      //todo: do a better 'fix-the-bad-name' (ie, perks/codegen)
-      name: normalizeIdentifier(name),
-      type
-    }));
-
-    result.initialize(initializer);
-
-    return result;
-  }
-
-  get requiredTypeDeclarations(): Array<TypeDeclaration> {
-    if( this.isInline ) {
-      const x = this.node.getProperties().map(each => each.getType())  ;
-      return [...<any>x , this.node];
-    }
-    return [this.node] ;
-  }
-}
 
 export function createPropertySignature(name: string, typeReference: TypeReference, initializer?: PropertyInitializer): PropertySignatureStructure {
   return {
@@ -170,20 +73,6 @@ export function createInterface(api: ApiModel, identity: Identity, initializer?:
   };
 }
 
-export function createObjectSchema(api: ApiModel, identity: Identity, initializer?: Partial<ObjectSchema>): ObjectSchema {
-  const {name, file} = api.getNameAndFile(identity, 'model');
-  
-  const result= new ObjectSchemaImpl(file.addInterface({
-    //todo: do a better 'fix-the-bad-name' (ie, perks/codegen)
-    name,
-    isExported: true,
-  }));
-
-  result.initialize(initializer);
-
-  return result;
-}
-
 export function createDictionary(elementTypeReference: TypeReference): TypeReference{
   return {
     declaration: `Dictionary<${elementTypeReference.declaration}>`,
@@ -199,7 +88,8 @@ export function createArray(elementTypeReference: TypeReference): TypeReference 
 }
 
 export interface Property extends PropertyImpl {
-  
+  required: boolean;
+  readonly: boolean;
 }
 
 export class PropertyImpl extends NamedElement<PropertySignature> {

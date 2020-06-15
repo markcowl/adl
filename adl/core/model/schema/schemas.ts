@@ -1,14 +1,8 @@
-import { EnumDeclaration, EnumMember, InterfaceDeclaration, PropertySignature, TypeAliasDeclaration } from 'ts-morph';
+import { EnumDeclaration, EnumMember, InterfaceDeclaration, PropertySignature } from 'ts-morph';
 import { ApiModel } from '../api-model';
 import { Element } from '../element';
 import { NamedElement } from '../typescript/named-element';
-import { AndSchema, AnyOfSchema, XorSchema } from './group';
 import { TypeReference } from './type';
-
-export interface RemovableNode {
-  /** Removes the Node. */
-  remove(): void;
-}
 
 function createPrimitiveSchema(declaration: string) {
   return {
@@ -32,16 +26,6 @@ export class PropertyElement extends NamedElement<PropertySignature> {
   }
 }
  
-export class AliasType extends NamedElement<TypeAliasDeclaration> implements TypeReference {
-  declaration!: string;
-  requiredReferences =[];
-  
-  isInline?: boolean;
-
-  constructor(node: TypeAliasDeclaration) {
-    super(node);
-  }
-}
 
 export class InterfaceType extends NamedElement<InterfaceDeclaration> implements TypeReference {
   readonly isInline = false;
@@ -121,5 +105,3 @@ export class Schemas extends Element {
     super();
   }
 }
-
-export type Combination = AndSchema | XorSchema | AnyOfSchema;

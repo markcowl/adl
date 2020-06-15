@@ -3,10 +3,10 @@ import { literal, normalizeIdentifier } from '../../support/codegen';
 import { createDocs } from '../../support/doc-tag';
 import { ApiModel } from '../api-model';
 import { Collection, Identity } from '../types';
-import { Schema } from './schema';
+import { SchemaInitializer } from './object';
 import { TypeReference } from './type';
 
-export interface Enum extends Schema {
+export interface EnumInitializer extends SchemaInitializer {
   extensible?: boolean;
   readonly values: Collection<EnumValue>;
 }
@@ -18,7 +18,7 @@ export interface EnumValue {
 }
 
 
-export function createEnum(api: ApiModel, identity: Identity, values: Array<EnumValue>, initializer?: Partial<Enum>): TypeReference {
+export function createEnum(api: ApiModel, identity: Identity, values: Array<EnumValue>, initializer?: Partial<EnumInitializer>): TypeReference {
   if (!isAnonymous(identity)) {
     const { name, file } = api.getNameAndFile(identity, 'enum');
 

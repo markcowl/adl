@@ -15,12 +15,12 @@ export interface ResponseCollectionTypeReference extends TypeReference {
 
 }
 
-export function isReference<T>(instance: T|Reference<T>): instance is Reference<T> { 
-  return  !!((<any>instance).target);
+export function isReference<T>(instance: T | Reference<T>): instance is Reference<T> {
+  return !!((<any>instance).target);
 }
 
-export class Reference<T> extends NamedElement<InterfaceDeclaration| TypeAliasDeclaration>  {
-  constructor(node: InterfaceDeclaration|TypeAliasDeclaration) {
+export class Reference<T> extends NamedElement<InterfaceDeclaration | TypeAliasDeclaration>  {
+  constructor(node: InterfaceDeclaration | TypeAliasDeclaration) {
     super(node);
   }
 
@@ -34,16 +34,16 @@ export class ResponseCollection extends TSElement<TupleTypeNode> {
     super(node);
   }
 
-  get responses(): Array<ResponseElement | Reference<ResponseElement>> {
+  get responses(): ReadonlyArray<ResponseElement | Reference<ResponseElement>> {
     return [];
   }
 }
 
 export class ParameterElement extends NamedElement<ParameterDeclaration> {
-  
+
 }
 
-export class ResultElement extends TSElement<InterfaceDeclaration|TypeAliasDeclaration> implements TypeReference {
+export class ResultElement extends TSElement<InterfaceDeclaration | TypeAliasDeclaration> implements TypeReference {
   declaration!: string;
   requiredReferences!: Array<TypeReference>;
 
@@ -56,7 +56,7 @@ export class ResponseCriteria extends TSElement<FunctionTypeNode> {
   }
 }
 
-export class ResponseElement implements TypeReference  {
+export class ResponseElement implements TypeReference {
   declaration!: string;
   requiredReferences!: Array<TypeReference>;
   sourceFile?: SourceFile;
@@ -78,13 +78,13 @@ export class Operation extends NamedElement<MethodDeclaration> {
   }
 
   get parameters(): ReadonlyArray<ParameterElement> {
-    return this.node.getParameters().map( each => new ParameterElement(each));
+    return this.node.getParameters().map(each => new ParameterElement(each));
   }
 
-  get response(): ResponseCollection|Reference<ResponseCollection> {
+  get response(): ResponseCollection | Reference<ResponseCollection> {
     throw new Error('Not Implemented');
   }
- 
+
 }
 
 export class Response extends Element {

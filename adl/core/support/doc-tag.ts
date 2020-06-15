@@ -34,8 +34,8 @@ export function getTagValue(target: Node | JSDocs | JSDoc, tagName: string): str
   return undefined;
 }
 
-export function* getTagValues(target: Node | JSDocs | JSDoc, tagName? : string): Iterable<string> {
-  for( const each of getTags(target,tagName)) {
+export function* getTagValues(target: Node | JSDocs | JSDoc, ...tagName: Array<string>): Iterable<string> {
+  for( const each of getTags(target,...tagName)) {
     yield each.getStructure().text?.toString() || '';
   } 
 }

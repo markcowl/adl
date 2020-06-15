@@ -130,11 +130,11 @@ export function wrapWithAliasIfNeeded<T extends OAIModel>(schema: v3.Schema | v2
     }
 
     if ((<any>schema).readOnly) {
-      // alias.constraints.push(new ReadOnlyModifier());
+
     }
 
     if ((<any>schema).nullable || schema['x-nullable']) {
-      // alias.constraints.push(new NullableModifier((<any>schema).readOnly));
+
     }
     return alias;
   }

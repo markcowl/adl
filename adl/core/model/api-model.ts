@@ -12,7 +12,8 @@ import { HttpProtocol } from './http/protocol';
 import { InternalData } from './internal-data';
 import { Metadata } from './metadata';
 import { OperationGroup, ParameterElement, ResponseCollection, ResponseElement, ResultElement } from './operation';
-import { AliasType, EnumType, InterfaceType, Schemas } from './schema/schemas';
+import { AliasType } from './schema/alias';
+import { EnumType, InterfaceType, Schemas } from './schema/schemas';
 import { Folders, Identity } from './types';
 import { VersionInfo } from './version-info';
 
@@ -49,7 +50,7 @@ export function identifyInterface(declaration: InterfaceDeclaration) {
 }
 
 export function identifyTypeAlias( declaration: TypeAliasDeclaration) {
-
+  //todo
 }
 
 export function isResource(declaration: InterfaceDeclaration) {
@@ -79,7 +80,7 @@ export function isAliasType( declaration: TypeAliasDeclaration) {
 
 export function isModelInterface(declaration: InterfaceDeclaration) {
   // interfaces that identify as @model are models
-  if (hasTag(declaration, KnownInterfaceTypes.model)) { 
+  if (hasTag(declaration, 'model')) { 
     return true;
   }
   // inference based on what it looks like it is. 
