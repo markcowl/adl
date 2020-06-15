@@ -14,7 +14,7 @@ import { Metadata } from './metadata';
 import { OperationGroup, ParameterElement, ResponseCollection, ResponseElement, ResultElement } from './operation';
 import { AliasType } from './schema/alias';
 import { EnumType } from './schema/enum';
-import { ModelType } from './schema/object';
+import { ModelType } from './schema/model';
 import { Schemas } from './schema/schemas';
 import { Folders, Identity } from './types';
 import { VersionInfo } from './version-info';

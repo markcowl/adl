@@ -43,20 +43,6 @@ export function createInterface(api: ApiModel, identity: Identity, initializer?:
   };
 }
 
-export function createDictionary(elementTypeReference: TypeReference): TypeReference{
-  return {
-    declaration: `Dictionary<${elementTypeReference.declaration}>`,
-    requiredReferences: [...elementTypeReference.requiredReferences, elementTypeReference],
-  };
-}
-
-export function createArray(elementTypeReference: TypeReference): TypeReference {
-  return {
-    declaration: `Array<${elementTypeReference.declaration}>`,
-    requiredReferences: [...elementTypeReference.requiredReferences, elementTypeReference],
-  };
-}
-
 export class ModelType extends NamedElement<InterfaceDeclaration> implements TypeReference {
   readonly isInline = false;
   readonly requiredReferences = [];
