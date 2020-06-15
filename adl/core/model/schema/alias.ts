@@ -7,7 +7,6 @@ import { NamedElement } from '../typescript/named-element';
 import { SchemaInitializer } from './schema';
 import { TypeReference } from './type';
 
-
 export class AliasType extends NamedElement<TypeAliasDeclaration> implements TypeReference {
   declaration!: string;
   requiredReferences = [];

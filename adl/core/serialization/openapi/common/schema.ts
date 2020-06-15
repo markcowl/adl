@@ -1,8 +1,8 @@
 import { IntegerFormat, NumberFormat, v2, v3, XMSEnumValue } from '@azure-tools/openapi';
 import { anonymous, nameOf } from '@azure-tools/sourcemap';
 import { createAliasType } from '../../../model/schema/alias';
-import { addEncoding, EncodingReference } from '../../../model/schema/constraint';
 import { addDefault } from '../../../model/schema/default';
+import { addEncoding, EncodingReference } from '../../../model/schema/encoding';
 import { createEnum } from '../../../model/schema/enum';
 import { TypeReference } from '../../../model/schema/type';
 import { Context, OAIModel } from '../../../support/visitor';
