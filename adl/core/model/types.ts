@@ -35,19 +35,6 @@ export class CollectionImpl<TCollectionType, TOwner> implements Collection<TColl
   }
 }
 
-export class ArrayCollectionImpl<T> implements Collection<T> {
-  #array = new Array<T>();
-  push(...values: Array<T>): void {
-    this.#array.push(...values);
-  }
-  remove(value: T): void {
-    throw new Error('not implemented.');
-  }
-  get(): Array<T> {
-    return [...this.#array];
-  }
-}
-
 
 export interface Folders {
   anonymous: Directory;
