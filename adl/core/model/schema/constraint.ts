@@ -26,7 +26,6 @@ export const Constraints = {
   maximumElements : (count: number) => createConstraint('MaximumElements', count),
   minimumElements : (count: number) => createConstraint('MinimumElements', count),
   uniqueElements : () => createConstraint('UniqueElements'),
-
 };
 
 export function addConstraint( type: TypeReference, constraint: ConstraintReference): TypeReference {

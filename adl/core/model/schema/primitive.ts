@@ -14,7 +14,7 @@ export function createArray(elementTypeReference: TypeReference): TypeReference 
   };
 }
 
-export function createPrimitiveSchema(declaration: string) {
+export function createPrimitiveType(declaration: string) {
   return {
     declaration: declaration,
     requiredReferences: []
@@ -22,25 +22,25 @@ export function createPrimitiveSchema(declaration: string) {
 }
 
 export const Primitives = {
-  any: createPrimitiveSchema('any'),
-  string: createPrimitiveSchema('string'),
-  char: createPrimitiveSchema('char'),
-  byte: createPrimitiveSchema('byte'),
-  int16: createPrimitiveSchema('int16'),
-  int32: createPrimitiveSchema('int32'),
-  int64: createPrimitiveSchema('int64'),
-  boolean: createPrimitiveSchema('boolean'),
-  double: createPrimitiveSchema('double'),
-  float: createPrimitiveSchema('float'),
-  byteArray: createPrimitiveSchema('Array<byte>'),
-  date: createPrimitiveSchema('date'),
-  time: createPrimitiveSchema('time'),
-  unixtime: createPrimitiveSchema('unixtime'),
-  dateTime: createPrimitiveSchema('dateTime'),
-  duration: createPrimitiveSchema('duration'),
-  uuid: createPrimitiveSchema('uuid'),
-  uri: createPrimitiveSchema('uri'),
-  password: createPrimitiveSchema('password'),
-  odata: createPrimitiveSchema('odata'),
-  file: createPrimitiveSchema('file'),
+  any: createPrimitiveType('any'),
+  string: createPrimitiveType('string'),
+  char: createPrimitiveType('char'),
+  byte: createPrimitiveType('byte'),
+  int16: createPrimitiveType('int16'),
+  int32: createPrimitiveType('int32'),
+  int64: createPrimitiveType('int64'),
+  boolean: createPrimitiveType('boolean'),
+  double: createPrimitiveType('double'),
+  float: createPrimitiveType('float'),
+  byteArray: createPrimitiveType('Array<byte>'),
+  date: createPrimitiveType('date'),
+  time: createPrimitiveType('time'),
+  unixtime: createPrimitiveType('unixtime'),
+  dateTime: createPrimitiveType('dateTime'),
+  duration: createPrimitiveType('duration'),
+  uuid: createPrimitiveType('uuid'),
+  uri: createPrimitiveType('uri'),
+  password: createPrimitiveType('password'),
+  odata: createPrimitiveType('odata'),
+  file: createPrimitiveType('file'),
 };

@@ -40,4 +40,3 @@ export function createAliasType(api: ApiModel, identity: Identity, typeReference
     requiredReferences: [],
   };
 }
-

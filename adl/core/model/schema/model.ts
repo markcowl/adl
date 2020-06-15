@@ -10,14 +10,13 @@ import { SchemaInitializer } from '../typescript/schema';
 import { Property } from './property';
 import { TypeReference } from './type';
 
-
-export interface ObjectSchemaInitializer extends SchemaInitializer { 
+export interface ModelTypeInitializer extends SchemaInitializer { 
   parents: Array<TypeReference>;
   properties: Array<PropertySignatureStructure>;
   requiredReferences: Array<TypeReference>;
 }
 
-export function createModelType(api: ApiModel, identity: Identity, initializer?: Partial<ObjectSchemaInitializer> ): TypeReference {
+export function createModelType(api: ApiModel, identity: Identity, initializer?: Partial<ModelTypeInitializer> ): TypeReference {
   const { name, file } = api.getNameAndFile(identity, 'model');
 
   const iface = file.addInterface( {
@@ -28,9 +27,7 @@ export function createModelType(api: ApiModel, identity: Identity, initializer?:
     isExported: true,
   });
   for (const each of values(initializer?.requiredReferences )) {
-   
     addImportsTo(file,each);
-   
   }
   
   return isAnonymous(identity) ? {
