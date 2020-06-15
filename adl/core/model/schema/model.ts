@@ -6,8 +6,8 @@ import { addImportsTo, getInnerText } from '../../support/typescript';
 import { ApiModel } from '../api-model';
 import { Identity } from '../types';
 import { NamedElement } from '../typescript/named-element';
-import { PropertyElement } from './property';
-import { SchemaInitializer } from './schema';
+import { SchemaInitializer } from '../typescript/schema';
+import { Property } from './property';
 import { TypeReference } from './type';
 
 
@@ -17,7 +17,7 @@ export interface ObjectSchemaInitializer extends SchemaInitializer {
   requiredReferences: Array<TypeReference>;
 }
 
-export function createInterface(api: ApiModel, identity: Identity, initializer?: Partial<ObjectSchemaInitializer> ): TypeReference {
+export function createModelType(api: ApiModel, identity: Identity, initializer?: Partial<ObjectSchemaInitializer> ): TypeReference {
   const { name, file } = api.getNameAndFile(identity, 'model');
 
   const iface = file.addInterface( {
@@ -54,8 +54,8 @@ export class ModelType extends NamedElement<InterfaceDeclaration> implements Typ
     return this.node.getName();
   }
 
-  getProperties(): Iterable<PropertyElement> {
-    return this.node.getProperties().map(each => new PropertyElement(each));
+  getProperties(): Iterable<Property> {
+    return this.node.getProperties().map(each => new Property(each));
   }
 
   createProperty(name: string) {

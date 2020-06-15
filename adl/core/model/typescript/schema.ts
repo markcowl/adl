@@ -1,7 +1,7 @@
 import { Dictionary } from '@azure-tools/linq';
-import { VersionedEntity } from '../typescript/versioned-element';
+import { VersionedElement } from './versioned-element';
 
-export interface SchemaInitializer extends VersionedEntity {
+export interface SchemaInitializer extends VersionedElement {
   description?: string;
   summary?: string;
   clientName?: string;

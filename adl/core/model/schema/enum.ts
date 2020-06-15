@@ -5,7 +5,7 @@ import { createDocs } from '../../support/doc-tag';
 import { ApiModel } from '../api-model';
 import { Collection, Identity } from '../types';
 import { NamedElement } from '../typescript/named-element';
-import { SchemaInitializer } from './schema';
+import { SchemaInitializer } from '../typescript/schema';
 import { TypeReference } from './type';
 
 export interface EnumInitializer extends SchemaInitializer {
@@ -18,7 +18,6 @@ export interface EnumValue {
   description?: string;
   value: any;
 }
-
 
 export function createEnum(api: ApiModel, identity: Identity, values: Array<EnumValue>, initializer?: Partial<EnumInitializer>): TypeReference {
   if (!isAnonymous(identity)) {
@@ -66,7 +65,6 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
   };
 }
 
-
 export class EnumElement extends NamedElement<EnumMember> {
   constructor(node: EnumMember) {
     super(node);
@@ -92,5 +90,4 @@ export class EnumType extends NamedElement<EnumDeclaration> implements TypeRefer
   createValue() {
     // shh
   }
-
 }

@@ -1,4 +1,4 @@
-export interface VersionedEntity {
+export interface VersionedElement {
   since?: string;
   deprecated?: string;
   deleted?: string;

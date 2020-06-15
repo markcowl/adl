@@ -15,7 +15,7 @@ import { OperationGroup, ParameterElement, ResponseCollection, ResponseElement, 
 import { AliasType } from './schema/alias';
 import { EnumType } from './schema/enum';
 import { ModelType } from './schema/model';
-import { Schemas } from './schema/schemas';
+import { Primitives } from './schema/primitive';
 import { Folders, Identity } from './types';
 import { VersionInfo } from './version-info';
 
@@ -210,9 +210,7 @@ export class ApiModel extends Files {
 
   metaData = new Metadata('');
 
-  // resources = new Array<Resource>();
-
-  schemas = new Schemas(this.api);
+  primitives = Primitives;
 
   http: HttpProtocol = new HttpProtocol();
 

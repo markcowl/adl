@@ -7,7 +7,7 @@ import { ApiModel } from '../api-model';
 import * as base from '../operation';
 import { Reference } from '../reference';
 import { Identity } from '../types';
-import { VersionedEntity } from '../typescript/versioned-element';
+import { VersionedElement } from '../typescript/versioned-element';
 import { Header } from './header';
 import { Parameter, ParameterElement, ParameterType } from './parameter';
 import { Request } from './request';
@@ -71,7 +71,7 @@ export class Operation extends base.Operation {
   // readonly connections: Collection<Connection>;
 }
 
-export interface OperationInitializer extends VersionedEntity {
+export interface OperationInitializer extends VersionedElement {
   description: string;
   summary: string;
   tags: Array<string>;

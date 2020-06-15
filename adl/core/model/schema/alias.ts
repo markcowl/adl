@@ -4,7 +4,7 @@ import { addImportsTo } from '../../support/typescript';
 import { ApiModel } from '../api-model';
 import { Identity } from '../types';
 import { NamedElement } from '../typescript/named-element';
-import { SchemaInitializer } from './schema';
+import { SchemaInitializer } from '../typescript/schema';
 import { TypeReference } from './type';
 
 export class AliasType extends NamedElement<TypeAliasDeclaration> implements TypeReference {

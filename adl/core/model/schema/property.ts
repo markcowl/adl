@@ -3,16 +3,14 @@ import { normalizeIdentifier } from '../../support/codegen';
 import { createDocs } from '../../support/doc-tag';
 import { addNullable } from '../../support/typescript';
 import { NamedElement } from '../typescript/named-element';
-import { SchemaInitializer } from './schema';
+import { SchemaInitializer } from '../typescript/schema';
 import { TypeReference } from './type';
-
 
 export interface PropertyInitializer extends SchemaInitializer {
   required?: boolean;
 }
 
-
-export class PropertyElement extends NamedElement<PropertySignature> {
+export class Property extends NamedElement<PropertySignature> {
   constructor(node: PropertySignature) {
     super(node);
   }
@@ -26,7 +24,6 @@ export class PropertyElement extends NamedElement<PropertySignature> {
   }
 }
 
-
 export function createPropertySignature(name: string, typeReference: TypeReference, initializer?: PropertyInitializer): PropertySignatureStructure {
   return {
     kind: StructureKind.PropertySignature,
@@ -38,4 +35,3 @@ export function createPropertySignature(name: string, typeReference: TypeReferen
     docs: createDocs(initializer),
   };
 }
-
