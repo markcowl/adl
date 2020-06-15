@@ -117,9 +117,8 @@ export class Files {
     // we need a query function for the extension
     // and then we can bind it as a property so that others can use it.
     // Object.defineProperty(this, 'AzureResource', {get: ()=>this.interfaces});
-    
   }
-
+  
   query<T>( propertyName: string ): Array<T> {
     return (Object.getOwnPropertyNames(this).indexOf(propertyName) > -1 ? (<any>this)[propertyName] : []);
   }
