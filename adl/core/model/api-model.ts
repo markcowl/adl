@@ -1,21 +1,56 @@
 import { exists, isFile, mkdir, rmdir, writeFile } from '@azure-tools/async-io';
-import { Dictionary } from '@azure-tools/linq';
+import { Dictionary, keys } from '@azure-tools/linq';
 import { isAnonymous, Path, valueOf } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
 import { dirname, join } from 'path';
 import { EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Node, Project, QuoteKind, SourceFile, TypeAliasDeclaration } from 'ts-morph';
+import { getTags, hasTag } from '../support/doc-tag';
 import { getNode, referenceTo } from '../support/typescript';
 import { Attic } from './element';
-import { SerializationResult } from './format';
 import { HeaderElement } from './http/header';
 import { HttpProtocol } from './http/protocol';
 import { InternalData } from './internal-data';
 import { Metadata } from './metadata';
 import { OperationGroup, ParameterElement, ResponseCollection, ResponseElement, ResultElement } from './operation';
-import { Alias } from './schema/alias';
 import { AliasType, EnumType, InterfaceType, Schemas } from './schema/schemas';
 import { Folders, Identity } from './types';
 import { VersionInfo } from './version-info';
+
+export const KnownInterfaceTypes = {
+  model: isModelInterface,
+  response: isResponse,
+  result: isResult,
+  operationgroup: isOperationGroup,
+  resource: isResource,
+};
+
+export const KnownAliasTypes = {
+  // model: isModelTypeAlias,
+  // response: isResponseTypeAlias,
+  // result: isResultTypeAlias,
+  // resource: isResourceTypeAlias,
+};
+
+
+export function identifyInterface(declaration: InterfaceDeclaration) {
+  // returns a string that identifies that an interface is what it says it is.
+  const tagType = [...getTags(declaration, ...keys(KnownAliasTypes))];
+  switch( tagType.length ) {
+    case 1:
+      // found a single
+      return tagType[0].getTagName();
+    case 0: 
+      // no tag types found
+      // we're going to have to guess
+      throw new Error('Not Implemented');
+  }
+  // it has more than one. That's not ok.
+  throw Error(`Inteface Decalaration has muliple type tags: ${declaration.getName()}: ${tagType.map( each => each.getTagName()).join(',')}`);  
+}
+
+export function identifyTypeAlias( declaration: TypeAliasDeclaration) {
+
+}
 
 export function isResource(declaration: InterfaceDeclaration) {
   return false;
@@ -24,7 +59,6 @@ export function isResource(declaration: InterfaceDeclaration) {
 export function isOperationGroup(declaration: InterfaceDeclaration) {
   // should only have operations
   return false;
-
 }
 
 export function isResult(declaration: InterfaceDeclaration) {
@@ -44,15 +78,29 @@ export function isAliasType( declaration: TypeAliasDeclaration) {
 }
 
 export function isModelInterface(declaration: InterfaceDeclaration) {
+  // interfaces that identify as @model are models
+  if (hasTag(declaration, KnownInterfaceTypes.model)) { 
+    return true;
+  }
+  // inference based on what it looks like it is. 
+
   // model interfaces should
   // - may have constructors (used for versioning)
+  
   // - may not have methods 
   if (declaration.getMethods().length > 0) {
     return false;
   }
+
   // - are not a response, result, operation-group or contentmap
-  return !(isOperationGroup(declaration) || isResource(declaration) || isResult(declaration) || isContentMap(declaration) || isResponse(declaration));
+  return !(isOperationGroup(declaration) || isResource(declaration) || isResult(declaration) || isContentMap(declaration) || isResponse(declaration) );
 }
+
+type Queryable<T extends string,TResult >  = {
+  readonly [key in T]: Array<TResult>;
+}
+const someFiles = <Files><any>{};
+const x = someFiles.query<InterfaceType>('interfaces');
 
 export class Files {
   readonly api: ApiModel;
@@ -61,6 +109,16 @@ export class Files {
   protected constructor(api?: ApiModel, sourceFiles?: Array<SourceFile>) {
     this.api = api || (this instanceof ApiModel ? this : fail('requires api model in constructor'));
     this.files = sourceFiles || this.api.files;
+
+    // when this gets constructed, we have to emit an event to allow extensions to add queries to the instance
+    // we need a query function for the extension
+    // and then we can bind it as a property so that others can use it.
+    // Object.defineProperty(this, 'AzureResource', {get: ()=>this.interfaces});
+    
+  }
+
+  query<T>( propertyName: string ): Array<T> {
+    return (Object.getOwnPropertyNames(this).indexOf(propertyName) > -1 ? (<any>this)[propertyName] : []);
   }
 
   where(predicate: (file: SourceFile) => boolean): Files {
@@ -88,6 +146,7 @@ export class Files {
   // }
 
   get responseCollections(): Array<ResponseCollection>{
+    // this.files.map( each => each.getTypeAliases()).filter(isResponseCollection)).flat().map(each => new ResponseCollectionAlias(each))
     return [];
   }
 
@@ -246,65 +305,31 @@ export class ApiModel extends Files {
     return { name, file };
   }
 
-
-  createInterface(name: string, initializer: Partial<InterfaceType>) {
-
+  createInterface(name: string) {
+    // todo
   }
 
-  createEnum(name: string, initializer: Partial<EnumType>) {
+  createEnum(name: string) {
     const file = this.project.createSourceFile(`${this.api.#folders.enum.getPath()}/${name}.ts`);
     // const e = file.addEnum(initializer);
     // there is already a function called create Enum
   }
 
-  createTypeAlias(name: string, initializer: Partial<Alias>) {
-
+  createTypeAlias(name: string) {
+    // todo
   }
 
   createOperationGroup() {
-
+    // todo
   }
 
   createResource() {
-
+    // todo
   }
 
   createOperationResultAlias() {
-
+    // todo
   }
 
   
-}
-
-export class None {
-  async __save(): Promise<SerializationResult> {
-    throw 'unimplemented';
-  }
-
-  /** 
-   * creates a duplicate of this API
-   */
-  async __clone() {
-    throw 'unimplemented';
-  }
-
-  /**
-   * Removes one or more API versions from the API
-   *
-   * @remarks When an API version is removed, elements that are marked '@since' will be pushed forward to the next API version, unless they are in the last version, at which point, they would be removed. 
-   * 
-   * @parameter apiVersions -- removes the definitions from this API.
-   */
-  async __removeVersions() {
-    throw 'unimplemented';
-  }
-
-  /** 
-   * Adds a new API Version to this API 
-   * 
-   * @param apiVersion - the api version string to add
-   */
-  async __addVersion() {
-    throw 'unimplemented';
-  }
 }
