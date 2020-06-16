@@ -7,16 +7,17 @@ import { EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, No
 import { getTags, hasTag } from '../support/doc-tag';
 import { getNode, referenceTo } from '../support/typescript';
 import { Attic } from './element';
-import { HeaderElement } from './http/header';
 import { HttpProtocol } from './http/protocol';
-import { OperationGroup, ParameterElement, ResponseCollection, ResponseElement, ResultElement } from './operation';
+import { ParameterElement, ResponseCollection, ResponseElement, ResultElement } from './operation';
 import { InternalData } from './project/internal-data';
 import { Metadata } from './project/metadata';
+import { Protocol } from './project/protocol';
 import { AliasType } from './schema/alias';
 import { EnumType } from './schema/enum';
 import { ModelType } from './schema/model';
 import { Primitives } from './schema/primitive';
 import { Folders, Identity } from './types';
+import { Declaration } from './typescript/reference';
 import { VersionInfo } from './version-info';
 
 export const KnownInterfaceTypes = {
@@ -105,6 +106,8 @@ type Queryable<T extends string,TResult >  = {
 const someFiles = <Files><any>{};
 const x = someFiles.query<ModelType>('interfaces');
 */
+
+
 export class Files {
   readonly api: ApiModel;
   readonly files: Array<SourceFile>;
@@ -127,45 +130,45 @@ export class Files {
     return new Files(this.api, this.files.filter(predicate));
   }
 
-  get interfaces() {
+  get modelTypes() {
     return this.files.map(each => each.getInterfaces().filter(isModelInterface)).flat().map(each => new ModelType(each));
   }
 
-  get enums() {
+  get enumTypes() {
     return this.files.map(each => each.getEnums().flat().map(each => new EnumType(each)));
   }
 
-  get typeAliases(): Array<AliasType> {
+  get aliasTypes(): Array<AliasType> {
     return this.files.map(each => each.getTypeAliases().filter(isAliasType)).flat().map(each => new AliasType(each));
   }
   
   get operationGroups() {
-    return this.files.map(each => each.getInterfaces().filter(isOperationGroup)).flat().map(each => new OperationGroup(each));
+    return this.protocols.map(protocol => protocol.operationGroups).flat();
+    // return this.files.map(each => each.getInterfaces().filter(isOperationGroup)).flat().map(each => new OperationGroup(each));
   }
 
+  get protocols(): Array<Protocol> {
+    return [];
+  }
   // get resources() {
   // return this.files.map(each => each.getInterfaces().filter(isResource)).flat().map(each => new ResourceElement(each));
   // }
 
-  get responseCollections(): Array<ResponseCollection>{
+  get responseCollections(): Array<Declaration<ResponseCollection>>{
     // this.files.map( each => each.getTypeAliases()).filter(isResponseCollection)).flat().map(each => new ResponseCollectionAlias(each))
-    return [];
+    return this.protocols.map( protocol => protocol.responseCollections).flat();
   }
 
-  get responses(): Array<ResponseElement> {
-    return [];
+  get responses(): Array<Declaration<ResponseElement>> {
+    return this.protocols.map(protocol => protocol.responses).flat();
   }
 
-  get results(): Array<ResultElement> {
-    return [];
+  get results(): Array<Declaration<ResultElement>> {
+    return this.protocols.map(protocol => protocol.results).flat();
   }
 
-  get parameters(): Array<ParameterElement> {
-    return [];
-  }
-
-  get headers(): Array<HeaderElement> {
-    return [];
+  get parameters(): Array<Declaration<ParameterElement>> {
+    return this.protocols.map(protocol => protocol.parameters).flat();
   }
 }
 

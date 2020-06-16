@@ -1,7 +1,7 @@
 import { Element } from '../element';
-import { Reference } from '../reference';
 import { Contact } from './contact';
 import { License } from './license';
+import { Reference } from './reference';
 
 
 /** Information about the API Surface */

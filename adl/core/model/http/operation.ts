@@ -5,7 +5,7 @@ import { createDocs, getTagValue, setTag } from '../../support/doc-tag';
 import { Alias } from '../alias';
 import { ApiModel } from '../api-model';
 import * as base from '../operation';
-import { Reference } from '../reference';
+import { Reference } from '../project/reference';
 import { Identity } from '../types';
 import { VersionedElement } from '../typescript/versioned-element';
 import { Header } from './header';
@@ -33,6 +33,25 @@ export interface Path {
 export class TagCollection {
   constructor(private node: Node | Array<JSDoc> | JSDoc) {
   }
+}
+
+export class OperationGroup extends base.OperationGroup {
+  
+  get operations(): Array<Operation> {
+    throw new Error('Method not implemented.');
+  }
+
+  /**
+   * Creates a new HttpOperation in this operation group.
+   */
+  createOperation() {
+
+  }
+  
+}
+
+export class ResponseCollection extends base.ResponseCollection {
+
 }
 
 export class Operation extends base.Operation {
@@ -426,13 +445,8 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
 
   private pushResponses(...responses: Array<Response | Alias<Response>>) {
     const responseStructures = createResponseStructures(
-<<<<<<< HEAD
-      responses,
-      this.node.getReturnTypeNode()?.getText() ?? '');
-=======
       responses, 
       this.node.getReturnTypeNode()?.compilerNode);
->>>>>>> af0ed2eaee62c5a35b38bcef9c3dbf2b1ec3bda0
 
     this.node.setReturnType(responseStructures.type);
     getLastDoc(this.node).addTags(responseStructures.tags);
