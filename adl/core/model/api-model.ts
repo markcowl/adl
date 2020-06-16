@@ -39,24 +39,24 @@ export const KnownAliasTypes = {
 export function identifyInterface(declaration: InterfaceDeclaration) {
   // returns a string that identifies that an interface is what it says it is.
   const tagType = [...getTags(declaration, ...keys(KnownInterfaceTypes))];
-  switch( tagType.length ) {
+  switch (tagType.length) {
     case 1:
       // found a single
       return tagType[0].getTagName();
-    case 0: 
+    case 0:
       // no tag types found
       // we're going to have to guess
-      for( const [type, check] of items(KnownInterfaceTypes)) {
-        if( check(declaration)) {
+      for (const [type, check] of items(KnownInterfaceTypes)) {
+        if (check(declaration)) {
           return type;
         }
       }
   }
   // it has more than one. That's not ok.
-  throw Error(`Inteface Decalaration has muliple type tags: ${declaration.getName()}: ${tagType.map( each => each.getTagName()).join(',')}`);  
+  throw Error(`Inteface Decalaration has muliple type tags: ${declaration.getName()}: ${tagType.map(each => each.getTagName()).join(',')}`);
 }
 
-export function identifyTypeAlias( declaration: TypeAliasDeclaration) {
+export function identifyTypeAlias(declaration: TypeAliasDeclaration) {
   const tagType = [...getTags(declaration, ...keys(KnownAliasTypes))];
   switch (tagType.length) {
     case 1:
@@ -72,10 +72,10 @@ export function identifyTypeAlias( declaration: TypeAliasDeclaration) {
       }
   }
   // it has more than one. That's not ok.
-  throw Error(`Inteface Decalaration has muliple type tags: ${declaration.getName()}: ${tagType.map(each => each.getTagName()).join(',')}`);  
+  throw Error(`Inteface Decalaration has muliple type tags: ${declaration.getName()}: ${tagType.map(each => each.getTagName()).join(',')}`);
 }
 
-export function isModelTypeAlias( declaration: TypeAliasDeclaration) {
+export function isModelTypeAlias(declaration: TypeAliasDeclaration) {
   if (hasTag(declaration, 'model')) {
     return true;
   }
@@ -110,20 +110,20 @@ export function isResultInterfaceType(declaration: InterfaceDeclaration) {
 }
 
 export function isResponseInterfaceType
-(declaration: InterfaceDeclaration) {
+  (declaration: InterfaceDeclaration) {
   return false;
 }
 
 export function isModelInterface(declaration: InterfaceDeclaration) {
   // interfaces that identify as @model are models
-  if (hasTag(declaration, 'model')) { 
+  if (hasTag(declaration, 'model')) {
     return true;
   }
   // inference based on what it looks like it is. 
 
   // model interfaces should
   // - may have constructors (used for versioning)
-  
+
   // - may not have methods 
   if (declaration.getMethods().length > 0) {
     return false;
@@ -153,8 +153,8 @@ export class Files {
     // and then we can bind it as a property so that others can use it.
     // Object.defineProperty(this, 'AzureResource', {get: ()=>this.interfaces});
   }
-  
-  query<T>( propertyName: string ): Array<T> {
+
+  query<T>(propertyName: string): Array<T> {
     return (Object.getOwnPropertyNames(this).indexOf(propertyName) > -1 ? (<any>this)[propertyName] : []);
   }
 
@@ -173,7 +173,7 @@ export class Files {
    * returns all the enumTypes in the API
    */
   get enumTypes() {
-    return this.files.map(each => each.getEnums().flat().map(each => new EnumType(each)));
+    return this.files.map(each => each.getEnums()).flat().map(each => new EnumType(each));
   }
 
   /**
@@ -194,13 +194,13 @@ export class Files {
    * returns all the protocols for this API 
    */
   get protocols(): Dictionary<Protocol> {
-    return linq.items(this.api.protocols).toDictionary(([key])=>key, ([,protocol])=>protocol.from(this.files) );
+    return linq.items(this.api.protocols).toDictionary(([key]) => key, ([, protocol]) => protocol.from(this.files));
   }
 
   /**
    * Gets all the globally declared response collections across all the protocols
    */
-  get responseCollections(): Array<Declaration<ResponseCollection>>{
+  get responseCollections(): Array<Declaration<ResponseCollection>> {
     // this.files.map( each => each.getTypeAliases()).filter(isResponseCollection)).flat().map(each => new ResponseCollectionAlias(each))
     return linq.values(this.protocols).selectMany(protocol => protocol.responseCollections).toArray();
   }
@@ -390,5 +390,5 @@ export class ApiModel extends Files {
     // todo
   }
 
-  
+
 }
