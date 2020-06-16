@@ -1,8 +1,10 @@
 import { EventEmitter } from "ee-ts";
 import { ApiModel, Files } from "../model/api-model";
 import { Operation, OperationGroup, ParameterElement, ResponseCollection, ResponseElement, ResultElement } from "../model/operation";
+import { AliasType } from "../model/schema/alias";
+import { EnumElement, EnumType } from "../model/schema/enum";
 import { ModelType } from "../model/schema/model";
-import { AliasType, EnumElement, EnumType, PropertyElement } from "../model/schema/schemas";
+import { Property } from "../model/schema/property";
 import { Declaration } from "../model/typescript/reference";
 import { RuleResult } from "./rule";
 
@@ -17,7 +19,7 @@ interface Events {
   modelType(model: ApiModel, modelType: ModelType): Array<RuleResult> | undefined;
   operationGroup(model: ApiModel, operationGroup: OperationGroup): Array<RuleResult> | undefined;
   operation(model: ApiModel, operation: Operation): Array<RuleResult> | undefined;
-  property(model: ApiModel, property: PropertyElement): Array<RuleResult> | undefined;
+  property(model: ApiModel, property: Property): Array<RuleResult> | undefined;
   parameter(model: ApiModel, parameter: ParameterElement): Array<RuleResult> | undefined;
 }
 
