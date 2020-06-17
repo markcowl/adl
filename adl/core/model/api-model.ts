@@ -348,7 +348,7 @@ export class ApiModel extends Files {
     return { name, file };
   }
 
-  createInterface(name: string) {
+  createInterface(identity: Identity, initializer: any): any {
     // todo
   }
 
