@@ -1,6 +1,7 @@
 import { items } from '@azure-tools/linq';
 import { v3 } from '@azure-tools/openapi';
 import { Element } from '../../../model/element';
+import { HttpProtocol } from '../../../model/http/protocol';
 import { parameter } from './parameter';
 import { requestBody } from './request-body';
 import { response } from './response';
@@ -31,21 +32,21 @@ export async function* processComponents(components: v3.Components, $: Context):
 
   // NOTE: components.headers are not processed here because we need to traverse
   //       via references to get the header client names.
-
+  const tmp = new Array<any>();
   for await (const p of $.processDictionary(parameter, components.parameters)) {
-    //  $.api.http.parameters.push(p);
+    tmp.push(p);
   }
 
   for await (const request of $.processDictionary(requestBody, components.requestBodies)) {
-    // $.api.http.requests.push(request);
+    tmp.push(request);
   }
 
   for await (const rsp of $.processDictionary(response, components.responses)) {
-    // $.api.http.responses.push(rsp);
+    tmp.push(rsp);
   }
 
   for await (const auth of $.processDictionary(authentication, components.securitySchemes)) {
-    // $.api.http.authentications.push(auth);
+    (<HttpProtocol>$.api.protocols.http).authentications.push(auth);
   }
 
 
