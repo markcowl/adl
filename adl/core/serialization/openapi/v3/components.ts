@@ -1,7 +1,6 @@
 import { items } from '@azure-tools/linq';
 import { v3 } from '@azure-tools/openapi';
 import { Element } from '../../../model/element';
-import { header } from './header';
 import { parameter } from './parameter';
 import { requestBody } from './request-body';
 import { response } from './response';
@@ -29,24 +28,24 @@ export async function* processComponents(components: v3.Components, $: Context):
   // for (const { key, value: extension } of vendorExtensions(components.headers)) {
   // ... do something ...
   // }
-  for await (const h of $.processDictionary(header, components.headers)) {
-    $.api.http.headers.push(h);
-  }
+
+  // NOTE: components.headers are not processed here because we need to traverse
+  //       via references to get the header client names.
 
   for await (const p of $.processDictionary(parameter, components.parameters)) {
-    $.api.http.parameters.push(p);
+    //  $.api.http.parameters.push(p);
   }
 
   for await (const request of $.processDictionary(requestBody, components.requestBodies)) {
-    $.api.http.requests.push(request);
+    // $.api.http.requests.push(request);
   }
 
   for await (const rsp of $.processDictionary(response, components.responses)) {
-    $.api.http.responses.push(rsp);
+    // $.api.http.responses.push(rsp);
   }
 
   for await (const auth of $.processDictionary(authentication, components.securitySchemes)) {
-    $.api.http.authentications.push(auth);
+    // $.api.http.authentications.push(auth);
   }
 
 

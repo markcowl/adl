@@ -58,11 +58,11 @@ async function processRoot(oai3: v3.Model, $: Context) {
   await consume($.process(processComponents, oai3.components));
 
   for await (const server of $.processArray(processServer, oai3.servers)) {
-    $.api.http.connections.push(server);
+    // $.api.http.connections.push(server);
   }
 
   for await (const security of $.processArray(authenticationRequirement, oai3.security)) {
-    $.api.http.authenticationRequirements.push(security);
+    // $.api.http.authenticationRequirements.push(security);
   }
 
   processPaths([oai3.paths, oai3['x-ms-paths']], $);

@@ -8,14 +8,8 @@
  * @since 2019-12-01
  */
 export enum SoapApiType {
-    /**
-     *
-     * @description Imports a SOAP API having a RESTful front end.
-     */
+    /** Imports a SOAP API having a RESTful front end. */
     SoapToRest = 'http',
-    /**
-     *
-     * @description Imports the Soap API having a SOAP front end.
-     */
+    /** Imports the Soap API having a SOAP front end. */
     SoapPassThrough = 'soap'
 }

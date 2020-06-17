@@ -53,15 +53,15 @@ async function processRoot(oai2: v2.Model, $: Context) {
   }
 
   for await (const server of $.process(processServers, oai2)) {
-    $.api.http.connections.push(server);
+    // $.api.http.connections.push(server);
   }
 
   for await (const auth of $.processDictionary(authentication, oai2.securityDefinitions)) {
-    $.api.http.authentications.push(auth);
+    // $.api.http.authentications.push(auth);
   }
 
   for await (const requirement of $.processArray(authenticationRequirement, oai2.security)) {
-    $.api.http.authenticationRequirements.push(requirement);
+    // $.api.http.authenticationRequirements.push(requirement);
   }
 
   for( const [key,value] of items(oai2.definitions)) {
@@ -77,17 +77,17 @@ async function processRoot(oai2: v2.Model, $: Context) {
     if (isReference(value)) {
       const r = (await $.resolveReference(value.$ref)).node;
       if (r.in == ParameterLocation.Body) {
-        push($.api.http.requests, $.processInline(requestBody, <JsonReference<v2.BodyParameter>>value ));
+        // push($.api.http.requests, $.processInline(requestBody, <JsonReference<v2.BodyParameter>>value ));
         continue;
       }
 
-      push($.api.http.parameters, $.processInline(parameter, value));
+      // push($.api.http.parameters, $.processInline(parameter, value));
       continue;
     } else if (value.in == ParameterLocation.Body) {
-      push($.api.http.requests, $.processInline(requestBody, <v2.BodyParameter>value));
+      // push($.api.http.requests, $.processInline(requestBody, <v2.BodyParameter>value));
       continue;
     }
-    push($.api.http.parameters, $.process(parameter, value));
+    // push($.api.http.parameters, $.process(parameter, value));
   }
 
   processPaths([oai2.paths, oai2['x-ms-paths']], $);

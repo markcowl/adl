@@ -44,7 +44,7 @@ export async function* processPath(pathItem: v3.PathItem, $: Context, options?: 
       yield processOperation({method: <Method><unknown>method, path}, pathItem[<common.HttpMethod>method], pathItem, $);
     }
   }
-  addExtensionsToAttic($.api.http, pathItem);
+  // addExtensionsToAttic($.api.http, pathItem);
 }
 
 export async function processOperation(path: Path, operation: v3.Operation, shared: v3.PathItemBase, $: Context): Promise<OperationStructure> {

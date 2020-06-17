@@ -5,14 +5,8 @@
  * @since 2019-12-01
  */
 export enum Confirmation {
-    /**
-     *
-     * @description Send an e-mail to the user confirming they have successfully signed up.
-     */
+    /** Send an e-mail to the user confirming they have successfully signed up. */
     signup = 'signup',
-    /**
-     *
-     * @description Send an e-mail inviting the user to sign-up and complete registration.
-     */
+    /** Send an e-mail inviting the user to sign-up and complete registration. */
     invite = 'invite'
 }

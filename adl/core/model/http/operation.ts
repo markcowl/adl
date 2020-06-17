@@ -1,6 +1,6 @@
 import { isAnonymous } from '@azure-tools/sourcemap';
-import { JSDoc, JSDocTagStructure, MethodSignatureStructure, Node, ParameterDeclarationStructure, StructureKind, ts } from 'ts-morph';
-import { normalizeIdentifier, normalizeName, printCompilerNode } from '../../support/codegen';
+import { JSDoc, JSDocTagStructure, MethodSignatureStructure, Node, ParameterDeclarationStructure, printNode, StructureKind, ts } from 'ts-morph';
+import { normalizeIdentifier, normalizeName } from '../../support/codegen';
 import { createDocs, getTagValue, setTag } from '../../support/doc-tag';
 import { Alias } from '../alias';
 import { ApiModel } from '../api-model';
@@ -260,13 +260,13 @@ function createResponseStructures(
   ]);
 
   return { 
-    type: printCompilerNode(returnType),
+    type: printNode(returnType),
     tags: tagStructures
   };
 }
 
 function getParameterType(parameter: Parameter, chosenName: string) {
-  const innerType = parameter.typeRef.declaration;
+  const innerType = parameter.typeRef.declaration.text;
   const outerType = getOuterParameterType(parameter.type);
   const nameArg = parameter.name == chosenName ? '' : `, '${parameter.name}'`;
 
@@ -342,12 +342,12 @@ function getResponseDefinition(response: Response) {
   const properties = new Array<ts.PropertySignature>();
 
   if (response.typeref) {
-    const typeReference = ts.createTypeReferenceNode(response.typeref.declaration, undefined);
-    properties.push(ts.createPropertySignature(undefined, 'body', undefined, typeReference, undefined));
+    const responseType = response.typeref.declaration.node;
+    properties.push(ts.createPropertySignature(undefined, 'body', undefined, responseType, undefined));
   }
 
   if (response.headers.length > 0) {
-    const headerType = getHeadersType(response.headers);
+    const headerType = ts.createTupleTypeNode(response.headers.map(h => h.declaration.node));
     properties.push(ts.createPropertySignature(undefined, 'headers', undefined, headerType, undefined));
   }
 
@@ -366,6 +366,7 @@ function getResponseType(response: Response) {
     getResponseDefinition(response));
 }
 
+
 function getHeadersType(headers: Array<Header | Alias<Header>>) {
   const typeReferences = new Array<ts.TypeReferenceNode>();
   
@@ -375,7 +376,7 @@ function getHeadersType(headers: Array<Header | Alias<Header>>) {
     }
 
     const args = [
-      ts.createTypeReferenceNode(each.typeRef?.declaration ?? 'any', undefined),
+      ts.createTypeReferenceNode(each.typeRef?.declaration.text ?? 'any', undefined),
       ts.createLiteralTypeNode(ts.createStringLiteral(each?.name))
     ];
   
@@ -385,69 +386,3 @@ function getHeadersType(headers: Array<Header | Alias<Header>>) {
 
   return ts.createTupleTypeNode(typeReferences);
 }
-
-/*
-class OperationImpl extends NamedElement<MethodSignature> implements Operation {
-  readonly tags: CollectionImpl<string, this>;
-  readonly parameters: CollectionImpl<Parameter | Alias<Parameter>, this>;
-  readonly requests: CollectionImpl<Request | Alias<Request>, this>;
-  readonly responses: CollectionImpl<Response | Alias<Response>, this>;
-  readonly references = new ArrayCollectionImpl<Reference>();
-  readonly authenticationRequirements = new ArrayCollectionImpl<AuthenticationRequirement>();
-  readonly connections = new ArrayCollectionImpl<Connection>();
-
-  constructor(node: MethodSignature) {
-    super(node);
-    this.parameters = new CollectionImpl(this, this.pushParameters, undefined!, undefined!);
-    this.requests = new CollectionImpl(this, this.pushRequests, undefined!, undefined!);
-    this.responses = new CollectionImpl(this, this.pushResponses, undefined!, undefined!);
-    this.tags = new CollectionImpl(this, this.pushTags, undefined!, undefined!);
-  }
-
-  get group() {
-    return (<InterfaceDeclaration>(this.node.getParent())).getName()!;
-  }
-
-  get name() {
-    return <string>super.name;
-  }
-  set name(value: string) {
-    super.name = value;
-  }
-
-  get path(): Path {
-    const tag = getTagValue(this.node, 'http')!;
-    const [method, path] = tag.split(' ', 2);
-    return { method: Method[<keyof typeof Method>method], path };
-  }
-  set path(path: Path) {
-    setTag(this.node, 'http', `${path.method.toUpperCase()} ${path.path}`);
-  }
-
-  private pushTags(...tags: Array<string>) {
-    const tagStructures = createTagStructures(tags);
-    getLastDoc(this.node).addTags(tagStructures);
-  }
-
-  private pushParameters(...parameters: Array<Parameter | Alias<Parameter>>) {
-    const parameterStructures = createParameterStructures(parameters);
-    this.node.addParameters(parameterStructures.parameters);
-    getLastDoc(this.node).addTags(parameterStructures.tags);
-  }
-
-  private pushRequests(...requests: Array<Request | Alias<Request>>) {
-    const requestStructures = createRequestStructures(requests);
-    this.node.addParameters(requestStructures.parameters);
-    getLastDoc(this.node).addTags(requestStructures.tags);
-  }
-
-  private pushResponses(...responses: Array<Response | Alias<Response>>) {
-    const responseStructures = createResponseStructures(
-      responses, 
-      this.node.getReturnTypeNode()?.compilerNode);
-
-    this.node.setReturnType(responseStructures.type);
-    getLastDoc(this.node).addTags(responseStructures.tags);
-  }
-}
-*/

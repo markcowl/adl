@@ -8,7 +8,7 @@ import { parse } from 'yaml';
 import { Alias } from '../model/alias';
 import { ApiModel } from '../model/api-model';
 import { Element } from '../model/element';
-import { ParameterReference, TypeReference } from '../model/schema/type';
+import { HeaderTypeReference, ParameterTypeReference, SchemaTypeReference } from '../model/schema/type';
 import { Host } from './file-system';
 import { Stopwatch } from './stopwatch';
 
@@ -54,9 +54,9 @@ class RefMap {
 }
 
 export class ReferenceMap {
-  schema = new Map<JsonPointer, TypeReference>();
-  parameter = new Map<JsonPointer, ParameterReference> ();
-  
+  schema = new Map<JsonPointer, SchemaTypeReference>();
+  parameter = new Map<JsonPointer, ParameterTypeReference> ();
+  header = new Map<JsonPointer, HeaderTypeReference> ();
 }
 
 export class Visitor<TSourceModel extends OAIModel> {

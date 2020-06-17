@@ -29,7 +29,7 @@ export function createPropertySignature(name: string, typeReference: TypeReferen
     kind: StructureKind.PropertySignature,
     //todo: do a better 'fix-the-bad-name' (ie, perks/codegen)
     name: normalizeIdentifier(name),
-    type: initializer?.nullable ? addNullable(typeReference.declaration) : typeReference.declaration,
+    type: initializer?.nullable ? addNullable(typeReference.declaration.text) : typeReference.declaration.text,
     isReadonly: initializer?.readOnly,
     hasQuestionToken: !(initializer?.required),
     docs: createDocs(initializer),

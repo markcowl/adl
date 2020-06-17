@@ -1,24 +1,28 @@
 import { v2 } from '@azure-tools/openapi';
 import { nameOf } from '@azure-tools/sourcemap';
-import { Header } from '../../../model/http/header';
+import { ts } from 'ts-morph';
+import { HeaderTypeReference } from '../../../model/schema/type';
+import { TypeSyntax } from '../../../support/codegen';
 import { processSchema } from './schema';
 import { Context } from './serializer';
 
-export async function* header(header: v2.Header, $: Context, options?: { isAnonymous?: boolean }): AsyncGenerator<Header> {
-  const name = nameOf(header);
+// NOTE: headers cannot be referenced in v2. They are always inline/anonymous
+export async function processHeader(header: v2.Header, $: Context, options?: {isAnonymous: true}): Promise<HeaderTypeReference> {
+  const clientName = nameOf(header);
 
   // get the schema for the header 
-  const typeref = await processSchema(<v2.Schema>header, $, { isAnonymous: true });
+  const schema = await processSchema(<v2.Schema>header, $, { isAnonymous: true });
+  const headerType = ts.createTypeReferenceNode(
+    'Header', [
+      schema.declaration.node,
+      ts.createLiteralTypeNode(ts.createStringLiteral(clientName))
+    ]);
 
-  // create the http header object and track it. 
-  const httpHeader = new Header({
-    // maintain the key
-    name,
-    // use the schema
-    typeRef: typeref,
-    // set a specific value 
-    description: header.description,
-  });
+  const headerRef: HeaderTypeReference = {
+    declaration: new TypeSyntax(headerType),
+    requiredReferences: schema.requiredReferences,
+  };
 
-  yield httpHeader;
+  return headerRef;
 }
+

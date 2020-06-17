@@ -1,22 +1,23 @@
+import { TypeSyntax } from '../../support/codegen';
 import { TypeReference } from './type';
 
 export function createDictionary(elementTypeReference: TypeReference): TypeReference {
   return {
-    declaration: `Dictionary<${elementTypeReference.declaration}>`,
+    declaration: new TypeSyntax(`Dictionary<${elementTypeReference.declaration}>`),
     requiredReferences: [...elementTypeReference.requiredReferences, elementTypeReference],
   };
 }
 
 export function createArray(elementTypeReference: TypeReference): TypeReference {
   return {
-    declaration: `Array<${elementTypeReference.declaration}>`,
+    declaration: new TypeSyntax(`Array<${elementTypeReference.declaration}>`),
     requiredReferences: [...elementTypeReference.requiredReferences, elementTypeReference],
   };
 }
 
-export function createPrimitiveType(declaration: string) {
+export function createPrimitiveType(declaration: string): TypeReference {
   return {
-    declaration: declaration,
+    declaration: new TypeSyntax(declaration),
     requiredReferences: []
   };
 }

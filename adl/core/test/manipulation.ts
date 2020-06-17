@@ -13,7 +13,7 @@ import { TSElement } from '../model/typescript/typescript-element';
     for (let i = 0; i < actual.length; i++) {
       assert.strictEqual(actual[i].name, expected[i].name);
       assert.strictEqual(actual[i].value, expected[i].value);
-      assert.strictEqual(actual[i].description, expected[i].description);
+      assert.strictEqual(actual[i].summary, expected[i].summary);
     }
   }
 

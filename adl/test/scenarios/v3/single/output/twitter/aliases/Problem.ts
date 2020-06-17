@@ -6,4 +6,8 @@ import { UnsupportedAuthenticationProblem } from '../models/UnsupportedAuthentic
 import { UsageCapExceededProblem } from '../models/UsageCapExceededProblem';
 import { ResourceNotFoundProblem } from '../models/ResourceNotFoundProblem';
 import { ResourceUnauthorizedProblem } from '../models/ResourceUnauthorizedProblem';
+/**
+ *
+ * @description An HTTP Problem Details object, as defined in IETF RFC 7807 (https://tools.ietf.org/html/rfc7807).
+ */
 export type Problem = Xor<GenericProblem, InvalidRequestProblem, ClientForbiddenProblem, ResourceNotFoundProblem, ResourceUnauthorizedProblem, DisallowedResourceProblem, UnsupportedAuthenticationProblem, UsageCapExceededProblem>;

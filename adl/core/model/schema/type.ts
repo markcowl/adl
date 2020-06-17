@@ -1,6 +1,5 @@
 import { SourceFile } from 'ts-morph';
-
-export type TypeDeclaration = string;
+import { TypeSyntax } from '../../support/codegen';
 
 export interface TypeReference {
   /** 
@@ -14,7 +13,7 @@ export interface TypeReference {
    *     enum  '"http" | "https"'
    * 
    */
-  readonly declaration: TypeDeclaration;
+  readonly declaration: TypeSyntax;
 
   /**
    * This is a list of imports that should be applied to the file that is consuming 
@@ -41,10 +40,13 @@ export interface ParameterOrPropertyTypeReference extends TypeReference  {
 }
 
 export interface InheritableTypeReference extends TypeReference {
-
 }
 
+export interface SchemaTypeReference extends TypeReference {
+}
 
-export interface ParameterReference {
+export interface ParameterTypeReference extends TypeReference {
+}
 
+export interface HeaderTypeReference extends TypeReference {
 }

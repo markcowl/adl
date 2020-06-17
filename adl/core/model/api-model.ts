@@ -219,7 +219,10 @@ export class ApiModel extends Files {
   };
 
 
-  protocols = new Dictionary<Protocol>();
+  #protocols = new Dictionary<Protocol>();
+  get protocols() {
+    return this.#protocols;
+  }
 
   counter = 0;
 
