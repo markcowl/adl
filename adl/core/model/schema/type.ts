@@ -35,13 +35,6 @@ export interface TypeReference {
   readonly isInline?: boolean;
 }
 
-export interface ParameterOrPropertyTypeReference extends TypeReference  {
-
-}
-
-export interface InheritableTypeReference extends TypeReference {
-}
-
 export interface SchemaTypeReference extends TypeReference {
 }
 

@@ -8,7 +8,6 @@ import * as base from '../operation';
 import { Reference } from '../project/reference';
 import { Identity } from '../types';
 import { VersionedElement } from '../typescript/versioned-element';
-import { Header } from './header';
 import { Parameter, ParameterElement, ParameterType } from './parameter';
 import { Request } from './request';
 import { Response, ResponseElement } from './response';
@@ -366,23 +365,3 @@ function getResponseType(response: Response) {
     getResponseDefinition(response));
 }
 
-
-function getHeadersType(headers: Array<Header | Alias<Header>>) {
-  const typeReferences = new Array<ts.TypeReferenceNode>();
-  
-  for (let each of headers) {
-    if (each instanceof Alias) {
-      each = each.target;
-    }
-
-    const args = [
-      ts.createTypeReferenceNode(each.typeRef?.declaration.text ?? 'any', undefined),
-      ts.createLiteralTypeNode(ts.createStringLiteral(each?.name))
-    ];
-  
-    const typeReference = ts.createTypeReferenceNode('Header', args); 
-    typeReferences.push(typeReference);
-  }
-
-  return ts.createTupleTypeNode(typeReferences);
-}

@@ -65,7 +65,7 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
   };
 }
 
-export class EnumElement extends NamedElement<EnumMember> {
+export class EnumValueElement extends NamedElement<EnumMember> {
   constructor(node: EnumMember) {
     super(node);
   }
@@ -83,8 +83,8 @@ export class EnumType extends NamedElement<EnumDeclaration> implements TypeRefer
     return new TypeSyntax(this.node.getName());
   }
 
-  get values(): Array<EnumElement> {
-    return this.node.getMembers().map(each => new EnumElement(each));
+  get values(): Array<EnumValueElement> {
+    return this.node.getMembers().map(each => new EnumValueElement(each));
   }
 
   createValue() {
