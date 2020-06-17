@@ -20,6 +20,7 @@ describe('Load ADL Projects', () => {
     it(`Processes '${folder}'`, async () => {
       const api = await ApiModel.loadADL(inputRoot);
       const q = api.modelTypes;
+      
       notEqual( q.length, 0 , 'Should have models');
       console.log(`has ${q.length} models`);
     });

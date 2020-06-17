@@ -7,11 +7,15 @@ import { Declaration } from '../typescript/reference';
 
 export abstract class Protocol {
   readonly api: ApiModel;
-  readonly files: Array<SourceFile>;
+  
+  readonly #files?: Array<SourceFile>;
 
+  get files() {
+    return this.#files || this.api.files;
+  } 
   protected constructor(api?: ApiModel, sourceFiles?: Array<SourceFile>) {
     this.api = api || (this instanceof ApiModel ? this : fail('requires api model in constructor'));
-    this.files = sourceFiles || this.api.files;
+    this.#files = sourceFiles;
 
     // when this gets constructed, we have to emit an event to allow extensions to add queries to the instance
     // we need a query function for the extension

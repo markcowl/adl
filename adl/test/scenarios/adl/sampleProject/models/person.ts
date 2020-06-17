@@ -1,7 +1,7 @@
 /**
  * @since 1.0
  */
-interface person {
+export interface Person {
   name: string;
   age: number;
 }

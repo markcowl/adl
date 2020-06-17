@@ -6,8 +6,6 @@ import { TSElement } from '../model/typescript/typescript-element';
 
 
 @suite class TestManipulation {
- 
-
   private assertEnumValuesEqual(actual: Array<EnumValue>, expected: Array<EnumValue>) {
     assert.strictEqual(actual.length, expected.length);
     for (let i = 0; i < actual.length; i++) {

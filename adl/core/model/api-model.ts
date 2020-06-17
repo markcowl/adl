@@ -64,6 +64,14 @@ export function isResourceInterfaceType(declaration: InterfaceDeclaration) {
 
 export function isOperationGroupInterfaceType(declaration: InterfaceDeclaration) {
   // should only have operations
+  if (hasTag(declaration, 'http')) {
+    return true;
+  }
+
+  // operation groups have methods.
+  if( declaration.getMethods().length > 0 ) {
+    return true;
+  }
   return false;
 }
 
