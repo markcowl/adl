@@ -11,6 +11,23 @@ export interface PropertyInitializer extends SchemaInitializer {
 }
 
 export class Property extends NamedElement<PropertySignature> {
+
+  get readOnly() {
+    return this.node.isReadonly();
+  }
+
+  set readOnly(value: boolean) {
+    this.node.setIsReadonly(value);
+  }
+
+  get required() {
+    return this.node.hasQuestionToken();
+  }
+
+  set required(value: boolean) {
+    this.node.setHasQuestionToken(value);
+  }
+
   constructor(node: PropertySignature) {
     super(node);
   }
