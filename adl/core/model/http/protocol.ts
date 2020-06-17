@@ -1,6 +1,7 @@
-import { SourceFile } from 'ts-morph';
+import { SourceFile, TypeAliasDeclaration } from 'ts-morph';
+import { hasTag } from '../../support/doc-tag';
 import { Alias } from '../alias';
-import { ApiModel } from '../api-model';
+import { ApiModel, isOperationGroupInterfaceType, isResponseCollectionTypeAlias, isResponseTypeAlias, isResultInterfaceType, isResultTypeAlias } from '../api-model';
 import { Element } from '../element';
 import { Protocol } from '../project/protocol';
 import { Declaration } from '../typescript/reference';
@@ -206,12 +207,28 @@ export class ConnectionVariable extends Element {
   }
 }
 
+function isHeader(declaration: TypeAliasDeclaration) {
+  if (hasTag(declaration, 'header')) {
+    return true;
+  }
+  return false;
+}
+
+function isParameterTypeAlias(declaration: TypeAliasDeclaration) {
+  // check for query,header,cookie,body
+  return false;
+}
+
 export class HttpProtocol extends Protocol {
   /** @internal */ 
   constructor(api: ApiModel, sourceFiles?: Array<SourceFile> ) {
     super(api, sourceFiles);
+    if(!sourceFiles) {
+      // add the checkers for header types
+      api.KnownAliasTypes['header'] = isHeader;
+    }
   }
-
+  
   authentications = new Array<Authentication|Alias<Authentication>>();
 
   /**
@@ -232,29 +249,32 @@ export class HttpProtocol extends Protocol {
   }
   
   get operationGroups(): Array<OperationGroup> {
-    // return this.files.map(each => each.getInterfaces().filter(isOperationGroup)).flat().map(each => new OperationGroup(each));
-    return [];
+    // for now, just get the operation groups and assume they are http
+    return this.files.map(each => each.getInterfaces().filter(isOperationGroupInterfaceType).map(each => new OperationGroup(each))).flat();
   }
 
   get responseCollections(): Array<Declaration<ResponseCollection>> {
-    // this.files.map( each => each.getTypeAliases()).filter(isResponseCollection)).flat().map(each => new ResponseCollectionAlias(each))
-    return [];
+    return this.files.map( each => each.getTypeAliases().filter(isResponseCollectionTypeAlias)).flat().map(each => new Declaration(each, ResponseCollection));
   }
 
   get responses(): Array<Declaration<ResponseElement>> {
-    return [];
+    return this.files.map(each => each.getTypeAliases().filter(isResponseTypeAlias)).flat().map(each => new Declaration(each, ResponseElement));
   }
 
   get results(): Array<Declaration<ResultElement>> {
-    return [];
+    return [
+      ... this.files.map(each => each.getTypeAliases().filter(isResultTypeAlias)).flat().map(each => new Declaration(each, ResultElement)), 
+      ... this.files.map(each => each.getInterfaces().filter(isResultInterfaceType)).flat().map(each => new Declaration(each, ResultElement)),
+    ];
   }
 
   get parameters(): Array<Declaration<ParameterElement>> {
-    return [];
+    // Query, Body, Header, Cookie
+    return this.files.map(each => each.getTypeAliases().filter(isParameterTypeAlias)).flat().map(each => new Declaration(each, ParameterElement));
   }
 
   get headers(): Array<Declaration<HeaderElement>> {
-    return [];
+    return this.files.map(each => each.getTypeAliases().filter(isHeader)).flat().map(each => new Declaration(each, ParameterElement));
   }
 
   // get resources() {

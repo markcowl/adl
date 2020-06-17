@@ -15,12 +15,10 @@ export class Initializer {
     for (const [key, value] of items(initializer)) {
       // copy the true value of the items to the object
       // (use the proxy)
-
       const rawThis = <any>this;
 
       if (value !== undefined) {
         const rawValue = (<any>value);
-
         const targetProperty = rawThis[key];
         if (targetProperty && targetProperty.push) {
           if (rawValue[Symbol.iterator]) {

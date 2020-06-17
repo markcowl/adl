@@ -1,14 +1,16 @@
 import { isAnonymous } from '@azure-tools/sourcemap';
 import { TypeAliasDeclaration } from 'ts-morph';
+import { TypeSyntax } from '../../support/codegen';
+import { createDocs, Documentation } from '../../support/doc-tag';
 import { addImportsTo } from '../../support/typescript';
 import { ApiModel } from '../api-model';
 import { Identity } from '../types';
 import { NamedElement } from '../typescript/named-element';
-import { SchemaInitializer } from '../typescript/schema';
 import { TypeReference } from './type';
 
+
 export class AliasType extends NamedElement<TypeAliasDeclaration> implements TypeReference {
-  declaration!: string;
+  declaration!: TypeSyntax;
   requiredReferences = [];
 
   isInline?: boolean;
@@ -18,7 +20,7 @@ export class AliasType extends NamedElement<TypeAliasDeclaration> implements Typ
   }
 }
 
-export function createAliasType(api: ApiModel, identity: Identity, typeReference: TypeReference, initializer?: Partial<SchemaInitializer>): TypeReference {
+export function createTypeAlias<T extends TypeReference>(api: ApiModel, identity: Identity, typeReference: T, initializer?: Documentation): T {
   if (isAnonymous(identity)) {
     // if it doesn't have a name, just return the type reference instead.
     return typeReference;
@@ -30,13 +32,17 @@ export function createAliasType(api: ApiModel, identity: Identity, typeReference
 
   file.addTypeAlias({
     name,
-    type: typeReference.declaration,
+    type: typeReference.declaration.text,
     isExported: true,
+    docs: createDocs(initializer)
   });
   
-  return {
-    declaration: name,
+  const result: TypeReference = {
+    declaration: new TypeSyntax(name),
     sourceFile: file,
     requiredReferences: [],
+    ...initializer 
   };
+
+  return <T>result;
 }

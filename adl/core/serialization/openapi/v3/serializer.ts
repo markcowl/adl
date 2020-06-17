@@ -1,5 +1,6 @@
 import { Dictionary, JsonReference, v3, vendorExtensions } from '@azure-tools/openapi';
 import { ApiModel } from '../../../model/api-model';
+import { HttpProtocol } from '../../../model/http/protocol';
 import { Host } from '../../../support/file-system';
 import { Context as Ctx, Visitor } from '../../../support/visitor';
 import { consume, singleOrDefault } from '../common';
@@ -58,11 +59,11 @@ async function processRoot(oai3: v3.Model, $: Context) {
   await consume($.process(processComponents, oai3.components));
 
   for await (const server of $.processArray(processServer, oai3.servers)) {
-    $.api.http.connections.push(server);
+    (<HttpProtocol>$.api.protocols.http).connections.push(server);
   }
 
   for await (const security of $.processArray(authenticationRequirement, oai3.security)) {
-    $.api.http.authenticationRequirements.push(security);
+    (<HttpProtocol>$.api.protocols.http).authenticationRequirements.push(security);
   }
 
   processPaths([oai3.paths, oai3['x-ms-paths']], $);

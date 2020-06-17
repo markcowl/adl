@@ -45,7 +45,7 @@ async function* processPath(pathItem: v2.PathItem, $: Context): AsyncGenerator<O
       yield processOperation({method: <Method><unknown>method, path}, pathItem[<common.HttpMethod>method], pathItem, $);
     }
   }
-  addExtensionsToAttic($.api.http, pathItem);
+  // addExtensionsToAttic($.api.http, pathItem);
 }
 
 async function processOperation(path: Path, operation: v2.Operation, shared: v2.PathItem, $: Context): Promise<OperationStructure> {

@@ -1,6 +1,7 @@
 import { values } from '@azure-tools/linq';
 import { isAnonymous } from '@azure-tools/sourcemap';
 import { InterfaceDeclaration, PropertySignatureStructure } from 'ts-morph';
+import { TypeSyntax } from '../../support/codegen';
 import { createDocs } from '../../support/doc-tag';
 import { addImportsTo, getInnerText } from '../../support/typescript';
 import { ApiModel } from '../api-model';
@@ -8,7 +9,7 @@ import { Identity } from '../types';
 import { NamedElement } from '../typescript/named-element';
 import { SchemaInitializer } from '../typescript/schema';
 import { Property } from './property';
-import { TypeReference } from './type';
+import { SchemaTypeReference, TypeReference } from './type';
 
 export interface ModelTypeInitializer extends SchemaInitializer { 
   parents: Array<TypeReference>;
@@ -16,13 +17,13 @@ export interface ModelTypeInitializer extends SchemaInitializer {
   requiredReferences: Array<TypeReference>;
 }
 
-export function createModelType(api: ApiModel, identity: Identity, initializer?: Partial<ModelTypeInitializer> ): TypeReference {
+export function createModelType(api: ApiModel, identity: Identity, initializer?: Partial<ModelTypeInitializer> ): SchemaTypeReference {
   const { name, file } = api.getNameAndFile(identity, 'model');
 
   const iface = file.addInterface( {
     name,
     properties: initializer?.properties || [],
-    extends: initializer?.parents ? initializer?.parents.map( each => each.declaration):[],
+    extends: initializer?.parents ? initializer?.parents.map( each => each.declaration.text):[],
     docs: createDocs(initializer),
     isExported: true,
   });
@@ -31,10 +32,10 @@ export function createModelType(api: ApiModel, identity: Identity, initializer?:
   }
   
   return isAnonymous(identity) ? {
-    declaration: getInnerText(iface),
+    declaration: new TypeSyntax( getInnerText(iface)),
     requiredReferences: initializer?.requiredReferences || [],
   } :  {
-    declaration: name,
+    declaration: new TypeSyntax(name),
     sourceFile: file,
     requiredReferences: []
   };
@@ -48,7 +49,7 @@ export class ModelType extends NamedElement<InterfaceDeclaration> implements Typ
     super(node);
   }
   get declaration() {
-    return this.node.getName();
+    return new TypeSyntax(this.node.getName());
   }
 
   getProperties(): Iterable<Property> {

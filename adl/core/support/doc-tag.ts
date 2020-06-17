@@ -95,7 +95,7 @@ export interface Documentation {
   extensible?: boolean;
 }
 
-export function createDocs(documentationIntializer?: Documentation, additionalTags?: Array<JSDocTagStructure>): Array<JSDocStructure> {
+export function createDocs(documentationIntializer?: Documentation, additionalTags?: Array<JSDocTagStructure>): Array<JSDocStructure> | undefined {
   if( documentationIntializer) {
     const tags = new Array<JSDocTagStructure>();
     if (documentationIntializer.extensible) {
@@ -142,12 +142,15 @@ export function createDocs(documentationIntializer?: Documentation, additionalTa
     if (additionalTags) {
       tags.push(...additionalTags);
     }
-  
-    return [{
-      kind: StructureKind.JSDoc,
-      description: documentationIntializer.summary || (tags.length< 2?  '\n': ''),
-      tags
-    }];
+
+    if (documentationIntializer.summary || tags.length > 0) {
+      return [{
+        kind: StructureKind.JSDoc,
+        description: documentationIntializer.summary || (tags.length < 2 ? '\n' : ''),
+        tags
+      }];
+    }
   }
-  return [];
+
+  return undefined;
 }

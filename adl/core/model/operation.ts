@@ -1,4 +1,5 @@
 import { FunctionTypeNode, InterfaceDeclaration, MethodDeclaration, ParameterDeclaration, TupleTypeNode, TypeLiteralNode } from 'ts-morph';
+import { TypeSyntax } from '../support/codegen';
 import { Element } from './element';
 import { TypeReference } from './schema/type';
 import { NamedElement } from './typescript/named-element';
@@ -52,7 +53,7 @@ export class ParameterElement extends NamedElement<ParameterDeclaration> {
  * 
  */
 export class ResultElement extends TSElement<TypeLiteralNode | InterfaceDeclaration> implements TypeReference {
-  declaration!: string;
+  declaration!: TypeSyntax;
   requiredReferences!: Array<TypeReference>;
 
   isInline?: boolean | undefined;
@@ -68,7 +69,7 @@ export class ResponseCriteria extends TSElement<FunctionTypeNode> {
  * A Response is the combination of the Criteria and the Result for a possible output from an operation.
  */
 export class ResponseElement extends TSElement<FunctionTypeNode> implements TypeReference {
-  declaration!: string;
+  declaration!: TypeSyntax;
   requiredReferences!: Array<TypeReference>;
   
   isInline?: boolean | undefined;

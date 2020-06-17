@@ -1,9 +1,9 @@
-import { items, length, values } from '@azure-tools/linq';
+import { items, length } from '@azure-tools/linq';
 import { v3 } from '@azure-tools/openapi';
-import { anonymous, nameOf, isAnonymous } from '@azure-tools/sourcemap';
+import { anonymous, isAnonymous, nameOf } from '@azure-tools/sourcemap';
 import { Response } from '../../../model/http/response';
 import { addExtensionsToAttic } from '../common';
-import { header } from './header';
+import { processHeader } from './header';
 import { processSchema } from './schema';
 import { Context } from './serializer';
 
@@ -19,11 +19,8 @@ export async function* response(response: v3.Response, $: Context, options?: { i
       isException
     });
 
-    for (const value of values(response.headers)) {
-      for await (const h of $.processInline(header, value)) {
-        result.headers.push(h);
-      }
-    }
+    await processResponseHeaders(response, $, result);
+
     return yield addExtensionsToAttic(result, response);
   }
 
@@ -34,11 +31,7 @@ export async function* response(response: v3.Response, $: Context, options?: { i
       isException
     });
 
-    for (const value of values(response.headers)) {
-      for await (const h of $.processInline(header, value)) {
-        result.headers.push(h);
-      }
-    }
+    await processResponseHeaders(response, $, result);
  
     // example data we can figure out later.
     result.addToAttic('example', type.example);
@@ -50,6 +43,12 @@ export async function* response(response: v3.Response, $: Context, options?: { i
 
     yield addExtensionsToAttic(result, response);
   }
+}
 
+async function processResponseHeaders(response: v3.Response, $: Context, result: Response) {
+  for (const [key, value] of items(response.headers)) {
+    const h = await processHeader(value, $, key, { isAnonymous: true });
+    result.headers.push(h);
+  }
 }
 

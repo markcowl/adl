@@ -131,9 +131,10 @@ export function createImportFor(name: string, sourceFile: SourceFile, relativeTo
   };
 }
 
-export function addImportsTo(sourceFile: SourceFile, typeReference: TypeReference) {
-  if (typeReference.sourceFile && sourceFile !== typeReference.sourceFile) {
-    const typeName = typeReference.declaration;
+export function addImportsTo(sourceFile: SourceFile,typeReference: TypeReference ) {
+  if (typeReference.sourceFile && sourceFile !== typeReference.sourceFile ) {
+    const typeName = typeReference.declaration.text;
+
 
     const importDecls = sourceFile.getImportDeclarations();
     let found = false;

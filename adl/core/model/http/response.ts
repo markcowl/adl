@@ -1,8 +1,7 @@
-import { Alias } from '../alias';
 import * as base from '../operation';
-import { TypeReference } from '../schema/type';
+import { HeaderTypeReference, TypeReference } from '../schema/type';
 import { Identity } from '../types';
-import { Header } from './header';
+import { Declaration } from '../typescript/reference';
 
 export class ResponseCriteria extends base.ResponseCriteria {
   set code(value: Array<string|number> ) {
@@ -28,7 +27,7 @@ export class ResultElement extends base.ResultElement {
 
 export class ResponseElement extends base.ResponseElement {
   criteria!: ResponseCriteria;
-  result!: ResultElement | base.Reference<ResultElement>;
+  result!: ResultElement | Declaration<ResultElement>;
 }
 
 export class Response extends base.Response {
@@ -38,7 +37,7 @@ export class Response extends base.Response {
    */
   description?: string;
 
-  headers = new Array<Header|Alias<Header>>();
+  headers = new Array<HeaderTypeReference>();
 
   /**
    * 

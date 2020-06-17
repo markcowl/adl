@@ -5,19 +5,10 @@
  * @since 2019-12-01
  */
 export enum versioningScheme {
-    /**
-     *
-     * @description The API Version is passed in a path segment.
-     */
+    /** The API Version is passed in a path segment. */
     Segment = 'Segment',
-    /**
-     *
-     * @description The API Version is passed in a query parameter.
-     */
+    /** The API Version is passed in a query parameter. */
     Query = 'Query',
-    /**
-     *
-     * @description The API Version is passed in a HTTP header.
-     */
+    /** The API Version is passed in a HTTP header. */
     Header = 'Header'
 }

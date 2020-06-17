@@ -1,3 +1,4 @@
+import { TypeSyntax } from '../../support/codegen';
 import { TypeReference } from './type';
 
 export interface EncodingReference {
@@ -12,6 +13,6 @@ export const Encodings = {
 export function addEncoding(type: TypeReference, encoding: EncodingReference): TypeReference {
   return {
     ...type,
-    declaration: `${type.declaration} & ${encoding.implementation}`
+    declaration: new TypeSyntax(`${type.declaration} & ${encoding.implementation}`)
   };
 }
