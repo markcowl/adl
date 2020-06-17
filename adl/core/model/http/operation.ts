@@ -35,7 +35,7 @@ export class TagCollection {
 }
 
 export class OperationGroup extends base.OperationGroup {
-  
+
   get operations(): Array<Operation> {
     throw new Error('Method not implemented.');
   }
@@ -64,11 +64,11 @@ export class Operation extends base.Operation {
   }
 
   get method(): Method  {
-    const m = ( /([^\s]*)\s+(.*)/.exec(getTagValue(this.node, 'http') || '')?.[1] || '' ).toUpperCase();
+    const m = (/([^\s]*)\s+(.*)/.exec(getTagValue(this.node, 'http') || '')?.[1] || '').toUpperCase();
     return <Method>m;
   }
   set method(value: Method) {
-    setTag( this.node,'http' , `${value} ${this.path}`);
+    setTag(this.node,'http' , `${value} ${this.path}`);
   }
 
   /** parameters common to all the requests(overloads) for this operation */
@@ -254,11 +254,11 @@ function createResponseStructures(
   }
 
   const returnType = ts.createTupleTypeNode([
-    ...currentReturnType.elementTypes, 
+    ...currentReturnType.elementTypes,
     ...reponseTypes
   ]);
 
-  return { 
+  return {
     type: printNode(returnType),
     tags: tagStructures
   };
