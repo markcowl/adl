@@ -1,12 +1,12 @@
-import { EventEmitter } from "ee-ts";
-import { ApiModel, Files } from "../model/api-model";
-import { Operation, OperationGroup, ParameterElement, ResponseCollection, ResponseElement, ResultElement } from "../model/operation";
-import { AliasType } from "../model/schema/alias";
-import { EnumElement, EnumType } from "../model/schema/enum";
-import { ModelType } from "../model/schema/model";
-import { Property } from "../model/schema/property";
-import { Declaration } from "../model/typescript/reference";
-import { RuleResult } from "./rule";
+import { EventEmitter } from 'ee-ts';
+import { ApiModel, Files } from '../model/api-model';
+import { Operation, OperationGroup, ParameterElement, ResponseCollection, ResponseElement, ResultElement } from '../model/operation';
+import { AliasType } from '../model/schema/alias';
+import { EnumType, EnumValueElement } from '../model/schema/enum';
+import { ModelType } from '../model/schema/model';
+import { Property } from '../model/schema/property';
+import { Declaration } from '../model/typescript/reference';
+import { RuleResult } from './rule';
 
 interface Events {
   aliasType(model: ApiModel, aliasType: AliasType): Array<RuleResult> | undefined;
@@ -15,7 +15,7 @@ interface Events {
   declaredResults(model: ApiModel, result: Declaration<ResultElement>): Array<RuleResult> | undefined;
   declaredParameters(model: ApiModel, parameter: Declaration<ParameterElement>): Array<RuleResult> | undefined;
   enumType(model: ApiModel, enumType: EnumType): Array<RuleResult> | undefined;
-  enumValue(model: ApiModel, enumValue: EnumElement): Array<RuleResult> | undefined;
+  enumValue(model: ApiModel, enumValue: EnumValueElement): Array<RuleResult> | undefined;
   modelType(model: ApiModel, modelType: ModelType): Array<RuleResult> | undefined;
   operationGroup(model: ApiModel, operationGroup: OperationGroup): Array<RuleResult> | undefined;
   operation(model: ApiModel, operation: Operation): Array<RuleResult> | undefined;
