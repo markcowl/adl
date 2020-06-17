@@ -3,7 +3,7 @@ import { Dictionary, items, keys, linq } from '@azure-tools/linq';
 import { isAnonymous, Path, valueOf } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
 import { dirname, join } from 'path';
-import { EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Node, Project, QuoteKind, SourceFile, TypeAliasDeclaration } from 'ts-morph';
+import { EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Node, Project, QuoteKind, SourceFile, SyntaxKind, TypeAliasDeclaration } from 'ts-morph';
 import { getTags, hasTag } from '../support/doc-tag';
 import { getNode, referenceTo } from '../support/typescript';
 import { Attic } from './element';
@@ -20,81 +20,46 @@ import { Folders, Identity } from './types';
 import { Declaration } from './typescript/reference';
 import { VersionInfo } from './version-info';
 
-export const KnownInterfaceTypes = {
-  model: isModelInterface,
-  response: isResponseInterfaceType,
-  result: isResultInterfaceType,
-  operationgroup: isOperationGroupInterfaceType,
-  resource: isResourceInterfaceType,
-};
-
-export const KnownAliasTypes = {
-  model: isModelTypeAlias,
-  response: isResponseTypeAlias,
-  result: isResultTypeAlias,
-  resource: isResourceTypeAlias,
-};
-
-
-export function identifyInterface(declaration: InterfaceDeclaration) {
-  // returns a string that identifies that an interface is what it says it is.
-  const tagType = [...getTags(declaration, ...keys(KnownInterfaceTypes))];
-  switch( tagType.length ) {
-    case 1:
-      // found a single
-      return tagType[0].getTagName();
-    case 0: 
-      // no tag types found
-      // we're going to have to guess
-      for( const [type, check] of items(KnownInterfaceTypes)) {
-        if( check(declaration)) {
-          return type;
-        }
-      }
-  }
-  // it has more than one. That's not ok.
-  throw Error(`Inteface Decalaration has muliple type tags: ${declaration.getName()}: ${tagType.map( each => each.getTagName()).join(',')}`);  
-}
-
-export function identifyTypeAlias( declaration: TypeAliasDeclaration) {
-  const tagType = [...getTags(declaration, ...keys(KnownAliasTypes))];
-  switch (tagType.length) {
-    case 1:
-      // found a single
-      return tagType[0].getTagName();
-    case 0:
-      // no tag types found
-      // we're going to have to guess
-      for (const [type, check] of items(KnownAliasTypes)) {
-        if (check(declaration)) {
-          return type;
-        }
-      }
-  }
-  // it has more than one. That's not ok.
-  throw Error(`Inteface Decalaration has muliple type tags: ${declaration.getName()}: ${tagType.map(each => each.getTagName()).join(',')}`);  
-}
-
 export function isModelTypeAlias( declaration: TypeAliasDeclaration) {
   if (hasTag(declaration, 'model')) {
+    return true;
+  }
+
+  // if this is an alias over a model type or primitive 
+  // or it is 
+
+  return false;
+}
+
+export function isResponseCollectionTypeAlias(declaration: TypeAliasDeclaration): boolean {
+  if (hasTag(declaration, 'responseCollection')) {
+    return true;
+  }
+  
+  // type aliases that are tupletypes are responsecollections.
+  return !!(declaration.getTypeNode()?.getKind() === SyntaxKind.TupleType);
+}
+
+export function isResponseTypeAlias(declaration: TypeAliasDeclaration) {
+  if (hasTag(declaration, 'response')) {
+    return true;
+  }
+
+  // type aliases that are function types are response declarations.
+  return (declaration.getTypeNode()?.getKind() === SyntaxKind.FunctionType);
+}
+
+export function isResultTypeAlias(declaration: TypeAliasDeclaration) {
+  if (hasTag(declaration, 'result')) {
     return true;
   }
 
   return false;
 }
 
-export function isResponseTypeAlias(declaration: TypeAliasDeclaration) {
-  return false;
-}
-
-export function isResultTypeAlias(declaration: TypeAliasDeclaration) {
-  return false;
-}
-
 export function isResourceTypeAlias(declaration: TypeAliasDeclaration) {
   return false;
 }
-
 
 export function isResourceInterfaceType(declaration: InterfaceDeclaration) {
   return false;
@@ -109,8 +74,7 @@ export function isResultInterfaceType(declaration: InterfaceDeclaration) {
   return false;
 }
 
-export function isResponseInterfaceType
-(declaration: InterfaceDeclaration) {
+export function isResponseInterfaceType(declaration: InterfaceDeclaration) {
   return false;
 }
 
@@ -237,6 +201,23 @@ export class ApiModel extends Files {
       quoteKind: QuoteKind.Single,
     },
   });
+
+  KnownInterfaceTypes = <Dictionary<(declaration: InterfaceDeclaration) => boolean>>{
+    model: isModelInterface,
+    response: isResponseInterfaceType,
+    result: isResultInterfaceType,
+    operationgroup: isOperationGroupInterfaceType,
+    resource: isResourceInterfaceType,
+  };
+
+  KnownAliasTypes = <Dictionary<(declaration: TypeAliasDeclaration) => boolean>>{
+    model: isModelTypeAlias,
+    responseCollection: isResponseCollectionTypeAlias,
+    response: isResponseTypeAlias,
+    result: isResultTypeAlias,
+    resource: isResourceTypeAlias,
+  };
+
 
   protocols = new Dictionary<Protocol>();
 
@@ -390,5 +371,43 @@ export class ApiModel extends Files {
     // todo
   }
 
+  identifyInterface(declaration: InterfaceDeclaration) {
+  // returns a string that identifies that an interface is what it says it is.
+    const tagType = [...getTags(declaration, ...keys(this.KnownInterfaceTypes))];
+    switch (tagType.length) {
+      case 1:
+      // found a single
+        return tagType[0].getTagName();
+      case 0:
+      // no tag types found
+      // we're going to have to guess
+        for (const [type, check] of items(this.KnownInterfaceTypes)) {
+          if (check(declaration)) {
+            return type;
+          }
+        }
+    }
+    // it has more than one. That's not ok.
+    throw Error(`Inteface Decalaration has muliple type tags: ${declaration.getName()}: ${tagType.map(each => each.getTagName()).join(',')}`);
+  }
+
+  identifyTypeAlias(declaration: TypeAliasDeclaration) {
+    const tagType = [...getTags(declaration, ...keys(this.KnownAliasTypes))];
+    switch (tagType.length) {
+      case 1:
+      // found a single
+        return tagType[0].getTagName();
+      case 0:
+      // no tag types found
+      // we're going to have to guess
+        for (const [type, check] of items(this.KnownAliasTypes)) {
+          if (check(declaration)) {
+            return type;
+          }
+        }
+    }
+    // it has more than one. That's not ok.
+    throw Error(`Type Alias has muliple type tags: ${declaration.getName()}: ${tagType.map(each => each.getTagName()).join(',')}`);
+  }
   
 }

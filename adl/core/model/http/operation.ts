@@ -45,13 +45,11 @@ export class OperationGroup extends base.OperationGroup {
    * Creates a new HttpOperation in this operation group.
    */
   createOperation() {
-
+    //todo
   }
-  
 }
 
 export class ResponseCollection extends base.ResponseCollection {
-
 }
 
 export class Operation extends base.Operation {
