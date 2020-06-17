@@ -189,7 +189,7 @@ export class EventEmitter<T> {
   }
 
   /** Call the listeners of an event */
-  iterEmit<K extends EventKey<T>>(key: K, ...args: EventIn<T, K>): Iterable<EventOut<T, K>>
+  iterEmit<K extends EventKey<T>>(key: K, ...args: EventIn<T, K>): Iterable<Id<Out<T[K]>>>
   
   /** Implementation */
   *iterEmit<K extends EventKey<T>>(key: K, ...args: EventIn<T, K>): Iterable<any> {

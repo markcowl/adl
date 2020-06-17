@@ -1,9 +1,9 @@
-import { exists, isFile, mkdir, rmdir, writeFile } from '@azure-tools/async-io';
+import { exists, isDirectory, isFile, mkdir, readdir, readFile, rmdir, writeFile } from '@azure-tools/async-io';
 import { Dictionary, items, keys, linq } from '@azure-tools/linq';
 import { isAnonymous, Path, valueOf } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
 import { dirname, join } from 'path';
-import { EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Project, QuoteKind, SourceFile, SyntaxKind, TypeAliasDeclaration } from 'ts-morph';
+import { Directory, EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Project, QuoteKind, SourceFile, SyntaxKind, TypeAliasDeclaration } from 'ts-morph';
 import { getTags, hasTag } from '../support/doc-tag';
 import { referenceTo } from '../support/typescript';
 import { HttpProtocol } from './http/protocol';
@@ -188,6 +188,24 @@ export class Files {
   }
 }
 
+async function readFiles( folder: string, directory: Project|Directory) {
+  const all = new Array<Promise<any>>();
+
+  const entries = await readdir(folder);
+  for( const each of entries) {
+    const fullPath = join(folder, each);
+    if( await isFile(fullPath)  && each.endsWith('.ts')) {
+      directory.createSourceFile(each, await readFile(fullPath) );
+    }
+    if( await isDirectory(fullPath)  ) {
+      const dir = directory.createDirectory(each);
+      all.push(readFiles(fullPath, dir));
+    }
+  }
+  // wait for everything below to here to finish.
+  await Promise.all(all);
+}
+
 export class ApiModel extends Files {
   /**
    * when creating constructs that lack a name, we can give them a unique number
@@ -288,6 +306,23 @@ export class ApiModel extends Files {
    */
   get attic() {
     return this.projectData.attic.unprocessed;
+  }
+
+  static async loadADL( path: string ) {
+    // path must be a directory
+    if( !await exists(path)) { 
+      throw new Error(`Path '${path}' does not exist`);
+    }
+    
+    if (!await isDirectory(path)) {
+      throw new Error(`Path '${path}' does is not a directory`);
+    }
+
+    // create a project from the contents of the folder
+    const result = new ApiModel();
+    await readFiles(path, result.#project);
+
+    return result;
   }
 
   async saveADL(path: string, cleanDirectory = true) {
