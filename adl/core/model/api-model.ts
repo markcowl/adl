@@ -103,12 +103,14 @@ const x = someFiles.query<ModelType>('interfaces');
 
 export class Files {
   readonly api: ApiModel;
-  readonly files: Array<SourceFile>;
-
+  readonly files!: Array<SourceFile>;
+  
   protected constructor(api?: ApiModel, sourceFiles?: Array<SourceFile>) {
+    if (api) {
+      this.files = sourceFiles || api.files;
+    }
     this.api = api || (this instanceof ApiModel ? this : fail('requires api model in constructor'));
-    this.files = sourceFiles || this.api.files;
-
+    
     // when this gets constructed, we have to emit an event to allow extensions to add queries to the instance
     // we need a query function for the extension
     // and then we can bind it as a property so that others can use it.
@@ -220,7 +222,7 @@ export class ApiModel extends Files {
   /**
    * typescript project for this model
    */
-  #project: Project = new Project({
+  readonly project: Project = new Project({
     useInMemoryFileSystem: true,
     manipulationSettings: {
       indentationText: IndentationText.TwoSpaces,
@@ -234,20 +236,20 @@ export class ApiModel extends Files {
    * well-known folders in the model
    */
   #folders = <Folders>{
-    anonymous: this.#project.createDirectory('anonymous'),
-    alias: this.#project.createDirectory('aliases'),
-    model: this.#project.createDirectory('models'),
-    enum: this.#project.createDirectory('enums'),
-    group: this.#project.createDirectory('operations'),
-    resource: this.#project.createDirectory('resources'),
+    anonymous: this.project.createDirectory('anonymous'),
+    alias: this.project.createDirectory('aliases'),
+    model: this.project.createDirectory('models'),
+    enum: this.project.createDirectory('enums'),
+    group: this.project.createDirectory('operations'),
+    resource: this.project.createDirectory('resources'),
   }
 
   /**
    * access to the ts project for this api.
    * @internal
    */
-  get project() {
-    return this.#project;
+  get prxoject() {
+    return this.project;
   }
 
   /**
@@ -280,6 +282,9 @@ export class ApiModel extends Files {
     return this.#protocols;
   }
 
+  get files() { 
+    return this.project?.getSourceFiles() || [];
+  }
   /**
    * gets access to privateData for a given node.
    *
@@ -297,7 +302,7 @@ export class ApiModel extends Files {
 
   constructor() {
     super();
-    (<any>this.#project).api = this;
+    (<any>this.project).api = this;
     this.protocols.http = new HttpProtocol(this);
   }
 
@@ -320,7 +325,7 @@ export class ApiModel extends Files {
 
     // create a project from the contents of the folder
     const result = new ApiModel();
-    await readFiles(path, result.#project);
+    await readFiles(path, result.project);
 
     return result;
   }
