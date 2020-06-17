@@ -5,14 +5,8 @@
  * @since 2019-12-01
  */
 export enum BackendProtocol {
-    /**
-     *
-     * @description The Backend is a RESTful service.
-     */
+    /** The Backend is a RESTful service. */
     http = 'http',
-    /**
-     *
-     * @description The Backend is a SOAP service.
-     */
+    /** The Backend is a SOAP service. */
     soap = 'soap'
 }
