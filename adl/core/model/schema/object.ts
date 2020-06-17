@@ -1,13 +1,13 @@
 import { Dictionary, values } from '@azure-tools/linq';
 import { isAnonymous } from '@azure-tools/sourcemap';
 import { InterfaceDeclaration, PropertySignature, PropertySignatureStructure, StructureKind } from 'ts-morph';
-import { normalizeIdentifier } from '../../support/codegen';
+import { normalizeIdentifier, TypeSyntax } from '../../support/codegen';
 import { createDocs, getTagValue, setTag } from '../../support/doc-tag';
 import { addImportsTo, addNullable, getInnerText, TypeDeclaration } from '../../support/typescript';
 import { ApiModel } from '../api-model';
 import { Collection, CollectionImpl, Identity, ReadOnlyCollection, ReadOnlyCollectionImpl } from '../types';
 import { NamedElement, Schema, TSSchema } from './schema';
-import { TypeReference } from './type';
+import { SchemaTypeReference } from './type';
 
 export interface ObjectSchema extends Schema {
   /** schemas that this object extends */
@@ -105,12 +105,12 @@ export class ObjectSchemaImpl extends TSSchema<InterfaceDeclaration> implements 
   }
 }
 
-export function createPropertySignature(name: string, typeReference: TypeReference, initializer?: PropertyInitializer): PropertySignatureStructure {
+export function createPropertySignature(name: string, typeReference: SchemaTypeReference, initializer?: PropertyInitializer): PropertySignatureStructure {
   return {
     kind: StructureKind.PropertySignature,
     //todo: do a better 'fix-the-bad-name' (ie, perks/codegen)
     name: normalizeIdentifier(name),
-    type: initializer?.nullable ? addNullable(typeReference.declaration) : typeReference.declaration,
+    type: initializer?.nullable ? addNullable(typeReference.declaration.text) : typeReference.declaration.text,
     isReadonly: initializer?.readOnly,
     hasQuestionToken: !(initializer?.required),
     docs: createDocs(initializer),
@@ -138,18 +138,18 @@ export interface SchemaInitializer extends VersionedEntity {
 }
 
 export interface ObjectSchemaInitializer extends SchemaInitializer { 
-  parents: Array<TypeReference>;
+  parents: Array<SchemaTypeReference>;
   properties: Array<PropertySignatureStructure>;
-  requiredReferences: Array<TypeReference>;
+  requiredReferences: Array<SchemaTypeReference>;
 }
 
-export function createInterface(api: ApiModel, identity: Identity, initializer?: Partial<ObjectSchemaInitializer> ): TypeReference {
+export function createInterface(api: ApiModel, identity: Identity, initializer?: Partial<ObjectSchemaInitializer> ): SchemaTypeReference {
   const { name, file } = api.getNameAndFile(identity, 'model');
 
   const iface = file.addInterface( {
     name,
     properties: initializer?.properties || [],
-    extends: initializer?.parents ? initializer?.parents.map( each => each.declaration):[],
+    extends: initializer?.parents ? initializer?.parents.map( each => each.declaration.text):[],
     docs: createDocs(initializer),
     isExported: true,
   });
@@ -160,10 +160,10 @@ export function createInterface(api: ApiModel, identity: Identity, initializer?:
   }
   
   return isAnonymous(identity) ? {
-    declaration: getInnerText(iface),
+    declaration: new TypeSyntax(getInnerText(iface)),
     requiredReferences: initializer?.requiredReferences || [],
   } :  {
-    declaration: name,
+    declaration: new TypeSyntax(name),
     sourceFile: file,
     requiredReferences: []
   };
@@ -183,16 +183,16 @@ export function createObjectSchema(api: ApiModel, identity: Identity, initialize
   return result;
 }
 
-export function createDictionary(elementTypeReference: TypeReference): TypeReference{
+export function createDictionary(elementTypeReference: SchemaTypeReference): SchemaTypeReference{
   return {
-    declaration: `Dictionary<${elementTypeReference.declaration}>`,
+    declaration: new TypeSyntax(`Dictionary<${elementTypeReference.declaration}>`),
     requiredReferences: [...elementTypeReference.requiredReferences, elementTypeReference],
   };
 }
 
-export function createArray(elementTypeReference: TypeReference): TypeReference {
+export function createArray(elementTypeReference: SchemaTypeReference): SchemaTypeReference {
   return {
-    declaration: `Array<${elementTypeReference.declaration}>`,
+    declaration: new TypeSyntax(`Array<${elementTypeReference.declaration}>`),
     requiredReferences: [...elementTypeReference.requiredReferences, elementTypeReference],
   };
 }

@@ -3,7 +3,7 @@ import { v2 } from '@azure-tools/openapi';
 import { anonymous, isAnonymous, nameOf } from '@azure-tools/sourcemap';
 import { Response } from '../../../model/http/response';
 import { addExtensionsToAttic } from '../common';
-import { header } from './header';
+import { processHeader } from './header';
 import { processSchema } from './schema';
 import { Context } from './serializer';
 
@@ -21,11 +21,7 @@ export async function* response(response: v2.Response, $: Context, options?: { i
       isException
     });
 
-    for (const value of values(response.headers)) {
-      for await (const h of $.processInline(header, value)) {
-        result.headers.push(h);
-      }
-    }
+    await processResponseHeaders(response, $, result);
     return yield addExtensionsToAttic(result, response);
   }
 
@@ -36,11 +32,14 @@ export async function* response(response: v2.Response, $: Context, options?: { i
       isException
     });
 
-    for (const value of values(response.headers)) {
-      for await (const h of $.processInline(header, value)) {
-        result.headers.push(h);
-      }
-    }
+    await processResponseHeaders(response, $, result);
     yield addExtensionsToAttic(result, response);
+  }
+}
+
+async function processResponseHeaders(response: v2.Response, $: Context, result: Response) {
+  for (const header of values(response.headers)) {
+    const h = await processHeader(header, $, { isAnonymous: true });
+    result.headers.push(h);
   }
 }

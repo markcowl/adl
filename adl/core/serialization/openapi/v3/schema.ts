@@ -6,13 +6,14 @@ import { createTypeAlias } from '../../../model/schema/alias';
 import { addConstraint, addEncoding, Constraints, Encodings } from '../../../model/schema/constraint';
 import { addDefault } from '../../../model/schema/default';
 import { createArray, createDictionary, createInterface, createPropertySignature } from '../../../model/schema/object';
-import { TypeReference } from '../../../model/schema/type';
+import { SchemaTypeReference } from '../../../model/schema/type';
 import { Identity } from '../../../model/types';
 import { Context } from '../../../support/visitor';
 import { isEnumSchema, isObjectSchema, isPrimitiveSchema } from '../common';
 import { arrayProperties, commonProperties, notObject, numberProperties, objectProperties, Options, processBooleanSchema, processByteArraySchema, processCharSchema, processDateSchema, processDateTimeSchema, processDurationSchema, processEnumSchema, processFileSchema, processIntegerSchema, processNumberSchema, processOdataSchema, processPasswordSchema, processTimeSchema, processUriSchema, processUuidSchema, stringProperties, versionInfo } from '../common/schema';
+import { TypeSyntax } from '../../../support/codegen';
 
-export async function processSchema(schema: v3.Schema|v3.SchemaReference, $: Context<v3.Model>, options?: { isAnonymous?: boolean }): Promise<TypeReference> {
+export async function processSchema(schema: v3.Schema|v3.SchemaReference, $: Context<v3.Model>, options?: { isAnonymous?: boolean }): Promise<SchemaTypeReference> {
   const here = $.normalizeReference(refTo(schema)).$ref;
 
   // did we already process this because we went thru a $ref earlier?
@@ -141,7 +142,7 @@ export async function processSchema(schema: v3.Schema|v3.SchemaReference, $: Con
 }
 
 
-export async function processAnyOf(schema: v3.Schema,$: Context<v3.Model>, options?: Options): Promise<TypeReference> {
+export async function processAnyOf(schema: v3.Schema,$: Context<v3.Model>, options?: Options): Promise<SchemaTypeReference> {
   // anyof[A,B,C] literally means [A] or [B] or [C] or [A & B] or [A & C] or [B & C] or [A & B & C]
   // NOTE: "An instance validates successfully against this keyword if it validates successfully against at least one schema defined by this keyword's value."
   //
@@ -171,7 +172,7 @@ export async function processAnyOf(schema: v3.Schema,$: Context<v3.Model>, optio
   const oneOf = schema.oneOf ? await processOneOf(schema, $, { isAnonymous: true, justTargetType: true }) : undefined;
 
   const schemaName = options?.isAnonymous ? anonymous('anyOf') : nameOf(schema);
-  const combineWith = new Array<TypeReference>();
+  const combineWith = new Array<SchemaTypeReference>();
   if (objectSchema) {
     combineWith.push(objectSchema);
   }
@@ -179,7 +180,7 @@ export async function processAnyOf(schema: v3.Schema,$: Context<v3.Model>, optio
     combineWith.push(oneOf);
   }
 
-  const requiredReferences = new Array<TypeReference>();
+  const requiredReferences = new Array<SchemaTypeReference>();
 
   const schemas =  schema.anyOf ? await Promise.all(schema.anyOf.map(async parent => {
     const result = await processSchema(parent, $, { isAnonymous: true });
@@ -189,14 +190,14 @@ export async function processAnyOf(schema: v3.Schema,$: Context<v3.Model>, optio
 
   // if this is combined with anything
   if (combineWith.length > 0) {
-    return createTypeAlias($.api, anonymous(schemaName), { declaration: `${schemas.map(each => each.declaration).join(' | ')} & ${combineWith.map(each => each.declaration).join(' & ')}` , requiredReferences }, commonProperties(schema)  );
+    return createTypeAlias<SchemaTypeReference>($.api, anonymous(schemaName), { declaration: new TypeSyntax(`${schemas.map(each => each.declaration).join(' | ')} & ${combineWith.map(each => each.declaration).join(' & ')}`) , requiredReferences }, commonProperties(schema)  );
   }
 
-  return createTypeAlias($.api, anonymous(schemaName), {declaration:  schemas.map(each => each.declaration).join(' | '), requiredReferences}, commonProperties(schema));
+  return createTypeAlias<SchemaTypeReference>($.api, anonymous(schemaName), {declaration: new TypeSyntax(schemas.map(each => each.declaration.text).join(' | ')), requiredReferences}, commonProperties(schema));
 }
 
 
-export async function processOneOf(schema: v3.Schema,$: Context<v3.Model>, options?: Options): Promise<TypeReference> {
+export async function processOneOf(schema: v3.Schema,$: Context<v3.Model>, options?: Options): Promise<SchemaTypeReference> {
   // oneof[A,B,C] literally means [A] or [B] or [C]
   //
   // oneOf Car, Cat
@@ -221,7 +222,7 @@ export async function processOneOf(schema: v3.Schema,$: Context<v3.Model>, optio
   const schemaName = options?.isAnonymous ? anonymous('oneOf') : nameOf(schema);
   const objectSchema = options?.justTargetType ? undefined : (isObjectSchema(schema) ? await processObjectSchema(schema, $, { isAnonymous: true, justTargetType: true }) : undefined);
   
-  const requiredReferences = new Array<TypeReference>();
+  const requiredReferences = new Array<SchemaTypeReference>();
   const schemas = schema.oneOf ? await Promise.all(schema.oneOf.map(async parent => {
     const result = await processSchema(parent, $, { isAnonymous: true });
     requiredReferences.push(result);
@@ -229,20 +230,20 @@ export async function processOneOf(schema: v3.Schema,$: Context<v3.Model>, optio
   })) : [];
 
   if (objectSchema) {
-    return createTypeAlias($.api, schemaName, {
-      declaration: `Xor<${[...schemas,objectSchema].map(each => each.declaration).join(',')}>`,
+    return createTypeAlias<SchemaTypeReference>($.api, schemaName, {
+      declaration: new TypeSyntax(`Xor<${[...schemas,objectSchema].map(each => each.declaration).join(',')}>`),
       requiredReferences
     }, commonProperties(schema));
   }
 
   // no object combinations
-  return createTypeAlias($.api, schemaName, {
-    declaration: `Xor<${[...schemas].map(each => each.declaration).join(',')}>`,
+  return createTypeAlias<SchemaTypeReference>($.api, schemaName, {
+    declaration: new TypeSyntax(`Xor<${[...schemas].map(each => each.declaration).join(',')}>`),
     requiredReferences
   }, commonProperties(schema));
 }
 
-function constrainNumericSchema(schema: v3.Schema, $: Context<v3.Model>, options: Options|undefined, target: TypeReference): TypeReference {
+function constrainNumericSchema(schema: v3.Schema, $: Context<v3.Model>, options: Options|undefined, target: SchemaTypeReference): SchemaTypeReference {
   // if this is just a number with no adornments, just return the common instance
   if ((schema.default !== undefined || schema.exclusiveMaximum !== undefined || schema.exclusiveMinimum !== undefined || schema.minimum !== undefined || schema.maximum !== undefined || schema.multipleOf)) {
     // add some stuff
@@ -275,7 +276,7 @@ function constrainNumericSchema(schema: v3.Schema, $: Context<v3.Model>, options
 }
 
 
-export async function processStringSchema(schema: v3.Schema, $: Context<v3.Model>, options?: Options): Promise<TypeReference> {
+export async function processStringSchema(schema: v3.Schema, $: Context<v3.Model>, options?: Options): Promise<SchemaTypeReference> {
   switch (schema.format) {
     case StringFormat.Base64Url:
       return addEncoding( await processByteArraySchema(schema, $), Encodings.UrlEncoding );
@@ -358,8 +359,8 @@ export async function processStringSchema(schema: v3.Schema, $: Context<v3.Model
 }
 
 
-export async function processObjectSchema(schema: v3.Schema, $: Context<v3.Model>, options?: Options): Promise<TypeReference> {
-  let result!: TypeReference;
+export async function processObjectSchema(schema: v3.Schema, $: Context<v3.Model>, options?: Options): Promise<SchemaTypeReference> {
+  let result!: SchemaTypeReference;
 
   if (schema.additionalProperties && length(schema.properties) === 0 && length(schema.allOf) === 0) {
     // if it has no actual properties of it's own, but it has additionalProperties, return just the dictionary
@@ -373,16 +374,16 @@ export async function processObjectSchema(schema: v3.Schema, $: Context<v3.Model
     // when it's not anonymous, we have to put the object typedefintion as soon as we can in case we recurse
     const { name, file } = $.api.getNameAndFile(schemaName, 'model');
 
-    result = <TypeReference> {
+    result = <SchemaTypeReference> {
       sourceFile: file,
-      declaration: name,
+      declaration: new TypeSyntax(name),
       requiredReferences: []
     };
 
     $.visitor.references.schema.set(refTo(schema), result );
   }
 
-  const requiredReferences = new Array<TypeReference>();
+  const requiredReferences = new Array<SchemaTypeReference>();
   // process the properties
   const properties = new Array<PropertySignatureStructure>();
   for( const [propertyName, property] of items(schema.properties) ) {
@@ -426,7 +427,7 @@ export async function processObjectSchema(schema: v3.Schema, $: Context<v3.Model
   return result;
 }
 
-function addObjectConstraints(schemaName: string, schema: v3.Schema, $: Context<v3.Model>, type: TypeReference): TypeReference {
+function addObjectConstraints(schemaName: string, schema: v3.Schema, $: Context<v3.Model>, type: SchemaTypeReference): SchemaTypeReference {
   if (schema.maxProperties !== undefined || schema.minProperties !== undefined || schema.default !== undefined) {
 
     if (schema.maxProperties !== undefined) {
@@ -444,7 +445,7 @@ function addObjectConstraints(schemaName: string, schema: v3.Schema, $: Context<
   return type;
 }
 
-export async function processAdditionalProperties(schema: v3.Schema, $: Context<v3.Model>, options?: Options): Promise<TypeReference> {
+export async function processAdditionalProperties(schema: v3.Schema, $: Context<v3.Model>, options?: Options): Promise<SchemaTypeReference> {
   if(!schema.additionalProperties) {
     throw new Error('should not get here.');
   }
@@ -474,7 +475,7 @@ export async function processAdditionalProperties(schema: v3.Schema, $: Context<
 }
 
 
-export async function processArraySchema(schema: v3.Schema, $: Context<v3.Model>, options?: Options): Promise<TypeReference> {
+export async function processArraySchema(schema: v3.Schema, $: Context<v3.Model>, options?: Options): Promise<SchemaTypeReference> {
   const schemaName = <Identity>(options?.isAnonymous ? anonymous('array') : nameOf(schema));
   // if this isn't anonymous or a property or parameter, things like descriptions belong to this declaration
   const common = (!options?.isAnonymous && !options?.isParameter && !options?.isProperty) ? commonProperties(schema) : {};

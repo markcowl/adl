@@ -4,6 +4,7 @@ import { anonymous, nameOf } from '@azure-tools/sourcemap';
 import { Request } from '../../../model/http/request';
 import { processSchema } from './schema';
 import { Context } from './serializer';
+import { TypeSyntax } from '../../../support/codegen';
 
 export async function* requestBody(requestBody: v3.RequestBody, $: Context, options?: { isAnonymous?: boolean }): AsyncGenerator<Request> {
   // a single request body gets turned into multiple requests with the same name 
@@ -14,7 +15,7 @@ export async function* requestBody(requestBody: v3.RequestBody, $: Context, opti
 
   for (const [mediaType, type] of items(requestBody.content)) {
     
-    const typeref = type.schema ? await processSchema(type.schema, $, {isAnonymous: true}) : { declaration: 'dunno', requiredReferences:[]};
+    const typeref = type.schema ? await processSchema(type.schema, $, {isAnonymous: true}) : { declaration: new TypeSyntax('dunno'), requiredReferences:[]};
 
     const request = new Request(bodyName, mediaType, typeref, {
       description: requestBody.description,

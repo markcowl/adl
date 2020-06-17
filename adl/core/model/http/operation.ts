@@ -1,6 +1,6 @@
 import { isAnonymous } from '@azure-tools/sourcemap';
-import { InterfaceDeclaration, JSDocTagStructure, MethodSignature, MethodSignatureStructure, ParameterDeclarationStructure, StructureKind, ts } from 'ts-morph';
-import { normalizeIdentifier, normalizeName, printCompilerNode } from '../../support/codegen';
+import { InterfaceDeclaration, JSDocTagStructure, MethodSignature, MethodSignatureStructure, ParameterDeclarationStructure, printNode, StructureKind, ts } from 'ts-morph';
+import { normalizeIdentifier, normalizeName } from '../../support/codegen';
 import { createDocs, getLastDoc, getTagValue, setTag } from '../../support/doc-tag';
 import { Alias } from '../alias';
 import { ApiModel } from '../api-model';
@@ -14,6 +14,7 @@ import { Parameter, ParameterType } from './parameter';
 import { AuthenticationRequirement, Connection } from './protocol';
 import { Request } from './request';
 import { Response } from './response';
+import { HeaderTypeReference } from '../schema/type';
 
 export enum Method {
   Get = 'get',
@@ -239,13 +240,13 @@ function createResponseStructures(
   ]);
 
   return { 
-    type: printCompilerNode(returnType),
+    type: printNode(returnType),
     tags: tagStructures
   };
 }
 
 function getParameterType(parameter: Parameter, chosenName: string) {
-  const innerType = parameter.typeRef.declaration;
+  const innerType = parameter.typeRef.declaration.text;
   const outerType = getOuterParameterType(parameter.type);
   const nameArg = parameter.name == chosenName ? '' : `, '${parameter.name}'`;
 
@@ -321,12 +322,12 @@ function getResponseDefinition(response: Response) {
   const properties = new Array<ts.PropertySignature>();
 
   if (response.typeref) {
-    const typeReference = ts.createTypeReferenceNode(response.typeref.declaration, undefined);
-    properties.push(ts.createPropertySignature(undefined, 'body', undefined, typeReference, undefined));
+    const responseType = response.typeref.declaration.node;
+    properties.push(ts.createPropertySignature(undefined, 'body', undefined, responseType, undefined));
   }
 
   if (response.headers.length > 0) {
-    const headerType = getHeadersType(response.headers);
+    const headerType = ts.createTupleTypeNode(response.headers.map(h => h.declaration.node));
     properties.push(ts.createPropertySignature(undefined, 'headers', undefined, headerType, undefined));
   }
 
@@ -343,26 +344,6 @@ function getResponseType(response: Response) {
     undefined,
     getResponseCriteria(response),
     getResponseDefinition(response));
-}
-
-function getHeadersType(headers: Array<Header | Alias<Header>>) {
-  const typeReferences = new Array<ts.TypeReferenceNode>();
-  
-  for (let each of headers) {
-    if (each instanceof Alias) {
-      each = each.target;
-    }
-
-    const args = [
-      ts.createTypeReferenceNode(each.typeRef?.declaration ?? 'any', undefined),
-      ts.createLiteralTypeNode(ts.createStringLiteral(each?.name))
-    ];
-  
-    const typeReference = ts.createTypeReferenceNode('Header', args); 
-    typeReferences.push(typeReference);
-  }
-
-  return ts.createTupleTypeNode(typeReferences);
 }
 
 class OperationImpl extends NamedElement<MethodSignature> implements Operation {
@@ -428,3 +409,4 @@ class OperationImpl extends NamedElement<MethodSignature> implements Operation {
     getLastDoc(this.node).addTags(responseStructures.tags);
   }
 }
+
