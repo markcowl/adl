@@ -1,10 +1,10 @@
-import { Property } from "@azure-tools/openapi/dist/v3";
 import { ApiModel } from "../model/api-model";
 import { Operation } from "../model/http/operation";
 import { OperationGroup, ParameterElement, ResponseCollection, ResponseElement, ResultElement } from "../model/operation";
 import { AliasType } from "../model/schema/alias";
 import { EnumElement, EnumType } from "../model/schema/enum";
 import { ModelType } from "../model/schema/model";
+import { Property } from "../model/schema/property";
 import { Declaration } from "../model/typescript/reference";
 
 export interface Rule {
