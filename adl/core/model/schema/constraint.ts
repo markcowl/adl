@@ -1,5 +1,5 @@
 import { ParameterDeclaration, PropertyDeclaration } from 'ts-morph';
-import { stringLiteral } from '../../support/codegen';
+import { stringLiteral, TypeSyntax } from '../../support/codegen';
 import { Identity } from '../types';
 import { Schema } from './schema';
 import { TypeReference } from './type';
@@ -233,7 +233,7 @@ export const Constraints = {
 export function addConstraint( type: TypeReference, constraint: ConstraintReference): TypeReference {
   return {
     ... type,
-    declaration: `${type.declaration} & ${constraint.implementation}`
+    declaration: new TypeSyntax(`${type.declaration} & ${constraint.implementation}`)
   };
 }
 
@@ -250,6 +250,6 @@ export const Encodings= {
 export function addEncoding(type: TypeReference, encoding: EncodingReference): TypeReference {
   return {
     ...type,
-    declaration: `${type.declaration} & ${encoding.implementation}`
+    declaration: new TypeSyntax(`${type.declaration} & ${encoding.implementation}`)
   };
 }

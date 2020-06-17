@@ -1,5 +1,5 @@
 import { isAnonymous } from '@azure-tools/sourcemap';
-import { literal, normalizeIdentifier } from '../../support/codegen';
+import { literal, normalizeIdentifier, TypeSyntax } from '../../support/codegen';
 import { createDocs } from '../../support/doc-tag';
 import { ApiModel } from '../api-model';
 import { Collection, Identity } from '../types';
@@ -13,7 +13,7 @@ export interface Enum extends Schema {
 
 export interface EnumValue {
   name?: string;
-  description?: string;
+  summary?: string;
   value: any;
 }
 
@@ -28,7 +28,7 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
       // which means there can be multiple declarations for the same enum 
       // so, we just return the existing enum by name 
       return {
-        declaration: existing.getName(),
+        declaration: new TypeSyntax(existing.getName()),
         sourceFile: file,
         requiredReferences: [],
       };
@@ -51,7 +51,7 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
 
     // return the reference to this enum 
     return {
-      declaration: name,
+      declaration: new TypeSyntax(name),
       sourceFile: file,
       requiredReferences: []
     };
@@ -59,7 +59,7 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
 
   // anonymous enums are far simpler, since they are purely inline information
   return {
-    declaration: values.map(v => literal(v.value)).join(' | '),
+    declaration: new TypeSyntax(values.map(v => literal(v.value)).join(' | ')),
     requiredReferences: [],
   };
 }

@@ -1,11 +1,12 @@
 import { isAnonymous } from '@azure-tools/sourcemap';
 import { TypeAliasDeclaration } from 'ts-morph';
+import { TypeSyntax } from '../../support/codegen';
+import { createDocs, Documentation } from '../../support/doc-tag';
 import { addImportsTo, TypeDeclaration } from '../../support/typescript';
 import { ApiModel } from '../api-model';
 import { Collection, CollectionImpl, Identity } from '../types';
 import { Constraint } from './constraint';
 import { Default } from './default';
-import { SchemaInitializer } from './object';
 import { TSSchema } from './schema';
 import { TypeReference } from './type';
 
@@ -62,7 +63,7 @@ export class Alias extends TSSchema<TypeAliasDeclaration> {
   }
 }
 
-export function createTypeAlias(api: ApiModel, identity: Identity, typeReference: TypeReference, initializer?: Partial<SchemaInitializer>): TypeReference {
+export function createTypeAlias<T extends TypeReference>(api: ApiModel, identity: Identity, typeReference: T, initializer?: Documentation): T {
   if (isAnonymous(identity)) {
     // if it doesn't have a name, just return the type reference instead.
     return typeReference;
@@ -72,16 +73,20 @@ export function createTypeAlias(api: ApiModel, identity: Identity, typeReference
   // we have to add the imports of the target to this file
   addImportsTo(file, typeReference);
 
-  new Alias(file.addTypeAlias({
+  file.addTypeAlias({
     name,
-    type: typeReference.declaration,
+    type: typeReference.declaration.text,
     isExported: true,
-  }));
+    docs: createDocs(initializer)
+  });
   
-  return {
-    declaration: name,
+  const result: TypeReference = {
+    declaration: new TypeSyntax(name),
     sourceFile: file,
     requiredReferences: [],
+    ...initializer 
   };
+
+  return <T>result;
 }
 

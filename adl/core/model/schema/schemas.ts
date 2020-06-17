@@ -6,10 +6,12 @@ import { Default } from './default';
 import { Enum } from './enum';
 import { AndSchema, AnyOfSchema, XorSchema } from './group';
 import { ObjectSchemaImpl } from './object';
+import { SchemaTypeReference } from './type';
+import { TypeSyntax } from '../../support/codegen';
 
-function createPrimitiveSchema( declaration: string ) {
+function createPrimitiveSchema( declaration: string ): SchemaTypeReference {
   return {
-    declaration: declaration,
+    declaration: new TypeSyntax(declaration),
     requiredReferences: []
   };
 }

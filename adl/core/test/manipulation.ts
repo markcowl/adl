@@ -13,7 +13,7 @@ import { EnumValue } from '../model/schema/enum';
     for (let i = 0; i < actual.length; i++) {
       assert.strictEqual(actual[i].name, expected[i].name);
       assert.strictEqual(actual[i].value, expected[i].value);
-      assert.strictEqual(actual[i].description, expected[i].description);
+      assert.strictEqual(actual[i].summary, expected[i].summary);
     }
   }
 

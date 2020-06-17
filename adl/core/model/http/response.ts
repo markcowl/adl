@@ -1,7 +1,6 @@
-import { Alias } from '../alias';
 import * as base from '../operation';
+import { HeaderTypeReference } from '../schema/type';
 import { Identity } from '../types';
-import { Header } from './header';
 
 export class Response extends base.Response {
   /**
@@ -10,7 +9,7 @@ export class Response extends base.Response {
    */
   description?: string;
 
-  headers = new Array<Header|Alias<Header>>();
+  headers = new Array<HeaderTypeReference>();
 
   /**
    * 

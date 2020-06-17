@@ -3,8 +3,8 @@ import { anonymous, nameOf } from '@azure-tools/sourcemap';
 import { createTypeAlias } from '../../../model/schema/alias';
 import { addEncoding, EncodingReference } from '../../../model/schema/constraint';
 import { addDefault } from '../../../model/schema/default';
-import { createEnum } from '../../../model/schema/enum';
-import { TypeReference } from '../../../model/schema/type';
+import { createEnum, EnumValue } from '../../../model/schema/enum';
+import { SchemaTypeReference } from '../../../model/schema/type';
 import { Context, OAIModel } from '../../../support/visitor';
 
 
@@ -49,75 +49,75 @@ export function versionInfo<T extends OAIModel>($: Context<T>, versionedElement:
   };
 }
 
-export async function processCharSchema<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>): Promise<TypeReference> {
+export async function processCharSchema<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>): Promise<SchemaTypeReference> {
   $.assertNoForbiddenProperties(schema, ...<any>notPrimitiveProperties);
 
   return wrapWithAliasIfNeeded(schema, $.api.schemas.primitives.char, $);
 }
 
 
-export async function processDateSchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>): Promise<TypeReference> {
+export async function processDateSchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>): Promise<SchemaTypeReference> {
   $.assertNoForbiddenProperties(schema, ...<any>notPrimitiveProperties);
 
   return wrapWithAliasIfNeeded(schema, $.api.schemas.primitives.date, $);
 }
 
-export async function processTimeSchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>): Promise<TypeReference> {
+export async function processTimeSchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>): Promise<SchemaTypeReference> {
   $.assertNoForbiddenProperties(schema, ...<any>notPrimitiveProperties);
 
   return wrapWithAliasIfNeeded(schema, $.api.schemas.primitives.time, $);
 }
 
-export async function processDateTimeSchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>, encoding?: EncodingReference): Promise<TypeReference> {
+export async function processDateTimeSchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>, encoding?: EncodingReference): Promise<SchemaTypeReference> {
   $.assertNoForbiddenProperties(schema, ...<any>notPrimitiveProperties);
 
   return wrapWithAliasIfNeeded(schema, $.api.schemas.primitives.dateTime, $, encoding);
 }
 
-export async function processDurationSchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>): Promise<TypeReference> {
+export async function processDurationSchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>): Promise<SchemaTypeReference> {
   $.assertNoForbiddenProperties(schema, ...<any>notPrimitiveProperties);
 
   return wrapWithAliasIfNeeded(schema, $.api.schemas.primitives.duration, $);
 }
 
-export async function processUuidSchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>): Promise<TypeReference> {
+export async function processUuidSchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>): Promise<SchemaTypeReference> {
   $.assertNoForbiddenProperties(schema, ...<any>notPrimitiveProperties);
 
   return wrapWithAliasIfNeeded(schema, $.api.schemas.primitives.uuid, $);
 }
 
-export async function processUriSchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>): Promise<TypeReference> {
+export async function processUriSchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>): Promise<SchemaTypeReference> {
   $.assertNoForbiddenProperties(schema, ...<any>notPrimitiveProperties);
 
   return wrapWithAliasIfNeeded(schema, $.api.schemas.primitives.uri, $);
 }
 
-export async function processPasswordSchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>): Promise<TypeReference> {
+export async function processPasswordSchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>): Promise<SchemaTypeReference> {
   $.assertNoForbiddenProperties(schema, ...<any>notPrimitiveProperties);
 
   return wrapWithAliasIfNeeded(schema, $.api.schemas.primitives.password, $);
 }
 
-export async function processOdataSchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>): Promise<TypeReference> {
+export async function processOdataSchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>): Promise<SchemaTypeReference> {
   $.assertNoForbiddenProperties(schema, ...<any>notPrimitiveProperties);
 
   return wrapWithAliasIfNeeded(schema, $.api.schemas.primitives.odata, $);
 }
 
-export async function processBooleanSchema<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>, options?: Options): Promise<TypeReference> {
+export async function processBooleanSchema<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>, options?: Options): Promise<SchemaTypeReference> {
   $.assertNoForbiddenProperties(schema, ...<any>notPrimitiveProperties);
 
   return wrapWithAliasIfNeeded(schema, $.api.schemas.primitives.boolean, $);
 }
 
-export async function processByteArraySchema<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>): Promise<TypeReference> {
+export async function processByteArraySchema<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>): Promise<SchemaTypeReference> {
   // throws on error.
   $.assertNoForbiddenProperties(schema, ...<any>stringProperties, ...<any>objectProperties, ...<any>numberProperties);
     
   return $.api.schemas.primitives.byteArray;
 }
 
-export function wrapWithAliasIfNeeded<T extends OAIModel>(schema: v3.Schema | v2.Schema, type: TypeReference, $: Context<T>, encoding?: EncodingReference) {
+export function wrapWithAliasIfNeeded<T extends OAIModel>(schema: v3.Schema | v2.Schema, type: SchemaTypeReference, $: Context<T>, encoding?: EncodingReference) {
   if (schema.default || schema.description || schema.title || (<any>schema).nullable || schema['x-nullable'] || (<any>schema).readOnly || encoding) {
     let alias = createTypeAlias($.api, anonymous(nameOf(schema)), type, commonProperties(schema));
     
@@ -141,7 +141,7 @@ export function wrapWithAliasIfNeeded<T extends OAIModel>(schema: v3.Schema | v2
   return type;
 }
 
-export async function processNumberSchema<T extends OAIModel>(schema: v2.Schema|v3.Schema, $: Context<T>, options?: Options ): Promise<TypeReference> {
+export async function processNumberSchema<T extends OAIModel>(schema: v2.Schema|v3.Schema, $: Context<T>, options?: Options ): Promise<SchemaTypeReference> {
   $.assertNoForbiddenProperties(schema, ...<any>stringProperties, ...<any>objectProperties, ...<any>arrayProperties);
   
   switch (schema.format) {
@@ -158,7 +158,7 @@ export async function processNumberSchema<T extends OAIModel>(schema: v2.Schema|
 }
 
 
-export async function processIntegerSchema<T extends OAIModel>(schema: v2.Schema | v3.Schema, $: Context<T>, options?: Options ): Promise<TypeReference> {
+export async function processIntegerSchema<T extends OAIModel>(schema: v2.Schema | v3.Schema, $: Context<T>, options?: Options ): Promise<SchemaTypeReference> {
   $.assertNoForbiddenProperties(schema, ...<any>stringProperties, ...<any>objectProperties, ...<any>arrayProperties);
 
   switch (schema.format) {
@@ -177,20 +177,26 @@ export async function processIntegerSchema<T extends OAIModel>(schema: v2.Schema
   }
 }
 
-export async function processFileSchema<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>, options?: Options): Promise<TypeReference> {
+export async function processFileSchema<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>, options?: Options): Promise<SchemaTypeReference> {
   return $.api.schemas.primitives.file;
 }
 
-export async function processAnySchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>): Promise<TypeReference> {
+export async function processAnySchema<T extends OAIModel>(schema: v3.Schema|v2.Schema, $: Context<T>): Promise<SchemaTypeReference> {
   return $.api.schemas.primitives.any;
 }
 
-export async function processEnumSchema<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>, options?: Options): Promise<TypeReference> {
+export async function processEnumSchema<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>, options?: Options): Promise<SchemaTypeReference> {
   const schemaEnum = schema.enum || [];
   const xmsEnum = schema['x-ms-enum'] || {};
-  const values: Array<XMSEnumValue> = xmsEnum.values || schemaEnum.map(value => ({ value }));
+  const xmsValues: Array<XMSEnumValue> = xmsEnum.values || schemaEnum.map(value => ({ value }));
   const name = xmsEnum.name || (options?.isAnonymous ? anonymous('enum') : nameOf(schema));
   const extensible = xmsEnum.modelAsString;
+
+  const values: Array<EnumValue> = xmsValues.map(value => ({
+    value: value.value,
+    name: value.name,
+    summary: value.description,
+  }));
 
   // enums are a bit funny -- they can define their name inside the x-ms-enum declaration 
   // which means there can be multiple declarations for the same enum 

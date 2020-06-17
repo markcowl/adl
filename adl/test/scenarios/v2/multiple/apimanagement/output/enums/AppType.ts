@@ -5,9 +5,6 @@
  * @since 2019-12-01
  */
 export enum AppType {
-    /**
-     *
-     * @description User create request was sent by new developer portal.
-     */
+    /** User create request was sent by new developer portal. */
     developerPortal = 'developerPortal'
 }
