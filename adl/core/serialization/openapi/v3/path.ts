@@ -3,13 +3,13 @@ import { common, isReference, v3 } from '@azure-tools/openapi';
 import { nameOf } from '@azure-tools/sourcemap';
 import { Alias } from '../../../model/alias';
 import { createOperationGroup, createOperationStructure, Method, OperationStructure, Path } from '../../../model/http/operation';
-import { Parameter } from '../../../model/http/parameter';
 import { Request } from '../../../model/http/request';
 import { Response } from '../../../model/http/response';
-import { addExtensionsToAttic, push } from '../common';
+import { ParameterTypeReference } from '../../../model/schema/type';
+import { addExtensionsToAttic } from '../common';
 import { getGroupAndName } from '../common/path';
 import { versionInfo } from '../common/schema';
-import { parameter } from './parameter';
+import { processParameter } from './parameter';
 import { requestBody } from './request-body';
 import { response } from './response';
 import { Context } from './serializer';
@@ -50,21 +50,13 @@ export async function* processPath(pathItem: v3.PathItem, $: Context, options?: 
 export async function processOperation(path: Path, operation: v3.Operation, shared: v3.PathItemBase, $: Context): Promise<OperationStructure> {
   const [group, name] = getGroupAndName(operation, path.path);
 
-  const parameters = new Array<Parameter | Alias<Parameter>>();
+  const parameters = new Array<ParameterTypeReference>();
   const requests = new Array<Request | Alias<Request>>();
   const responses = new Array<Response | Alias<Response>>();
 
-  // OAI3 parameters are all in the operation
-  for (const p of values(shared.parameters)) {
-    // create each parameter in the operation 
-    await push(parameters, $.processInline(parameter, p));
-  }
-  
-  for (const p of values(operation.parameters)) {
-    // create each parameter in the operation 
-    await push(parameters, $.processInline(parameter, p));
-  }
-  
+  await processOperationParameters(shared.parameters, $, parameters);
+  await processOperationParameters(operation.parameters, $, parameters);
+
   // request body
   for await (const request of $.processInline(requestBody, operation.requestBody, { isAnonymous: true })) {
     // each request body.
@@ -104,4 +96,15 @@ export async function processOperation(path: Path, operation: v3.Operation, shar
   // }
 
   // yield addExtensionsToAttic(result, operation);
+}
+
+async function processOperationParameters<T>(
+  parameters: ReadonlyArray<v3.Parameter | v3.ParameterReference> | undefined,
+  $: Context, 
+  result: Array<ParameterTypeReference>
+) {
+  for (const each of values(parameters)) {
+    const p = await processParameter(each, $, { isAnonymous: true });
+    result.push(p);
+  }
 }

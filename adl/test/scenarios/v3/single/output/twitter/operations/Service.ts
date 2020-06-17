@@ -17,17 +17,11 @@ export interface Service {
      * @http GET /labs/2/tweets
      * @tag Tweets
      * @param ids - A comma separated list of Tweet IDs. Up to 100 are allowed in a single request.
-     * @param expansions - A comma separated list of fields to expand.
-     * @param tweet_fields - A comma separated list of Tweet fields to display.
-     * @param user_fields - A comma separated list of User fields to display.
-     * @param media_fields - A comma separated list of Media fields to display.
-     * @param place_fields - A comma separated list of Place fields to display.
-     * @param poll_fields - A comma separated list of Poll fields to display.
      * @return 200|application/json - The request was successful
      * @return HttpErrorResponse|application/json - The request has failed.
      * @return HttpErrorResponse|application/problem+json - The request has failed.
      */
-    findTweetsById(ids: Query<Array<TweetID> & MaximumElements<100> & MinimumElements<1>>, expansions?: Query<Array<"author_id" | "referenced_tweets.id" | "in_reply_to_user_id" | "geo.place_id" | "attachments.media_keys" | "attachments.poll_ids" | "entities.mentions.username" | "referenced_tweets.id.author_id"> & MinimumElements<1> & UniqueElements>, tweet_fields?: Query<Array<"id" | "created_at" | "text" | "author_id" | "in_reply_to_user_id" | "referenced_tweets" | "attachments" | "withheld" | "geo" | "entities" | "public_metrics" | "possibly_sensitive" | "source" | "lang" | "context_annotations"> & MinimumElements<1> & UniqueElements, 'tweet.fields'>, user_fields?: Query<Array<"id" | "created_at" | "name" | "username" | "protected" | "verified" | "withheld" | "profile_image_url" | "location" | "url" | "description" | "entities" | "pinned_tweet_id" | "public_metrics"> & MinimumElements<1> & UniqueElements, 'user.fields'>, media_fields?: Query<Array<"media_key" | "duration_ms" | "height" | "preview_image_url" | "type" | "url" | "width"> & MinimumElements<1> & UniqueElements, 'media.fields'>, place_fields?: Query<Array<"id" | "name" | "country_code" | "place_type" | "full_name" | "country" | "contained_within" | "geo"> & MinimumElements<1> & UniqueElements, 'place.fields'>, poll_fields?: Query<Array<"id" | "options" | "voting_status" | "end_datetime" | "duration_minutes"> & MinimumElements<1> & UniqueElements, 'poll.fields'>): [(code: 200, mediaType: "application/json") => {
+    findTweetsById(ids: Query<Array<TweetID> & MaximumElements<100> & MinimumElements<1>>, expansions?: TweetExpansionsParameter, tweet_fields?: TweetFieldsParameter, user_fields?: UserFieldsParameter, media_fields?: MediaFieldsParameter, place_fields?: PlaceFieldsParameter, poll_fields?: PollFieldsParameter): [(code: 200, mediaType: "application/json") => {
         body: TweetLookupResponse;
     }, (code: "HttpErrorResponse", mediaType: "application/json") => {
         body: Error;
@@ -48,17 +42,11 @@ export interface Service {
      * @param until_id - Returns results with a Tweet ID less than (that is, older than) the specified ID.
      * @param max_results - The maximum number of search results to be returned by a request.
      * @param next_token - This parameter is used to get the next 'page' of results. The value used with the parameter is pulled directly from the response provided by the API, and should not be modified.
-     * @param expansions - A comma separated list of fields to expand.
-     * @param tweet_fields - A comma separated list of Tweet fields to display.
-     * @param user_fields - A comma separated list of User fields to display.
-     * @param media_fields - A comma separated list of Media fields to display.
-     * @param place_fields - A comma separated list of Place fields to display.
-     * @param poll_fields - A comma separated list of Poll fields to display.
      * @return 200|application/json - Tweets recent search response
      * @return HttpErrorResponse|application/json - The request has failed.
      * @return HttpErrorResponse|application/problem+json - The request has failed.
      */
-    tweetsRecentSearch(query: Query<string & MaxLength<512> & MinLength<1>>, start_time?: Query<dateTime>, end_time?: Query<dateTime>, since_id?: Query<TweetID>, until_id?: Query<TweetID>, max_results?: Query<int32 /* todo: add defaultValue '10' */ & Minimum<10> & Maximum<100>>, next_token?: Query<string>, expansions?: Query<Array<"author_id" | "referenced_tweets.id" | "in_reply_to_user_id" | "geo.place_id" | "attachments.media_keys" | "attachments.poll_ids" | "entities.mentions.username" | "referenced_tweets.id.author_id"> & MinimumElements<1> & UniqueElements>, tweet_fields?: Query<Array<"id" | "created_at" | "text" | "author_id" | "in_reply_to_user_id" | "referenced_tweets" | "attachments" | "withheld" | "geo" | "entities" | "public_metrics" | "possibly_sensitive" | "source" | "lang" | "context_annotations"> & MinimumElements<1> & UniqueElements, 'tweet.fields'>, user_fields?: Query<Array<"id" | "created_at" | "name" | "username" | "protected" | "verified" | "withheld" | "profile_image_url" | "location" | "url" | "description" | "entities" | "pinned_tweet_id" | "public_metrics"> & MinimumElements<1> & UniqueElements, 'user.fields'>, media_fields?: Query<Array<"media_key" | "duration_ms" | "height" | "preview_image_url" | "type" | "url" | "width"> & MinimumElements<1> & UniqueElements, 'media.fields'>, place_fields?: Query<Array<"id" | "name" | "country_code" | "place_type" | "full_name" | "country" | "contained_within" | "geo"> & MinimumElements<1> & UniqueElements, 'place.fields'>, poll_fields?: Query<Array<"id" | "options" | "voting_status" | "end_datetime" | "duration_minutes"> & MinimumElements<1> & UniqueElements, 'poll.fields'>): [(code: 200, mediaType: "application/json") => {
+    tweetsRecentSearch(query: Query<string & MaxLength<512> & MinLength<1>>, start_time?: Query<dateTime>, end_time?: Query<dateTime>, since_id?: Query<TweetID>, until_id?: Query<TweetID>, max_results?: Query<int32 /* todo: add defaultValue '10' */ & Minimum<10> & Maximum<100>>, next_token?: Query<string>, expansions?: TweetExpansionsParameter, tweet_fields?: TweetFieldsParameter, user_fields?: UserFieldsParameter, media_fields?: MediaFieldsParameter, place_fields?: PlaceFieldsParameter, poll_fields?: PollFieldsParameter): [(code: 200, mediaType: "application/json") => {
         body: TweetSearchResponse;
     }, (code: "HttpErrorResponse", mediaType: "application/json") => {
         body: Error;
@@ -72,17 +60,11 @@ export interface Service {
      * @http GET /labs/2/tweets/{id}
      * @tag Tweets
      * @param id - A single Tweet ID.
-     * @param expansions - A comma separated list of fields to expand.
-     * @param tweet_fields - A comma separated list of Tweet fields to display.
-     * @param user_fields - A comma separated list of User fields to display.
-     * @param media_fields - A comma separated list of Media fields to display.
-     * @param place_fields - A comma separated list of Place fields to display.
-     * @param poll_fields - A comma separated list of Poll fields to display.
      * @return 200|application/json - The request was successful
      * @return HttpErrorResponse|application/json - The request has failed.
      * @return HttpErrorResponse|application/problem+json - The request has failed.
      */
-    findTweetById(id: TweetID, expansions?: Query<Array<"author_id" | "referenced_tweets.id" | "in_reply_to_user_id" | "geo.place_id" | "attachments.media_keys" | "attachments.poll_ids" | "entities.mentions.username" | "referenced_tweets.id.author_id"> & MinimumElements<1> & UniqueElements>, tweet_fields?: Query<Array<"id" | "created_at" | "text" | "author_id" | "in_reply_to_user_id" | "referenced_tweets" | "attachments" | "withheld" | "geo" | "entities" | "public_metrics" | "possibly_sensitive" | "source" | "lang" | "context_annotations"> & MinimumElements<1> & UniqueElements, 'tweet.fields'>, user_fields?: Query<Array<"id" | "created_at" | "name" | "username" | "protected" | "verified" | "withheld" | "profile_image_url" | "location" | "url" | "description" | "entities" | "pinned_tweet_id" | "public_metrics"> & MinimumElements<1> & UniqueElements, 'user.fields'>, media_fields?: Query<Array<"media_key" | "duration_ms" | "height" | "preview_image_url" | "type" | "url" | "width"> & MinimumElements<1> & UniqueElements, 'media.fields'>, place_fields?: Query<Array<"id" | "name" | "country_code" | "place_type" | "full_name" | "country" | "contained_within" | "geo"> & MinimumElements<1> & UniqueElements, 'place.fields'>, poll_fields?: Query<Array<"id" | "options" | "voting_status" | "end_datetime" | "duration_minutes"> & MinimumElements<1> & UniqueElements, 'poll.fields'>): [(code: 200, mediaType: "application/json") => {
+    findTweetById(id: TweetID, expansions?: TweetExpansionsParameter, tweet_fields?: TweetFieldsParameter, user_fields?: UserFieldsParameter, media_fields?: MediaFieldsParameter, place_fields?: PlaceFieldsParameter, poll_fields?: PollFieldsParameter): [(code: 200, mediaType: "application/json") => {
         body: SingleTweetLookupResponse;
     }, (code: "HttpErrorResponse", mediaType: "application/json") => {
         body: Error;
@@ -132,17 +114,11 @@ export interface Service {
      * @http GET /labs/2/users
      * @tag Users
      * @param ids - Required. A list of User IDs, comma-separated. You can specify up to 100 IDs.
-     * @param expansions - A comma separated list of fields to expand.
-     * @param tweet_fields - A comma separated list of Tweet fields to display.
-     * @param user_fields - A comma separated list of User fields to display.
-     * @param media_fields - A comma separated list of Media fields to display.
-     * @param place_fields - A comma separated list of Place fields to display.
-     * @param poll_fields - A comma separated list of Poll fields to display.
      * @return 200|application/json - The request was successful
      * @return HttpErrorResponse|application/json - The request has failed.
      * @return HttpErrorResponse|application/problem+json - The request has failed.
      */
-    findUsersById(ids: Query<Array<UserID> & MaximumElements<100> & MinimumElements<1>>, expansions?: Query<Array<"pinned_tweet_id"> & MinimumElements<1> & UniqueElements>, tweet_fields?: Query<Array<"id" | "created_at" | "text" | "author_id" | "in_reply_to_user_id" | "referenced_tweets" | "attachments" | "withheld" | "geo" | "entities" | "public_metrics" | "possibly_sensitive" | "source" | "lang" | "context_annotations"> & MinimumElements<1> & UniqueElements, 'tweet.fields'>, user_fields?: Query<Array<"id" | "created_at" | "name" | "username" | "protected" | "verified" | "withheld" | "profile_image_url" | "location" | "url" | "description" | "entities" | "pinned_tweet_id" | "public_metrics"> & MinimumElements<1> & UniqueElements, 'user.fields'>, media_fields?: Query<Array<"media_key" | "duration_ms" | "height" | "preview_image_url" | "type" | "url" | "width"> & MinimumElements<1> & UniqueElements, 'media.fields'>, place_fields?: Query<Array<"id" | "name" | "country_code" | "place_type" | "full_name" | "country" | "contained_within" | "geo"> & MinimumElements<1> & UniqueElements, 'place.fields'>, poll_fields?: Query<Array<"id" | "options" | "voting_status" | "end_datetime" | "duration_minutes"> & MinimumElements<1> & UniqueElements, 'poll.fields'>): [(code: 200, mediaType: "application/json") => {
+    findUsersById(ids: Query<Array<UserID> & MaximumElements<100> & MinimumElements<1>>, expansions?: UserExpansionsParameter, tweet_fields?: TweetFieldsParameter, user_fields?: UserFieldsParameter, media_fields?: MediaFieldsParameter, place_fields?: PlaceFieldsParameter, poll_fields?: PollFieldsParameter): [(code: 200, mediaType: "application/json") => {
         body: UserLookupResponse;
     }, (code: "HttpErrorResponse", mediaType: "application/json") => {
         body: Error;
@@ -156,17 +132,11 @@ export interface Service {
      * @http GET /labs/2/users/by
      * @tag Users
      * @param usernames - Required . A list of usernames, comma-separated. You can specify up to 100 usernames.
-     * @param expansions - A comma separated list of fields to expand.
-     * @param tweet_fields - A comma separated list of Tweet fields to display.
-     * @param user_fields - A comma separated list of User fields to display.
-     * @param media_fields - A comma separated list of Media fields to display.
-     * @param place_fields - A comma separated list of Place fields to display.
-     * @param poll_fields - A comma separated list of Poll fields to display.
      * @return 200|application/json - The request was successful
      * @return HttpErrorResponse|application/json - The request has failed.
      * @return HttpErrorResponse|application/problem+json - The request has failed.
      */
-    findUsersByUsername(usernames: Query<Array<UserName> & MaximumElements<100> & MinimumElements<1>>, expansions?: Query<Array<"pinned_tweet_id"> & MinimumElements<1> & UniqueElements>, tweet_fields?: Query<Array<"id" | "created_at" | "text" | "author_id" | "in_reply_to_user_id" | "referenced_tweets" | "attachments" | "withheld" | "geo" | "entities" | "public_metrics" | "possibly_sensitive" | "source" | "lang" | "context_annotations"> & MinimumElements<1> & UniqueElements, 'tweet.fields'>, user_fields?: Query<Array<"id" | "created_at" | "name" | "username" | "protected" | "verified" | "withheld" | "profile_image_url" | "location" | "url" | "description" | "entities" | "pinned_tweet_id" | "public_metrics"> & MinimumElements<1> & UniqueElements, 'user.fields'>, media_fields?: Query<Array<"media_key" | "duration_ms" | "height" | "preview_image_url" | "type" | "url" | "width"> & MinimumElements<1> & UniqueElements, 'media.fields'>, place_fields?: Query<Array<"id" | "name" | "country_code" | "place_type" | "full_name" | "country" | "contained_within" | "geo"> & MinimumElements<1> & UniqueElements, 'place.fields'>, poll_fields?: Query<Array<"id" | "options" | "voting_status" | "end_datetime" | "duration_minutes"> & MinimumElements<1> & UniqueElements, 'poll.fields'>): [(code: 200, mediaType: "application/json") => {
+    findUsersByUsername(usernames: Query<Array<UserName> & MaximumElements<100> & MinimumElements<1>>, expansions?: UserExpansionsParameter, tweet_fields?: TweetFieldsParameter, user_fields?: UserFieldsParameter, media_fields?: MediaFieldsParameter, place_fields?: PlaceFieldsParameter, poll_fields?: PollFieldsParameter): [(code: 200, mediaType: "application/json") => {
         body: UserLookupResponse;
     }, (code: "HttpErrorResponse", mediaType: "application/json") => {
         body: Error;
@@ -180,17 +150,11 @@ export interface Service {
      * @http GET /labs/2/users/by/username/{username}
      * @tag Users
      * @param username - Required. A username.
-     * @param expansions - A comma separated list of fields to expand.
-     * @param tweet_fields - A comma separated list of Tweet fields to display.
-     * @param user_fields - A comma separated list of User fields to display.
-     * @param media_fields - A comma separated list of Media fields to display.
-     * @param place_fields - A comma separated list of Place fields to display.
-     * @param poll_fields - A comma separated list of Poll fields to display.
      * @return 200|application/json - The request was successful
      * @return HttpErrorResponse|application/json - The request has failed.
      * @return HttpErrorResponse|application/problem+json - The request has failed.
      */
-    findUserByUsername(username: UserName, expansions?: Query<Array<"pinned_tweet_id"> & MinimumElements<1> & UniqueElements>, tweet_fields?: Query<Array<"id" | "created_at" | "text" | "author_id" | "in_reply_to_user_id" | "referenced_tweets" | "attachments" | "withheld" | "geo" | "entities" | "public_metrics" | "possibly_sensitive" | "source" | "lang" | "context_annotations"> & MinimumElements<1> & UniqueElements, 'tweet.fields'>, user_fields?: Query<Array<"id" | "created_at" | "name" | "username" | "protected" | "verified" | "withheld" | "profile_image_url" | "location" | "url" | "description" | "entities" | "pinned_tweet_id" | "public_metrics"> & MinimumElements<1> & UniqueElements, 'user.fields'>, media_fields?: Query<Array<"media_key" | "duration_ms" | "height" | "preview_image_url" | "type" | "url" | "width"> & MinimumElements<1> & UniqueElements, 'media.fields'>, place_fields?: Query<Array<"id" | "name" | "country_code" | "place_type" | "full_name" | "country" | "contained_within" | "geo"> & MinimumElements<1> & UniqueElements, 'place.fields'>, poll_fields?: Query<Array<"id" | "options" | "voting_status" | "end_datetime" | "duration_minutes"> & MinimumElements<1> & UniqueElements, 'poll.fields'>): [(code: 200, mediaType: "application/json") => {
+    findUserByUsername(username: UserName, expansions?: UserExpansionsParameter, tweet_fields?: TweetFieldsParameter, user_fields?: UserFieldsParameter, media_fields?: MediaFieldsParameter, place_fields?: PlaceFieldsParameter, poll_fields?: PollFieldsParameter): [(code: 200, mediaType: "application/json") => {
         body: SingleUserLookupResponse;
     }, (code: "HttpErrorResponse", mediaType: "application/json") => {
         body: Error;
@@ -204,17 +168,11 @@ export interface Service {
      * @http GET /labs/2/users/{id}
      * @tag Users
      * @param id - Required. A User ID.
-     * @param expansions - A comma separated list of fields to expand.
-     * @param tweet_fields - A comma separated list of Tweet fields to display.
-     * @param user_fields - A comma separated list of User fields to display.
-     * @param media_fields - A comma separated list of Media fields to display.
-     * @param place_fields - A comma separated list of Place fields to display.
-     * @param poll_fields - A comma separated list of Poll fields to display.
      * @return 200|application/json - The request was successful
      * @return HttpErrorResponse|application/json - The request has failed.
      * @return HttpErrorResponse|application/problem+json - The request has failed.
      */
-    findUserById(id: UserID, expansions?: Query<Array<"pinned_tweet_id"> & MinimumElements<1> & UniqueElements>, tweet_fields?: Query<Array<"id" | "created_at" | "text" | "author_id" | "in_reply_to_user_id" | "referenced_tweets" | "attachments" | "withheld" | "geo" | "entities" | "public_metrics" | "possibly_sensitive" | "source" | "lang" | "context_annotations"> & MinimumElements<1> & UniqueElements, 'tweet.fields'>, user_fields?: Query<Array<"id" | "created_at" | "name" | "username" | "protected" | "verified" | "withheld" | "profile_image_url" | "location" | "url" | "description" | "entities" | "pinned_tweet_id" | "public_metrics"> & MinimumElements<1> & UniqueElements, 'user.fields'>, media_fields?: Query<Array<"media_key" | "duration_ms" | "height" | "preview_image_url" | "type" | "url" | "width"> & MinimumElements<1> & UniqueElements, 'media.fields'>, place_fields?: Query<Array<"id" | "name" | "country_code" | "place_type" | "full_name" | "country" | "contained_within" | "geo"> & MinimumElements<1> & UniqueElements, 'place.fields'>, poll_fields?: Query<Array<"id" | "options" | "voting_status" | "end_datetime" | "duration_minutes"> & MinimumElements<1> & UniqueElements, 'poll.fields'>): [(code: 200, mediaType: "application/json") => {
+    findUserById(id: UserID, expansions?: UserExpansionsParameter, tweet_fields?: TweetFieldsParameter, user_fields?: UserFieldsParameter, media_fields?: MediaFieldsParameter, place_fields?: PlaceFieldsParameter, poll_fields?: PollFieldsParameter): [(code: 200, mediaType: "application/json") => {
         body: SingleUserLookupResponse;
     }, (code: "HttpErrorResponse", mediaType: "application/json") => {
         body: Error;
