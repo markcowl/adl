@@ -8,13 +8,12 @@ import * as base from '../operation';
 import { Reference } from '../reference';
 import { VersionedEntity } from '../schema/object';
 import { NamedElement } from '../schema/schema';
+import { ParameterTypeReference } from '../schema/type';
 import { ArrayCollectionImpl, Collection, CollectionImpl, Identity } from '../types';
-import { Header } from './header';
 import { Parameter, ParameterType } from './parameter';
 import { AuthenticationRequirement, Connection } from './protocol';
 import { Request } from './request';
 import { Response } from './response';
-import { HeaderTypeReference } from '../schema/type';
 
 export enum Method {
   Get = 'get',
@@ -72,7 +71,7 @@ export interface OperationInitializer extends VersionedEntity {
   description: string;
   summary: string;
   tags: Array<string>;
-  parameters: Array<Parameter | Alias<Parameter>>;
+  parameters: Array<ParameterTypeReference>;
   requests: Array<Request | Alias<Request>>;
   responses: Array<Response | Alias<Response>>;
   references: Array<Reference>;
@@ -150,14 +149,13 @@ function createTagStructures(tags?: Array<string>) {
   return tagStructures;
 }
 
-function createParameterStructures(parameters?: Array<Parameter | Alias<Parameter>>) {
+function createParameterStructures(parameters?: Array<ParameterTypeReference>) {
   const parameterStructures = new Array<ParameterDeclarationStructure>();
   const tagStructures = new Array<JSDocTagStructure>();
 
-  for(const each of parameters ?? []) {
-    const parameter = each instanceof Alias ? each.target : each;
+  for(const parameter of parameters ?? []) {
     const name = normalizeName(parameter.name);
-    const type = getParameterType(parameter, name);
+    const type = parameter.declaration.text;
 
     parameterStructures.push({
       kind: StructureKind.Parameter,
@@ -344,69 +342,5 @@ function getResponseType(response: Response) {
     undefined,
     getResponseCriteria(response),
     getResponseDefinition(response));
-}
-
-class OperationImpl extends NamedElement<MethodSignature> implements Operation {
-  readonly tags: CollectionImpl<string, this>;
-  readonly parameters: CollectionImpl<Parameter | Alias<Parameter>, this>;
-  readonly requests: CollectionImpl<Request | Alias<Request>, this>;
-  readonly responses: CollectionImpl<Response | Alias<Response>, this>;
-  readonly references = new ArrayCollectionImpl<Reference>();
-  readonly authenticationRequirements = new ArrayCollectionImpl<AuthenticationRequirement>();
-  readonly connections = new ArrayCollectionImpl<Connection>();
-
-  constructor(node: MethodSignature) {
-    super(node);
-    this.parameters = new CollectionImpl(this, this.pushParameters, undefined!, undefined!);
-    this.requests = new CollectionImpl(this, this.pushRequests, undefined!, undefined!);
-    this.responses = new CollectionImpl(this, this.pushResponses, undefined!, undefined!);
-    this.tags = new CollectionImpl(this, this.pushTags, undefined!, undefined!);
-  }
-
-  get group() {
-    return (<InterfaceDeclaration>(this.node.getParent())).getName()!;
-  }
-
-  get name() {
-    return <string>super.name;
-  }
-  set name(value: string) {
-    super.name = value;
-  }
-
-  get path(): Path {
-    const tag = getTagValue(this.node, 'http')!;
-    const [method, path] = tag.split(' ', 2);
-    return { method: Method[<keyof typeof Method>method], path };
-  }
-  set path(path: Path) {
-    setTag(this.node, 'http', `${path.method.toUpperCase()} ${path.path}`);
-  }
-
-  private pushTags(...tags: Array<string>) {
-    const tagStructures = createTagStructures(tags);
-    getLastDoc(this.node).addTags(tagStructures);
-  }
-
-  private pushParameters(...parameters: Array<Parameter | Alias<Parameter>>) {
-    const parameterStructures = createParameterStructures(parameters);
-    this.node.addParameters(parameterStructures.parameters);
-    getLastDoc(this.node).addTags(parameterStructures.tags);
-  }
-
-  private pushRequests(...requests: Array<Request | Alias<Request>>) {
-    const requestStructures = createRequestStructures(requests);
-    this.node.addParameters(requestStructures.parameters);
-    getLastDoc(this.node).addTags(requestStructures.tags);
-  }
-
-  private pushResponses(...responses: Array<Response | Alias<Response>>) {
-    const responseStructures = createResponseStructures(
-      responses, 
-      this.node.getReturnTypeNode()?.compilerNode);
-
-    this.node.setReturnType(responseStructures.type);
-    getLastDoc(this.node).addTags(responseStructures.tags);
-  }
 }
 

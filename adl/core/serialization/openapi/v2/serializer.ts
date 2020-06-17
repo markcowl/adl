@@ -8,10 +8,10 @@ import { push, singleOrDefault } from '../common';
 import { processExternalDocs, processInfo, processTag } from '../common/info';
 import { processPaths } from '../v2/path';
 import { requestBody } from './body-parameter';
-import { parameter } from './parameter';
 import { processSchema } from './schema';
 import { authentication, authenticationRequirement } from './security';
 import { processServers } from './server';
+import { processParameter } from './parameter';
 
 
 // node types that are objects
@@ -81,13 +81,13 @@ async function processRoot(oai2: v2.Model, $: Context) {
         continue;
       }
 
-      push($.api.http.parameters, $.processInline(parameter, value));
+      await processParameter(value, $, { isAnonymous: true });
       continue;
     } else if (value.in == ParameterLocation.Body) {
       push($.api.http.requests, $.processInline(requestBody, <v2.BodyParameter>value));
       continue;
     }
-    push($.api.http.parameters, $.process(parameter, value));
+    await processParameter(value, $);
   }
 
   processPaths([oai2.paths, oai2['x-ms-paths']], $);

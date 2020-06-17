@@ -4,14 +4,14 @@ import { JsonReference, ParameterLocation } from '@azure-tools/openapi/dist/v2';
 import { anonymous, nameOf } from '@azure-tools/sourcemap';
 import { Alias } from '../../../model/alias';
 import { createOperationGroup, createOperationStructure, Method, OperationStructure, Path } from '../../../model/http/operation';
-import { Parameter } from '../../../model/http/parameter';
 import { Request } from '../../../model/http/request';
 import { Response } from '../../../model/http/response';
+import { ParameterTypeReference } from '../../../model/schema/type';
 import { addExtensionsToAttic, push } from '../common';
 import { getGroupAndName } from '../common/path';
 import { versionInfo } from '../common/schema';
 import { requestBody } from './body-parameter';
-import { parameter } from './parameter';
+import { processParameter } from './parameter';
 import { response } from './response';
 import { Context } from './serializer';
 
@@ -51,7 +51,7 @@ async function* processPath(pathItem: v2.PathItem, $: Context): AsyncGenerator<O
 async function processOperation(path: Path, operation: v2.Operation, shared: v2.PathItem, $: Context): Promise<OperationStructure> {
   const [group, name] = getGroupAndName(operation, path.path);
 
-  const parameters = new Array<Parameter | Alias<Parameter>>();
+  const parameters = new Array<ParameterTypeReference>();
   const requests = new Array<Request | Alias<Request>>();
   const responses = new Array<Response | Alias<Response>>();
   const tags = operation.tags ?? [];
@@ -70,7 +70,7 @@ async function processOperation(path: Path, operation: v2.Operation, shared: v2.
     }
 
     // create each parameter in the operation  (non-body)
-    await push(parameters, $.processInline(parameter, p));
+    parameters.push(await processParameter(p, $, { isAnonymous: true }));
   }
 
   const consumes = operation?.consumes || $.sourceModel.consumes || [];
@@ -96,7 +96,7 @@ async function processOperation(path: Path, operation: v2.Operation, shared: v2.
     }
 
     // create each parameter in the operation  (non-body)
-    await push(parameters, $.processInline(parameter, p, {isAnonymous: true}));
+    parameters.push(await processParameter(p, $, { isAnonymous: true }));
   }
 
   for await (const rsp of $.processDictionary(response, <any>operation.responses, {operation})) {

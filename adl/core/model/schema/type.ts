@@ -1,5 +1,6 @@
 import { SourceFile } from 'ts-morph';
 import { TypeSyntax } from '../../support/codegen';
+import { Documentation } from '../../support/doc-tag';
 
 export interface TypeReference {
   /** 
@@ -37,6 +38,9 @@ export interface SchemaTypeReference extends TypeReference {
 }
 
 export interface ParameterTypeReference extends TypeReference {
+  name: string;
+  description?: string;
+  required: boolean;
 }
 
 export interface HeaderTypeReference extends TypeReference {
