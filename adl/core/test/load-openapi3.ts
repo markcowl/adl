@@ -39,7 +39,6 @@ async function checkAttic(api: ApiModel, errors: Errors, atticOutput: string) {
     errors.check(() => equal(attic.components, undefined, 'Should not have components section left in attic'));
 */
     await writeFile(atticOutput, serialize(api.attic));
-    delete api.attic;
   }
 }
 
@@ -49,7 +48,7 @@ describe('Load Single OAI3 files', () => {
   const files = linq.values(readdirSync(inputRoot)).where(each => statSync(`${inputRoot}/${each}`).isFile()).toArray();
 
   for (const file of files) {
-    if( file.startsWith('_')) {
+    if(file.startsWith('_')) {
       continue;
     }
     it(`Processes '${file}'`, async () => {
@@ -59,7 +58,7 @@ describe('Load Single OAI3 files', () => {
       const name = basename(file, '.yaml');
 
       const adlOutput = resolve(`${outputRoot}/${name}`);
-      
+
       // clean the folder and write out ts files
       const stopwatch = new Stopwatch();
       const n = await api.saveADL(adlOutput, true);
@@ -73,13 +72,13 @@ describe('Load Single OAI3 files', () => {
       await clean(apiOutput, atticOutput);
       await checkAttic(api, errors, atticOutput);
 
-      
+
       // reset timer
       stopwatch.time;
 
       const content = serialize(api);
       console.log(chalk.cyan(`      serialize: '${file}' ${formatDuration(stopwatch.time)} `));
-      // write out yaml 
+      // write out yaml
       await writeFile(apiOutput, content);
       console.log(chalk.cyan(`      save: '${file}' ${formatDuration(stopwatch.time)} `));
       equal(await isFile(apiOutput), true, `Should write file ${apiOutput} `);
@@ -106,7 +105,7 @@ describe('Load Multiple OAI3 files', () => {
       const files = linq.values(readdirSync(inputRoot)).where(each => statSync(`${inputRoot}/${each}`).isFile()).toArray();
       const api = await deserializeOpenAPI3(host, ...files);
 
-      
+
       // clean the folder and write out ts files
       await api.saveADL(adlOutput, true);
       const apiOutput = resolve(`${adlOutput}/${folder}.api.yaml`);
@@ -120,10 +119,10 @@ describe('Load Multiple OAI3 files', () => {
       const content = serialize(api);
       console.log(chalk.cyan(`      serialize: '${folder}' ${formatDuration(stopwatch.time)} `));
       await writeFile(apiOutput, content);
-        
+
       console.log(chalk.cyan(`      save: '${folder}' ${formatDuration(stopwatch.time)} `));
       equal(await isFile(apiOutput), true, `Should write file ${apiOutput} `);
-      
+
       if (errors.count > 0) {
         fail(`Should not report errors: \n      ${errors.summary}\n`);
       }

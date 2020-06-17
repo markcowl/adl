@@ -220,15 +220,15 @@ function isParameterTypeAlias(declaration: TypeAliasDeclaration) {
 }
 
 export class HttpProtocol extends Protocol {
-  /** @internal */ 
-  constructor(api: ApiModel, sourceFiles?: Array<SourceFile> ) {
+  /** @internal */
+  constructor(api: ApiModel, sourceFiles?: Array<SourceFile>) {
     super(api, sourceFiles);
     if(!sourceFiles) {
       // add the checkers for header types
       api.KnownAliasTypes['header'] = isHeader;
     }
   }
-  
+
   authentications = new Array<Authentication|Alias<Authentication>>();
 
   /**
@@ -247,14 +247,14 @@ export class HttpProtocol extends Protocol {
   from(sourceFiles: Array<SourceFile>): HttpProtocol {
     return new HttpProtocol(this.api, sourceFiles);
   }
-  
+
   get operationGroups(): Array<OperationGroup> {
     // for now, just get the operation groups and assume they are http
     return this.files.map(each => each.getInterfaces().filter(isOperationGroupInterfaceType).map(each => new OperationGroup(each))).flat();
   }
 
   get responseCollections(): Array<Declaration<ResponseCollection>> {
-    return this.files.map( each => each.getTypeAliases().filter(isResponseCollectionTypeAlias)).flat().map(each => new Declaration(each, ResponseCollection));
+    return this.files.map(each => each.getTypeAliases().filter(isResponseCollectionTypeAlias)).flat().map(each => new Declaration(each, ResponseCollection));
   }
 
   get responses(): Array<Declaration<ResponseElement>> {
@@ -263,7 +263,7 @@ export class HttpProtocol extends Protocol {
 
   get results(): Array<Declaration<ResultElement>> {
     return [
-      ... this.files.map(each => each.getTypeAliases().filter(isResultTypeAlias)).flat().map(each => new Declaration(each, ResultElement)), 
+      ... this.files.map(each => each.getTypeAliases().filter(isResultTypeAlias)).flat().map(each => new Declaration(each, ResultElement)),
       ... this.files.map(each => each.getInterfaces().filter(isResultInterfaceType)).flat().map(each => new Declaration(each, ResultElement)),
     ];
   }
@@ -275,6 +275,19 @@ export class HttpProtocol extends Protocol {
 
   get headers(): Array<Declaration<HeaderElement>> {
     return this.files.map(each => each.getTypeAliases().filter(isHeader)).flat().map(each => new Declaration(each, ParameterElement));
+  }
+
+
+  createOperationGroup() {
+    // todo
+  }
+
+  //  createResource() {
+  // todo
+  // }
+
+  createOperationResultAlias() {
+    // todo
   }
 
   // get resources() {

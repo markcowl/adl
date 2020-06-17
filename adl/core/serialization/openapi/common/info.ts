@@ -13,7 +13,7 @@ async function *processContact<TModel extends OAIModel>(contact: common.Contact,
     url: contact.url,
   });
 
-  // add remaining extensions to attic. 
+  // add remaining extensions to attic.
   await addExtensionsToAttic(result, contact);
 
   yield result;
@@ -23,46 +23,44 @@ async function *processLicense<TModel extends OAIModel>(license: common.License,
   const result = new License(license.name, {
     url: license.url
   });
-  // add remaining extensions to attic. 
+  // add remaining extensions to attic.
   await addExtensionsToAttic(result, license);
 
   yield result;
 }
 
-export async function *processInfo<TModel extends OAIModel>(info: common.Info, $: Context<TModel>): AsyncGenerator<Metadata> {
+export async function processInfo<TModel extends OAIModel>(info: common.Info, $: Context<TModel>): Promise<Metadata> {
 
-  // create the metadata 
-  const metadata = new Metadata(info.title, {
-    description: info.description,
-    termsOfService: info.termsOfService
-  });
+  // create the metadata
+  const metadata = $.api.projectData.metaData;
+  metadata.name = info.title;
+  metadata.description = info.description;
+  metadata.termsOfService = info.termsOfService;
 
   // add the author contact
   if (info.contact !== undefined) {
     for await (const c of $.process(processContact, info.contact)) {
       metadata.contacts.push(c)  ;
     }
-    //metadata.contacts.push(await $.process2(processContact, info.contact));
   }
 
   // add license
   if (info.license !== undefined) {
-    for await (const l of $.process(processLicense, info.license) ) {
+    for await (const l of $.process(processLicense, info.license)) {
       metadata.licenses.push(l);
     }
-    //metadata.licenses.push(await $.process(processLicense, info.license));
   }
 
-  // add remaining extensions to attic. 
-  await addExtensionsToAttic(metadata, info);
+  // add remaining extensions to attic.
+  addExtensionsToAttic(metadata, info);
 
-  yield metadata;
+  return metadata;
 }
 
 
 export async function *processExternalDocs<TModel extends OAIModel>(externalDocs: common.ExternalDocumentation|undefined, $: Context<TModel>): AsyncGenerator<Reference> {
-  if( externalDocs ) {
-  // external docs are just a kind of reference. 
+  if(externalDocs) {
+  // external docs are just a kind of reference.
     const reference = new Reference('external-documentation', {
       location: externalDocs.url,
       description: externalDocs.description,

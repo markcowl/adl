@@ -33,7 +33,6 @@ async function checkAttic(api: ApiModel, errors: Errors, atticOutput: string) {
     errors.check(() => equal(attic.securityDefinitions, undefined, 'Should not have securityDefinitions section left in attic'));
 */
     await writeFile(atticOutput, serialize(api.attic));
-    delete api.attic;
   }
 }
 
@@ -50,7 +49,7 @@ describe('Load Single OAI2 files', () => {
       const name = basename(file, '.yaml');
 
       const adlOutput = resolve(`${outputRoot}/${name}`);
-      
+
       // clean the folder and write out ts files
       const stopwatch = new Stopwatch();
       const n = await api.saveADL(adlOutput, true);
@@ -67,8 +66,8 @@ describe('Load Single OAI2 files', () => {
       stopwatch.time;
       const content = serialize(api);
       console.log(chalk.cyan(`      serialize: '${file}' ${formatDuration(stopwatch.time)} `));
-      // write out yaml 
-      
+      // write out yaml
+
       await writeFile(apiOutput,content);
       console.log(chalk.cyan(`      save: '${file}' ${formatDuration(stopwatch.time)} `));
       equal(await isFile(apiOutput), true, `Should write file ${apiOutput} `);
@@ -97,7 +96,7 @@ describe('Load Multiple OAI2 files', () => {
       // clean the folder and write out ts files
       await api.saveADL(adlOutput, true);
 
-      
+
       const apiOutput = resolve(`${adlOutput}/${folder}.api.yaml`);
       const atticOutput = resolve(`${adlOutput}/${folder}.attic.yaml`);
 
@@ -109,7 +108,7 @@ describe('Load Multiple OAI2 files', () => {
       const stopwatch = new Stopwatch();
       const content = serialize(api);
       console.log(chalk.cyan(`      serialize: '${folder}' ${formatDuration(stopwatch.time)} `));
-      
+
       await writeFile(apiOutput, content);
       console.log(chalk.cyan(`      save: '${folder}' ${formatDuration(stopwatch.time)} `));
 

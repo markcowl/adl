@@ -5,7 +5,7 @@ import { ApiModel } from '../../../model/api-model';
 import { HttpProtocol } from '../../../model/http/protocol';
 import { Host } from '../../../support/file-system';
 import { Context as Ctx, Visitor } from '../../../support/visitor';
-import { push, singleOrDefault } from '../common';
+import { push } from '../common';
 import { processExternalDocs, processInfo, processTag } from '../common/info';
 import { processPaths } from '../v2/path';
 import { requestBody } from './body-parameter';
@@ -41,16 +41,17 @@ async function processRoot(oai2: v2.Model, $: Context) {
         break;
     }
   }
-  
-  $.api.metaData = await singleOrDefault($.process(processInfo, oai2.info)) || $.api.metaData;
+
+  // handle info structure
+  await processInfo(oai2.info, $);
 
   // external docs are just a kind of reference
   for await (const reference of $.process(processExternalDocs, oai2.externalDocs)) {
-    $.api.metaData.references.push(reference);
+    $.api.projectData.metaData.references.push(reference);
   }
 
   for await (const reference of $.processArray(processTag, oai2.tags)) {
-    $.api.metaData.references.push(reference);
+    $.api.projectData.metaData.references.push(reference);
   }
 
   for await (const server of $.process(processServers, oai2)) {
@@ -65,11 +66,11 @@ async function processRoot(oai2: v2.Model, $: Context) {
     (<HttpProtocol>$.api.protocols.http).authenticationRequirements.push(requirement);
   }
 
-  for( const [key,value] of items(oai2.definitions)) {
+  for(const [key,value] of items(oai2.definitions)) {
     // process each item in the collection
-    await processSchema(value, $ );
+    await processSchema(value, $);
   }
-  
+
   const tmp  = new Array<any>();
 
   for (const [key, value] of items(oai2.parameters)) {
@@ -80,7 +81,7 @@ async function processRoot(oai2: v2.Model, $: Context) {
     if (isReference(value)) {
       const r = (await $.resolveReference(value.$ref)).node;
       if (r.in == ParameterLocation.Body) {
-        push(tmp, $.processInline(requestBody, <JsonReference<v2.BodyParameter>>value ));
+        push(tmp, $.processInline(requestBody, <JsonReference<v2.BodyParameter>>value));
         continue;
       }
 

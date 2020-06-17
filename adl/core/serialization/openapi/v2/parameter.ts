@@ -11,7 +11,7 @@ export async function* parameter(parameter: v2.Parameter, $: Context, options?: 
 
     case v2.ParameterLocation.Query:
       return yield* processQueryParameter(<v2.QueryParameter>parameter, $, options);
-    
+
     case v2.ParameterLocation.FormData:
       return yield* processFormDataParameter(<v2.FormDataParameter>parameter, $, options);
 
@@ -30,7 +30,7 @@ export async function* processPathParameter(parameter: v2.PathParameter, $: Cont
     required: parameter.required,
     renderStyle:  RenderStyle.Simple,
     generatedLocation: parameter['x-ms-parameter-location']
-  }); 
+  });
   yield result;
 }
 
@@ -70,6 +70,6 @@ export async function* processHeaderParameter(parameter: v2.HeaderParameter, $: 
     renderStyle: RenderStyle.Simple,
     generatedLocation: parameter['x-ms-parameter-location']
   });
-  
+
   yield result;
 }
