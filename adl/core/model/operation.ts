@@ -99,7 +99,7 @@ export abstract class OperationGroup extends NamedElement<InterfaceDeclaration> 
   }
 
   abstract get operations(): Array<Operation>;
-  
+
 }
 
 export class Operation extends NamedElement<MethodDeclaration> {
