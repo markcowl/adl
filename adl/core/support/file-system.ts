@@ -1,6 +1,6 @@
 import { CreateFolderUri, ReadUri, ResolveUri } from '@azure-tools/uri';
-import { EventEmitter } from 'ee-ts';
 import { relative, resolve } from 'path';
+import { EventEmitter } from '../support/event-emitter';
 import { Stopwatch } from './stopwatch';
 
 interface Events {
