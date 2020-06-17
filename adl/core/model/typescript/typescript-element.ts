@@ -1,7 +1,8 @@
+import { Dictionary } from '@azure-tools/linq';
 import { Node } from 'ts-morph';
 import { getTagValue, setTag } from '../../support/doc-tag';
 import { getAPI, getPath } from '../../support/typescript';
-import { Attic, Initializer } from '../element';
+import { Initializer } from '../element';
 import { InternalData } from '../project/internal-data';
 import { VersionInfo } from '../version-info';
 
@@ -28,7 +29,7 @@ export class TSElement<TNode extends Node> extends Initializer {
     };
   }
 
-  get attic(): Attic {
+  get attic(): Dictionary<any> {
     const pv = this.api.getPrivateData(getPath(this.node));
     if (!pv.attic) {
       pv.attic = {};

@@ -46,7 +46,6 @@
     "@testdeck/mocha": "~0.1.0"
   },
   "dependencies": {
-    "ee-ts": "~1.0.1",
     "typescript": "~3.9.2",
     "@azure-tools/openapi": "~4.0.0",
     "@azure-tools/sourcemap": "~1.0.0",

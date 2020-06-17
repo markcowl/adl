@@ -3,14 +3,12 @@ import { Dictionary, items, keys, linq } from '@azure-tools/linq';
 import { isAnonymous, Path, valueOf } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
 import { dirname, join } from 'path';
-import { EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Node, Project, QuoteKind, SourceFile, SyntaxKind, TypeAliasDeclaration } from 'ts-morph';
+import { EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Project, QuoteKind, SourceFile, SyntaxKind, TypeAliasDeclaration } from 'ts-morph';
 import { getTags, hasTag } from '../support/doc-tag';
-import { getNode, referenceTo } from '../support/typescript';
-import { Attic } from './element';
+import { referenceTo } from '../support/typescript';
 import { HttpProtocol } from './http/protocol';
 import { ParameterElement, ResponseCollection, ResponseElement, ResultElement } from './operation';
-import { InternalData } from './project/internal-data';
-import { Metadata } from './project/metadata';
+import { ProjectData } from './project/project-data';
 import { Protocol } from './project/protocol';
 import { AliasType } from './schema/alias';
 import { EnumType } from './schema/enum';
@@ -18,7 +16,6 @@ import { ModelType } from './schema/model';
 import { Primitives } from './schema/primitive';
 import { Folders, Identity } from './types';
 import { Declaration } from './typescript/reference';
-import { VersionInfo } from './version-info';
 
 export function isModelTypeAlias(declaration: TypeAliasDeclaration) {
   if (hasTag(declaration, 'model')) {
@@ -192,6 +189,19 @@ export class Files {
 }
 
 export class ApiModel extends Files {
+  /**
+   * when creating constructs that lack a name, we can give them a unique number
+   */
+  #counter = 0;
+
+  /**
+   * protocols connected to this model
+   */
+  #protocols = new Dictionary<Protocol>();
+
+  /**
+   * typescript project for this model
+   */
   #project: Project = new Project({
     useInMemoryFileSystem: true,
     manipulationSettings: {
@@ -202,30 +212,9 @@ export class ApiModel extends Files {
     },
   });
 
-  KnownInterfaceTypes = <Dictionary<(declaration: InterfaceDeclaration) => boolean>>{
-    model: isModelInterface,
-    response: isResponseInterfaceType,
-    result: isResultInterfaceType,
-    operationgroup: isOperationGroupInterfaceType,
-    resource: isResourceInterfaceType,
-  };
-
-  KnownAliasTypes = <Dictionary<(declaration: TypeAliasDeclaration) => boolean>>{
-    model: isModelTypeAlias,
-    responseCollection: isResponseCollectionTypeAlias,
-    response: isResponseTypeAlias,
-    result: isResultTypeAlias,
-    resource: isResourceTypeAlias,
-  };
-
-
-  #protocols = new Dictionary<Protocol>();
-  get protocols() {
-    return this.#protocols;
-  }
-
-  counter = 0;
-
+  /**
+   * well-known folders in the model
+   */
   #folders = <Folders>{
     anonymous: this.#project.createDirectory('anonymous'),
     alias: this.#project.createDirectory('aliases'),
@@ -235,25 +224,58 @@ export class ApiModel extends Files {
     resource: this.#project.createDirectory('resources'),
   }
 
-  privateData = new Map<string, any>();
-
+  /**
+   * access to the ts project for this api.
+   * @internal
+   */
   get project() {
     return this.#project;
   }
+
+  /**
+   * persistable project data (this should end up in the adl.yaml file)
+   */
+  readonly projectData = new ProjectData();
+
+  /**
+   * references to the primitive types.
+   */
+  readonly primitives = Primitives;
+
+  readonly KnownInterfaceTypes = <Dictionary<(declaration: InterfaceDeclaration) => boolean>>{
+    model: isModelInterface,
+    response: isResponseInterfaceType,
+    result: isResultInterfaceType,
+    operationgroup: isOperationGroupInterfaceType,
+    resource: isResourceInterfaceType,
+  };
+
+  readonly KnownAliasTypes = <Dictionary<(declaration: TypeAliasDeclaration) => boolean>>{
+    model: isModelTypeAlias,
+    responseCollection: isResponseCollectionTypeAlias,
+    response: isResponseTypeAlias,
+    result: isResultTypeAlias,
+    resource: isResourceTypeAlias,
+  };
+
+  get protocols() {
+    return this.#protocols;
+  }
+
+  /**
+   * gets access to privateData for a given node.
+   *
+   * @param path the navigable path to the node for which data is being stored.
+   * @internal
+   */
   getPrivateData(path: Path): Dictionary<any> {
     const p = path.join('/');
-    let v = this.privateData.get(p);
-    if (!v) {
-      this.privateData.set(p, v = {});
+    let v = this.projectData.attic[p];
+    if (v === undefined) {
+      v = this.projectData.attic[p] = {};
     }
     return v;
   }
-
-  internalData: Dictionary<InternalData> = {};
-
-  metaData = new Metadata('');
-
-  primitives = Primitives;
 
   constructor() {
     super();
@@ -261,12 +283,11 @@ export class ApiModel extends Files {
     this.protocols.http = new HttpProtocol(this);
   }
 
-  versionInfo = new Array<VersionInfo>();
-
-  attic?: Attic;
-
-  addInternalData(key: string, internalData: InternalData): void {
-    // ...
+  /**
+   * Access to the project's attic
+   */
+  get attic() {
+    return this.projectData.attic.unprocessed;
   }
 
   async saveADL(path: string, cleanDirectory = true) {
@@ -311,10 +332,7 @@ export class ApiModel extends Files {
       }))).length;
   }
 
-  getNode(path: Path): Node | undefined {
-    return getNode(path, this.project);
-  }
-
+  /** @internal */
   getFile(identity: Identity, type: keyof Folders): SourceFile {
     if (isAnonymous(identity)) {
       identity = identity.name;
@@ -342,7 +360,7 @@ export class ApiModel extends Files {
   }
 
   getNameAndFile(identity: Identity, type: keyof Folders) {
-    const name = isAnonymous(identity) ? `${type}_${this.counter++}` : <string><any>valueOf(identity).replace(/[^\w]+/g, '_');
+    const name = isAnonymous(identity) ? `${type}_${this.#counter++}` : <string><any>valueOf(identity).replace(/[^\w]+/g, '_');
     const file = isAnonymous(identity) ? this.getFile(name, 'anonymous') : this.getFile(name, type);
 
     return { name, file };
@@ -352,7 +370,7 @@ export class ApiModel extends Files {
     // todo
   }
 
-  createEnum(name: string) {
+  createEnumType(name: string) {
     const file = this.project.createSourceFile(`${this.api.#folders.enum.getPath()}/${name}.ts`);
     // const e = file.addEnum(initializer);
     // there is already a function called create Enum
@@ -362,17 +380,6 @@ export class ApiModel extends Files {
     // todo
   }
 
-  createOperationGroup() {
-    // todo
-  }
-
-  createResource() {
-    // todo
-  }
-
-  createOperationResultAlias() {
-    // todo
-  }
 
   identifyInterface(declaration: InterfaceDeclaration) {
   // returns a string that identifies that an interface is what it says it is.

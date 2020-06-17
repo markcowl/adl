@@ -2,10 +2,6 @@ import { Dictionary, items } from '@azure-tools/linq';
 import { InternalData } from './project/internal-data';
 import { VersionInfo } from './version-info';
 
-export interface Attic extends Dictionary<any> {
-
-}
-
 /** inheriting from Initializer adds an apply<T> method to the class, allowing you to accept an object initalizer, and applying it to the class in the constructor. */
 export class Initializer {
   initialize<T>(initializer?: Partial<T>) {
@@ -38,13 +34,13 @@ export class Initializer {
 }
 
 
-/** 
- * Base type for all objects in the model 
+/**
+ * Base type for all objects in the model
  */
 export class Element extends Initializer {
   internalData?: Dictionary<InternalData>;
   versionInfo = new Array<VersionInfo>();
-  attic?: Attic;
+  attic?: Dictionary<any>;
 
   constructor(initializer?: Partial<Element>) {
     super();

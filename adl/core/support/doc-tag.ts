@@ -1,67 +1,74 @@
 import { fail } from 'assert';
 import { JSDoc, JSDocStructure, JSDocTag, JSDocTagStructure, Node, StructureKind } from 'ts-morph';
 
-
 export type JSDocs = Array<JSDoc>;
+export type HasNode = { node: Node };
+export type Taggable = Node | JSDocs | JSDoc | HasNode;
 
-export function getDocs(target: Node | JSDocs | JSDoc) {
+function hasNode( target: Taggable ): target is HasNode {
+  return !!((<any>target).node);
+}
+
+export function getDocs(target: Taggable) {
+  target = hasNode(target) ? target.node : target;
+  
   return Array.isArray(target) ? target :
     Node.isJSDoc(target) ? [target] :
       Node.isJSDocableNode(target) ? target.getJsDocs().filter(each => !!each) :
         fail('Node is not a docable node');
 }
 
-export function getFirstDoc(target: Node | JSDocs | JSDoc): JSDoc {
+export function getFirstDoc(target: Taggable): JSDoc {
   const docs = getDocs(target);
   return docs.length > 0 ? docs[0] : (Node.isJSDocableNode(<any>target) ? (<any>target).addJsDoc('\n') : fail('Node is not a docable node'));
 }
 
-export function getLastDoc(target: Node | JSDocs | JSDoc): JSDoc {
+export function getLastDoc(target: Taggable): JSDoc {
   const docs = getDocs(target);
   return docs.length > 0 ? docs[docs.length - 1] : (Node.isJSDocableNode(<any>target) ? (<any>target).addJsDoc('\n') : fail('Node is not a docable node'));
 }
 
-export function* getTags(target: Node | JSDocs | JSDoc, ...tagName: Array<string>): Iterable<JSDocTag> {
+export function* getTags(target: Taggable, ...tagName: Array<string>): Iterable<JSDocTag> {
   for (const each of getDocs(target)) {
     yield* (tagName.length ? each.getTags().filter(tag => tagName.indexOf(tag.getTagName()) >-1) : each.getTags());
   }
 }
 
-export function getTagValue(target: Node | JSDocs | JSDoc, tagName: string): string | undefined {
+export function getTagValue(target: Taggable, tagName: string): string | undefined {
   for (const each of getTagValues(target, tagName)) {
     return each;
   }
   return undefined;
 }
 
-export function* getTagValues(target: Node | JSDocs | JSDoc, ...tagName: Array<string>): Iterable<string> {
+export function* getTagValues(target: Taggable, ...tagName: Array<string>): Iterable<string> {
   for( const each of getTags(target,...tagName)) {
     yield each.getStructure().text?.toString() || '';
   } 
 }
 
-export function hasTag(target: Node | JSDocs | JSDoc, tagName: string) {
+export function hasTag(target: Taggable, tagName: string) {
   for (const each of getTags(target, tagName)) {
     return true;
   }
   return false;
 }
 
-export function appendTag(target: Node | JSDocs | JSDoc, tagName: string, text?: string) {
+export function appendTag(target: Taggable, tagName: string, text?: string) {
   getLastDoc(target).addTag({
     tagName,
     text
   });
 }
 
-export function prependTag(target: Node | JSDocs | JSDoc, tagName: string, text?: string) {
+export function prependTag(target: Taggable, tagName: string, text?: string) {
   getFirstDoc(target).insertTag(0, {
     tagName,
     text
   });
 }
 
-export function removeTag(target: Node | JSDocs | JSDoc, tagName: string) {
+export function removeTag(target: Taggable, tagName: string) {
   // todo: investigate if this is ok -- does removing tags from from the source file reset the nodes in the sourcefile? 
   if (tagName) {
     for (const tag of getTags(target, tagName)) {
@@ -70,7 +77,7 @@ export function removeTag(target: Node | JSDocs | JSDoc, tagName: string) {
   }
 }
 
-export function setTag(target: Node | JSDoc | JSDocs, tagName: string, text?: string | boolean) {
+export function setTag(target: Taggable, tagName: string, text?: string | boolean) {
   removeTag(target, tagName);
   switch (text) {
     case undefined:

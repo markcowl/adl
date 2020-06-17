@@ -84,6 +84,7 @@ export class ResponseElement extends TSElement<FunctionTypeNode> implements Type
    * (if you want to set the result to a globally defined result, use {@link setResult})
    */
   createResult() {
+
     // todo
   }
 
@@ -114,7 +115,7 @@ export class Operation extends NamedElement<MethodDeclaration> {
   /**
    * creates a new parameter in this operation
    */
-  createParameter() {
+  createParameter(name: string,) {
     // todo
   }
 
