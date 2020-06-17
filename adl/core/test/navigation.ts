@@ -15,8 +15,14 @@ const scenarios = `${__dirname}/../../../test/scenarios/adl`;
     const models = api.modelTypes.map( each => each.name );
     deepEqual( models, ['Person']);
 
-    const groups = api.operationGroups.map( each => each.name );
-    deepEqual(groups, ['myOperations']);
+    const groups = api.operationGroups;
+    
+    deepEqual(groups.map(each => each.name), ['myOperations']);
+
+    const operations = groups[0].operations;
+    
+    deepEqual(operations.map(each => each.name), ['first']);
+
   }
  
 }
