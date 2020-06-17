@@ -1,5 +1,5 @@
 import { Node } from 'ts-morph';
-import { setTag } from '../../support/doc-tag';
+import { getTagValue, setTag } from '../../support/doc-tag';
 import { getAPI, getPath } from '../../support/typescript';
 import { Attic, Initializer } from '../element';
 import { InternalData } from '../project/internal-data';
@@ -19,9 +19,13 @@ export class TSElement<TNode extends Node> extends Initializer {
     return pv.internalData;
   }
 
-  get versionInfo(): Array<VersionInfo> {
+  get versionInfo(): VersionInfo {
     // get versions back from doctags.
-    return [];
+    return {
+      since: getTagValue(this.node, 'since'),
+      deleted: getTagValue(this.node, 'deleted'),
+      deprecated: getTagValue(this.node, 'deprecated')
+    };
   }
 
   get attic(): Attic {
@@ -44,8 +48,8 @@ export class TSElement<TNode extends Node> extends Initializer {
   }
 
   addVersionInfo(info: VersionInfo) {
-    if (info.added) {
-      setTag(this.node, 'since', info.added);
+    if (info.since) {
+      setTag(this.node, 'since', info.since);
     }
     if (info.deprecated) {
       setTag(this.node, 'deprecated', info.deprecated);
