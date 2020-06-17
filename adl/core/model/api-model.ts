@@ -20,13 +20,13 @@ import { Folders, Identity } from './types';
 import { Declaration } from './typescript/reference';
 import { VersionInfo } from './version-info';
 
-export function isModelTypeAlias( declaration: TypeAliasDeclaration) {
+export function isModelTypeAlias(declaration: TypeAliasDeclaration) {
   if (hasTag(declaration, 'model')) {
     return true;
   }
 
-  // if this is an alias over a model type or primitive 
-  // or it is 
+  // if this is an alias over a model type or primitive
+  // or it is
 
   return false;
 }
@@ -35,7 +35,7 @@ export function isResponseCollectionTypeAlias(declaration: TypeAliasDeclaration)
   if (hasTag(declaration, 'responseCollection')) {
     return true;
   }
-  
+
   // type aliases that are tupletypes are responsecollections.
   return !!(declaration.getTypeNode()?.getKind() === SyntaxKind.TupleType);
 }
@@ -83,12 +83,12 @@ export function isModelInterface(declaration: InterfaceDeclaration) {
   if (hasTag(declaration, 'model')) {
     return true;
   }
-  // inference based on what it looks like it is. 
+  // inference based on what it looks like it is.
 
   // model interfaces should
   // - may have constructors (used for versioning)
 
-  // - may not have methods 
+  // - may not have methods
   if (declaration.getMethods().length > 0) {
     return false;
   }
@@ -155,10 +155,10 @@ export class Files {
   }
 
   /**
-   * returns all the protocols for this API 
+   * returns all the protocols for this API
    */
   get protocols(): Dictionary<Protocol> {
-    return linq.items(this.api.protocols).toDictionary(([key]) => key, ([, protocol]) => protocol.from(this.files));
+    return linq.items(this.api.protocols).toDictionary(([key])=>key, ([,protocol])=>protocol.from(this.files));
   }
 
   /**
@@ -283,7 +283,7 @@ export class ApiModel extends Files {
       }
     }
 
-    // ensure folder is created 
+    // ensure folder is created
     await mkdir(path);
 
     const format = {
@@ -412,5 +412,5 @@ export class ApiModel extends Files {
     // it has more than one. That's not ok.
     throw Error(`Type Alias has muliple type tags: ${declaration.getName()}: ${tagType.map(each => each.getTagName()).join(',')}`);
   }
-  
+
 }

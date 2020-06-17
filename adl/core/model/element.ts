@@ -2,7 +2,6 @@ import { Dictionary, items } from '@azure-tools/linq';
 import { InternalData } from './project/internal-data';
 import { VersionInfo } from './version-info';
 
-
 export interface Attic extends Dictionary<any> {
 
 }
