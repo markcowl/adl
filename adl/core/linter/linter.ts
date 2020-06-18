@@ -34,52 +34,52 @@ export class Linter extends EventEmitter<Events> {
 
     // globally declared stuff
     for (const responseCollection of files.responseCollections) {
-      yield this.iterEmit('declaredResponseCollections', model, responseCollection);
+      yield* this.iterEmit('declaredResponseCollections', model, responseCollection);
     }
 
     for (const response of files.responses) {
-      yield this.iterEmit('declaredResponses', model, response);
+      yield* this.iterEmit('declaredResponses', model, response);
     }
 
     for (const result of files.results) {
-      yield this.iterEmit('declaredResults', model, result);
+      yield* this.iterEmit('declaredResults', model, result);
     }
 
     for (const parameter of files.parameters) {
-      yield this.iterEmit('declaredParameters', model, parameter);
+      yield* this.iterEmit('declaredParameters', model, parameter);
     }
 
     for (const responseCollection of files.responseCollections) {
-      yield this.iterEmit('declaredResponseCollections', model, responseCollection);
+      yield* this.iterEmit('declaredResponseCollections', model, responseCollection);
     }
 
     for (const responseCollection of files.responseCollections) {
-      yield this.iterEmit('declaredResponseCollections', model, responseCollection);
+      yield* this.iterEmit('declaredResponseCollections', model, responseCollection);
     }
 
     // enumTypes and values
     for (const enumType of files.enumTypes) {
-      yield this.iterEmit('enumType', model, enumType);
+      yield* this.iterEmit('enumType', model, enumType);
       for (const value of enumType.values) {
-        yield this.iterEmit('enumValue', model, value);
+        yield* this.iterEmit('enumValue', model, value);
       }
     }
 
     // modelTypes and properties
     for (const modelType of files.modelTypes) {
-      yield this.iterEmit('modelType', model, modelType);
+      yield* this.iterEmit('modelType', model, modelType);
       for (const property of modelType.getProperties()) {
-        yield this.iterEmit('property', model, property);
+        yield* this.iterEmit('property', model, property);
       }
     }
 
     // operationGroups, operations, parameters
     for (const group of files.operationGroups) {
-      yield this.iterEmit('operationGroup', model, group);
+      yield* this.iterEmit('operationGroup', model, group);
       for (const operation of group.operations) {
-        yield this.iterEmit('operation', model, operation);
+        yield* this.iterEmit('operation', model, operation);
         for (const parameter of operation.parameters) {
-          yield this.iterEmit('parameter', model, parameter);
+          yield* this.iterEmit('parameter', model, parameter);
         }
       }
     }
