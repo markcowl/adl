@@ -1,4 +1,3 @@
-import { EventEmitter } from 'ee-ts';
 import { ApiModel, Files } from '../model/api-model';
 import { Operation, OperationGroup, ParameterElement, ResponseCollection, ResponseElement, ResultElement } from '../model/operation';
 import { AliasType } from '../model/schema/alias';
@@ -6,6 +5,7 @@ import { EnumType, EnumValueElement } from '../model/schema/enum';
 import { ModelType } from '../model/schema/model';
 import { Property } from '../model/schema/property';
 import { Declaration } from '../model/typescript/reference';
+import { EventEmitter } from '../support/event-emitter';
 import { RuleResult } from './rule';
 
 interface Events {
@@ -29,57 +29,57 @@ export class Linter extends EventEmitter<Events> {
 
     // aliasTypes
     for (const aliasType of files.aliasTypes) {
-      yield this.emit('aliasType', model, aliasType);
+      yield* this.iterEmit('aliasType', model, aliasType);
     }
 
     // globally declared stuff
     for (const responseCollection of files.responseCollections) {
-      yield this.emit('declaredResponseCollections', model, responseCollection);
+      yield this.iterEmit('declaredResponseCollections', model, responseCollection);
     }
 
     for (const response of files.responses) {
-      yield this.emit('declaredResponses', model, response);
+      yield this.iterEmit('declaredResponses', model, response);
     }
 
     for (const result of files.results) {
-      yield this.emit('declaredResults', model, result);
+      yield this.iterEmit('declaredResults', model, result);
     }
 
     for (const parameter of files.parameters) {
-      yield this.emit('declaredParameters', model, parameter);
+      yield this.iterEmit('declaredParameters', model, parameter);
     }
 
     for (const responseCollection of files.responseCollections) {
-      yield this.emit('declaredResponseCollections', model, responseCollection);
+      yield this.iterEmit('declaredResponseCollections', model, responseCollection);
     }
 
     for (const responseCollection of files.responseCollections) {
-      yield this.emit('declaredResponseCollections', model, responseCollection);
+      yield this.iterEmit('declaredResponseCollections', model, responseCollection);
     }
 
     // enumTypes and values
     for (const enumType of files.enumTypes) {
-      yield this.emit('enumType', model, enumType);
+      yield this.iterEmit('enumType', model, enumType);
       for (const value of enumType.values) {
-        yield this.emit('enumValue', model, value);
+        yield this.iterEmit('enumValue', model, value);
       }
     }
 
     // modelTypes and properties
     for (const modelType of files.modelTypes) {
-      yield this.emit('modelType', model, modelType);
+      yield this.iterEmit('modelType', model, modelType);
       for (const property of modelType.getProperties()) {
-        yield this.emit('property', model, property);
+        yield this.iterEmit('property', model, property);
       }
     }
 
     // operationGroups, operations, parameters
     for (const group of files.operationGroups) {
-      yield this.emit('operationGroup', model, group);
+      yield this.iterEmit('operationGroup', model, group);
       for (const operation of group.operations) {
-        yield this.emit('operation', model, operation);
+        yield this.iterEmit('operation', model, operation);
         for (const parameter of operation.parameters) {
-          yield this.emit('parameter', model, parameter);
+          yield this.iterEmit('parameter', model, parameter);
         }
       }
     }
