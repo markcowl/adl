@@ -1,33 +1,88 @@
+import { fail } from 'assert';
+import { FunctionTypeNode, Node } from 'ts-morph';
+import { TypeSyntax } from '../../support/codegen';
+import { expandLiterals } from '../../support/typescript';
 import * as base from '../operation';
 import { HeaderTypeReference, TypeReference } from '../schema/type';
 import { Identity } from '../types';
 import { Declaration } from '../typescript/reference';
 
 export class ResponseCriteria extends base.ResponseCriteria {
-  set code(value: Array<string|number> ) {
-    //todo
-  }
-  get code(): Array<string|number> {
+  
+  get codes(): Array<string|number> {
     const p = this.node.getParameter('code');
     if( p ) {
-      // expecting some kind of union type 
-      // pull out the values.
+      const t = p.getTypeNode();
+      if( t ) {
+        return expandLiterals(t);
+      }
+
     }
-    throw Error('not implemented');
+    return [];
   }
-  mediaType!: Array<string>;
+ 
+  get mediaTypes( ): Array<string> {
+    const p = this.node.getParameter('mediaType');
+    if (p) {
+      const t = p.getTypeNode();
+      if (t) {
+        return expandLiterals(t).map( each => each.toString());
+      }
+    }
+    return [];
+  }
 }
 
 export class ResultElement extends base.ResultElement {
-  body!: TypeReference;
+  get body(): TypeReference |undefined {
+    if (Node.isTypeLiteralNode(this.node) || Node.isInterfaceDeclaration(this.node)) { 
+      const bodyType =  this.node.getProperty('body');
+      if( bodyType) {
+        return {
+          declaration: new TypeSyntax(bodyType.getText()),
+          requiredReferences: []
+        };
+      }
+    }
+    return undefined;
+  }
   headers!: Array<TypeReference>;
   isException?: boolean;
   message?: string;
+
+  
 }
 
 export class ResponseElement extends base.ResponseElement {
-  criteria!: ResponseCriteria;
-  result!: ResultElement | Declaration<ResultElement>;
+  constructor(node: FunctionTypeNode) {
+    super(node);
+  }
+  get criteria(): ResponseCriteria {
+    return new ResponseCriteria(this.node);
+  }
+  
+  get result(): ResultElement | Declaration<ResultElement> {
+    const rt = this.node.getReturnType();
+    const s= rt.getSymbol();
+    const d = s?.getDeclarations()?.[0];
+    if( d ) {
+      if( Node.isTypeLiteralNode(d)) {
+      // we've got an inline declaration
+        return new ResultElement(d);
+      }
+      if( Node.isTypeReferenceNode(d)) {
+      // we've got a reference to the declaration
+        const target = d?.getTypeName()?.getSymbol()?.getDeclarations()?.[0];
+        if (target && (Node.isTypeAliasDeclaration(target) || Node.isInterfaceDeclaration(target))) {
+          return new Declaration(target, ResultElement);
+        }
+      }
+      if (Node.isInterfaceDeclaration(d)) {
+        return new Declaration(d, ResultElement);
+      }
+    }
+    fail('does not look like a result element');
+  }
 }
 
 export class Response extends base.Response {

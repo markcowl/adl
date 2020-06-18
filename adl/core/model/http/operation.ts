@@ -1,4 +1,5 @@
 import { isAnonymous } from '@azure-tools/sourcemap';
+import { fail } from 'assert';
 import { JSDoc, JSDocTagStructure, MethodSignatureStructure, Node, ParameterDeclarationStructure, printNode, StructureKind, ts } from 'ts-morph';
 import { normalizeIdentifier, normalizeName } from '../../support/codegen';
 import { createDocs, getTagValue, setTag } from '../../support/doc-tag';
@@ -7,6 +8,7 @@ import { ApiModel } from '../api-model';
 import * as base from '../operation';
 import { Reference } from '../project/reference';
 import { Identity } from '../types';
+import { Declaration } from '../typescript/reference';
 import { VersionedElement } from '../typescript/versioned-element';
 import { Parameter, ParameterElement, ParameterType } from './parameter';
 import { Request } from './request';
@@ -49,6 +51,26 @@ export class OperationGroup extends base.OperationGroup {
 }
 
 export class ResponseCollection extends base.ResponseCollection {
+
+  get responses(): ReadonlyArray<ResponseElement | Declaration<ResponseElement>> {
+    return this.node.getElementTypeNodes().map(each => {
+      if (Node.isFunctionTypeNode(each)) {
+        return new ResponseElement(each);
+      }
+      if (Node.isTypeReferenceNode(each)) {
+        const target = each?.getTypeName()?.getSymbol()?.getDeclarations()?.[0];
+        if (target && (Node.isTypeAliasDeclaration(target) || Node.isInterfaceDeclaration(target))) {
+          return new Declaration(target, ResponseElement);
+        }
+        fail(`Type Reference Node is a ${target?.getKindName()} in ResponseCollection `);
+      }
+      // we don't support any other kind of node right now in a responseCollection
+      fail(`Unrecognized Node Type ${each.getKindName()} in ResponseCollection `);
+    });
+
+    // to get the actual target of a ts TypeReference : 
+    // t[3].getTypeName().getSymbol().getDeclarations()[0]  // .getText()
+  }
 }
 
 export class Operation extends base.Operation {
