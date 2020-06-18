@@ -37,7 +37,7 @@ export class TagCollection {
 export class OperationGroup extends base.OperationGroup {
 
   get operations(): Array<Operation> {
-    throw new Error('Method not implemented.');
+    return this.node.getMethods().map( each => new Operation(each));
   }
 
   /**

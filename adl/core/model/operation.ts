@@ -1,4 +1,4 @@
-import { FunctionTypeNode, InterfaceDeclaration, MethodDeclaration, ParameterDeclaration, TupleTypeNode, TypeLiteralNode } from 'ts-morph';
+import { FunctionTypeNode, InterfaceDeclaration, MethodSignature, ParameterDeclaration, TupleTypeNode, TypeLiteralNode } from 'ts-morph';
 import { TypeSyntax } from '../support/codegen';
 import { Element } from './element';
 import { TypeReference } from './schema/type';
@@ -103,8 +103,8 @@ export abstract class OperationGroup extends NamedElement<InterfaceDeclaration> 
 
 }
 
-export class Operation extends NamedElement<MethodDeclaration> {
-  constructor(node: MethodDeclaration) {
+export class Operation extends NamedElement<MethodSignature> {
+  constructor(node: MethodSignature) {
     super(node);
   }
 
