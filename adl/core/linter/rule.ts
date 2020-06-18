@@ -21,8 +21,7 @@ export interface Rule {
   onOperationGroup?: (model: ApiModel, operationGroup: OperationGroup) => Array<RuleResult> | undefined;
   onOperation?: (model: ApiModel, operation: Operation) => Array<RuleResult> | undefined;
   onProperty?: (model: ApiModel, property: Property) => Array<RuleResult> | undefined;
-  onParameter(model: ApiModel, parameter: ParameterElement): Array<RuleResult> | undefined;
-  onEnum?: (model: ApiModel, e: EnumType) => Array<RuleResult> | undefined;
+  onParameter?: (model: ApiModel, parameter: ParameterElement) => Array<RuleResult> | undefined;
 }
 
 export interface RuleMetaData {
@@ -49,7 +48,7 @@ export interface RuleMetaData {
 
 export interface RuleResult {
   message?: string;
-  suggestion: Array<Fix>;
+  suggestion?: Array<Fix>;
 }
 
 export interface Fix {
