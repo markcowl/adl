@@ -1,6 +1,6 @@
 import { Path } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
-import { ClassDeclaration, EnumDeclaration, EnumMember, ImportDeclarationStructure, InterfaceDeclaration, Node, Project, SourceFile, StructureKind, SyntaxList, TypeAliasDeclaration } from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, EnumMember, ImportDeclarationStructure, InterfaceDeclaration, Node, Project, SourceFile, StructureKind, SyntaxList, TypeAliasDeclaration, TypeNode, TypeReferenceNode, UnionTypeNode } from 'ts-morph';
 import { ApiModel } from '../model/api-model';
 import { TypeReference } from '../model/schema/type';
 import { createSandbox } from './sandbox';
@@ -172,4 +172,35 @@ export function addNullable(declaration: string) {
 export function getInnerText(declaration: InterfaceDeclaration) {
   const text = declaration.getText();
   return text.substring(text.indexOf('{'));
+}
+
+export function expandUnion(node: UnionTypeNode): Array<TypeNode> {
+  return node.getTypeNodes().map( each => Node.isUnionTypeNode( each ) ? expandUnion(each) : each).flat();
+}
+
+export function getDefinition(node: TypeReferenceNode): Node|undefined {
+  return node.getTypeName().getSymbol()?.getDeclarations()[0];
+}
+
+export function expandLiterals( node: Node): Array<string|number> {
+  if( Node.isLiteralTypeNode(node) ) {
+    const l =node.getLiteral();
+    if (Node.isNumericLiteral(l) || Node.isStringLiteral(l) ) {
+      return [l.getLiteralValue()];
+    }
+    fail(`unsupported literal type '${l.getKindName()}' `);
+  }
+  if( Node.isTypeReferenceNode(node)) {
+    const t = getDefinition(node);
+    if( t) {
+      if( Node.isTypeAliasDeclaration(t)) {
+        return expandLiterals(t.getTypeNode()!);
+      }
+      fail(`unsupported type reference node '${t.getKindName()}' `);
+    }
+  }
+  if( Node.isUnionTypeNode(node)) {
+    return expandUnion(node).map( each => expandLiterals(each)).flat();
+  }
+  fail(`unsupported type for expandLiterals '${node.getKindName()}' `);
 }

@@ -1,4 +1,4 @@
-import { FunctionTypeNode, InterfaceDeclaration, MethodSignature, ParameterDeclaration, TupleTypeNode, TypeLiteralNode } from 'ts-morph';
+import { FunctionTypeNode, InterfaceDeclaration, MethodSignature, ParameterDeclaration, TupleTypeNode, TypeAliasDeclaration, TypeLiteralNode } from 'ts-morph';
 import { TypeSyntax } from '../support/codegen';
 import { Element } from './element';
 import { TypeReference } from './schema/type';
@@ -25,9 +25,7 @@ export abstract class ResponseCollection extends TSElement<TupleTypeNode> {
   /**
    * returns the collection of responses
    */
-  get responses(): ReadonlyArray<ResponseElement | Declaration<ResponseElement>> {
-    return [];
-  }
+  abstract get responses(): ReadonlyArray<ResponseElement | Declaration<ResponseElement>>;
 
   /**
    * Adds a new response to this collection
@@ -52,7 +50,7 @@ export class ParameterElement extends NamedElement<ParameterDeclaration> {
  * A Result describes a single output from an operation.
  *
  */
-export class ResultElement extends TSElement<TypeLiteralNode | InterfaceDeclaration> implements TypeReference {
+export class ResultElement extends TSElement<TypeLiteralNode | InterfaceDeclaration | TypeAliasDeclaration> implements TypeReference {
   declaration!: TypeSyntax;
   requiredReferences!: Array<TypeReference>;
 

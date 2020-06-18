@@ -3,7 +3,7 @@ import { Dictionary, items, keys, linq } from '@azure-tools/linq';
 import { isAnonymous, Path, valueOf } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
 import { dirname, join } from 'path';
-import { Directory, EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Project, QuoteKind, SourceFile, SyntaxKind, TypeAliasDeclaration } from 'ts-morph';
+import { Directory, EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Node, Project, QuoteKind, SourceFile, SyntaxKind, TypeAliasDeclaration } from 'ts-morph';
 import { getTags, hasTag } from '../support/doc-tag';
 import { referenceTo } from '../support/typescript';
 import { HttpProtocol } from './http/protocol';
@@ -34,7 +34,13 @@ export function isResponseCollectionTypeAlias(declaration: TypeAliasDeclaration)
   }
 
   // type aliases that are tupletypes are responsecollections.
-  return !!(declaration.getTypeNode()?.getKind() === SyntaxKind.TupleType);
+  const typeNode = declaration.getTypeNode();
+  if (typeNode && Node.isTupleTypeNode(typeNode)) { //?.getKind() === SyntaxKind.TupleType
+    // they must only have children that are either functionTypeNode or TypeReferenceNode
+    // if they have anything else, ignore them. 
+    return !(typeNode.getElementTypeNodes().find(each => !(Node.isFunctionTypeNode(each) || Node.isTypeReferenceNode(each)) )  );
+  }
+  return false;
 }
 
 export function isResponseTypeAlias(declaration: TypeAliasDeclaration) {
