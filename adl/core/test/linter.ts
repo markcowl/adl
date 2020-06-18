@@ -3,14 +3,15 @@ import { notEqual } from 'assert';
 import { readdirSync, statSync } from 'fs';
 import { describe } from 'mocha';
 import { resolve } from 'path';
+import { Linter } from '../linter/linter';
 import { ApiModel } from '../model/api-model';
 
 require('source-map-support').install();
 
 
-const scenarios = `${__dirname}/../../../test/scenarios/adl`;
+const scenarios = `${__dirname}/../../../test/scenarios/adl/linter`;
 
-describe('Load ADL Projects', () => {
+describe('Test Linter', () => {
   const root = `${scenarios}`;
   const folders = linq.values(readdirSync(root)).where(each => statSync(`${root}/${each}`).isDirectory()).toArray();
 
@@ -20,8 +21,13 @@ describe('Load ADL Projects', () => {
     it(`Processes '${folder}'`, async () => {
       const api = await ApiModel.loadADL(inputRoot);
       const q = api.modelTypes;
+      const linter = new Linter();
+      const results = linter.run(api);
+      for (const result of results) {
+        console.log(result);
+      }
 
-      notEqual(q.length, 0 , 'Should have models');
+      notEqual(q.length, 0, 'Should have models');
       console.log(`has ${q.length} models`);
     });
   }
