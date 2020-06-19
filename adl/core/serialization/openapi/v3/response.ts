@@ -47,7 +47,7 @@ export async function* response(response: v3.Response, $: Context, options?: { i
 
 async function processResponseHeaders(response: v3.Response, $: Context, result: Response) {
   for (const [key, value] of items(response.headers)) {
-    const h = await processHeader(value, $, key, { isAnonymous: true });
+    const h = await processHeader(value, $, { isAnonymous: true, clientName: key });
     result.headers.push(h);
   }
 }
