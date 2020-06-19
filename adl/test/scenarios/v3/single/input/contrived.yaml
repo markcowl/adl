@@ -13,7 +13,11 @@ paths:
       responses:
         200:
           description: OK
-          content: {}
+          headers:
+            reuse-header-1:
+              $ref: '#/components/headers/NumericHeader'
+            reuse-header-2:
+              $ref: '#/components/headers/NumericHeader'
 components:
   schemas:
     Thing:
@@ -32,3 +36,9 @@ components:
           schema:
             $ref: '#/components/schemas/Thing'
       required: true
+  headers:
+   NumericHeader:
+    description: This is a header that holds a number
+    schema:
+      type: integer
+      format: int32
