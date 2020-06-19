@@ -16,22 +16,22 @@ export interface Service {
      */
     getMetadataOfAllChannels(X_Ably_Version?: versionHeader, format?: responseFormat, limit?: Query<int64 /* todo: add defaultValue '100' */>, prefix?: Query<string>, by?: Query<"value" | "id">): [(code: "2XX", mediaType: "application/json") => {
         body: Xor<Array<ChannelDetails>, Array<string>>;
-        headers: [Link];
+        headers: [Link<"link">];
     }, (code: "2XX", mediaType: "application/x-msgpack") => {
         body: Xor<Array<ChannelDetails>, Array<string>>;
-        headers: [Link];
+        headers: [Link<"link">];
     }, (code: "2XX", mediaType: "text/html") => {
         body: string;
-        headers: [Link];
+        headers: [Link<"link">];
     }, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * Get metadata of a channel
@@ -46,16 +46,16 @@ export interface Service {
      */
     getMetadataOfChannel(X_Ably_Version?: versionHeader, format?: responseFormat, channel_id: channelId): [(code: 200, mediaType: "application/json") => {
         body: ChannelDetails;
-        headers: [ServerId];
+        headers: [ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * Get message history for a channel
@@ -70,15 +70,15 @@ export interface Service {
      */
     getMessagesByChannel(X_Ably_Version?: versionHeader, format?: responseFormat, channel_id: channelId, start?: filterStart, limit?: filterLimit, end?: filterEnd, direction?: filterDirection): [(code: "2XX", mediaType: "application/json") => {
         body: Array<Message>;
-        headers: [Link, ServerId];
+        headers: [Link<"link">, ServerId<"x-ably-serverid">];
     }, (code: "2XX", mediaType: "application/x-msgpack") => {
         body: Array<Message>;
-        headers: [Link, ServerId];
+        headers: [Link<"link">, ServerId<"x-ably-serverid">];
     }, (code: "2XX", mediaType: "text/html") => {
         body: string;
-        headers: [Link, ServerId];
+        headers: [Link<"link">, ServerId<"x-ably-serverid">];
     }, () => {
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
         isException: true;
     }];
     /**
@@ -107,7 +107,7 @@ export interface Service {
              */
             messageId?: string;
         };
-        headers: [ServerId];
+        headers: [ServerId<"x-ably-serverid">];
     }, (code: "2XX", mediaType: "application/x-msgpack") => {
         body: {
             /**
@@ -121,7 +121,7 @@ export interface Service {
              */
             messageId?: string;
         };
-        headers: [ServerId];
+        headers: [ServerId<"x-ably-serverid">];
     }, (code: "2XX", mediaType: "text/html") => {
         body: {
             /**
@@ -135,16 +135,16 @@ export interface Service {
              */
             messageId?: string;
         };
-        headers: [ServerId];
+        headers: [ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * Get presence of a channel
@@ -161,22 +161,22 @@ export interface Service {
      */
     getPresenceOfChannel(X_Ably_Version?: versionHeader, format?: responseFormat, channel_id: channelId, clientId?: Query<string>, connectionId?: Query<string>, limit?: Query<int64 /* todo: add defaultValue '100' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<PresenceMessage>;
-        headers: [Link, ServerId];
+        headers: [Link<"link">, ServerId<"x-ably-serverid">];
     }, (code: 200, mediaType: "application/x-msgpack") => {
         body: Array<PresenceMessage>;
-        headers: [Link, ServerId];
+        headers: [Link<"link">, ServerId<"x-ably-serverid">];
     }, (code: 200, mediaType: "text/html") => {
         body: string;
-        headers: [Link, ServerId];
+        headers: [Link<"link">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * Get presence history of a channel
@@ -193,22 +193,22 @@ export interface Service {
      */
     getPresenceHistoryOfChannel(X_Ably_Version?: versionHeader, format?: responseFormat, channel_id: channelId, start?: filterStart, limit?: filterLimit, end?: filterEnd, direction?: filterDirection): [(code: "2XX", mediaType: "application/json") => {
         body: Array<PresenceMessage>;
-        headers: [Link];
+        headers: [Link<"link">];
     }, (code: "2XX", mediaType: "application/x-msgpack") => {
         body: Array<PresenceMessage>;
-        headers: [Link];
+        headers: [Link<"link">];
     }, (code: "2XX", mediaType: "text/html") => {
         body: string;
-        headers: [Link];
+        headers: [Link<"link">];
     }, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * Request an access token
@@ -228,13 +228,13 @@ export interface Service {
         body: TokenDetails;
     }, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * List channel subscriptions
@@ -255,13 +255,13 @@ export interface Service {
         body: DeviceDetails;
     }, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * Subscribe a device to a channel
@@ -342,13 +342,13 @@ export interface Service {
         clientId?: string;
     }>, "application/x-www-form-urlencoded">): [(code: "2XX") => {}, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * Delete a registered device's update token
@@ -366,13 +366,13 @@ export interface Service {
      */
     deletePushDeviceDetails(X_Ably_Version?: versionHeader, format?: responseFormat, channel?: Query<string>, deviceId?: Query<string>, clientId?: Query<string>): [(code: "2XX") => {}, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * List all channels with at least one subscribed device
@@ -395,13 +395,13 @@ export interface Service {
         body: Array<string>;
     }, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * List devices registered for receiving push notifications
@@ -427,13 +427,13 @@ export interface Service {
         body: DeviceDetails;
     }, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * Register a device for receiving push notifications
@@ -456,13 +456,13 @@ export interface Service {
         body: DeviceDetails;
     }, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * Unregister matching devices for push notifications
@@ -479,13 +479,13 @@ export interface Service {
      */
     unregisterAllPushDevices(X_Ably_Version?: versionHeader, format?: responseFormat, deviceId?: Query<string>, clientId?: Query<string>): [(code: "2XX") => {}, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * Get a device registration
@@ -508,13 +508,13 @@ export interface Service {
         body: DeviceDetails;
     }, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * Update a device registration
@@ -537,13 +537,13 @@ export interface Service {
         body: DeviceDetails;
     }, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * Unregister a single device for push notifications
@@ -558,13 +558,13 @@ export interface Service {
      */
     unregisterPushDevice(X_Ably_Version?: versionHeader, format?: responseFormat, device_id: deviceId): [(code: "2XX") => {}, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * Update a device registration
@@ -587,13 +587,13 @@ export interface Service {
         body: DeviceDetails;
     }, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * Reset a registered device's update token
@@ -616,13 +616,13 @@ export interface Service {
         body: DeviceDetails;
     }, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * Publish a push notification to device(s)
@@ -670,13 +670,13 @@ export interface Service {
         recipient: Recipient;
     }, "application/x-www-form-urlencoded">): [(code: "2XX") => {}, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * Retrieve usage statistics for an application
@@ -694,13 +694,13 @@ export interface Service {
         body: {};
     }, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
     /**
      * Get the service time
@@ -723,12 +723,12 @@ export interface Service {
         body: string;
     }, (code: "Error", mediaType: "application/json") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }, (code: "Error", mediaType: "text/html") => {
         body: Error;
-        headers: [ErrorCode, ErrorMessage, ServerId];
+        headers: [ErrorCode<"x-ably-errorcode">, ErrorMessage<"x-ably-errormessage">, ServerId<"x-ably-serverid">];
     }];
 }

@@ -1,3 +1,3 @@
 
 /** The error message. */
-export type ErrorMessage = Header<string, "x-ably-errormessage">;
+export type ErrorMessage<Name> = Header<string, Name>;
