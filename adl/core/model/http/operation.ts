@@ -1,15 +1,15 @@
+import { RequestBodyReference } from '@azure-tools/openapi/dist/v3';
 import { isAnonymous } from '@azure-tools/sourcemap';
-import { InterfaceDeclaration, JSDocTagStructure, MethodSignature, MethodSignatureStructure, ParameterDeclarationStructure, printNode, StructureKind, ts } from 'ts-morph';
+import { JSDocTagStructure, MethodSignatureStructure, ParameterDeclarationStructure, printNode, StructureKind, ts } from 'ts-morph';
 import { normalizeIdentifier, normalizeName } from '../../support/codegen';
-import { createDocs, getLastDoc, getTagValue, setTag } from '../../support/doc-tag';
+import { createDocs } from '../../support/doc-tag';
 import { Alias } from '../alias';
 import { ApiModel } from '../api-model';
 import * as base from '../operation';
 import { Reference } from '../reference';
 import { VersionedEntity } from '../schema/object';
-import { NamedElement } from '../schema/schema';
-import { ParameterTypeReference } from '../schema/type';
-import { ArrayCollectionImpl, Collection, CollectionImpl, Identity } from '../types';
+import { ParameterTypeReference, RequestBodyTypeReference } from '../schema/type';
+import { Collection, Identity } from '../types';
 import { Parameter, ParameterType } from './parameter';
 import { AuthenticationRequirement, Connection } from './protocol';
 import { Request } from './request';
@@ -72,7 +72,7 @@ export interface OperationInitializer extends VersionedEntity {
   summary: string;
   tags: Array<string>;
   parameters: Array<ParameterTypeReference>;
-  requests: Array<Request | Alias<Request>>;
+  requestBody: RequestBodyTypeReference;
   responses: Array<Response | Alias<Response>>;
   references: Array<Reference>;
 }
@@ -103,7 +103,7 @@ export function createOperationStructure(
 ): OperationStructure {
 
   const parameterStructures = createParameterStructures(initializer.parameters);
-  const requestStructures =  createRequestStructures(initializer.requests);
+  const requestStructures =  createRequestStructures(initializer.requestBody);
   const responseStructures = createResponseStructures(initializer.responses);
   const tagStructures = createTagStructures(initializer.tags);
   const pathStructure = createPathStructure(path);
@@ -177,24 +177,20 @@ function createParameterStructures(parameters?: Array<ParameterTypeReference>) {
   return { parameters: parameterStructures, tags: tagStructures };
 }
 
-function createRequestStructures(requests?: Array<Request | Alias<Request>>) {
+function createRequestStructures(requestBody?: RequestBodyTypeReference) {
   const parameterStructures = new Array<ParameterDeclarationStructure>();
   const tagStructures = new Array<JSDocTagStructure>();
 
-  for(const each of requests ?? []) {
-    const request = each instanceof Alias ? each.target : each;
-    const name = normalizeName(request.name ?? 'body');
-    const type = getRequestType(request, name);
-
+  if (requestBody) {
     parameterStructures.push({
       kind: StructureKind.Parameter,
-      hasQuestionToken: !request.required,
-      name,
-      type,
+      hasQuestionToken: !requestBody.required,
+      name: 'body',
+      type: requestBody.declaration.text,
     });
 
-    if (request.description) {
-      const doc = `${name} - ${request.description}`;
+    if (requestBody.description) {
+      const doc = `body - ${requestBody.description}`;
       tagStructures.push({
         kind: StructureKind.JSDocTag,
         tagName: 'param',

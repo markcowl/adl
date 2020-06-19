@@ -76,6 +76,7 @@ export function createTypeAlias<T extends TypeReference>(api: ApiModel, identity
   file.addTypeAlias({
     name,
     type: typeReference.declaration.text,
+    typeParameters: typeReference.typeParameters,
     isExported: true,
     docs: createDocs(docs)
   });
