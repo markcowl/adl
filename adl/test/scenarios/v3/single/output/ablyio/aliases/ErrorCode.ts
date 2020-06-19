@@ -1,3 +1,3 @@
 
 /** The error code. */
-export type ErrorCode<Name> = Header<int64, Name>;
+export type ErrorCode<WireName> = Header<int64, WireName>;

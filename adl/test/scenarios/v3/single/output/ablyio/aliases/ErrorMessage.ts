@@ -1,3 +1,3 @@
 
 /** The error message. */
-export type ErrorMessage<Name> = Header<string, Name>;
+export type ErrorMessage<WireName> = Header<string, WireName>;

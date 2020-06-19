@@ -1,3 +1,3 @@
 
 /** This is a header that holds a number */
-export type NumericHeader<Name> = Header<int32, Name>;
+export type NumericHeader<WireName> = Header<int32, WireName>;

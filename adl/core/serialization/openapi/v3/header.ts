@@ -7,7 +7,7 @@ import { TypeSyntax } from '../../../support/codegen';
 import { processSchema } from '../v3/schema';
 import { Context } from './serializer';
 
-export async function processHeader(header: v3.Header | v3.HeaderReference, $: Context, options?: { isAnonymous?: boolean; clientName?: string }): Promise<HeaderTypeReference> {
+export async function processHeader(header: v3.Header | v3.HeaderReference, $: Context, options?: { isAnonymous?: boolean; wireName?: string }): Promise<HeaderTypeReference> {
   const here = $.normalizeReference(refTo(header)).$ref;
 
   const headerRef = $.visitor.references.header.get(here);
@@ -23,7 +23,7 @@ export async function processHeader(header: v3.Header | v3.HeaderReference, $: C
         headerRef = await processHeader(resolvedReference.node, resolvedReference.context);
       }
 
-      return specializeWithName(headerRef, options!.clientName!);
+      return specializeWithName(headerRef, options!.wireName!);
     }
 
     // these are in the OAI schema, but should not be in headers - freakout if they are used
@@ -36,7 +36,7 @@ export async function processHeader(header: v3.Header | v3.HeaderReference, $: C
     // get the schema for the header 
     const schema = await processSchema(header.schema, $, { isAnonymous: true });
 
-    const headerRef = getHeaderReference(schema, options?.clientName);
+    const headerRef = getHeaderReference(schema, options?.wireName);
     const name = options?.isAnonymous ? anonymous('header') : nameOf(header);
     return createTypeAlias($.api, name, headerRef, { summary: header.description });
   };
@@ -47,16 +47,16 @@ export async function processHeader(header: v3.Header | v3.HeaderReference, $: C
   return result;
 }
 
-function getHeaderReference(schema: SchemaTypeReference, clientName?: string): HeaderTypeReference {
+function getHeaderReference(schema: SchemaTypeReference, wireName?: string): HeaderTypeReference {
   let typeParameters: Array<TypeParameterDeclarationStructure> | undefined;
   const typeArguments = [schema.declaration.node];
 
-  if (clientName) {  
+  if (wireName) {  
     typeParameters = undefined;
-    typeArguments.push(ts.createLiteralTypeNode(ts.createStringLiteral(clientName)));
+    typeArguments.push(ts.createLiteralTypeNode(ts.createStringLiteral(wireName)));
   } else {
-    typeParameters = [{ kind: StructureKind.TypeParameter, name: 'Name' }];
-    typeArguments.push(ts.createTypeReferenceNode('Name', undefined));
+    typeParameters = [{ kind: StructureKind.TypeParameter, name: 'WireName' }];
+    typeArguments.push(ts.createTypeReferenceNode('WireName', undefined));
   }
 
   return {
