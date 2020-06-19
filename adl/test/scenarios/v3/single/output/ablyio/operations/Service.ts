@@ -94,7 +94,7 @@ export interface Service {
      * @return Error|application/x-msgpack - Error
      * @return Error|text/html - Error
      */
-    publishMessagesToChannel(X_Ably_Version?: versionHeader, format?: responseFormat, channel_id: channelId, body?: Body<Message, 'application/json'>, body?: Body<Message, 'application/x-msgpack'>, body?: Body<Message, 'application/x-www-form-urlencoded'>): [(code: "2XX", mediaType: "application/json") => {
+    publishMessagesToChannel(X_Ably_Version?: versionHeader, format?: responseFormat, channel_id: channelId, body?: Body<Message, "application/json"> | Body<Message, "application/x-msgpack"> | Body<Message, "application/x-www-form-urlencoded">): [(code: "2XX", mediaType: "application/json") => {
         body: {
             /**
              *
@@ -222,7 +222,7 @@ export interface Service {
      * @return Error|application/x-msgpack - Error
      * @return Error|text/html - Error
      */
-    requestAccessToken(X_Ably_Version?: versionHeader, format?: responseFormat, keyName: key_name, body?: Body<Xor<TokenRequest, SignedTokenRequest>, 'application/json'>): [(code: "2XX", mediaType: "application/json") => {
+    requestAccessToken(X_Ably_Version?: versionHeader, format?: responseFormat, keyName: key_name, body?: Body<Xor<TokenRequest, SignedTokenRequest>, "application/json">): [(code: "2XX", mediaType: "application/json") => {
         body: TokenDetails;
     }, (code: "2XX", mediaType: "application/x-msgpack") => {
         body: TokenDetails;
@@ -296,7 +296,7 @@ export interface Service {
          * @since 1.1.0
          */
         clientId?: string;
-    }>, 'application/json'>, body?: Body<Xor<{
+    }>, "application/json"> | Body<Xor<{
         /**
          * @description Channel name.
          * @since 1.1.0
@@ -318,7 +318,7 @@ export interface Service {
          * @since 1.1.0
          */
         clientId?: string;
-    }>, 'application/x-msgpack'>, body?: Body<Xor<{
+    }>, "application/x-msgpack"> | Body<Xor<{
         /**
          * @description Channel name.
          * @since 1.1.0
@@ -340,7 +340,7 @@ export interface Service {
          * @since 1.1.0
          */
         clientId?: string;
-    }>, 'application/x-www-form-urlencoded'>): [(code: "2XX") => {}, (code: "Error", mediaType: "application/json") => {
+    }>, "application/x-www-form-urlencoded">): [(code: "2XX") => {}, (code: "Error", mediaType: "application/json") => {
         body: Error;
         headers: [ErrorCode, ErrorMessage, ServerId];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
@@ -448,7 +448,7 @@ export interface Service {
      * @return Error|application/x-msgpack - Error
      * @return Error|text/html - Error
      */
-    registerPushDevice(X_Ably_Version?: versionHeader, format?: responseFormat, body?: Body<DeviceDetails, 'application/json'>, body?: Body<DeviceDetails, 'application/x-msgpack'>): [(code: "2XX", mediaType: "application/json") => {
+    registerPushDevice(X_Ably_Version?: versionHeader, format?: responseFormat, body?: Body<DeviceDetails, "application/json"> | Body<DeviceDetails, "application/x-msgpack">): [(code: "2XX", mediaType: "application/json") => {
         body: DeviceDetails;
     }, (code: "2XX", mediaType: "application/x-msgpack") => {
         body: DeviceDetails;
@@ -529,7 +529,7 @@ export interface Service {
      * @return Error|application/x-msgpack - Error
      * @return Error|text/html - Error
      */
-    putPushDeviceDetails(X_Ably_Version?: versionHeader, format?: responseFormat, device_id: deviceId, body?: Body<DeviceDetails, 'application/json'>, body?: Body<DeviceDetails, 'application/x-msgpack'>, body?: Body<DeviceDetails, 'application/x-www-form-urlencoded'>): [(code: "2XX", mediaType: "application/json") => {
+    putPushDeviceDetails(X_Ably_Version?: versionHeader, format?: responseFormat, device_id: deviceId, body?: Body<DeviceDetails, "application/json"> | Body<DeviceDetails, "application/x-msgpack"> | Body<DeviceDetails, "application/x-www-form-urlencoded">): [(code: "2XX", mediaType: "application/json") => {
         body: DeviceDetails;
     }, (code: "2XX", mediaType: "application/x-msgpack") => {
         body: DeviceDetails;
@@ -579,7 +579,7 @@ export interface Service {
      * @return Error|application/x-msgpack - Error
      * @return Error|text/html - Error
      */
-    patchPushDeviceDetails(X_Ably_Version?: versionHeader, format?: responseFormat, device_id: deviceId, body?: Body<DeviceDetails, 'application/json'>, body?: Body<DeviceDetails, 'application/x-msgpack'>, body?: Body<DeviceDetails, 'application/x-www-form-urlencoded'>): [(code: "2XX", mediaType: "application/json") => {
+    patchPushDeviceDetails(X_Ably_Version?: versionHeader, format?: responseFormat, device_id: deviceId, body?: Body<DeviceDetails, "application/json"> | Body<DeviceDetails, "application/x-msgpack"> | Body<DeviceDetails, "application/x-www-form-urlencoded">): [(code: "2XX", mediaType: "application/json") => {
         body: DeviceDetails;
     }, (code: "2XX", mediaType: "application/x-msgpack") => {
         body: DeviceDetails;
@@ -646,7 +646,7 @@ export interface Service {
          * @since 1.1.0
          */
         recipient: Recipient;
-    }, 'application/json'>, body?: Body<{
+    }, "application/json"> | Body<{
         /**
          *
          * @since 1.1.0
@@ -657,7 +657,7 @@ export interface Service {
          * @since 1.1.0
          */
         recipient: Recipient;
-    }, 'application/x-msgpack'>, body?: Body<{
+    }, "application/x-msgpack"> | Body<{
         /**
          *
          * @since 1.1.0
@@ -668,7 +668,7 @@ export interface Service {
          * @since 1.1.0
          */
         recipient: Recipient;
-    }, 'application/x-www-form-urlencoded'>): [(code: "2XX") => {}, (code: "Error", mediaType: "application/json") => {
+    }, "application/x-www-form-urlencoded">): [(code: "2XX") => {}, (code: "Error", mediaType: "application/json") => {
         body: Error;
         headers: [ErrorCode, ErrorMessage, ServerId];
     }, (code: "Error", mediaType: "application/x-msgpack") => {
