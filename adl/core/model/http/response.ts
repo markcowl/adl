@@ -61,6 +61,8 @@ export class ResponseElement extends base.ResponseElement {
     return new ResponseCriteria(this.node);
   }
   
+  // temp while working on code: 
+  // eslint-disable-next-line getter-return
   get result(): ResultElement | Declaration<ResultElement> {
     const rt = this.node.getReturnType();
     const s= rt.getSymbol();
