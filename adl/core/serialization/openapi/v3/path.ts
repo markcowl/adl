@@ -10,7 +10,7 @@ import { addExtensionsToAttic } from '../common';
 import { getGroupAndName } from '../common/path';
 import { versionInfo } from '../common/schema';
 import { processParameter } from './parameter';
-import { requestBody } from './request-body';
+import { processRequestBody } from './request-body';
 import { response } from './response';
 import { Context } from './serializer';
 
@@ -51,18 +51,12 @@ export async function processOperation(path: Path, operation: v3.Operation, shar
   const [group, name] = getGroupAndName(operation, path.path);
 
   const parameters = new Array<ParameterTypeReference>();
-  const requests = new Array<Request | Alias<Request>>();
-  const responses = new Array<Response | Alias<Response>>();
-
   await processOperationParameters(shared.parameters, $, parameters);
   await processOperationParameters(operation.parameters, $, parameters);
-
-  // request body
-  for await (const request of $.processInline(requestBody, operation.requestBody, { isAnonymous: true })) {
-    // each request body.
-    requests.push(request);
-  }
   
+  const requestBody = operation.requestBody ? await processRequestBody(operation.requestBody, $, { isAnonymous: true }) : undefined;
+
+  const responses = new Array<Response | Alias<Response>>();
   for await (const rsp of $.processDictionary(response, <any>operation.responses)) {
     responses.push(rsp);
   }
@@ -76,7 +70,7 @@ export async function processOperation(path: Path, operation: v3.Operation, shar
       description: operation.description || shared.description,
       tags: operation.tags,
       parameters,
-      requests,
+      requestBody,
       responses,
       ...versionInfo($, operation)
     });

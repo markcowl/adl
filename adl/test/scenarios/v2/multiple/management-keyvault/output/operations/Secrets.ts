@@ -9,7 +9,7 @@ export interface Secrets {
      * @param secretName - The name of the secret.
      * @return 200|application/json - Retrieved secret
      */
-    Get(resourceGroupName: string, vaultName: string, secretName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    Get(resourceGroupName: string, vaultName: string, secretName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Secret;
     }];
     /**
@@ -24,7 +24,7 @@ export interface Secrets {
      * @return 200|application/json - Created or updated secret
      * @return 201|application/json - Created or updated vault
      */
-    CreateOrUpdate(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, secretName: string & RegularExpression<'^[a-zA-Z0-9-]{1,127}$'>, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, parameters: Body<SecretCreateOrUpdateParameters, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    CreateOrUpdate(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, secretName: string & RegularExpression<'^[a-zA-Z0-9-]{1,127}$'>, api_version: ApiVersionParameter, parameters: Body<SecretCreateOrUpdateParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: Secret;
     }, (code: 201, mediaType: "application/json") => {
         body: Secret;
@@ -41,7 +41,7 @@ export interface Secrets {
      * @return 200|application/json - Patched secret
      * @return 201|application/json - Patched secret
      */
-    Update(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, secretName: string & RegularExpression<'^[a-zA-Z0-9-]{1,127}$'>, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, parameters: Body<SecretPatchParameters, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    Update(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, secretName: string & RegularExpression<'^[a-zA-Z0-9-]{1,127}$'>, api_version: ApiVersionParameter, parameters: Body<SecretPatchParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: Secret;
     }, (code: 201, mediaType: "application/json") => {
         body: Secret;
@@ -56,7 +56,7 @@ export interface Secrets {
      * @param __top - Maximum number of results to return.
      * @return 200|application/json - Get information about secrets in the specified vault.
      */
-    List(resourceGroupName: string, vaultName: string, __top?: Query<int32, "$top">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    List(resourceGroupName: string, vaultName: string, __top?: Query<int32, "$top">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: SecretListResult;
     }];
 }

@@ -22,7 +22,7 @@ export interface PrivateEndpointConnections {
      * @return 200|application/json - The state of private endpoint connection was updated successfully.
      * @return default|application/json - Error response describing why the operation failed.
      */
-    Put(subscriptionId: SubscriptionIdParameter, resourceGroupName: ResourceGroupName, vaultName: VaultName, privateEndpointConnectionName: PrivateEndpointConnectionName, api_version: ApiVersionParameter, properties: Body<PrivateEndpointConnection, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    Put(subscriptionId: SubscriptionIdParameter, resourceGroupName: ResourceGroupName, vaultName: VaultName, privateEndpointConnectionName: PrivateEndpointConnectionName, api_version: ApiVersionParameter, properties: Body<PrivateEndpointConnection, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: PrivateEndpointConnection;
         headers: [Header<int64, "Retry-After">, Header<string, "Azure-AsyncOperation">];
     }, (mediaType: "application/json") => {

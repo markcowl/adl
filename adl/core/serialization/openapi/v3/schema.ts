@@ -8,12 +8,16 @@ import { addDefault } from '../../../model/schema/default';
 import { createArray, createDictionary, createInterface, createPropertySignature } from '../../../model/schema/object';
 import { SchemaTypeReference } from '../../../model/schema/type';
 import { Identity } from '../../../model/types';
+import { TypeSyntax } from '../../../support/codegen';
 import { Context } from '../../../support/visitor';
 import { isEnumSchema, isObjectSchema, isPrimitiveSchema } from '../common';
 import { arrayProperties, commonProperties, notObject, numberProperties, objectProperties, Options, processBooleanSchema, processByteArraySchema, processCharSchema, processDateSchema, processDateTimeSchema, processDurationSchema, processEnumSchema, processFileSchema, processIntegerSchema, processNumberSchema, processOdataSchema, processPasswordSchema, processTimeSchema, processUriSchema, processUuidSchema, stringProperties, versionInfo } from '../common/schema';
-import { TypeSyntax } from '../../../support/codegen';
 
-export async function processSchema(schema: v3.Schema|v3.SchemaReference, $: Context<v3.Model>, options?: { isAnonymous?: boolean }): Promise<SchemaTypeReference> {
+export async function processSchema(schema: v3.Schema|v3.SchemaReference|undefined, $: Context<v3.Model>, options?: { isAnonymous?: boolean }): Promise<SchemaTypeReference> {
+  if (!schema) {
+    return $.api.schemas.primitives.any;
+  }
+
   const here = $.normalizeReference(refTo(schema)).$ref;
 
   // did we already process this because we went thru a $ref earlier?

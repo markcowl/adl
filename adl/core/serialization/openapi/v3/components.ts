@@ -1,13 +1,13 @@
 import { items } from '@azure-tools/linq';
 import { v3 } from '@azure-tools/openapi';
 import { Element } from '../../../model/element';
+import { processHeader } from './header';
 import { processParameter } from './parameter';
-import { requestBody } from './request-body';
+import { processRequestBody } from './request-body';
 import { response } from './response';
 import { processSchema } from './schema';
 import { authentication } from './security';
 import { Context } from './serializer';
-
 const { vendorExtensions } = v3;
 
 
@@ -29,16 +29,17 @@ export async function* processComponents(components: v3.Components, $: Context):
   // ... do something ...
   // }
 
-  // NOTE: components.headers are not processed here because we need to traverse
-  //       via references to get the header client names.
+  for (const [key, value] of items(components.headers)) {
+    await processHeader(value, $);
+  }
 
   for (const [key, value] of items(components.parameters)) {
     // process each item in the collection
     await processParameter(value, $);
   }
 
-  for await (const request of $.processDictionary(requestBody, components.requestBodies)) {
-    $.api.http.requests.push(request);
+  for await (const [key, value] of items(components.requestBodies)) {
+    await processRequestBody(value, $);
   }
 
   for await (const rsp of $.processDictionary(response, components.responses)) {

@@ -1,6 +1,5 @@
-import { SourceFile } from 'ts-morph';
+import { SourceFile, TypeParameterDeclarationStructure } from 'ts-morph';
 import { TypeSyntax } from '../../support/codegen';
-import { Documentation } from '../../support/doc-tag';
 
 export interface TypeReference {
   /** 
@@ -32,6 +31,8 @@ export interface TypeReference {
    * This may be undefined -- which means that there is nota source
    */
   readonly sourceFile?: SourceFile;
+
+  typeParameters?: Array<TypeParameterDeclarationStructure>;
 }
 
 export interface SchemaTypeReference extends TypeReference {
@@ -41,7 +42,13 @@ export interface ParameterTypeReference extends TypeReference {
   name: string;
   description?: string;
   required: boolean;
+  location: string;
 }
 
 export interface HeaderTypeReference extends TypeReference {
+}
+
+export interface RequestBodyTypeReference extends TypeReference {
+  required: boolean;
+  description?: string;
 }

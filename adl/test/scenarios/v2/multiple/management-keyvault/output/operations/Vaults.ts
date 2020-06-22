@@ -8,7 +8,7 @@ export interface Vaults {
      * @param vaultName - The name of the vault.
      * @return 200|application/json - Retrieved vault
      */
-    Get(resourceGroupName: string, vaultName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    Get(resourceGroupName: string, vaultName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Vault;
     }];
     /**
@@ -22,7 +22,7 @@ export interface Vaults {
      * @return 200|application/json - Created or updated vault
      * @return 201|application/json - Created or updated vault
      */
-    CreateOrUpdate(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, parameters: Body<VaultCreateOrUpdateParameters, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    CreateOrUpdate(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, api_version: ApiVersionParameter, parameters: Body<VaultCreateOrUpdateParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: Vault;
     }, (code: 201, mediaType: "application/json") => {
         body: Vault;
@@ -37,7 +37,7 @@ export interface Vaults {
      * @return 200|application/json - OK Response.
      * @return 204|application/json - No Content.
      */
-    Delete(resourceGroupName: string, vaultName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, 'application/json'>): [(code: 200, mediaType: "application/json") => {}, (code: 204, mediaType: "application/json") => {}];
+    Delete(resourceGroupName: string, vaultName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {}, (code: 204, mediaType: "application/json") => {}];
     /**
      * @description Update a key vault in the specified subscription.
      * @since 2019-09-01
@@ -49,7 +49,7 @@ export interface Vaults {
      * @return 200|application/json - Patched vault
      * @return 201|application/json - Patched vault
      */
-    Update(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, parameters: Body<VaultPatchParameters, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    Update(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, api_version: ApiVersionParameter, parameters: Body<VaultPatchParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: Vault;
     }, (code: 201, mediaType: "application/json") => {
         body: Vault;
@@ -66,7 +66,7 @@ export interface Vaults {
      * @return 200|application/json - The updated access policies
      * @return 201|application/json - The updated access policies
      */
-    UpdateAccessPolicy(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, operationKind: AccessPolicyUpdateKind, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, parameters: Body<VaultAccessPolicyParameters, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    UpdateAccessPolicy(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, operationKind: AccessPolicyUpdateKind, api_version: ApiVersionParameter, parameters: Body<VaultAccessPolicyParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: VaultAccessPolicyParameters;
     }, (code: 201, mediaType: "application/json") => {
         body: VaultAccessPolicyParameters;
@@ -80,7 +80,7 @@ export interface Vaults {
      * @param __top - Maximum number of results to return.
      * @return 200|application/json - Get information about all key vaults in the specified resource group.
      */
-    ListByResourceGroup(resourceGroupName: string, __top?: Query<int32, "$top">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    ListByResourceGroup(resourceGroupName: string, __top?: Query<int32, "$top">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: VaultListResult;
     }];
     /**
@@ -91,7 +91,7 @@ export interface Vaults {
      * @param __top - Maximum number of results to return.
      * @return 200|application/json - Get information about all key vaults in the specified subscription.
      */
-    ListBySubscription(__top?: Query<int32, "$top">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    ListBySubscription(__top?: Query<int32, "$top">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: VaultListResult;
     }];
     /**
@@ -101,7 +101,7 @@ export interface Vaults {
      * @tag Vaults
      * @return 200|application/json - Retrieved information about all deleted key vaults in a subscription.
      */
-    ListDeleted(api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    ListDeleted(api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: DeletedVaultListResult;
     }];
     /**
@@ -113,7 +113,7 @@ export interface Vaults {
      * @param location - The location of the deleted vault.
      * @return 200|application/json - Retrieved information about the deleted vault.
      */
-    GetDeleted(vaultName: string, location: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    GetDeleted(vaultName: string, location: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: DeletedVault;
     }];
     /**
@@ -126,7 +126,7 @@ export interface Vaults {
      * @return 200|application/json - The vault is purged.
      * @return 202|application/json - Vault is being purged.
      */
-    PurgeDeleted(vaultName: string, location: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, 'application/json'>): [(code: 200, mediaType: "application/json") => {}, (code: 202, mediaType: "application/json") => {}];
+    PurgeDeleted(vaultName: string, location: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {}, (code: 202, mediaType: "application/json") => {}];
     /**
      * @description The List operation gets information about the vaults associated with the subscription.
      * @since 2019-09-01
@@ -148,7 +148,7 @@ export interface Vaults {
      * @param vaultName - The name of the vault.
      * @return 200|application/json - OK -- Operation to check the vault name availability was successful.
      */
-    CheckNameAvailability(api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, vaultName: Body<VaultCheckNameAvailabilityParameters, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    CheckNameAvailability(vaultName: Body<VaultCheckNameAvailabilityParameters, "application/json">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: CheckNameAvailabilityResult;
     }];
 }

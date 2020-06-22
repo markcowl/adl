@@ -36,6 +36,7 @@ export async function processParameter(parameter: v3.Parameter | v3.ParameterRef
       required: parameter.required ?? false,
       declaration: parameterTypeSyntax,
       requiredReferences: schema.requiredReferences,
+      location: parameter.in,
     };
   
     return createTypeAlias(
@@ -120,7 +121,7 @@ function getHeaderParameterSyntax(parameter: v3.HeaderParameter, schema: SchemaT
   // TODO: not yet represented in ADL
   const renderStyle = <any><unknown>parameter.style || RenderStyle.Simple;
   const explode = parameter.explode ?? false;
-  //(t)
+  //
 
   return new TypeSyntax(getParameterTypeNode('Header', parameter, schema, options));
 }

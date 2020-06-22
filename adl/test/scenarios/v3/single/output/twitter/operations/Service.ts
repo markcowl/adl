@@ -88,7 +88,7 @@ export interface Service {
          * @since 2.3
          */
         hidden?: true;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *

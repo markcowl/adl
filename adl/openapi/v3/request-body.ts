@@ -1,3 +1,4 @@
+import { JsonReference } from '../common';
 import { Dictionary } from '../common/dictionary';
 import { VendorExtensions } from '../common/vendor-extensions';
 import { MediaType } from './media-type';
@@ -18,3 +19,5 @@ export interface RequestBody extends VendorExtensions {
   /** Determines if the request body is required in the request. Defaults to false. */
   required?: boolean;
 }
+
+export type RequestBodyReference = JsonReference<RequestBody>;
