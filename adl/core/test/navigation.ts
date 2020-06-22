@@ -33,7 +33,7 @@ const scenarios = `${__dirname}/../../../test/scenarios/adl`;
     const collection = <ResponseCollection> col.target;
     const responses = collection.responses;
 
-    deepEqual(responses.length, 7, 'should have 6 responses in the collection');
+    deepEqual(responses.length, 6, 'should have 6 responses in the collection');
 
     for( const response of responses ) {
       const r = isDeclaration( response ) ? response.target : response;
