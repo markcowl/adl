@@ -684,7 +684,7 @@ export interface Service {
          * @since 9.0.0
          */
         repository_ids?: Array<int64>;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -1384,7 +1384,7 @@ export interface Service {
          * @since 9.0.0
          */
         access_token?: string;
-    }, 'application/json'>): [(code: 204) => {}];
+    }, "application/json">): [(code: 204) => {}];
     /**
      * Revoke a grant for an application
      * @description **Deprecation Notice:** GitHub will replace and discontinue OAuth endpoints containing `access_token` in the path parameter. We are introducing new endpoints that allow you to securely manage tokens for OAuth Apps by using `access_token` as an input parameter. The OAuth Application API will be removed on July 1, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-app-endpoint/).
@@ -1418,7 +1418,7 @@ export interface Service {
          * @since 9.0.0
          */
         access_token?: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -1610,7 +1610,7 @@ export interface Service {
          * @since 9.0.0
          */
         access_token?: string;
-    }, 'application/json'>): [(code: 204) => {}];
+    }, "application/json">): [(code: 204) => {}];
     /**
      * Reset a token
      * @description OAuth applications can use this API method to reset a valid OAuth token without end-user involvement. Applications must save the "token" property in the response because changes take effect immediately. You must use [Basic Authentication](https://developer.github.com/v3/auth#basic-authentication) when accessing this endpoint, using the OAuth application's `client_id` and `client_secret` as the username and password. Invalid tokens will return `404 NOT FOUND`.
@@ -1627,7 +1627,7 @@ export interface Service {
          * @since 9.0.0
          */
         access_token?: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -2499,7 +2499,7 @@ export interface Service {
          * @since 9.0.0
          */
         scopes?: Array<string>;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -2625,7 +2625,7 @@ export interface Service {
          * @since 9.0.0
          */
         scopes?: Array<string>;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -2824,7 +2824,7 @@ export interface Service {
          * @since 9.0.0
          */
         scopes?: Array<string>;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -3132,7 +3132,7 @@ export interface Service {
          * @since 9.0.0
          */
         scopes?: Array<string>;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -3299,7 +3299,7 @@ export interface Service {
          * @since 9.0.0
          */
         title: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -3802,7 +3802,7 @@ export interface Service {
          * @since 9.0.0
          */
         public?: boolean;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -5533,7 +5533,7 @@ export interface Service {
              */
             filename?: string;
         };
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -6299,7 +6299,7 @@ export interface Service {
          * @since 9.0.0
          */
         body: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -6596,7 +6596,7 @@ export interface Service {
          * @since 9.0.0
          */
         body: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -10188,7 +10188,7 @@ export interface Service {
          * @since 9.0.0
          */
         text: string;
-    }, 'application/json'>): [(code: 200) => {}];
+    }, "application/json">): [(code: 200) => {}];
     /**
      * Render a Markdown document in raw mode
      * @description You must send Markdown as plain text (using a `Content-Type` header of `text/plain` or `text/x-markdown`) to this endpoint, rather than using JSON format. In raw mode, [GitHub Flavored Markdown](https://github.github.com/gfm/) is not supported and Markdown will be rendered in plain format like a README.md file. Markdown content must be 400 KB or less.
@@ -10201,7 +10201,7 @@ export interface Service {
      * @param content_type - Setting content-type header is required for this endpoint
      * @return 200| - response
      */
-    'markdown/render-raw'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, content_type?: Header<"text/plain; charset=utf-8", 'content-type'>, body?: Body<string, 'application/json'>): [(code: 200) => {}];
+    'markdown/render-raw'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, content_type?: Header<"text/plain; charset=utf-8", "content-type">, body?: Body<string, "application/json">): [(code: 200) => {}];
     /**
      * Check if a GitHub account is associated with any Marketplace listing
      * @description Shows whether the user or organization account actively subscribes to a plan listed by the authenticated GitHub App. When someone submits a plan change that won't be processed until the end of their billing cycle, you will also see the upcoming pending change.
@@ -11863,7 +11863,7 @@ export interface Service {
          * @since 9.0.0
          */
         last_read_at?: string;
-    }, 'application/json'>): [(code: 205) => {}];
+    }, "application/json">): [(code: 205) => {}];
     /**
      * View a single thread
      * @since 9.0.0
@@ -12337,7 +12337,7 @@ export interface Service {
          * @since 9.0.0
          */
         ignored?: boolean;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -12803,7 +12803,7 @@ export interface Service {
          * @since 9.0.0
          */
         name?: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -13368,7 +13368,7 @@ export interface Service {
          * @since 9.0.0
          */
         name: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -13556,7 +13556,7 @@ export interface Service {
          * @since 9.0.0
          */
         events?: Array<string> /* todo: add defaultValue '["push"]' */;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -14070,7 +14070,7 @@ export interface Service {
          * @since 9.0.0
          */
         limit: "existing_users" | "contributors_only" | "collaborators_only";
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -14283,7 +14283,7 @@ export interface Service {
          * @since 9.0.0
          */
         team_ids?: Array<int64>;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -16029,7 +16029,7 @@ export interface Service {
          * @since 9.0.0
          */
         role?: "admin" | "member";
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -16890,7 +16890,7 @@ export interface Service {
          * @since 9.0.0
          */
         repositories: Array<string>;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -19097,7 +19097,7 @@ export interface Service {
          * @since 9.0.0
          */
         name: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -20048,7 +20048,7 @@ export interface Service {
          * @since 9.0.0
          */
         visibility?: "public" | "private" | "visibility" | "internal";
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -20734,7 +20734,7 @@ export interface Service {
          * @since 9.0.0
          */
         repo_names?: Array<string>;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -21260,7 +21260,7 @@ export interface Service {
          * @since 9.0.0
          */
         privacy?: "secret" | "closed";
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -21758,7 +21758,7 @@ export interface Service {
          * @since 9.0.0
          */
         title: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -22264,7 +22264,7 @@ export interface Service {
          * @since 9.0.0
          */
         title?: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -22730,7 +22730,7 @@ export interface Service {
          * @since 9.0.0
          */
         body: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -23184,7 +23184,7 @@ export interface Service {
          * @since 9.0.0
          */
         body: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -23544,7 +23544,7 @@ export interface Service {
          * @since 9.0.0
          */
         content: "+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes";
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -23821,7 +23821,7 @@ export interface Service {
          * @since 9.0.0
          */
         content: "+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes";
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -24276,7 +24276,7 @@ export interface Service {
          * @since 9.0.0
          */
         role?: "member" | "maintainer";
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -24788,7 +24788,7 @@ export interface Service {
          * @since 9.0.0
          */
         permission?: "read" | "write" | "admin";
-    }, 'application/json'>): [(code: 204) => {}, (code: 403, mediaType: "application/json") => {
+    }, "application/json">): [(code: 204) => {}, (code: 403, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -25918,7 +25918,7 @@ export interface Service {
          * @since 9.0.0
          */
         permission?: "pull" | "push" | "admin";
-    }, 'application/json'>): [(code: 204) => {}];
+    }, "application/json">): [(code: 204) => {}];
     /**
      * Remove team repository
      * @description If the authenticated user is an organization owner or a team maintainer, they can remove any repositories from the team. To remove a repository from a team as an organization member, the authenticated user must have admin access to the repository and must be able to see the team. This does not delete the repository, it just removes it from the team.
@@ -26012,7 +26012,7 @@ export interface Service {
              */
             group_name: string;
         }>;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -26358,7 +26358,7 @@ export interface Service {
          * @since 9.0.0
          */
         note?: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/vnd.github.inertia-preview+json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/vnd.github.inertia-preview+json") => {
         body: {
             /**
              *
@@ -26528,7 +26528,7 @@ export interface Service {
          * @since 9.0.0
          */
         position: string & RegularExpression<'^(top|bottom|after:\d+)$'>;
-    }, 'application/json'>): [(code: 201) => {}];
+    }, "application/json">): [(code: 201) => {}];
     /**
      * Get a project column
      * @since 9.0.0
@@ -26607,7 +26607,7 @@ export interface Service {
          * @since 9.0.0
          */
         name: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/vnd.github.inertia-preview+json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/vnd.github.inertia-preview+json") => {
         body: {
             /**
              *
@@ -26842,7 +26842,7 @@ export interface Service {
          * @since 9.0.0
          */
         note?: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -27007,7 +27007,7 @@ export interface Service {
          * @since 9.0.0
          */
         position: string & RegularExpression<'^(first|last|after:\d+)$'>;
-    }, 'application/json'>): [(code: 201) => {}];
+    }, "application/json">): [(code: 201) => {}];
     /**
      * Get a project
      * @description Gets a project by its `id`. Returns a `404 Not Found` status if projects are disabled. If you do not have sufficient privileges to perform this action, a `401 Unauthorized` or `410 Gone` status is returned.
@@ -27240,7 +27240,7 @@ export interface Service {
          * @since 9.0.0
          */
         state?: "open" | "closed";
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -27532,7 +27532,7 @@ export interface Service {
          * @since 9.0.0
          */
         permission?: "read" | "write" | "admin";
-    }, 'application/json'>): [(code: 204) => {}];
+    }, "application/json">): [(code: 204) => {}];
     /**
      * Remove user as a collaborator
      * @description Removes a collaborator from an organization project. You must be an organization owner or a project `admin` to remove a collaborator.
@@ -27731,7 +27731,7 @@ export interface Service {
          * @since 9.0.0
          */
         name: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/vnd.github.inertia-preview+json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/vnd.github.inertia-preview+json") => {
         body: {
             /**
              *
@@ -29719,7 +29719,7 @@ export interface Service {
          * @since 9.0.0
          */
         visibility?: "public" | "private" | "visibility" | "internal";
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -33816,7 +33816,7 @@ export interface Service {
          * @since 9.0.0
          */
         key_id?: string;
-    }, 'application/json'>): [(code: 418) => {
+    }, "application/json">): [(code: 418) => {
         isException: true;
     }];
     /**
@@ -36080,7 +36080,7 @@ export interface Service {
              */
             users: Array<string>;
         } | null;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -37075,7 +37075,7 @@ export interface Service {
          * @since 9.0.0
          */
         required_approving_review_count?: int64;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -37433,7 +37433,7 @@ export interface Service {
          * @since 9.0.0
          */
         strict?: boolean;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -37484,7 +37484,7 @@ export interface Service {
      * @param branch - branch parameter
      * @return 200|application/json - response
      */
-    'repos/replace-protected-branch-required-status-checks-contexts'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    'repos/replace-protected-branch-required-status-checks-contexts'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<string>;
     }];
     /**
@@ -37499,7 +37499,7 @@ export interface Service {
      * @param branch - branch parameter
      * @return 200|application/json - response
      */
-    'repos/add-protected-branch-required-status-checks-contexts'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    'repos/add-protected-branch-required-status-checks-contexts'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<string>;
     }];
     /**
@@ -37514,7 +37514,7 @@ export interface Service {
      * @param branch - branch parameter
      * @return 200|application/json - response
      */
-    'repos/remove-protected-branch-required-status-checks-contexts'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    'repos/remove-protected-branch-required-status-checks-contexts'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<string>;
     }];
     /**
@@ -38062,7 +38062,7 @@ export interface Service {
      * @param branch - branch parameter
      * @return 200|application/json - response
      */
-    'repos/replace-protected-branch-app-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    'repos/replace-protected-branch-app-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
             /**
              *
@@ -38226,7 +38226,7 @@ export interface Service {
      * @param branch - branch parameter
      * @return 200|application/json - response
      */
-    'repos/add-protected-branch-app-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    'repos/add-protected-branch-app-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
             /**
              *
@@ -38390,7 +38390,7 @@ export interface Service {
      * @param branch - branch parameter
      * @return 200|application/json - response
      */
-    'repos/remove-protected-branch-app-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    'repos/remove-protected-branch-app-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
             /**
              *
@@ -38632,7 +38632,7 @@ export interface Service {
      * @param branch - branch parameter
      * @return 200|application/json - response
      */
-    'repos/replace-protected-branch-team-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    'repos/replace-protected-branch-team-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
             /**
              *
@@ -38714,7 +38714,7 @@ export interface Service {
      * @param branch - branch parameter
      * @return 200|application/json - response
      */
-    'repos/add-protected-branch-team-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    'repos/add-protected-branch-team-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
             /**
              *
@@ -38796,7 +38796,7 @@ export interface Service {
      * @param branch - branch parameter
      * @return 200|application/json - response
      */
-    'repos/remove-protected-branch-team-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    'repos/remove-protected-branch-team-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
             /**
              *
@@ -38986,7 +38986,7 @@ export interface Service {
      * @param branch - branch parameter
      * @return 200|application/json - response
      */
-    'repos/replace-protected-branch-user-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    'repos/replace-protected-branch-user-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
             /**
              *
@@ -39098,7 +39098,7 @@ export interface Service {
      * @param branch - branch parameter
      * @return 200|application/json - response
      */
-    'repos/add-protected-branch-user-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    'repos/add-protected-branch-user-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
             /**
              *
@@ -39210,7 +39210,7 @@ export interface Service {
      * @param branch - branch parameter
      * @return 200|application/json - response
      */
-    'repos/remove-protected-branch-user-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    'repos/remove-protected-branch-user-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
             /**
              *
@@ -39473,7 +39473,7 @@ export interface Service {
          * @since 9.0.0
          */
         status?: "queued" | "in_progress" | "completed";
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -40340,7 +40340,7 @@ export interface Service {
          * @since 9.0.0
          */
         status?: "queued" | "in_progress" | "completed";
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -40771,7 +40771,7 @@ export interface Service {
          * @since 9.0.0
          */
         head_sha: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -41514,7 +41514,7 @@ export interface Service {
              */
             setting: boolean /* todo: add defaultValue 'true' */;
         }>;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -43357,7 +43357,7 @@ export interface Service {
          * @since 9.0.0
          */
         permission?: "pull" | "push" | "admin";
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -44406,7 +44406,7 @@ export interface Service {
          * @since 9.0.0
          */
         body: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -44714,7 +44714,7 @@ export interface Service {
          * @since 9.0.0
          */
         content: "+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes";
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -45464,7 +45464,7 @@ export interface Service {
          * @since 9.0.0
          */
         position?: int64;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -51517,7 +51517,7 @@ export interface Service {
          * @since 9.0.0
          */
         sha?: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -52006,7 +52006,7 @@ export interface Service {
          * @since 9.0.0
          */
         sha: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -52561,7 +52561,7 @@ export interface Service {
          * @since 9.0.0
          */
         transient_environment?: boolean;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -53214,7 +53214,7 @@ export interface Service {
          * @since 9.0.0
          */
         target_url?: string /* todo: add defaultValue '""' */;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -53585,7 +53585,7 @@ export interface Service {
          * @since 9.0.0
          */
         event_type?: string;
-    }, 'application/json'>): [(code: 204) => {}];
+    }, "application/json">): [(code: 204) => {}];
     /**
      * List downloads for a repository
      * @since 9.0.0
@@ -54283,7 +54283,7 @@ export interface Service {
          * @since 9.0.0
          */
         organization?: string;
-    }, 'application/json'>): [(code: 202, mediaType: "application/json") => {
+    }, "application/json">): [(code: 202, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -54815,7 +54815,7 @@ export interface Service {
          * @since 9.0.0
          */
         encoding?: string /* todo: add defaultValue '"utf-8"' */;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -54972,7 +54972,7 @@ export interface Service {
          * @since 9.0.0
          */
         tree: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -55387,7 +55387,7 @@ export interface Service {
          * @since 9.0.0
          */
         sha: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -55468,7 +55468,7 @@ export interface Service {
          * @since 9.0.0
          */
         sha: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -55583,7 +55583,7 @@ export interface Service {
          * @since 9.0.0
          */
         type: "commit" | "tree" | "blob";
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -55863,7 +55863,7 @@ export interface Service {
              */
             type?: "blob" | "tree" | "commit";
         }>;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -56146,7 +56146,7 @@ export interface Service {
          * @since 9.0.0
          */
         name?: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -56419,7 +56419,7 @@ export interface Service {
          * @since 9.0.0
          */
         remove_events?: Array<string>;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -56693,7 +56693,7 @@ export interface Service {
          * @since 9.0.0
          */
         vcs_username?: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -56812,7 +56812,7 @@ export interface Service {
          * @since 9.0.0
          */
         vcs_username?: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -56932,7 +56932,7 @@ export interface Service {
          * @since 9.0.0
          */
         name?: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -57023,7 +57023,7 @@ export interface Service {
          * @since 9.0.0
          */
         use_lfs: "opt_in" | "opt_out";
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -57328,7 +57328,7 @@ export interface Service {
          * @since 9.0.0
          */
         limit: "existing_users" | "contributors_only" | "collaborators_only";
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -57956,7 +57956,7 @@ export interface Service {
          * @since 9.0.0
          */
         permissions?: "read" | "write" | "admin";
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -59205,7 +59205,7 @@ export interface Service {
          * @since 9.0.0
          */
         title: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -60255,7 +60255,7 @@ export interface Service {
          * @since 9.0.0
          */
         body: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -60543,7 +60543,7 @@ export interface Service {
          * @since 9.0.0
          */
         content: "+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes";
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -63000,7 +63000,7 @@ export interface Service {
          * @since 9.0.0
          */
         title?: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -63742,7 +63742,7 @@ export interface Service {
          * @since 9.0.0
          */
         assignees?: Array<string>;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -64388,7 +64388,7 @@ export interface Service {
          * @since 9.0.0
          */
         assignees?: Array<string>;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -65184,7 +65184,7 @@ export interface Service {
          * @since 9.0.0
          */
         body: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -65536,7 +65536,7 @@ export interface Service {
          * @since 9.0.0
          */
         labels?: Array<string>;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
             /**
              *
@@ -65592,7 +65592,7 @@ export interface Service {
          * @since 9.0.0
          */
         labels: Array<string>;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
             /**
              *
@@ -65719,7 +65719,7 @@ export interface Service {
          * @since 9.0.0
          */
         lock_reason?: "off-topic" | "too heated" | "resolved" | "spam";
-    }, 'application/json'>): [(code: 204) => {}];
+    }, "application/json">): [(code: 204) => {}];
     /**
      * Unlock an issue
      * @description Users with push access can unlock an issue's conversation.
@@ -65886,7 +65886,7 @@ export interface Service {
          * @since 9.0.0
          */
         content: "+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes";
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -66236,7 +66236,7 @@ export interface Service {
          * @since 9.0.0
          */
         title?: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -66414,7 +66414,7 @@ export interface Service {
          * @since 9.0.0
          */
         name: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -66542,7 +66542,7 @@ export interface Service {
          * @since 9.0.0
          */
         new_name?: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -66758,7 +66758,7 @@ export interface Service {
          * @since 9.0.0
          */
         head: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -67339,7 +67339,7 @@ export interface Service {
          * @since 9.0.0
          */
         title: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -67744,7 +67744,7 @@ export interface Service {
          * @since 9.0.0
          */
         title?: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -68397,7 +68397,7 @@ export interface Service {
          * @since 9.0.0
          */
         last_read_at?: string;
-    }, 'application/json'>): [(code: 205) => {}];
+    }, "application/json">): [(code: 205) => {}];
     /**
      * Get information about a Pages site
      * @since 9.0.0
@@ -68474,7 +68474,7 @@ export interface Service {
          * @since 9.0.0
          */
         source?: "\"gh-pages\"" | "\"master\"" | "\"master /docs\"";
-    }, 'application/json'>): [(code: 204) => {}];
+    }, "application/json">): [(code: 204) => {}];
     /**
      * Enable a Pages site
      * @since 9.0.0
@@ -68502,7 +68502,7 @@ export interface Service {
              */
             path?: string;
         };
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -69237,7 +69237,7 @@ export interface Service {
          * @since 9.0.0
          */
         name: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -71614,7 +71614,7 @@ export interface Service {
          * @since 9.0.0
          */
         title: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -74545,7 +74545,7 @@ export interface Service {
          * @since 9.0.0
          */
         body: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -74952,7 +74952,7 @@ export interface Service {
          * @since 9.0.0
          */
         content: "+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes";
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -77440,7 +77440,7 @@ export interface Service {
          * @since 9.0.0
          */
         title?: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -80112,7 +80112,7 @@ export interface Service {
          * @since 9.0.0
          */
         start_side?: "LEFT" | "RIGHT" | "side";
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -80387,7 +80387,7 @@ export interface Service {
          * @since 9.0.0
          */
         body: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -81080,7 +81080,7 @@ export interface Service {
          * @since 9.0.0
          */
         sha?: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -81330,7 +81330,7 @@ export interface Service {
          * @since 9.0.0
          */
         team_reviewers?: Array<string>;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -83505,7 +83505,7 @@ export interface Service {
          * @since 9.0.0
          */
         team_reviewers?: Array<string>;
-    }, 'application/json'>): [(code: 200) => {}];
+    }, "application/json">): [(code: 200) => {}];
     /**
      * List reviews on a pull request
      * @description The list of reviews returns in chronological order.
@@ -83741,7 +83741,7 @@ export interface Service {
          * @since 9.0.0
          */
         event?: "APPROVE" | "REQUEST_CHANGES" | "COMMENT";
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -84103,7 +84103,7 @@ export interface Service {
          * @since 9.0.0
          */
         body: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -84698,7 +84698,7 @@ export interface Service {
          * @since 9.0.0
          */
         message: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -84884,7 +84884,7 @@ export interface Service {
          * @since 9.0.0
          */
         event: "APPROVE" | "REQUEST_CHANGES" | "COMMENT";
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -85070,7 +85070,7 @@ export interface Service {
          * @since 9.0.0
          */
         expected_head_sha?: string;
-    }, 'application/json'>): [(code: 202, mediaType: "application/json") => {
+    }, "application/json">): [(code: 202, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -85579,7 +85579,7 @@ export interface Service {
          * @since 9.0.0
          */
         target_commitish?: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -85971,7 +85971,7 @@ export interface Service {
          * @since 9.0.0
          */
         name?: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -87250,7 +87250,7 @@ export interface Service {
          * @since 9.0.0
          */
         target_commitish?: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -87796,7 +87796,7 @@ export interface Service {
      * @param label - label parameter
      * @return 201|application/json - Response for successful upload
      */
-    'repos/upload-release-asset'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, content_length: Header<string, 'content-length'>, content_type: Header<string, 'content-type'>, owner: string, repo: string, release_id: int64, name?: Query<string>, label?: Query<string>, body?: Body<string, '*/*'>): [(code: 201, mediaType: "application/json") => {
+    'repos/upload-release-asset'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, content_length: Header<string, "content-length">, content_type: Header<string, "content-type">, owner: string, repo: string, release_id: int64, name?: Query<string>, label?: Query<string>, body?: Body<string, "*/*">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -88456,7 +88456,7 @@ export interface Service {
          * @since 9.0.0
          */
         target_url?: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -88781,7 +88781,7 @@ export interface Service {
          * @since 9.0.0
          */
         subscribed?: boolean;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -88985,7 +88985,7 @@ export interface Service {
          * @since 9.0.0
          */
         names: Array<string>;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -89175,7 +89175,7 @@ export interface Service {
          * @since 9.0.0
          */
         team_ids?: Array<int64>;
-    }, 'application/json'>): [(code: 202, mediaType: "application/json") => {
+    }, "application/json">): [(code: 202, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -89786,7 +89786,7 @@ export interface Service {
          * @since 9.0.0
          */
         private?: boolean;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -93880,7 +93880,7 @@ export interface Service {
          * @since 9.0.0
          */
         privacy?: "secret" | "closed";
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -94378,7 +94378,7 @@ export interface Service {
          * @since 9.0.0
          */
         title: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -94884,7 +94884,7 @@ export interface Service {
          * @since 9.0.0
          */
         title?: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -95350,7 +95350,7 @@ export interface Service {
          * @since 9.0.0
          */
         body: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -95804,7 +95804,7 @@ export interface Service {
          * @since 9.0.0
          */
         body: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -96164,7 +96164,7 @@ export interface Service {
          * @since 9.0.0
          */
         content: "+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes";
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -96441,7 +96441,7 @@ export interface Service {
          * @since 9.0.0
          */
         content: "+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes";
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -96994,7 +96994,7 @@ export interface Service {
          * @since 9.0.0
          */
         role?: "member" | "maintainer";
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -97506,7 +97506,7 @@ export interface Service {
          * @since 9.0.0
          */
         permission?: "read" | "write" | "admin";
-    }, 'application/json'>): [(code: 204) => {}, (code: 403, mediaType: "application/json") => {
+    }, "application/json">): [(code: 204) => {}, (code: 403, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -98636,7 +98636,7 @@ export interface Service {
          * @since 9.0.0
          */
         permission?: "pull" | "push" | "admin";
-    }, 'application/json'>): [(code: 204) => {}];
+    }, "application/json">): [(code: 204) => {}];
     /**
      * Remove team repository (Legacy)
      * @description **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [`Remove team repository`](https://developer.github.com/v3/teams/#remove-team-repository) endpoint.
@@ -98730,7 +98730,7 @@ export interface Service {
              */
             group_name: string;
         }>;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -99156,7 +99156,7 @@ export interface Service {
          * @since 9.0.0
          */
         name?: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -99530,7 +99530,7 @@ export interface Service {
          * @since 9.0.0
          */
         visibility: string;
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
             /**
              *
@@ -99604,7 +99604,7 @@ export interface Service {
          * @since 9.0.0
          */
         emails: Array<string>;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: Array<{
             /**
              *
@@ -99643,7 +99643,7 @@ export interface Service {
          * @since 9.0.0
          */
         emails: Array<string>;
-    }, 'application/json'>): [(code: 204) => {}];
+    }, "application/json">): [(code: 204) => {}];
     /**
      * List the authenticated user's followers
      * @since 9.0.0
@@ -100051,7 +100051,7 @@ export interface Service {
          * @since 9.0.0
          */
         armored_public_key?: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -102346,7 +102346,7 @@ export interface Service {
          * @since 9.0.0
          */
         title?: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -103106,7 +103106,7 @@ export interface Service {
          * @since 9.0.0
          */
         state: "active";
-    }, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -103981,7 +103981,7 @@ export interface Service {
          * @since 9.0.0
          */
         repositories: Array<string>;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -105458,7 +105458,7 @@ export interface Service {
          * @since 9.0.0
          */
         name: string;
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
@@ -105782,7 +105782,7 @@ export interface Service {
          * @since 9.0.0
          */
         visibility?: "public" | "private" | "visibility" | "internal";
-    }, 'application/json'>): [(code: 201, mediaType: "application/json") => {
+    }, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: {
             /**
              *
