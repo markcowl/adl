@@ -5,11 +5,11 @@ import { versionedElement } from '../utils';
 export default <Rule>{
   runOn: 'edit',
   meta: {
-    name: 'required-read-only-properties',
+    name: 'version-format',
     code: 'R2056',
     type: 'error',
-    description: 'A model property cannot be both readOnly and required. A readOnly property is something that the server sets when returning the model object while required is a property to be set when sending it as a part of the request body.',
-    documentationUrl: 'https://github.com/Azure/azure-rest-api-specs/blob/master/documentation/openapi-authoring-automated-guidelines.md#r2056-requiredreadonlyproperties',
+    description: 'API version must be in the format: yyyy - MM - dd, optionally followed by - preview, - alpha, -beta, -rc, -privatepreview.',
+    documentationUrl: 'URL',
     category: 'SDK Error'
   },
   onAliasType: (model, alias) => checkVersionFormat(alias),
