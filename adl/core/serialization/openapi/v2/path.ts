@@ -1,17 +1,13 @@
 import { items, length, values } from '@azure-tools/linq';
 import { common, isReference, v2 } from '@azure-tools/openapi';
-import { JsonReference, ParameterLocation } from '@azure-tools/openapi/dist/v2';
-import { anonymous, nameOf } from '@azure-tools/sourcemap';
+import { nameOf } from '@azure-tools/sourcemap';
 import { Alias } from '../../../model/alias';
 import { createOperationGroup, createOperationStructure, Method, OperationStructure, Path } from '../../../model/http/operation';
-import { Parameter } from '../../../model/http/parameter';
-import { Request } from '../../../model/http/request';
 import { Response } from '../../../model/http/response';
-import { addExtensionsToAttic, push } from '../common';
+import { ParameterTypeReference } from '../../../model/schema/type';
 import { getGroupAndName } from '../common/path';
 import { versionInfo } from '../common/schema';
-import { requestBody } from './body-parameter';
-import { parameter } from './parameter';
+import { getParameterReference, processParameter } from './parameter';
 import { response } from './response';
 import { Context } from './serializer';
 
@@ -51,52 +47,31 @@ async function* processPath(pathItem: v2.PathItem, $: Context): AsyncGenerator<O
 async function processOperation(path: Path, operation: v2.Operation, shared: v2.PathItem, $: Context): Promise<OperationStructure> {
   const [group, name] = getGroupAndName(operation, path.path);
 
-  const parameters = new Array<Parameter | Alias<Parameter>>();
-  const requests = new Array<Request | Alias<Request>>();
+  const parameters = new Array<ParameterTypeReference>();
   const responses = new Array<Response | Alias<Response>>();
-  const tags = operation.tags ?? [];
 
   // OAI2 parameters are all in the operation
-  for (const p of values(shared.parameters)) {
-    if (isReference(p)) {
-      const r = (await $.resolveReference(p.$ref)).node;
-      if (r.in == ParameterLocation.Body || r.in == ParameterLocation.FormData) {
-        push(requests, $.processInline(requestBody, <JsonReference<v2.BodyParameter>> p, { isAnonymous: true, operation }));
-        continue;
-      }
-    } else if (p.in == ParameterLocation.Body || p.in == ParameterLocation.FormData )  {
-      push(requests, $.processInline(requestBody, <v2.BodyParameter>p, { isAnonymous: true, operation}));
-      continue;
-    }
-
-    // create each parameter in the operation  (non-body)
-    await push(parameters, $.processInline(parameter, p));
+  for (const each of values(shared.parameters)) {
+    parameters.push(await processParameter(each, $, { isAnonymous: true, operation: operation }));
+  }
+  for (const p of values(operation.parameters)) {
+    parameters.push(await processParameter(p, $, { isAnonymous: true, operation: operation }));
   }
 
   const consumes = operation?.consumes || $.sourceModel.consumes || [];
-  if( length( consumes) > 0  && operation.parameters?.find(each =>(<any>each).in === ParameterLocation.Body) === undefined )   {
+  const hasBodyParameter = () => parameters.find(
+    each => each.location == v2.ParameterLocation.Body ||
+    each.location == v2.ParameterLocation.FormData) !== undefined;
+
+  if (length(consumes) > 0 && !hasBodyParameter()) {
     // they specified a body content type, but no actual body parameter, which means
     // they get an anonymous one added 
-    for( const mediaType of consumes ) {
-      requests.push( new Request(anonymous('requestBody'),mediaType,$.api.primitives.file));
-    }
-  }
-
-  for (const p of values(operation.parameters)) {
-    // create each parameter in the operation 
-    if (isReference(p)) {
-      const r = (await $.resolveReference(p.$ref)).node;
-      if (r.in == ParameterLocation.Body) {
-        push(requests, $.processInline(requestBody, <JsonReference<v2.BodyParameter>>p, { isAnonymous: true, operation }));
-        continue;
-      }
-    } else if (p.in == ParameterLocation.Body) {
-      push(requests, $.processInline(requestBody, <v2.BodyParameter>p, { isAnonymous: true, operation }));
-      continue;
-    }
-
-    // create each parameter in the operation  (non-body)
-    await push(parameters, $.processInline(parameter, p, {isAnonymous: true}));
+    const bodyParameter: v2.BodyParameter = {
+      name: 'body',
+      in: v2.ParameterLocation.Body
+    };
+  
+    parameters.push(getParameterReference(bodyParameter, $.api.primitives.file, $, { isAnonymous: true, operation }));
   }
 
   for await (const rsp of $.processDictionary(response, <any>operation.responses, {operation})) {
@@ -112,7 +87,6 @@ async function processOperation(path: Path, operation: v2.Operation, shared: v2.
       description: operation.description,
       tags: operation.tags,
       parameters,
-      requests,
       responses,
       ...versionInfo($, operation)
     });
@@ -136,3 +110,4 @@ async function processOperation(path: Path, operation: v2.Operation, shared: v2.
 
   // yield addExtensionsToAttic(result, operation);
 }
+

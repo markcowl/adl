@@ -1,4 +1,4 @@
-import { SourceFile } from 'ts-morph';
+import { SourceFile, TypeParameterDeclarationStructure } from 'ts-morph';
 import { TypeSyntax } from '../../support/codegen';
 
 export interface TypeReference {
@@ -33,13 +33,23 @@ export interface TypeReference {
   readonly sourceFile?: SourceFile;
 
   readonly isInline?: boolean;
+  typeParameters?: Array<TypeParameterDeclarationStructure>;
 }
 
 export interface SchemaTypeReference extends TypeReference {
 }
 
 export interface ParameterTypeReference extends TypeReference {
+  name: string;
+  description?: string;
+  required: boolean;
+  location: string;
 }
 
 export interface HeaderTypeReference extends TypeReference {
+}
+
+export interface RequestBodyTypeReference extends TypeReference {
+  required: boolean;
+  description?: string;
 }

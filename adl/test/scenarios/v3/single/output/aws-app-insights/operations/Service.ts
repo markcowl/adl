@@ -10,7 +10,7 @@ export interface Service {
      * @return 483|application/json - InternalServerException
      * @return 484|application/json - TagsAlreadyExistException
      */
-    CreateApplication(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.CreateApplication", 'X-Amz-Target'>, body: Body<CreateApplicationRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    CreateApplication(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.CreateApplication", "X-Amz-Target">, body: Body<CreateApplicationRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: CreateApplicationResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -38,7 +38,7 @@ export interface Service {
      * @return 482|application/json - ValidationException
      * @return 483|application/json - InternalServerException
      */
-    CreateComponent(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.CreateComponent", 'X-Amz-Target'>, body: Body<CreateComponentRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    CreateComponent(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.CreateComponent", "X-Amz-Target">, body: Body<CreateComponentRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: CreateComponentResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -63,7 +63,7 @@ export interface Service {
      * @return 482|application/json - ValidationException
      * @return 483|application/json - InternalServerException
      */
-    CreateLogPattern(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.CreateLogPattern", 'X-Amz-Target'>, body: Body<CreateLogPatternRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    CreateLogPattern(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.CreateLogPattern", "X-Amz-Target">, body: Body<CreateLogPatternRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: CreateLogPatternResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -88,7 +88,7 @@ export interface Service {
      * @return 482|application/json - BadRequestException
      * @return 483|application/json - InternalServerException
      */
-    DeleteApplication(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.DeleteApplication", 'X-Amz-Target'>, body: Body<DeleteApplicationRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    DeleteApplication(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.DeleteApplication", "X-Amz-Target">, body: Body<DeleteApplicationRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: DeleteApplicationResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -112,7 +112,7 @@ export interface Service {
      * @return 481|application/json - ValidationException
      * @return 482|application/json - InternalServerException
      */
-    DeleteComponent(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.DeleteComponent", 'X-Amz-Target'>, body: Body<DeleteComponentRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    DeleteComponent(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.DeleteComponent", "X-Amz-Target">, body: Body<DeleteComponentRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: DeleteComponentResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -134,7 +134,7 @@ export interface Service {
      * @return 482|application/json - BadRequestException
      * @return 483|application/json - InternalServerException
      */
-    DeleteLogPattern(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.DeleteLogPattern", 'X-Amz-Target'>, body: Body<DeleteLogPatternRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    DeleteLogPattern(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.DeleteLogPattern", "X-Amz-Target">, body: Body<DeleteLogPatternRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: DeleteLogPatternResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -158,7 +158,7 @@ export interface Service {
      * @return 481|application/json - ValidationException
      * @return 482|application/json - InternalServerException
      */
-    DescribeApplication(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.DescribeApplication", 'X-Amz-Target'>, body: Body<DescribeApplicationRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    DescribeApplication(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.DescribeApplication", "X-Amz-Target">, body: Body<DescribeApplicationRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: DescribeApplicationResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -179,7 +179,7 @@ export interface Service {
      * @return 481|application/json - ValidationException
      * @return 482|application/json - InternalServerException
      */
-    DescribeComponent(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.DescribeComponent", 'X-Amz-Target'>, body: Body<DescribeComponentRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    DescribeComponent(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.DescribeComponent", "X-Amz-Target">, body: Body<DescribeComponentRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: DescribeComponentResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -200,7 +200,7 @@ export interface Service {
      * @return 481|application/json - ValidationException
      * @return 482|application/json - InternalServerException
      */
-    DescribeComponentConfiguration(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.DescribeComponentConfiguration", 'X-Amz-Target'>, body: Body<DescribeComponentConfigurationRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    DescribeComponentConfiguration(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.DescribeComponentConfiguration", "X-Amz-Target">, body: Body<DescribeComponentConfigurationRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: DescribeComponentConfigurationResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -221,7 +221,7 @@ export interface Service {
      * @return 481|application/json - ValidationException
      * @return 482|application/json - InternalServerException
      */
-    DescribeComponentConfigurationRecommendation(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.DescribeComponentConfigurationRecommendation", 'X-Amz-Target'>, body: Body<DescribeComponentConfigurationRecommendationRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    DescribeComponentConfigurationRecommendation(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.DescribeComponentConfigurationRecommendation", "X-Amz-Target">, body: Body<DescribeComponentConfigurationRecommendationRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: DescribeComponentConfigurationRecommendationResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -242,7 +242,7 @@ export interface Service {
      * @return 481|application/json - ValidationException
      * @return 482|application/json - InternalServerException
      */
-    DescribeLogPattern(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.DescribeLogPattern", 'X-Amz-Target'>, body: Body<DescribeLogPatternRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    DescribeLogPattern(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.DescribeLogPattern", "X-Amz-Target">, body: Body<DescribeLogPatternRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: DescribeLogPatternResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -263,7 +263,7 @@ export interface Service {
      * @return 481|application/json - ValidationException
      * @return 482|application/json - ResourceNotFoundException
      */
-    DescribeObservation(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.DescribeObservation", 'X-Amz-Target'>, body: Body<DescribeObservationRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    DescribeObservation(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.DescribeObservation", "X-Amz-Target">, body: Body<DescribeObservationRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: DescribeObservationResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -284,7 +284,7 @@ export interface Service {
      * @return 481|application/json - ValidationException
      * @return 482|application/json - ResourceNotFoundException
      */
-    DescribeProblem(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.DescribeProblem", 'X-Amz-Target'>, body: Body<DescribeProblemRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    DescribeProblem(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.DescribeProblem", "X-Amz-Target">, body: Body<DescribeProblemRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: DescribeProblemResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -305,7 +305,7 @@ export interface Service {
      * @return 481|application/json - ValidationException
      * @return 482|application/json - ResourceNotFoundException
      */
-    DescribeProblemObservations(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.DescribeProblemObservations", 'X-Amz-Target'>, body: Body<DescribeProblemObservationsRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    DescribeProblemObservations(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.DescribeProblemObservations", "X-Amz-Target">, body: Body<DescribeProblemObservationsRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: DescribeProblemObservationsResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -327,7 +327,7 @@ export interface Service {
      * @return 480|application/json - ValidationException
      * @return 481|application/json - InternalServerException
      */
-    ListApplications(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, MaxResults?: Query<string>, NextToken?: Query<string>, X_Amz_Target: Header<"EC2WindowsBarleyService.ListApplications", 'X-Amz-Target'>, body: Body<ListApplicationsRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    ListApplications(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, MaxResults?: Query<string>, NextToken?: Query<string>, X_Amz_Target: Header<"EC2WindowsBarleyService.ListApplications", "X-Amz-Target">, body: Body<ListApplicationsRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: ListApplicationsResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -347,7 +347,7 @@ export interface Service {
      * @return 481|application/json - ValidationException
      * @return 482|application/json - InternalServerException
      */
-    ListComponents(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, MaxResults?: Query<string>, NextToken?: Query<string>, X_Amz_Target: Header<"EC2WindowsBarleyService.ListComponents", 'X-Amz-Target'>, body: Body<ListComponentsRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    ListComponents(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, MaxResults?: Query<string>, NextToken?: Query<string>, X_Amz_Target: Header<"EC2WindowsBarleyService.ListComponents", "X-Amz-Target">, body: Body<ListComponentsRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: ListComponentsResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -370,7 +370,7 @@ export interface Service {
      * @return 481|application/json - ResourceNotFoundException
      * @return 482|application/json - InternalServerException
      */
-    ListConfigurationHistory(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, MaxResults?: Query<string>, NextToken?: Query<string>, X_Amz_Target: Header<"EC2WindowsBarleyService.ListConfigurationHistory", 'X-Amz-Target'>, body: Body<ListConfigurationHistoryRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    ListConfigurationHistory(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, MaxResults?: Query<string>, NextToken?: Query<string>, X_Amz_Target: Header<"EC2WindowsBarleyService.ListConfigurationHistory", "X-Amz-Target">, body: Body<ListConfigurationHistoryRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: ListConfigurationHistoryResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -393,7 +393,7 @@ export interface Service {
      * @return 481|application/json - ValidationException
      * @return 482|application/json - InternalServerException
      */
-    ListLogPatternSets(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, MaxResults?: Query<string>, NextToken?: Query<string>, X_Amz_Target: Header<"EC2WindowsBarleyService.ListLogPatternSets", 'X-Amz-Target'>, body: Body<ListLogPatternSetsRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    ListLogPatternSets(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, MaxResults?: Query<string>, NextToken?: Query<string>, X_Amz_Target: Header<"EC2WindowsBarleyService.ListLogPatternSets", "X-Amz-Target">, body: Body<ListLogPatternSetsRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: ListLogPatternSetsResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -416,7 +416,7 @@ export interface Service {
      * @return 481|application/json - ValidationException
      * @return 482|application/json - InternalServerException
      */
-    ListLogPatterns(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, MaxResults?: Query<string>, NextToken?: Query<string>, X_Amz_Target: Header<"EC2WindowsBarleyService.ListLogPatterns", 'X-Amz-Target'>, body: Body<ListLogPatternsRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    ListLogPatterns(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, MaxResults?: Query<string>, NextToken?: Query<string>, X_Amz_Target: Header<"EC2WindowsBarleyService.ListLogPatterns", "X-Amz-Target">, body: Body<ListLogPatternsRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: ListLogPatternsResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -439,7 +439,7 @@ export interface Service {
      * @return 481|application/json - ResourceNotFoundException
      * @return 482|application/json - InternalServerException
      */
-    ListProblems(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, MaxResults?: Query<string>, NextToken?: Query<string>, X_Amz_Target: Header<"EC2WindowsBarleyService.ListProblems", 'X-Amz-Target'>, body: Body<ListProblemsRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    ListProblems(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, MaxResults?: Query<string>, NextToken?: Query<string>, X_Amz_Target: Header<"EC2WindowsBarleyService.ListProblems", "X-Amz-Target">, body: Body<ListProblemsRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: ListProblemsResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -459,7 +459,7 @@ export interface Service {
      * @return 480|application/json - ResourceNotFoundException
      * @return 481|application/json - ValidationException
      */
-    ListTagsForResource(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.ListTagsForResource", 'X-Amz-Target'>, body: Body<ListTagsForResourceRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    ListTagsForResource(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.ListTagsForResource", "X-Amz-Target">, body: Body<ListTagsForResourceRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: ListTagsForResourceResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -477,7 +477,7 @@ export interface Service {
      * @return 481|application/json - TooManyTagsException
      * @return 482|application/json - ValidationException
      */
-    TagResource(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.TagResource", 'X-Amz-Target'>, body: Body<TagResourceRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    TagResource(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.TagResource", "X-Amz-Target">, body: Body<TagResourceRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: TagResourceResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -497,7 +497,7 @@ export interface Service {
      * @return 480|application/json - ResourceNotFoundException
      * @return 481|application/json - ValidationException
      */
-    UntagResource(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.UntagResource", 'X-Amz-Target'>, body: Body<UntagResourceRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    UntagResource(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.UntagResource", "X-Amz-Target">, body: Body<UntagResourceRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: UntagResourceResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -515,7 +515,7 @@ export interface Service {
      * @return 481|application/json - ResourceNotFoundException
      * @return 482|application/json - ValidationException
      */
-    UpdateApplication(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.UpdateApplication", 'X-Amz-Target'>, body: Body<UpdateApplicationRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    UpdateApplication(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.UpdateApplication", "X-Amz-Target">, body: Body<UpdateApplicationRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: UpdateApplicationResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -537,7 +537,7 @@ export interface Service {
      * @return 482|application/json - ValidationException
      * @return 483|application/json - InternalServerException
      */
-    UpdateComponent(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.UpdateComponent", 'X-Amz-Target'>, body: Body<UpdateComponentRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    UpdateComponent(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.UpdateComponent", "X-Amz-Target">, body: Body<UpdateComponentRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: UpdateComponentResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -561,7 +561,7 @@ export interface Service {
      * @return 481|application/json - ValidationException
      * @return 482|application/json - InternalServerException
      */
-    UpdateComponentConfiguration(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.UpdateComponentConfiguration", 'X-Amz-Target'>, body: Body<UpdateComponentConfigurationRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    UpdateComponentConfiguration(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.UpdateComponentConfiguration", "X-Amz-Target">, body: Body<UpdateComponentConfigurationRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: UpdateComponentConfigurationResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
@@ -583,7 +583,7 @@ export interface Service {
      * @return 482|application/json - ValidationException
      * @return 483|application/json - InternalServerException
      */
-    UpdateLogPattern(X_Amz_Content_Sha256?: Header<string, 'X-Amz-Content-Sha256'>, X_Amz_Date?: Header<string, 'X-Amz-Date'>, X_Amz_Algorithm?: Header<string, 'X-Amz-Algorithm'>, X_Amz_Credential?: Header<string, 'X-Amz-Credential'>, X_Amz_Security_Token?: Header<string, 'X-Amz-Security-Token'>, X_Amz_Signature?: Header<string, 'X-Amz-Signature'>, X_Amz_SignedHeaders?: Header<string, 'X-Amz-SignedHeaders'>, X_Amz_Target: Header<"EC2WindowsBarleyService.UpdateLogPattern", 'X-Amz-Target'>, body: Body<UpdateLogPatternRequest, 'application/json'>): [(code: 200, mediaType: "application/json") => {
+    UpdateLogPattern(X_Amz_Content_Sha256?: X_Amz_Content_Sha256, X_Amz_Date?: X_Amz_Date, X_Amz_Algorithm?: X_Amz_Algorithm, X_Amz_Credential?: X_Amz_Credential, X_Amz_Security_Token?: X_Amz_Security_Token, X_Amz_Signature?: X_Amz_Signature, X_Amz_SignedHeaders?: X_Amz_SignedHeaders, X_Amz_Target: Header<"EC2WindowsBarleyService.UpdateLogPattern", "X-Amz-Target">, body: Body<UpdateLogPatternRequest, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: UpdateLogPatternResponse;
     }, (code: 480, mediaType: "application/json") => {
         body: any;
