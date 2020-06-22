@@ -13,14 +13,17 @@ export default <Rule>{
   onOperation: (model, operation) => {
     const name = operation.name;
     if (operation.method === Method.Delete && name !== 'delete') {
-      return [
-        {
-          message: `The operation name ${name} is not allowed. Make sure that operation name for DELETE operation is 'delete'.`,
-          fix: () => {
-            operation.name = 'delete';
+      return {
+        message: `The operation name ${name} is not allowed. Make sure that operation name for DELETE operation is 'delete'.`,
+        suggestion: [
+          {
+            description: 'Rename the operation to delete.',
+            fix: () => {
+              operation.name = 'delete';
+            }
           }
-        }
-      ];
+        ]
+      };
     }
 
     return;

@@ -1,4 +1,5 @@
-import { Rule } from '../rule';
+import { NamedElement } from '../../model/typescript/named-element';
+import { Rule, RuleResult } from '../rule';
 import { getPascalIdentifier } from '../utils';
 export default <Rule>{
   runOn: 'edit',
@@ -10,51 +11,26 @@ export default <Rule>{
     documentationUrl: 'PLACEHOLDER',
     category: 'SDK Warning'
   },
-  onModelType: (model, modelType) => {
-    const name = modelType.name.toString();
-    if (name.match(pascalCaseRegex)) {
-      return [
-        {
-          message: `The operation ${name} must follow pascal case style.`,
-          fix: () => {
-            modelType.name = getPascalIdentifier(name);
-          }
-        }
-      ];
-    }
-
-    return;
-  },
-  onEnum: (model, e) => {
-    const name = e.name.toString();
-    if (name.match(pascalCaseRegex)) {
-      return [
-        {
-          message: `The operation ${name} must follow pascal case style.`,
-          fix: () => {
-            e.name = getPascalIdentifier(name);
-          }
-        }
-      ];
-    }
-
-    return;
-  },
-  onOperation: (model, operation) => {
-    const name = operation.name.toString();
-    if (name.match(pascalCaseRegex)) {
-      return [
-        {
-          message: `The operation ${name} must follow pascal case style.`,
-          fix: () => {
-            operation.name = getPascalIdentifier(name);
-          }
-        }
-      ];
-    }
-
-    return;
-  }
+  onModelType: (model, modelType) => checkPascalIdentifier('modelType', modelType),
+  onEnumType: (model, e) => checkPascalIdentifier('enumType', e),
+  onOperation: (model, operation) => checkPascalIdentifier('operation', operation)
 };
 
-const pascalCaseRegex = /^[A-Z][a-z0-9]+\.([A-Z]+[a-z0-9]+)+$/g;
+function checkPascalIdentifier(type: string, element: NamedElement<any>): RuleResult | undefined {
+  const pascalCaseRegex = /^[A-Z][a-z0-9]+\.([A-Z]+[a-z0-9]+)+$/g;
+  if (!element.versionInfo.since?.match(pascalCaseRegex)) {
+    return {
+      message: `The ${type}: ${ element.name.toString() } must follow pascal case style.`,
+      suggestion: [
+        {
+          description: 'Rename to follow pascal case style.',
+          fix: () => {
+            element.name = getPascalIdentifier(element.name.toString());
+          }
+        }
+      ]
+    };
+  }
+
+  return;
+}

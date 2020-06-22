@@ -10,18 +10,18 @@ import { Declaration } from '../model/typescript/reference';
 export interface Rule {
   runOn: 'edit' | 'onDemand';
   meta: RuleMetaData;
-  onAliasType?: (model: ApiModel, aliasType: AliasType) => Array<RuleResult> | undefined;
-  onDeclaredResponseCollections?: (model: ApiModel, reponseCollection: Declaration<ResponseCollection>) => Array<RuleResult> | undefined;
-  onDeclaredResponses?: (model: ApiModel, response: Declaration<ResponseElement>) => Array<RuleResult> | undefined;
-  onDeclaredResults?: (model: ApiModel, result: Declaration<ResultElement>) => Array<RuleResult> | undefined;
-  onDeclaredParameters?: (model: ApiModel, parameter: Declaration<ParameterElement>) => Array<RuleResult> | undefined;
-  onEnumType?: (model: ApiModel, enumType: EnumType) => Array<RuleResult> | undefined;
-  onEnumValue?: (model: ApiModel, enumValue: EnumValueElement) => Array<RuleResult> | undefined;
-  onModelType?: (model: ApiModel, modelType: ModelType) => Array<RuleResult> | undefined;
-  onOperationGroup?: (model: ApiModel, operationGroup: OperationGroup) => Array<RuleResult> | undefined;
-  onOperation?: (model: ApiModel, operation: Operation) => Array<RuleResult> | undefined;
-  onProperty?: (model: ApiModel, property: Property) => Array<RuleResult> | undefined;
-  onParameter?: (model: ApiModel, parameter: ParameterElement) => Array<RuleResult> | undefined;
+  onAliasType?: (model: ApiModel, aliasType: AliasType) => RuleResult | undefined;
+  onDeclaredResponseCollections?: (model: ApiModel, reponseCollection: Declaration<ResponseCollection>) => RuleResult | undefined;
+  onDeclaredResponses?: (model: ApiModel, response: Declaration<ResponseElement>) => RuleResult | undefined;
+  onDeclaredResults?: (model: ApiModel, result: Declaration<ResultElement>) => RuleResult | undefined;
+  onDeclaredParameters?: (model: ApiModel, parameter: Declaration<ParameterElement>) => RuleResult | undefined;
+  onEnumType?: (model: ApiModel, enumType: EnumType) => RuleResult | undefined;
+  onEnumValue?: (model: ApiModel, enumValue: EnumValueElement) => RuleResult | undefined;
+  onModelType?: (model: ApiModel, modelType: ModelType) => RuleResult | undefined;
+  onOperationGroup?: (model: ApiModel, operationGroup: OperationGroup) => RuleResult | undefined;
+  onOperation?: (model: ApiModel, operation: Operation) => RuleResult | undefined;
+  onProperty?: (model: ApiModel, property: Property) => RuleResult | undefined;
+  onParameter?: (model: ApiModel, parameter: ParameterElement) => RuleResult | undefined;
 }
 
 export interface RuleMetaData {

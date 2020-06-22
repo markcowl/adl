@@ -4,12 +4,33 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Dictionary, linq } from '@azure-tools/linq';
+import { ParameterElement } from '../model/http/parameter';
+import { Operation, OperationGroup, ResponseCollection, ResponseElement, ResultElement } from '../model/operation';
+import { AliasType } from '../model/schema/alias';
+import { EnumType, EnumValueElement } from '../model/schema/enum';
+import { ModelType } from '../model/schema/model';
+import { Property } from '../model/schema/property';
+import { Declaration } from '../model/typescript/reference';
+
 let indentation = '    ';
 
 export const lineCommentPrefix = '//';
 export const docCommentPrefix = '///';
 export const EOL = '\n';
 export const CommaChar = ', ';
+
+export type versionedElement = AliasType
+  | Declaration<ResponseCollection>
+  | Declaration<ResponseElement>
+  | Declaration<ResultElement>
+  | Declaration<ParameterElement>
+  | EnumValueElement
+  | EnumType
+  | ModelType
+  | Operation
+  | OperationGroup
+  | Property
+  | ParameterElement
 
 const acronyms = new Set([
   'ip', 'os', 'ms', 'vm', //  'ssl', 'https', 'http', ''

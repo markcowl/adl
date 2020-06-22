@@ -14,27 +14,31 @@ export default <Rule>{
   },
   onProperty: (model, property) => {
     if (property.readOnly && property) {
-      return [
-        {
-          message: 'Set required = false.',
-          fix: () => {
-            property.readOnly = false;
+      return {
+        message: 'A model property cannot be both readOnly and required',
+        suggestion: [
+          {
+            description: 'Set required: false.',
+            fix: () => {
+              property.readOnly = false;
+            }
+          },
+          {
+            description: 'Set remove: false',
+            fix: () => {
+              property.required = false;
+            }
+          },
+          {
+            description: 'Set required: false and readonly: false.',
+            fix: () => {
+              property.required = false;
+              property.readOnly = false;
+            }
           }
-        },
-        {
-          message: 'Set remove = false',
-          fix: () => {
-            property.required = false;
-          }
-        },
-        {
-          message: 'Set required = false and readonly = false.',
-          fix: () => {
-            property.required = false;
-            property.readOnly = false;
-          }
-        }
-      ];
+        ]
+
+      };
     }
 
     return;

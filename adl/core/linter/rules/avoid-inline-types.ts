@@ -15,16 +15,20 @@ export default <Rule> {
   onProperty: (model, property) => {
     const type = property.type;
     if (type.isInline) {
-      return [
-        {
-          message: 'Extract contents and create a model definition for this type.',
-          fix: () => {
-            const typeReference = model.createInterface(property.name , {declaration: type.declaration});
-            property.type = typeReference;
+      return {
+        message: 'The type of this property is inlined.',
+        suggestion: [
+          {
+
+            description: 'Extract contents and create a model definition for this type.',
+            fix: () => {
+              const typeReference = model.createInterface(property.name, { declaration: type.declaration });
+              property.type = typeReference;
             // TODO: EMIT EVENT with emit('new-type-created', position);
+            }
           }
-        }
-      ];
+        ]
+      };
     }
 
     return;
