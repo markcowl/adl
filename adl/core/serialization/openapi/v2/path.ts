@@ -1,14 +1,12 @@
 import { items, length, values } from '@azure-tools/linq';
 import { common, isReference, v2 } from '@azure-tools/openapi';
 import { nameOf } from '@azure-tools/sourcemap';
-import { Alias } from '../../../model/alias';
 import { createOperationGroup, createOperationStructure, Method, OperationStructure, Path } from '../../../model/http/operation';
-import { Response } from '../../../model/http/response';
-import { ParameterTypeReference } from '../../../model/schema/type';
+import { ParameterTypeReference, ResponseTypeReference } from '../../../model/schema/type';
 import { getGroupAndName } from '../common/path';
 import { versionInfo } from '../common/schema';
 import { getParameterReference, processParameter } from './parameter';
-import { response } from './response';
+import { processResponse } from './response';
 import { Context } from './serializer';
 
 export async function processPaths(pathLists: Array<v2.Paths>, $: Context) {
@@ -48,7 +46,7 @@ async function processOperation(path: Path, operation: v2.Operation, shared: v2.
   const [group, name] = getGroupAndName(operation, path.path);
 
   const parameters = new Array<ParameterTypeReference>();
-  const responses = new Array<Response | Alias<Response>>();
+  const responses = new Array<ResponseTypeReference>();
 
   // OAI2 parameters are all in the operation
   for (const each of values(shared.parameters)) {
@@ -74,8 +72,8 @@ async function processOperation(path: Path, operation: v2.Operation, shared: v2.
     parameters.push(getParameterReference(bodyParameter, $.api.primitives.file, $, { isAnonymous: true, operation }));
   }
 
-  for await (const rsp of $.processDictionary(response, <any>operation.responses, {operation})) {
-    responses.push(rsp);
+  for (const [key, value] of items(operation.responses)) {
+    responses.push(await processResponse(value, $, { isAnonymous: true, code: key, operation }));
   }
 
   return createOperationStructure(
@@ -96,9 +94,6 @@ async function processOperation(path: Path, operation: v2.Operation, shared: v2.
   // for await (const reference of processExternalDocs(operation.externalDocs, $)) {
   //   result.references.push(reference);
   // }
-
-  // // since we're not going thru $.process
-  // $.addVersionInfo(result, operation);
 
   // // push to the attic for now
   // result.addToAttic('security', operation.security);

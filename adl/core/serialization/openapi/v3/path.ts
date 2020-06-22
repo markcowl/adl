@@ -1,17 +1,13 @@
 import { items, values } from '@azure-tools/linq';
 import { common, isReference, v3 } from '@azure-tools/openapi';
 import { nameOf } from '@azure-tools/sourcemap';
-import { Alias } from '../../../model/alias';
 import { createOperationGroup, createOperationStructure, Method, OperationStructure, Path } from '../../../model/http/operation';
-import { Request } from '../../../model/http/request';
-import { Response } from '../../../model/http/response';
-import { ParameterTypeReference } from '../../../model/schema/type';
-import { addExtensionsToAttic } from '../common';
+import { ParameterTypeReference, ResponseTypeReference } from '../../../model/schema/type';
 import { getGroupAndName } from '../common/path';
 import { versionInfo } from '../common/schema';
 import { processParameter } from './parameter';
 import { processRequestBody } from './request-body';
-import { response } from './response';
+import { processResponse } from './response';
 import { Context } from './serializer';
 
 export async function processPaths(pathLists: Array<v3.Paths>, $: Context) {
@@ -56,9 +52,9 @@ export async function processOperation(path: Path, operation: v3.Operation, shar
   
   const requestBody = operation.requestBody ? await processRequestBody(operation.requestBody, $, { isAnonymous: true }) : undefined;
 
-  const responses = new Array<Response | Alias<Response>>();
-  for await (const rsp of $.processDictionary(response, <any>operation.responses)) {
-    responses.push(rsp);
+  const responses = new Array<ResponseTypeReference>();
+  for (const [key, value] of items(operation.responses)) {
+    responses.push(await processResponse(value, $, { isAnonymous: true, operation, code: key }));
   }
 
   return createOperationStructure(

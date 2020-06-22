@@ -1,4 +1,3 @@
-import { isAnonymous } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
 import { JSDoc, JSDocTagStructure, MethodSignatureStructure, Node, ParameterDeclarationStructure, printNode, StructureKind, ts } from 'ts-morph';
 import { normalizeIdentifier, normalizeName } from '../../support/codegen';
@@ -7,13 +6,11 @@ import { Alias } from '../alias';
 import { ApiModel } from '../api-model';
 import * as base from '../operation';
 import { Reference } from '../project/reference';
-import { ParameterTypeReference, RequestBodyTypeReference } from '../schema/type';
-import { Identity } from '../types';
+import { HeaderTypeReference, ParameterTypeReference, RequestBodyTypeReference, ResponseTypeReference, TypeReference } from '../schema/type';
 import { Declaration } from '../typescript/reference';
 import { VersionedElement } from '../typescript/versioned-element';
-import { Parameter, ParameterElement, ParameterType } from './parameter';
-import { Request } from './request';
-import { Response, ResponseElement } from './response';
+import { ParameterElement } from './parameter';
+import { ResponseElement } from './response';
 
 
 export enum Method {
@@ -116,7 +113,7 @@ export interface OperationInitializer extends VersionedElement {
   tags: Array<string>;
   parameters: Array<ParameterTypeReference>;
   requestBody: RequestBodyTypeReference;
-  responses: Array<Response | Alias<Response>>;
+  responses: Array<ResponseTypeReference>;
   references: Array<Reference>;
 }
 
@@ -245,24 +242,17 @@ function createRequestStructures(requestBody?: RequestBodyTypeReference) {
   return { parameters: parameterStructures, tags: tagStructures };
 }
 
-function createResponseStructures(
-  responses?: Array<Response | Alias<Response>>,
-  currentReturnType: ts.TypeNode = ts.createTupleTypeNode([])) {
-
-  if (!ts.isTupleTypeNode(currentReturnType)) {
-    throw new Error('Operation has invalid return type');
-  }
-
+function createResponseStructures(responses?: Array<ResponseTypeReference>) {
   const reponseTypes = new Array<ts.FunctionTypeNode>();
   const tagStructures = new Array<JSDocTagStructure>();
 
   for (const each of responses ?? []) {
     const response = each instanceof Alias ? each.target : each;
-    const type = getResponseType(response);
+    const type = response.declaration.node;
     reponseTypes.push(type);
 
     if (response.description) {
-      const doc = `${response.name}|${response.mediaType} - ${response.description}`;
+      const doc = `${response.code} - ${response.description}`;
       tagStructures.push({
         kind: StructureKind.JSDocTag,
         tagName: 'return',
@@ -271,115 +261,103 @@ function createResponseStructures(
     }
   }
 
-  const returnType = ts.createTupleTypeNode([
-    ...currentReturnType.elementTypes, 
-    ...reponseTypes
-  ]);
-
+  const returnType = ts.createTupleTypeNode(reponseTypes);
   return { 
     type: printNode(returnType),
     tags: tagStructures
   };
 }
 
-function getParameterType(parameter: Parameter, chosenName: string) {
-  const innerType = parameter.typeRef.declaration.text;
-  const outerType = getOuterParameterType(parameter.type);
-  const nameArg = parameter.name == chosenName ? '' : `, '${parameter.name}'`;
-
-  if (outerType == 'Path' && nameArg == '') {
-    return innerType;
-  }
-
-  return `${outerType}<${innerType}${nameArg}>`;
-}
-
-function getOuterParameterType(parameterType: ParameterType) {
-  switch (parameterType) {
-    case ParameterType.Cookie:
-      return 'Cookie';
-    case ParameterType.FormData:
-      return 'FormData';
-    case ParameterType.Header:
-      return 'Header';
-    case ParameterType.Path:
-      return 'Path';
-    case ParameterType.Query:
-      return 'Query';
-    default:
-      throw new Error(`Invalid parameter type '${parameterType}'`);
-  }
-}
-
-function getRequestType(request: Request, chosenName: string) {
-  const innerType = request.typeRef.declaration;
-  const outerType = 'Body';
-  const mediaTypeArg = `, '${request.mediaType}'`;
-  const nameArg = (!request.name || request.name == chosenName) ? '' : `, '${request.name}'`;
-  return `${outerType}<${innerType}${mediaTypeArg}${nameArg}>`;
-}
-
-function getResponseCodeParameter(code: Identity) {
-  if (isAnonymous(code) || code == 'default') {
+function getResponseCodeParameter(code: string | ts.TypeNode) {
+  if (!code || code == 'default') {
     return undefined;
   }
 
-  const literal = /^\d+$/.test(code) ? ts.createNumericLiteral(code) : ts.createStringLiteral(code);
-  const literalType = ts.createLiteralTypeNode(literal);
-  return ts.createParameter(undefined, undefined, undefined, 'code', undefined, literalType);
+  if (typeof code === 'string') {
+    const literal = /^\d+$/.test(code) ? ts.createNumericLiteral(code) : ts.createStringLiteral(code);
+    code = ts.createLiteralTypeNode(literal);
+  }
+
+  return ts.createParameter(undefined, undefined, undefined, 'code', undefined, code);
 }
 
-function getMediaTypeParameter(mediaType: string) {
+function getMediaTypeParameter(mediaType?: string | ts.TypeNode) {
   if (!mediaType) {
     return undefined;
   }
 
-  const literal = ts.createStringLiteral(mediaType);
-  const literalType = ts.createLiteralTypeNode(literal);
-  return ts.createParameter(undefined, undefined, undefined, 'mediaType', undefined, literalType);
+  if (typeof mediaType === 'string') {
+    mediaType = ts.createLiteralTypeNode(ts.createStringLiteral(mediaType));
+  }
+
+  return ts.createParameter(undefined, undefined, undefined, 'mediaType', undefined, mediaType);
 }
 
-function getResponseCriteria(response: Response) {
+export function getMediaTypeUnion(mediaTypes?: Array<string>) {
+  if (!mediaTypes || mediaTypes.length == 0) {
+    return undefined;
+  } 
+
+  return ts.createUnionTypeNode(
+    mediaTypes.map(
+      m => ts.createLiteralTypeNode(ts.createStringLiteral(m))));
+}
+
+function getResponseCriteria(code: string | ts.TypeNode, mediaType?: string | ts.TypeNode) {
   const parameters = new Array<ts.ParameterDeclaration>();
 
-  const code = getResponseCodeParameter(response.name);
-  if (code) {
-    parameters.push(code);
+  const codeParameter = getResponseCodeParameter(code);
+  if (codeParameter) {
+    parameters.push(codeParameter);
   }
 
-  const mediaType = getMediaTypeParameter(response.mediaType);
-  if (mediaType) {
-    parameters.push(mediaType);
+  const mediaTypeParameter = getMediaTypeParameter(mediaType);
+  if (mediaTypeParameter) {
+    parameters.push(mediaTypeParameter);
   }
+  
 
   return parameters;
 }
 
-function getResponseDefinition(response: Response) {
+function getResponseDefinition(
+  typeref?: TypeReference, 
+  headers?: Array<HeaderTypeReference>,
+  isException?: boolean | ts.TypeNode,
+) {
   const properties = new Array<ts.PropertySignature>();
 
-  if (response.typeref) {
-    const responseType = response.typeref.declaration.node;
+  if (typeref) {
+    const responseType = typeref.declaration.node;
     properties.push(ts.createPropertySignature(undefined, 'body', undefined, responseType, undefined));
   }
 
-  if (response.headers.length > 0) {
-    const headerType = ts.createTupleTypeNode(response.headers.map(h => h.declaration.node));
+  if (headers && headers.length > 0) {
+    const headerType = ts.createTupleTypeNode(headers.map(h => h.declaration.node));
     properties.push(ts.createPropertySignature(undefined, 'headers', undefined, headerType, undefined));
   }
 
-  if (response.isException) {
-    const literalTrueType = ts.createLiteralTypeNode(ts.createTrue());
-    properties.push(ts.createPropertySignature(undefined, 'isException', undefined, literalTrueType, undefined));
+  if (isException !== false && isException !== undefined) {
+    if (isException === true) {
+      isException = ts.createLiteralTypeNode(ts.createTrue());
+    }
+    properties.push(
+      ts.createPropertySignature(undefined, 'isException', undefined, isException, undefined));
   }
 
   return ts.createTypeLiteralNode(properties);
 }
 
-function getResponseType(response: Response) {
+export function getResponseType(
+  code: string | ts.TypeNode,
+  isException?: boolean | ts.TypeNode,
+  mediaType?: string | ts.TypeNode,
+  typeref?: TypeReference,
+  headers?: Array<HeaderTypeReference>,
+) {
   return ts.createFunctionTypeNode(
     undefined,
-    getResponseCriteria(response),
-    getResponseDefinition(response));
+    getResponseCriteria(code, mediaType),
+    getResponseDefinition(typeref, headers, isException));
 }
 
