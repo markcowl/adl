@@ -1,79 +1,127 @@
-import { v3 } from '@azure-tools/openapi';
-import { CookieParameter, HeaderParameter, PathParameter, QueryParameter, RenderStyle } from '../../../model/http/parameter';
+import { isReference, v3 } from '@azure-tools/openapi';
+import { anonymous, nameOf, refTo } from '@azure-tools/sourcemap';
+import { ts } from 'ts-morph';
+import { RenderStyle } from '../../../model/http/parameter';
+import { createTypeAlias } from '../../../model/schema/alias';
+import { ParameterTypeReference, SchemaTypeReference } from '../../../model/schema/type';
+import { normalizeIdentifier, TypeSyntax } from '../../../support/codegen';
 import { processSchema } from './schema';
 import { Context } from './serializer';
 
 
-export async function* parameter(parameter: v3.Parameter, $: Context, options?: { isAnonymous?: boolean }) {
+export async function processParameter(parameter: v3.Parameter | v3.ParameterReference, $: Context, options?: { isAnonymous?: boolean }): Promise<ParameterTypeReference> {
+  const here = $.normalizeReference(refTo(parameter)).$ref;
+  const parameterRef = $.visitor.references.parameter.get(here);
+  if (parameterRef) {
+    return parameterRef;
+  }
 
+  const impl = async () => {
+    if (isReference(parameter)) {
+      let parameterRef = $.visitor.references.parameter.get($.normalizeReference(parameter.$ref).$ref);
+      if (!parameterRef) {
+        const resolvedReference = await $.resolveReference(parameter.$ref);
+        parameterRef = await processParameter(resolvedReference.node, resolvedReference.context);
+      }
+      return parameterRef;
+    }
+
+    const parameterTypeName = options?.isAnonymous ? anonymous('parameter') : nameOf(parameter);
+    const schema = await processSchema(parameter.schema, $, { isAnonymous: true });
+    const parameterTypeSyntax = getParameterSyntax(parameter, schema, $, options);
+
+    const parameterRef: ParameterTypeReference = {
+      name: parameter.name,
+      description: options?.isAnonymous ? parameter.description : undefined,
+      required: parameter.required ?? false,
+      declaration: parameterTypeSyntax,
+      requiredReferences: schema.requiredReferences,
+      location: parameter.in,
+    };
+  
+    return createTypeAlias(
+      $.api,
+      parameterTypeName,
+      parameterRef, { 
+        summary: !options?.isAnonymous ? parameter.description : undefined,
+      });
+  };
+
+  const result = await impl();
+  $.visitor.references.parameter.set(here, result);
+  return result;
+}
+
+function getParameterSyntax(parameter: v3.Parameter, schema: SchemaTypeReference, $: Context, options?: { isAnonymous?: boolean }): TypeSyntax {
   switch (parameter.in) {
     case v3.ParameterLocation.Path:
-      return yield* processPathParameter(<v3.PathParameter>parameter, $, options);
-
+      return getPathParameterSyntax(<v3.PathParameter>parameter, schema, $, options);
     case v3.ParameterLocation.Cookie:
-      return yield* processCookieParameter(<v3.CookieParameter>parameter, $, options);
-
+      return getCookieParameterSyntax(<v3.CookieParameter>parameter, schema, $, options);
     case v3.ParameterLocation.Query:
-      return yield* processQueryParameter(<v3.QueryParameter>parameter, $, options);
-
+      return getQueryParameterSyntax(<v3.QueryParameter>parameter, schema, $, options);
     case v3.ParameterLocation.Header:
-      return yield* processHeaderParameter(<v3.HeaderParameter>parameter, $, options);
+      return getHeaderParameterSyntax(<v3.HeaderParameter>parameter, schema, $, options);
   }
   throw $.error(`unknown parameter location '${parameter.in}'`, parameter);
-
 }
 
+function getParameterTypeNode(
+  parameterType: 'Path' | 'Query' | 'Cookie' | 'Header',
+  parameter: v3.Parameter,
+  schema: SchemaTypeReference,
+  options?: { isAnonymous?: boolean})
+{
+  const hasSafeParameterName = normalizeIdentifier(parameter.name) == parameter.name;
 
-export async function* processPathParameter(parameter: v3.PathParameter, $: Context, options?: { isAnonymous?: boolean }) {
-  const schema = await processSchema(parameter.schema, $, { isAnonymous: true });
-  const result = new PathParameter(parameter.name, schema,
-    parameter.explode === undefined ? false : parameter.explode, {
-      description: parameter.description,
-      required: parameter.required,
-      renderStyle: <any><unknown>parameter.style || RenderStyle.Simple
-    }); 
-  result.addToAttic('example', parameter.example);
+  if (options?.isAnonymous && parameterType == 'Path' && hasSafeParameterName) {
+    // common case of inline path parameter with safe name is represented as the
+    // underlying schema type for brevity
+    return schema.declaration.node;
+  }
 
-  yield result;
+  const args = [schema.declaration.node];
+  if (!options?.isAnonymous || !hasSafeParameterName) {
+    // inline case with safe parameter name does not repeat the parameter name
+    // as type arg
+    args.push(ts.createLiteralTypeNode(ts.createStringLiteral(parameter.name)));
+  }
+
+  return ts.createTypeReferenceNode(parameterType, args);
 }
 
-export async function* processCookieParameter(parameter: v3.CookieParameter, $: Context, options?: { isAnonymous?: boolean }) {
-  const schema = await processSchema(parameter.schema, $, { isAnonymous: true });
-  const result = new CookieParameter(parameter.name, schema,
-    parameter.explode === undefined ? true : parameter.explode, {
-      description: parameter.description,
-      required: parameter.required
-    }
-  );
-  result.addToAttic('example', parameter.example);
+function getPathParameterSyntax(parameter: v3.PathParameter, schema: SchemaTypeReference, $: Context, options?: {isAnonymous?: boolean}) {
+  // TODO: not yet represented in ADL
+  const renderStyle = <any><unknown>parameter.style || RenderStyle.Simple;
+  const explode = parameter.explode === undefined ? false : parameter.explode;
+  //
 
-  yield result;
+  return new TypeSyntax(getParameterTypeNode('Path', parameter, schema, options));
 }
 
-export async function* processQueryParameter(parameter: v3.QueryParameter, $: Context, options?: { isAnonymous?: boolean }) {
-  const schema = await processSchema(parameter.schema, $, {isAnonymous: true});
+function getCookieParameterSyntax(parameter: v3.CookieParameter, schema: SchemaTypeReference, $: Context, options?: { isAnonymous?: boolean }) {
+  // TODO: not yet represented in ADL
+  const explode = parameter.explode ?? false;
+  //
+
+  return new TypeSyntax(getParameterTypeNode('Cookie', parameter, schema, options));
+}
+
+function getQueryParameterSyntax(parameter: v3.QueryParameter, schema: SchemaTypeReference, $: Context, options?: { isAnonymous?: boolean }): TypeSyntax {
+  // TODO: not yet represented in ADL
   const renderStyle = <any><unknown>parameter.style || RenderStyle.Form;
-  const result = new QueryParameter(parameter.name, schema,
-    parameter.explode === undefined ? renderStyle === RenderStyle.Form ? true : false : parameter.explode, {
-      description: parameter.description,
-      required: parameter.required,
-      renderStyle,
-      allowEmptyValue: parameter.allowEmptyValue,
-      allowReserved: parameter.allowReserved,
+  const explode = parameter.explode ?? false;
+  const allowEmptyValue = parameter.allowEmptyValue;
+  const allowReserved = parameter.allowReserved;
+  //
 
-    });
-  result.addToAttic('example', parameter.example);
-  yield result;
+  return new TypeSyntax(getParameterTypeNode('Query', parameter, schema, options));
 }
-export async function* processHeaderParameter(parameter: v3.HeaderParameter, $: Context, options?: { isAnonymous?: boolean }) {
-  const schema = await processSchema(parameter.schema, $, { isAnonymous: true });
-  const result = new HeaderParameter(parameter.name, schema,
-    parameter.explode === undefined ? false : parameter.explode, {
-      description: parameter.description,
-      required: parameter.required,
-      renderStyle: <any><unknown>parameter.style || RenderStyle.Simple
-    });
-  result.addToAttic('example', parameter.example);
+function getHeaderParameterSyntax(parameter: v3.HeaderParameter, schema: SchemaTypeReference, $: Context, options?: { isAnonymous?: boolean }): TypeSyntax {
+  // TODO: not yet represented in ADL
+  const renderStyle = <any><unknown>parameter.style || RenderStyle.Simple;
+  const explode = parameter.explode ?? false;
+  //
 
-  yield result;
+  return new TypeSyntax(getParameterTypeNode('Header', parameter, schema, options));
 }

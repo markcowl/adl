@@ -204,3 +204,4 @@ export function expandLiterals( node: Node): Array<string|number> {
   }
   fail(`unsupported type for expandLiterals '${node.getKindName()}' `);
 }
+

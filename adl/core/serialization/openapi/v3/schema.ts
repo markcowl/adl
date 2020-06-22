@@ -16,7 +16,11 @@ import { Context } from '../../../support/visitor';
 import { isEnumSchema, isObjectSchema, isPrimitiveSchema } from '../common';
 import { arrayProperties, commonProperties, notObject, numberProperties, objectProperties, Options, processBooleanSchema, processByteArraySchema, processCharSchema, processDateSchema, processDateTimeSchema, processDurationSchema, processEnumSchema, processFileSchema, processIntegerSchema, processNumberSchema, processOdataSchema, processPasswordSchema, processTimeSchema, processUriSchema, processUuidSchema, stringProperties, versionInfo } from '../common/schema';
 
-export async function processSchema(schema: v3.Schema|v3.SchemaReference, $: Context<v3.Model>, options?: { isAnonymous?: boolean }): Promise<SchemaTypeReference> {
+export async function processSchema(schema: v3.Schema|v3.SchemaReference|undefined, $: Context<v3.Model>, options?: { isAnonymous?: boolean }): Promise<SchemaTypeReference> {
+  if (!schema) {
+    return $.api.primitives.any;
+  }
+
   const here = $.normalizeReference(refTo(schema)).$ref;
 
   // did we already process this because we went thru a $ref earlier?

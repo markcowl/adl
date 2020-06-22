@@ -1,3 +1,3 @@
 
 /** The error code. */
-export type ErrorCode = Header<int64, "x-ably-errorcode">;
+export type ErrorCode<WireName> = Header<int64, WireName>;

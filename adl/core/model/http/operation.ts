@@ -7,6 +7,7 @@ import { Alias } from '../alias';
 import { ApiModel } from '../api-model';
 import * as base from '../operation';
 import { Reference } from '../project/reference';
+import { ParameterTypeReference, RequestBodyTypeReference } from '../schema/type';
 import { Identity } from '../types';
 import { Declaration } from '../typescript/reference';
 import { VersionedElement } from '../typescript/versioned-element';
@@ -113,8 +114,8 @@ export interface OperationInitializer extends VersionedElement {
   description: string;
   summary: string;
   tags: Array<string>;
-  parameters: Array<Parameter | Alias<Parameter>>;
-  requests: Array<Request | Alias<Request>>;
+  parameters: Array<ParameterTypeReference>;
+  requestBody: RequestBodyTypeReference;
   responses: Array<Response | Alias<Response>>;
   references: Array<Reference>;
 }
@@ -145,7 +146,7 @@ export function createOperationStructure(
 ): OperationStructure {
 
   const parameterStructures = createParameterStructures(initializer.parameters);
-  const requestStructures = createRequestStructures(initializer.requests);
+  const requestStructures =  createRequestStructures(initializer.requestBody);
   const responseStructures = createResponseStructures(initializer.responses);
   const tagStructures = createTagStructures(initializer.tags);
   const pathStructure = createPathStructure(path);
@@ -191,14 +192,13 @@ function createTagStructures(tags?: Array<string>) {
   return tagStructures;
 }
 
-function createParameterStructures(parameters?: Array<Parameter | Alias<Parameter>>) {
+function createParameterStructures(parameters?: Array<ParameterTypeReference>) {
   const parameterStructures = new Array<ParameterDeclarationStructure>();
   const tagStructures = new Array<JSDocTagStructure>();
 
-  for (const each of parameters ?? []) {
-    const parameter = each instanceof Alias ? each.target : each;
+  for(const parameter of parameters ?? []) {
     const name = normalizeName(parameter.name);
-    const type = getParameterType(parameter, name);
+    const type = parameter.declaration.text;
 
     parameterStructures.push({
       kind: StructureKind.Parameter,
@@ -220,24 +220,20 @@ function createParameterStructures(parameters?: Array<Parameter | Alias<Paramete
   return { parameters: parameterStructures, tags: tagStructures };
 }
 
-function createRequestStructures(requests?: Array<Request | Alias<Request>>) {
+function createRequestStructures(requestBody?: RequestBodyTypeReference) {
   const parameterStructures = new Array<ParameterDeclarationStructure>();
   const tagStructures = new Array<JSDocTagStructure>();
 
-  for (const each of requests ?? []) {
-    const request = each instanceof Alias ? each.target : each;
-    const name = normalizeName(request.name ?? 'body');
-    const type = getRequestType(request, name);
-
+  if (requestBody) {
     parameterStructures.push({
       kind: StructureKind.Parameter,
-      hasQuestionToken: !request.required,
-      name,
-      type,
+      hasQuestionToken: !requestBody.required,
+      name: 'body',
+      type: requestBody.declaration.text,
     });
 
-    if (request.description) {
-      const doc = `${name} - ${request.description}`;
+    if (requestBody.description) {
+      const doc = `body - ${requestBody.description}`;
       tagStructures.push({
         kind: StructureKind.JSDocTag,
         tagName: 'param',

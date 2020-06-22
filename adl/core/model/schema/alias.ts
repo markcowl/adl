@@ -20,7 +20,7 @@ export class AliasType extends NamedElement<TypeAliasDeclaration> implements Typ
   }
 }
 
-export function createTypeAlias<T extends TypeReference>(api: ApiModel, identity: Identity, typeReference: T, initializer?: Documentation): T {
+export function createTypeAlias<T extends TypeReference>(api: ApiModel, identity: Identity, typeReference: T, docs?: Documentation): T {
   if (isAnonymous(identity)) {
     // if it doesn't have a name, just return the type reference instead.
     return typeReference;
@@ -33,16 +33,15 @@ export function createTypeAlias<T extends TypeReference>(api: ApiModel, identity
   file.addTypeAlias({
     name,
     type: typeReference.declaration.text,
+    typeParameters: typeReference.typeParameters,
     isExported: true,
-    docs: createDocs(initializer)
+    docs: createDocs(docs)
   });
   
-  const result: TypeReference = {
+  return {
+    ...typeReference,
     declaration: new TypeSyntax(name),
     sourceFile: file,
     requiredReferences: [],
-    ...initializer 
   };
-
-  return <T>result;
 }
