@@ -4,8 +4,8 @@ export interface Service {
      * @since v3
      * @http GET /emojis
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -21,8 +21,8 @@ export interface Service {
      * @since v3
      * @http GET /events
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -41,8 +41,8 @@ export interface Service {
      * @since v3
      * @http GET /feeds
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -63,8 +63,8 @@ export interface Service {
      * Only gists updated at or after this time are returned.
      *
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -80,8 +80,8 @@ export interface Service {
      * @since v3
      * @http POST /gists
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -100,8 +100,8 @@ export interface Service {
      * Only gists updated at or after this time are returned.
      *
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -120,8 +120,8 @@ export interface Service {
      * Only gists updated at or after this time are returned.
      *
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -138,8 +138,8 @@ export interface Service {
      * @http GET /gists/{id}
      * @param id - Id of gist.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -156,9 +156,9 @@ export interface Service {
      * @http DELETE /gists/{id}
      * @param id - Id of gist.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content.
+     * @return 204 - No content.
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -174,8 +174,8 @@ export interface Service {
      * @http PATCH /gists/{id}
      * @param id - Id of gist.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -192,8 +192,8 @@ export interface Service {
      * @http GET /gists/{id}/comments
      * @param id - Id of gist.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -210,8 +210,8 @@ export interface Service {
      * @http POST /gists/{id}/comments
      * @param id - Id of gist.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -229,8 +229,8 @@ export interface Service {
      * @param id - Id of gist.
      * @param commentId - Id of comment.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -248,9 +248,9 @@ export interface Service {
      * @param id - Id of gist.
      * @param commentId - Id of comment.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content.
+     * @return 204 - No content.
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -267,8 +267,8 @@ export interface Service {
      * @param id - Id of gist.
      * @param commentId - Id of comment.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -285,11 +285,11 @@ export interface Service {
      * @http POST /gists/{id}/forks
      * @param id - Id of gist.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Exists.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Exists.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
-     * @return 404|application/json - Not exists.
+     * @return 404 - Not exists.
      */
     forks(id: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -306,11 +306,11 @@ export interface Service {
      * @http GET /gists/{id}/star
      * @param id - Id of gist.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Exists.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Exists.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
-     * @return 404|application/json - Not exists.
+     * @return 404 - Not exists.
      */
     star(id: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -327,8 +327,8 @@ export interface Service {
      * @http PUT /gists/{id}/star
      * @param id - Id of gist.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Starred.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Starred.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -344,8 +344,8 @@ export interface Service {
      * @http DELETE /gists/{id}/star
      * @param id - Id of gist.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Item removed.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Item removed.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -362,8 +362,8 @@ export interface Service {
      * @since v3
      * @http GET /gitignore/templates
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -379,8 +379,8 @@ export interface Service {
      * @since v3
      * @http GET /gitignore/templates/{language}
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -405,8 +405,8 @@ export interface Service {
      * Only issues updated at or after this time are returned.
      *
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -425,8 +425,8 @@ export interface Service {
      * @param keyword - The search term.
      * @param state - Indicates the state of the issues to return. Can be either open or closed.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -448,8 +448,8 @@ export interface Service {
      * @param start_page - The page number to fetch
      * @param sort - The sort field. One of stars, forks, or updated. Default: results are sorted by best match.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -467,8 +467,8 @@ export interface Service {
      * @http GET /legacy/user/email/{email}
      * @param email - The email address
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -489,8 +489,8 @@ export interface Service {
      * @param start_page - The page number to fetch
      * @param sort - The sort field. One of stars, forks, or updated. Default: results are sorted by best match.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -506,8 +506,8 @@ export interface Service {
      * @since v3
      * @http POST /markdown
      * @param Accept - Is used to set specified media type.
-     * @return 200|text/html - OK
-     * @return 403|text/html - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -522,8 +522,8 @@ export interface Service {
      * @since v3
      * @http POST /markdown/raw
      * @param Accept - Is used to set specified media type.
-     * @return 200|text/html - OK
-     * @return 403|text/html - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -538,8 +538,8 @@ export interface Service {
      * @since v3
      * @http GET /meta
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -557,8 +557,8 @@ export interface Service {
      * @param owner - Name of the owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -583,8 +583,8 @@ export interface Service {
      * Example: "2012-10-09T23:39:01Z".
      *
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -602,8 +602,8 @@ export interface Service {
      * @since v3
      * @http PUT /notifications
      * @param Accept - Is used to set specified media type.
-     * @return 205|application/json - Marked as read.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 205 - Marked as read.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -619,8 +619,8 @@ export interface Service {
      * @http GET /notifications/threads/{id}
      * @param id - Id of thread.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -637,8 +637,8 @@ export interface Service {
      * @http PATCH /notifications/threads/{id}
      * @param id - Id of thread.
      * @param Accept - Is used to set specified media type.
-     * @return 205|application/json - Thread marked as read.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 205 - Thread marked as read.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -654,8 +654,8 @@ export interface Service {
      * @http GET /notifications/threads/{id}/subscription
      * @param id - Id of thread.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -676,8 +676,8 @@ export interface Service {
      * @http PUT /notifications/threads/{id}/subscription
      * @param id - Id of thread.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -694,9 +694,9 @@ export interface Service {
      * @http DELETE /notifications/threads/{id}/subscription
      * @param id - Id of thread.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No Content
+     * @return 204 - No Content
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -712,8 +712,8 @@ export interface Service {
      * @http GET /orgs/{org}
      * @param org - Name of organisation.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -730,8 +730,8 @@ export interface Service {
      * @http PATCH /orgs/{org}
      * @param org - Name of organisation.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -748,8 +748,8 @@ export interface Service {
      * @http GET /orgs/{org}/events
      * @param org - Name of organisation.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -775,8 +775,8 @@ export interface Service {
      * Only issues updated at or after this time are returned.
      *
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -799,9 +799,9 @@ export interface Service {
      * @http GET /orgs/{org}/members
      * @param org - Name of organisation.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 302|application/json - Response if requester is not an organization member.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 302 - Response if requester is not an organization member.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -821,14 +821,14 @@ export interface Service {
      * @param org - Name of organisation.
      * @param username - Name of the user.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content. Response if requester is an organization member and user is a member
+     * @return 204 - No content. Response if requester is an organization member and user is a member
      *
-     * @return 302|application/json - Found. Response if requester is not an organization member
+     * @return 302 - Found. Response if requester is not an organization member
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
-     * @return 404|application/json - Not Found.
+     * @return 404 - Not Found.
      * a. Response if requester is an organization member and user is not a member
      * b. Response if requester is not an organization member and is inquiring about themselves
      *
@@ -854,9 +854,9 @@ export interface Service {
      * @param org - Name of organisation.
      * @param username - Name of the user.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content.
+     * @return 204 - No content.
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -875,8 +875,8 @@ export interface Service {
      * @http GET /orgs/{org}/public_members
      * @param org - Name of organisation.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -894,11 +894,11 @@ export interface Service {
      * @param org - Name of organisation.
      * @param username - Name of the user.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - User is a public member.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - User is a public member.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
-     * @return 404|application/json - User is not a public member.
+     * @return 404 - User is not a public member.
      */
     public_members(org: string, username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -916,8 +916,8 @@ export interface Service {
      * @param org - Name of organisation.
      * @param username - Name of the user.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Publicized.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Publicized.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -934,8 +934,8 @@ export interface Service {
      * @param org - Name of organisation.
      * @param username - Name of the user.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Concealed.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Concealed.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -951,8 +951,8 @@ export interface Service {
      * @http GET /orgs/{org}/repos
      * @param org - Name of organisation.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -971,8 +971,8 @@ export interface Service {
      * @http POST /orgs/{org}/repos
      * @param org - Name of organisation.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -989,8 +989,8 @@ export interface Service {
      * @http GET /orgs/{org}/teams
      * @param org - Name of organisation.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1009,8 +1009,8 @@ export interface Service {
      * @http POST /orgs/{org}/teams
      * @param org - Name of organisation.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1028,8 +1028,8 @@ export interface Service {
      * @since v3
      * @http GET /rate_limit
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1047,8 +1047,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1069,8 +1069,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Item removed.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Item removed.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1087,8 +1087,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1109,8 +1109,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1131,11 +1131,11 @@ export interface Service {
      * @param repo - Name of repository.
      * @param assignee - Login of the assignee.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - User is an assignee.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - User is an assignee.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
-     * @return 404|application/json - User isn't an assignee.
+     * @return 404 - User isn't an assignee.
      */
     assignees(owner: string, repo: string, assignee: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -1153,8 +1153,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1173,8 +1173,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param branch - Name of the branch.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1197,8 +1197,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1217,11 +1217,11 @@ export interface Service {
      * @param repo - Name of repository.
      * @param user - Login of the user.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - User is a collaborator.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - User is a collaborator.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
-     * @return 404|application/json - User is not a collaborator.
+     * @return 404 - User is not a collaborator.
      */
     collaborators(owner: string, repo: string, user: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -1240,8 +1240,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param user - Login of the user.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Collaborator added.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Collaborator added.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1259,8 +1259,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param user - Login of the user.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Collaborator removed.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Collaborator removed.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1279,8 +1279,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1299,8 +1299,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param commentId - Id of comment.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1319,9 +1319,9 @@ export interface Service {
      * @param repo - Name of repository.
      * @param commentId - Id of comment.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content.
+     * @return 204 - No content.
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1339,8 +1339,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param commentId - Id of comment.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1365,8 +1365,8 @@ export interface Service {
      * @param author - GitHub login, name, or email by which to filter by commit author.
      * @param until - ISO 8601 Date - Only commits before this date will be returned.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1388,8 +1388,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1408,8 +1408,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param shaCode - SHA-1 code of the commit.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1428,8 +1428,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param shaCode - SHA-1 code of the commit.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1448,8 +1448,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param shaCode - SHA-1 code of the commit.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1467,8 +1467,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1494,8 +1494,8 @@ export interface Service {
      * @param path - The content path.
      * @param ref - The String name of the Commit/Branch/Tag. Defaults to 'master'.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1513,8 +1513,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1534,8 +1534,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1554,8 +1554,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param anon - Set to 1 or true to include anonymous contributors in results.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1573,8 +1573,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1592,8 +1592,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1612,8 +1612,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param id - The Deployment ID to list the statuses from.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1634,8 +1634,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param id - The Deployment ID to list the statuses from.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - ok
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - ok
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1653,8 +1653,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1674,8 +1674,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param downloadId - Id of download.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1695,9 +1695,9 @@ export interface Service {
      * @param repo - Name of repository.
      * @param downloadId - Id of download.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content.
+     * @return 204 - No content.
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1714,8 +1714,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1733,8 +1733,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1756,8 +1756,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1775,8 +1775,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1800,8 +1800,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param shaCode - SHA-1 code.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1819,8 +1819,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1839,8 +1839,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param shaCode - SHA-1 code.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1858,8 +1858,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1877,8 +1877,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1896,8 +1896,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1918,8 +1918,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No Content
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - No Content
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1936,8 +1936,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1961,8 +1961,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -1980,8 +1980,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2003,8 +2003,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2024,8 +2024,8 @@ export interface Service {
      * @param shaCode - Tree SHA.
      * @param recursive - Get a Tree Recursively. (0 or 1)
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2043,8 +2043,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2062,8 +2062,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2082,8 +2082,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param hookId - Id of hook.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2102,9 +2102,9 @@ export interface Service {
      * @param repo - Name of repository.
      * @param hookId - Id of hook.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content.
+     * @return 204 - No content.
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2122,8 +2122,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param hookId - Id of hook.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2148,8 +2148,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param hookId - Id of hook.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Hook is triggered.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Hook is triggered.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2173,8 +2173,8 @@ export interface Service {
      * Only issues updated at or after this time are returned.
      *
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2194,8 +2194,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2217,8 +2217,8 @@ export interface Service {
      * Example: "2012-10-09T23:39:01Z".
      *
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2237,8 +2237,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param commentId - ID of comment.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2257,9 +2257,9 @@ export interface Service {
      * @param repo - Name of repository.
      * @param commentId - ID of comment.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content.
+     * @return 204 - No content.
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2277,8 +2277,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param commentId - ID of comment.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2296,8 +2296,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2316,8 +2316,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param eventId - Id of the event.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2336,8 +2336,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Number of issue.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2358,8 +2358,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Number of issue.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2378,8 +2378,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Number of issue.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2398,8 +2398,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Number of issue.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2418,8 +2418,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Number of issue.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2438,8 +2438,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Number of issue.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2460,8 +2460,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Number of issue.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2480,8 +2480,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Number of issue.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2500,9 +2500,9 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Number of issue.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content.
+     * @return 204 - No content.
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2521,8 +2521,8 @@ export interface Service {
      * @param number - Number of issue.
      * @param name - Name of the label.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Item removed.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Item removed.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2539,8 +2539,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2558,8 +2558,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2578,8 +2578,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param keyId - Id of key.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2598,9 +2598,9 @@ export interface Service {
      * @param repo - Name of repository.
      * @param keyId - Id of key.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content.
+     * @return 204 - No content.
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2617,8 +2617,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2636,8 +2636,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2656,8 +2656,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param name - Name of the label.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2676,9 +2676,9 @@ export interface Service {
      * @param repo - Name of repository.
      * @param name - Name of the label.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content.
+     * @return 204 - No content.
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2696,8 +2696,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param name - Name of the label.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2718,8 +2718,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2737,13 +2737,13 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Successful Response (The resulting merge commit)
-     * @return 204|application/json - No-op response (base already contains the head, nothing to merge)
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Successful Response (The resulting merge commit)
+     * @return 204 - No-op response (base already contains the head, nothing to merge)
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
-     * @return 404|application/json - Missing base response or missing head response
-     * @return 409|application/json - Merge conflict response.
+     * @return 404 - Missing base response or missing head response
+     * @return 409 - Merge conflict response.
      */
     merges(owner: string, repo: string, Accept?: Header<string>, body: Body<mergesBody, "application/json">): [(code: 201, mediaType: "application/json") => {
         body: mergesSuccessful;
@@ -2771,8 +2771,8 @@ export interface Service {
      * @param state - String to filter by state.
      * @param direction - Ignored without 'sort' parameter.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2790,8 +2790,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2810,8 +2810,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Number of milestone.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2830,9 +2830,9 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Number of milestone.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content.
+     * @return 204 - No content.
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2850,8 +2850,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Number of milestone.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2870,8 +2870,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Number of milestone.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2898,8 +2898,8 @@ export interface Service {
      * Example: "2012-10-09T23:39:01Z".
      *
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2920,8 +2920,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 205|application/json - Marked as read.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 205 - Marked as read.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2943,8 +2943,8 @@ export interface Service {
      *
      * @param base - Filter pulls by base branch name. Example - gh-pages.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2962,8 +2962,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -2987,8 +2987,8 @@ export interface Service {
      * Example: "2012-10-09T23:39:01Z".
      *
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3007,8 +3007,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param commentId - Id of comment.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3027,9 +3027,9 @@ export interface Service {
      * @param repo - Name of repository.
      * @param commentId - Id of comment.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content.
+     * @return 204 - No content.
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3047,8 +3047,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param commentId - Id of comment.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3067,8 +3067,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Id of pull.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3087,8 +3087,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Id of pull.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3107,8 +3107,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Id of pull.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3138,8 +3138,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Id of pull.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3158,8 +3158,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Id of pull.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3178,8 +3178,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Id of pull.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3198,11 +3198,11 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Id of pull.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Pull request has been merged.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Pull request has been merged.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
-     * @return 404|application/json - Pull request has not been merged.
+     * @return 404 - Pull request has not been merged.
      */
     merge(owner: string, repo: string, number: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -3221,11 +3221,11 @@ export interface Service {
      * @param repo - Name of repository.
      * @param number - Id of pull.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - Response if merge was successful.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - Response if merge was successful.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
-     * @return 405|application/json - Response if merge cannot be performed.
+     * @return 405 - Response if merge cannot be performed.
      */
     merge(owner: string, repo: string, number: int64, Accept?: Header<string>, body: Body<mergePullBody, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: merge;
@@ -3248,8 +3248,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param ref - The String name of the Commit/Branch/Tag. Defaults to master.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3267,8 +3267,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3288,8 +3288,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3307,8 +3307,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3326,8 +3326,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No Content
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - No Content
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3346,8 +3346,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3365,8 +3365,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3384,8 +3384,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No Content
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - No Content
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3402,8 +3402,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3421,8 +3421,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3440,8 +3440,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3462,8 +3462,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3484,8 +3484,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3503,8 +3503,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3522,8 +3522,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3550,8 +3550,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3571,8 +3571,8 @@ export interface Service {
      * @param ref - Ref to list the statuses from. It can be a SHA, a branch name, or a tag name.
      *
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3592,8 +3592,8 @@ export interface Service {
      * @param ref - Ref to list the statuses from. It can be a SHA, a branch name, or a tag name.
      *
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3611,8 +3611,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3630,8 +3630,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3649,8 +3649,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3668,9 +3668,9 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content.
+     * @return 204 - No content.
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3687,8 +3687,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3706,8 +3706,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3725,8 +3725,8 @@ export interface Service {
      * @param owner - Name of repository owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3751,8 +3751,8 @@ export interface Service {
      * @param repo - Name of repository.
      * @param path - Valid Git reference, defaults to 'master'.
      * @param Accept - Is used to set specified media type.
-     * @return 302|application/json - Found.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 302 - Found.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3775,8 +3775,8 @@ export interface Service {
      * Example: "2012-10-09T23:39:01Z".
      *
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3811,8 +3811,8 @@ export interface Service {
      * by best match.
      *
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3831,8 +3831,8 @@ export interface Service {
      * @param q - The q search term can also contain any combination of the supported issue search qualifiers:
      * @param sort - The sort field. Can be comments, created, or updated. Default: results are sorted by best match.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3864,8 +3864,8 @@ export interface Service {
      *
      * @param sort - If not provided, results are sorted by best match.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3896,8 +3896,8 @@ export interface Service {
      *
      * @param sort - If not provided, results are sorted by best match.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3914,8 +3914,8 @@ export interface Service {
      * @http GET /teams/{teamId}
      * @param teamId - Id of team.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3935,9 +3935,9 @@ export interface Service {
      * @http DELETE /teams/{teamId}
      * @param teamId - Id of team.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content.
+     * @return 204 - No content.
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3956,8 +3956,8 @@ export interface Service {
      * @http PATCH /teams/{teamId}
      * @param teamId - Id of team.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -3977,8 +3977,8 @@ export interface Service {
      * @http GET /teams/{teamId}/members
      * @param teamId - Id of team.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4002,11 +4002,11 @@ export interface Service {
      * @param teamId - Id of team.
      * @param username - Name of a member.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - User is a member.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - User is a member.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
-     * @return 404|application/json - User is not a member.
+     * @return 404 - User is not a member.
      */
     members(teamId: int64, username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4031,11 +4031,11 @@ export interface Service {
      * @param teamId - Id of team.
      * @param username - Name of a member.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Team member added.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Team member added.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
-     * @return 422|application/json - If you attempt to add an organization to a team, you will get this.
+     * @return 422 - If you attempt to add an organization to a team, you will get this.
      */
     members(teamId: int64, username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4062,8 +4062,8 @@ export interface Service {
      * @param teamId - Id of team.
      * @param username - Name of a member.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Team member removed.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Team member removed.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4082,11 +4082,11 @@ export interface Service {
      * @param teamId - Id of team.
      * @param username - Name of a member.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - User is a member.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - User is a member.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
-     * @return 404|application/json - User has no membership with team
+     * @return 404 - User has no membership with team
      */
     memberships(teamId: int64, username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: teamMembership;
@@ -4111,11 +4111,11 @@ export interface Service {
      * @param teamId - Id of team.
      * @param username - Name of a member.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - Team member added.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - Team member added.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
-     * @return 422|application/json - If you attempt to add an organization to a team, you will get this.
+     * @return 422 - If you attempt to add an organization to a team, you will get this.
      */
     memberships(teamId: int64, username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: teamMembership;
@@ -4137,8 +4137,8 @@ export interface Service {
      * @param teamId - Id of team.
      * @param username - Name of a member.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Team member removed.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Team member removed.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4154,8 +4154,8 @@ export interface Service {
      * @http GET /teams/{teamId}/repos
      * @param teamId - Id of team.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4174,7 +4174,7 @@ export interface Service {
      * @param owner - Name of a repository owner.
      * @param repo - Name of a repository.
      * @param Accept - Is used to set specified media type.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4190,7 +4190,7 @@ export interface Service {
      * @param owner - Name of a organization.
      * @param repo - Name of a repository.
      * @param Accept - Is used to set specified media type.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4206,9 +4206,9 @@ export interface Service {
      * @param owner - Name of a repository owner.
      * @param repo - Name of a repository.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content.
+     * @return 204 - No content.
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4223,8 +4223,8 @@ export interface Service {
      * @since v3
      * @http GET /user
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4240,8 +4240,8 @@ export interface Service {
      * @since v3
      * @http PATCH /user
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4263,8 +4263,8 @@ export interface Service {
      * @since v3
      * @http GET /user/emails
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/vnd.github.v3 - OK
-     * @return 403|application/vnd.github.v3 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4282,7 +4282,7 @@ export interface Service {
      * @since v3
      * @http POST /user/emails
      * @param Accept - Is used to set specified media type.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4297,9 +4297,9 @@ export interface Service {
      * @since v3
      * @http DELETE /user/emails
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content.
+     * @return 204 - No content.
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4314,8 +4314,8 @@ export interface Service {
      * @since v3
      * @http GET /user/followers
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4331,8 +4331,8 @@ export interface Service {
      * @since v3
      * @http GET /user/following
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4349,11 +4349,11 @@ export interface Service {
      * @http GET /user/following/{username}
      * @param username - Name of user.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Response if you are following this user.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Response if you are following this user.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
-     * @return 404|application/json - Response if you are not following this user.
+     * @return 404 - Response if you are not following this user.
      */
     following(username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4373,8 +4373,8 @@ export interface Service {
      * @http PUT /user/following/{username}
      * @param username - Name of user.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - You are now following the user.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - You are now following the user.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4393,8 +4393,8 @@ export interface Service {
      * @http DELETE /user/following/{username}
      * @param username - Name of user.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - User unfollowed.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - User unfollowed.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4419,8 +4419,8 @@ export interface Service {
      * Only issues updated at or after this time are returned.
      *
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4439,8 +4439,8 @@ export interface Service {
      * @since v3
      * @http GET /user/keys
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4456,8 +4456,8 @@ export interface Service {
      * @since v3
      * @http POST /user/keys
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4474,8 +4474,8 @@ export interface Service {
      * @http GET /user/keys/{keyId}
      * @param keyId - ID of key.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4492,9 +4492,9 @@ export interface Service {
      * @http DELETE /user/keys/{keyId}
      * @param keyId - ID of key.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - No content.
+     * @return 204 - No content.
      *
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4509,8 +4509,8 @@ export interface Service {
      * @since v3
      * @http GET /user/orgs
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4529,8 +4529,8 @@ export interface Service {
      * @since v3
      * @http GET /user/repos
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4548,8 +4548,8 @@ export interface Service {
      * @since v3
      * @http POST /user/repos
      * @param Accept - Is used to set specified media type.
-     * @return 201|application/json - Created
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 201 - Created
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4566,8 +4566,8 @@ export interface Service {
      * @http GET /user/starred
      * @param direction - Ignored without 'sort' parameter.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4585,11 +4585,11 @@ export interface Service {
      * @param owner - Name of a repository owner.
      * @param repo - Name of a repository.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - This repository is starred by you.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - This repository is starred by you.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
-     * @return 404|application/json - This repository is not starred by you.
+     * @return 404 - This repository is not starred by you.
      */
     starred(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4607,8 +4607,8 @@ export interface Service {
      * @param owner - Name of a repository owner.
      * @param repo - Name of a repository.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Repository starred.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Repository starred.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4625,8 +4625,8 @@ export interface Service {
      * @param owner - Name of a repository owner.
      * @param repo - Name of a repository.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Unstarred.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Unstarred.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4641,8 +4641,8 @@ export interface Service {
      * @since v3
      * @http GET /user/subscriptions
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4661,11 +4661,11 @@ export interface Service {
      * @param owner - Name of the owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Repository is watched by you.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Repository is watched by you.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
-     * @return 404|application/json - Repository is not watched by you.
+     * @return 404 - Repository is not watched by you.
      */
     subscriptions(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4684,8 +4684,8 @@ export interface Service {
      * @param owner - Name of the owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Repository is watched.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Repository is watched.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4703,8 +4703,8 @@ export interface Service {
      * @param owner - Name of the owner.
      * @param repo - Name of repository.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Unwatched.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Unwatched.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4719,8 +4719,8 @@ export interface Service {
      * @since v3
      * @http GET /user/teams
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4741,8 +4741,8 @@ export interface Service {
      * @http GET /users
      * @param since - The integer ID of the last user that you've seen.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4759,8 +4759,8 @@ export interface Service {
      * @http GET /users/{username}
      * @param username - Name of user.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4777,7 +4777,7 @@ export interface Service {
      * @http GET /users/{username}/events
      * @param username - Name of user.
      * @param Accept - Is used to set specified media type.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4791,7 +4791,7 @@ export interface Service {
      * @http GET /users/{username}/events/orgs/{org}
      * @param username - Name of user.
      * @param Accept - Is used to set specified media type.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4805,8 +4805,8 @@ export interface Service {
      * @http GET /users/{username}/followers
      * @param username - Name of user.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4824,11 +4824,11 @@ export interface Service {
      * @param username - Name of user.
      * @param targetUser - Name of user.
      * @param Accept - Is used to set specified media type.
-     * @return 204|application/json - Response if user follows target user.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 204 - Response if user follows target user.
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
-     * @return 404|application/json - Response if user does not follow target user.
+     * @return 404 - Response if user does not follow target user.
      */
     following(username: string, targetUser: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4848,8 +4848,8 @@ export interface Service {
      * Example: "2012-10-09T23:39:01Z".
      *
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4868,8 +4868,8 @@ export interface Service {
      * @http GET /users/{username}/keys
      * @param username - Name of user.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4886,8 +4886,8 @@ export interface Service {
      * @http GET /users/{username}/orgs
      * @param username - Name of user.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4904,7 +4904,7 @@ export interface Service {
      * @http GET /users/{username}/received_events
      * @param username - Name of user.
      * @param Accept - Is used to set specified media type.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4918,7 +4918,7 @@ export interface Service {
      * @http GET /users/{username}/received_events/public
      * @param username - Name of user.
      * @param Accept - Is used to set specified media type.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4932,8 +4932,8 @@ export interface Service {
      * @http GET /users/{username}/repos
      * @param username - Name of user.
      * @param Accept - Is used to set specified media type.
-     * @return 200|application/json - OK
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 200 - OK
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4950,7 +4950,7 @@ export interface Service {
      * @http GET /users/{username}/starred
      * @param username - Name of user.
      * @param Accept - Is used to set specified media type.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
@@ -4964,7 +4964,7 @@ export interface Service {
      * @http GET /users/{username}/subscriptions
      * @param username - Name of user.
      * @param Accept - Is used to set specified media type.
-     * @return 403|application/json - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
+     * @return 403 - API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting
      * for details.
      *
      */
