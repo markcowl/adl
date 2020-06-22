@@ -74,12 +74,52 @@ A rule result contains information about fixing the error in `message` and a fix
 - message: This describes the warning or error. You can use string interpolation to be more specific about the error like shown above.
 - suggestion: This contains an array of fixes.
 
+In the rule above, the rule result is:
+
+``` js
+{
+  message: `The property ${property.name} is marked both as readOnly and required, which is forbidden.`,
+  suggestion: [
+    {
+      description: "Set required: false.",
+      fix: () => {
+        property.readonly = false;
+      }
+    },
+    {
+      description: "Set remove: false",
+      fix: () => {
+        property.required = false;
+      }
+    },
+    {
+      description: "Set required: false and readonly: false.",
+      fix: () => {
+        property.required = false;
+        property.readonly = false;
+      }
+    }
+  ]
+}
+``` 
+
 ### Fix
 
 A fix contains:
 
 - description: The description of the fix to be applied on the api model.
 - fix: This is a function that modifies the element for which the rule is operating on.
+
+In the example above a fix is:
+
+``` js
+{
+  description: "Set required: false.",
+  fix: () => {
+    property.readonly = false;
+  }
+}
+```
 
 
 ### References
