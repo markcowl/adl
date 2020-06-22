@@ -6,13 +6,13 @@
 import { exists, isDirectory, isFile, mkdir, readdir, readFile, rmdir, writeFile } from '@azure-tools/async-io';
 import { Delay } from '@azure-tools/tasks';
 import { ChildProcess, spawn, SpawnOptions } from 'child_process';
-import { EventEmitter } from 'ee-ts';
 import { promises, readFileSync } from 'fs';
 import { resolve as npmResolvePackage } from 'npm-package-arg';
 import { tmpdir } from 'os';
 import * as pacote from 'pacote';
 import { basename, delimiter, dirname, extname, isAbsolute, join, normalize, resolve } from 'path';
 import * as semver from 'semver';
+import { EventEmitter } from '../support/event-emitter';
 import { Stopwatch } from '../support/stopwatch';
 
 const copyFile = promises.copyFile;

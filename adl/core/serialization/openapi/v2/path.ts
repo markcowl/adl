@@ -5,7 +5,6 @@ import { Alias } from '../../../model/alias';
 import { createOperationGroup, createOperationStructure, Method, OperationStructure, Path } from '../../../model/http/operation';
 import { Response } from '../../../model/http/response';
 import { ParameterTypeReference } from '../../../model/schema/type';
-import { addExtensionsToAttic } from '../common';
 import { getGroupAndName } from '../common/path';
 import { versionInfo } from '../common/schema';
 import { getParameterReference, processParameter } from './parameter';
@@ -42,7 +41,7 @@ async function* processPath(pathItem: v2.PathItem, $: Context): AsyncGenerator<O
       yield processOperation({method: <Method><unknown>method, path}, pathItem[<common.HttpMethod>method], pathItem, $);
     }
   }
-  addExtensionsToAttic($.api.http, pathItem);
+  // addExtensionsToAttic($.api.http, pathItem);
 }
 
 async function processOperation(path: Path, operation: v2.Operation, shared: v2.PathItem, $: Context): Promise<OperationStructure> {
@@ -72,7 +71,7 @@ async function processOperation(path: Path, operation: v2.Operation, shared: v2.
       in: v2.ParameterLocation.Body
     };
   
-    parameters.push(getParameterReference(bodyParameter, $.api.schemas.primitives.file, $, { isAnonymous: true, operation }));
+    parameters.push(getParameterReference(bodyParameter, $.api.primitives.file, $, { isAnonymous: true, operation }));
   }
 
   for await (const rsp of $.processDictionary(response, <any>operation.responses, {operation})) {

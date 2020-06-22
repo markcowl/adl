@@ -1,10 +1,14 @@
+import { SourceFile, TypeAliasDeclaration } from 'ts-morph';
+import { hasTag } from '../../support/doc-tag';
 import { Alias } from '../alias';
+import { ApiModel, isOperationGroupInterfaceType, isResponseCollectionTypeAlias, isResponseTypeAlias, isResultInterfaceType, isResultTypeAlias } from '../api-model';
 import { Element } from '../element';
-import { Header } from './header';
-import { Operation } from './operation';
-import { Parameter } from './parameter';
-import { Request } from './request';
-import { Response } from './response';
+import { Protocol } from '../project/protocol';
+import { Declaration } from '../typescript/reference';
+import { HeaderElement } from './header';
+import { OperationGroup, ResponseCollection } from './operation';
+import { ParameterElement } from './parameter';
+import { ResponseElement, ResultElement } from './response';
 
 export enum AuthenticationType {
   ApiKey = 'apikey',
@@ -203,8 +207,28 @@ export class ConnectionVariable extends Element {
   }
 }
 
-export class HttpProtocol extends Element {
-  headers = new Array<Header|Alias<Header>>();
+function isHeader(declaration: TypeAliasDeclaration) {
+  if (hasTag(declaration, 'header')) {
+    return true;
+  }
+  return false;
+}
+
+function isParameterTypeAlias(declaration: TypeAliasDeclaration) {
+  // check for query,header,cookie,body
+  return false;
+}
+
+export class HttpProtocol extends Protocol {
+  /** @internal */
+  constructor(api: ApiModel, sourceFiles?: Array<SourceFile>) {
+    super(api, sourceFiles);
+    if(!sourceFiles) {
+      // add the checkers for header types
+      api.KnownAliasTypes['header'] = isHeader;
+    }
+  }
+
   authentications = new Array<Authentication|Alias<Authentication>>();
 
   /**
@@ -215,8 +239,58 @@ export class HttpProtocol extends Element {
 
   /** Global connections, which may be overridden by individual operations. */
   connections = new Array<Connection | Alias<Connection>>();
-  operations = new Array<Operation|Alias<Operation>>();
-  requests = new Array<Request | Alias<Request>>();
-  responses = new Array<Response| Alias<Response>>();
-  parameters = new Array<Parameter|Alias<Parameter>>();
+
+  where(predicate: (file: SourceFile) => boolean): HttpProtocol {
+    return new HttpProtocol(this.api, this.files.filter(predicate));
+  }
+
+  from(sourceFiles: Array<SourceFile>): HttpProtocol {
+    return new HttpProtocol(this.api, sourceFiles);
+  }
+
+  get operationGroups(): Array<OperationGroup> {
+    // for now, just get the operation groups and assume they are http
+    return this.files.map(each => each.getInterfaces().filter(isOperationGroupInterfaceType).map(each => new OperationGroup(each))).flat();
+  }
+
+  get responseCollections(): Array<Declaration<ResponseCollection>> {
+    return this.files.map(each => each.getTypeAliases().filter(isResponseCollectionTypeAlias)).flat().map(each => new Declaration(each, ResponseCollection));
+  }
+
+  get responses(): Array<Declaration<ResponseElement>> {
+    return this.files.map(each => each.getTypeAliases().filter(isResponseTypeAlias)).flat().map(each => new Declaration(each, ResponseElement));
+  }
+
+  get results(): Array<Declaration<ResultElement>> {
+    return [
+      ... this.files.map(each => each.getTypeAliases().filter(isResultTypeAlias)).flat().map(each => new Declaration(each, ResultElement)),
+      ... this.files.map(each => each.getInterfaces().filter(isResultInterfaceType)).flat().map(each => new Declaration(each, ResultElement)),
+    ];
+  }
+
+  get parameters(): Array<Declaration<ParameterElement>> {
+    // Query, Body, Header, Cookie
+    return this.files.map(each => each.getTypeAliases().filter(isParameterTypeAlias)).flat().map(each => new Declaration(each, ParameterElement));
+  }
+
+  get headers(): Array<Declaration<HeaderElement>> {
+    return this.files.map(each => each.getTypeAliases().filter(isHeader)).flat().map(each => new Declaration(each, ParameterElement));
+  }
+
+
+  createOperationGroup() {
+    // todo
+  }
+
+  //  createResource() {
+  // todo
+  // }
+
+  createOperationResultAlias() {
+    // todo
+  }
+
+  // get resources() {
+  // ??
+  // }
 }

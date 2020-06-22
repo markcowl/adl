@@ -32,6 +32,7 @@ export interface TypeReference {
    */
   readonly sourceFile?: SourceFile;
 
+  readonly isInline?: boolean;
   typeParameters?: Array<TypeParameterDeclarationStructure>;
 }
 

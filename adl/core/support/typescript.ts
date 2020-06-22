@@ -1,6 +1,6 @@
 import { Path } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
-import { ClassDeclaration, EnumDeclaration, EnumMember, ImportDeclarationStructure, InterfaceDeclaration, Node, Project, SourceFile, StructureKind, SyntaxList, TypeAliasDeclaration } from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, EnumMember, ImportDeclarationStructure, InterfaceDeclaration, Node, Project, SourceFile, StructureKind, SyntaxList, TypeAliasDeclaration, TypeNode, TypeReferenceNode, UnionTypeNode } from 'ts-morph';
 import { ApiModel } from '../model/api-model';
 import { TypeReference } from '../model/schema/type';
 import { createSandbox } from './sandbox';
@@ -107,7 +107,7 @@ export function referenceTo<T extends Node>(input: T): T {
   });
 }
 
-export function project<T extends Node>(input: T): ApiModel {
+export function getAPI<T extends Node>(input: T): ApiModel {
   return (<any>input.getProject()).api;
 }
 
@@ -115,7 +115,7 @@ export function IsTypeDeclaration(node?: Node): node is TypeDeclaration {
   return node instanceof TypeAliasDeclaration || node instanceof ClassDeclaration || node instanceof InterfaceDeclaration || node instanceof EnumDeclaration;
 }
 
-export function getImportFor(type: EnumDeclaration|InterfaceDeclaration|TypeAliasDeclaration, relativeToSourceFile: SourceFile): ImportDeclarationStructure {
+export function getImportFor(type: EnumDeclaration | InterfaceDeclaration | TypeAliasDeclaration, relativeToSourceFile: SourceFile): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
     namedImports: [type.getName()],
@@ -135,6 +135,7 @@ export function addImportsTo(sourceFile: SourceFile,typeReference: TypeReference
   if (typeReference.sourceFile && sourceFile !== typeReference.sourceFile ) {
     const typeName = typeReference.declaration.text;
 
+
     const importDecls = sourceFile.getImportDeclarations();
     let found = false;
 
@@ -153,22 +154,54 @@ export function addImportsTo(sourceFile: SourceFile,typeReference: TypeReference
       // wasn't that file
     }
     // wasn't imported yet. Let's add it.
-    if( !found) {
+    if (!found) {
       sourceFile.addImportDeclaration(createImportFor(typeName, typeReference.sourceFile, sourceFile));
     }
   }
 
   // now, add any requiredTypes to this file too.
-  for( const each of typeReference.requiredReferences) {
-    addImportsTo( sourceFile, each);
+  for (const each of typeReference.requiredReferences) {
+    addImportsTo(sourceFile, each);
   }
 }
 
 export function addNullable(declaration: string) {
-  return declaration.endsWith('| null') ?declaration:`${declaration} | null`;
+  return declaration.endsWith('| null') ? declaration : `${declaration} | null`;
 }
 
 export function getInnerText(declaration: InterfaceDeclaration) {
-  const text = declaration.getText(); 
+  const text = declaration.getText();
   return text.substring(text.indexOf('{'));
 }
+
+export function expandUnion(node: UnionTypeNode): Array<TypeNode> {
+  return node.getTypeNodes().map( each => Node.isUnionTypeNode( each ) ? expandUnion(each) : each).flat();
+}
+
+export function getDefinition(node: TypeReferenceNode): Node|undefined {
+  return node.getTypeName().getSymbol()?.getDeclarations()[0];
+}
+
+export function expandLiterals( node: Node): Array<string|number> {
+  if( Node.isLiteralTypeNode(node) ) {
+    const l =node.getLiteral();
+    if (Node.isNumericLiteral(l) || Node.isStringLiteral(l) ) {
+      return [l.getLiteralValue()];
+    }
+    fail(`unsupported literal type '${l.getKindName()}' `);
+  }
+  if( Node.isTypeReferenceNode(node)) {
+    const t = getDefinition(node);
+    if( t) {
+      if( Node.isTypeAliasDeclaration(t)) {
+        return expandLiterals(t.getTypeNode()!);
+      }
+      fail(`unsupported type reference node '${t.getKindName()}' `);
+    }
+  }
+  if( Node.isUnionTypeNode(node)) {
+    return expandUnion(node).map( each => expandLiterals(each)).flat();
+  }
+  fail(`unsupported type for expandLiterals '${node.getKindName()}' `);
+}
+

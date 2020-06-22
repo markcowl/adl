@@ -1,29 +1,30 @@
-import { RequestBodyReference } from '@azure-tools/openapi/dist/v3';
 import { isAnonymous } from '@azure-tools/sourcemap';
-import { JSDocTagStructure, MethodSignatureStructure, ParameterDeclarationStructure, printNode, StructureKind, ts } from 'ts-morph';
+import { fail } from 'assert';
+import { JSDoc, JSDocTagStructure, MethodSignatureStructure, Node, ParameterDeclarationStructure, printNode, StructureKind, ts } from 'ts-morph';
 import { normalizeIdentifier, normalizeName } from '../../support/codegen';
-import { createDocs } from '../../support/doc-tag';
+import { createDocs, getTagValue, setTag } from '../../support/doc-tag';
 import { Alias } from '../alias';
 import { ApiModel } from '../api-model';
 import * as base from '../operation';
-import { Reference } from '../reference';
-import { VersionedEntity } from '../schema/object';
+import { Reference } from '../project/reference';
 import { ParameterTypeReference, RequestBodyTypeReference } from '../schema/type';
-import { Collection, Identity } from '../types';
-import { Parameter, ParameterType } from './parameter';
-import { AuthenticationRequirement, Connection } from './protocol';
+import { Identity } from '../types';
+import { Declaration } from '../typescript/reference';
+import { VersionedElement } from '../typescript/versioned-element';
+import { Parameter, ParameterElement, ParameterType } from './parameter';
 import { Request } from './request';
-import { Response } from './response';
+import { Response, ResponseElement } from './response';
+
 
 export enum Method {
-  Get = 'get',
-  Put = 'put',
-  Post = 'post',
-  Delete = 'delete',
-  Options = 'options',
-  Head = 'head',
-  Patch = 'patch',
-  Trace = 'trace'
+  Get = 'GET',
+  Put = 'PUT',
+  Post = 'POST',
+  Delete = 'DELETE',
+  Options = 'OPTIONS',
+  Head = 'HEAD',
+  Patch = 'PATCH',
+  Trace = 'TRACE'
 }
 
 export interface Path {
@@ -31,43 +32,85 @@ export interface Path {
   path: string;
 }
 
-export interface Operation extends base.Operation {
+export class TagCollection {
+  constructor(private node: Node | Array<JSDoc> | JSDoc) {
+  }
+}
+
+export class OperationGroup extends base.OperationGroup {
+  
+  get operations(): Array<Operation> {
+    return this.node.getMethods().map( each => new Operation(each));
+  }
+
+  /**
+   * Creates a new HttpOperation in this operation group.
+   */
+  createOperation() {
+    //todo 
+  }
+}
+
+export class ResponseCollection extends base.ResponseCollection {
+
+  get responses(): ReadonlyArray<ResponseElement | Declaration<ResponseElement>> {
+    return this.node.getElementTypeNodes().map(each => {
+      if (Node.isFunctionTypeNode(each)) {
+        return new ResponseElement(each);
+      }
+      if (Node.isTypeReferenceNode(each)) {
+        const target = each?.getTypeName()?.getSymbol()?.getDeclarations()?.[0];
+        if (target && (Node.isTypeAliasDeclaration(target) || Node.isInterfaceDeclaration(target))) {
+          return new Declaration(target, ResponseElement);
+        }
+        fail(`Type Reference Node is a ${target?.getKindName()} in ResponseCollection `);
+      }
+      // we don't support any other kind of node right now in a responseCollection
+      fail(`Unrecognized Node Type ${each.getKindName()} in ResponseCollection `);
+    });
+
+    // to get the actual target of a ts TypeReference : 
+    // t[3].getTypeName().getSymbol().getDeclarations()[0]  // .getText()
+  }
+}
+
+export class Operation extends base.Operation {
   /** A list of tags for API documentation control. Tags can be used for logical grouping of operations by resources or any other qualifier. */
-  readonly tags: Collection<string>;
-
-  /** A group name to group this operation with others. */
-  readonly group: string;
-
-  /** A name for this operation within its group. */
-  name: string;
+  readonly tags = new TagCollection(this.node);
 
   /** The HTTP method used and the path operated upon. */
-  path: Path;
+  get path(): string {
+    return /([^\s]*)\s+(.*)/.exec(getTagValue(this.node, 'http')||'')?.[2] || '';
+  }
+  set path(value: string) {
+    setTag(this.node,'http' , `${this.method} ${value}`);
+  }
+
+  get method(): Method  {
+    const m = ( /([^\s]*)\s+(.*)/.exec(getTagValue(this.node, 'http') || '')?.[1] || '' ).toUpperCase();
+    return <Method>m;
+  }
+  set method(value: Method) {
+    setTag( this.node,'http' , `${value} ${this.path}`);
+  }
 
   /** parameters common to all the requests(overloads) for this operation */
-  readonly parameters: Collection<Parameter | Alias<Parameter>>;
+  readonly parameters!: ReadonlyArray<ParameterElement>;
 
-  /** possible requests that can be made for this operation (ie, overloads)  */
-  readonly requests: Collection<Request | Alias<Request>>;
-
-  /** non-error outputs from this operation */
-  readonly responses: Collection<Response | Alias<Response>>;
-
-  /** a collection of reference information regarding the operation  */
-  readonly references: Collection<Reference>;
+  readonly responses!: ReadonlyArray<ResponseElement>;
 
   /**
    * Authentication requirements for this operation, which override those specified globally.
    *
    * Only one of the elements in the array needs to be satisfied to authorize a request.
    */
-  readonly authenticationRequirements: Collection<AuthenticationRequirement>;
+  // readonly authenticationRequirements: Collection<AuthenticationRequirement>;
 
   /** Connections for this operation, which override those specified globally. */
-  readonly connections: Collection<Connection>;
+  // readonly connections: Collection<Connection>;
 }
 
-export interface OperationInitializer extends VersionedEntity {
+export interface OperationInitializer extends VersionedElement {
   description: string;
   summary: string;
   tags: Array<string>;
@@ -130,7 +173,7 @@ export function createOperationStructure(
 function createPathStructure(path: Path): JSDocTagStructure {
   return {
     kind: StructureKind.JSDocTag,
-    tagName: 'http', 
+    tagName: 'http',
     text: `${path.method.toUpperCase()} ${path.path}`,
   };
 }

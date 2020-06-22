@@ -1,13 +1,11 @@
 import { suite } from '@testdeck/mocha';
 import * as assert from 'assert';
 import { Node } from 'ts-morph';
-import { TSElement } from '../model/element';
 import { EnumValue } from '../model/schema/enum';
+import { TSElement } from '../model/typescript/typescript-element';
 
 
 @suite class TestManipulation {
- 
-
   private assertEnumValuesEqual(actual: Array<EnumValue>, expected: Array<EnumValue>) {
     assert.strictEqual(actual.length, expected.length);
     for (let i = 0; i < actual.length; i++) {

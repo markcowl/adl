@@ -1,6 +1,10 @@
 import { Element } from '../element';
 import { SchemaTypeReference } from '../schema/type';
 
+export class HeaderElement {
+  
+}
+
 export class Header extends Element {
   /** description of the HTTP Header */
   description?: string;

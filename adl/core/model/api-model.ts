@@ -1,22 +1,242 @@
-import { exists, isFile, mkdir, rmdir, writeFile } from '@azure-tools/async-io';
-import { Dictionary } from '@azure-tools/linq';
+import { exists, isDirectory, isFile, mkdir, readdir, readFile, rmdir, writeFile } from '@azure-tools/async-io';
+import { Dictionary, items, keys, linq } from '@azure-tools/linq';
 import { isAnonymous, Path, valueOf } from '@azure-tools/sourcemap';
+import { fail } from 'assert';
 import { dirname, join } from 'path';
-import { EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Node, Project, QuoteKind, SourceFile } from 'ts-morph';
-import { getNode, referenceTo } from '../support/typescript';
-import { Attic } from './element';
-import { SerializationResult } from './format';
+import { Directory, EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Node, Project, QuoteKind, SourceFile, SyntaxKind, TypeAliasDeclaration } from 'ts-morph';
+import { getTags, hasTag } from '../support/doc-tag';
+import { referenceTo } from '../support/typescript';
 import { HttpProtocol } from './http/protocol';
-import { InternalData } from './internal-data';
-import { Metadata } from './metadata';
-import { Resource } from './resource';
-import { Schema } from './schema/schema';
-import { Schemas } from './schema/schemas';
+import { ParameterElement, ResponseCollection, ResponseElement, ResultElement } from './operation';
+import { ProjectData } from './project/project-data';
+import { Protocol } from './project/protocol';
+import { AliasType } from './schema/alias';
+import { EnumType } from './schema/enum';
+import { ModelType } from './schema/model';
+import { Primitives } from './schema/primitive';
 import { Folders, Identity } from './types';
-import { VersionInfo } from './version-info';
+import { Declaration } from './typescript/reference';
 
-export class ApiModel {
-  #project: Project = new Project({
+export function isModelTypeAlias(declaration: TypeAliasDeclaration) {
+  if (hasTag(declaration, 'model')) {
+    return true;
+  }
+
+  // if this is an alias over a model type or primitive
+  // or it is
+
+  return false;
+}
+
+export function isResponseCollectionTypeAlias(declaration: TypeAliasDeclaration): boolean {
+  if (hasTag(declaration, 'responseCollection')) {
+    return true;
+  }
+
+  // type aliases that are tupletypes are responsecollections.
+  const typeNode = declaration.getTypeNode();
+  if (typeNode && Node.isTupleTypeNode(typeNode)) { //?.getKind() === SyntaxKind.TupleType
+    // they must only have children that are either functionTypeNode or TypeReferenceNode
+    // if they have anything else, ignore them. 
+    return !(typeNode.getElementTypeNodes().find(each => !(Node.isFunctionTypeNode(each) || Node.isTypeReferenceNode(each)) )  );
+  }
+  return false;
+}
+
+export function isResponseTypeAlias(declaration: TypeAliasDeclaration) {
+  if (hasTag(declaration, 'response')) {
+    return true;
+  }
+
+  // type aliases that are function types are response declarations.
+  return (declaration.getTypeNode()?.getKind() === SyntaxKind.FunctionType);
+}
+
+export function isResultTypeAlias(declaration: TypeAliasDeclaration) {
+  if (hasTag(declaration, 'result')) {
+    return true;
+  }
+
+  return false;
+}
+
+export function isResourceTypeAlias(declaration: TypeAliasDeclaration) {
+  return false;
+}
+
+export function isResourceInterfaceType(declaration: InterfaceDeclaration) {
+  return false;
+}
+
+export function isOperationGroupInterfaceType(declaration: InterfaceDeclaration) {
+  // should only have operations
+  if (hasTag(declaration, 'http')) {
+    return true;
+  }
+
+  // operation groups have methods.
+  if( declaration.getMethods().length > 0 ) {
+    return true;
+  }
+  return false;
+}
+
+export function isResultInterfaceType(declaration: InterfaceDeclaration) {
+  return false;
+}
+
+export function isResponseInterfaceType(declaration: InterfaceDeclaration) {
+  return false;
+}
+
+export function isModelInterface(declaration: InterfaceDeclaration) {
+  // interfaces that identify as @model are models
+  if (hasTag(declaration, 'model')) {
+    return true;
+  }
+  // inference based on what it looks like it is.
+
+  // model interfaces should
+  // - may have constructors (used for versioning)
+
+  // - may not have methods
+  if (declaration.getMethods().length > 0) {
+    return false;
+  }
+
+  return true;
+}
+/*
+type Queryable<T extends string,TResult >  = {
+  readonly [key in T]: Array<TResult>;
+}
+const someFiles = <Files><any>{};
+const x = someFiles.query<ModelType>('interfaces');
+*/
+
+
+export class Files {
+  readonly api: ApiModel;
+  readonly files!: Array<SourceFile>;
+  
+  protected constructor(api?: ApiModel, sourceFiles?: Array<SourceFile>) {
+    if (api) {
+      this.files = sourceFiles || api.files;
+    }
+    this.api = api || (this instanceof ApiModel ? this : fail('requires api model in constructor'));
+    
+    // when this gets constructed, we have to emit an event to allow extensions to add queries to the instance
+    // we need a query function for the extension
+    // and then we can bind it as a property so that others can use it.
+    // Object.defineProperty(this, 'AzureResource', {get: ()=>this.interfaces});
+  }
+
+  query<T>(propertyName: string): Array<T> {
+    return (Object.getOwnPropertyNames(this).indexOf(propertyName) > -1 ? (<any>this)[propertyName] : []);
+  }
+
+  where(predicate: (file: SourceFile) => boolean): Files {
+    return new Files(this.api, this.files.filter(predicate));
+  }
+
+  /**
+   * returns all the modelTypes in the API
+   */
+  get modelTypes() {
+    return this.files.map(each => each.getInterfaces().filter(isModelInterface)).flat().map(each => new ModelType(each));
+  }
+
+  /**
+   * returns all the enumTypes in the API
+   */
+  get enumTypes() {
+    return this.files.map(each => each.getEnums().flat().map(each => new EnumType(each)));
+  }
+
+  /**
+   * returns all the aliasTypes in the API
+   */
+  get aliasTypes(): Array<AliasType> {
+    return this.files.map(each => each.getTypeAliases().filter(isModelTypeAlias)).flat().map(each => new AliasType(each));
+  }
+
+  /**
+   * Returns all the operation groups for all protocols
+   */
+  get operationGroups() {
+    return linq.values(this.protocols).selectMany(protocol => protocol.operationGroups).toArray();
+  }
+
+  /**
+   * returns all the protocols for this API
+   */
+  get protocols(): Dictionary<Protocol> {
+    return linq.items(this.api.protocols).toDictionary(([key])=>key, ([,protocol])=>protocol.from(this.files));
+  }
+
+  /**
+   * Gets all the globally declared response collections across all the protocols
+   */
+  get responseCollections(): Array<Declaration<ResponseCollection>>{
+    // this.files.map( each => each.getTypeAliases()).filter(isResponseCollection)).flat().map(each => new ResponseCollectionAlias(each))
+    return linq.values(this.protocols).selectMany(protocol => protocol.responseCollections).toArray();
+  }
+
+  /**
+   * Gets all the globally declared responses across all the protocols
+   */
+  get responses(): Array<Declaration<ResponseElement>> {
+    return linq.values(this.protocols).selectMany(protocol => protocol.responses).toArray();
+  }
+
+  /**
+   * Gets all the globally declared results across all the protocols
+   */
+  get results(): Array<Declaration<ResultElement>> {
+    return linq.values(this.protocols).selectMany(protocol => protocol.results).toArray();
+  }
+
+  /**
+   * Gets all the globally parameters across all the protocols
+   */
+  get parameters(): Array<Declaration<ParameterElement>> {
+    return linq.values(this.protocols).selectMany(protocol => protocol.parameters).toArray();
+  }
+}
+
+async function readFiles( folder: string, directory: Project|Directory) {
+  const all = new Array<Promise<any>>();
+
+  const entries = await readdir(folder);
+  for( const each of entries) {
+    const fullPath = join(folder, each);
+    if( await isFile(fullPath)  && each.endsWith('.ts')) {
+      directory.createSourceFile(each, await readFile(fullPath) );
+    }
+    if( await isDirectory(fullPath)  ) {
+      const dir = directory.createDirectory(each);
+      all.push(readFiles(fullPath, dir));
+    }
+  }
+  // wait for everything below to here to finish.
+  await Promise.all(all);
+}
+
+export class ApiModel extends Files {
+  /**
+   * when creating constructs that lack a name, we can give them a unique number
+   */
+  #counter = 0;
+
+  /**
+   * protocols connected to this model
+   */
+  #protocols = new Dictionary<Protocol>();
+
+  /**
+   * typescript project for this model
+   */
+  readonly project: Project = new Project({
     useInMemoryFileSystem: true,
     manipulationSettings: {
       indentationText: IndentationText.TwoSpaces,
@@ -26,51 +246,102 @@ export class ApiModel {
     },
   });
 
-  counter = 0;
-
+  /**
+   * well-known folders in the model
+   */
   #folders = <Folders>{
-    anonymous: this.#project.createDirectory('anonymous'),
-    alias: this.#project.createDirectory('aliases'),
-    model: this.#project.createDirectory('models'),
-    enum : this.#project.createDirectory('enums'),
-    group: this.#project.createDirectory('operations'),
-    resource: this.#project.createDirectory('resources'),
+    anonymous: this.project.createDirectory('anonymous'),
+    alias: this.project.createDirectory('aliases'),
+    model: this.project.createDirectory('models'),
+    enum: this.project.createDirectory('enums'),
+    group: this.project.createDirectory('operations'),
+    resource: this.project.createDirectory('resources'),
   }
-  
-  privateData = new Map<string,any>();
 
-  get project() {
-    return this.#project;
+  /**
+   * access to the ts project for this api.
+   * @internal
+   */
+  get prxoject() {
+    return this.project;
   }
+
+  /**
+   * persistable project data (this should end up in the adl.yaml file)
+   */
+  readonly projectData = new ProjectData();
+
+  /**
+   * references to the primitive types.
+   */
+  readonly primitives = Primitives;
+
+  readonly KnownInterfaceTypes = <Dictionary<(declaration: InterfaceDeclaration) => boolean>>{
+    model: isModelInterface,
+    response: isResponseInterfaceType,
+    result: isResultInterfaceType,
+    operationgroup: isOperationGroupInterfaceType,
+    resource: isResourceInterfaceType,
+  };
+
+  readonly KnownAliasTypes = <Dictionary<(declaration: TypeAliasDeclaration) => boolean>>{
+    model: isModelTypeAlias,
+    responseCollection: isResponseCollectionTypeAlias,
+    response: isResponseTypeAlias,
+    result: isResultTypeAlias,
+    resource: isResourceTypeAlias,
+  };
+
+  get protocols() {
+    return this.#protocols;
+  }
+
+  get files() { 
+    return this.project?.getSourceFiles() || [];
+  }
+  /**
+   * gets access to privateData for a given node.
+   *
+   * @param path the navigable path to the node for which data is being stored.
+   * @internal
+   */
   getPrivateData(path: Path): Dictionary<any> {
     const p = path.join('/');
-    let v = this.privateData.get(p);
-    if( !v ) {
-      this.privateData.set(p, v = {});
+    let v = this.projectData.attic[p];
+    if (v === undefined) {
+      v = this.projectData.attic[p] = {};
     }
     return v;
   }
-  
-  internalData: Dictionary<InternalData> = {};
-  
-  metaData = new Metadata('');
-
-  resources = new Array<Resource>();
-
-  schemas = new Schemas();
-
-  http: HttpProtocol = new HttpProtocol();
 
   constructor() {
-    (<any>this.#project).api = this;
+    super();
+    (<any>this.project).api = this;
+    this.protocols.http = new HttpProtocol(this);
   }
 
-  versionInfo = new Array<VersionInfo>();
+  /**
+   * Access to the project's attic
+   */
+  get attic() {
+    return this.projectData.attic.unprocessed;
+  }
 
-  attic?: Attic;
+  static async loadADL( path: string ) {
+    // path must be a directory
+    if( !await exists(path)) { 
+      throw new Error(`Path '${path}' does not exist`);
+    }
+    
+    if (!await isDirectory(path)) {
+      throw new Error(`Path '${path}' does is not a directory`);
+    }
 
-  addInternalData(key: string, internalData: InternalData): void {
-    // ...
+    // create a project from the contents of the folder
+    const result = new ApiModel();
+    await readFiles(path, result.project);
+
+    return result;
   }
 
   async saveADL(path: string, cleanDirectory = true) {
@@ -87,7 +358,7 @@ export class ApiModel {
       }
     }
 
-    // ensure folder is created 
+    // ensure folder is created
     await mkdir(path);
 
     const format = {
@@ -115,12 +386,9 @@ export class ApiModel {
       }))).length;
   }
 
-  getNode(path: Path): Node | undefined {
-    return getNode(path, this.project);
-  }
-
-  getFile(identity: Identity, type: keyof Folders ): SourceFile {
-    if (isAnonymous(identity) ) {
+  /** @internal */
+  getFile(identity: Identity, type: keyof Folders): SourceFile {
+    if (isAnonymous(identity)) {
       identity = identity.name;
       type = 'anonymous';
     }
@@ -141,112 +409,69 @@ export class ApiModel {
     return undefined;
   }
 
-  getGroup(name: string) {
-    name = valueOf(name);
-    let result: InterfaceDeclaration;
-
-    for (const file of this.project.getSourceFiles()) {
-      const result = file.getInterface(name);
-      if (result) {
-        return referenceTo(result);
-      }
-    }
-    return undefined;
-  }
-
   isFileAnonymous(sourceFile: SourceFile): boolean {
     return this.#folders.anonymous.isAncestorOf(sourceFile);
   }
 
   getNameAndFile(identity: Identity, type: keyof Folders) {
-    const name = isAnonymous(identity) ? `${type}_${this.counter++}` : <string><any>valueOf(identity).replace(/[^\w]+/g, '_');
-    const file = isAnonymous(identity) ? this.getFile(name,'anonymous') : this.getFile(name, type);
+    const name = isAnonymous(identity) ? `${type}_${this.#counter++}` : <string><any>valueOf(identity).replace(/[^\w]+/g, '_');
+    const file = isAnonymous(identity) ? this.getFile(name, 'anonymous') : this.getFile(name, type);
 
     return { name, file };
-  } 
+  }
 
-  /**
-   * Gets a type reference for a given schema.
-   * 
-   * This also ensures that the types that are required for the schema are imported into the current sourcefile 
-   * 
-   * @param schema the schema that we need imported.
-   */
-  getTypeReference(schema: Schema, targetSourceFile: SourceFile): string {
-    schema = valueOf(schema);
+  createModelType(name: string) {
+    // todo
+  }
 
-    // get all the imports required for the type 
-    // add them to this file
-    const importDecls = targetSourceFile.getImportDeclarations();
+  createEnumType(name: string) {
+    const file = this.project.createSourceFile(`${this.api.#folders.enum.getPath()}/${name}.ts`);
+    // const e = file.addEnum(initializer);
+    // there is already a function called create Enum
+  }
 
-    reqdTypes:
-    for (const requiredType of schema.requiredTypeDeclarations) {
-      if (requiredType.getSourceFile && requiredType.getName ) {
-        const typeFile = requiredType.getSourceFile();
-        const typeName = requiredType.getName();
+  createTypeAlias(name: string) {
+    // todo
+  }
 
-        if (typeName === undefined || typeFile === undefined || typeFile === targetSourceFile || this.isFileAnonymous(typeFile)) {
-          // don't need to do anything if it's the same file 
-          continue;
-        }
 
-        for (const importDecl of importDecls) {
-
-          if (importDecl.getModuleSpecifierSourceFile() === typeFile) {
-            // we've got imports from that sourcefile 
-            if (importDecl.getNamedImports().find(imp => imp.getName() === typeName)) {
-              // we've already imported this. Go on to the next one.
-              continue reqdTypes;
-            }
-            
-            // we've referenced the file, but not imported the type.
-            importDecl.addNamedImport(typeName);
-            continue reqdTypes;
+  identifyInterface(declaration: InterfaceDeclaration) {
+  // returns a string that identifies that an interface is what it says it is.
+    const tagType = [...getTags(declaration, ...keys(this.KnownInterfaceTypes))];
+    switch (tagType.length) {
+      case 1:
+      // found a single
+        return tagType[0].getTagName();
+      case 0:
+      // no tag types found
+      // we're going to have to guess
+        for (const [type, check] of items(this.KnownInterfaceTypes)) {
+          if (check(declaration)) {
+            return type;
           }
-          // wasn't in that file
         }
-        targetSourceFile.addImportDeclaration({
-          moduleSpecifier: targetSourceFile.getRelativePathAsModuleSpecifierTo(typeFile),
-          namedImports: [typeName]
-        });
-      }
     }
-    // imported everything we needed. 
-    //return schema.node.getName();
-    
-    return schema.typeDefinition;
-  }
-}
-
-export class None {
-  async __save(): Promise<SerializationResult> {
-    throw 'unimplemented';
+    // it has more than one. That's not ok.
+    throw Error(`Inteface Decalaration has muliple type tags: ${declaration.getName()}: ${tagType.map(each => each.getTagName()).join(',')}`);
   }
 
-  /** 
-   * creates a duplicate of this API
-   */
-  async __clone() {
-    throw 'unimplemented';
+  identifyTypeAlias(declaration: TypeAliasDeclaration) {
+    const tagType = [...getTags(declaration, ...keys(this.KnownAliasTypes))];
+    switch (tagType.length) {
+      case 1:
+      // found a single
+        return tagType[0].getTagName();
+      case 0:
+      // no tag types found
+      // we're going to have to guess
+        for (const [type, check] of items(this.KnownAliasTypes)) {
+          if (check(declaration)) {
+            return type;
+          }
+        }
+    }
+    // it has more than one. That's not ok.
+    throw Error(`Type Alias has muliple type tags: ${declaration.getName()}: ${tagType.map(each => each.getTagName()).join(',')}`);
   }
 
-  /**
-   * Removes one or more API versions from the API
-   *
-   * @remarks When an API version is removed, elements that are marked '@since' will be pushed forward to the next API version, unless they are in the last version, at which point, they would be removed. 
-   * 
-   * @parameter apiVersions -- removes the definitions from this API.
-   */
-  async __removeVersions() {
-    throw 'unimplemented';
-  }
-
-  /** 
-   * Adds a new API Version to this API 
-   * 
-   * @param apiVersion - the api version string to add
-   */
-  async __addVersion() {
-    throw 'unimplemented';
-  }
 }

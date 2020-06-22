@@ -1,6 +1,7 @@
 import { items } from '@azure-tools/linq';
 import { v3 } from '@azure-tools/openapi';
 import { Element } from '../../../model/element';
+import { HttpProtocol } from '../../../model/http/protocol';
 import { processHeader } from './header';
 import { processParameter } from './parameter';
 import { processRequestBody } from './request-body';
@@ -42,12 +43,13 @@ export async function* processComponents(components: v3.Components, $: Context):
     await processRequestBody(value, $);
   }
 
+  const tmp = new Array<any>();
   for await (const rsp of $.processDictionary(response, components.responses)) {
-    $.api.http.responses.push(rsp);
+    tmp.push(rsp);
   }
 
   for await (const auth of $.processDictionary(authentication, components.securitySchemes)) {
-    $.api.http.authentications.push(auth);
+    (<HttpProtocol>$.api.protocols.http).authentications.push(auth);
   }
 
 
