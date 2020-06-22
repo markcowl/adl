@@ -5,7 +5,7 @@ import { HttpProtocol } from '../../../model/http/protocol';
 import { processHeader } from './header';
 import { processParameter } from './parameter';
 import { processRequestBody } from './request-body';
-import { response } from './response';
+import { processResponse } from './response';
 import { processSchema } from './schema';
 import { authentication } from './security';
 import { Context } from './serializer';
@@ -43,9 +43,8 @@ export async function* processComponents(components: v3.Components, $: Context):
     await processRequestBody(value, $);
   }
 
-  const tmp = new Array<any>();
-  for await (const rsp of $.processDictionary(response, components.responses)) {
-    tmp.push(rsp);
+  for await (const [key, value] of items(components.responses)) {
+    await processResponse(value, $);
   }
 
   for await (const auth of $.processDictionary(authentication, components.securitySchemes)) {

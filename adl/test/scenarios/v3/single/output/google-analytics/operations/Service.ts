@@ -14,7 +14,7 @@ export interface Service {
      * @param segment - An Analytics advanced segment to be applied to the report data.
      * @param sort - A comma-separated list of dimensions or metrics that determine the sort order for the report data.
      * @param start_index - An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
-     * @return 200| - Successful response
+     * @return 200 - Successful response
      */
     'analytics.data.get'(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, ids: Query<string>, start_date: Query<string, "start-date">, end_date: Query<string, "end-date">, metrics: Query<string>, dimensions?: Query<string>, filters?: Query<string>, max_results?: Query<int64, "max-results">, segment?: Query<string>, sort?: Query<string>, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
     /**
@@ -24,7 +24,7 @@ export interface Service {
      * @tag management
      * @param max_results - The maximum number of accounts to include in this response.
      * @param start_index - An index of the first account to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
-     * @return 200| - Successful response
+     * @return 200 - Successful response
      */
     'analytics.management.accounts.list'(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, max_results?: Query<int64, "max-results">, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
     /**
@@ -35,7 +35,7 @@ export interface Service {
      * @param accountId - Account ID to retrieve web properties for. Can either be a specific account ID or '~all', which refers to all the accounts that user has access to.
      * @param max_results - The maximum number of web properties to include in this response.
      * @param start_index - An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
-     * @return 200| - Successful response
+     * @return 200 - Successful response
      */
     'analytics.management.webproperties.list'(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, accountId: string, max_results?: Query<int64, "max-results">, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
     /**
@@ -47,7 +47,7 @@ export interface Service {
      * @param webPropertyId - Web property ID for the views (profiles) to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.
      * @param max_results - The maximum number of views (profiles) to include in this response.
      * @param start_index - An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
-     * @return 200| - Successful response
+     * @return 200 - Successful response
      */
     'analytics.management.profiles.list'(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, accountId: string, webPropertyId: string, max_results?: Query<int64, "max-results">, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
     /**
@@ -60,7 +60,7 @@ export interface Service {
      * @param profileId - View (Profile) ID to retrieve goals for. Can either be a specific view (profile) ID or '~all', which refers to all the views (profiles) that user has access to.
      * @param max_results - The maximum number of goals to include in this response.
      * @param start_index - An index of the first goal to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
-     * @return 200| - Successful response
+     * @return 200 - Successful response
      */
     'analytics.management.goals.list'(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, accountId: string, webPropertyId: string, profileId: string, max_results?: Query<int64, "max-results">, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
     /**
@@ -70,7 +70,7 @@ export interface Service {
      * @tag management
      * @param max_results - The maximum number of advanced segments to include in this response.
      * @param start_index - An index of the first advanced segment to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
-     * @return 200| - Successful response
+     * @return 200 - Successful response
      */
     'analytics.management.segments.list'(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, max_results?: Query<int64, "max-results">, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
 }

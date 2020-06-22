@@ -8,7 +8,7 @@ export interface Service {
      * @http GET /app
      * @tag apps
      * @param accept - This API is under preview and subject to change.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/get-authenticated'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.machine-man-preview+json"' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -169,7 +169,7 @@ export interface Service {
      * @tag apps
      * @param accept - This API is under preview and subject to change.
      * @param code - code parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/create-from-manifest'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.fury-preview+json"' */>, code: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -342,7 +342,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - The permissions the installation has are included under the `permissions` key.
+     * @return 200 - The permissions the installation has are included under the `permissions` key.
      */
     'apps/list-installations'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.machine-man-preview+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -498,7 +498,7 @@ export interface Service {
      * @tag apps
      * @param accept - This API is under preview and subject to change.
      * @param installation_id - installation_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/get-installation'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.machine-man-preview+json"' */>, installation_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -656,7 +656,7 @@ export interface Service {
      * @tag apps
      * @param accept - This API is under preview and subject to change.
      * @param installation_id - installation_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'apps/delete-installation'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.gambit-preview+json,application/vnd.github.machine-man-preview+json"' */>, installation_id: int64): [(code: 204) => {}];
     /**
@@ -671,7 +671,7 @@ export interface Service {
      * @tag apps
      * @param accept - This API is under preview and subject to change.
      * @param installation_id - installation_id parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'apps/create-installation-token'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.machine-man-preview+json"' */>, installation_id: int64, body?: Body<{
         /**
@@ -1239,7 +1239,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'oauth-authorizations/list-grants'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -1300,7 +1300,7 @@ export interface Service {
      * @tag oauth-authorizations
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param grant_id - grant_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'oauth-authorizations/get-grant'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, grant_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -1363,7 +1363,7 @@ export interface Service {
      * @tag oauth-authorizations
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param grant_id - grant_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'oauth-authorizations/delete-grant'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, grant_id: int64): [(code: 204) => {}];
     /**
@@ -1376,7 +1376,7 @@ export interface Service {
      * @tag apps
      * @param accept - This API is under preview and subject to change.
      * @param client_id - client_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'apps/delete-authorization'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.doctor-strange-preview+json"' */>, client_id: string, body?: Body<{
         /**
@@ -1399,7 +1399,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param client_id - client_id parameter
      * @param access_token - access_token parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'apps/revoke-grant-for-application'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, client_id: string, access_token: string): [(code: 204) => {}];
     /**
@@ -1410,7 +1410,7 @@ export interface Service {
      * @tag apps
      * @param accept - This API is under preview and subject to change.
      * @param client_id - client_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/check-token'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.doctor-strange-preview+json"' */>, client_id: string, body?: Body<{
         /**
@@ -1602,7 +1602,7 @@ export interface Service {
      * @tag apps
      * @param accept - This API is under preview and subject to change.
      * @param client_id - client_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'apps/delete-token'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.doctor-strange-preview+json"' */>, client_id: string, body?: Body<{
         /**
@@ -1619,7 +1619,7 @@ export interface Service {
      * @tag apps
      * @param accept - This API is under preview and subject to change.
      * @param client_id - client_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/reset-token'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.doctor-strange-preview+json"' */>, client_id: string, body?: Body<{
         /**
@@ -1815,7 +1815,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param client_id - client_id parameter
      * @param access_token - access_token parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/check-authorization'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, client_id: string, access_token: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -2005,7 +2005,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param client_id - client_id parameter
      * @param access_token - access_token parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/reset-authorization'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, client_id: string, access_token: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -2195,7 +2195,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param client_id - client_id parameter
      * @param access_token - access_token parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'apps/revoke-authorization-for-application'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, client_id: string, access_token: string): [(code: 204) => {}];
     /**
@@ -2208,7 +2208,7 @@ export interface Service {
      * @tag apps
      * @param accept - This API is under preview and subject to change.
      * @param app_slug - app_slug parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/get-by-slug'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.machine-man-preview+json"' */>, app_slug: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -2366,7 +2366,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'oauth-authorizations/list-authorizations'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -2466,7 +2466,7 @@ export interface Service {
      * @http POST /authorizations
      * @tag oauth-authorizations
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'oauth-authorizations/create-authorization'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, body?: Body<{
         /**
@@ -2596,8 +2596,8 @@ export interface Service {
      * @tag oauth-authorizations
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param client_id - client_id parameter
-     * @return 200|application/json - Response if returning an existing token
-     * @return 201|application/json - **Deprecation Notice:** GitHub will discontinue the [OAuth Authorizations API](https://developer.github.com/v3/oauth_authorizations/), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow). The [OAuth Authorizations API](https://developer.github.com/v3/oauth_authorizations/) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
+     * @return 200 - Response if returning an existing token
+     * @return 201 - **Deprecation Notice:** GitHub will discontinue the [OAuth Authorizations API](https://developer.github.com/v3/oauth_authorizations/), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow). The [OAuth Authorizations API](https://developer.github.com/v3/oauth_authorizations/) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
      */
     'oauth-authorizations/get-or-create-authorization-for-app'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, client_id: string, body?: Body<{
         /**
@@ -2800,8 +2800,8 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param client_id - client_id parameter
      * @param fingerprint - fingerprint parameter
-     * @return 200|application/json - Response if returning an existing token
-     * @return 201|application/json - Response if returning a new token
+     * @return 200 - Response if returning an existing token
+     * @return 201 - Response if returning a new token
      */
     'oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, client_id: string, fingerprint: string, body?: Body<{
         /**
@@ -2992,7 +2992,7 @@ export interface Service {
      * @tag oauth-authorizations
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param authorization_id - authorization_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'oauth-authorizations/get-authorization'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, authorization_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -3083,7 +3083,7 @@ export interface Service {
      * @tag oauth-authorizations
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param authorization_id - authorization_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'oauth-authorizations/delete-authorization'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, authorization_id: int64): [(code: 204) => {}];
     /**
@@ -3099,7 +3099,7 @@ export interface Service {
      * @tag oauth-authorizations
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param authorization_id - authorization_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'oauth-authorizations/update-authorization'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, authorization_id: int64, body?: Body<{
         /**
@@ -3218,7 +3218,7 @@ export interface Service {
      * @http GET /codes_of_conduct
      * @tag codes-of-conduct
      * @param accept - This API is under preview and subject to change.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'codes-of-conduct/list-conduct-codes'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.scarlet-witch-preview+json"' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -3246,7 +3246,7 @@ export interface Service {
      * @tag codes-of-conduct
      * @param accept - This API is under preview and subject to change.
      * @param key - key parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'codes-of-conduct/get-conduct-code'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.scarlet-witch-preview+json"' */>, key: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -3286,7 +3286,7 @@ export interface Service {
      * @tag apps
      * @param accept - This API is under preview and subject to change.
      * @param content_reference_id - content_reference_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/create-content-attachment'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.corsair-preview+json"' */>, content_reference_id: int64, body?: Body<{
         /**
@@ -3327,7 +3327,7 @@ export interface Service {
      * @http GET /emojis
      * @tag emojis
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 200| - response
+     * @return 200 - response
      */
     'emojis/get'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>): [(code: 200) => {}];
     /**
@@ -3339,7 +3339,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'activity/list-public-events'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 418) => {
         isException: true;
@@ -3361,7 +3361,7 @@ export interface Service {
      * @http GET /feeds
      * @tag activity
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'activity/list-feeds'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -3550,7 +3550,7 @@ export interface Service {
      * @param since - This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are returned.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'gists/list'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, since?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -3778,7 +3778,7 @@ export interface Service {
      * @http POST /gists
      * @tag gists
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'gists/create'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, body?: Body<{
         /**
@@ -4424,7 +4424,7 @@ export interface Service {
      * @param since - This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are returned.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'gists/list-public'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, since?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -4653,7 +4653,7 @@ export interface Service {
      * @param since - This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are returned.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'gists/list-starred'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, since?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -4879,7 +4879,7 @@ export interface Service {
      * @tag gists
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param gist_id - gist_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'gists/get'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, gist_id: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -5498,7 +5498,7 @@ export interface Service {
      * @tag gists
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param gist_id - gist_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'gists/delete'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, gist_id: string): [(code: 204) => {}];
     /**
@@ -5509,7 +5509,7 @@ export interface Service {
      * @tag gists
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param gist_id - gist_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'gists/update'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, gist_id: string, body?: Body<{
         /**
@@ -6152,7 +6152,7 @@ export interface Service {
      * @param gist_id - gist_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'gists/list-comments'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, gist_id: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -6291,7 +6291,7 @@ export interface Service {
      * @tag gists
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param gist_id - gist_id parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'gists/create-comment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, gist_id: string, body?: Body<{
         /**
@@ -6437,7 +6437,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param gist_id - gist_id parameter
      * @param comment_id - comment_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'gists/get-comment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, gist_id: string, comment_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -6577,7 +6577,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param gist_id - gist_id parameter
      * @param comment_id - comment_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'gists/delete-comment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, gist_id: string, comment_id: int64): [(code: 204) => {}];
     /**
@@ -6588,7 +6588,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param gist_id - gist_id parameter
      * @param comment_id - comment_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'gists/update-comment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, gist_id: string, comment_id: int64, body?: Body<{
         /**
@@ -6735,7 +6735,7 @@ export interface Service {
      * @param gist_id - gist_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'gists/list-commits'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, gist_id: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -6882,7 +6882,7 @@ export interface Service {
      * @param gist_id - gist_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'gists/list-forks'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, gist_id: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -7012,7 +7012,7 @@ export interface Service {
      * @tag gists
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param gist_id - gist_id parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'gists/fork'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, gist_id: string): [(code: 201, mediaType: "application/json") => {
         body: {
@@ -7238,8 +7238,8 @@ export interface Service {
      * @tag gists
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param gist_id - gist_id parameter
-     * @return 204| - Response if gist is starred
-     * @return 404| - Response if gist is not starred
+     * @return 204 - Response if gist is starred
+     * @return 404 - Response if gist is not starred
      */
     'gists/check-is-starred'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, gist_id: string): [(code: 204) => {}, (code: 404) => {
         isException: true;
@@ -7252,7 +7252,7 @@ export interface Service {
      * @tag gists
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param gist_id - gist_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'gists/star'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, gist_id: string): [(code: 204) => {}];
     /**
@@ -7262,7 +7262,7 @@ export interface Service {
      * @tag gists
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param gist_id - gist_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'gists/unstar'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, gist_id: string): [(code: 204) => {}];
     /**
@@ -7273,7 +7273,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param gist_id - gist_id parameter
      * @param sha - sha parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'gists/get-revision'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, gist_id: string, sha: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -7892,7 +7892,7 @@ export interface Service {
      * @http GET /gitignore/templates
      * @tag gitignore
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'gitignore/list-templates'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<string>;
@@ -7909,7 +7909,7 @@ export interface Service {
      * @tag gitignore
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param name - name parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'gitignore/get-template'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, name: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -7936,7 +7936,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/list-repos'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.machine-man-preview+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -8450,7 +8450,7 @@ export interface Service {
      * @http DELETE /installation/token
      * @tag apps
      * @param accept - This API is under preview and subject to change.
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'apps/revoke-installation-token'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.gambit-preview+json"' */>): [(code: 204) => {}];
     /**
@@ -8477,7 +8477,7 @@ export interface Service {
      * @param since - Only issues updated at or after this time are returned. This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/list'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, filter?: Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state?: Query<"open" | "closed" | "all">, labels?: Query<string>, sort?: Query<"created" | "updated" | "comments">, direction?: Query<"asc" | "desc">, since?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -9630,7 +9630,7 @@ export interface Service {
      * @param repository - repository parameter
      * @param state - Indicates the state of the issues to return. Can be either `open` or `closed`.
      * @param keyword - The search term.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'search/issues-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repository: string, state: "open" | "closed", keyword: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -9720,7 +9720,7 @@ export interface Service {
      * @param start_page - The page number to fetch.
      * @param sort - The sort field. One of `stars`, `forks`, or `updated`. Default: results are sorted by best match.
      * @param order - The sort field. if `sort` param is provided. Can be either `asc` or `desc`.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'search/repos-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, keyword: string, language?: Query<string>, start_page?: Query<string>, sort?: Query<"stars" | "forks" | "updated">, order?: Query<"asc" | "desc">): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -9856,7 +9856,7 @@ export interface Service {
      * @tag search
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param email - The email address.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'search/email-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, email: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -9955,7 +9955,7 @@ export interface Service {
      * @param start_page - The page number to fetch.
      * @param sort - The sort field. One of `stars`, `forks`, or `updated`. Default: results are sorted by best match.
      * @param order - The sort field. if `sort` param is provided. Can be either `asc` or `desc`.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'search/users-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, keyword: string, start_page?: Query<string>, sort?: Query<"stars" | "forks" | "updated">, order?: Query<"asc" | "desc">): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -10053,7 +10053,7 @@ export interface Service {
      * @http GET /licenses
      * @tag licenses
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'licenses/list-commonly-used'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -10091,7 +10091,7 @@ export interface Service {
      * @tag licenses
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param license - license parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'licenses/get'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, license: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -10168,7 +10168,7 @@ export interface Service {
      * @http POST /markdown
      * @tag markdown
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 200| - response
+     * @return 200 - response
      */
     'markdown/render'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, body?: Body<{
         /**
@@ -10199,7 +10199,7 @@ export interface Service {
      * @tag markdown
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param content_type - Setting content-type header is required for this endpoint
-     * @return 200| - response
+     * @return 200 - response
      */
     'markdown/render-raw'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, content_type?: Header<"text/plain; charset=utf-8", "content-type">, body?: Body<string, "application/json">): [(code: 200) => {}];
     /**
@@ -10212,7 +10212,7 @@ export interface Service {
      * @tag apps
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param account_id - account_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/check-account-is-associated-with-any'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, account_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -10456,7 +10456,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/list-plans'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -10541,7 +10541,7 @@ export interface Service {
      * @param direction - To return the oldest accounts first, set to `asc`. Can be one of `asc` or `desc`. Ignored without the `sort` parameter.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/list-accounts-user-or-org-on-plan'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, plan_id: int64, sort?: Query<"created" | "updated">, direction?: Query<"asc" | "desc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -10786,7 +10786,7 @@ export interface Service {
      * @tag apps
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param account_id - account_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/check-account-is-associated-with-any-stubbed'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, account_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -11030,7 +11030,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/list-plans-stubbed'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -11115,7 +11115,7 @@ export interface Service {
      * @param direction - To return the oldest accounts first, set to `asc`. Can be one of `asc` or `desc`. Ignored without the `sort` parameter.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/list-accounts-user-or-org-on-plan-stubbed'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, plan_id: int64, sort?: Query<"created" | "updated">, direction?: Query<"asc" | "desc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -11357,7 +11357,7 @@ export interface Service {
      * @http GET /meta
      * @tag meta
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'meta/get'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -11434,7 +11434,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'activity/list-public-events-for-repo-network'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 418) => {
         isException: true;
@@ -11454,7 +11454,7 @@ export interface Service {
      * @param before - Only show notifications updated before the given time. This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'activity/list-notifications'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, all?: Query<boolean>, participating?: Query<boolean>, since?: Query<string>, before?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -11855,7 +11855,7 @@ export interface Service {
      * @http PUT /notifications
      * @tag activity
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 205| - response
+     * @return 205 - response
      */
     'activity/mark-as-read'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, body?: Body<{
         /**
@@ -11871,7 +11871,7 @@ export interface Service {
      * @tag activity
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param thread_id - thread_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'activity/get-thread'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, thread_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -12272,7 +12272,7 @@ export interface Service {
      * @tag activity
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param thread_id - thread_id parameter
-     * @return 205| - response
+     * @return 205 - response
      */
     'activity/mark-thread-as-read'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, thread_id: int64): [(code: 205) => {}];
     /**
@@ -12285,7 +12285,7 @@ export interface Service {
      * @tag activity
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param thread_id - thread_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'activity/get-thread-subscription'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, thread_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -12329,7 +12329,7 @@ export interface Service {
      * @tag activity
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param thread_id - thread_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'activity/set-thread-subscription'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, thread_id: int64, body?: Body<{
         /**
@@ -12379,7 +12379,7 @@ export interface Service {
      * @tag activity
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param thread_id - thread_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'activity/delete-thread-subscription'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, thread_id: int64): [(code: 204) => {}];
     /**
@@ -12394,7 +12394,7 @@ export interface Service {
      * @param since - The integer ID of the last organization that you've seen.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/list'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, since?: Query<int64>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -12470,7 +12470,7 @@ export interface Service {
      * @tag orgs
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/get'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -12709,7 +12709,7 @@ export interface Service {
      * @tag orgs
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/update'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, body?: Body<{
         /**
@@ -13036,7 +13036,7 @@ export interface Service {
      * @tag orgs
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/list-blocked-users'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -13143,8 +13143,8 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param username - username parameter
-     * @return 204| - If the user is blocked:
-     * @return 404| - If the user is not blocked:
+     * @return 204 - If the user is blocked:
+     * @return 404 - If the user is not blocked:
      */
     'orgs/check-blocked-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, username: string): [(code: 204) => {}, (code: 404) => {
         isException: true;
@@ -13157,7 +13157,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param username - username parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'orgs/block-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, username: string): [(code: 204) => {}];
     /**
@@ -13168,7 +13168,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param username - username parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'orgs/unblock-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, username: string): [(code: 204) => {}];
     /**
@@ -13181,7 +13181,7 @@ export interface Service {
      * @tag orgs
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/list-credential-authorizations'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -13228,7 +13228,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param credential_id - credential_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'orgs/remove-credential-authorization'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, credential_id: int64): [(code: 204) => {}];
     /**
@@ -13240,7 +13240,7 @@ export interface Service {
      * @param org - org parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'activity/list-public-events-for-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 418) => {
         isException: true;
@@ -13254,7 +13254,7 @@ export interface Service {
      * @param org - org parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/list-hooks'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -13324,7 +13324,7 @@ export interface Service {
      * @tag orgs
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'orgs/create-hook'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, body?: Body<{
         /**
@@ -13436,7 +13436,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param hook_id - hook_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/get-hook'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, hook_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -13506,7 +13506,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param hook_id - hook_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'orgs/delete-hook'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, hook_id: int64): [(code: 204) => {}];
     /**
@@ -13517,7 +13517,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param hook_id - hook_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/update-hook'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, hook_id: int64, body?: Body<{
         /**
@@ -13625,7 +13625,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param hook_id - hook_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'orgs/ping-hook'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, hook_id: int64): [(code: 204) => {}];
     /**
@@ -13638,7 +13638,7 @@ export interface Service {
      * @tag apps
      * @param accept - This API is under preview and subject to change.
      * @param org - org parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/get-org-installation'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.machine-man-preview+json"' */>, org: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -13826,7 +13826,7 @@ export interface Service {
      * @param org - org parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/list-installations'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.machine-man-preview+json"' */>, org: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -14033,7 +14033,7 @@ export interface Service {
      * @tag interactions
      * @param accept - This API is under preview and subject to change.
      * @param org - org parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'interactions/get-restrictions-for-org'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.sombra-preview+json"' */>, org: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -14062,7 +14062,7 @@ export interface Service {
      * @tag interactions
      * @param accept - This API is under preview and subject to change.
      * @param org - org parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'interactions/add-or-update-restrictions-for-org'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.sombra-preview+json"' */>, org: string, body?: Body<{
         /**
@@ -14097,7 +14097,7 @@ export interface Service {
      * @tag interactions
      * @param accept - This API is under preview and subject to change.
      * @param org - org parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'interactions/remove-restrictions-for-org'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.sombra-preview+json"' */>, org: string): [(code: 204) => {}];
     /**
@@ -14110,7 +14110,7 @@ export interface Service {
      * @param org - org parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/list-pending-invitations'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -14257,7 +14257,7 @@ export interface Service {
      * @tag orgs
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'orgs/create-invitation'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, body?: Body<{
         /**
@@ -14429,7 +14429,7 @@ export interface Service {
      * @param invitation_id - invitation_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/list-invitation-teams'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, invitation_id: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -14520,7 +14520,7 @@ export interface Service {
      * @param since - Only issues updated at or after this time are returned. This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/list-for-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, filter?: Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state?: Query<"open" | "closed" | "all">, labels?: Query<string>, sort?: Query<"created" | "updated" | "comments">, direction?: Query<"asc" | "desc">, since?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -15680,8 +15680,8 @@ export interface Service {
      * \* `member` - Non-owner organization members.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
-     * @return 302| - Response if requester is not an organization member
+     * @return 200 - response
+     * @return 302 - Response if requester is not an organization member
      */
     'orgs/list-members'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, filter?: Query<"2fa_disabled" | "all">, role?: Query<"all" | "admin" | "member">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -15786,9 +15786,9 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param username - username parameter
-     * @return 204| - Response if requester is an organization member and user is a member
-     * @return 302| - Response if requester is not an organization member
-     * @return 404| - Response if requester is an organization member and user is not a member
+     * @return 204 - Response if requester is an organization member and user is a member
+     * @return 302 - Response if requester is not an organization member
+     * @return 404 - Response if requester is an organization member and user is not a member
      */
     'orgs/check-membership'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, username: string): [(code: 204) => {}, (code: 302) => {}, (code: 404) => {
         isException: true;
@@ -15802,7 +15802,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param username - username parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'orgs/remove-member'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, username: string): [(code: 204) => {}];
     /**
@@ -15814,7 +15814,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param username - username parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/get-membership'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, username: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -16019,7 +16019,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param username - username parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/add-or-update-membership'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, username: string, body?: Body<{
         /**
@@ -16226,7 +16226,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param username - username parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'orgs/remove-membership'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, username: string): [(code: 204) => {}];
     /**
@@ -16239,7 +16239,7 @@ export interface Service {
      * @param org - org parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'migrations/list-for-org'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.wyandotte-preview+json"' */>, org: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -16872,7 +16872,7 @@ export interface Service {
      * @tag migrations
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'migrations/start-for-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, body?: Body<{
         /**
@@ -17529,7 +17529,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param org - org parameter
      * @param migration_id - migration_id parameter
-     * @return 200|application/json - *   `pending`, which means the migration hasn't started yet.
+     * @return 200 - *   `pending`, which means the migration hasn't started yet.
      * *   `exporting`, which means the migration is in progress.
      * *   `exported`, which means the migration finished successfully.
      * *   `failed`, which means the migration failed.
@@ -18168,7 +18168,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param org - org parameter
      * @param migration_id - migration_id parameter
-     * @return 302| - response
+     * @return 302 - response
      */
     'migrations/download-archive-for-org'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.wyandotte-preview+json"' */>, org: string, migration_id: int64): [(code: 302) => {}];
     /**
@@ -18180,7 +18180,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param org - org parameter
      * @param migration_id - migration_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'migrations/delete-archive-for-org'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.wyandotte-preview+json"' */>, org: string, migration_id: int64): [(code: 204) => {}];
     /**
@@ -18193,7 +18193,7 @@ export interface Service {
      * @param org - org parameter
      * @param migration_id - migration_id parameter
      * @param repo_name - repo_name parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'migrations/unlock-repo-for-org'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.wyandotte-preview+json"' */>, org: string, migration_id: int64, repo_name: string): [(code: 204) => {}];
     /**
@@ -18207,7 +18207,7 @@ export interface Service {
      * @param migration_id - migration_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'migrations/list-repos-for-org'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.wyandotte-preview+json"' */>, org: string, migration_id: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -18751,7 +18751,7 @@ export interface Service {
      * \* `all`: All outside collaborators.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/list-outside-collaborators'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, filter?: Query<"2fa_disabled" | "all">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -18856,8 +18856,8 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param username - username parameter
-     * @return 204| - Empty response
-     * @return 403|application/json - response
+     * @return 204 - Empty response
+     * @return 403 - response
      */
     'orgs/convert-member-to-outside-collaborator'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, username: string): [(code: 204) => {}, (code: 403, mediaType: "application/json") => {
         body: {
@@ -18883,8 +18883,8 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param username - username parameter
-     * @return 204| - Empty response
-     * @return 422|application/json - Response if user is a member of the organization
+     * @return 204 - Empty response
+     * @return 422 - Response if user is a member of the organization
      */
     'orgs/remove-outside-collaborator'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, username: string): [(code: 204) => {}, (code: 422, mediaType: "application/json") => {
         body: {
@@ -18914,7 +18914,7 @@ export interface Service {
      * @param state - Indicates the state of the projects to return. Can be either `open`, `closed`, or `all`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'projects/list-for-org'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, org: string, state?: Query<"open" | "closed" | "all">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -19084,7 +19084,7 @@ export interface Service {
      * @tag projects
      * @param accept - This API is under preview and subject to change.
      * @param org - org parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'projects/create-for-org'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, org: string, body?: Body<{
         /**
@@ -19267,7 +19267,7 @@ export interface Service {
      * @param org - org parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/list-public-members'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -19371,8 +19371,8 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param username - username parameter
-     * @return 204| - Response if user is a public member
-     * @return 404| - Response if user is not a public member
+     * @return 204 - Response if user is a public member
+     * @return 404 - Response if user is not a public member
      */
     'orgs/check-public-membership'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, username: string): [(code: 204) => {}, (code: 404) => {
         isException: true;
@@ -19388,7 +19388,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param username - username parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'orgs/publicize-membership'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, username: string): [(code: 204) => {}];
     /**
@@ -19399,7 +19399,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param username - username parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'orgs/conceal-membership'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, username: string): [(code: 204) => {}];
     /**
@@ -19415,7 +19415,7 @@ export interface Service {
      * @param direction - Can be one of `asc` or `desc`. Default: when using `full_name`: `asc`, otherwise `desc`
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-for-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, type?: Query<"all" | "public" | "private" | "forks" | "sources" | "member" | "internal">, sort?: Query<"created" | "updated" | "pushed" | "full_name">, direction?: Query<"asc" | "desc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -19959,7 +19959,7 @@ export interface Service {
      * @tag repos
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'repos/create-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, body?: Body<{
         /**
@@ -20573,7 +20573,7 @@ export interface Service {
      * @param org - org parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/list-id-p-groups-for-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -20610,7 +20610,7 @@ export interface Service {
      * @param org - org parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/list'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -20686,7 +20686,7 @@ export interface Service {
      * @tag teams
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'teams/create'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, body?: Body<{
         /**
@@ -20970,7 +20970,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param team_slug - team_slug parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/get-by-name'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -21210,7 +21210,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param team_slug - team_slug parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'teams/delete-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string): [(code: 204) => {}];
     /**
@@ -21224,7 +21224,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param team_slug - team_slug parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'teams/update-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, body?: Body<{
         /**
@@ -21499,7 +21499,7 @@ export interface Service {
      * @param direction - Sorts the discussion comments by the date they were created. To return the oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/list-discussions-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, direction?: Query<"asc" | "desc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -21740,7 +21740,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param team_slug - team_slug parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'teams/create-discussion-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, body?: Body<{
         /**
@@ -21996,7 +21996,7 @@ export interface Service {
      * @param org - org parameter
      * @param team_slug - team_slug parameter
      * @param discussion_number - discussion_number parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/get-discussion-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, discussion_number: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -22236,7 +22236,7 @@ export interface Service {
      * @param org - org parameter
      * @param team_slug - team_slug parameter
      * @param discussion_number - discussion_number parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'teams/delete-discussion-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, discussion_number: int64): [(code: 204) => {}];
     /**
@@ -22251,7 +22251,7 @@ export interface Service {
      * @param org - org parameter
      * @param team_slug - team_slug parameter
      * @param discussion_number - discussion_number parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/update-discussion-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, discussion_number: int64, body?: Body<{
         /**
@@ -22505,7 +22505,7 @@ export interface Service {
      * @param direction - Sorts the discussion comments by the date they were created. To return the oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/list-discussion-comments-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, discussion_number: int64, direction?: Query<"asc" | "desc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -22722,7 +22722,7 @@ export interface Service {
      * @param org - org parameter
      * @param team_slug - team_slug parameter
      * @param discussion_number - discussion_number parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'teams/create-discussion-comment-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, discussion_number: int64, body?: Body<{
         /**
@@ -22944,7 +22944,7 @@ export interface Service {
      * @param team_slug - team_slug parameter
      * @param discussion_number - discussion_number parameter
      * @param comment_number - comment_number parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/get-discussion-comment-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, discussion_number: int64, comment_number: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -23160,7 +23160,7 @@ export interface Service {
      * @param team_slug - team_slug parameter
      * @param discussion_number - discussion_number parameter
      * @param comment_number - comment_number parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'teams/delete-discussion-comment-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, discussion_number: int64, comment_number: int64): [(code: 204) => {}];
     /**
@@ -23176,7 +23176,7 @@ export interface Service {
      * @param team_slug - team_slug parameter
      * @param discussion_number - discussion_number parameter
      * @param comment_number - comment_number parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/update-discussion-comment-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, discussion_number: int64, comment_number: int64, body?: Body<{
         /**
@@ -23401,7 +23401,7 @@ export interface Service {
      * @param content - Returns a single [reaction type](https://developer.github.com/v3/reactions/#reaction-types). Omit this parameter to list all reactions to a team discussion comment.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'reactions/list-for-team-discussion-comment-in-org'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.squirrel-girl-preview+json"' */>, org: string, team_slug: string, discussion_number: int64, comment_number: int64, content?: Query<"+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -23536,7 +23536,7 @@ export interface Service {
      * @param team_slug - team_slug parameter
      * @param discussion_number - discussion_number parameter
      * @param comment_number - comment_number parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'reactions/create-for-team-discussion-comment-in-org'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.squirrel-girl-preview+json"' */>, org: string, team_slug: string, discussion_number: int64, comment_number: int64, body?: Body<{
         /**
@@ -23679,7 +23679,7 @@ export interface Service {
      * @param content - Returns a single [reaction type](https://developer.github.com/v3/reactions/#reaction-types). Omit this parameter to list all reactions to a team discussion.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'reactions/list-for-team-discussion-in-org'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.squirrel-girl-preview+json"' */>, org: string, team_slug: string, discussion_number: int64, content?: Query<"+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -23813,7 +23813,7 @@ export interface Service {
      * @param org - org parameter
      * @param team_slug - team_slug parameter
      * @param discussion_number - discussion_number parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'reactions/create-for-team-discussion-in-org'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.squirrel-girl-preview+json"' */>, org: string, team_slug: string, discussion_number: int64, body?: Body<{
         /**
@@ -23954,7 +23954,7 @@ export interface Service {
      * @param team_slug - team_slug parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/list-pending-invitations-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -24108,7 +24108,7 @@ export interface Service {
      * \* `all` - all members of the team.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/list-members-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, role?: Query<"member" | "maintainer" | "all">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -24220,8 +24220,8 @@ export interface Service {
      * @param org - org parameter
      * @param team_slug - team_slug parameter
      * @param username - username parameter
-     * @return 200|application/json - response
-     * @return 404| - Response if user has no team membership
+     * @return 200 - response
+     * @return 404 - Response if user has no team membership
      */
     'teams/get-membership-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, username: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -24264,9 +24264,9 @@ export interface Service {
      * @param org - org parameter
      * @param team_slug - team_slug parameter
      * @param username - username parameter
-     * @return 200|application/json - response
-     * @return 403| - Response if team synchronization is set up
-     * @return 422|application/json - Response if you attempt to add an organization to a team
+     * @return 200 - response
+     * @return 403 - Response if team synchronization is set up
+     * @return 422 - Response if you attempt to add an organization to a team
      */
     'teams/add-or-update-membership-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, username: string, body?: Body<{
         /**
@@ -24343,8 +24343,8 @@ export interface Service {
      * @param org - org parameter
      * @param team_slug - team_slug parameter
      * @param username - username parameter
-     * @return 204| - Empty response
-     * @return 403| - Response if team synchronization is set up
+     * @return 204 - Empty response
+     * @return 403 - Response if team synchronization is set up
      */
     'teams/remove-membership-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, username: string): [(code: 204) => {}, (code: 403) => {
         isException: true;
@@ -24362,7 +24362,7 @@ export interface Service {
      * @param team_slug - team_slug parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/list-projects-in-org'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, org: string, team_slug: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -24567,8 +24567,8 @@ export interface Service {
      * @param org - org parameter
      * @param team_slug - team_slug parameter
      * @param project_id - project_id parameter
-     * @return 200|application/json - response
-     * @return 404| - Response if project is not managed by this team
+     * @return 200 - response
+     * @return 404 - Response if project is not managed by this team
      */
     'teams/review-project-in-org'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, org: string, team_slug: string, project_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -24775,8 +24775,8 @@ export interface Service {
      * @param org - org parameter
      * @param team_slug - team_slug parameter
      * @param project_id - project_id parameter
-     * @return 204| - Empty response
-     * @return 403|application/json - Response if the project is not owned by the organization
+     * @return 204 - Empty response
+     * @return 403 - Response if the project is not owned by the organization
      */
     'teams/add-or-update-project-in-org'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, org: string, team_slug: string, project_id: int64, body?: Body<{
         /**
@@ -24815,7 +24815,7 @@ export interface Service {
      * @param org - org parameter
      * @param team_slug - team_slug parameter
      * @param project_id - project_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'teams/remove-project-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, project_id: int64): [(code: 204) => {}];
     /**
@@ -24831,7 +24831,7 @@ export interface Service {
      * @param team_slug - team_slug parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/list-repos-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -25375,9 +25375,9 @@ export interface Service {
      * @param team_slug - team_slug parameter
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/vnd.github.v3.repository+json - Alternative response with repository permissions
-     * @return 204| - Response if team has permission for the repository
-     * @return 404| - Response if team does not have permission for the repository
+     * @return 200 - Alternative response with repository permissions
+     * @return 204 - Response if team has permission for the repository
+     * @return 404 - Response if team does not have permission for the repository
      */
     'teams/check-manages-repo-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, owner: string, repo: string): [(code: 200, mediaType: "application/vnd.github.v3.repository+json") => {
         body: {
@@ -25905,7 +25905,7 @@ export interface Service {
      * @param team_slug - team_slug parameter
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'teams/add-or-update-repo-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, owner: string, repo: string, body?: Body<{
         /**
@@ -25932,7 +25932,7 @@ export interface Service {
      * @param team_slug - team_slug parameter
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'teams/remove-repo-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, owner: string, repo: string): [(code: 204) => {}];
     /**
@@ -25948,7 +25948,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param team_slug - team_slug parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/list-id-p-groups-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -25988,7 +25988,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param team_slug - team_slug parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/create-or-update-id-p-group-connections-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, body?: Body<{
         /**
@@ -26052,7 +26052,7 @@ export interface Service {
      * @param team_slug - team_slug parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - Response if child teams exist
+     * @return 200 - Response if child teams exist
      */
     'teams/list-child-in-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, team_slug: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -26176,7 +26176,7 @@ export interface Service {
      * @tag projects
      * @param accept - This API is under preview and subject to change.
      * @param card_id - card_id parameter
-     * @return 200|application/vnd.github.inertia-preview+json - response
+     * @return 200 - response
      */
     'projects/get-card'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, card_id: int64): [(code: 200, mediaType: "application/vnd.github.inertia-preview+json") => {
         body: {
@@ -26335,7 +26335,7 @@ export interface Service {
      * @tag projects
      * @param accept - This API is under preview and subject to change.
      * @param card_id - card_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'projects/delete-card'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, card_id: int64): [(code: 204) => {}];
     /**
@@ -26345,7 +26345,7 @@ export interface Service {
      * @tag projects
      * @param accept - This API is under preview and subject to change.
      * @param card_id - card_id parameter
-     * @return 200|application/vnd.github.inertia-preview+json - response
+     * @return 200 - response
      */
     'projects/update-card'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, card_id: int64, body?: Body<{
         /**
@@ -26515,7 +26515,7 @@ export interface Service {
      * @tag projects
      * @param accept - This API is under preview and subject to change.
      * @param card_id - card_id parameter
-     * @return 201| - response
+     * @return 201 - response
      */
     'projects/move-card'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, card_id: int64, body?: Body<{
         /**
@@ -26536,7 +26536,7 @@ export interface Service {
      * @tag projects
      * @param accept - This API is under preview and subject to change.
      * @param column_id - column_id parameter
-     * @return 200|application/vnd.github.inertia-preview+json - response
+     * @return 200 - response
      */
     'projects/get-column'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, column_id: int64): [(code: 200, mediaType: "application/vnd.github.inertia-preview+json") => {
         body: {
@@ -26589,7 +26589,7 @@ export interface Service {
      * @tag projects
      * @param accept - This API is under preview and subject to change.
      * @param column_id - column_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'projects/delete-column'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, column_id: int64): [(code: 204) => {}];
     /**
@@ -26599,7 +26599,7 @@ export interface Service {
      * @tag projects
      * @param accept - This API is under preview and subject to change.
      * @param column_id - column_id parameter
-     * @return 200|application/vnd.github.inertia-preview+json - response
+     * @return 200 - response
      */
     'projects/update-column'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, column_id: int64, body?: Body<{
         /**
@@ -26661,7 +26661,7 @@ export interface Service {
      * @param archived_state - Filters the project cards that are returned by the card's state. Can be one of `all`,`archived`, or `not_archived`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'projects/list-cards'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, column_id: int64, archived_state?: Query<"all" | "archived" | "not_archived">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -26823,7 +26823,7 @@ export interface Service {
      * @tag projects
      * @param accept - This API is under preview and subject to change.
      * @param column_id - column_id parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'projects/create-card'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, column_id: int64, body?: Body<{
         /**
@@ -26999,7 +26999,7 @@ export interface Service {
      * @tag projects
      * @param accept - This API is under preview and subject to change.
      * @param column_id - column_id parameter
-     * @return 201| - response
+     * @return 201 - response
      */
     'projects/move-column'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, column_id: int64, body?: Body<{
         /**
@@ -27016,7 +27016,7 @@ export interface Service {
      * @tag projects
      * @param accept - This API is under preview and subject to change.
      * @param project_id - project_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'projects/get'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, project_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -27186,7 +27186,7 @@ export interface Service {
      * @tag projects
      * @param accept - This API is under preview and subject to change.
      * @param project_id - project_id parameter
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'projects/delete'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, project_id: int64): [(code: 418) => {
         isException: true;
@@ -27199,8 +27199,8 @@ export interface Service {
      * @tag projects
      * @param accept - This API is under preview and subject to change.
      * @param project_id - project_id parameter
-     * @return 200|application/json - response
-     * @return 404| - Response if the authenticated user does not have access to the project
+     * @return 200 - response
+     * @return 404 - Response if the authenticated user does not have access to the project
      */
     'projects/update'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, project_id: int64, body?: Body<{
         /**
@@ -27416,7 +27416,7 @@ export interface Service {
      * \* `all`: All collaborators the authenticated user can see.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'projects/list-collaborators'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, project_id: int64, affiliation?: Query<"outside" | "direct" | "all">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -27521,7 +27521,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param project_id - project_id parameter
      * @param username - username parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'projects/add-collaborator'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, project_id: int64, username: string, body?: Body<{
         /**
@@ -27542,7 +27542,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param project_id - project_id parameter
      * @param username - username parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'projects/remove-collaborator'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, project_id: int64, username: string): [(code: 204) => {}];
     /**
@@ -27554,7 +27554,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param project_id - project_id parameter
      * @param username - username parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'projects/review-user-permission-level'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, project_id: int64, username: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -27670,7 +27670,7 @@ export interface Service {
      * @param project_id - project_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'projects/list-columns'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, project_id: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -27723,7 +27723,7 @@ export interface Service {
      * @tag projects
      * @param accept - This API is under preview and subject to change.
      * @param project_id - project_id parameter
-     * @return 200|application/vnd.github.inertia-preview+json - response
+     * @return 200 - response
      */
     'projects/create-column'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, project_id: int64, body?: Body<{
         /**
@@ -27799,7 +27799,7 @@ export interface Service {
      * @http GET /rate_limit
      * @tag rate-limit
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'rate-limit/get'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -27924,7 +27924,7 @@ export interface Service {
      * @tag reactions
      * @param accept - This API is under preview and subject to change.
      * @param reaction_id - reaction_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'reactions/delete'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.squirrel-girl-preview+json"' */>, reaction_id: int64): [(code: 204) => {}];
     /**
@@ -27936,7 +27936,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - The `parent` and `source` objects are present when the repository is a fork. `parent` is the repository this repository was forked from, `source` is the ultimate source for the network.
+     * @return 200 - The `parent` and `source` objects are present when the repository is a fork. `parent` is the repository this repository was forked from, `source` is the ultimate source for the network.
      */
     'repos/get'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -29613,8 +29613,8 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
-     * @return 403|application/json - If an organization owner has configured the organization to prevent members from deleting organization-owned repositories, a member will get this response:
+     * @return 204 - Empty response
+     * @return 403 - If an organization owner has configured the organization to prevent members from deleting organization-owned repositories, a member will get this response:
      */
     'repos/delete'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 204) => {}, (code: 403, mediaType: "application/json") => {
         body: {
@@ -29640,7 +29640,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/update'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -31362,7 +31362,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param artifact_id - artifact_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'actions/get-artifact'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, artifact_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -31418,7 +31418,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param artifact_id - artifact_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'actions/delete-artifact'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, artifact_id: int64): [(code: 204) => {}];
     /**
@@ -31434,7 +31434,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param artifact_id - artifact_id parameter
      * @param archive_format - archive_format parameter
-     * @return 302| - response
+     * @return 302 - response
      */
     'actions/download-artifact'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, artifact_id: int64, archive_format: string): [(code: 302) => {}];
     /**
@@ -31447,7 +31447,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param job_id - job_id parameter
-     * @return 202|application/json - response
+     * @return 202 - response
      */
     'actions/get-workflow-job'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, job_id: int64): [(code: 202, mediaType: "application/json") => {
         body: {
@@ -31568,7 +31568,7 @@ export interface Service {
      * @param job_id - job_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 302| - response
+     * @return 302 - response
      */
     'actions/list-workflow-job-logs'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, job_id: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 302) => {}];
     /**
@@ -31582,7 +31582,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'actions/list-self-hosted-runners-for-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<Array<{
@@ -31617,7 +31617,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'actions/list-downloads-for-self-hosted-runner-application'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -31656,7 +31656,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'actions/create-registration-token'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 201, mediaType: "application/json") => {
         body: {
@@ -31685,7 +31685,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'actions/create-remove-token'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 201, mediaType: "application/json") => {
         body: {
@@ -31711,7 +31711,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param runner_id - runner_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'actions/get-self-hosted-runner'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, runner_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -31747,7 +31747,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param runner_id - runner_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'actions/remove-self-hosted-runner'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, runner_id: int64): [(code: 204) => {}];
     /**
@@ -31767,7 +31767,7 @@ export interface Service {
      * @param status - Returns workflow runs associated with the check run `status` or `conclusion` you specify. For example, a conclusion can be `success` or a status can be `completed`. For more information, see the `status` and `conclusion` options available in "[Create a check run](https://developer.github.com/v3/checks/runs/#create-a-check-run)."
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'actions/list-repo-workflow-runs'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, actor?: Query<string>, branch?: Query<string>, event?: Query<string>, status?: Query<"completed" | "status" | "conclusion">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -32611,7 +32611,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param run_id - run_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'actions/get-workflow-run'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, run_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -33446,7 +33446,7 @@ export interface Service {
      * @param run_id - run_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'actions/list-workflow-run-artifacts'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, run_id: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -33513,7 +33513,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param run_id - run_id parameter
-     * @return 202| - response
+     * @return 202 - response
      */
     'actions/cancel-workflow-run'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, run_id: int64): [(code: 202) => {}];
     /**
@@ -33528,7 +33528,7 @@ export interface Service {
      * @param run_id - run_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'actions/list-jobs-for-workflow-run'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, run_id: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -33660,7 +33660,7 @@ export interface Service {
      * @param run_id - run_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 302| - response
+     * @return 302 - response
      */
     'actions/list-workflow-run-logs'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, run_id: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 302) => {}];
     /**
@@ -33673,7 +33673,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param run_id - run_id parameter
-     * @return 201| - response
+     * @return 201 - response
      */
     'actions/re-run-workflow'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, run_id: int64): [(code: 201) => {}];
     /**
@@ -33687,7 +33687,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'actions/list-secrets-for-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -33728,7 +33728,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'actions/get-public-key'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -33756,7 +33756,7 @@ export interface Service {
      * @param name - name parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'actions/get-secret'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, name: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -33803,7 +33803,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param name - name parameter
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'actions/create-or-update-secret-for-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, name: string, body?: Body<{
         /**
@@ -33829,7 +33829,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param name - name parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'actions/delete-secret-from-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, name: string): [(code: 204) => {}];
     /**
@@ -33843,7 +33843,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'actions/list-repo-workflows'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -33920,7 +33920,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param workflow_id - workflow_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'actions/get-workflow'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, workflow_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -33994,7 +33994,7 @@ export interface Service {
      * @param status - Returns workflow runs associated with the check run `status` or `conclusion` you specify. For example, a conclusion can be `success` or a status can be `completed`. For more information, see the `status` and `conclusion` options available in "[Create a check run](https://developer.github.com/v3/checks/runs/#create-a-check-run)."
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'actions/list-workflow-runs'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, workflow_id: int64, actor?: Query<string>, branch?: Query<string>, event?: Query<string>, status?: Query<"completed" | "status" | "conclusion">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -34839,7 +34839,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/list-assignees'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -34949,8 +34949,8 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param assignee - assignee parameter
-     * @return 204| - If the `assignee` can be assigned to issues in the repository, a `204` header with no content is returned.
-     * @return 404| - Otherwise a `404` status code is returned.
+     * @return 204 - If the `assignee` can be assigned to issues in the repository, a `204` header with no content is returned.
+     * @return 404 - Otherwise a `404` status code is returned.
      */
     'issues/check-assignee'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, assignee: string): [(code: 204) => {}, (code: 404) => {
         isException: true;
@@ -34964,7 +34964,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/enable-automated-security-fixes'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.london-preview+json"' */>, owner: string, repo: string): [(code: 204) => {}];
     /**
@@ -34976,7 +34976,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/disable-automated-security-fixes'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.london-preview+json"' */>, owner: string, repo: string): [(code: 204) => {}];
     /**
@@ -34990,7 +34990,7 @@ export interface Service {
      * @param protected - Setting to `true` returns only protected branches. When set to `false`, only unprotected branches are returned. Omitting this parameter returns all branches.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-branches'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, protected?: Query<boolean>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -35063,7 +35063,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-branch'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -35336,7 +35336,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-branch-protection'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.luke-cage-preview+json"' */>, owner: string, repo: string, branch: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -35983,7 +35983,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/update-branch-protection'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.luke-cage-preview+json"' */>, owner: string, repo: string, branch: string, body?: Body<{
         /**
@@ -36719,7 +36719,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/remove-branch-protection'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string): [(code: 204) => {}];
     /**
@@ -36732,7 +36732,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-protected-branch-admin-enforcement'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -36760,7 +36760,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/add-protected-branch-admin-enforcement'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -36788,7 +36788,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'repos/remove-protected-branch-admin-enforcement'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string): [(code: 418) => {
         isException: true;
@@ -36803,7 +36803,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/vnd.github.luke-cage-preview+json - response
+     * @return 200 - response
      */
     'repos/get-protected-branch-pull-request-review-enforcement'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.luke-cage-preview+json"' */>, owner: string, repo: string, branch: string): [(code: 200, mediaType: "application/vnd.github.luke-cage-preview+json") => {
         body: {
@@ -37022,7 +37022,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'repos/remove-protected-branch-pull-request-review-enforcement'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string): [(code: 418) => {
         isException: true;
@@ -37041,7 +37041,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/update-protected-branch-pull-request-review-enforcement'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.luke-cage-preview+json"' */>, owner: string, repo: string, branch: string, body?: Body<{
         /**
@@ -37296,7 +37296,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-protected-branch-required-signatures'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.zzzax-preview+json"' */>, owner: string, repo: string, branch: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -37324,7 +37324,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/add-protected-branch-required-signatures'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.zzzax-preview+json"' */>, owner: string, repo: string, branch: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -37352,7 +37352,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'repos/remove-protected-branch-required-signatures'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.zzzax-preview+json"' */>, owner: string, repo: string, branch: string): [(code: 418) => {
         isException: true;
@@ -37367,7 +37367,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-protected-branch-required-status-checks'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -37403,7 +37403,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'repos/remove-protected-branch-required-status-checks'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string): [(code: 418) => {
         isException: true;
@@ -37420,7 +37420,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/update-protected-branch-required-status-checks'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<{
         /**
@@ -37467,7 +37467,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-protected-branch-required-status-checks-contexts'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string): [(code: 200, mediaType: "application/json") => {
         body: Array<string>;
@@ -37482,7 +37482,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/replace-protected-branch-required-status-checks-contexts'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<string>;
@@ -37497,7 +37497,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/add-protected-branch-required-status-checks-contexts'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<string>;
@@ -37512,7 +37512,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/remove-protected-branch-required-status-checks-contexts'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<string>;
@@ -37531,7 +37531,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-protected-branch-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -37879,7 +37879,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'repos/remove-protected-branch-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string): [(code: 418) => {
         isException: true;
@@ -37896,7 +37896,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-apps-with-access-to-protected-branch'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -38060,7 +38060,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/replace-protected-branch-app-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -38224,7 +38224,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/add-protected-branch-app-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -38388,7 +38388,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/remove-protected-branch-app-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -38548,7 +38548,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-teams-with-access-to-protected-branch'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -38630,7 +38630,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/replace-protected-branch-team-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -38712,7 +38712,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/add-protected-branch-team-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -38794,7 +38794,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/remove-protected-branch-team-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -38872,7 +38872,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-users-with-access-to-protected-branch'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -38984,7 +38984,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/replace-protected-branch-user-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -39096,7 +39096,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/add-protected-branch-user-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -39208,7 +39208,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param branch - branch parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/remove-protected-branch-user-restrictions'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, branch: string, body?: Body<Array<string>, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -39315,7 +39315,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'checks/create'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.antiope-preview+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -39824,7 +39824,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param check_run_id - check_run_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'checks/get'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.antiope-preview+json"' */>, owner: string, repo: string, check_run_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -40187,7 +40187,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param check_run_id - check_run_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'checks/update'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.antiope-preview+json"' */>, owner: string, repo: string, check_run_id: int64, body?: Body<{
         /**
@@ -40701,7 +40701,7 @@ export interface Service {
      * @param check_run_id - check_run_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'checks/list-annotations'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.antiope-preview+json"' */>, owner: string, repo: string, check_run_id: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -40763,7 +40763,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'checks/create-suite'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.antiope-preview+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -41495,7 +41495,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'checks/set-suites-preferences'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.antiope-preview+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -42065,7 +42065,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param check_suite_id - check_suite_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'checks/get-suite'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.antiope-preview+json"' */>, owner: string, repo: string, check_suite_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -42799,7 +42799,7 @@ export interface Service {
      * @param filter - Filters check runs by their `completed_at` timestamp. Can be one of `latest` (returning the most recent check runs) or `all`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'checks/list-for-suite'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.antiope-preview+json"' */>, owner: string, repo: string, check_suite_id: int64, check_name?: Query<string>, status?: Query<"queued" | "in_progress" | "completed">, filter?: Query<"latest" | "all">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -43173,7 +43173,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param check_suite_id - check_suite_id parameter
-     * @return 201| - response
+     * @return 201 - response
      */
     'checks/rerequest-suite'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.antiope-preview+json"' */>, owner: string, repo: string, check_suite_id: int64): [(code: 201) => {}];
     /**
@@ -43193,7 +43193,7 @@ export interface Service {
      * \* `all`: All collaborators the authenticated user can see.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-collaborators'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, affiliation?: Query<"outside" | "direct" | "all">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -43322,8 +43322,8 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param username - username parameter
-     * @return 204| - Response if user is a collaborator
-     * @return 404| - Response if user is not a collaborator
+     * @return 204 - Response if user is a collaborator
+     * @return 404 - Response if user is not a collaborator
      */
     'repos/check-collaborator'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, username: string): [(code: 204) => {}, (code: 404) => {
         isException: true;
@@ -43346,7 +43346,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param username - username parameter
-     * @return 201|application/json - Response when a new invitation is created
+     * @return 201 - Response when a new invitation is created
      */
     'repos/add-collaborator'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, username: string, body?: Body<{
         /**
@@ -43919,7 +43919,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param username - username parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/remove-collaborator'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, username: string): [(code: 204) => {}];
     /**
@@ -43932,7 +43932,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param username - username parameter
-     * @return 200|application/json - Response if user has admin permissions
+     * @return 200 - Response if user has admin permissions
      */
     'repos/get-collaborator-permission-level'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, username: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -44054,7 +44054,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-commit-comments'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -44220,7 +44220,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param comment_id - comment_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-commit-comment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, comment_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -44386,7 +44386,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param comment_id - comment_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/delete-commit-comment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, comment_id: int64): [(code: 204) => {}];
     /**
@@ -44398,7 +44398,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param comment_id - comment_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/update-commit-comment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, comment_id: int64, body?: Body<{
         /**
@@ -44574,7 +44574,7 @@ export interface Service {
      * @param content - Returns a single [reaction type](https://developer.github.com/v3/reactions/#reaction-types). Omit this parameter to list all reactions to a commit comment.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'reactions/list-for-commit-comment'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.squirrel-girl-preview+json"' */>, owner: string, repo: string, comment_id: int64, content?: Query<"+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -44706,7 +44706,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param comment_id - comment_id parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'reactions/create-for-commit-comment'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.squirrel-girl-preview+json"' */>, owner: string, repo: string, comment_id: int64, body?: Body<{
         /**
@@ -44870,7 +44870,7 @@ export interface Service {
      * @param until - Only commits before this date will be returned. This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-commits'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, sha?: Query<string>, path?: Query<string>, author?: Query<string>, since?: Query<string>, until?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -45226,7 +45226,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param commit_sha - commit_sha parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-branches-for-head-commit'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.groot-preview+json"' */>, owner: string, repo: string, commit_sha: string): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -45272,7 +45272,7 @@ export interface Service {
      * @param commit_sha - commit_sha parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-comments-for-commit'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, commit_sha: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -45441,7 +45441,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param commit_sha - commit_sha parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'repos/create-commit-comment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, commit_sha: string, body?: Body<{
         /**
@@ -45631,7 +45631,7 @@ export interface Service {
      * @param commit_sha - commit_sha parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-pull-requests-associated-with-commit'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.groot-preview+json"' */>, owner: string, repo: string, commit_sha: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -47822,7 +47822,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param ref - ref parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-commit'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, ref: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -48250,7 +48250,7 @@ export interface Service {
      * @param filter - Filters check runs by their `completed_at` timestamp. Can be one of `latest` (returning the most recent check runs) or `all`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'checks/list-for-ref'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.antiope-preview+json"' */>, owner: string, repo: string, ref: string, check_name?: Query<string>, status?: Query<"queued" | "in_progress" | "completed">, filter?: Query<"latest" | "all">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -48628,7 +48628,7 @@ export interface Service {
      * @param check_name - Filters checks suites by the name of the [check run](https://developer.github.com/v3/checks/runs/).
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'checks/list-suites-for-ref'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.antiope-preview+json"' */>, owner: string, repo: string, ref: string, app_id?: Query<int64>, check_name?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -49374,7 +49374,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param ref - ref parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-combined-status-for-ref'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, ref: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -49807,7 +49807,7 @@ export interface Service {
      * @param ref - ref parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-statuses-for-ref'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, ref: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -49968,7 +49968,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'codes-of-conduct/get-for-repo'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.scarlet-witch-preview+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -50003,7 +50003,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/retrieve-community-profile-metrics'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -50199,7 +50199,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param base - base parameter
      * @param head - head parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/compare-commits'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, base: string, head: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -51369,7 +51369,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param path - path parameter
      * @param ref - The name of the commit/branch/tag. Default: the repository’s default branch (usually `master`)
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-contents'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, path: string, ref?: Query<string>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -51461,8 +51461,8 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param path - path parameter
-     * @return 200|application/json - response
-     * @return 201|application/json - response
+     * @return 200 - response
+     * @return 201 - response
      */
     'repos/create-or-update-file'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, path: string, body?: Body<{
         /**
@@ -51956,7 +51956,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param path - path parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/delete-file'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, path: string, body?: Body<{
         /**
@@ -52165,8 +52165,8 @@ export interface Service {
      * @param anon - Set to `1` or `true` to include anonymous contributors in results.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - Response if repository contains content
-     * @return 204| - Response if repository is empty
+     * @return 200 - Response if repository contains content
+     * @return 204 - Response if repository is empty
      */
     'repos/list-contributors'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, anon?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -52282,7 +52282,7 @@ export interface Service {
      * @param environment - The name of the environment that was deployed to (e.g., `staging` or `production`).
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-deployments'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, sha?: Query<string /* todo: add defaultValue '"none"' */>, ref?: Query<string /* todo: add defaultValue '"none"' */>, task?: Query<string /* todo: add defaultValue '"none"' */>, environment?: Query<string /* todo: add defaultValue '"none"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -52509,9 +52509,9 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
-     * @return 202|application/json - Merged branch response
-     * @return 409|application/json - response
+     * @return 201 - response
+     * @return 202 - Merged branch response
+     * @return 409 - response
      */
     'repos/create-deployment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -52773,7 +52773,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param deployment_id - deployment_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-deployment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, deployment_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -52978,7 +52978,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param deployment_id - deployment_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/delete-deployment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, deployment_id: int64): [(code: 204) => {}];
     /**
@@ -52993,7 +52993,7 @@ export interface Service {
      * @param deployment_id - deployment_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-deployment-statuses'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, deployment_id: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -53172,7 +53172,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param deployment_id - deployment_id parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'repos/create-deployment-status'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, deployment_id: int64, body?: Body<{
         /**
@@ -53390,7 +53390,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param deployment_id - deployment_id parameter
      * @param status_id - status_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-deployment-status'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, deployment_id: int64, status_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -53572,7 +53572,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/create-dispatch-event'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -53596,7 +53596,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-downloads'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -53651,7 +53651,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param download_id - download_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-download'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, download_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -53706,7 +53706,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param download_id - download_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/delete-download'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, download_id: int64): [(code: 204) => {}];
     /**
@@ -53719,7 +53719,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'activity/list-repo-events'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 418) => {
         isException: true;
@@ -53735,7 +53735,7 @@ export interface Service {
      * @param sort - The sort order. Can be either `newest`, `oldest`, or `stargazers`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-forks'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, sort?: Query<"newest" | "oldest" | "stargazers">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -54275,7 +54275,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 202|application/json - response
+     * @return 202 - response
      */
     'repos/create-fork'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -54802,7 +54802,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'git/create-blob'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -54841,7 +54841,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param file_sha - file_sha parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'git/get-blob'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, file_sha: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -54907,7 +54907,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'git/create-commit'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -55128,7 +55128,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param commit_sha - commit_sha parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'git/get-commit'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, commit_sha: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -55267,7 +55267,7 @@ export interface Service {
      * @param ref - ref parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'git/list-matching-refs'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, ref: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -55323,7 +55323,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param ref - ref parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'git/get-ref'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, ref: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -55374,7 +55374,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'git/create-ref'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -55443,7 +55443,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param ref - ref parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'git/delete-ref'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, ref: string): [(code: 204) => {}];
     /**
@@ -55455,7 +55455,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param ref - ref parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'git/update-ref'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, ref: string, body?: Body<{
         /**
@@ -55539,7 +55539,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'git/create-tag'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -55710,7 +55710,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param tag_sha - tag_sha parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'git/get-tag'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, tag_sha: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -55820,7 +55820,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'git/create-tree'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -55926,7 +55926,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param tree_sha - tree_sha parameter
      * @param recursive - recursive parameter
-     * @return 200|application/json - If `truncated` is `true` in the response then the number of items in the `tree` array exceeded our maximum limit. If you need to fetch more items, you can clone the repository and iterate over the Git data locally.
+     * @return 200 - If `truncated` is `true` in the response then the number of items in the `tree` array exceeded our maximum limit. If you need to fetch more items, you can clone the repository and iterate over the Git data locally.
      */
     'git/get-tree'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, tree_sha: string, recursive?: Query<1>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -55993,7 +55993,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-hooks'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -56102,7 +56102,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'repos/create-hook'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -56251,7 +56251,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param hook_id - hook_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-hook'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, hook_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -56358,7 +56358,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param hook_id - hook_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/delete-hook'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, hook_id: int64): [(code: 204) => {}];
     /**
@@ -56370,7 +56370,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param hook_id - hook_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/update-hook'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, hook_id: int64, body?: Body<{
         /**
@@ -56525,7 +56525,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param hook_id - hook_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/ping-hook'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, hook_id: int64): [(code: 204) => {}];
     /**
@@ -56540,7 +56540,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param hook_id - hook_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/test-push-hook'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, hook_id: int64): [(code: 204) => {}];
     /**
@@ -56585,7 +56585,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'migrations/get-import-progress'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -56665,7 +56665,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'migrations/start-import'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -56781,7 +56781,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'migrations/cancel-import'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 204) => {}];
     /**
@@ -56799,7 +56799,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'migrations/update-import'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -56868,7 +56868,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param since - Only authors found after this id are returned. Provide the highest author ID you've seen so far. New authors may be added to the list at any point while the importer is performing the `raw` step.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'migrations/get-commit-authors'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, since?: Query<string>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -56919,7 +56919,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param author_id - author_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'migrations/map-commit-author'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, author_id: int64, body?: Body<{
         /**
@@ -56980,7 +56980,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'migrations/get-large-files'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -57015,7 +57015,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'migrations/set-lfs-preference'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -57103,7 +57103,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/get-repo-installation'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.machine-man-preview+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -57290,7 +57290,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'interactions/get-restrictions-for-repo'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.sombra-preview+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -57320,7 +57320,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'interactions/add-or-update-restrictions-for-repo'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.sombra-preview+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -57356,7 +57356,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'interactions/remove-restrictions-for-repo'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.sombra-preview+json"' */>, owner: string, repo: string): [(code: 204) => {}];
     /**
@@ -57372,7 +57372,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-invitations'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -57936,7 +57936,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param invitation_id - invitation_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/delete-invitation'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, invitation_id: int64): [(code: 204) => {}];
     /**
@@ -57948,7 +57948,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param invitation_id - invitation_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/update-invitation'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, invitation_id: int64, body?: Body<{
         /**
@@ -58533,7 +58533,7 @@ export interface Service {
      * @param since - Only issues updated at or after this time are returned. This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/list-for-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, milestone?: Query<string>, state?: Query<"open" | "closed" | "all">, assignee?: Query<string>, creator?: Query<string>, mentioned?: Query<string>, labels?: Query<string>, sort?: Query<"created" | "updated" | "comments">, direction?: Query<"asc" | "desc">, since?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -59172,7 +59172,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'issues/create'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -59943,7 +59943,7 @@ export interface Service {
      * @param since - Only comments updated at or after this time are returned. This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/list-comments-for-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, sort?: Query<"created" | "updated">, direction?: Query<"asc" | "desc">, since?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -60089,7 +60089,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param comment_id - comment_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/get-comment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, comment_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -60235,7 +60235,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param comment_id - comment_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'issues/delete-comment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, comment_id: int64): [(code: 204) => {}];
     /**
@@ -60247,7 +60247,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param comment_id - comment_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/update-comment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, comment_id: int64, body?: Body<{
         /**
@@ -60403,7 +60403,7 @@ export interface Service {
      * @param content - Returns a single [reaction type](https://developer.github.com/v3/reactions/#reaction-types). Omit this parameter to list all reactions to an issue comment.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'reactions/list-for-issue-comment'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.squirrel-girl-preview+json"' */>, owner: string, repo: string, comment_id: int64, content?: Query<"+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -60535,7 +60535,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param comment_id - comment_id parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'reactions/create-for-issue-comment'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.squirrel-girl-preview+json"' */>, owner: string, repo: string, comment_id: int64, body?: Body<{
         /**
@@ -60673,7 +60673,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/list-events-for-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -61447,7 +61447,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param event_id - event_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/get-event'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, event_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -62228,7 +62228,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param issue_number - issue_number parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/get'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, issue_number: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -62962,7 +62962,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param issue_number - issue_number parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/update'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, issue_number: int64, body?: Body<{
         /**
@@ -63734,7 +63734,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param issue_number - issue_number parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'issues/add-assignees'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, issue_number: int64, body?: Body<{
         /**
@@ -64380,7 +64380,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param issue_number - issue_number parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/remove-assignees'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, issue_number: int64, body?: Body<{
         /**
@@ -65029,7 +65029,7 @@ export interface Service {
      * @param since - Only comments updated at or after this time are returned. This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/list-comments'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, issue_number: int64, since?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -65176,7 +65176,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param issue_number - issue_number parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'issues/create-comment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, issue_number: int64, body?: Body<{
         /**
@@ -65330,7 +65330,7 @@ export interface Service {
      * @param issue_number - issue_number parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/list-events'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, issue_number: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -65478,7 +65478,7 @@ export interface Service {
      * @param issue_number - issue_number parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/list-labels-on-issue'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, issue_number: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -65528,7 +65528,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param issue_number - issue_number parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/replace-labels'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, issue_number: int64, body?: Body<{
         /**
@@ -65584,7 +65584,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param issue_number - issue_number parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/add-labels'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, issue_number: int64, body?: Body<{
         /**
@@ -65640,7 +65640,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param issue_number - issue_number parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'issues/remove-labels'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, issue_number: int64): [(code: 204) => {}];
     /**
@@ -65654,7 +65654,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param issue_number - issue_number parameter
      * @param name - name parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/remove-label'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, issue_number: int64, name: string): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -65707,7 +65707,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param issue_number - issue_number parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'issues/lock'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, issue_number: int64, body?: Body<{
         /**
@@ -65730,7 +65730,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param issue_number - issue_number parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'issues/unlock'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, issue_number: int64): [(code: 204) => {}];
     /**
@@ -65746,7 +65746,7 @@ export interface Service {
      * @param content - Returns a single [reaction type](https://developer.github.com/v3/reactions/#reaction-types). Omit this parameter to list all reactions to an issue.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'reactions/list-for-issue'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.squirrel-girl-preview+json"' */>, owner: string, repo: string, issue_number: int64, content?: Query<"+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -65878,7 +65878,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param issue_number - issue_number parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'reactions/create-for-issue'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.squirrel-girl-preview+json"' */>, owner: string, repo: string, issue_number: int64, body?: Body<{
         /**
@@ -66017,7 +66017,7 @@ export interface Service {
      * @param issue_number - issue_number parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/list-events-for-timeline'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.mockingbird-preview+json"' */>, owner: string, repo: string, issue_number: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -66164,7 +66164,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-deploy-keys'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -66216,7 +66216,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'repos/add-deploy-key'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -66284,7 +66284,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param key_id - key_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-deploy-key'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, key_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -66334,7 +66334,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param key_id - key_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/remove-deploy-key'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, key_id: int64): [(code: 204) => {}];
     /**
@@ -66347,7 +66347,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/list-labels-for-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -66396,7 +66396,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'issues/create-label'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -66462,7 +66462,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param name - name parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/get-label'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, name: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -66512,7 +66512,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param name - name parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'issues/delete-label'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, name: string): [(code: 204) => {}];
     /**
@@ -66524,7 +66524,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param name - name parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/update-label'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, name: string, body?: Body<{
         /**
@@ -66590,7 +66590,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-languages'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -66617,7 +66617,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'licenses/get-for-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -66738,9 +66738,9 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - Successful Response (The resulting merge commit)
-     * @return 404|application/json - response
-     * @return 409|application/json - Merge conflict response
+     * @return 201 - Successful Response (The resulting merge commit)
+     * @return 404 - response
+     * @return 409 - Merge conflict response
      */
     'repos/merge'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -67131,7 +67131,7 @@ export interface Service {
      * @param direction - The direction of the sort. Either `asc` or `desc`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/list-milestones-for-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, state?: Query<"open" | "closed" | "all">, sort?: Query<"due_on" | "completeness">, direction?: Query<"asc" | "desc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -67316,7 +67316,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'issues/create-milestone'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -67523,7 +67523,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param milestone_number - milestone_number parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/get-milestone'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, milestone_number: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -67709,7 +67709,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param milestone_number - milestone_number parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'issues/delete-milestone'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, milestone_number: int64): [(code: 204) => {}];
     /**
@@ -67721,7 +67721,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param milestone_number - milestone_number parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/update-milestone'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, milestone_number: int64, body?: Body<{
         /**
@@ -67930,7 +67930,7 @@ export interface Service {
      * @param milestone_number - milestone_number parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/list-labels-for-milestone'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, milestone_number: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -67986,7 +67986,7 @@ export interface Service {
      * @param before - Only show notifications updated before the given time. This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'activity/list-notifications-for-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, all?: Query<boolean>, participating?: Query<boolean>, since?: Query<string>, before?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -68389,7 +68389,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 205| - response
+     * @return 205 - response
      */
     'activity/mark-notifications-as-read-for-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -68406,7 +68406,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-pages'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -68461,7 +68461,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/update-information-about-pages-site'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -68483,7 +68483,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'repos/enable-pages-site'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.switcheroo-preview+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -68555,7 +68555,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/disable-pages-site'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.switcheroo-preview+json"' */>, owner: string, repo: string): [(code: 204) => {}];
     /**
@@ -68568,7 +68568,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-pages-builds'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -68722,7 +68722,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/request-page-build'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -68746,7 +68746,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-latest-pages-build'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -68898,7 +68898,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param build_id - build_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-pages-build'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, build_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -69053,7 +69053,7 @@ export interface Service {
      * @param state - Indicates the state of the projects to return. Can be either `open`, `closed`, or `all`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'projects/list-for-repo'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, owner: string, repo: string, state?: Query<"open" | "closed" | "all">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -69224,7 +69224,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'projects/create-for-repo'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -69413,7 +69413,7 @@ export interface Service {
      * @param direction - The direction of the sort. Can be either `asc` or `desc`. Default: `desc` when sort is `created` or sort is not specified, otherwise `asc`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'pulls/list'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, state?: Query<"open" | "closed" | "all">, head?: Query<string>, base?: Query<string>, sort?: Query<"created" | "updated" | "popularity" | "long-running">, direction?: Query<"asc" | "desc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -71581,7 +71581,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'pulls/create'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -73952,7 +73952,7 @@ export interface Service {
      * @param since - This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`. Only returns comments `updated` at or after this time.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'pulls/list-comments-for-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, sort?: Query<"created" | "updated">, direction?: Query<"asc" | "desc">, since?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -74240,7 +74240,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param comment_id - comment_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'pulls/get-comment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, comment_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -74506,7 +74506,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param comment_id - comment_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'pulls/delete-comment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, comment_id: int64): [(code: 204) => {}];
     /**
@@ -74537,7 +74537,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param comment_id - comment_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'pulls/update-comment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, comment_id: int64, body?: Body<{
         /**
@@ -74812,7 +74812,7 @@ export interface Service {
      * @param content - Returns a single [reaction type](https://developer.github.com/v3/reactions/#reaction-types). Omit this parameter to list all reactions to a pull request review comment.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'reactions/list-for-pull-request-review-comment'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.squirrel-girl-preview+json"' */>, owner: string, repo: string, comment_id: int64, content?: Query<"+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -74944,7 +74944,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param comment_id - comment_id parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'reactions/create-for-pull-request-review-comment'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.squirrel-girl-preview+json"' */>, owner: string, repo: string, comment_id: int64, body?: Body<{
         /**
@@ -75096,7 +75096,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param pull_number - pull_number parameter
-     * @return 200|application/json - Pass the appropriate [media type](https://developer.github.com/v3/media/#commits-commit-comparison-and-pull-requests) to fetch diff and patch formats.
+     * @return 200 - Pass the appropriate [media type](https://developer.github.com/v3/media/#commits-commit-comparison-and-pull-requests) to fetch diff and patch formats.
      */
     'pulls/get'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -77412,7 +77412,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param pull_number - pull_number parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'pulls/update'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, body?: Body<{
         /**
@@ -79779,7 +79779,7 @@ export interface Service {
      * @param since - This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`. Only returns comments `updated` at or after this time.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'pulls/list-comments'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, sort?: Query<"created" | "updated">, direction?: Query<"asc" | "desc">, since?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -80069,7 +80069,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param pull_number - pull_number parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'pulls/create-comment'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, body?: Body<{
         /**
@@ -80379,7 +80379,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param pull_number - pull_number parameter
      * @param comment_id - comment_id parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'pulls/create-review-comment-reply'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, comment_id: int64, body?: Body<{
         /**
@@ -80618,7 +80618,7 @@ export interface Service {
      * @param pull_number - pull_number parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'pulls/list-commits'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -80974,7 +80974,7 @@ export interface Service {
      * @param pull_number - pull_number parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'pulls/list-files'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -81039,8 +81039,8 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param pull_number - pull_number parameter
-     * @return 204| - Response if pull request has been merged
-     * @return 404| - Response if pull request has not been merged
+     * @return 204 - Response if pull request has been merged
+     * @return 404 - Response if pull request has not been merged
      */
     'pulls/check-if-merged'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64): [(code: 204) => {}, (code: 404) => {
         isException: true;
@@ -81055,9 +81055,9 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param pull_number - pull_number parameter
-     * @return 200|application/json - Response if merge was successful
-     * @return 405|application/json - Response if merge cannot be performed
-     * @return 409|application/json - Response if sha was provided and pull request head did not match
+     * @return 200 - Response if merge was successful
+     * @return 405 - Response if merge cannot be performed
+     * @return 409 - Response if sha was provided and pull request head did not match
      */
     'pulls/merge'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, body?: Body<{
         /**
@@ -81138,7 +81138,7 @@ export interface Service {
      * @param pull_number - pull_number parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'pulls/list-review-requests'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -81316,8 +81316,8 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param pull_number - pull_number parameter
-     * @return 201|application/json - response
-     * @return 422| - Response if user is not a collaborator
+     * @return 201 - response
+     * @return 422 - Response if user is not a collaborator
      */
     'pulls/create-review-request'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, body?: Body<{
         /**
@@ -83492,7 +83492,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param pull_number - pull_number parameter
-     * @return 200| - response
+     * @return 200 - response
      */
     'pulls/delete-review-request'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, body?: Body<{
         /**
@@ -83518,7 +83518,7 @@ export interface Service {
      * @param pull_number - pull_number parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - The list of reviews returns in chronological order.
+     * @return 200 - The list of reviews returns in chronological order.
      */
     'pulls/list-reviews'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -83702,7 +83702,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param pull_number - pull_number parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'pulls/create-review'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, body?: Body<{
         /**
@@ -83914,7 +83914,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param pull_number - pull_number parameter
      * @param review_id - review_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'pulls/get-review'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, review_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -84095,7 +84095,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param pull_number - pull_number parameter
      * @param review_id - review_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'pulls/update-review'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, review_id: int64, body?: Body<{
         /**
@@ -84276,7 +84276,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param pull_number - pull_number parameter
      * @param review_id - review_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'pulls/delete-pending-review'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, review_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -84453,7 +84453,7 @@ export interface Service {
      * @param review_id - review_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'pulls/get-comments-for-review'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, review_id: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -84690,7 +84690,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param pull_number - pull_number parameter
      * @param review_id - review_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'pulls/dismiss-review'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, review_id: int64, body?: Body<{
         /**
@@ -84871,7 +84871,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param pull_number - pull_number parameter
      * @param review_id - review_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'pulls/submit-review'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, pull_number: int64, review_id: int64, body?: Body<{
         /**
@@ -85062,7 +85062,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param pull_number - pull_number parameter
-     * @return 202|application/json - response
+     * @return 202 - response
      */
     'pulls/update-branch'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.lydian-preview+json"' */>, owner: string, repo: string, pull_number: int64, body?: Body<{
         /**
@@ -85096,7 +85096,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param ref - The name of the commit/branch/tag. Default: the repository’s default branch (usually `master`)
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-readme'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, ref?: Query<string>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -85191,7 +85191,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-releases'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -85546,7 +85546,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'repos/create-release'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -85774,7 +85774,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param asset_id - asset_id parameter
-     * @return 200|application/json - To download the asset's binary content, set the `Accept` header of the request to [`application/octet-stream`](https://developer.github.com/v3/media/#media-types). The API will either redirect the client to the location, or stream it directly if possible. API clients should handle both a `200` or `302` response.
+     * @return 200 - To download the asset's binary content, set the `Accept` header of the request to [`application/octet-stream`](https://developer.github.com/v3/media/#media-types). The API will either redirect the client to the location, or stream it directly if possible. API clients should handle both a `200` or `302` response.
      */
     'repos/get-release-asset'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, asset_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -85945,7 +85945,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param asset_id - asset_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/delete-release-asset'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, asset_id: int64): [(code: 204) => {}];
     /**
@@ -85958,7 +85958,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param asset_id - asset_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/update-release-asset'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, asset_id: int64, body?: Body<{
         /**
@@ -86142,7 +86142,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-latest-release'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -86496,7 +86496,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param tag - tag parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-release-by-tag'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, tag: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -86850,7 +86850,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param release_id - release_id parameter
-     * @return 200|application/json - **Note:** This returns an `upload_url` key corresponding to the endpoint for uploading release assets. This key is a [hypermedia resource](https://developer.github.com/v3/#hypermedia).
+     * @return 200 - **Note:** This returns an `upload_url` key corresponding to the endpoint for uploading release assets. This key is a [hypermedia resource](https://developer.github.com/v3/#hypermedia).
      */
     'repos/get-release'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, release_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -87204,7 +87204,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param release_id - release_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/delete-release'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, release_id: int64): [(code: 204) => {}];
     /**
@@ -87217,7 +87217,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param release_id - release_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/update-release'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, release_id: int64, body?: Body<{
         /**
@@ -87603,7 +87603,7 @@ export interface Service {
      * @param release_id - release_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-assets-for-release'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, release_id: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -87794,7 +87794,7 @@ export interface Service {
      * @param release_id - release_id parameter
      * @param name - name parameter
      * @param label - label parameter
-     * @return 201|application/json - Response for successful upload
+     * @return 201 - Response for successful upload
      */
     'repos/upload-release-asset'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, content_length: Header<string, "content-length">, content_type: Header<string, "content-type">, owner: string, repo: string, release_id: int64, name?: Query<string>, label?: Query<string>, body?: Body<string, "*/*">): [(code: 201, mediaType: "application/json") => {
         body: {
@@ -87967,10 +87967,9 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
-     * @return 200|application/vnd.github.v3.star+json - response
+     * @return 200 - response
      */
-    'activity/list-stargazers-for-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
+    'activity/list-stargazers-for-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [[(code: 200, mediaType: "application/json") => {
         body: Array<{
             /**
              *
@@ -88167,7 +88166,7 @@ export interface Service {
                 url?: string;
             };
         }>;
-    }];
+    }]];
     /**
      * Get the number of additions and deletions per week
      * @description Returns a weekly aggregate of the number of additions and deletions pushed to a repository.
@@ -88179,7 +88178,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - Returns a weekly aggregate of the number of additions and deletions pushed to a repository.
+     * @return 200 - Returns a weekly aggregate of the number of additions and deletions pushed to a repository.
      */
     'repos/get-code-frequency-stats'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: Array<Array<double>>;
@@ -88195,7 +88194,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-commit-activity-stats'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -88234,7 +88233,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - *   `w` - Start of the week, given as a [Unix timestamp](http://en.wikipedia.org/wiki/Unix_time).
+     * @return 200 - *   `w` - Start of the week, given as a [Unix timestamp](http://en.wikipedia.org/wiki/Unix_time).
      * *   `a` - Number of additions
      * *   `d` - Number of deletions
      * *   `c` - Number of commits
@@ -88383,7 +88382,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - The array order is oldest week (index 0) to most recent week.
+     * @return 200 - The array order is oldest week (index 0) to most recent week.
      */
     'repos/get-participation-stats'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -88414,7 +88413,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - For example, `[2, 14, 25]` indicates that there were 25 total commits, during the 2:00pm hour on Tuesdays. All times are based on the time zone of individual commits.
+     * @return 200 - For example, `[2, 14, 25]` indicates that there were 25 total commits, during the 2:00pm hour on Tuesdays. All times are based on the time zone of individual commits.
      */
     'repos/get-punch-card-stats'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: Array<Array<double>>;
@@ -88431,7 +88430,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param sha - sha parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'repos/create-status'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, sha: string, body?: Body<{
         /**
@@ -88616,7 +88615,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'activity/list-watchers-for-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -88720,8 +88719,8 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - Response if you are subscribed to the repository
-     * @return 404| - Response if you are not subscribed to the repository
+     * @return 200 - Response if you are subscribed to the repository
+     * @return 404 - Response if you are not subscribed to the repository
      */
     'activity/get-repo-subscription'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -88768,7 +88767,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'activity/set-repo-subscription'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -88824,7 +88823,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'activity/delete-repo-subscription'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 204) => {}];
     /**
@@ -88837,7 +88836,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-tags'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -88884,7 +88883,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-teams'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -88958,7 +88957,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-topics'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.mercy-preview+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -88977,7 +88976,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/replace-topics'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.mercy-preview+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -89004,7 +89003,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param per - Must be one of: `day`, `week`.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-clones'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per?: Query<"day" | "week">): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -89050,7 +89049,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-top-paths'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -89085,7 +89084,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-top-referrers'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -89116,7 +89115,7 @@ export interface Service {
      * @param owner - owner parameter
      * @param repo - repo parameter
      * @param per - Must be one of: `day`, `week`.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/get-views'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, per?: Query<"day" | "week">): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -89162,7 +89161,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 202|application/json - response
+     * @return 202 - response
      */
     'repos/transfer'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, body?: Body<{
         /**
@@ -89695,8 +89694,8 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Response if repository is enabled with vulnerability alerts
-     * @return 404| - Response if repository is not enabled with vulnerability alerts
+     * @return 204 - Response if repository is enabled with vulnerability alerts
+     * @return 404 - Response if repository is not enabled with vulnerability alerts
      */
     'repos/check-vulnerability-alerts'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.dorian-preview+json"' */>, owner: string, repo: string): [(code: 204) => {}, (code: 404) => {
         isException: true;
@@ -89710,7 +89709,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/enable-vulnerability-alerts'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.dorian-preview+json"' */>, owner: string, repo: string): [(code: 204) => {}];
     /**
@@ -89722,7 +89721,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/disable-vulnerability-alerts'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.dorian-preview+json"' */>, owner: string, repo: string): [(code: 204) => {}];
     /**
@@ -89742,7 +89741,7 @@ export interface Service {
      * @param repo - repo parameter
      * @param archive_format - archive_format parameter
      * @param ref - ref parameter
-     * @return 302| - response
+     * @return 302 - response
      */
     'repos/get-archive-link'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string, archive_format: string, ref: string): [(code: 302) => {}];
     /**
@@ -89763,7 +89762,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param template_owner - template_owner parameter
      * @param template_repo - template_repo parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'repos/create-using-template'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.baptiste-preview+json"' */>, template_owner: string, template_repo: string, body?: Body<{
         /**
@@ -90817,7 +90816,7 @@ export interface Service {
      * @param since - The integer ID of the last repository that you've seen.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-public'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, since?: Query<int64>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -91166,7 +91165,7 @@ export interface Service {
      * @param startIndex - Used for pagination: the index of the first result to return.
      * @param count - Used for pagination: the number of results to return.
      * @param filter - Filters results using the equals query parameter operator (`eq`). You can filter results that are equal to `id`, `userName`, `emails`, and `external_id`. For example, to search for an identity with the `userName` Octocat, you would use this query: `?filter=userName%20eq%20\"Octocat\"`.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'scim/list-provisioned-identities'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, startIndex?: Query<int64>, count?: Query<int64>, filter?: Query<string>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -91296,7 +91295,7 @@ export interface Service {
      * @tag scim
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'scim/provision-and-invite-users'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string): [(code: 201, mediaType: "application/json") => {
         body: {
@@ -91398,7 +91397,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param scim_user_id - scim_user_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'scim/get-provisioning-details-for-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, scim_user_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -91505,7 +91504,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param scim_user_id - scim_user_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'scim/replace-provisioned-user-information'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, scim_user_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -91607,7 +91606,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param scim_user_id - scim_user_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'scim/remove-user-from-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, scim_user_id: int64): [(code: 204) => {}];
     /**
@@ -91637,7 +91636,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
      * @param scim_user_id - scim_user_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'scim/update-user-attribute'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, scim_user_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -91759,7 +91758,7 @@ export interface Service {
      * @param order - Determines whether the first search result returned is the highest number of matches (`desc`) or lowest number of matches (`asc`). This parameter is ignored unless you provide `sort`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'search/code'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, q: Query<string>, sort?: Query<"indexed">, order?: Query<"desc" | "asc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -92153,7 +92152,7 @@ export interface Service {
      * @param order - Determines whether the first search result returned is the highest number of matches (`desc`) or lowest number of matches (`asc`). This parameter is ignored unless you provide `sort`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'search/commits'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.cloak-preview+json"' */>, q: Query<string>, sort?: Query<"author-date" | "committer-date">, order?: Query<"desc" | "asc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -92837,7 +92836,7 @@ export interface Service {
      * @param order - Determines whether the first search result returned is the highest number of matches (`desc`) or lowest number of matches (`asc`). This parameter is ignored unless you provide `sort`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'search/issues-and-pull-requests'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, q: Query<string>, sort?: Query<"comments" | "reactions" | "reactions-+1" | "reactions--1" | "reactions-smile" | "reactions-thinking_face" | "reactions-heart" | "reactions-tada" | "interactions" | "created" | "updated">, order?: Query<"desc" | "asc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -93114,7 +93113,7 @@ export interface Service {
      * @param q - The search keywords. This endpoint does not accept qualifiers in the query. To learn more about the format of the query, see [Constructing a search query](https://developer.github.com/v3/search/#constructing-a-search-query).
      * @param sort - Sorts the results of your query by when the label was `created` or `updated`. Default: [best match](https://developer.github.com/v3/search/#ranking-search-results)
      * @param order - Determines whether the first search result returned is the highest number of matches (`desc`) or lowest number of matches (`asc`). This parameter is ignored unless you provide `sort`.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'search/labels'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, repository_id: Query<int64>, q: Query<string>, sort?: Query<"created" | "updated">, order?: Query<"desc" | "asc">): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -93196,7 +93195,7 @@ export interface Service {
      * @param order - Determines whether the first search result returned is the highest number of matches (`desc`) or lowest number of matches (`asc`). This parameter is ignored unless you provide `sort`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'search/repos'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, q: Query<string>, sort?: Query<"stars" | "forks" | "help-wanted-issues" | "updated">, order?: Query<"desc" | "asc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -93392,7 +93391,7 @@ export interface Service {
      * @tag search
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param q - The query contains one or more search keywords and qualifiers. Qualifiers allow you to limit your search to specific areas of GitHub. The REST API supports the same qualifiers as GitHub.com. To learn more about the format of the query, see [Constructing a search query](https://developer.github.com/v3/search/#constructing-a-search-query).
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'search/topics'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, q: Query<string>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -93487,7 +93486,7 @@ export interface Service {
      * @param order - Determines whether the first search result returned is the highest number of matches (`desc`) or lowest number of matches (`asc`). This parameter is ignored unless you provide `sort`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'search/users'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, q: Query<string>, sort?: Query<"followers" | "repositories" | "joined">, order?: Query<"desc" | "asc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -93588,7 +93587,7 @@ export interface Service {
      * @tag teams
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param team_id - team_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/get-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -93828,7 +93827,7 @@ export interface Service {
      * @tag teams
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param team_id - team_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'teams/delete-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64): [(code: 204) => {}];
     /**
@@ -93844,7 +93843,7 @@ export interface Service {
      * @tag teams
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param team_id - team_id parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'teams/update-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, body?: Body<{
         /**
@@ -94119,7 +94118,7 @@ export interface Service {
      * @param direction - Sorts the discussion comments by the date they were created. To return the oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/list-discussions-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, direction?: Query<"asc" | "desc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -94360,7 +94359,7 @@ export interface Service {
      * @tag teams
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param team_id - team_id parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'teams/create-discussion-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, body?: Body<{
         /**
@@ -94616,7 +94615,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param team_id - team_id parameter
      * @param discussion_number - discussion_number parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/get-discussion-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, discussion_number: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -94856,7 +94855,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param team_id - team_id parameter
      * @param discussion_number - discussion_number parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'teams/delete-discussion-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, discussion_number: int64): [(code: 204) => {}];
     /**
@@ -94871,7 +94870,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param team_id - team_id parameter
      * @param discussion_number - discussion_number parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/update-discussion-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, discussion_number: int64, body?: Body<{
         /**
@@ -95125,7 +95124,7 @@ export interface Service {
      * @param direction - Sorts the discussion comments by the date they were created. To return the oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/list-discussion-comments-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, discussion_number: int64, direction?: Query<"asc" | "desc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -95342,7 +95341,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param team_id - team_id parameter
      * @param discussion_number - discussion_number parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'teams/create-discussion-comment-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, discussion_number: int64, body?: Body<{
         /**
@@ -95564,7 +95563,7 @@ export interface Service {
      * @param team_id - team_id parameter
      * @param discussion_number - discussion_number parameter
      * @param comment_number - comment_number parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/get-discussion-comment-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, discussion_number: int64, comment_number: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -95780,7 +95779,7 @@ export interface Service {
      * @param team_id - team_id parameter
      * @param discussion_number - discussion_number parameter
      * @param comment_number - comment_number parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'teams/delete-discussion-comment-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, discussion_number: int64, comment_number: int64): [(code: 204) => {}];
     /**
@@ -95796,7 +95795,7 @@ export interface Service {
      * @param team_id - team_id parameter
      * @param discussion_number - discussion_number parameter
      * @param comment_number - comment_number parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/update-discussion-comment-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, discussion_number: int64, comment_number: int64, body?: Body<{
         /**
@@ -96021,7 +96020,7 @@ export interface Service {
      * @param content - Returns a single [reaction type](https://developer.github.com/v3/reactions/#reaction-types). Omit this parameter to list all reactions to a team discussion comment.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'reactions/list-for-team-discussion-comment-legacy'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.squirrel-girl-preview+json"' */>, team_id: int64, discussion_number: int64, comment_number: int64, content?: Query<"+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -96156,7 +96155,7 @@ export interface Service {
      * @param team_id - team_id parameter
      * @param discussion_number - discussion_number parameter
      * @param comment_number - comment_number parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'reactions/create-for-team-discussion-comment-legacy'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.squirrel-girl-preview+json"' */>, team_id: int64, discussion_number: int64, comment_number: int64, body?: Body<{
         /**
@@ -96299,7 +96298,7 @@ export interface Service {
      * @param content - Returns a single [reaction type](https://developer.github.com/v3/reactions/#reaction-types). Omit this parameter to list all reactions to a team discussion.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'reactions/list-for-team-discussion-legacy'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.squirrel-girl-preview+json"' */>, team_id: int64, discussion_number: int64, content?: Query<"+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -96433,7 +96432,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param team_id - team_id parameter
      * @param discussion_number - discussion_number parameter
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'reactions/create-for-team-discussion-legacy'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.squirrel-girl-preview+json"' */>, team_id: int64, discussion_number: int64, body?: Body<{
         /**
@@ -96574,7 +96573,7 @@ export interface Service {
      * @param team_id - team_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/list-pending-invitations-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -96728,7 +96727,7 @@ export interface Service {
      * \* `all` - all members of the team.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/list-members-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, role?: Query<"member" | "maintainer" | "all">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -96838,8 +96837,8 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param team_id - team_id parameter
      * @param username - username parameter
-     * @return 204| - Response if user is a member
-     * @return 404| - Response if user is not a member
+     * @return 204 - Response if user is a member
+     * @return 404 - Response if user is not a member
      */
     'teams/get-member-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, username: string): [(code: 204) => {}, (code: 404) => {
         isException: true;
@@ -96864,9 +96863,9 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param team_id - team_id parameter
      * @param username - username parameter
-     * @return 204| - Empty response
-     * @return 404| - Response if team synchronization is set up
-     * @return 422|application/json - response
+     * @return 204 - Empty response
+     * @return 404 - Response if team synchronization is set up
+     * @return 422 - response
      */
     'teams/add-member-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, username: string): [(code: 204) => {}, (code: 404) => {
         isException: true;
@@ -96919,8 +96918,8 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param team_id - team_id parameter
      * @param username - username parameter
-     * @return 204| - Empty response
-     * @return 404| - Response if team synchronization is setup
+     * @return 204 - Empty response
+     * @return 404 - Response if team synchronization is setup
      */
     'teams/remove-member-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, username: string): [(code: 204) => {}, (code: 404) => {
         isException: true;
@@ -96941,7 +96940,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param team_id - team_id parameter
      * @param username - username parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/get-membership-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, username: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -96982,9 +96981,9 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param team_id - team_id parameter
      * @param username - username parameter
-     * @return 200|application/json - response
-     * @return 403| - Response if team synchronization is set up
-     * @return 422|application/json - Response if you attempt to add an organization to a team
+     * @return 200 - response
+     * @return 403 - Response if team synchronization is set up
+     * @return 422 - Response if you attempt to add an organization to a team
      */
     'teams/add-or-update-membership-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, username: string, body?: Body<{
         /**
@@ -97061,8 +97060,8 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param team_id - team_id parameter
      * @param username - username parameter
-     * @return 204| - Empty response
-     * @return 403| - Response if team synchronization is set up
+     * @return 204 - Empty response
+     * @return 403 - Response if team synchronization is set up
      */
     'teams/remove-membership-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, username: string): [(code: 204) => {}, (code: 403) => {
         isException: true;
@@ -97080,7 +97079,7 @@ export interface Service {
      * @param team_id - team_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/list-projects-legacy'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, team_id: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -97285,8 +97284,8 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param team_id - team_id parameter
      * @param project_id - project_id parameter
-     * @return 200|application/json - response
-     * @return 404| - Response if project is not managed by this team
+     * @return 200 - response
+     * @return 404 - Response if project is not managed by this team
      */
     'teams/review-project-legacy'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, team_id: int64, project_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -97493,8 +97492,8 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param team_id - team_id parameter
      * @param project_id - project_id parameter
-     * @return 204| - Empty response
-     * @return 403|application/json - Response if the project is not owned by the organization
+     * @return 204 - Empty response
+     * @return 403 - Response if the project is not owned by the organization
      */
     'teams/add-or-update-project-legacy'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, team_id: int64, project_id: int64, body?: Body<{
         /**
@@ -97533,7 +97532,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param team_id - team_id parameter
      * @param project_id - project_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'teams/remove-project-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, project_id: int64): [(code: 204) => {}];
     /**
@@ -97547,7 +97546,7 @@ export interface Service {
      * @param team_id - team_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/list-repos-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -98091,9 +98090,9 @@ export interface Service {
      * @param team_id - team_id parameter
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 200|application/vnd.github.v3.repository+json - Alternative response with extra repository information
-     * @return 204| - Response if repository is managed by this team
-     * @return 404| - Response if repository is not managed by this team
+     * @return 200 - Alternative response with extra repository information
+     * @return 204 - Response if repository is managed by this team
+     * @return 404 - Response if repository is not managed by this team
      */
     'teams/check-manages-repo-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, owner: string, repo: string): [(code: 200, mediaType: "application/vnd.github.v3.repository+json") => {
         body: {
@@ -98623,7 +98622,7 @@ export interface Service {
      * @param team_id - team_id parameter
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'teams/add-or-update-repo-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, owner: string, repo: string, body?: Body<{
         /**
@@ -98650,7 +98649,7 @@ export interface Service {
      * @param team_id - team_id parameter
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'teams/remove-repo-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, owner: string, repo: string): [(code: 204) => {}];
     /**
@@ -98666,7 +98665,7 @@ export interface Service {
      * @tag teams
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param team_id - team_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/list-id-p-groups-for-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -98706,7 +98705,7 @@ export interface Service {
      * @tag teams
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param team_id - team_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/create-or-update-id-p-group-connections-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, body?: Body<{
         /**
@@ -98768,7 +98767,7 @@ export interface Service {
      * @param team_id - team_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - Response if child teams exist
+     * @return 200 - Response if child teams exist
      */
     'teams/list-child-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, team_id: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -98894,7 +98893,7 @@ export interface Service {
      * @http GET /user
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/get-authenticated'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -99118,7 +99117,7 @@ export interface Service {
      * @http PATCH /user
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/update-authenticated'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, body?: Body<{
         /**
@@ -99378,7 +99377,7 @@ export interface Service {
      * @http GET /user/blocks
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/list-blocked'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -99484,8 +99483,8 @@ export interface Service {
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param username - username parameter
-     * @return 204| - If the user is blocked:
-     * @return 404| - If the user is not blocked:
+     * @return 204 - If the user is blocked:
+     * @return 404 - If the user is not blocked:
      */
     'users/check-blocked'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string): [(code: 204) => {}, (code: 404) => {
         isException: true;
@@ -99497,7 +99496,7 @@ export interface Service {
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param username - username parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'users/block'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string): [(code: 204) => {}];
     /**
@@ -99507,7 +99506,7 @@ export interface Service {
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param username - username parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'users/unblock'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string): [(code: 204) => {}];
     /**
@@ -99517,7 +99516,7 @@ export interface Service {
      * @http PATCH /user/email/visibility
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/toggle-primary-email-visibility'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, body?: Body<{
         /**
@@ -99563,7 +99562,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/list-emails'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -99596,7 +99595,7 @@ export interface Service {
      * @http POST /user/emails
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'users/add-emails'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, body?: Body<{
         /**
@@ -99635,7 +99634,7 @@ export interface Service {
      * @http DELETE /user/emails
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'users/delete-emails'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, body?: Body<{
         /**
@@ -99652,7 +99651,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/list-followers-for-authenticated-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -99756,7 +99755,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/list-following-for-authenticated-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -99859,8 +99858,8 @@ export interface Service {
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param username - username parameter
-     * @return 204| - Response if you are following this user
-     * @return 404| - Response if you are not following this user
+     * @return 204 - Response if you are following this user
+     * @return 404 - Response if you are not following this user
      */
     'users/check-following'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string): [(code: 204) => {}, (code: 404) => {
         isException: true;
@@ -99875,7 +99874,7 @@ export interface Service {
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param username - username parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'users/follow'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string): [(code: 204) => {}];
     /**
@@ -99886,7 +99885,7 @@ export interface Service {
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param username - username parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'users/unfollow'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string): [(code: 204) => {}];
     /**
@@ -99898,7 +99897,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/list-gpg-keys'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -100043,7 +100042,7 @@ export interface Service {
      * @http POST /user/gpg_keys
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'users/create-gpg-key'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, body?: Body<{
         /**
@@ -100195,7 +100194,7 @@ export interface Service {
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param gpg_key_id - gpg_key_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/get-gpg-key'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, gpg_key_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -100341,7 +100340,7 @@ export interface Service {
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param gpg_key_id - gpg_key_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'users/delete-gpg-key'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, gpg_key_id: int64): [(code: 204) => {}];
     /**
@@ -100359,7 +100358,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - You can find the permissions for the installation under the `permissions` key.
+     * @return 200 - You can find the permissions for the installation under the `permissions` key.
      */
     'apps/list-installations-for-authenticated-user'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.machine-man-preview+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -100584,7 +100583,7 @@ export interface Service {
      * @param installation_id - installation_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - The access the user has to each repository is included in the hash under the `permissions` key.
+     * @return 200 - The access the user has to each repository is included in the hash under the `permissions` key.
      */
     'apps/list-installation-repos-for-authenticated-user'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.machine-man-preview+json"' */>, installation_id: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -101119,7 +101118,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param installation_id - installation_id parameter
      * @param repository_id - repository_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'apps/add-repo-to-installation'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.machine-man-preview+json"' */>, installation_id: int64, repository_id: int64): [(code: 204) => {}];
     /**
@@ -101133,7 +101132,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param installation_id - installation_id parameter
      * @param repository_id - repository_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'apps/remove-repo-from-installation'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.machine-man-preview+json"' */>, installation_id: int64, repository_id: int64): [(code: 204) => {}];
     /**
@@ -101160,7 +101159,7 @@ export interface Service {
      * @param since - Only issues updated at or after this time are returned. This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'issues/list-for-authenticated-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, filter?: Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state?: Query<"open" | "closed" | "all">, labels?: Query<string>, sort?: Query<"created" | "updated" | "comments">, direction?: Query<"asc" | "desc">, since?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -102310,7 +102309,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/list-public-keys'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -102333,7 +102332,7 @@ export interface Service {
      * @http POST /user/keys
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'users/create-public-key'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, body?: Body<{
         /**
@@ -102368,7 +102367,7 @@ export interface Service {
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param key_id - key_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/get-public-key'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, key_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -102392,7 +102391,7 @@ export interface Service {
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param key_id - key_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'users/delete-public-key'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, key_id: int64): [(code: 204) => {}];
     /**
@@ -102404,7 +102403,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/list-marketplace-purchases-for-authenticated-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -102556,7 +102555,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/list-marketplace-purchases-for-authenticated-user-stubbed'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -102708,7 +102707,7 @@ export interface Service {
      * @param state - Indicates the state of the memberships to return. Can be either `active` or `pending`. If not specified, the API returns both active and pending memberships.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/list-memberships'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, state?: Query<"active" | "pending">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -102903,7 +102902,7 @@ export interface Service {
      * @tag orgs
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/get-membership-for-authenticated-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -103098,7 +103097,7 @@ export interface Service {
      * @tag orgs
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param org - org parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/update-membership'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, org: string, body?: Body<{
         /**
@@ -103301,7 +103300,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'migrations/list-for-authenticated-user'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.wyandotte-preview+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -103963,7 +103962,7 @@ export interface Service {
      * @http POST /user/migrations
      * @tag migrations
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'migrations/start-for-authenticated-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, body?: Body<{
         /**
@@ -104649,7 +104648,7 @@ export interface Service {
      * @tag migrations
      * @param accept - This API is under preview and subject to change.
      * @param migration_id - migration_id parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'migrations/get-status-for-authenticated-user'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.wyandotte-preview+json"' */>, migration_id: int64): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -105334,7 +105333,7 @@ export interface Service {
      * @tag migrations
      * @param accept - This API is under preview and subject to change.
      * @param migration_id - migration_id parameter
-     * @return 302| - response
+     * @return 302 - response
      */
     'migrations/get-archive-for-authenticated-user'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.wyandotte-preview+json"' */>, migration_id: int64): [(code: 302) => {}];
     /**
@@ -105345,7 +105344,7 @@ export interface Service {
      * @tag migrations
      * @param accept - This API is under preview and subject to change.
      * @param migration_id - migration_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'migrations/delete-archive-for-authenticated-user'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.wyandotte-preview+json"' */>, migration_id: int64): [(code: 204) => {}];
     /**
@@ -105357,7 +105356,7 @@ export interface Service {
      * @param accept - This API is under preview and subject to change.
      * @param migration_id - migration_id parameter
      * @param repo_name - repo_name parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'migrations/unlock-repo-for-authenticated-user'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.wyandotte-preview+json"' */>, migration_id: int64, repo_name: string): [(code: 204) => {}];
     /**
@@ -105373,7 +105372,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/list-for-authenticated-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -105445,7 +105444,7 @@ export interface Service {
      * @http POST /user/projects
      * @tag projects
      * @param accept - This API is under preview and subject to change.
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'projects/create-for-authenticated-user'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, body?: Body<{
         /**
@@ -105627,7 +105626,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/list-public-emails'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -105674,7 +105673,7 @@ export interface Service {
      * @param direction - Can be one of `asc` or `desc`. Default: `asc` when using `full_name`, otherwise `desc`
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'repos/list'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, visibility?: Query<"all" | "public" | "private">, affiliation?: Query<string /* todo: add defaultValue '"owner,collaborator,organization_member"' */>, type?: Query<"all" | "owner" | "public" | "private" | "member">, sort?: Query<"created" | "updated" | "pushed" | "full_name">, direction?: Query<"asc" | "desc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 418) => {
         isException: true;
@@ -105693,7 +105692,7 @@ export interface Service {
      * @http POST /user/repos
      * @tag repos
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
-     * @return 201|application/json - response
+     * @return 201 - response
      */
     'repos/create-for-authenticated-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, body?: Body<{
         /**
@@ -106304,7 +106303,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'repos/list-invitations-for-authenticated-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -106866,7 +106865,7 @@ export interface Service {
      * @tag repos
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param invitation_id - invitation_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/decline-invitation'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, invitation_id: int64): [(code: 204) => {}];
     /**
@@ -106876,7 +106875,7 @@ export interface Service {
      * @tag repos
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param invitation_id - invitation_id parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'repos/accept-invitation'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, invitation_id: int64): [(code: 204) => {}];
     /**
@@ -106890,10 +106889,9 @@ export interface Service {
      * @param direction - One of `asc` (ascending) or `desc` (descending).
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
-     * @return 200|application/vnd.github.v3.star+json - response
+     * @return 200 - response
      */
-    'activity/list-repos-starred-by-authenticated-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, sort?: Query<"created" | "updated">, direction?: Query<"asc" | "desc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
+    'activity/list-repos-starred-by-authenticated-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, sort?: Query<"created" | "updated">, direction?: Query<"asc" | "desc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [[(code: 200, mediaType: "application/json") => {
         body: Array<{
             /**
              *
@@ -107924,7 +107922,7 @@ export interface Service {
              */
             starred_at?: string;
         }>;
-    }];
+    }]];
     /**
      * Check if you are starring a repository
      * @description Requires for the user to be authenticated.
@@ -107934,8 +107932,8 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Response if this repository is starred by you
-     * @return 404| - Response if this repository is not starred by you
+     * @return 204 - Response if this repository is starred by you
+     * @return 404 - Response if this repository is not starred by you
      */
     'activity/check-starring-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 204) => {}, (code: 404) => {
         isException: true;
@@ -107951,7 +107949,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'activity/star-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 204) => {}];
     /**
@@ -107963,7 +107961,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'activity/unstar-repo'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 204) => {}];
     /**
@@ -107974,7 +107972,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'activity/list-watched-repos-for-authenticated-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -108512,8 +108510,8 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Response if this repository is watched by you
-     * @return 404| - Response if this repository is not watched by you
+     * @return 204 - Response if this repository is watched by you
+     * @return 404 - Response if this repository is not watched by you
      */
     'activity/check-watching-repo-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 204) => {}, (code: 404) => {
         isException: true;
@@ -108529,7 +108527,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'activity/watch-repo-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 204) => {}];
     /**
@@ -108541,7 +108539,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param owner - owner parameter
      * @param repo - repo parameter
-     * @return 204| - Empty response
+     * @return 204 - Empty response
      */
     'activity/stop-watching-repo-legacy'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, owner: string, repo: string): [(code: 204) => {}];
     /**
@@ -108553,7 +108551,7 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'teams/list-for-authenticated-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -108790,7 +108788,7 @@ export interface Service {
      * @param migration_id - migration_id parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'migrations/list-repos-for-user'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.wyandotte-preview+json"' */>, migration_id: int64, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -109331,7 +109329,7 @@ export interface Service {
      * @param since - The integer ID of the last User that you've seen.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/list'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, since?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -109441,7 +109439,7 @@ export interface Service {
      * @tag users
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param username - username parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/get-by-username'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -109612,7 +109610,7 @@ export interface Service {
      * @param username - username parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'activity/list-events-for-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 418) => {
         isException: true;
@@ -109628,7 +109626,7 @@ export interface Service {
      * @param org - org parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'activity/list-events-for-org'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string, org: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 418) => {
         isException: true;
@@ -109642,7 +109640,7 @@ export interface Service {
      * @param username - username parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'activity/list-public-events-for-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 418) => {
         isException: true;
@@ -109656,7 +109654,7 @@ export interface Service {
      * @param username - username parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/list-followers-for-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -109761,7 +109759,7 @@ export interface Service {
      * @param username - username parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/list-following-for-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -109865,8 +109863,8 @@ export interface Service {
      * @param accept - Setting to `application/vnd.github.v3+json` is recommended
      * @param username - username parameter
      * @param target_user - target_user parameter
-     * @return 204| - Response if user follows target user
-     * @return 404| - Response if user does not follow target user
+     * @return 204 - Response if user follows target user
+     * @return 404 - Response if user does not follow target user
      */
     'users/check-following-for-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string, target_user: string): [(code: 204) => {}, (code: 404) => {
         isException: true;
@@ -109881,7 +109879,7 @@ export interface Service {
      * @param since - This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are returned.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'gists/list-public-for-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string, since?: Query<string>, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -110110,7 +110108,7 @@ export interface Service {
      * @param username - username parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/list-gpg-keys-for-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -110260,7 +110258,7 @@ export interface Service {
      * @param username - username parameter
      * @param subject_type - Identifies which additional information you'd like to receive about the person's hovercard. Can be `organization`, `repository`, `issue`, `pull_request`. **Required** when using `subject_id`.
      * @param subject_id - Uses the ID for the `subject_type` you specified. **Required** when using `subject_type`.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/get-context-for-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string, subject_type?: Query<"organization" | "repository" | "issue" | "pull_request">, subject_id?: Query<string>): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -110292,7 +110290,7 @@ export interface Service {
      * @tag apps
      * @param accept - This API is under preview and subject to change.
      * @param username - username parameter
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'apps/get-user-installation'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.machine-man-preview+json"' */>, username: string): [(code: 200, mediaType: "application/json") => {
         body: {
@@ -110485,7 +110483,7 @@ export interface Service {
      * @param username - username parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'users/list-public-keys-for-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -110513,7 +110511,7 @@ export interface Service {
      * @param username - username parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'orgs/list-for-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -110589,7 +110587,7 @@ export interface Service {
      * @param state - Indicates the state of the projects to return. Can be either `open`, `closed`, or `all`.
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'projects/list-for-user'(accept: Header<string /* todo: add defaultValue '"application/vnd.github.inertia-preview+json"' */>, username: string, state?: Query<"open" | "closed" | "all">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{
@@ -110761,7 +110759,7 @@ export interface Service {
      * @param username - username parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'activity/list-received-events-for-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 418) => {
         isException: true;
@@ -110775,7 +110773,7 @@ export interface Service {
      * @param username - username parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'activity/list-received-public-events-for-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 418) => {
         isException: true;
@@ -110793,7 +110791,7 @@ export interface Service {
      * @param direction - Can be one of `asc` or `desc`. Default: `asc` when using `full_name`, otherwise `desc`
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 418| - Response definition missing
+     * @return 418 - Response definition missing
      */
     'repos/list-for-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string, type?: Query<"all" | "owner" | "member">, sort?: Query<"created" | "updated" | "pushed" | "full_name">, direction?: Query<"asc" | "desc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 418) => {
         isException: true;
@@ -110810,10 +110808,9 @@ export interface Service {
      * @param direction - One of `asc` (ascending) or `desc` (descending).
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
-     * @return 200|application/vnd.github.v3.star+json - response
+     * @return 200 - response
      */
-    'activity/list-repos-starred-by-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string, sort?: Query<"created" | "updated">, direction?: Query<"asc" | "desc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
+    'activity/list-repos-starred-by-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string, sort?: Query<"created" | "updated">, direction?: Query<"asc" | "desc">, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [[(code: 200, mediaType: "application/json") => {
         body: Array<{
             /**
              *
@@ -111844,7 +111841,7 @@ export interface Service {
              */
             starred_at?: string;
         }>;
-    }];
+    }]];
     /**
      * List repositories being watched by a user
      * @since 9.0.0
@@ -111854,7 +111851,7 @@ export interface Service {
      * @param username - username parameter
      * @param per_page - Results per page (max 100)
      * @param page - Page number of the results to fetch.
-     * @return 200|application/json - response
+     * @return 200 - response
      */
     'activity/list-repos-watched-by-user'(accept?: Header<string /* todo: add defaultValue '"application/vnd.github.v3+json"' */>, username: string, per_page?: Query<int64 /* todo: add defaultValue '30' */>, page?: Query<int64 /* todo: add defaultValue '1' */>): [(code: 200, mediaType: "application/json") => {
         body: Array<{

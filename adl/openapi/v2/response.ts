@@ -24,6 +24,8 @@ export interface Response {
   examples?: Dictionary<Example>;
 }
 
+export type ResponseReference = JsonReference<Response>;
+
 /**
  * An object to hold responses to be reused across operations. Response definitions can be referenced to the ones defined here.
  * This does not define global operation responses.
@@ -33,5 +35,5 @@ export interface Response {
  * @see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#responses-definitions-object
  */
 export type Responses = {
-  [status in HttpStatus]: Response | JsonReference<Response>;
+  [status in HttpStatus | string]: Response | ResponseReference;
 } & VendorExtensions;

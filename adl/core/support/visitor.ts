@@ -8,7 +8,7 @@ import { parse } from 'yaml';
 import { Alias } from '../model/alias';
 import { ApiModel } from '../model/api-model';
 import { Element } from '../model/element';
-import { HeaderTypeReference, ParameterTypeReference, RequestBodyTypeReference, SchemaTypeReference } from '../model/schema/type';
+import { HeaderTypeReference, ParameterTypeReference, RequestBodyTypeReference, ResponseTypeReference, SchemaTypeReference } from '../model/schema/type';
 import { Host } from './file-system';
 import { Stopwatch } from './stopwatch';
 
@@ -58,6 +58,7 @@ export class ReferenceMap {
   parameter = new Map<JsonPointer, ParameterTypeReference> ();
   header = new Map<JsonPointer, HeaderTypeReference>();
   requestBody = new Map<JsonPointer, RequestBodyTypeReference>();
+  response = new Map<JsonPointer, ResponseTypeReference>();
 }
 
 export class Visitor<TSourceModel extends OAIModel> {

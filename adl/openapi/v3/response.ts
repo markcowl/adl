@@ -34,7 +34,7 @@ export interface Response extends VendorExtensions {
  * @see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#responses-object
  */
 export type Responses = {
-  [status in HttpStatus]: Response | ResponseReference;
+  [status in HttpStatus | string]: Response | ResponseReference;
 } & VendorExtensions;
 
 export type ResponseReference = JsonReference<Response>;
