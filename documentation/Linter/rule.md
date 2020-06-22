@@ -54,7 +54,7 @@ export default <Rule> {
     - description
     - documentationUrl: This is link to the full documentation of the rule. 
     - category: This is an umbrella identifier for a set of rules. This can be used to run a set of rules.
-- on\<Element>: This function returns an array of `RuleResult`. Depending on the rule there can be multiple on\<Element> functions. For example:
+- on\<Element>: This function returns a `RuleResult`. Depending on the rule there can be multiple on\<Element> functions. For example:
 
 ``` js
   meta: 
@@ -69,7 +69,17 @@ export default <Rule> {
 
 ### RuleResult
 
-A rule result contains information about fixing the error in `message` and a fix. The fix is optional depending on the rule.
+A rule result contains information about fixing the error in `message` and a fix. The fix is optional depending on the rule. The structure is:
+ 
+- message: This describes the warning or error. You can use string interpolation to be more specific about the error like shown above.
+- suggestion: This contains an array of fixes.
+
+### Fix
+
+A fix contains:
+
+- description: The description of the fix to be applied on the api model.
+- fix: This is a function that modifies the element for which the rule is operating on.
 
 
 ### References
