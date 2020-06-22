@@ -17,7 +17,7 @@ export type responseCollection = [
   (code: 200) => {
     body: Person
   },
-  response4<200>,
+  // response4<200>,
   response1,
   response2,
   response3,
