@@ -30,11 +30,6 @@ const acronyms = new Set([
 ]);
 
 declare global {
-  interface Array<T> {
-    joinWith(selector: (t: T) => string, separator?: string): string;
-    last: T;
-  }
-
   interface String {
     capitalize(): string;
     uncapitalize(): string;
