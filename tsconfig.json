@@ -22,5 +22,8 @@
     {
       "path": "adl/sample-plugin/tsconfig.json"
     },
+    {
+      "path": "adl/rules-plugin/tsconfig.json"
+    },
   ]
 }
