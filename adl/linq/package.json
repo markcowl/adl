@@ -39,7 +39,7 @@
   "homepage": "https://github.com/Azure/perks/tree/master/linq#readme",
   "readme": "https://github.com/Azure/perks/tree/master/linq/readme.md",
   "devDependencies": {
-    "@testdeck/mocha": "0.1.0",
+    "@testdeck/mocha": "~0.1.0",
     "@types/mocha": "~7.0.2",
     "@types/node": "12.7.2",
     "mocha": "7.1.2",
