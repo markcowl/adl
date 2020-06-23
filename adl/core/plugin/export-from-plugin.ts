@@ -3,7 +3,7 @@ import * as path from 'path';
 
 // automatically pull exports from all .js files in this project that 
 // have a default export
-export function exportFromPlugin(location: string = __dirname, result: any = {}, container: string = ''): any | undefined {
+export function exportFromPlugin(location: string = __dirname, result: any = {}, container = ''): any | undefined {
 
   let count = 0;
   for (const name of fs.readdirSync(location)) {
@@ -19,6 +19,7 @@ export function exportFromPlugin(location: string = __dirname, result: any = {},
     // and added to the map 
     if (name.endsWith('.js')) {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const mod = require(fullPath);
         if (mod.default) {
           // files with a default export are added to the tree.
