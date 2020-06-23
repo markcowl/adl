@@ -22,7 +22,7 @@ export default <Rule> {
 
             description: 'Extract contents and create a model definition for this type.',
             fix: () => {
-              const typeReference = model.createInterface(property.name, { declaration: type.declaration });
+              const typeReference = model.createModelType(property.name, { declaration: type.declaration });
               property.type = typeReference;
             // TODO: EMIT EVENT with emit('new-type-created', position);
             }
