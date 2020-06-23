@@ -1,6 +1,3 @@
-// This rule suggests three ways to fix an error.
-// The user should be able to choose a fix using code actions.
-
 import { Rule } from '@azure-tools/adl.core/linter/rule';
 export default <Rule>{
   runOn: 'edit',

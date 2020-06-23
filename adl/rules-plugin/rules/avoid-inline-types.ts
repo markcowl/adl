@@ -1,6 +1,3 @@
-// Need: I would like to be able to extract the definition, so it can be rehused.
-// Also, I would like to detect similar defintions to this and make those rehuse this newly defined type.
-
 import { Rule } from '@azure-tools/adl.core/linter/rule';
 
 export default <Rule>{
