@@ -84,6 +84,10 @@
     {
       "changeProcessCWD": true,
       "directory": "./adl/extension",
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./adl/sample-plugin",
     }
   ],
   "git.ignoreLimitWarning": true,
