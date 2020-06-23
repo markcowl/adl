@@ -19,5 +19,8 @@
     {
       "path": "adl/sourcemap/tsconfig.json"
     },
+    {
+      "path": "adl/sample-plugin/tsconfig.json"
+    },
   ]
 }

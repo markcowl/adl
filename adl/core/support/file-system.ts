@@ -1,5 +1,6 @@
-import { CreateFolderUri, ReadUri, ResolveUri } from '@azure-tools/uri';
+import { ReadUri, ResolveUri } from '@azure-tools/uri';
 import { relative, resolve } from 'path';
+import { cwd } from 'process';
 import { EventEmitter } from '../support/event-emitter';
 import { Stopwatch } from './stopwatch';
 
@@ -55,7 +56,7 @@ export class UrlFileSystem implements FileSystem {
     return process.env['github-auth-token'] || process.env['githubauthtoken'] || undefined;
   }
   constructor(baseFolder: string = resolve()) {
-    this.cwd = CreateFolderUri(baseFolder);
+    this.cwd = ResolveUri(cwd(), `${baseFolder}/`);
   }
   resolve(pathOrRelativePath: string): string {
     return ResolveUri(this.cwd, pathOrRelativePath);

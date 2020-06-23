@@ -68,7 +68,7 @@ describe('Load Single OAI2 files', () => {
       console.log(chalk.cyan(`      serialize: '${file}' ${formatDuration(stopwatch.time)} `));
       // write out yaml
 
-      await writeFile(apiOutput,content);
+      await writeFile(apiOutput, content);
       console.log(chalk.cyan(`      save: '${file}' ${formatDuration(stopwatch.time)} `));
       equal(await isFile(apiOutput), true, `Should write file ${apiOutput} `);
       if (errors.count > 0) {

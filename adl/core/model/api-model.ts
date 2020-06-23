@@ -327,6 +327,12 @@ export class ApiModel extends Files {
     return this.projectData.attic.unprocessed;
   }
 
+
+  initialize() {
+    // loads any extensions in the project file 
+    // and binds their events to the model.
+  }
+
   static async loadADL( path: string ) {
     // path must be a directory
     if( !await exists(path)) { 
@@ -339,6 +345,11 @@ export class ApiModel extends Files {
 
     // create a project from the contents of the folder
     const result = new ApiModel();
+
+    // find the API.YAML file for the project
+    // load any extensions into the ApiModel we're creating
+    result.initialize(); 
+
     await readFiles(path, result.project);
 
     return result;
