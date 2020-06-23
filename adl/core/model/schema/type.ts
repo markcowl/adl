@@ -53,3 +53,8 @@ export interface RequestBodyTypeReference extends TypeReference {
   required: boolean;
   description?: string;
 }
+
+export interface ResponseTypeReference extends TypeReference {
+  description?: string;
+  code?: string;
+}

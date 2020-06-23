@@ -13,11 +13,16 @@ paths:
       consumes:
       - "application/json"
       - "application/xml"
+      produces:
+      - "application/json"
+      - "aplication/xml"
       parameters:
       - $ref: "#/parameters/BodyOfThing"
       responses:
         "200":
-          description: "OK"
+          $ref: "#/responses/StringResponse"
+        "404":
+          description: "Not found"
 parameters:
   BodyOfThing:
     in: "body"
@@ -32,3 +37,8 @@ definitions:
       id:
         type: "integer"
         format: "int64"
+responses:
+  StringResponse:
+    description: "A string response"
+    schema: 
+      type: string

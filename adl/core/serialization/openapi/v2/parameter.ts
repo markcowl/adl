@@ -3,7 +3,7 @@ import { anonymous, nameOf, refTo } from '@azure-tools/sourcemap';
 import { StructureKind, ts, TypeParameterDeclarationStructure } from 'ts-morph';
 import { createTypeAlias } from '../../../model/schema/alias';
 import { ParameterTypeReference, SchemaTypeReference } from '../../../model/schema/type';
-import { normalizeIdentifier, TypeSyntax } from '../../../support/codegen';
+import { GenericTypeSyntax, normalizeIdentifier, TypeSyntax } from '../../../support/codegen';
 import { processSchema } from './schema';
 import { Context } from './serializer';
 
@@ -60,11 +60,6 @@ export function getParameterReference(parameter: v2.Parameter, schema: SchemaTyp
     requiredReferences: schema.requiredReferences,
     location: parameter.in,
   };
-}
-
-interface GenericTypeSyntax {
-  type: TypeSyntax;
-  typeParameters?: Array<TypeParameterDeclarationStructure>;
 }
 
 function getParameterSyntax(parameter: v2.Parameter, schema: SchemaTypeReference, $: Context, options?: ParameterOptions): GenericTypeSyntax {

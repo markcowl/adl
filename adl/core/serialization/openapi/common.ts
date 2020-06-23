@@ -2,6 +2,7 @@ import { length } from '@azure-tools/linq';
 import { common, StringFormat, v2, v3, vendorExtensions } from '@azure-tools/openapi';
 import { Element } from '../../model/element';
 import { Collection } from '../../model/types';
+import { fail } from 'assert';
 
 export async function toArray<T>(g: AsyncGenerator<T>) {
   const result = new Array<T>();
@@ -82,5 +83,11 @@ export function addExtensionsToAttic<T extends Element>(element: T, input: any) 
     element.addToAttic(key, value);
   }
   return element;
+}
+
+export function assert(condition?: boolean): asserts condition {
+  if (!condition) {
+    fail();
+  }
 }
 

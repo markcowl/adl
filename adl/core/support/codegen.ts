@@ -1,4 +1,4 @@
-import { printNode, ts } from 'ts-morph';
+import { printNode, ts, TypeParameterDeclarationStructure } from 'ts-morph';
 
 /**  
  * Prepares a string for use as a TypeScript identifier.
@@ -74,5 +74,10 @@ export class TypeSyntax {
   toString() {
     return this.text;
   }
+}
+
+export interface GenericTypeSyntax {
+  type: TypeSyntax;
+  typeParameters?: Array<TypeParameterDeclarationStructure>;
 }
 
