@@ -1,5 +1,5 @@
-import { NamedElement } from '../../model/typescript/named-element';
-import { Rule, RuleResult } from '../rule';
+import { Rule, RuleResult } from '@azure-tools/adl.core/linter/rule';
+import { NamedElement } from '@azure-tools/adl.core/model/typescript/named-element';
 export default <Rule>{
   runOn: 'edit',
   meta: {

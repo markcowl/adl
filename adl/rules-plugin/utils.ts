@@ -3,14 +3,14 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+import { ParameterElement } from '@azure-tools/adl.core/model/http/parameter';
+import { Operation, OperationGroup, ResponseCollection, ResponseElement, ResultElement } from '@azure-tools/adl.core/model/operation';
+import { AliasType } from '@azure-tools/adl.core/model/schema/alias';
+import { EnumType, EnumValueElement } from '@azure-tools/adl.core/model/schema/enum';
+import { ModelType } from '@azure-tools/adl.core/model/schema/model';
+import { Property } from '@azure-tools/adl.core/model/schema/property';
+import { Declaration } from '@azure-tools/adl.core/model/typescript/reference';
 import { linq } from '@azure-tools/linq';
-import { ParameterElement } from '../model/http/parameter';
-import { Operation, OperationGroup, ResponseCollection, ResponseElement, ResultElement } from '../model/operation';
-import { AliasType } from '../model/schema/alias';
-import { EnumType, EnumValueElement } from '../model/schema/enum';
-import { ModelType } from '../model/schema/model';
-import { Property } from '../model/schema/property';
-import { Declaration } from '../model/typescript/reference';
 
 export type versionedElement = AliasType
   | Declaration<ResponseCollection>

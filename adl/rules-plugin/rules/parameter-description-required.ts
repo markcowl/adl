@@ -1,5 +1,5 @@
-import { getTagValues, setTag } from '../../support/doc-tag';
-import { Rule } from '../rule';
+import { Rule } from '@azure-tools/adl.core/linter/rule';
+import { getTagValues, setTag } from '@azure-tools/adl.core/support/doc-tag';
 export default <Rule>{
   runOn: 'edit',
   meta: {
@@ -15,7 +15,7 @@ export default <Rule>{
     const taggedParamNames = Array.from(getTagValues(operation, 'param')).map(s => s.split(' ')[0]);
     const missingDoc = new Array<string>();
     for (const name of parameterNames) {
-      if (parameterNames.includes(name)){
+      if (parameterNames.includes(name)) {
         missingDoc.push(name.toString());
       }
     }

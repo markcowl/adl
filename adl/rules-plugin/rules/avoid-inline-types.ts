@@ -1,8 +1,9 @@
 // Need: I would like to be able to extract the definition, so it can be rehused.
 // Also, I would like to detect similar defintions to this and make those rehuse this newly defined type.
 
-import { Rule } from '../rule';
-export default <Rule> {
+import { Rule } from '@azure-tools/adl.core/linter/rule';
+
+export default <Rule>{
   runOn: 'edit',
   meta: {
     name: 'avoid-anonymous-types',
@@ -24,7 +25,7 @@ export default <Rule> {
             fix: () => {
               const typeReference = model.createModelType(property.name, { declaration: type.declaration });
               property.type = typeReference;
-            // TODO: EMIT EVENT with emit('new-type-created', position);
+              // TODO: EMIT EVENT with emit('new-type-created', position);
             }
           }
         ]

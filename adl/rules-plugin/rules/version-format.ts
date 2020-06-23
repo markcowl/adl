@@ -1,6 +1,6 @@
 // This rule suggests three ways to fix an error.
 // The user should be able to choose a fix using code actions.
-import { Rule, RuleResult } from '../rule';
+import { Rule, RuleResult } from '@azure-tools/adl.core/linter/rule';
 import { versionedElement } from '../utils';
 export default <Rule>{
   runOn: 'edit',

@@ -1,4 +1,4 @@
-import { Rule } from '../rule';
+import { Rule } from '@azure-tools/adl.core/linter/rule';
 export default <Rule>{
   runOn: 'edit',
   meta: {
