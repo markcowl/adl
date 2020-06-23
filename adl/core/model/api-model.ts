@@ -420,7 +420,7 @@ export class ApiModel extends Files {
     return { name, file };
   }
 
-  createInterface(identity: Identity, initializer: any): any {
+  createModelType(identity: Identity, initializer: any): any {
     // todo
   }
 
