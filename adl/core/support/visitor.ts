@@ -78,7 +78,7 @@ export class Visitor<TSourceModel extends OAIModel> {
     public host: Host,
     public inputType: 'oai3' | 'oai2' | 'unknown',
     ...sourceFiles: Array<string>) {
-    // the source files are going to be YAML/JSON files for this 
+    // the source files are going to be YAML/JSON files for this
     // so we can speed up the process and grab them all and hold onto them
     for (const each of new Set(sourceFiles)) {
       this.sourceFiles.set(this.host.fileSystem.resolve(each), this.loadInput(this.host.fileSystem.resolve(each)));
@@ -192,14 +192,14 @@ export class Visitor<TSourceModel extends OAIModel> {
       targetContext = await t;
     }
     const node = targetContext.visitor.findNode(path, targetContext.sourceModel);
-    if( !node ) {
+    if(!node) {
       fail(`Unable to process Ref ${sourceFile}#/${path}`);
     }
-    
+
     return {
-      node, 
+      node,
       context: targetContext
-    }; 
+    };
   }
 }
 
@@ -242,7 +242,7 @@ export class Context<TSourceModel extends OAIModel> {
         result = true;
       }
     }
-    if( result) {
+    if(result) {
       throw new Error('Forbidden Properties');
     }
     return;
@@ -255,7 +255,7 @@ export class Context<TSourceModel extends OAIModel> {
   async *processArray<TInput, TOutput extends Element, TOptions extends Options>(action: fnAction<TSourceModel, TInput, TOutput, TOptions>, value: Array<TInput> | undefined, options?: TOptions): AsyncGenerator<TOutput> {
     if (value) {
       for (const each of value) {
-      
+
         yield* this.process(action, each);
       }
     }
@@ -290,7 +290,7 @@ export class Context<TSourceModel extends OAIModel> {
             result.addVersionInfo({
               // deprecated isn't on everything, but this is safe when it's not there
               deprecated: (<any>value).deprecated ? this.apiVersion : undefined,
-              added: this.apiVersion,
+              since: this.apiVersion,
             });
             result.addInternalData(this.visitor.inputType, { preferredFile: getSourceFile(value) });
           }
@@ -302,7 +302,7 @@ export class Context<TSourceModel extends OAIModel> {
   }
 
   addVersionInfo(result: any, value: any) {
-    // 
+    //
     if (result.versionInfo.length === 0) {
       // only add this if we haven't added it before
       // when a result is returned up the chain more than once
@@ -316,7 +316,7 @@ export class Context<TSourceModel extends OAIModel> {
   }
 
   async resolveReference(reference: string)  {
-    const {file, path } = this.normalizeReference(reference); 
+    const {file, path } = this.normalizeReference(reference);
     return this.visitor.resolveReference(file,path);
   }
 
@@ -332,7 +332,7 @@ export class Context<TSourceModel extends OAIModel> {
           // already processed?
           for (const target of targets) {
             // if this is a direct link to the target, we return it as-is
-            // otherwise it's got a name, so we're creating an alias to the actual target 
+            // otherwise it's got a name, so we're creating an alias to the actual target
 
             yield options?.isAnonymous ? target : new Alias(action.name, <string>name, target);
           }
@@ -342,12 +342,12 @@ export class Context<TSourceModel extends OAIModel> {
         // nope, this will process them
         for await (const target of this.visitor.processRef2(file, path, action)) {
           // if this is a direct link to the target, we return it as-is
-          // otherwise it's got a name, so we're creating an alias to the actual target 
+          // otherwise it's got a name, so we're creating an alias to the actual target
           yield options?.isAnonymous ? target : new Alias(action.name, <string>name, target);
         }
         return;
       }
-      // if we came to processInline, then that means 
+      // if we came to processInline, then that means
       // by defintion, we are processing an anonymous element.
       yield* this.process(action, <TIn>value, <TOptions>{ ...options, isAnonymous: true });
     }
@@ -385,7 +385,7 @@ export class Context<TSourceModel extends OAIModel> {
         result.addVersionInfo({
           // deprecated isn't on everything, but this is safe when it's not there
           deprecated: (<any>value).deprecated ? this.apiVersion: undefined,
-          added: this.apiVersion,
+          since: this.apiVersion,
         });
         result.addInternalData(this.visitor.inputType, { preferredFile: getSourceFile(value) });
 
@@ -396,7 +396,7 @@ export class Context<TSourceModel extends OAIModel> {
   }
 
   normalizeReference(ref: string) {
-    
+
     const split = /(.*?)#(.*)/g.exec(ref);
     if (!split) {
       throw new Error(`$ref '${ref}' not legal`);

@@ -153,7 +153,7 @@ export class Files {
    * returns all the enumTypes in the API
    */
   get enumTypes() {
-    return this.files.map(each => each.getEnums().flat().map(each => new EnumType(each)));
+    return this.files.map(each => each.getEnums()).flat().map(each => new EnumType(each));
   }
 
   /**
@@ -180,7 +180,7 @@ export class Files {
   /**
    * Gets all the globally declared response collections across all the protocols
    */
-  get responseCollections(): Array<Declaration<ResponseCollection>>{
+  get responseCollections(): Array<Declaration<ResponseCollection>> {
     // this.files.map( each => each.getTypeAliases()).filter(isResponseCollection)).flat().map(each => new ResponseCollectionAlias(each))
     return linq.values(this.protocols).selectMany(protocol => protocol.responseCollections).toArray();
   }
@@ -490,7 +490,7 @@ export class ApiModel extends Files {
     return { name, file };
   }
 
-  createModelType(name: string) {
+  createModelType(identity: Identity, initializer: any): any {
     // todo
   }
 

@@ -88,6 +88,10 @@
     {
       "changeProcessCWD": true,
       "directory": "./adl/sample-plugin",
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./adl/rules-plugin",
     }
   ],
   "git.ignoreLimitWarning": true,
