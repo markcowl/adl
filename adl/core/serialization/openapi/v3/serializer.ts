@@ -68,7 +68,7 @@ export async function processOpenApi3(oai3: v3.Model, $: Context) {
     (<HttpProtocol>$.api.protocols.http).authenticationRequirements.push(security);
   }
 
-  processPaths([oai3.paths, oai3['x-ms-paths']], $);
+  await processPaths([oai3.paths, oai3['x-ms-paths']], $);
 
   return $.api;
 }
