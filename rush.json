@@ -97,6 +97,12 @@
       "projectFolder": "adl/sample-plugin",
       "reviewCategory": "production",
       "shouldPublish": false
+    },
+    {
+      "packageName": "rules-plugin",
+      "projectFolder": "adl/rules-plugin",
+      "reviewCategory": "production",
+      "shouldPublish": false
     }
   ]
 }

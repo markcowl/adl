@@ -35,9 +35,9 @@ export class TagCollection {
 }
 
 export class OperationGroup extends base.OperationGroup {
-  
+
   get operations(): Array<Operation> {
-    return this.node.getMethods().map( each => new Operation(each));
+    return this.node.getMethods().map(each => new Operation(each));
   }
 
   /**
@@ -77,18 +77,18 @@ export class Operation extends base.Operation {
 
   /** The HTTP method used and the path operated upon. */
   get path(): string {
-    return /([^\s]*)\s+(.*)/.exec(getTagValue(this.node, 'http')||'')?.[2] || '';
+    return /([^\s]*)\s+(.*)/.exec(getTagValue(this.node, 'http') || '')?.[2] || '';
   }
   set path(value: string) {
-    setTag(this.node,'http' , `${this.method} ${value}`);
+    setTag(this.node, 'http', `${this.method} ${value}`);
   }
 
-  get method(): Method  {
-    const m = ( /([^\s]*)\s+(.*)/.exec(getTagValue(this.node, 'http') || '')?.[1] || '' ).toUpperCase();
+  get method(): Method {
+    const m = (/([^\s]*)\s+(.*)/.exec(getTagValue(this.node, 'http') || '')?.[1] || '').toUpperCase();
     return <Method>m;
   }
   set method(value: Method) {
-    setTag( this.node,'http' , `${value} ${this.path}`);
+    setTag(this.node, 'http', `${value} ${this.path}`);
   }
 
   /** parameters common to all the requests(overloads) for this operation */
@@ -143,7 +143,7 @@ export function createOperationStructure(
 ): OperationStructure {
 
   const parameterStructures = createParameterStructures(initializer.parameters);
-  const requestStructures =  createRequestStructures(initializer.requestBody);
+  const requestStructures = createRequestStructures(initializer.requestBody);
   const responseStructures = createResponseStructures(initializer.responses);
   const tagStructures = createTagStructures(initializer.tags);
   const pathStructure = createPathStructure(path);
@@ -193,7 +193,7 @@ function createParameterStructures(parameters?: Array<ParameterTypeReference>) {
   const parameterStructures = new Array<ParameterDeclarationStructure>();
   const tagStructures = new Array<JSDocTagStructure>();
 
-  for(const parameter of parameters ?? []) {
+  for (const parameter of parameters ?? []) {
     const name = normalizeName(parameter.name);
     const type = parameter.declaration.text;
 
@@ -262,7 +262,7 @@ function createResponseStructures(responses?: Array<ResponseTypeReference>) {
   }
 
   const returnType = ts.createTupleTypeNode(reponseTypes);
-  return { 
+  return {
     type: printNode(returnType),
     tags: tagStructures
   };
@@ -296,7 +296,7 @@ function getMediaTypeParameter(mediaType?: string | ts.TypeNode) {
 export function getMediaTypeUnion(mediaTypes?: Array<string>) {
   if (!mediaTypes || mediaTypes.length == 0) {
     return undefined;
-  } 
+  }
 
   return ts.createUnionTypeNode(
     mediaTypes.map(
@@ -315,13 +315,13 @@ function getResponseCriteria(code: string | ts.TypeNode, mediaType?: string | ts
   if (mediaTypeParameter) {
     parameters.push(mediaTypeParameter);
   }
-  
+
 
   return parameters;
 }
 
 function getResponseDefinition(
-  typeref?: TypeReference, 
+  typeref?: TypeReference,
   headers?: Array<HeaderTypeReference>,
   isException?: boolean | ts.TypeNode,
 ) {
@@ -360,4 +360,3 @@ export function getResponseType(
     getResponseCriteria(code, mediaType),
     getResponseDefinition(typeref, headers, isException));
 }
-
