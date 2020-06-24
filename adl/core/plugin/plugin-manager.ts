@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { exists, isDirectory, isFile, mkdir, readdir, readFile, rmdir, writeFile } from '@azure-tools/async-io';
+import { exists, isDirectory, isFile, mkdir, readdir, rmdir, writeFile } from '@azure-tools/async-io';
 import { Delay } from '@azure-tools/tasks';
 import { ChildProcess, spawn, SpawnOptions } from 'child_process';
 import { promises, readFileSync } from 'fs';
@@ -153,6 +153,16 @@ export class Package {
   get allVersions(): Promise<Array<string>> {
     return this.extensionManager.getPackageVersions(this.name);
   }
+
+  get extension(): Promise<Extension|undefined> {
+    // if the location is on disk, we can return that directly.
+    
+    return (async () =>{
+      const exts = await this.extensionManager.getInstalledExtensions();
+      return exts.find( each => each.name === this.packageMetadata.name && each.version === this.packageMetadata.version );
+      
+    } )();
+  }
 }
 
 /**
@@ -183,37 +193,9 @@ export class Extension extends Package {
     return normalize(`${this.modulePath}/package.json`);
   }
 
-  /**
- * the path to the readme.md configuration file for the extension.
- */
-  public get configurationPath(): Promise<string> {
-    return (async () => {
-      const items = await readdir(this.modulePath);
-      for (const each of items) {
-        if (/^readme.md$/i.exec(each)) {
-          const fullPath = normalize(`${this.modulePath}/${each}`);
-          if (await isFile(fullPath)) {
-            return fullPath;
-          }
-        }
-      }
-      return '';
-    })();
-  }
-
   /** the loaded package.json information */
   public get definition(): any {
     return require(this.packageJsonPath);
-  }
-
-  public get configuration(): Promise<string> {
-    return (async () => {
-      const cfgPath = await this.configurationPath;
-      if (cfgPath) {
-        return readFile(cfgPath);
-      }
-      return '';
-    })();
   }
 
   async remove(): Promise<void> {
@@ -222,6 +204,10 @@ export class Extension extends Package {
 
   async start(enableDebugger = false): Promise<ChildProcess> {
     return this.extensionManager.start(this, enableDebugger);
+  }
+
+  load(): any {
+    return this.extensionManager.load(this);
   }
 }
 
@@ -414,7 +400,7 @@ export class ExtensionManager extends EventEmitter<Events> {
   }
 
   async findPackage(name: string, version = 'latest'): Promise<Package> {
-    if (version.endsWith('.tgz')) {
+    if (version.endsWith('.tgz') || version.endsWith('.pkg')) {
       // get the package metadata
       const pm = await fetchPackageMetadata(version);
       return new Package(pm, pm, this);

@@ -4,7 +4,10 @@ import { isAnonymous, Path, valueOf } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
 import { dirname, join } from 'path';
 import { Directory, EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Node, Project, QuoteKind, SourceFile, SyntaxKind, TypeAliasDeclaration } from 'ts-morph';
+import { Document, parseDocument } from 'yaml';
+import { ExtensionManager } from '../plugin/plugin-manager';
 import { getTags, hasTag } from '../support/doc-tag';
+import { Host, UrlFileSystem } from '../support/file-system';
 import { referenceTo } from '../support/typescript';
 import { HttpProtocol } from './http/protocol';
 import { ParameterElement, ResponseCollection, ResponseElement, ResultElement } from './operation';
@@ -235,6 +238,9 @@ export class ApiModel extends Files {
 
   /**
    * typescript project for this model
+   * 
+   * provides access to the ts project for this api.
+   * @internal
    */
   readonly project: Project = new Project({
     useInMemoryFileSystem: true,
@@ -258,13 +264,7 @@ export class ApiModel extends Files {
     resource: this.project.createDirectory('resources'),
   }
 
-  /**
-   * access to the ts project for this api.
-   * @internal
-   */
-  get prxoject() {
-    return this.project;
-  }
+  #rootFolder = '';
 
   /**
    * persistable project data (this should end up in the adl.yaml file)
@@ -314,8 +314,12 @@ export class ApiModel extends Files {
     return v;
   }
 
-  constructor() {
+  document: Document.Parsed;
+  extensionManager?: ExtensionManager;
+  
+  constructor(readonly host: Host = new Host(new UrlFileSystem(process.cwd()))) {
     super();
+    this.document = parseDocument('# ADL Project\n\n', { keepCstNodes: true });
     (<any>this.project).api = this;
     this.protocols.http = new HttpProtocol(this);
   }
@@ -327,10 +331,61 @@ export class ApiModel extends Files {
     return this.projectData.attic.unprocessed;
   }
 
+  async loadExtensions() {
+    let use = this.document.get('use');
+    switch( typeof use )  {
+      case 'string': 
+        use = [use];
 
-  initialize() {
+      // eslint-disable-next-line no-fallthrough
+      case 'object':
+        if( !Array.isArray(use)) {
+          throw new Error('Invalid plugin configuration');
+        }
+        // load plugins now 
+        this.extensionManager = this.extensionManager || await ExtensionManager.Create(this.host.fileSystem.apiPath);
+        for( const each of use ) {
+          const pkg = await this.extensionManager.findPackage(each);
+          let ext = await pkg.extension;
+          if( !ext ) {
+            // it's not installed, 
+            ext = await pkg.install();
+          }
+          const exports = ext.load();
+
+          // iterate thru the default exports and bind the events to the respective emitters.
+          for( const [key, xport] of items(exports.default) ) {
+            // the key is just a string 
+            // the xport should have members that we 
+            // use to bind to the events.
+            if( !this.
+              .subscribe(xport) ) {
+              // let the linter play with it first
+              // if that doesn't bind, then we can 
+              // see if the model binds to it.
+              this.subscribe(xport); 
+            }
+          }
+        }
+
+        break;
+      
+      default:
+        throw new Error('Invalid plugin configuration');
+    }
+  }
+
+  /** @internal */
+  async initialize() {
     // loads any extensions in the project file 
     // and binds their events to the model.
+    
+    if( await this.host.fileSystem.isFile('api.yaml')) {
+      const content = await this.host.fileSystem.readFile('api.yaml');
+      this.document =  parseDocument(content, {keepCstNodes: true});
+      
+    }
+    
   }
 
   static async loadADL( path: string ) {
@@ -343,12 +398,16 @@ export class ApiModel extends Files {
       throw new Error(`Path '${path}' does is not a directory`);
     }
 
+    new UrlFileSystem(path);
+
     // create a project from the contents of the folder
     const result = new ApiModel();
 
+    result.#rootFolder = path;
+
     // find the API.YAML file for the project
     // load any extensions into the ApiModel we're creating
-    result.initialize(); 
+    await result.initialize(); 
 
     await readFiles(path, result.project);
 
