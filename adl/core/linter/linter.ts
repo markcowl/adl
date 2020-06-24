@@ -31,7 +31,7 @@ export class Linter extends EventEmitter<Events> {
     files = files || this.apiModel;
     const model = this.apiModel;
 
-    // aliasTypesc
+    // aliasTypes
     for (const aliasType of files.aliasTypes) {
       yield* this.iterEmit('AliasType', model, aliasType);
     }

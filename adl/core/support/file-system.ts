@@ -7,7 +7,6 @@ import { cwd } from 'process';
 import { EventEmitter } from '../eventing/event-emitter';
 import { Stopwatch } from './stopwatch';
 
-
 interface Events {
   warning(message: string, offendingNode: any, msec: number): void;
   error(message: string, offendingNode: any, msec: number): void;
@@ -41,7 +40,6 @@ export class Host extends EventEmitter<Events> {
   constructor(public fileSystem: FileSystem) {
     super();
   }
-
 }
 
 export interface FileSystem {
@@ -57,8 +55,6 @@ export interface FileSystem {
   writeFile(relativePath: string, data: string): Promise<void>;
   isDirectory( relativePath: string):  Promise<boolean>;
   isFile(relativePath: string): Promise<boolean>;
-  
-  
 }
 
 function uniqueTempFolder(): string {
