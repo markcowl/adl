@@ -1,3 +1,5 @@
+import { Activation } from '../eventing/activation';
+import { EventListener } from '../eventing/event-listener';
 import { ApiModel } from '../model/api-model';
 import { Operation } from '../model/http/operation';
 import { OperationGroup, ParameterElement, ResponseCollection, ResponseElement, ResultElement } from '../model/operation';
@@ -7,8 +9,8 @@ import { ModelType } from '../model/schema/model';
 import { Property } from '../model/schema/property';
 import { Declaration } from '../model/typescript/reference';
 
-export interface Rule {
-  runOn: 'edit' | 'onDemand';
+export interface Rule extends EventListener {
+  activation: Activation.disabled | Activation.edit | Activation.demand;
   meta: RuleMetaData;
   onAliasType?: (model: ApiModel, aliasType: AliasType) => RuleResult | undefined;
   onDeclaredResponseCollections?: (model: ApiModel, reponseCollection: Declaration<ResponseCollection>) => RuleResult | undefined;

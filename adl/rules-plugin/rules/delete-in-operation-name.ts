@@ -1,7 +1,7 @@
 import { Rule } from '@azure-tools/adl.core/linter/rule';
 import { Method } from '@azure-tools/adl.core/model/http/operation';
 export default <Rule>{
-  runOn: 'edit',
+  activation: 'edit',
   meta: {
     name: 'DeleteInOperationName',
     code: 'R1009',

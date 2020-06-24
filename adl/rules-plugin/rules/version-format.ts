@@ -3,7 +3,7 @@
 import { Rule, RuleResult } from '@azure-tools/adl.core/linter/rule';
 import { versionedElement } from '../utils';
 export default <Rule>{
-  runOn: 'edit',
+  activation: 'edit',
   meta: {
     name: 'version-format',
     code: 'R2056',
@@ -23,7 +23,7 @@ export default <Rule>{
   onOperationGroup: (model, operationGroup) => checkVersionFormat(operationGroup),
   onOperation: (model, operation) => checkVersionFormat(operation),
   onProperty: (model, property) => checkVersionFormat(property),
-  onParameter: (model, parameter) => checkVersionFormat(parameter)
+  //onParameter: (model, parameter) => checkVersionFormat(parameter)
 };
 
 function checkVersionFormat(element: versionedElement): RuleResult | undefined {

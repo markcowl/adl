@@ -1,6 +1,8 @@
 import { Rule } from '@azure-tools/adl.core/linter/rule';
+import { Declaration } from '@azure-tools/adl.core/model/typescript/reference';
+
 export default <Rule>{
-  runOn: 'edit',
+  activation: 'edit',
   meta: {
     name: 'missing-operation-response',
     code: 'R1009',
@@ -10,7 +12,15 @@ export default <Rule>{
     category: 'SDK Error'
   },
   onOperation: (model, operation) => {
-    if (operation.responses.length === 0) {
+    let responses = operation.responseCollection;
+
+    if (!operation.responseCollection) {
+      return {
+        message: `The operation: ${operation.name} doesn't specify any repsonse. Please consider adding one.`
+      };
+    }
+    responses =  responses instanceof Declaration ? responses.target : responses!;
+    if (responses.responses.length === 0  ) {
       return {
         message: `The operation: ${operation.name} doesn't specify any repsonse. Please consider adding one.`
       };

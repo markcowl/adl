@@ -1,6 +1,6 @@
 import { Rule } from '@azure-tools/adl.core/linter/rule';
 export default <Rule>{
-  runOn: 'edit',
+  activation: 'edit',
   meta: {
     name: 'required-read-only-properties',
     code: 'R2056',

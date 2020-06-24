@@ -29,6 +29,8 @@ export async function deserializeOpenAPI3(host: Host, ...inputs: Array<string>) 
 }
 
 export async function processOpenApi3(oai3: v3.Model, $: Context) {
+  // call event for importing oai3
+  $.emit.importOAI3(oai3);
 
   const extensions = vendorExtensions(oai3);
 

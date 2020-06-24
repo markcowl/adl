@@ -25,7 +25,9 @@ export async function deserializeOpenAPI2(host: Host, ...inputs: Array<string>) 
 }
 
 export async function processOpenApi2(oai2: v2.Model, $: Context) {
-
+  // call event for importing oai2
+  $.emit.importOAI2(oai2);
+  
   const extensions = vendorExtensions(oai2);
 
   for (const [key] of extensions) {

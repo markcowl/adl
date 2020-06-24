@@ -1,7 +1,7 @@
 import { Rule } from '@azure-tools/adl.core/linter/rule';
 import { getTagValue, setTag } from '@azure-tools/adl.core/support/doc-tag';
 export default <Rule>{
-  runOn: 'edit',
+  activation: 'edit',
   meta: {
     name: 'http-tag-required',
     code: 'R1009',

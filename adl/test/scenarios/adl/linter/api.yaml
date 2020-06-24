@@ -1,0 +1,6 @@
+# API Project/Metadata
+
+# load the sample rules
+use: 
+  - ../../../../rules-plugin
+

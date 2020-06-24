@@ -221,6 +221,11 @@ export class Context<TSourceModel extends OAIModel> {
   get host() {
     return this.visitor.host;
   }
+  
+  get emit() {
+    return this.api.import;
+  }
+
   get apiVersion() {
     return this.sourceModel.info.version;
   }
