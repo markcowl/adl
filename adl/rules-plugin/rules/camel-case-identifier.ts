@@ -3,7 +3,7 @@ import { NamedElement } from '@azure-tools/adl.core/model/typescript/named-eleme
 import { getPascalIdentifier } from '../utils';
 
 export default <Rule>{
-  runOn: 'edit',
+  activation: 'disabled',
   meta: {
     name: 'camel-case-identifiers',
     code: 'PLACEHOLDER',

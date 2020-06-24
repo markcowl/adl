@@ -1,11 +1,17 @@
 import { exists, isDirectory, isFile, mkdir, readdir, readFile, rmdir, writeFile } from '@azure-tools/async-io';
 import { Dictionary, items, keys, linq } from '@azure-tools/linq';
 import { isAnonymous, Path, valueOf } from '@azure-tools/sourcemap';
+import { FileUriToPath } from '@azure-tools/uri';
 import { fail } from 'assert';
 import { dirname, join } from 'path';
 import { Directory, EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Node, Project, QuoteKind, SourceFile, SyntaxKind, TypeAliasDeclaration } from 'ts-morph';
 import { Document, parseDocument } from 'yaml';
+import { YAMLSeq } from 'yaml/types';
+import { Activation } from '../eventing/activation';
+import { EventListener } from '../eventing/event-listener';
+import { Linter } from '../linter/linter';
 import { ExtensionManager } from '../plugin/plugin-manager';
+import { ImportExtension } from '../serialization/openapi/import-extensions';
 import { getTags, hasTag } from '../support/doc-tag';
 import { Host, UrlFileSystem } from '../support/file-system';
 import { referenceTo } from '../support/typescript';
@@ -266,6 +272,15 @@ export class ApiModel extends Files {
 
   #rootFolder = '';
 
+  /** 
+   * @internal 
+   * 
+   * Linter instance for this API.
+  */
+  readonly linter = new Linter(this);
+
+  readonly import = new ImportExtension();
+
   /**
    * persistable project data (this should end up in the adl.yaml file)
    */
@@ -339,35 +354,55 @@ export class ApiModel extends Files {
 
       // eslint-disable-next-line no-fallthrough
       case 'object':
+        if( use instanceof YAMLSeq  ) {
+          use = use.items.map( (i) =>i.value);
+        }
         if( !Array.isArray(use)) {
-          throw new Error('Invalid plugin configuration');
+          throw new Error('Invalid plugin configuration ("use" is not an array of package references');
         }
         // load plugins now 
-        this.extensionManager = this.extensionManager || await ExtensionManager.Create(this.host.fileSystem.apiPath);
+        this.extensionManager = this.extensionManager || await ExtensionManager.Create(this.host.fileSystem.extensionPath);
+        
         for( const each of use ) {
-          const pkg = await this.extensionManager.findPackage(each);
-          let ext = await pkg.extension;
-          if( !ext ) {
+          try {
+          // we need to see if this a local folder before trying to load the extension.
+            const fullPath = this.host.fileSystem.resolve(each);
+            
+            const pkg = (fullPath.startsWith('file:/') && await exists(FileUriToPath(fullPath))) ? await this.extensionManager.findPackage('someExtension', fullPath) : await this.extensionManager.findPackage(each) ;
+            let ext = await pkg.extension;
+            if( !ext ) {
             // it's not installed, 
-            ext = await pkg.install();
-          }
-          const exports = ext.load();
+              ext = await pkg.install();
+            }
+            const exports = ext.load();
 
-          // iterate thru the default exports and bind the events to the respective emitters.
-          for( const [key, xport] of items(exports.default) ) {
+            // iterate thru the default exports and bind the events to the respective emitters.
+            for( const [key, xport] of items<string, EventListener,any>(exports.default) ) {
             // the key is just a string 
             // the xport should have members that we 
             // use to bind to the events.
-            if( !this.
-              .subscribe(xport) ) {
-              // let the linter play with it first
-              // if that doesn't bind, then we can 
-              // see if the model binds to it.
-              this.subscribe(xport); 
+              if( typeof xport === 'object') {
+                switch( xport.activation) {
+                  case undefined:
+                  case Activation.disabled:
+                    continue;
+
+                  case Activation.demand:
+                  case Activation.edit:
+                    this.linter.subscribe(xport);
+                    continue;
+              
+                  case Activation.import:
+                    this.import.subscribe(xport);
+                    continue;
+                }
+              }
             }
+        
+          } catch (E) {
+            this.host.warning(`Unable to load extension ${each} -- ${E.message}`, undefined);
           }
         }
-
         break;
       
       default:
@@ -383,9 +418,8 @@ export class ApiModel extends Files {
     if( await this.host.fileSystem.isFile('api.yaml')) {
       const content = await this.host.fileSystem.readFile('api.yaml');
       this.document =  parseDocument(content, {keepCstNodes: true});
-      
+      await this.loadExtensions();
     }
-    
   }
 
   static async loadADL( path: string ) {
@@ -398,10 +432,8 @@ export class ApiModel extends Files {
       throw new Error(`Path '${path}' does is not a directory`);
     }
 
-    new UrlFileSystem(path);
-
     // create a project from the contents of the folder
-    const result = new ApiModel();
+    const result = new ApiModel(new Host(new UrlFileSystem(path)));
 
     result.#rootFolder = path;
 

@@ -1,7 +1,7 @@
 import { Rule, RuleResult } from '@azure-tools/adl.core/linter/rule';
 import { NamedElement } from '@azure-tools/adl.core/model/typescript/named-element';
 export default <Rule>{
-  runOn: 'edit',
+  activation: 'edit',
   meta: {
     name: 'version-format',
     code: 'R2056',
@@ -21,7 +21,7 @@ export default <Rule>{
   onOperationGroup: (model, operationGroup) => checkDescription('operationGroup', operationGroup),
   onOperation: (model, operation) => checkDescription('operation', operation),
   onProperty: (model, property) => checkDescription('property', property),
-  onParameter: (model, parameter) => checkDescription('parameter', parameter)
+  // onParameter: (model, parameter) => checkDescription('parameter', parameter)
 };
 
 function checkDescription(nodeType: string, element: NamedElement<any>): RuleResult | undefined {

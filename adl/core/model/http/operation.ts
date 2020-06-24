@@ -92,9 +92,15 @@ export class Operation extends base.Operation {
   }
 
   /** parameters common to all the requests(overloads) for this operation */
-  readonly parameters!: ReadonlyArray<ParameterElement>;
+  get parameters(){
+    return this.node.getParameters().map( p => new ParameterElement(p));
+  }
 
-  readonly responses!: ReadonlyArray<ResponseElement>;
+  get responseCollection(): ResponseCollection | Declaration<ResponseCollection> | undefined {
+    const rt = this.node.getReturnType();
+    
+    return undefined;
+  }
 
   /**
    * Authentication requirements for this operation, which override those specified globally.

@@ -4,7 +4,7 @@ import { mkdtempSync } from 'fs';
 import { tmpdir } from 'os';
 import { relative, resolve } from 'path';
 import { cwd } from 'process';
-import { EventEmitter } from '../support/event-emitter';
+import { EventEmitter } from '../eventing/event-emitter';
 import { Stopwatch } from './stopwatch';
 
 
@@ -74,7 +74,7 @@ export class UrlFileSystem implements FileSystem {
   set cwd(path: string) {
     this.#cwd = ResolveUri(cwd(), `${path}/`);
 
-    if( path.startsWith('file:/') )  {
+    if( this.#cwd.startsWith('file:/') )  {
       // it's a local path, so the extension and api paths are relative to this location
       this.#extPath = FileUriToPath( ResolveUri(this.#cwd,'.adl/.extensions')) ;
       this.#apiPath = FileUriToPath( ResolveUri(this.#cwd, '.adl/.apis') );

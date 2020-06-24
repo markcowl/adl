@@ -1,7 +1,7 @@
 import { Rule } from '@azure-tools/adl.core/linter/rule';
 
 export default <Rule>{
-  runOn: 'edit',
+  activation: 'edit',
   meta: {
     name: 'avoid-anonymous-types',
     code: 'R2056',
