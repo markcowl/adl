@@ -279,7 +279,7 @@ export class ApiModel extends Files {
   */
   readonly linter = new Linter(this);
 
-  readonly import = new ImportExtension();
+  readonly import = new ImportExtension(this);
 
   /**
    * persistable project data (this should end up in the adl.yaml file)
