@@ -270,8 +270,6 @@ export class ApiModel extends Files {
     resource: this.project.createDirectory('resources'),
   }
 
-  #rootFolder = '';
-
   /** 
    * @internal 
    * 
@@ -422,7 +420,7 @@ export class ApiModel extends Files {
     }
   }
 
-  static async loadADL( path: string ) {
+  static async loadADL(path: string, host = new Host(new UrlFileSystem(path)) ) {
     // path must be a directory
     if( !await exists(path)) { 
       throw new Error(`Path '${path}' does not exist`);
@@ -434,8 +432,6 @@ export class ApiModel extends Files {
 
     // create a project from the contents of the folder
     const result = new ApiModel(new Host(new UrlFileSystem(path)));
-
-    result.#rootFolder = path;
 
     // find the API.YAML file for the project
     // load any extensions into the ApiModel we're creating

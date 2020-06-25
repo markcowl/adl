@@ -55,6 +55,15 @@ export interface responseValue2 {
 
 
 // operation interfaces have methods.
+
+/**
+ * this is some text 
+ * 
+ * @param     paramname comment text
+ * @happy        this is all comment text
+ * @since      this is all comment text too
+ * 
+ */
 export interface myOperations {
 
   /**

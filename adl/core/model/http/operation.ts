@@ -1,7 +1,7 @@
 import { fail } from 'assert';
 import { JSDoc, JSDocTagStructure, MethodSignatureStructure, Node, ParameterDeclarationStructure, printNode, StructureKind, ts } from 'ts-morph';
 import { normalizeIdentifier, normalizeName } from '../../support/codegen';
-import { createDocs, getTagValue, setTag } from '../../support/doc-tag';
+import { createDocs } from '../../support/doc-tag';
 import { Alias } from '../alias';
 import { ApiModel } from '../api-model';
 import * as base from '../operation';
@@ -72,23 +72,20 @@ export class ResponseCollection extends base.ResponseCollection {
 }
 
 export class Operation extends base.Operation {
-  /** A list of tags for API documentation control. Tags can be used for logical grouping of operations by resources or any other qualifier. */
-  readonly tags = new TagCollection(this.node);
-
+  
   /** The HTTP method used and the path operated upon. */
   get path(): string {
-    return /([^\s]*)\s+(.*)/.exec(getTagValue(this.node, 'http') || '')?.[2] || '';
+    return this.annotations?.get('http')[0]?.content?.value || '';
   }
   set path(value: string) {
-    setTag(this.node, 'http', `${this.method} ${value}`);
+    this.annotations?.set('http', `${this.method} ${value}`);
   }
 
   get method(): Method {
-    const m = (/([^\s]*)\s+(.*)/.exec(getTagValue(this.node, 'http') || '')?.[1] || '').toUpperCase();
-    return <Method>m;
+    return <Method>(this.annotations?.get('http')[0]?.content?.value.toUpperCase() || '');
   }
   set method(value: Method) {
-    setTag(this.node, 'http', `${value} ${this.path}`);
+    this.annotations?.set('http', `${value} ${this.path}`);
   }
 
   /** parameters common to all the requests(overloads) for this operation */

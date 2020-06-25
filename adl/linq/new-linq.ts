@@ -280,9 +280,7 @@ function select<T, V>(this: Iterable<T>, selector: (each: T) => V): IterableWith
 function selectMany<T, V>(this: Iterable<T>, selector: (each: T) => Iterable<V>): IterableWithLinq<V> {
   return linqify(function* (this: Iterable<T>) {
     for (const each of this) {
-      for (const item of selector(each)) {
-        yield item;
-      }
+      yield *selector(each);
     }
   }.bind(this)());
 }
