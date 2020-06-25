@@ -1,5 +1,4 @@
-import { Rule } from '@azure-tools/adl.core/linter/rule';
-import { getTagValues, setTag } from '@azure-tools/adl.core/support/doc-tag';
+import { getTagValues, Rule, setTag } from '@azure-tools/adl.core';
 export default <Rule>{
   activation: 'edit',
   meta: {
