@@ -222,7 +222,7 @@ async function readFiles(fileSystem: FileSystem, folder: string, directory: Proj
     if (each.endsWith('.ts') && await fileSystem.isFile(fullPath) ) {
       directory.createSourceFile(each, await fileSystem.readFile(fullPath) );
     }
-    if (await fileSystem.isDirectory(fullPath)  ) {
+    if ( each !== '.adl' && await fileSystem.isDirectory(fullPath)  ) {
       const dir = directory.createDirectory(each);
       all.push(readFiles(fileSystem, fullPath, dir));
     }
