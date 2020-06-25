@@ -76,7 +76,7 @@ export async function processOpenApi2(oai2: v2.Model, $: Context) {
     await processParameter(value, $);
   }
 
-  processPaths([oai2.paths, oai2['x-ms-paths']], $);
+  await processPaths([oai2.paths, oai2['x-ms-paths']], $);
 
   return $.api;
 }

@@ -15,5 +15,5 @@ export async function cmdImport(args: CommandLine) {
     throw new Error(`Project folder '${args.project}' is not empty. Use --force to overwrite output`);
   }
 
-  api.saveADL(args.project, true);
+  await api.saveADL(args.project, true);
 }

@@ -83,9 +83,9 @@ export class UrlFileSystem implements FileSystem {
       this.#extPath = FileUriToPath(ResolveUri(tempfolder, '.adl/.extensions'));
       this.#apiPath = FileUriToPath(ResolveUri(tempfolder, '.adl/.apis'));
       
-      process.on('beforeExit',()=> {
+      process.on('beforeExit',async ()=> {
         // remember to remove them when we're done.
-        rmdir(tempfolder);
+        await rmdir(tempfolder);
       });
     }
   }
