@@ -2,15 +2,6 @@
 import { items, linq } from '@azure-tools/linq';
 import { Path, Tracker } from './exports';
 
-
-// eslint-disable-next-line no-prototype-builtins
-if (!Array.prototype.hasOwnProperty('last')) {
-  Object.defineProperty(Array.prototype, 'last', {
-    get() {
-      return this[this.length - 1];
-    }
-  });
-}
 export interface SourceFile {
   filename: string;
 }

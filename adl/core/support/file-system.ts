@@ -1,4 +1,4 @@
-import { isDirectory, isFile, rmdir } from '@azure-tools/async-io';
+import { isDirectory, isFile, readdir, rmdir } from '@azure-tools/async-io';
 import { FileUriToPath, ReadUri, ResolveUri, WriteString } from '@azure-tools/uri';
 import { mkdtempSync } from 'fs';
 import { tmpdir } from 'os';
@@ -55,6 +55,8 @@ export interface FileSystem {
   writeFile(relativePath: string, data: string): Promise<void>;
   isDirectory( relativePath: string):  Promise<boolean>;
   isFile(relativePath: string): Promise<boolean>;
+
+  readdir(relativePath: string): Promise<Array<string>>;
 }
 
 function uniqueTempFolder(): string {
@@ -121,7 +123,7 @@ export class UrlFileSystem implements FileSystem {
     return WriteString(fullPath, data);
   }
   async isDirectory(relativePath: string): Promise<boolean> {
-    return isDirectory( FileUriToPath(ResolveUri(this.#cwd, relativePath)));
+    return await isDirectory( FileUriToPath(ResolveUri(this.#cwd, relativePath)));
   }
   async isFile(relativePath: string): Promise<boolean> {
     return isFile(FileUriToPath(ResolveUri(this.#cwd, relativePath)));
@@ -143,6 +145,15 @@ export class UrlFileSystem implements FileSystem {
       headers.authorization = `Bearer ${this.githubAuthToken}`;
     }
     return ReadUri(uri, headers);
+  }
+  async readdir(relativePath: string): Promise<Array<string>> {
+    const uri = this.resolve(relativePath);
+    if( uri.startsWith('file:/')) {
+      const path = FileUriToPath(uri);
+      return readdir(path);
+    }
+    // can't do remote filesystem readdir at the moment.
+    return [];
   }
 
 }

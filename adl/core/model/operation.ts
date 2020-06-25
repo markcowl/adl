@@ -99,6 +99,9 @@ export abstract class OperationGroup extends NamedElement<InterfaceDeclaration> 
 
   abstract get operations(): Array<Operation>;
 
+  get extends(): Array<string> {
+    return [];
+  }
 }
 
 export class Operation extends NamedElement<MethodSignature> {

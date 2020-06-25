@@ -5,6 +5,8 @@ import { getAPI, getPath } from '../../support/typescript';
 import { Initializer } from '../element';
 import { InternalData } from '../project/internal-data';
 import { VersionInfo } from '../version-info';
+import { Annotations } from './annotations';
+
 
 export class TSElement<TNode extends Node> extends Initializer {
   constructor(public node: TNode, initializer?: Partial<TSElement<TNode>>) {
@@ -64,5 +66,12 @@ export class TSElement<TNode extends Node> extends Initializer {
 
   get sourceFile() {
     return this.node.getSourceFile();
+  }
+
+  get annotations(): Annotations|undefined {
+    if( Node.isJSDocableNode(this.node)) {
+      return new Annotations(this.node);
+    }
+    return undefined;
   }
 }

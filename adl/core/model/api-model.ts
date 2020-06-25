@@ -1,4 +1,4 @@
-import { exists, isDirectory, isFile, mkdir, readdir, readFile, rmdir, writeFile } from '@azure-tools/async-io';
+import { exists, isFile, mkdir, rmdir, writeFile } from '@azure-tools/async-io';
 import { Dictionary, items, keys, linq } from '@azure-tools/linq';
 import { isAnonymous, Path, valueOf } from '@azure-tools/sourcemap';
 import { FileUriToPath } from '@azure-tools/uri';
@@ -13,7 +13,7 @@ import { Linter } from '../linter/linter';
 import { ExtensionManager } from '../plugin/plugin-manager';
 import { ImportExtension } from '../serialization/openapi/import-extensions';
 import { getTags, hasTag } from '../support/doc-tag';
-import { Host, UrlFileSystem } from '../support/file-system';
+import { FileSystem, Host, UrlFileSystem } from '../support/file-system';
 import { referenceTo } from '../support/typescript';
 import { HttpProtocol } from './http/protocol';
 import { ParameterElement, ResponseCollection, ResponseElement, ResultElement } from './operation';
@@ -213,18 +213,18 @@ export class Files {
   }
 }
 
-async function readFiles( folder: string, directory: Project|Directory) {
+async function readFiles(fileSystem: FileSystem, folder: string, directory: Project|Directory) {
   const all = new Array<Promise<any>>();
 
-  const entries = await readdir(folder);
+  const entries = await fileSystem.readdir(folder);
   for( const each of entries) {
     const fullPath = join(folder, each);
-    if( await isFile(fullPath)  && each.endsWith('.ts')) {
-      directory.createSourceFile(each, await readFile(fullPath) );
+    if (each.endsWith('.ts') && await fileSystem.isFile(fullPath) ) {
+      directory.createSourceFile(each, await fileSystem.readFile(fullPath) );
     }
-    if( await isDirectory(fullPath)  ) {
+    if ( each !== '.adl' && await fileSystem.isDirectory(fullPath)  ) {
       const dir = directory.createDirectory(each);
-      all.push(readFiles(fullPath, dir));
+      all.push(readFiles(fileSystem, fullPath, dir));
     }
   }
   // wait for everything below to here to finish.
@@ -269,8 +269,6 @@ export class ApiModel extends Files {
     group: this.project.createDirectory('operations'),
     resource: this.project.createDirectory('resources'),
   }
-
-  #rootFolder = '';
 
   /** 
    * @internal 
@@ -422,26 +420,24 @@ export class ApiModel extends Files {
     }
   }
 
-  static async loadADL( path: string ) {
+  static async loadADL(path: string, host = new Host(new UrlFileSystem(path)) ) {
     // path must be a directory
     if( !await exists(path)) { 
       throw new Error(`Path '${path}' does not exist`);
     }
     
-    if (!await isDirectory(path)) {
+    if (!await host.fileSystem.isDirectory(path)) {
       throw new Error(`Path '${path}' does is not a directory`);
     }
 
     // create a project from the contents of the folder
-    const result = new ApiModel(new Host(new UrlFileSystem(path)));
-
-    result.#rootFolder = path;
+    const result = new ApiModel(host);
 
     // find the API.YAML file for the project
     // load any extensions into the ApiModel we're creating
     await result.initialize(); 
 
-    await readFiles(path, result.project);
+    await readFiles(host.fileSystem, '', result.project);
 
     return result;
   }
