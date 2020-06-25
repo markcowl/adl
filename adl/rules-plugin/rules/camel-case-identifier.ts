@@ -1,5 +1,4 @@
-import { Rule, RuleResult } from '@azure-tools/adl.core/linter/rule';
-import { NamedElement } from '@azure-tools/adl.core/model/typescript/named-element';
+import { NamedElement, Rule, RuleResult } from '@azure-tools/adl.core';
 import { getPascalIdentifier } from '../utils';
 
 export default <Rule>{

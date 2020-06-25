@@ -1,4 +1,4 @@
-import { Rule } from '@azure-tools/adl.core/linter/rule';
+import { Rule } from '@azure-tools/adl.core';
 
 export default <Rule>{
   activation: 'edit',
