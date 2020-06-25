@@ -75,10 +75,6 @@
     },
     {
       "changeProcessCWD": true,
-      "directory": "./adl/adl.types",
-    },
-    {
-      "changeProcessCWD": true,
       "directory": "./adl/linq",
     },
     {
