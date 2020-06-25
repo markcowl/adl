@@ -7,7 +7,7 @@
     "vscode": "^1.43.0"
   },
   "activationEvents": [
-    "onLanguage:typescript"
+    "workspaceContains:adl.yaml"
   ],
   "contributes": {
     "configuration": {
