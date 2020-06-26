@@ -9,4 +9,10 @@ export interface EventListener {
    * 
    */
   activation: Activation;
+
+  meta: ListenerMetaData;
+}
+
+export interface ListenerMetaData {
+  
 }
