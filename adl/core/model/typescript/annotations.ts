@@ -53,7 +53,7 @@ export class Annotation implements Rangeable {
     
   }
   #initialized = false;
-  #type!: Text;
+  #name!: Text;
   #identity?: Text;
   #content?: Text;
 
@@ -72,7 +72,7 @@ export class Annotation implements Rangeable {
 
     const tn = this.node.getTagName();
 
-    this.#type = {
+    this.#name = {
       ...Range.fromNode(this.node.getTagNameNode()),
       value: tn
     };
@@ -104,12 +104,12 @@ export class Annotation implements Rangeable {
    */
   get name(): string {
     this.initialize();
-    return this.#type.value;
+    return this.#name.value;
   }
 
   get range(): Range {
     this.initialize();
-    return this.#type;
+    return this.#name;
   }
 
   get fullRange(): Range {
