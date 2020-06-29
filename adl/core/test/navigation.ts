@@ -1,5 +1,5 @@
 import { suite, test } from '@testdeck/mocha';
-import { deepEqual } from 'assert';
+import { deepEqual, equal } from 'assert';
 import { resolve } from 'path';
 import { ApiModel } from '../model/api-model';
 import { ResponseCollection } from '../model/http/operation';
@@ -14,6 +14,7 @@ const scenarios = `${__dirname}/../../../test/scenarios/adl`;
     const api = await ApiModel.loadADL(inputRoot);
 
     this.navigateModels(api);
+    this.navigateEnums(api);
     this.navigateOperations(api);
   }
 
@@ -59,5 +60,35 @@ const scenarios = `${__dirname}/../../../test/scenarios/adl`;
     deepEqual(modelTypeNames, ['Person', 'responseValue2']);
 
     const personModel = api.modelTypes[0];
+  }
+
+  private navigateEnums(api: ApiModel) {
+    const enumNames = api.enumTypes.map(each => each.name);
+    deepEqual(enumNames, ['Color', 'Priority']);
+
+    const colorEnum = api.enumTypes[0];
+    equal(colorEnum.name, 'Color');
+    equal(colorEnum.summary, 'Represents a color');
+    equal(colorEnum.extensible, true);
+
+    const colorValueNames = colorEnum.values.map(each => each.name);
+    deepEqual(colorValueNames, ['Red', 'Blue', 'None']);
+
+    const colorValueSummaries = colorEnum.values.map(each => each.summary);
+    deepEqual(colorValueSummaries, ['The color red', 'The color blue', 'No color']);
+
+    const colorValues = colorEnum.values.map(each => each.value);
+    deepEqual(colorValues, ['Red', 'Blue', '']);
+
+    const priorityEnum = api.enumTypes[1];
+    equal(priorityEnum.name, 'Priority');
+    equal(priorityEnum.summary, '');
+    equal(priorityEnum.extensible, false);
+
+    const priorityValueSummaries = priorityEnum.values.map(each => each.summary);
+    deepEqual(priorityValueSummaries, ['', '', '']);
+
+    const priorityValues = priorityEnum.values.map(each => each.value);
+    deepEqual(priorityValues, [0, 1, 2]);
   }
 }

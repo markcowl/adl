@@ -32,15 +32,15 @@ export class NamedElement<TNode extends Node & NamedNodeSpecificBase<Identifier 
   }
 
   get summary() {
-    return getFirstDoc(this.node).getDescription();
+    return getFirstDoc(this.node).getDescription().trim();
   }
 
-  set summary(value: string | undefined) {
+  set summary(value: string) {
     getFirstDoc(this.node).setDescription(value || '\n');
   }
 
   get description() {
-    return getTagValue(this.node, 'description');
+    return getTagValue(this.node, 'description')?.trim();
   }
   set description(value: string | undefined) {
     setTag(this.node, 'description', value);

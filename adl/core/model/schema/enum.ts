@@ -1,7 +1,7 @@
 import { isAnonymous } from '@azure-tools/sourcemap';
 import { EnumDeclaration, EnumMember, ts } from 'ts-morph';
 import { normalizeIdentifier, TypeSyntax } from '../../support/codegen';
-import { createDocs } from '../../support/doc-tag';
+import { createDocs, hasTag, setTag } from '../../support/doc-tag';
 import { ApiModel } from '../api-model';
 import { Identity } from '../types';
 import { NamedElement } from '../typescript/named-element';
@@ -70,6 +70,17 @@ export class EnumValueElement extends NamedElement<EnumMember> {
   constructor(node: EnumMember) {
     super(node);
   }
+
+  get value(): string | number | undefined {
+    return this.node.getValue();
+  }
+  set value(v: string | number | undefined) {
+    if (v == undefined) {
+      this.node.removeInitializer();
+      return;
+    }
+    this.node.setValue(v);
+  }
 }
 
 export class EnumType extends NamedElement<EnumDeclaration> implements TypeReference {
@@ -86,6 +97,13 @@ export class EnumType extends NamedElement<EnumDeclaration> implements TypeRefer
 
   get values(): Array<EnumValueElement> {
     return this.node.getMembers().map(each => new EnumValueElement(each));
+  }
+
+  get extensible(): boolean {
+    return hasTag(this.node, 'extensible');
+  }
+  set extensible(value: boolean) {
+    setTag(this.node, 'extensible', value);
   }
 
   createValue() {
