@@ -1,6 +1,6 @@
 import { isAnonymous } from '@azure-tools/sourcemap';
-import { EnumDeclaration, EnumMember } from 'ts-morph';
-import { literal, normalizeIdentifier, TypeSyntax } from '../../support/codegen';
+import { EnumDeclaration, EnumMember, ts } from 'ts-morph';
+import { normalizeIdentifier, TypeSyntax } from '../../support/codegen';
 import { createDocs } from '../../support/doc-tag';
 import { ApiModel } from '../api-model';
 import { Identity } from '../types';
@@ -59,7 +59,9 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
 
   // anonymous enums are far simpler, since they are purely inline information
   return {
-    declaration: new TypeSyntax(values.map(v => literal(v.value)).join(' | ')),
+    declaration: new TypeSyntax(
+      ts.createUnionTypeNode(
+        values.map(v => ts.createLiteralTypeNode(ts.createLiteral(v.value))))),
     requiredReferences: [],
   };
 }
