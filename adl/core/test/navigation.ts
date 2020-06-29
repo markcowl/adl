@@ -9,48 +9,55 @@ const scenarios = `${__dirname}/../../../test/scenarios/adl`;
 
 @suite class TestNavigation {
 
-  @test async first() { 
+  @test async 'Load and navigate ADL'() { 
     const inputRoot = resolve(scenarios, 'sampleProject');
     const api = await ApiModel.loadADL(inputRoot);
 
-    const models = api.modelTypes.map( each => each.name );
-    deepEqual(models, ['Person', 'responseValue2']);
+    this.navigateModels(api);
+    this.navigateOperations(api);
+  }
 
+  private navigateOperations(api: ApiModel) {
     const groups = api.operationGroups;
-    
+
     deepEqual(groups.map(each => each.name), ['myOperations']);
 
     const operations = groups[0].operations;
-    
+
     deepEqual(operations.map(each => each.name), ['first']);
 
-    const responseCollections =  api.responseCollections;
+    this.navigateResponses(api);
+  }
+
+  private navigateResponses(api: ApiModel) {
+    const responseCollections = api.responseCollections;
     deepEqual(responseCollections.length, 1, 'should have one response collection');
-    
+
     const col = responseCollections[0];
 
     // strongly type the expected collections type
-    const collection = <ResponseCollection> col.target;
+    const collection = <ResponseCollection>col.target;
     const responses = collection.responses;
 
     deepEqual(responses.length, 6, 'should have 6 responses in the collection');
 
-    for( const response of responses ) {
-      const r = isDeclaration( response ) ? response.target : response;
+    for (const response of responses) {
+      const r = isDeclaration(response) ? response.target : response;
       const c = r.criteria;
-      let discard =  c.codes; // will throw if it's not good
+      let discard = c.codes; // will throw if it's not good
       discard = c.mediaTypes; // will throw if it's not good
-      //console.log(  c.codes.join(',') );
-      // console.log( c.mediaTypes.join(',') );
       const s = r.result;
-      if( s ) {
+      if (s) {
         const result = isDeclaration(s) ? s.target : s;
-        //console.log( result.body?.declaration.text || 'No Body Present' ) ;
-        const discard = result.body?.declaration.text; // will throw if it's not good
+        const discard = result.body?.declaration.text;
       }
-    } 
-
-
+    }
   }
- 
+
+  private navigateModels(api: ApiModel) {
+    const modelTypeNames = api.modelTypes.map(each => each.name);
+    deepEqual(modelTypeNames, ['Person', 'responseValue2']);
+
+    const personModel = api.modelTypes[0];
+  }
 }
