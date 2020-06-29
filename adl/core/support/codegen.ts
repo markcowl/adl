@@ -54,7 +54,7 @@ export class TypeSyntax {
   }
 
   get node() {
-    if (!this.#node) {
+    if (this.#node === undefined) {
       // NOTE: We currently get away with putting arbitrary syntax in a type
       // reference node's "name" here. It would be more correct to to parse the
       // text here into a proper tree, but that costs extra parsing and has the
@@ -65,7 +65,7 @@ export class TypeSyntax {
   }
 
   get text() {
-    if (!this.#text) {
+    if (this.#text === undefined) {
       this.#text = printNode(this.#node!);
     }
     return this.#text;
