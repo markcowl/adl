@@ -9,8 +9,7 @@ import { SchemaInitializer } from '../typescript/schema';
 import { TypeReference } from './type';
 
 export interface EnumInitializer extends SchemaInitializer {
-  extensible?: boolean;
-  readonly values: Array<EnumValue>;
+  extensible: boolean;
 }
 
 export interface EnumValue {
