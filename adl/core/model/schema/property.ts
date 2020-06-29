@@ -1,5 +1,5 @@
-import { PropertySignature, PropertySignatureStructure, StructureKind } from 'ts-morph';
-import { normalizeIdentifier } from '../../support/codegen';
+import { PropertySignature, PropertySignatureStructure, StructureKind, ts } from 'ts-morph';
+import { normalizeIdentifier, TypeSyntax } from '../../support/codegen';
 import { createDocs } from '../../support/doc-tag';
 import { addNullable } from '../../support/typescript';
 import { NamedElement } from '../typescript/named-element';
@@ -33,11 +33,14 @@ export class Property extends NamedElement<PropertySignature> {
   }
 
   get type(): TypeReference {
-    return <TypeReference><any>{};
+    return {
+      declaration: new TypeSyntax(this.node.getTypeNode()?.compilerNode ?? ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)),
+      requiredReferences: [] // todo
+    };
   }
 
   set type(typeReference: TypeReference) {
-    // shh
+    this.node.setType(typeReference.declaration.text);
   }
 }
 

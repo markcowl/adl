@@ -60,6 +60,14 @@ const scenarios = `${__dirname}/../../../test/scenarios/adl`;
     deepEqual(modelTypeNames, ['Person', 'responseValue2']);
 
     const personModel = api.modelTypes[0];
+    equal(personModel.name, 'Person');
+
+    const properties = personModel.properties;
+    const propertyNames = properties.map(each => each.name);
+    deepEqual(propertyNames, [ 'name', 'age' ]);
+
+    const propertyTypes = properties.map(each => each.type.declaration.text);
+    deepEqual(propertyTypes, ['string', 'number']);
   }
 
   private navigateEnums(api: ApiModel) {

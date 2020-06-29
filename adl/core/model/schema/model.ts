@@ -52,7 +52,7 @@ export class ModelType extends NamedElement<InterfaceDeclaration> implements Typ
     return new TypeSyntax(this.node.getName());
   }
 
-  getProperties(): Array<Property> {
+  get properties(): Array<Property> {
     return this.node.getProperties().map(each => new Property(each));
   }
 
