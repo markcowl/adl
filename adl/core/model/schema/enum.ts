@@ -3,14 +3,14 @@ import { EnumDeclaration, EnumMember } from 'ts-morph';
 import { literal, normalizeIdentifier, TypeSyntax } from '../../support/codegen';
 import { createDocs } from '../../support/doc-tag';
 import { ApiModel } from '../api-model';
-import { Collection, Identity } from '../types';
+import { Identity } from '../types';
 import { NamedElement } from '../typescript/named-element';
 import { SchemaInitializer } from '../typescript/schema';
 import { TypeReference } from './type';
 
 export interface EnumInitializer extends SchemaInitializer {
   extensible?: boolean;
-  readonly values: Collection<EnumValue>;
+  readonly values: Array<EnumValue>;
 }
 
 export interface EnumValue {

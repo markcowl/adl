@@ -5,15 +5,6 @@ export type Identity = string | anonymous;
 
 export type URL = string;
 
-export interface ReadOnlyCollection<T> {
-  get(): Array<T>;
-}
-
-export interface Collection<T> extends ReadOnlyCollection<T> {
-  push(...values: Array<T>): void;
-  remove(value: T): void;
-}
-
 export interface Folders {
   anonymous: Directory;
   alias: Directory;
