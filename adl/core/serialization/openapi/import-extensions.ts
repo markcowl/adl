@@ -13,10 +13,10 @@ export class ImportExtension extends EventEmitter<Events>  {
     super();
   }
   importOAI2( input: v2.Model): Iterable<boolean> {
-    return this.iterEmit('ImportOAI2',this.apiModel, input);
+    return [...this.iterEmit('ImportOAI2',this.apiModel, input)].select( each => each.result);
   }
   
   importOAI3(input: v3.Model): Iterable<boolean> {
-    return this.iterEmit('ImportOAI3', this.apiModel, input);
+    return [...this.iterEmit('ImportOAI3', this.apiModel, input)].select(each => each.result);
   }
 }

@@ -1,7 +1,6 @@
 // This rule suggests three ways to fix an error.
 // The user should be able to choose a fix using code actions.
-import { Rule, RuleResult } from '@azure-tools/adl.core/linter/rule';
-import { versionedElement } from '../utils';
+import { Rule, RuleResult } from '@azure-tools/adl.core';
 export default <Rule>{
   activation: 'edit',
   meta: {
@@ -26,7 +25,7 @@ export default <Rule>{
   //onParameter: (model, parameter) => checkVersionFormat(parameter)
 };
 
-function checkVersionFormat(element: versionedElement): RuleResult | undefined {
+function checkVersionFormat(element: any): RuleResult | undefined {
   const versionRegex = /^(20\d{2})-(0[1-9]|1[0-2])-((0[1-9])|[12][0-9]|3[01])(-(preview|alpha|beta|rc|privatepreview))?$/g;
   if (!element.versionInfo.since?.match(versionRegex)) {
     return {

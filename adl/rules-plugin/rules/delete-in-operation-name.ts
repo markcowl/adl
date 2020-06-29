@@ -1,5 +1,4 @@
-import { Rule } from '@azure-tools/adl.core/linter/rule';
-import { Method } from '@azure-tools/adl.core/model/http/operation';
+import { Method, Rule } from '@azure-tools/adl.core';
 export default <Rule>{
   activation: 'edit',
   meta: {

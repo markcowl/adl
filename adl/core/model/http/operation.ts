@@ -75,14 +75,14 @@ export class Operation extends base.Operation {
   
   /** The HTTP method used and the path operated upon. */
   get path(): string {
-    return this.annotations?.get('http')[0]?.content?.value || '';
+    return this.annotations?.get('http')[0]?.content || '';
   }
   set path(value: string) {
     this.annotations?.set('http', `${this.method} ${value}`);
   }
 
   get method(): Method {
-    return <Method>(this.annotations?.get('http')[0]?.content?.value.toUpperCase() || '');
+    return <Method>(this.annotations?.get('http')[0]?.identity?.toUpperCase() || '');
   }
   set method(value: Method) {
     this.annotations?.set('http', `${value} ${this.path}`);

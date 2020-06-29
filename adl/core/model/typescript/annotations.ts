@@ -1,7 +1,7 @@
 import { Dictionary } from '@azure-tools/linq';
 import { JSDocableNode, JSDocTag, Node, StructureKind } from 'ts-morph';
 import { appendTag, prependTag } from '../../support/doc-tag';
-import { Range, Text } from './position';
+import { Range, Rangeable, Text } from './position';
 
 
 function firstWord(text: string | undefined): string | undefined {
@@ -31,7 +31,7 @@ function trimmed(input: string | undefined) {
   };
 }
 
-export class Annotation {
+export class Annotation implements Rangeable {
   IdentityForWellKnownAnnotation = <Dictionary<((text: string | undefined) => string | undefined) | undefined>>{
     since: wholeLine,
     http: firstWord,
@@ -53,7 +53,7 @@ export class Annotation {
     
   }
   #initialized = false;
-  #type!: Text;
+  #name!: Text;
   #identity?: Text;
   #content?: Text;
 
@@ -72,7 +72,7 @@ export class Annotation {
 
     const tn = this.node.getTagName();
 
-    this.#type = {
+    this.#name = {
       ...Range.fromNode(this.node.getTagNameNode()),
       value: tn
     };
@@ -102,15 +102,33 @@ export class Annotation {
   /**
    * returns the annotation type (ie, 'since', 'param', etc... )
    */
-  get type(): Text {
+  get name(): string {
     this.initialize();
-    return this.#type;
+    return this.#name.value;
+  }
+
+  get range(): Range {
+    this.initialize();
+    return this.#name;
+  }
+
+  get fullRange(): Range {
+    return Range.fromNode( this.node);
+  }
+
+  get filename(): string{
+    return this.node.getSourceFile().getFilePath();
   }
 
   /**
    * returns the identity of the annotation (ie, a 'param' can have the name of the parameter)
    */
-  get identity(): Text | undefined {
+  get identity(): string | undefined {
+    this.initialize();
+    return this.#identity?.value;
+  }
+
+  get identityRange(): Range | undefined {
     this.initialize();
     return this.#identity;
   }
@@ -118,11 +136,15 @@ export class Annotation {
   /**
    * returns the textual value of the annotation
    */
-  get content(): Text | undefined {
+  get content(): string | undefined {
+    this.initialize();
+    return this.#content?.value;
+  }
+
+  get contentRange(): Range | undefined {
     this.initialize();
     return this.#content;
   }
-
   /**
    * removes this annoation from the element.
    */

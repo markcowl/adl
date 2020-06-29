@@ -33,57 +33,57 @@ export class Linter extends EventEmitter<Events> {
 
     // aliasTypes
     for (const aliasType of files.aliasTypes) {
-      yield* this.iterEmit('AliasType', model, aliasType);
+      yield*  [ ... this.iterEmit('AliasType', model, aliasType) ].select( each => each.result);
     }
 
     // globally declared stuff
     for (const responseCollection of files.responseCollections) {
-      yield* this.iterEmit('DeclaredResponseCollections', model, responseCollection);
+      yield* [ ... this.iterEmit('DeclaredResponseCollections', model, responseCollection)].select( each => each.result);
     }
 
     for (const response of files.responses) {
-      yield* this.iterEmit('DeclaredResponses', model, response);
+      yield* [ ... this.iterEmit('DeclaredResponses', model, response)].select( each => each.result);
     }
 
     for (const result of files.results) {
-      yield* this.iterEmit('DeclaredResults', model, result);
+      yield* [ ... this.iterEmit('DeclaredResults', model, result)].select( each => each.result);
     }
 
     for (const parameter of files.parameters) {
-      yield* this.iterEmit('DeclaredParameters', model, parameter);
+      yield* [ ... this.iterEmit('DeclaredParameters', model, parameter)].select( each => each.result);
     }
 
     for (const responseCollection of files.responseCollections) {
-      yield* this.iterEmit('DeclaredResponseCollections', model, responseCollection);
+      yield* [ ... this.iterEmit('DeclaredResponseCollections', model, responseCollection)].select( each => each.result);
     }
 
     for (const responseCollection of files.responseCollections) {
-      yield* this.iterEmit('DeclaredResponseCollections', model, responseCollection);
+      yield* [ ... this.iterEmit('DeclaredResponseCollections', model, responseCollection)].select( each => each.result);
     }
 
     // enumTypes and values
     for (const enumType of files.enumTypes) {
-      yield* this.iterEmit('EnumType', model, enumType);
+      yield* [ ... this.iterEmit('EnumType', model, enumType)].select( each => each.result);
       for (const value of enumType.values) {
-        yield* this.iterEmit('EnumValue', model, value);
+        yield* [ ... this.iterEmit('EnumValue', model, value)].select( each => each.result);
       }
     }
 
     // modelTypes and properties
     for (const modelType of files.modelTypes) {
-      yield* this.iterEmit('ModelType', model, modelType);
+      yield* [ ... this.iterEmit('ModelType', model, modelType)].select( each => each.result);
       for (const property of modelType.getProperties()) {
-        yield* this.iterEmit('Property', model, property);
+        yield* [ ... this.iterEmit('Property', model, property)].select( each => each.result);
       }
     }
 
     // operationGroups, operations, parameters
     for (const group of files.operationGroups) {
-      yield* this.iterEmit('OperationGroup', model, group);
+      yield* [ ... this.iterEmit('OperationGroup', model, group)].select( each => each.result);
       for (const operation of group.operations) {
-        yield* this.iterEmit('Operation', model, operation);
+        yield* [ ... this.iterEmit('Operation', model, operation)].select( each => each.result);
         for (const parameter of operation.parameters) {
-          yield* this.iterEmit('Parameter', model, parameter);
+          yield* [ ... this.iterEmit('Parameter', model, parameter)].select( each => each.result);
         }
       }
     }

@@ -83,3 +83,10 @@ export class Position {
     return { line: line - 1, character: column - 1 };
   }
 }
+
+
+export interface Rangeable {
+  readonly filename: string;
+  readonly range: Range;
+  readonly fullRange: Range;
+}

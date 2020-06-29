@@ -20,9 +20,9 @@ const scenarios = `${__dirname}/../../../../test/scenarios/adl`;
     deepEqual(a.names, ['param', 'happy', 'since'] );
 
     const ann = a.annotations;
-    deepEqual(ann[0].type.value, 'param' );
-    deepEqual(ann[0].identity?.value, 'paramname');
-    deepEqual(ann[0].content?.value, 'comment text');
+    deepEqual(ann[0].name, 'param' );
+    deepEqual(ann[0].identity, 'paramname');
+    deepEqual(ann[0].content, 'comment text');
   }
 
 }

@@ -6,14 +6,25 @@ import { Initializer } from '../element';
 import { InternalData } from '../project/internal-data';
 import { VersionInfo } from '../version-info';
 import { Annotations } from './annotations';
+import { Range, Rangeable } from './position';
 
 
-export class TSElement<TNode extends Node> extends Initializer {
+export class TSElement<TNode extends Node> extends Initializer implements Rangeable {
   constructor(public node: TNode, initializer?: Partial<TSElement<TNode>>) {
     super();
     this.initialize(initializer);
   }
 
+  get range(): Range{
+    return Range.fromNode(this.node);
+  }
+  get fullRange(): Range {
+    return Range.fromNode(this.node);
+  }
+  get filename(): string {
+    return this.node.getSourceFile().getFilePath();
+  }
+ 
   get internalData() {
     const pv = this.api.getPrivateData(getPath(this.node));
     if (!pv.internalData) {

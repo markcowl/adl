@@ -1,5 +1,5 @@
 import { Activation } from '../eventing/activation';
-import { EventListener } from '../eventing/event-listener';
+import { EventListener, ListenerMetaData } from '../eventing/event-listener';
 import { ApiModel } from '../model/api-model';
 import { Operation } from '../model/http/operation';
 import { OperationGroup, ParameterElement, ResponseCollection, ResponseElement, ResultElement } from '../model/operation';
@@ -26,7 +26,7 @@ export interface Rule extends EventListener {
   onParameter?: (model: ApiModel, parameter: ParameterElement) => RuleResult | undefined;
 }
 
-export interface RuleMetaData {
+export interface RuleMetaData extends ListenerMetaData {
   // The name of the rule
   name: string;
 
@@ -51,6 +51,7 @@ export interface RuleMetaData {
 export interface RuleResult {
   message?: string;
   suggestion?: Array<Fix>;
+  
 }
 
 export interface Fix {
