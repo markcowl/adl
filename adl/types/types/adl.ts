@@ -12,9 +12,6 @@ export type Kind<V> = V & TypeOf<V>;
 /** Declares the property is a polymorphic discriminator */
 export type Discriminator<V> = V;
 
-/** Version Restriction */
-export type Version<low, high = any> = any;
-
 /** an dictionary of key(string)/value pairs */
 export interface Dictionary<T> {
   [key: string]: T;

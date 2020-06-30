@@ -2,7 +2,7 @@
   "name": "@azure-tools/adl.types",
   "version": "1.0.0",
   "description": "ADL Type Definitions for HTTP APIs",
-  "types": "index",
+  "types": "./dist/index",
   "directories": {
     "doc": "docs"
   },
@@ -12,7 +12,7 @@
   "scripts": {
     "eslint-fix": "",
     "eslint": "",
-    "build": "",
+    "build": "tsc -p . && node ./.scripts/exports.js",
     "watch": "",
     "prepare": "npm run build",
     "test": "npm run build && echo - no tests yet mocha dist/test"
