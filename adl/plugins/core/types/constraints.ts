@@ -1,5 +1,5 @@
-import { Traits } from './annotations';
 import { integer } from './primitives';
+import { Traits } from './traits';
 
 /** A valid regular expression to apply as a constraint on a value
  * 

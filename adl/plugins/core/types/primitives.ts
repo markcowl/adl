@@ -1,5 +1,5 @@
-import { Traits } from './annotations';
 import { MaxLength, MinLength, RegularExpression } from './constraints';
+import { Traits } from './traits';
 import { Type } from './type';
 
 /** an 8 bit integer value */
