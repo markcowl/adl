@@ -1,5 +1,5 @@
 {
-  "name": "sample-plugin",
+  "name": "@adl-plugins/sample",
   "version": "1.0.0",
   "description": "ADL sample plugin",
   "main": "dist/exports.js",

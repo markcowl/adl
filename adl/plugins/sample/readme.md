@@ -1,4 +1,4 @@
-# ADL CLI
+# ADL Sample Plugin
 
 
 # Contributing
