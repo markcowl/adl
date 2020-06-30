@@ -1,10 +1,10 @@
-import { Host, UrlFileSystem } from '@azure-tools/adl.core';
+import { ApiModel } from '@azure-tools/adl.core';
 import { markdown } from './main';
 
-export function createHost(sourceFolder: string, projectFolder: string) {
-  const host =  new Host(new UrlFileSystem(sourceFolder));
+export function subscribeToMessages(apiModel: ApiModel) {
+  const host = apiModel.messages;
 
-  host.on('error', (text: string)=> {
+  host.on('error', (text: string) => {
     console.error(markdown(text));
   });
 
@@ -15,6 +15,4 @@ export function createHost(sourceFolder: string, projectFolder: string) {
   host.on('processed', (file: string, msec: number) => {
     console.log(markdown(`_Processed '${file}' in ${msec}_`));
   });
-
-  return host;
 }

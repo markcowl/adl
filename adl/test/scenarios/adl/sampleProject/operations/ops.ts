@@ -71,7 +71,7 @@ export interface myOperations {
    * 
    * @param name the name of the person
    */
-  first(person: string): [
+  first(person: string & MaxLength<25>): [
     (code: 200) => {
       body: Person;
     }

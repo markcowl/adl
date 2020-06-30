@@ -1,5 +1,4 @@
-import { ApiModel } from '@azure-tools/adl.core/dist/model/api-model';
-import { OperationGroup } from '@azure-tools/adl.core/dist/model/operation';
+import { ApiModel, OperationGroup } from '@azure-tools/adl.core';
 
 
 export class MyResource {

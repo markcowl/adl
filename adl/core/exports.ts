@@ -1,12 +1,13 @@
 export { Rule, RuleResult } from './linter/rule';
+export { ApiModel } from './model/api-model';
 export { Method } from './model/http/operation';
+export { OperationGroup } from './model/operation';
+export { Protocol } from './model/project/protocol';
 export { NamedElement } from './model/typescript/named-element';
 export { Declaration } from './model/typescript/reference';
 export { exportFromPlugin } from './plugin/export-from-plugin';
-export { deserializeOpenAPI2 } from './serialization/openapi/v2/serializer';
-export { deserializeOpenAPI3 } from './serialization/openapi/v3/serializer';
 export * from './support/doc-tag';
-export { FileSystem, Host, UrlFileSystem } from './support/file-system';
+export { FileSystem, UrlFileSystem } from './support/file-system';
+export { MessageChannels as Host } from './support/message-channels';
 export * from './support/typescript';
-export { importModel } from './support/visitor';
 

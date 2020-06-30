@@ -1,7 +1,7 @@
 import { isFile } from '@azure-tools/async-io';
 import * as chalk from 'chalk';
 import * as fs from 'fs';
-import { Host, UrlFileSystem } from '../support/file-system';
+import { ApiModel } from '../model/api-model';
 const unlink = fs.promises.unlink;
 
 export function formatDuration(msec: number) {
@@ -20,8 +20,8 @@ export function formatDuration(msec: number) {
   return chalk.red(`${Math.floor(msec / 60000)}:${(Math.floor(msec / 1000) % 60).toString().padStart(2, '0')}.${msec % 1000}m`);
 }
 
-export function createHost(inputRoot: string) {
-  const host = new Host(new UrlFileSystem(inputRoot));
+export function subscribeToMessages(api: ApiModel) {
+  const host = api.messages;
   host.on('warning', (msg, node, when) => console.log(chalk.yellowBright(`      ${msg}`)));
   host.on('error', (msg, node, when) => console.log(chalk.redBright(`      ${msg}`)));
   host.on('loaded', (path, duration, when) => console.log(chalk.cyan(`      loaded: '${path}' ${formatDuration(duration)} `)));
@@ -43,7 +43,7 @@ export async function clean(...files: Array<string>) {
           await unlink(each);
         }
       } catch {
-      // shh
+        // shh
       }
     }));
 }
