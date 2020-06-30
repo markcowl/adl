@@ -8,6 +8,7 @@ import { Directory, EnumDeclaration, IndentationText, InterfaceDeclaration, NewL
 import { Document, parseDocument } from 'yaml';
 import { YAMLSeq } from 'yaml/types';
 import { Activation } from '../eventing/activation';
+import { EventEmitter } from '../eventing/event-emitter';
 import { EventListener } from '../eventing/event-listener';
 import { Linter } from '../linter/linter';
 import { ExtensionManager } from '../plugin/plugin-manager';
@@ -179,7 +180,7 @@ export class Files {
   /**
    * returns all the protocols for this API
    */
-  get protocols(): Dictionary<Protocol> {
+  get protocols(): Dictionary<Protocol<any>> {
     return linq.items(this.api.protocols).toDictionary(([key])=>key, ([,protocol])=>protocol.from(this.files));
   }
 
@@ -231,7 +232,21 @@ async function readFiles(fileSystem: FileSystem, folder: string, directory: Proj
   await Promise.all(all);
 }
 
-export class ApiModel extends Files {
+interface ProtocolEvents {
+  InitializeProtocol(apiModel: ApiModel): Protocol;
+}
+
+class Protocols extends EventEmitter<ProtocolEvents> {
+  constructor(private apiModel: ApiModel) {
+    super();
+  }
+  intializeProtocol(): Iterable<Protocol> {
+    return [... this.iterEmit('InitializeProtocol', this.apiModel)].select( each => each.result);
+  }
+
+}
+
+export class ApiModel extends Files  {
   /**
    * when creating constructs that lack a name, we can give them a unique number
    */
@@ -240,7 +255,7 @@ export class ApiModel extends Files {
   /**
    * protocols connected to this model
    */
-  #protocols = new Dictionary<Protocol>();
+  #protocols = new Dictionary<Protocol<any>>();
 
   /**
    * typescript project for this model
@@ -278,6 +293,8 @@ export class ApiModel extends Files {
   readonly linter = new Linter(this);
 
   readonly import = new ImportExtension(this);
+
+  readonly #protos = new Protocols(this);
 
   /**
    * persistable project data (this should end up in the adl.yaml file)
@@ -417,6 +434,10 @@ export class ApiModel extends Files {
       const content = await this.host.fileSystem.readFile('api.yaml');
       this.document =  parseDocument(content, {keepCstNodes: true});
       await this.loadExtensions();
+    }
+
+    for( const each of this.#protos.intializeProtocol() ) {
+      this.api.protocols[each.protocolName] = each;
     }
   }
 
