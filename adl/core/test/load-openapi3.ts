@@ -72,7 +72,6 @@ describe('Load Single OAI3 files', () => {
       await clean(apiOutput, atticOutput);
       await checkAttic(api, errors, atticOutput);
 
-
       // reset timer
       stopwatch.time;
 

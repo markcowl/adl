@@ -5,7 +5,11 @@ import { OperationGroup, ParameterElement, ResponseCollection, ResponseElement, 
 import { Declaration } from '../typescript/reference';
 
 
-export abstract class Protocol {
+interface ProtocolImpl{
+  new(api: ApiModel, sourceFiles?: Array<SourceFile>): Protocol;
+}
+
+export abstract class Protocol<T extends Protocol = Protocol<any> > {
   readonly api: ApiModel;
   
   readonly #files?: Array<SourceFile>;
@@ -13,10 +17,13 @@ export abstract class Protocol {
   get files() {
     return this.#files || this.api.files;
   } 
-  protected constructor(api?: ApiModel, sourceFiles?: Array<SourceFile>) {
+  readonly protocolName: string;
+  
+  protected constructor(private ctor: ProtocolImpl, api?: ApiModel, sourceFiles?: Array<SourceFile>) {
     this.api = api || (this instanceof ApiModel ? this : fail('requires api model in constructor'));
     this.#files = sourceFiles;
-
+    this.protocolName = ctor.prototype.constructor.name;
+    
     // when this gets constructed, we have to emit an event to allow extensions to add queries to the instance
     // we need a query function for the extension
     // and then we can bind it as a property so that others can use it.
@@ -27,9 +34,13 @@ export abstract class Protocol {
     return (Object.getOwnPropertyNames(this).indexOf(propertyName) > -1 ? (<any>this)[propertyName] : []);
   }
 
-  abstract from(sourceFiles: Array<SourceFile>): Protocol;
+  where(predicate: (file: SourceFile) => boolean): Protocol<T> {
+    return new this.ctor(this.api, this.files.filter(predicate));
+  }
 
-  abstract where(predicate: (file: SourceFile) => boolean): Protocol;
+  from(sourceFiles: Array<SourceFile>): Protocol<T> {
+    return new this.ctor(this.api, sourceFiles);
+  }
 
   abstract get operationGroups(): Array<OperationGroup>;
 

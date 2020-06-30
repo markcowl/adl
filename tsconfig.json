@@ -20,7 +20,13 @@
       "path": "adl/sourcemap/tsconfig.json"
     },
     {
-      "path": "adl/sample-plugin/tsconfig.json"
+      "path": "adl/plugins/arm/tsconfig.json"
+    },
+    {
+      "path": "adl/plugins/core/tsconfig.json"
+    },
+    {
+      "path": "adl/plugins/sample/tsconfig.json"
     },
     {
       "path": "adl/rules-plugin/tsconfig.json"

@@ -223,7 +223,7 @@ export class Context<TSourceModel extends OAIModel> {
   }
   
   get emit() {
-    return this.api.import;
+    return this.api.oaiExtensions;
   }
 
   get apiVersion() {
