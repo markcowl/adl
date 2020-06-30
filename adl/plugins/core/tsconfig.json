@@ -1,20 +1,35 @@
 {
   "compilerOptions": {
+    "alwaysStrict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "commonjs",
+  "noEmitOnError": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "sourceMap": true,
+
     "experimentalDecorators": true,
-    "target": "es2020",
+    "target": "es2019",
     "noLib": false,
     "outDir": "dist",
     "rootDir": ".",
     "declaration": true,
     "declarationMap": false,
     "removeComments": false,
+    "lib": [
+      "es2019"
+    ],
+    "stripInternal": true,
+    "types": [
+      "node"
+    ],
   },
   "include": [
     "**/*.ts"
   ],
   "exclude": [
     "dist/**",
-    "../node_modules",
     "resources",
     "node_modules",
   ]

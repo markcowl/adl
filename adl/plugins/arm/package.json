@@ -1,15 +1,16 @@
 {
-  "name": "@azure-tools/arm.types",
+  "name": "@adl-plugins/arm",
   "version": "1.0.0",
-  "description": "ADL cli tool",
-  "main": "dist/main.js",
+  "description": "Azure Resource Manager extensionf for ADL",
+  "types": "./dist/index",
+  "main": "dist/exports.js",
   "engines": {
     "node": ">=10.12.0"
   },
   "scripts": {
-    "eslint-fix": "",
-    "eslint": "",
-    "build": "",
+    "eslint-fix": "eslint  . --fix --ext .ts",
+    "eslint": "eslint  . --ext .ts",
+    "build": "tsc -p . && node ./.scripts/exports.js",
     "watch": "",
     "prepare": "npm run build",
     "test": "npm run build && echo - no tests yet mocha dist/test"
@@ -19,8 +20,7 @@
     "url": "git+https://github.com/Azure/adl.git"
   },
   "keywords": [
-    "adl",
-    "cli"
+    "adl"
   ],
   "author": "",
   "license": "MIT",
@@ -35,7 +35,7 @@
     "typescript": "~3.9.5",
     "@typescript-eslint/eslint-plugin": "2.28.0",
     "@typescript-eslint/parser": "2.28.0",
-    "eslint": "6.8.0"
-  },
-  "dependencies": {}
+    "eslint": "6.8.0",
+    "@azure-tools/adl.core": "~1.0.0"
+  }
 }

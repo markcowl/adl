@@ -1,4 +1,4 @@
-# ADL CLI
+# ADL Azure Resource Manager Extension
 
 
 # Contributing

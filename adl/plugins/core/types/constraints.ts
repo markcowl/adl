@@ -1,4 +1,4 @@
-import { Attributes } from './Annotations';
+import { Attributes } from './annotations';
 
 /** A valid regular expression to apply as a constraint on a value
  * 

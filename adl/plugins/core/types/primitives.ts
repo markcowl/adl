@@ -1,4 +1,4 @@
-import { Attributes } from './Annotations';
+import { Attributes } from './annotations';
 import { MaxLength, MinLength, RegularExpression } from './constraints';
 import { Type } from './type';
 

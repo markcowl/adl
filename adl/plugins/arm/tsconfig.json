@@ -1,19 +1,35 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": ".",
     "types": [
-      "mocha",
       "node"
-    ]
+    ],
+    "alwaysStrict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "commonjs",
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "sourceMap": true,
+    "declarationMap": false,
+    "strict": true,
+    "declaration": true,
+    "stripInternal": true,
+    "noEmitHelpers": false,
+    "target": "es2019",
+    "lib": [
+      "es2019"
+    ],
+    "experimentalDecorators": true,
+    "newLine": "LF"
   },
   "include": [
-    "."
+    "**/*.ts"
   ],
   "exclude": [
     "dist",
-    "test/scenarios/**",
     "resources",
     "node_modules",
     "**/*.d.ts",
