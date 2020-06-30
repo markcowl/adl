@@ -1,5 +1,4 @@
-import { OperationGroup } from '@azure-tools/adl.core/dist/model/operation';
-import { Protocol } from '@azure-tools/adl.core/dist/model/project/protocol';
+import { OperationGroup, Protocol } from '@azure-tools/adl.core';
 
 class AmqpProtocol extends Protocol {
 

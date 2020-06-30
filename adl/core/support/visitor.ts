@@ -11,7 +11,7 @@ import { Element } from '../model/element';
 import { HeaderTypeReference, ParameterTypeReference, RequestBodyTypeReference, ResponseTypeReference, SchemaTypeReference } from '../model/schema/type';
 import { processOpenApi2 } from '../serialization/openapi/v2/serializer';
 import { processOpenApi3 } from '../serialization/openapi/v3/serializer';
-import { Host } from './file-system';
+import { FileSystem } from './file-system';
 import { Stopwatch } from './stopwatch';
 
 export interface Options {
@@ -57,15 +57,12 @@ class RefMap {
 
 export class ReferenceMap {
   schema = new Map<JsonPointer, SchemaTypeReference>();
-  parameter = new Map<JsonPointer, ParameterTypeReference> ();
+  parameter = new Map<JsonPointer, ParameterTypeReference>();
   header = new Map<JsonPointer, HeaderTypeReference>();
   requestBody = new Map<JsonPointer, RequestBodyTypeReference>();
   response = new Map<JsonPointer, ResponseTypeReference>();
 }
 
-export async function importModel<T extends OAIModel>(host: Host, ...inputs: Array<string>) {
-  return await new Visitor<T>(new ApiModel(), host, 'unknown', ...inputs).process();
-}
 
 export class Visitor<TSourceModel extends OAIModel> {
   key = '';
@@ -75,23 +72,23 @@ export class Visitor<TSourceModel extends OAIModel> {
 
   constructor(
     public api: ApiModel,
-    public host: Host,
+    public fileSystem: FileSystem,
     public inputType: 'oai3' | 'oai2' | 'unknown',
     ...sourceFiles: Array<string>) {
     // the source files are going to be YAML/JSON files for this
     // so we can speed up the process and grab them all and hold onto them
     for (const each of new Set(sourceFiles)) {
-      this.sourceFiles.set(this.host.fileSystem.resolve(each), this.loadInput(this.host.fileSystem.resolve(each)));
+      this.sourceFiles.set(this.fileSystem.resolve(each), this.loadInput(this.fileSystem.resolve(each)));
     }
   }
 
   async loadInput(sourceFile: string): Promise<Context<TSourceModel>> {
 
     const watch = new Stopwatch();
-    const content = await this.host.fileSystem.readFile(sourceFile);
-    this.host.loaded(sourceFile, watch.time);
+    const content = await this.fileSystem.readFile(sourceFile);
+    this.api.messages.loaded(sourceFile, watch.time);
     const model = parse(content);
-    this.host.parsed(sourceFile, watch.time);
+    this.api.messages.parsed(sourceFile, watch.time);
 
     if (model.openapi) {
       if (this.inputType === 'oai2') {
@@ -133,7 +130,7 @@ export class Visitor<TSourceModel extends OAIModel> {
       }
 
       await action(<NonNullable<TSourceModel>>ctx.sourceModel, ctx);
-      this.host.processed(ctx.sourceFile, watch.time);
+      this.api.messages.processed(ctx.sourceFile, watch.time);
     }
     return this.api;
   }
@@ -192,7 +189,7 @@ export class Visitor<TSourceModel extends OAIModel> {
       targetContext = await t;
     }
     const node = targetContext.visitor.findNode(path, targetContext.sourceModel);
-    if(!node) {
+    if (!node) {
       fail(`Unable to process Ref ${sourceFile}#/${path}`);
     }
 
@@ -218,10 +215,8 @@ export class Context<TSourceModel extends OAIModel> {
   ) {
 
   }
-  get host() {
-    return this.visitor.host;
-  }
-  
+
+
   get emit() {
     return this.api.oaiExtensions;
   }
@@ -230,12 +225,12 @@ export class Context<TSourceModel extends OAIModel> {
     return this.sourceModel.info.version;
   }
   error(text: string, offendingNode: any) {
-    this.host.error(text, offendingNode);
+    this.api.messages.error(text, offendingNode);
     return undefined;
   }
 
   warn(text: string, offendingNode: any) {
-    this.host.warning(text, offendingNode);
+    this.api.messages.warning(text, offendingNode);
     return undefined;
   }
 
@@ -247,7 +242,7 @@ export class Context<TSourceModel extends OAIModel> {
         result = true;
       }
     }
-    if(result) {
+    if (result) {
       throw new Error('Forbidden Properties');
     }
     return;
@@ -320,9 +315,9 @@ export class Context<TSourceModel extends OAIModel> {
     }
   }
 
-  async resolveReference(reference: string)  {
-    const {file, path } = this.normalizeReference(reference);
-    return this.visitor.resolveReference(file,path);
+  async resolveReference(reference: string) {
+    const { file, path } = this.normalizeReference(reference);
+    return this.visitor.resolveReference(file, path);
   }
 
   async *processInline<TIn, TOut extends Element, TOptions extends Options = Options>(action: fnAction<TSourceModel, TIn, TOut, TOptions>, value: TIn | common.JsonReference<TIn> | undefined, options?: TOptions): AsyncGenerator<TOut | Alias<TOut>> {
@@ -389,7 +384,7 @@ export class Context<TSourceModel extends OAIModel> {
 
         result.addVersionInfo({
           // deprecated isn't on everything, but this is safe when it's not there
-          deprecated: (<any>value).deprecated ? this.apiVersion: undefined,
+          deprecated: (<any>value).deprecated ? this.apiVersion : undefined,
           since: this.apiVersion,
         });
         result.addInternalData(this.visitor.inputType, { preferredFile: getSourceFile(value) });
@@ -416,7 +411,7 @@ export class Context<TSourceModel extends OAIModel> {
       // file = getSourceFile(ref)?.filename || fail(`unable to get filename of $ref ${ref}`);
       file = this.sourceFile;
     } else {
-      file = this.visitor.host.fileSystem.resolve(file);
+      file = this.visitor.fileSystem.resolve(file);
     }
 
     return {

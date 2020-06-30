@@ -18,7 +18,6 @@ export type Cookie<ParameterType, serializedName extends string = undefined> = P
 /** Parameter Locations */
 export type ParameterLocation = 'query' | 'path' | 'cookie' | 'header' | 'body';
 
-
 /** A parameter for an HTTP call
  * @argument Location - Location where the parameter is sent. Must be one of type @see ParameterLocation
  * @argument ParameterType - the schema/type of the parameter. 

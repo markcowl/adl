@@ -16,4 +16,3 @@ export type Discriminator<V> = V;
 export interface Dictionary<T> {
   [key: string]: T;
 }
-

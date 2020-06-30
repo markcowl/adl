@@ -1,33 +1,32 @@
-import { Attributes } from './annotations';
 import { MaxLength, MinLength, RegularExpression } from './constraints';
+import { Traits } from './traits';
 import { Type } from './type';
 
 /** an 8 bit integer value */
-export declare type int8 = number & Type.Integer & Attributes.Precision<8>;
+export declare type int8 = number & Type.Integer & Traits.Precision<8>;
 
 /** an 8 bit integer value */
-export declare type byte = number & Type.Integer & Attributes.Precision<8>;
+export declare type byte = number & Type.Integer & Traits.Precision<8>;
 
 /** a 16 bit integer value */
-export declare type int16 = number & Type.Integer & Attributes.Precision<16>;
+export declare type int16 = number & Type.Integer & Traits.Precision<16>;
 
 /** a 32 bit integer value */
-export declare type int32 = number & Type.Integer & Attributes.Precision<32>;
+export declare type int32 = number & Type.Integer & Traits.Precision<32>;
 
 /** a 64 bit integer value */
-export declare type int64 = number & Type.Integer & Attributes.Precision<64>;
+export declare type int64 = number & Type.Integer & Traits.Precision<64>;
 
-/** a 64 bit integer value */
-export declare type long = number & Type.Integer & Attributes.Precision<64>;
+export declare type integer = int8 | int16 | int32 | int64;
 
 /** a 32 bit floating point value */
-export declare type float32 = number & Type.FloatingPoint & Attributes.Precision<32>;
+export declare type float32 = number & Type.FloatingPoint & Traits.Precision<32>;
 
 /** a 64 bit floating point value */
-export declare type float64 = number & Type.FloatingPoint & Attributes.Precision<64>;
+export declare type float64 = number & Type.FloatingPoint & Traits.Precision<64>;
 
 /** the number of seconds that have passed since 00:00:00 UTC Thursday, 1 January 1970. */
-export declare type unixtime = number & Type.Date & Type.Time & Attributes.Standard<'unix-time'>;
+export declare type unixtime = number & Type.Date & Type.Time & Traits.Standard<'unix-time'>;
 
 /** a single character  */
 export declare type char = string & MinLength<1> & MaxLength<1>;
@@ -36,20 +35,20 @@ export declare type char = string & MinLength<1> & MaxLength<1>;
  * 
  * @todo - should this have a Pattern?
  */
-export declare type date = string & Type.Date & Attributes.Standard<'iso8601:date'>;
+export declare type date = string & Type.Date & Traits.Standard<'iso8601:date'>;
 
 /** an ISO 8601 DateTime format
  * 
  * @todo - should this have a Pattern?
  */
-export declare type datetime = string & Type.Date & Type.Time & Attributes.Standard<'iso8601:date-time'>;
+export declare type datetime = string & Type.Date & Type.Time & Traits.Standard<'iso8601:date-time'>;
 
 
 /** an RFC 1123 date time format 
  * 
  * @todo - should this have a Pattern?
 */
-export declare type datetimeRfc1123 = string & Type.Date & Type.Time & Attributes.Standard<'rfc1123:date-time'>;
+export declare type datetimeRfc1123 = string & Type.Date & Type.Time & Traits.Standard<'rfc1123:date-time'>;
 
 /** 
  * An ISO8601 duration 
@@ -63,7 +62,7 @@ export declare type datetimeRfc1123 = string & Type.Date & Type.Time & Attribute
  * 
  * The capital letters P, Y, M, W, D, T, H, M, and S are designators for each of the date and time elements and are not replaced.
 */
-export declare type duration = string & Attributes.Standard<'iso8601:duration'>;
+export declare type duration = string & Traits.Standard<'iso8601:duration'>;
 
 /** a universally unique ID */
 export declare type uuid = string & RegularExpression<'^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}$'>;

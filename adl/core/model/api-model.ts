@@ -1,9 +1,9 @@
-import { exists, isFile, mkdir, rmdir, writeFile } from '@azure-tools/async-io';
+import { exists, rmdir } from '@azure-tools/async-io';
 import { Dictionary, items, keys, linq } from '@azure-tools/linq';
 import { isAnonymous, Path, valueOf } from '@azure-tools/sourcemap';
 import { FileUriToPath } from '@azure-tools/uri';
 import { fail } from 'assert';
-import { dirname, join } from 'path';
+import { join } from 'path';
 import { Directory, EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Node, Project, QuoteKind, SourceFile, SyntaxKind, TypeAliasDeclaration } from 'ts-morph';
 import { Document, parseDocument } from 'yaml';
 import { YAMLSeq } from 'yaml/types';
@@ -14,8 +14,10 @@ import { Linter } from '../linter/linter';
 import { ExtensionManager } from '../plugin/plugin-manager';
 import { ImportExtension } from '../serialization/openapi/import-extensions';
 import { getTags, hasTag } from '../support/doc-tag';
-import { FileSystem, Host, UrlFileSystem } from '../support/file-system';
+import { FileSystem, UrlFileSystem } from '../support/file-system';
+import { MessageChannels } from '../support/message-channels';
 import { referenceTo } from '../support/typescript';
+import { Visitor } from '../support/visitor';
 import { HttpProtocol } from './http/protocol';
 import { ParameterElement, ResponseCollection, ResponseElement, ResultElement } from './operation';
 import { ProjectData } from './project/project-data';
@@ -48,7 +50,7 @@ export function isResponseCollectionTypeAlias(declaration: TypeAliasDeclaration)
   if (typeNode && Node.isTupleTypeNode(typeNode)) { //?.getKind() === SyntaxKind.TupleType
     // they must only have children that are either functionTypeNode or TypeReferenceNode
     // if they have anything else, ignore them. 
-    return !(typeNode.getElementTypeNodes().find(each => !(Node.isFunctionTypeNode(each) || Node.isTypeReferenceNode(each)) )  );
+    return !(typeNode.getElementTypeNodes().find(each => !(Node.isFunctionTypeNode(each) || Node.isTypeReferenceNode(each))));
   }
   return false;
 }
@@ -85,7 +87,7 @@ export function isOperationGroupInterfaceType(declaration: InterfaceDeclaration)
   }
 
   // operation groups have methods.
-  if( declaration.getMethods().length > 0 ) {
+  if (declaration.getMethods().length > 0) {
     return true;
   }
   return false;
@@ -128,13 +130,13 @@ const x = someFiles.query<ModelType>('interfaces');
 export class Files {
   readonly api: ApiModel;
   readonly files!: Array<SourceFile>;
-  
+
   protected constructor(api?: ApiModel, sourceFiles?: Array<SourceFile>) {
     if (api) {
       this.files = sourceFiles || api.files;
     }
     this.api = api || (this instanceof ApiModel ? this : fail('requires api model in constructor'));
-    
+
     // when this gets constructed, we have to emit an event to allow extensions to add queries to the instance
     // we need a query function for the extension
     // and then we can bind it as a property so that others can use it.
@@ -181,7 +183,7 @@ export class Files {
    * returns all the protocols for this API
    */
   get protocols(): Dictionary<Protocol<any>> {
-    return linq.items(this.api.protocols).toDictionary(([key])=>key, ([,protocol])=>protocol.from(this.files));
+    return linq.items(this.api.protocols).toDictionary(([key]) => key, ([, protocol]) => protocol.from(this.files));
   }
 
   /**
@@ -214,16 +216,16 @@ export class Files {
   }
 }
 
-async function readFiles(fileSystem: FileSystem, folder: string, directory: Project|Directory) {
+async function readFiles(fileSystem: FileSystem, folder: string, directory: Project | Directory) {
   const all = new Array<Promise<any>>();
 
   const entries = await fileSystem.readdir(folder);
-  for( const each of entries) {
+  for (const each of entries) {
     const fullPath = join(folder, each);
-    if (each.endsWith('.ts') && await fileSystem.isFile(fullPath) ) {
-      directory.createSourceFile(each, await fileSystem.readFile(fullPath) );
+    if (each.endsWith('.ts') && await fileSystem.isFile(fullPath)) {
+      directory.createSourceFile(each, await fileSystem.readFile(fullPath));
     }
-    if ( each !== '.adl' && await fileSystem.isDirectory(fullPath)  ) {
+    if (each !== '.adl' && await fileSystem.isDirectory(fullPath)) {
       const dir = directory.createDirectory(each);
       all.push(readFiles(fileSystem, fullPath, dir));
     }
@@ -241,12 +243,12 @@ class Protocols extends EventEmitter<ProtocolEvents> {
     super();
   }
   intializeProtocol(): Iterable<Protocol> {
-    return [... this.iterEmit('InitializeProtocol', this.apiModel)].select( each => each.result);
+    return [... this.iterEmit('InitializeProtocol', this.apiModel)].select(each => each.result);
   }
 
 }
 
-export class ApiModel extends Files  {
+export class ApiModel extends Files {
   /**
    * when creating constructs that lack a name, we can give them a unique number
    */
@@ -296,6 +298,8 @@ export class ApiModel extends Files  {
 
   readonly #protocolExtensions = new Protocols(this);
 
+  readonly messages = new MessageChannels(this);
+
   /**
    * persistable project data (this should end up in the adl.yaml file)
    */
@@ -326,7 +330,7 @@ export class ApiModel extends Files  {
     return this.#protocols;
   }
 
-  get files() { 
+  get files() {
     return this.project?.getSourceFiles() || [];
   }
   /**
@@ -346,8 +350,8 @@ export class ApiModel extends Files  {
 
   document: Document.Parsed;
   extensionManager?: ExtensionManager;
-  
-  constructor(readonly host: Host = new Host(new UrlFileSystem(process.cwd()))) {
+
+  constructor(public readonly fileSystem: FileSystem = new UrlFileSystem(process.cwd())) {
     super();
     this.document = parseDocument('# ADL Project\n\n', { keepCstNodes: true });
     (<any>this.project).api = this;
@@ -363,41 +367,41 @@ export class ApiModel extends Files  {
 
   async loadExtensions() {
     let use = this.document.get('use');
-    switch( typeof use )  {
-      case 'string': 
+    switch (typeof use) {
+      case 'string':
         use = [use];
 
       // eslint-disable-next-line no-fallthrough
       case 'object':
-        if( use instanceof YAMLSeq  ) {
-          use = use.items.map( (i) =>i.value);
+        if (use instanceof YAMLSeq) {
+          use = use.items.map((i) => i.value);
         }
-        if( !Array.isArray(use)) {
+        if (!Array.isArray(use)) {
           throw new Error('Invalid plugin configuration ("use" is not an array of package references');
         }
         // load plugins now 
-        this.extensionManager = this.extensionManager || await ExtensionManager.Create(this.host.fileSystem.extensionPath);
-        
-        for( const each of use ) {
+        this.extensionManager = this.extensionManager || await ExtensionManager.Create(this.fileSystem.extensionPath);
+
+        for (const each of use) {
           try {
-          // we need to see if this a local folder before trying to load the extension.
-            const fullPath = this.host.fileSystem.resolve(each);
-            
-            const pkg = (fullPath.startsWith('file:/') && await exists(FileUriToPath(fullPath))) ? await this.extensionManager.findPackage('someExtension', fullPath) : await this.extensionManager.findPackage(each) ;
+            // we need to see if this a local folder before trying to load the extension.
+            const fullPath = this.fileSystem.resolve(each);
+
+            const pkg = (fullPath.startsWith('file:/') && await exists(FileUriToPath(fullPath))) ? await this.extensionManager.findPackage('someExtension', fullPath) : await this.extensionManager.findPackage(each);
             let ext = await pkg.extension;
-            if( !ext ) {
-            // it's not installed, 
+            if (!ext) {
+              // it's not installed, 
               ext = await pkg.install();
             }
             const exports = ext.load();
 
             // iterate thru the default exports and bind the events to the respective emitters.
-            for( const [key, xport] of items<string, EventListener,any>(exports.default) ) {
-            // the key is just a string 
-            // the xport should have members that we 
-            // use to bind to the events.
-              if( typeof xport === 'object') {
-                switch( xport.activation) {
+            for (const [key, xport] of items<string, EventListener, any>(exports.default)) {
+              // the key is just a string 
+              // the xport should have members that we 
+              // use to bind to the events.
+              if (typeof xport === 'object') {
+                switch (xport.activation) {
                   case undefined:
                   case Activation.disabled:
                     continue;
@@ -406,20 +410,20 @@ export class ApiModel extends Files  {
                   case Activation.edit:
                     this.linter.subscribe(xport);
                     continue;
-              
+
                   case Activation.import:
                     this.oaiExtensions.subscribe(xport);
                     continue;
                 }
               }
             }
-        
+
           } catch (E) {
-            this.host.warning(`Unable to load extension ${each} -- ${E.message}`, undefined);
+            this.messages.warning(`Unable to load extension ${each} -- ${E.message}`, undefined);
           }
         }
         break;
-      
+
       default:
         throw new Error('Invalid plugin configuration');
     }
@@ -429,60 +433,57 @@ export class ApiModel extends Files  {
   async initialize() {
     // loads any extensions in the project file 
     // and binds their events to the model.
-    
-    if( await this.host.fileSystem.isFile('api.yaml')) {
-      const content = await this.host.fileSystem.readFile('api.yaml');
-      this.document =  parseDocument(content, {keepCstNodes: true});
+
+    if (await this.fileSystem.isFile('api.yaml')) {
+      const content = await this.fileSystem.readFile('api.yaml');
+      this.document = parseDocument(content, { keepCstNodes: true });
       await this.loadExtensions();
     }
 
-    for( const each of this.#protocolExtensions.intializeProtocol() ) {
+    for (const each of this.#protocolExtensions.intializeProtocol()) {
       this.api.protocols[each.protocolName] = each;
     }
   }
 
-  static async loadADL(path: string, host = new Host(new UrlFileSystem(path)) ) {
+  async importModel(source: FileSystem, ...inputs: Array<string>) {
+    return await new Visitor(this, source, 'unknown', ...inputs).process();
+  }
+
+  static async loadADL(path: string, fileSystem = new UrlFileSystem(path)) {
     // path must be a directory
-    if( !await exists(path)) { 
+    if (!await exists(path)) {
       throw new Error(`Path '${path}' does not exist`);
     }
-    
-    if (!await host.fileSystem.isDirectory(path)) {
+
+    if (!await fileSystem.isDirectory(path)) {
       throw new Error(`Path '${path}' does is not a directory`);
     }
 
     // create a project from the contents of the folder
-    const result = new ApiModel(host);
+    const result = new ApiModel(fileSystem);
 
     // find the API.YAML file for the project
     // load any extensions into the ApiModel we're creating
-    await result.initialize(); 
+    await result.initialize();
 
-    await readFiles(host.fileSystem, '', result.project);
+    await readFiles(fileSystem, '', result.project);
 
     return result;
   }
 
-  async saveADL(path: string, cleanDirectory = true) {
+  async saveADL(cleanDirectory = true) {
     // save any open files to memory
     await this.project.save();
 
     // remove folder if required
-    if (await exists(path)) {
-      if (await isFile(path)) {
-        throw Error('Target path is a file.');
-      }
-      if (cleanDirectory) {
-        await rmdir(path);
-      }
+    if (cleanDirectory) {
+      await rmdir(FileUriToPath(this.fileSystem.cwd));
     }
-
-    // ensure folder is created
-    await mkdir(path);
 
     const format = {
       indentSize: 1,
     };
+
     // print each file and save it.
     return (await Promise.all(
       this.project.getSourceFiles().map(async (each) => {
@@ -493,15 +494,9 @@ export class ApiModel extends Files  {
         // each.formatText(format);
         // each.organizeImports(format);
 
-        const filename = join(path, each.getFilePath());
-
-        const folder = dirname(filename);
-        await mkdir(folder);
-
-        await writeFile(filename, each.print().
+        await this.fileSystem.writeFile(each.getFilePath(), each.print().
           //replace(/\*\/\s*\/\*\*\s*/g, '').
-          replace(/^(\s*\/\*)/g, '\n$1')
-        );
+          replace(/^(\s*\/\*)/g, '\n$1'));
       }))).length;
   }
 
@@ -555,15 +550,15 @@ export class ApiModel extends Files  {
 
 
   identifyInterface(declaration: InterfaceDeclaration) {
-  // returns a string that identifies that an interface is what it says it is.
+    // returns a string that identifies that an interface is what it says it is.
     const tagType = [...getTags(declaration, ...keys(this.KnownInterfaceTypes))];
     switch (tagType.length) {
       case 1:
-      // found a single
+        // found a single
         return tagType[0].getTagName();
       case 0:
-      // no tag types found
-      // we're going to have to guess
+        // no tag types found
+        // we're going to have to guess
         for (const [type, check] of items(this.KnownInterfaceTypes)) {
           if (check(declaration)) {
             return type;
@@ -578,11 +573,11 @@ export class ApiModel extends Files  {
     const tagType = [...getTags(declaration, ...keys(this.KnownAliasTypes))];
     switch (tagType.length) {
       case 1:
-      // found a single
+        // found a single
         return tagType[0].getTagName();
       case 0:
-      // no tag types found
-      // we're going to have to guess
+        // no tag types found
+        // we're going to have to guess
         for (const [type, check] of items(this.KnownAliasTypes)) {
           if (check(declaration)) {
             return type;

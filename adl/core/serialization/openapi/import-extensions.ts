@@ -1,7 +1,7 @@
-import * as v2 from '@azure-tools/openapi/dist/v2';
-import * as v3 from '@azure-tools/openapi/dist/v3';
+import { v2, v3 } from '@azure-tools/openapi';
 import { EventEmitter } from '../../eventing/event-emitter';
 import { ApiModel } from '../../model/api-model';
+
 
 interface Events {
   ImportOAI2(apiModel: ApiModel, input: v2.Model): boolean;
