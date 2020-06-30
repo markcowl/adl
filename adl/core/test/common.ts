@@ -21,14 +21,12 @@ export function formatDuration(msec: number) {
 }
 
 export function subscribeToMessages(api: ApiModel) {
-  const host = api.messages;
-  host.on('warning', (msg, node, when) => console.log(chalk.yellowBright(`      ${msg}`)));
-  host.on('error', (msg, node, when) => console.log(chalk.redBright(`      ${msg}`)));
-  host.on('loaded', (path, duration, when) => console.log(chalk.cyan(`      loaded: '${path}' ${formatDuration(duration)} `)));
-  host.on('parsed', (path, duration, when) => console.log(chalk.cyan(`      parsed: '${path}' ${formatDuration(duration)} `)));
-  host.on('attic', (path, duration, when) => console.log(chalk.cyan(`      attic: '${path}' ${formatDuration(duration)} `)));
-  host.on('processed', (path, duration, when) => console.log(chalk.cyan(`      processed: '${path}' ${formatDuration(duration)} `)));
-  return host;
+  api.messages.on('warning', (msg, node, when) => console.log(chalk.yellowBright(`      ${msg}`)));
+  api.messages.on('error', (msg, node, when) => console.log(chalk.redBright(`      ${msg}`)));
+  api.messages.on('loaded', (path, duration, when) => console.log(chalk.cyan(`      loaded: '${path}' ${formatDuration(duration)} `)));
+  api.messages.on('parsed', (path, duration, when) => console.log(chalk.cyan(`      parsed: '${path}' ${formatDuration(duration)} `)));
+  api.messages.on('attic', (path, duration, when) => console.log(chalk.cyan(`      attic: '${path}' ${formatDuration(duration)} `)));
+  api.messages.on('processed', (path, duration, when) => console.log(chalk.cyan(`      processed: '${path}' ${formatDuration(duration)} `)));
 }
 
 export function Delay(delayMS: number): Promise<void> {

@@ -213,9 +213,7 @@ export class Context<TSourceModel extends OAIModel> {
   ) {
 
   }
-  get host() {
-    return this.visitor.api.messages;
-  }
+
 
   get emit() {
     return this.api.oaiExtensions;
@@ -225,12 +223,12 @@ export class Context<TSourceModel extends OAIModel> {
     return this.sourceModel.info.version;
   }
   error(text: string, offendingNode: any) {
-    this.host.error(text, offendingNode);
+    this.api.messages.error(text, offendingNode);
     return undefined;
   }
 
   warn(text: string, offendingNode: any) {
-    this.host.warning(text, offendingNode);
+    this.api.messages.warning(text, offendingNode);
     return undefined;
   }
 

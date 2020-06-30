@@ -1,7 +1,7 @@
 import { ApiModel, UrlFileSystem } from '@azure-tools/adl.core';
 import { isDirectory } from '@azure-tools/async-io';
 import { CommandLine } from '../command-line';
-import { subscribeToMessages } from '../host';
+import { subscribeToMessages } from '../messages';
 
 export async function cmdImport(args: CommandLine) {
   console.log(`Import: ${args.inputs.join(',')} : 
