@@ -292,9 +292,9 @@ export class ApiModel extends Files  {
   */
   readonly linter = new Linter(this);
 
-  readonly import = new ImportExtension(this);
+  readonly oaiExtensions = new ImportExtension(this);
 
-  readonly #protos = new Protocols(this);
+  readonly #protocolExtensions = new Protocols(this);
 
   /**
    * persistable project data (this should end up in the adl.yaml file)
@@ -408,7 +408,7 @@ export class ApiModel extends Files  {
                     continue;
               
                   case Activation.import:
-                    this.import.subscribe(xport);
+                    this.oaiExtensions.subscribe(xport);
                     continue;
                 }
               }
@@ -436,7 +436,7 @@ export class ApiModel extends Files  {
       await this.loadExtensions();
     }
 
-    for( const each of this.#protos.intializeProtocol() ) {
+    for( const each of this.#protocolExtensions.intializeProtocol() ) {
       this.api.protocols[each.protocolName] = each;
     }
   }
