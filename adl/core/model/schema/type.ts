@@ -33,28 +33,28 @@ export interface TypeReference {
   readonly sourceFile?: SourceFile;
 
   readonly isInline?: boolean;
-  typeParameters?: Array<TypeParameterDeclarationStructure>;
+  readonly typeParameters?: Array<TypeParameterDeclarationStructure>;
 }
 
 export interface SchemaTypeReference extends TypeReference {
 }
 
 export interface ParameterTypeReference extends TypeReference {
-  name: string;
-  description?: string;
-  required: boolean;
-  location: string;
+  readonly name: string;
+  readonly description?: string;
+  readonly required: boolean;
+  readonly location: string;
 }
 
 export interface HeaderTypeReference extends TypeReference {
 }
 
 export interface RequestBodyTypeReference extends TypeReference {
-  required: boolean;
-  description?: string;
+  readonly required: boolean;
+  readonly description?: string;
 }
 
 export interface ResponseTypeReference extends TypeReference {
-  description?: string;
-  code?: string;
+  readonly description?: string;
+  readonly code?: string;
 }

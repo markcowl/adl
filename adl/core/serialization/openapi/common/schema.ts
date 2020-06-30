@@ -198,8 +198,6 @@ export async function processEnumSchema<T extends OAIModel>(schema: v3.Schema | 
     summary: value.description,
   }));
 
-  // enums are a bit funny -- they can define their name inside the x-ms-enum declaration 
-  // which means there can be multiple declarations for the same enum 
   const result = createEnum($.api, name, values, {
     extensible,
     ...commonProperties(schema),

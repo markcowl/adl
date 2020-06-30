@@ -1,16 +1,15 @@
 import { isAnonymous } from '@azure-tools/sourcemap';
-import { EnumDeclaration, EnumMember } from 'ts-morph';
-import { literal, normalizeIdentifier, TypeSyntax } from '../../support/codegen';
-import { createDocs } from '../../support/doc-tag';
+import { EnumDeclaration, EnumMember, ts } from 'ts-morph';
+import { normalizeIdentifier, TypeSyntax } from '../../support/codegen';
+import { createDocs, hasTag, setTag } from '../../support/doc-tag';
 import { ApiModel } from '../api-model';
-import { Collection, Identity } from '../types';
+import { Identity } from '../types';
 import { NamedElement } from '../typescript/named-element';
 import { SchemaInitializer } from '../typescript/schema';
 import { TypeReference } from './type';
 
 export interface EnumInitializer extends SchemaInitializer {
-  extensible?: boolean;
-  readonly values: Collection<EnumValue>;
+  extensible: boolean;
 }
 
 export interface EnumValue {
@@ -60,7 +59,9 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
 
   // anonymous enums are far simpler, since they are purely inline information
   return {
-    declaration: new TypeSyntax(values.map(v => literal(v.value)).join(' | ')),
+    declaration: new TypeSyntax(
+      ts.createUnionTypeNode(
+        values.map(v => ts.createLiteralTypeNode(ts.createLiteral(v.value))))),
     requiredReferences: [],
   };
 }
@@ -68,6 +69,17 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
 export class EnumValueElement extends NamedElement<EnumMember> {
   constructor(node: EnumMember) {
     super(node);
+  }
+
+  get value(): string | number | undefined {
+    return this.node.getValue();
+  }
+  set value(v: string | number | undefined) {
+    if (v == undefined) {
+      this.node.removeInitializer();
+      return;
+    }
+    this.node.setValue(v);
   }
 }
 
@@ -85,6 +97,13 @@ export class EnumType extends NamedElement<EnumDeclaration> implements TypeRefer
 
   get values(): Array<EnumValueElement> {
     return this.node.getMembers().map(each => new EnumValueElement(each));
+  }
+
+  get extensible(): boolean {
+    return hasTag(this.node, 'extensible');
+  }
+  set extensible(value: boolean) {
+    setTag(this.node, 'extensible', value);
   }
 
   createValue() {
