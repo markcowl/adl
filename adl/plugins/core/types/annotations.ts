@@ -14,4 +14,3 @@ export declare namespace Attributes {
   }
 }
 
-

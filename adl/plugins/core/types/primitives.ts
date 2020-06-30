@@ -72,6 +72,5 @@ export declare type uuid = string & RegularExpression<'^([a-fA-F0-9]{8}-[a-fA-F0
  * 
  * @see https://en.wikipedia.org/wiki/Uniform_Resource_Identifier
 */
-export declare type uri = string & RegularExpression<'^[A-Za-z][A-Za-z0-9+\-.]*:.*^'>;
-
+export declare type uri = string & RegularExpression<'^[A-Za-z][A-Za-z0-9+-.]*:.*^'>;
 

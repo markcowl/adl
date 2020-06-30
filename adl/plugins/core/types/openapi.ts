@@ -27,7 +27,7 @@ export type ParameterLocation = 'query' | 'path' | 'cookie' | 'header' | 'body';
 export interface Parameter<Location extends ParameterLocation, ParameterType, SerializedName extends string = undefined> {
   style: Location;
   type: ParameterType;
-  serializedName: SerializedName
+  serializedName: SerializedName;
 }
 
 export enum MediaType {

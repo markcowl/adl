@@ -1,5 +1,3 @@
-
-
 /** A catch-all for all un-handled response codes. */
 export type Default = 'default';
 export type StatusCode = Http1XX | Http2XX | Http3XX | Http4XX | Http5XX | Default;

@@ -1,4 +1,3 @@
-
 /** attributes to mark primitive types with purpose */
 export declare namespace Type {
 
