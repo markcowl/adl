@@ -1,9 +1,9 @@
-import { exists, isFile, mkdir, rmdir, writeFile } from '@azure-tools/async-io';
+import { exists, rmdir } from '@azure-tools/async-io';
 import { Dictionary, items, keys, linq } from '@azure-tools/linq';
 import { isAnonymous, Path, valueOf } from '@azure-tools/sourcemap';
 import { FileUriToPath } from '@azure-tools/uri';
 import { fail } from 'assert';
-import { dirname, join } from 'path';
+import { join } from 'path';
 import { Directory, EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Node, Project, QuoteKind, SourceFile, SyntaxKind, TypeAliasDeclaration } from 'ts-morph';
 import { Document, parseDocument } from 'yaml';
 import { YAMLSeq } from 'yaml/types';
@@ -445,8 +445,8 @@ export class ApiModel extends Files {
     }
   }
 
-  async importModel(...inputs: Array<string>) {
-    return await new Visitor(this, 'unknown', ...inputs).process();
+  async importModel(source: FileSystem, ...inputs: Array<string>) {
+    return await new Visitor(this, source, 'unknown', ...inputs).process();
   }
 
   static async loadADL(path: string, fileSystem = new UrlFileSystem(path)) {
@@ -471,26 +471,22 @@ export class ApiModel extends Files {
     return result;
   }
 
-  async saveADL(path: string, cleanDirectory = true) {
+  async saveADL(cleanDirectory = true) {
     // save any open files to memory
     await this.project.save();
 
     // remove folder if required
-    if (await exists(path)) {
-      if (await isFile(path)) {
-        throw Error('Target path is a file.');
-      }
-      if (cleanDirectory) {
-        await rmdir(path);
-      }
+    if (cleanDirectory) {
+      await rmdir(FileUriToPath(this.fileSystem.cwd));
     }
 
     // ensure folder is created
-    await mkdir(path);
+    // await mkdir(this.fileSystem.cwd);
 
     const format = {
       indentSize: 1,
     };
+
     // print each file and save it.
     return (await Promise.all(
       this.project.getSourceFiles().map(async (each) => {
@@ -501,15 +497,9 @@ export class ApiModel extends Files {
         // each.formatText(format);
         // each.organizeImports(format);
 
-        const filename = join(path, each.getFilePath());
-
-        const folder = dirname(filename);
-        await mkdir(folder);
-
-        await writeFile(filename, each.print().
+        await this.fileSystem.writeFile(each.getFilePath(), each.print().
           //replace(/\*\/\s*\/\*\*\s*/g, '').
-          replace(/^(\s*\/\*)/g, '\n$1')
-        );
+          replace(/^(\s*\/\*)/g, '\n$1'));
       }))).length;
   }
 

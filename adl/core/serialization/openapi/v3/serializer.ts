@@ -1,7 +1,6 @@
 import { Dictionary, JsonReference, v3, vendorExtensions } from '@azure-tools/openapi';
-import { ApiModel } from '../../../model/api-model';
 import { HttpProtocol } from '../../../model/http/protocol';
-import { Context as Ctx, Visitor } from '../../../support/visitor';
+import { Context as Ctx } from '../../../support/visitor';
 import { consume } from '../common';
 import { processExternalDocs, processInfo, processTag } from '../common/info';
 import { processPaths } from '../v3/path';
@@ -20,12 +19,6 @@ export type Context = Ctx<v3.Model>;
 
 // node types that are objects or references
 export type ItemsOf<T> = Dictionary<T | JsonReference<T>>;
-
-export async function deserializeOpenAPI3(apiModel: ApiModel, ...inputs: Array<string>) {
-  const output = await new Visitor<v3.Model>(apiModel, 'unknown', ...inputs).process();
-
-  return output;
-}
 
 export async function processOpenApi3(oai3: v3.Model, $: Context) {
   // call event for importing oai3

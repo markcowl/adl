@@ -8,13 +8,13 @@ export async function cmdImport(args: CommandLine) {
     project: ${args.project}
   `);
 
-  const api = new ApiModel(new UrlFileSystem(args.inputFolder));
+  const api = new ApiModel(new UrlFileSystem(args.project));
   subscribeToMessages(api);
-  await api.importModel(...args.inputPaths);
+  await api.importModel(new UrlFileSystem(args.inputFolder), ...args.inputPaths);
 
   if (await isDirectory(args.project) && !args.force) {
     throw new Error(`Project folder '${args.project}' is not empty. Use --force to overwrite output`);
   }
 
-  await api.saveADL(args.project, true);
+  await api.saveADL(true);
 }

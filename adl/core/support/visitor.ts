@@ -11,6 +11,7 @@ import { Element } from '../model/element';
 import { HeaderTypeReference, ParameterTypeReference, RequestBodyTypeReference, ResponseTypeReference, SchemaTypeReference } from '../model/schema/type';
 import { processOpenApi2 } from '../serialization/openapi/v2/serializer';
 import { processOpenApi3 } from '../serialization/openapi/v3/serializer';
+import { FileSystem } from './file-system';
 import { Stopwatch } from './stopwatch';
 
 export interface Options {
@@ -71,19 +72,20 @@ export class Visitor<TSourceModel extends OAIModel> {
 
   constructor(
     public api: ApiModel,
+    public fileSystem: FileSystem,
     public inputType: 'oai3' | 'oai2' | 'unknown',
     ...sourceFiles: Array<string>) {
     // the source files are going to be YAML/JSON files for this
     // so we can speed up the process and grab them all and hold onto them
     for (const each of new Set(sourceFiles)) {
-      this.sourceFiles.set(this.api.fileSystem.resolve(each), this.loadInput(this.api.fileSystem.resolve(each)));
+      this.sourceFiles.set(this.fileSystem.resolve(each), this.loadInput(this.fileSystem.resolve(each)));
     }
   }
 
   async loadInput(sourceFile: string): Promise<Context<TSourceModel>> {
 
     const watch = new Stopwatch();
-    const content = await this.api.fileSystem.readFile(sourceFile);
+    const content = await this.fileSystem.readFile(sourceFile);
     this.api.messages.loaded(sourceFile, watch.time);
     const model = parse(content);
     this.api.messages.parsed(sourceFile, watch.time);
@@ -409,7 +411,7 @@ export class Context<TSourceModel extends OAIModel> {
       // file = getSourceFile(ref)?.filename || fail(`unable to get filename of $ref ${ref}`);
       file = this.sourceFile;
     } else {
-      file = this.visitor.api.fileSystem.resolve(file);
+      file = this.visitor.fileSystem.resolve(file);
     }
 
     return {

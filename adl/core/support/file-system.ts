@@ -83,7 +83,9 @@ export class UrlFileSystem implements FileSystem {
     if (!fullPath.startsWith(this.#cwd)) {
       throw new Error(`Path (${fullPath}) not inside the project folder (${this.#cwd})`);
     }
-    return WriteString(fullPath, data);
+
+
+    return WriteString(FileUriToPath(fullPath), data);
   }
   async isDirectory(relativePath: string): Promise<boolean> {
     return await isDirectory(FileUriToPath(ResolveUri(this.#cwd, relativePath)));
