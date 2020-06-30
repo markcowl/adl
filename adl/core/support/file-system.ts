@@ -73,19 +73,21 @@ export class UrlFileSystem implements FileSystem {
   }
 
   async writeFile(relativePath: string, data: string): Promise<void> {
+    relativePath = relativePath[0] === '/' ? `.${relativePath}` : relativePath;
     if (relativePath.indexOf(':') > -1) {
       throw new Error(`Relative paths may not contain ':' characters (${relativePath}) `);
     }
     if (!this.#cwd.startsWith('file:/')) {
       throw new Error('Writing only supported on projects loaded from file:// uris');
     }
+
     const fullPath = ResolveUri(this.#cwd, relativePath);
+
     if (!fullPath.startsWith(this.#cwd)) {
       throw new Error(`Path (${fullPath}) not inside the project folder (${this.#cwd})`);
     }
 
-
-    return WriteString(FileUriToPath(fullPath), data);
+    return WriteString(fullPath, data);
   }
   async isDirectory(relativePath: string): Promise<boolean> {
     return await isDirectory(FileUriToPath(ResolveUri(this.#cwd, relativePath)));
