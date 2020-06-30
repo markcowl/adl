@@ -480,9 +480,6 @@ export class ApiModel extends Files {
       await rmdir(FileUriToPath(this.fileSystem.cwd));
     }
 
-    // ensure folder is created
-    // await mkdir(this.fileSystem.cwd);
-
     const format = {
       indentSize: 1,
     };
