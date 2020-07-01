@@ -122,6 +122,7 @@ export class UrlFileSystem implements FileSystem {
     }
     return WriteString(fullPath, data);
   }
+  
   async isDirectory(relativePath: string): Promise<boolean> {
     return await isDirectory( FileUriToPath(ResolveUri(this.#cwd, relativePath)));
   }
