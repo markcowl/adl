@@ -1,5 +1,5 @@
 {
-  "name": "@adl-plugins/arm",
+  "name": "@azure-tools/adl.types.arm",
   "version": "1.0.0",
   "description": "Azure Resource Manager extensionf for ADL",
   "types": "./dist/index",
