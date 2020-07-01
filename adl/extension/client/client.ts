@@ -3,14 +3,21 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 
+// using static-link'd dependencies: 
+let usingStaticLoader = false;
+if (process.env['no-static-loader'] === undefined && require('fs').existsSync(`${__dirname}/../../dist/static-loader.js`)) {
+  usingStaticLoader = true;
+  require(`${__dirname}/../../dist/static-loader.js`).load(`${__dirname}/../../dist/static_modules.fs`);
+}
+
 import * as path from 'path';
 import { ExtensionContext, workspace } from 'vscode';
 import { LanguageClient, LanguageClientOptions, ServerOptions, TransportKind } from 'vscode-languageclient';
 
-
 let client: LanguageClient;
 
 export function activate(context: ExtensionContext) {
+
   // The server is implemented in node
   const serverModule = context.asAbsolutePath(
     path.join('dist', 'server', 'server.js')
@@ -52,6 +59,8 @@ export function activate(context: ExtensionContext) {
 
   // Start the client. This will also launch the server
   client.start();
+
+  client.outputChannel.appendLine(`ADL Language Client started. [static-loader: ${usingStaticLoader}]`);
 }
 
 export function deactivate(): Thenable<void> | undefined {
