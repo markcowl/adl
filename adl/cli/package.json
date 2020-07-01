@@ -43,7 +43,7 @@
     "@azure-tools/adl.core": "~1.0.0",
     "@azure-tools/linq": "~4.0.0",
     "marked-terminal": "~4.1.0",
-    "@azure-tools/async-io": "~3.0.0",
+    "@azure-tools/async-io": "~4.0.0",
     "marked": "~1.1.0",
     "typescript": "~3.9.5",
     "ts-morph": "~7.1.0"
