@@ -219,7 +219,7 @@ export class Files {
 async function readFiles(fileSystem: FileSystem, folder: string, directory: Project | Directory) {
   const all = new Array<Promise<any>>();
 
-  const entries = await fileSystem.readdir(folder);
+  const entries = await fileSystem.readDirectory(folder);
   for (const each of entries) {
     const fullPath = join(folder, each);
     if (each.endsWith('.ts') && await fileSystem.isFile(fullPath)) {
@@ -288,8 +288,6 @@ export class ApiModel extends Files {
   }
 
   /** 
-   * @internal 
-   * 
    * Linter instance for this API.
   */
   readonly linter = new Linter(this);
@@ -449,26 +447,10 @@ export class ApiModel extends Files {
     return await new Visitor(this, source, 'unknown', ...inputs).process();
   }
 
-  static async loadADL(path: string, fileSystem = new UrlFileSystem(path)) {
-    // path must be a directory
-    if (!await exists(path)) {
-      throw new Error(`Path '${path}' does not exist`);
-    }
-
-    if (!await fileSystem.isDirectory(path)) {
-      throw new Error(`Path '${path}' does is not a directory`);
-    }
-
-    // create a project from the contents of the folder
-    const result = new ApiModel(fileSystem);
-
-    // find the API.YAML file for the project
-    // load any extensions into the ApiModel we're creating
-    await result.initialize();
-
-    await readFiles(fileSystem, '', result.project);
-
-    return result;
+  async load() {
+    await this.initialize();
+    await readFiles(this.fileSystem, '', this.project);
+    return this;
   }
 
   async saveADL(cleanDirectory = true) {

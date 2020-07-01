@@ -4,7 +4,7 @@ export default <Rule>{
   meta: {
     name: 'DeleteInOperationName',
     code: 'R1009',
-    type: 'warning',
+    severity: 'warning',
     description: 'DELETE operation should use the method name \'delete\'',
     documentationUrl: 'https://github.com/Azure/azure-rest-api-specs/blob/master/documentation/openapi-authoring-automated-guidelines.md#r1009-deleteinoperationname',
     category: 'SDK Warning'

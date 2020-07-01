@@ -19,7 +19,7 @@ export interface FileSystem {
   isDirectory(relativePath: string): Promise<boolean>;
   isFile(relativePath: string): Promise<boolean>;
 
-  readdir(relativePath: string): Promise<Array<string>>;
+  readDirectory(relativePath: string): Promise<Array<string>>;
 }
 
 function uniqueTempFolder(): string {
@@ -89,6 +89,7 @@ export class UrlFileSystem implements FileSystem {
 
     return WriteString(fullPath, data);
   }
+  
   async isDirectory(relativePath: string): Promise<boolean> {
     return await isDirectory(FileUriToPath(ResolveUri(this.#cwd, relativePath)));
   }
@@ -113,7 +114,7 @@ export class UrlFileSystem implements FileSystem {
     }
     return ReadUri(uri, headers);
   }
-  async readdir(relativePath: string): Promise<Array<string>> {
+  async readDirectory(relativePath: string): Promise<Array<string>> {
     const uri = this.resolve(relativePath);
     if (uri.startsWith('file:/')) {
       const path = FileUriToPath(uri);

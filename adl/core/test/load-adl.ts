@@ -4,6 +4,7 @@ import { readdirSync, statSync } from 'fs';
 import { describe } from 'mocha';
 import { resolve } from 'path';
 import { ApiModel } from '../model/api-model';
+import { UrlFileSystem } from '../support/file-system';
 
 require('source-map-support').install();
 
@@ -18,7 +19,7 @@ describe('Load ADL Projects', () => {
     const inputRoot = resolve(root, folder);
 
     it(`Processes '${folder}'`, async () => {
-      const api = await ApiModel.loadADL(inputRoot);
+      const api = await new ApiModel(new UrlFileSystem(inputRoot)).load();
       const q = api.modelTypes;
 
       notEqual(q.length, 0 , 'Should have models');

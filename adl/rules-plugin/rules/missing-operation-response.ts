@@ -5,7 +5,7 @@ export default <Rule>{
   meta: {
     name: 'missing-operation-response',
     code: 'R1009',
-    type: 'error',
+    severity: 'error',
     description: 'Every operation should have at least one response specified.',
     documentationUrl: 'PLACEHOLDER',
     category: 'SDK Error'

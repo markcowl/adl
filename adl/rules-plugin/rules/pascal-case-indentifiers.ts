@@ -5,7 +5,7 @@ export default <Rule>{
   meta: {
     name: 'pascal-case-identifiers',
     code: 'PLACEHOLDER',
-    type: 'warning',
+    severity: 'warning',
     description: 'PLACEHOLDER',
     documentationUrl: 'PLACEHOLDER',
     category: 'SDK Warning'

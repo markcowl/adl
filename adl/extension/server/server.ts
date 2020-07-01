@@ -2,8 +2,10 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
+import { ApiModel } from '@azure-tools/adl.core';
 import { CompletionItem, CompletionItemKind, createConnection, Diagnostic, DiagnosticSeverity, DidChangeConfigurationNotification, InitializeParams, InitializeResult, ProposedFeatures, TextDocumentPositionParams, TextDocuments, TextDocumentSyncKind } from 'vscode-languageserver';
 import { TextDocument } from 'vscode-languageserver-textdocument';
+import { ServerFileSystem } from './file-system';
 
 
 // Create a connection for the server. The connection uses Node's IPC as a transport.
@@ -17,6 +19,7 @@ const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
 let hasConfigurationCapability = false;
 let hasWorkspaceFolderCapability = false;
 let hasDiagnosticRelatedInformationCapability = false;
+let apiModel: ApiModel;
 
 // HANDLE INITIALIZE EVENT
 connection.onInitialize((params: InitializeParams) => {
@@ -57,10 +60,15 @@ connection.onInitialize((params: InitializeParams) => {
 
 // HANDLE INITIALIZED EVENT
 connection.onInitialized(async () => {
+  const fs = new ServerFileSystem(connection);
+  fs.cwd = (await connection.workspace.getWorkspaceFolders())?.first?.uri || '';
+  apiModel = await new ApiModel(fs).load(); 
+
   if (hasConfigurationCapability) {
     // Register for all configuration changes.
     await connection.client.register(DidChangeConfigurationNotification.type, undefined);
   }
+  
   if (hasWorkspaceFolderCapability) {
     connection.workspace.onDidChangeWorkspaceFolders(_event => {
       connection.console.log('Workspace folder change event received.');
@@ -92,7 +100,7 @@ connection.onDidChangeConfiguration(change => {
       (change.settings.languageServerExample || defaultSettings)
     );
   }
-
+  
   // Revalidate all open text documents
   documents.all().forEach(validateTextDocument);
 });
@@ -120,6 +128,7 @@ documents.onDidClose(e => {
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent(async change => {
+  const results = [...apiModel.where( each => each.getFilePath() === change.document.uri).api.linter.run()];
   await validateTextDocument(change.document);
 });
 
@@ -220,3 +229,4 @@ documents.listen(connection);
 
 // Listen on the connection
 connection.listen();
+
