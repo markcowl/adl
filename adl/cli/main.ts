@@ -71,9 +71,9 @@ async function main() {
     case 'import':
       return cmdImport(commandLine);
 
-    // temporarily disable
-    // case 'merge':
-    //  return cmdMerge(commandLine);
+      // temporarily disable
+      // case 'merge':
+      //  return cmdMerge(commandLine);
 
     default:
       return console.log('No command given. Use --help for more information.');
