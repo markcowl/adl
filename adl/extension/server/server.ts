@@ -2,8 +2,11 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
+import { Host } from '@azure-tools/adl.core';
+import { ApiModel } from '@azure-tools/adl.core/dist/model/api-model';
 import { CompletionItem, CompletionItemKind, createConnection, Diagnostic, DiagnosticSeverity, DidChangeConfigurationNotification, InitializeParams, InitializeResult, ProposedFeatures, TextDocumentPositionParams, TextDocuments, TextDocumentSyncKind } from 'vscode-languageserver';
 import { TextDocument } from 'vscode-languageserver-textdocument';
+import { ServerFileSystem } from './file-system';
 
 
 // Create a connection for the server. The connection uses Node's IPC as a transport.
@@ -14,13 +17,17 @@ const connection = createConnection(ProposedFeatures.all);
 // supports full document sync only
 const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
 
-let hasConfigurationCapability = false;
+const hasConfigurationCapability = false;
 let hasWorkspaceFolderCapability = false;
 let hasDiagnosticRelatedInformationCapability = false;
+let apiModel: ApiModel;
 
 // HANDLE INITIALIZE EVENT
 connection.onInitialize((params: InitializeParams) => {
   const capabilities = params.capabilities;
+  const fs = new ServerFileSystem(connection);
+  fs.cwd = params.workspaceFolders?.first?.uri || '';
+  apiModel = new  ApiModel(fs); 
 
   // Does the client support the `workspace/configuration` request?
   // If not, we will fall back using global settings
@@ -57,6 +64,9 @@ connection.onInitialize((params: InitializeParams) => {
 
 // HANDLE INITIALIZED EVENT
 connection.onInitialized(async () => {
+  const fs = new ServerFileSystem(connection);
+  const host = new Host(fs);
+  apiModel = new ApiModel(host);
   if (hasConfigurationCapability) {
     // Register for all configuration changes.
     await connection.client.register(DidChangeConfigurationNotification.type, undefined);
@@ -92,7 +102,7 @@ connection.onDidChangeConfiguration(change => {
       (change.settings.languageServerExample || defaultSettings)
     );
   }
-
+  
   // Revalidate all open text documents
   documents.all().forEach(validateTextDocument);
 });
@@ -220,3 +230,4 @@ documents.listen(connection);
 
 // Listen on the connection
 connection.listen();
+
