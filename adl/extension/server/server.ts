@@ -62,13 +62,13 @@ connection.onInitialize((params: InitializeParams) => {
 connection.onInitialized(async () => {
   const fs = new ServerFileSystem(connection);
   fs.cwd = (await connection.workspace.getWorkspaceFolders())?.first?.uri || '';
-  apiModel = await new ApiModel(fs).load(); 
+  apiModel = await new ApiModel(fs).load();
 
   if (hasConfigurationCapability) {
     // Register for all configuration changes.
     await connection.client.register(DidChangeConfigurationNotification.type, undefined);
   }
-  
+
   if (hasWorkspaceFolderCapability) {
     connection.workspace.onDidChangeWorkspaceFolders(_event => {
       connection.console.log('Workspace folder change event received.');
@@ -100,7 +100,7 @@ connection.onDidChangeConfiguration(change => {
       (change.settings.languageServerExample || defaultSettings)
     );
   }
-  
+
   // Revalidate all open text documents
   documents.all().forEach(validateTextDocument);
 });
@@ -128,8 +128,10 @@ documents.onDidClose(e => {
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent(async change => {
-  const results = [...apiModel.where( each => each.getFilePath() === change.document.uri).api.linter.run()];
-  await validateTextDocument(change.document);
+  if (apiModel) {
+    const results = [...apiModel.where(each => each.getFilePath() === change.document.uri).api.linter.run()];
+    await validateTextDocument(change.document);
+  }
 });
 
 async function validateTextDocument(textDocument: TextDocument): Promise<void> {
