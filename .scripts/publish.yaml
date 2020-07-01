@@ -43,8 +43,8 @@ steps:
     rc=$?; if [ $rc -ne 0 ]; then exit $rc ; fi 
 
     # publish the packages (tag as preview by default)
-    echo "registry=https://registry.npmjs.org/" > ./common/temp/artifacts/packages/.npmrc 
-    echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" >> ./common/temp/artifacts/packages/.npmrc 
+    echo updating .npmrc
+    echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" >> ./common/temp/.npmrc 
     for file in common/temp/artifacts/packages/*.tgz 
     do
      common/temp/pnpm-local/node_modules/.bin/pnpm publish $file --tag preview --access public || echo no-worries 
