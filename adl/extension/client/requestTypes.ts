@@ -1,43 +1,43 @@
 import { RequestType } from 'vscode-languageclient';
 
-interface ReadFileParams {
+export interface ReadFileParams {
   pathOrRelativePath: string;
 }
 
-namespace ReadFileRequest {
- export const type = new RequestType<ReadFileParams,string, void, void>('adl/readFile'); 
+export namespace ReadFileRequest {
+  export const type = new RequestType<ReadFileParams, string, void, void>('adl/readFile');
 }
 
-interface WriteFileParams {
-  relativePath: string; 
+export interface WriteFileParams {
+  relativePath: string;
   data: string;
 }
 
-namespace WriteFileRequest {
+export namespace WriteFileRequest {
   export const type = new RequestType<WriteFileParams, void, void, void>('adl/writeFile');
 }
 
-interface IsDirectoryParams {
+export interface IsDirectoryParams {
   relativePath: string;
 }
 
-namespace IsDirectoryRequest {
+export namespace IsDirectoryRequest {
   export const type = new RequestType<IsDirectoryParams, boolean, void, void>('adl/isDirectory');
 }
 
-interface IsFileParams {
+export interface IsFileParams {
   relativePath: string;
 }
 
-namespace IsFileRequest {
+export namespace IsFileRequest {
   export const type = new RequestType<IsFileParams, boolean, void, void>('adl/isFile');
 }
 
-interface ReadDirectoryParams {
+export interface ReadDirectoryParams {
   relativePath: string;
 }
 
-namespace ReadDirectoryRequest {
+export namespace ReadDirectoryRequest {
   export const type = new RequestType<IsDirectoryParams, Array<string>, void, void>('adl/readDirectory');
 }
 

@@ -2,8 +2,7 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
-import { Host } from '@azure-tools/adl.core';
-import { ApiModel } from '@azure-tools/adl.core/dist/model/api-model';
+import { ApiModel } from '@azure-tools/adl.core';
 import { CompletionItem, CompletionItemKind, createConnection, Diagnostic, DiagnosticSeverity, DidChangeConfigurationNotification, InitializeParams, InitializeResult, ProposedFeatures, TextDocumentPositionParams, TextDocuments, TextDocumentSyncKind } from 'vscode-languageserver';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { ServerFileSystem } from './file-system';
@@ -17,7 +16,7 @@ const connection = createConnection(ProposedFeatures.all);
 // supports full document sync only
 const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
 
-const hasConfigurationCapability = false;
+let hasConfigurationCapability = false;
 let hasWorkspaceFolderCapability = false;
 let hasDiagnosticRelatedInformationCapability = false;
 let apiModel: ApiModel;
@@ -25,9 +24,6 @@ let apiModel: ApiModel;
 // HANDLE INITIALIZE EVENT
 connection.onInitialize((params: InitializeParams) => {
   const capabilities = params.capabilities;
-  const fs = new ServerFileSystem(connection);
-  fs.cwd = params.workspaceFolders?.first?.uri || '';
-  apiModel = new  ApiModel(fs); 
 
   // Does the client support the `workspace/configuration` request?
   // If not, we will fall back using global settings
@@ -65,12 +61,14 @@ connection.onInitialize((params: InitializeParams) => {
 // HANDLE INITIALIZED EVENT
 connection.onInitialized(async () => {
   const fs = new ServerFileSystem(connection);
-  const host = new Host(fs);
-  apiModel = new ApiModel(host);
+  fs.cwd = (await connection.workspace.getWorkspaceFolders())?.first?.uri || '';
+  apiModel = await new ApiModel(fs).load(); 
+
   if (hasConfigurationCapability) {
     // Register for all configuration changes.
     await connection.client.register(DidChangeConfigurationNotification.type, undefined);
   }
+  
   if (hasWorkspaceFolderCapability) {
     connection.workspace.onDidChangeWorkspaceFolders(_event => {
       connection.console.log('Workspace folder change event received.');
@@ -130,6 +128,7 @@ documents.onDidClose(e => {
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent(async change => {
+  const results = [...apiModel.where( each => each.getFilePath() === change.document.uri).api.linter.run()];
   await validateTextDocument(change.document);
 });
 

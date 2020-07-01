@@ -2,6 +2,7 @@ import { suite, test } from '@testdeck/mocha';
 import { deepEqual } from 'assert';
 import { resolve } from 'path';
 import { ApiModel } from '../../model/api-model';
+import { UrlFileSystem } from '../../support/file-system';
 
 const scenarios = `${__dirname}/../../../../test/scenarios/adl`;
 
@@ -9,7 +10,7 @@ const scenarios = `${__dirname}/../../../../test/scenarios/adl`;
 
   @test async first() { 
     const inputRoot = resolve(scenarios, 'sampleProject');
-    const api = await ApiModel.loadADL(inputRoot);
+    const api = await new ApiModel(new UrlFileSystem(inputRoot)).load();
 
     const groups = api.operationGroups;
     const a = groups[0].annotations;
