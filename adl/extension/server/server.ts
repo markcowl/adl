@@ -17,7 +17,7 @@ import { TextDocument } from 'vscode-languageserver-textdocument';
 // Also include all preview / proposed LSP features.
 const connection = createConnection(ProposedFeatures.all);
 
-connection.console.info(`ADL Language Server started. [static-loader: ${usingStaticLoader}]`)
+connection.console.info(`ADL Language Server started. [static-loader: ${usingStaticLoader}]`);
 
 // Create a simple text document manager. The text document manager
 // supports full document sync only
