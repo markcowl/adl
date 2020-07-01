@@ -44,12 +44,14 @@ steps:
 
     # publish the packages (
     echo updating .npmrc
-    pnpm config set //registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)
+    common/temp/pnpm-local/node_modules/.bin/pnpm config set //registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)
+    
     npm whoami
     cd common/temp/artifacts/packages
 
     for file in ./*.tgz 
     do
+     echo npm publish $file --tag latest --access public || echo no-worries 
      npm publish $file --tag latest --access public || echo no-worries 
     done
     
