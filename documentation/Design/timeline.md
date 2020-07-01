@@ -17,7 +17,10 @@
   - TS Project loading (data from project file, generate tsconfig, restore packages)
   
 ### Jul 3 
-  - ALPHA ADL Consumer API (load/save/manipulate models, eventing)
+  - ALPHA ADL Consumer API part 1 (load/save)
+
+### Jul 10 
+  - ALPHA ADL Consumer API part 2 (manipulate models, eventing)
 
 ### Jul 17
   - OAI2, OAI3 output serialization 
@@ -41,8 +44,9 @@ Improve the authoring and reviewing experience of ADL by designing and developin
 ### June 19th. Engine Internals
 - ADL basic linting engine internal functional.
 - Implement a set of 20 linting rules encapsulated in ADL extension.
-### June 26th. Implement a Github template repository for rules creation.
-### July 10th. VS Code extension support for ADL rule engine.  At this point it should show errors inline and do fixes.
+### July 10th. 
+- Implement a Github template repository for rules creation.
+- VS Code extension support for ADL rule engine.  At this point it should show errors inline and do fixes.
 ### July 24th. Advanced features (e.g. navigation, refactoring, intellisense)
 ### August 7th.
 - Fully integrated linting (i.e. API Wide)
