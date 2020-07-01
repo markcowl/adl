@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /*
 adl --input:https://.../foo.json  --save:./outputfolder --format:adl
 adl
@@ -22,7 +23,6 @@ import * as marked from 'marked';
 import { argv } from 'process';
 import { parseArgs } from './command-line';
 import { cmdImport } from './commands/import';
-import { cmdMerge } from './commands/merge';
 
 require('source-map-support').install();
 
@@ -34,7 +34,7 @@ marked.setOptions({
   renderer: new TerminalRenderer({
     showSectionPrefix: false,
     tab: 2,
-    
+
   })
 });
 
@@ -49,7 +49,7 @@ function help() {
 
 ## Usage: 
   \`adl import <...filename.yaml|json>\` -- import OpenAPI into an ADL model.
-  \`adl merge <...projectfolder>\` -- import OpenAPI into an ADL model.
+  
 
 ## Switches:
   \`--project:<folder> \` -- the ADL project folder to work with (defaults to the current folder)
@@ -57,6 +57,8 @@ function help() {
 
 `));
 }
+// temporarily disable
+// \`adl merge <...projectfolder>\` -- import OpenAPI into an ADL model.
 
 async function main() {
   const command = args.shift();
@@ -69,8 +71,9 @@ async function main() {
     case 'import':
       return cmdImport(commandLine);
 
-    case 'merge': 
-      return cmdMerge(commandLine);
+    // temporarily disable
+    // case 'merge':
+    //  return cmdMerge(commandLine);
 
     default:
       return console.log('No command given. Use --help for more information.');
