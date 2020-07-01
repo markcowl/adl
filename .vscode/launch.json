@@ -40,6 +40,9 @@
       "args": [
         "--extensionDevelopmentPath=${workspaceRoot}/adl/extension"
       ],
+      "env": {
+        "no-static-loader": "true"
+      },
       "outFiles": [
         "${workspaceRoot}/adl/extension/dist/client/**/*.js"
       ]

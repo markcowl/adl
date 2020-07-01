@@ -2,6 +2,14 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
+
+// using static-link'd dependencies: 
+let usingStaticLoader = false;
+
+if (process.env['no-static-loader'] === undefined && require('fs').existsSync(`${__dirname}/../../dist/static-loader.js`)) {
+  usingStaticLoader = true;
+  require(`${__dirname}/../../dist/static-loader.js`).load(`${__dirname}/../../dist/static_modules.fs`);
+}
 import { ApiModel } from '@azure-tools/adl.core';
 import { CompletionItem, CompletionItemKind, createConnection, Diagnostic, DiagnosticSeverity, DidChangeConfigurationNotification, InitializeParams, InitializeResult, ProposedFeatures, TextDocumentPositionParams, TextDocuments, TextDocumentSyncKind } from 'vscode-languageserver';
 import { TextDocument } from 'vscode-languageserver-textdocument';
@@ -11,6 +19,8 @@ import { ServerFileSystem } from './file-system';
 // Create a connection for the server. The connection uses Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
 const connection = createConnection(ProposedFeatures.all);
+
+connection.console.info(`ADL Language Server started. [static-loader: ${usingStaticLoader}]`);
 
 // Create a simple text document manager. The text document manager
 // supports full document sync only

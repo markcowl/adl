@@ -2,15 +2,19 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
+// using static-link'd dependencies: 
+let usingStaticLoader = false;
+if (process.env['no-static-loader'] === undefined && require('fs').existsSync(`${__dirname}/../../dist/static-loader.js`)) {
+  usingStaticLoader = true;
+  require(`${__dirname}/../../dist/static-loader.js`).load(`${__dirname}/../../dist/static_modules.fs`);
+}
 
 import { isDirectory, readdir } from '@azure-tools/async-io';
-import { linq } from '@azure-tools/linq';
 import { FileUriToPath, ReadUri, ResolveUri, WriteString } from '@azure-tools/uri';
 import * as path from 'path';
 import { ExtensionContext, FileType, Uri, workspace } from 'vscode';
 import { LanguageClient, LanguageClientOptions, ServerOptions, TransportKind } from 'vscode-languageclient';
 import { IsDirectoryRequest, IsFileRequest, ReadDirectoryRequest, ReadFileRequest, WriteFileRequest } from '../server/requestTypes';
-linq;
 
 
 declare global {
@@ -70,10 +74,8 @@ declare global {
   }
 }
 
-
-let client!: LanguageClient;
+let client: LanguageClient;
 let cwd: string;
-
 export async function activate(context: ExtensionContext) {
   // The server is implemented in node
   const serverModule = context.asAbsolutePath(
@@ -114,10 +116,12 @@ export async function activate(context: ExtensionContext) {
     clientOptions
   );
   client.start();
+  client.outputChannel.appendLine(`ADL Language Client started. [static-loader: ${usingStaticLoader}]`);
 
   await client.onReady();
 
   // Start the client. This will also launch the server
+
   client.onRequest(ReadFileRequest.type, async ({ pathOrRelativePath: uri }) => {
     const headers: { [key: string]: string } = {};
 

@@ -1,10 +1,11 @@
 {
   "name": "adl-language",
   "version": "1.0.0",
+  "publisher": "ms-vscode",
   "description": "ADL Language Service",
   "main": "dist/client/client",
   "engines": {
-    "vscode": "^1.43.0"
+    "vscode": "^1.45.0"
   },
   "activationEvents": [
     "workspaceContains:adl.yaml"
@@ -35,7 +36,8 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run build",
+    "vscode:prepublish": "npm run static-link && npm run build",
+    "static-link": "static-link --no-node-modules --debug",
     "eslint-fix": "eslint  . --fix --ext .ts",
     "eslint": "eslint  . --ext .ts",
     "build": "tsc -p .",
@@ -48,8 +50,7 @@
     "url": "git+https://github.com/Azure/adl.git"
   },
   "keywords": [
-    "adl",
-    "cli"
+    "adl"
   ],
   "author": "",
   "license": "MIT",
@@ -59,23 +60,35 @@
   "homepage": "https://github.com/Azure/adl#readme",
   "readme": "https://github.com/Azure/adl/blob/master/readme.md",
   "devDependencies": {
-    "mocha": "7.1.2",
     "@types/mocha": "~7.0.2",
-    "typescript": "~3.9.5",
+    "@types/node": "~12.7.2",
+    "@types/vscode": "~1.45.0",
     "@typescript-eslint/eslint-plugin": "2.28.0",
     "@typescript-eslint/parser": "2.28.0",
-    "source-map-support": "0.5.19",
     "eslint": "6.8.0",
-    "@types/vscode": "~1.45.0",
-    "vscode-test": "~1.3.0"
-  },
-  "dependencies": {
+    "mocha": "7.1.2",
+    "source-map-support": "0.5.19",
+    "static-link": "^0.2.4",
+    "typescript": "~3.9.5",
+    "vscode-test": "~1.3.0",
     "vscode-languageclient": "~6.1.3",
     "vscode-languageserver": "^6.1.1",
+    "vscode-languageserver-textdocument": "^1.0.1",
     "@azure-tools/uri": "~4.0.0",
     "@azure-tools/linq": "~4.0.0",
     "@azure-tools/async-io": "~4.0.0",
-    "@azure-tools/adl.core": "~1.0.0",
-    "vscode-languageserver-textdocument": "^1.0.1"
+    "@azure-tools/adl.core": "~1.0.0"
+  },
+  "static-link": {
+    "entrypoints": [],
+    "dependencies": {
+      "vscode-languageclient": "~6.1.3",
+      "vscode-languageserver": "^6.1.1",
+      "vscode-languageserver-textdocument": "^1.0.1",
+      "@azure-tools/uri": "~4.0.0",
+      "@azure-tools/linq": "~4.0.0",
+      "@azure-tools/async-io": "~4.0.0",
+      "@azure-tools/adl.core": "~1.0.0"
+    }
   }
 }

@@ -11,12 +11,6 @@
       "path": "adl/extension/tsconfig.json"
     },
     {
-      "path": "adl/linq/tsconfig.json"
-    },
-    {
-      "path": "adl/openapi/tsconfig.json"
-    },
-    {
       "path": "adl/sourcemap/tsconfig.json"
     },
     {
