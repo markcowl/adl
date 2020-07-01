@@ -51,18 +51,6 @@
       "shouldPublish": true
     },
     {
-      "packageName": "@azure-tools/arm.types",
-      "projectFolder": "adl/arm.types",
-      "reviewCategory": "production",
-      "shouldPublish": true
-    },
-    {
-      "packageName": "@azure-tools/adl.types",
-      "projectFolder": "adl/types",
-      "reviewCategory": "production",
-      "shouldPublish": true
-    },
-    {
       "packageName": "@azure-tools/adl",
       "projectFolder": "adl/cli",
       "reviewCategory": "production",
@@ -74,7 +62,7 @@
       "reviewCategory": "production",
       "shouldPublish": true
     },
-    {
+    /*  {
       "packageName": "@azure-tools/openapi",
       "projectFolder": "adl/openapi",
       "reviewCategory": "production",
@@ -86,15 +74,29 @@
       "reviewCategory": "production",
       "shouldPublish": true
     },
+    */
     {
       "packageName": "adl-language",
       "projectFolder": "adl/extension",
       "reviewCategory": "production",
       "shouldPublish": false
     },
+    /** PLUGINS **/
     {
-      "packageName": "sample-plugin",
-      "projectFolder": "adl/sample-plugin",
+      "packageName": "@azure-tools/adl.types.arm",
+      "projectFolder": "adl/plugins/arm",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@azure-tools/adl.types.core",
+      "projectFolder": "adl/plugins/core",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@azure-tools/adl-plugin-sample",
+      "projectFolder": "adl/plugins/sample",
       "reviewCategory": "production",
       "shouldPublish": false
     },

@@ -1,7 +1,7 @@
 import { isFile } from '@azure-tools/async-io';
 import * as chalk from 'chalk';
 import * as fs from 'fs';
-import { Host, UrlFileSystem } from '../support/file-system';
+import { ApiModel } from '../model/api-model';
 const unlink = fs.promises.unlink;
 
 export function formatDuration(msec: number) {
@@ -20,15 +20,13 @@ export function formatDuration(msec: number) {
   return chalk.red(`${Math.floor(msec / 60000)}:${(Math.floor(msec / 1000) % 60).toString().padStart(2, '0')}.${msec % 1000}m`);
 }
 
-export function createHost(inputRoot: string) {
-  const host = new Host(new UrlFileSystem(inputRoot));
-  host.on('warning', (msg, node, when) => console.log(chalk.yellowBright(`      ${msg}`)));
-  host.on('error', (msg, node, when) => console.log(chalk.redBright(`      ${msg}`)));
-  host.on('loaded', (path, duration, when) => console.log(chalk.cyan(`      loaded: '${path}' ${formatDuration(duration)} `)));
-  host.on('parsed', (path, duration, when) => console.log(chalk.cyan(`      parsed: '${path}' ${formatDuration(duration)} `)));
-  host.on('attic', (path, duration, when) => console.log(chalk.cyan(`      attic: '${path}' ${formatDuration(duration)} `)));
-  host.on('processed', (path, duration, when) => console.log(chalk.cyan(`      processed: '${path}' ${formatDuration(duration)} `)));
-  return host;
+export function subscribeToMessages(api: ApiModel) {
+  api.messages.on('warning', (msg, node, when) => console.log(chalk.yellowBright(`      ${msg}`)));
+  api.messages.on('error', (msg, node, when) => console.log(chalk.redBright(`      ${msg}`)));
+  api.messages.on('loaded', (path, duration, when) => console.log(chalk.cyan(`      loaded: '${path}' ${formatDuration(duration)} `)));
+  api.messages.on('parsed', (path, duration, when) => console.log(chalk.cyan(`      parsed: '${path}' ${formatDuration(duration)} `)));
+  api.messages.on('attic', (path, duration, when) => console.log(chalk.cyan(`      attic: '${path}' ${formatDuration(duration)} `)));
+  api.messages.on('processed', (path, duration, when) => console.log(chalk.cyan(`      processed: '${path}' ${formatDuration(duration)} `)));
 }
 
 export function Delay(delayMS: number): Promise<void> {
@@ -43,7 +41,7 @@ export async function clean(...files: Array<string>) {
           await unlink(each);
         }
       } catch {
-      // shh
+        // shh
       }
     }));
 }

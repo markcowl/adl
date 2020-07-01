@@ -1,9 +1,7 @@
 import { items } from '@azure-tools/linq';
 import { Dictionary, JsonReference, v2, vendorExtensions } from '@azure-tools/openapi';
-import { ApiModel } from '../../../model/api-model';
 import { HttpProtocol } from '../../../model/http/protocol';
-import { Host } from '../../../support/file-system';
-import { Context as Ctx, Visitor } from '../../../support/visitor';
+import { Context as Ctx } from '../../../support/visitor';
 import { processExternalDocs, processInfo, processTag } from '../common/info';
 import { processPaths } from '../v2/path';
 import { processParameter } from './parameter';
@@ -18,16 +16,10 @@ export type Context = Ctx<v2.Model>;
 // node types that are objects or references
 export type ItemsOf<T> = Dictionary<T | JsonReference<T>>;
 
-export async function deserializeOpenAPI2(host: Host, ...inputs: Array<string>) {
-  const output = await new Visitor<v2.Model>(new ApiModel(), host, 'oai2', ...inputs).process();
-
-  return output;
-}
-
 export async function processOpenApi2(oai2: v2.Model, $: Context) {
   // call event for importing oai2
   $.emit.importOAI2(oai2);
-  
+
   const extensions = vendorExtensions(oai2);
 
   for (const [key] of extensions) {
@@ -65,12 +57,12 @@ export async function processOpenApi2(oai2: v2.Model, $: Context) {
     (<HttpProtocol>$.api.protocols.http).authenticationRequirements.push(requirement);
   }
 
-  for(const [key,value] of items(oai2.definitions)) {
+  for (const [key, value] of items(oai2.definitions)) {
     // process each item in the collection
     await processSchema(value, $);
   }
 
-  const tmp  = new Array<any>();
+  const tmp = new Array<any>();
 
   for (const [key, value] of items(oai2.parameters)) {
     await processParameter(value, $);

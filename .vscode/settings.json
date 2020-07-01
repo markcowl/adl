@@ -6,6 +6,7 @@
     "node_modules/**": true,
     "**/generated/**": false,
     "**/dist/**": true,
+    "**/dist/dist/**": false,
     "**/obj/**": true,
     "**/bin/**": true,
     "**/node_modules/**": true,
@@ -83,7 +84,15 @@
     },
     {
       "changeProcessCWD": true,
-      "directory": "./adl/sample-plugin",
+      "directory": "./adl/plugins/sample",
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./adl/plugins/core",
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./adl/plugins/arm",
     },
     {
       "changeProcessCWD": true,

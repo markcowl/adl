@@ -72,7 +72,7 @@ export class Linter extends EventEmitter<Events> {
     // modelTypes and properties
     for (const modelType of files.modelTypes) {
       yield* [ ... this.iterEmit('ModelType', model, modelType)].select( each => each.result);
-      for (const property of modelType.getProperties()) {
+      for (const property of modelType.properties) {
         yield* [ ... this.iterEmit('Property', model, property)].select( each => each.result);
       }
     }

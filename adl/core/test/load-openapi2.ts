@@ -7,9 +7,9 @@ import { readdirSync, statSync } from 'fs';
 import { describe, it } from 'mocha';
 import { basename, resolve } from 'path';
 import { ApiModel } from '../model/api-model';
-import { deserializeOpenAPI2 } from '../serialization/openapi/v2/serializer';
+import { UrlFileSystem } from '../support/file-system';
 import { Stopwatch } from '../support/stopwatch';
-import { clean, createHost, formatDuration } from './common';
+import { clean, formatDuration, subscribeToMessages } from './common';
 import { Errors as AccumulateErrors, Errors } from './errors';
 import { serialize } from './serialization';
 
@@ -44,15 +44,17 @@ describe('Load Single OAI2 files', () => {
   for (const file of files) {
     it(`Processes '${file}'`, async () => {
       console.log('\n');
-      const host = createHost(inputRoot);
-      const api = await deserializeOpenAPI2(host, file);
-      const name = basename(file, '.yaml');
 
+      const name = basename(file, '.yaml');
       const adlOutput = resolve(`${outputRoot}/${name}`);
+      const api = new ApiModel(new UrlFileSystem(adlOutput));
+      subscribeToMessages(api);
+
+      await api.importModel(new UrlFileSystem(inputRoot), file);
 
       // clean the folder and write out ts files
       const stopwatch = new Stopwatch();
-      const n = await api.saveADL(adlOutput, true);
+      const n = await api.saveADL(true);
       console.log(chalk.cyan(`      save ADL: '${file}' - ${n} files saved - ${formatDuration(stopwatch.time)} `));
       const apiOutput = resolve(`${adlOutput}/${file.replace(/.yaml$/ig, '.api.yaml')}`);
       const atticOutput = resolve(`${adlOutput}/${file.replace(/.yaml$/ig, '.attic.yaml')}`);
@@ -88,13 +90,14 @@ describe('Load Multiple OAI2 files', () => {
 
     it(`Processes folder '${folder}'`, async () => {
       console.log('\n');
-      const host = createHost(inputRoot);
 
       const files = linq.values(readdirSync(inputRoot)).where(each => statSync(`${inputRoot}/${each}`).isFile()).toArray();
-      const api = await deserializeOpenAPI2(host, ...files);
+      const api = new ApiModel(new UrlFileSystem(adlOutput));
+      subscribeToMessages(api);
+      await api.importModel(new UrlFileSystem(inputRoot), ...files);
 
       // clean the folder and write out ts files
-      await api.saveADL(adlOutput, true);
+      await api.saveADL(true);
 
 
       const apiOutput = resolve(`${adlOutput}/${folder}.api.yaml`);

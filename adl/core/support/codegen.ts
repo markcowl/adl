@@ -10,24 +10,6 @@ export function normalizeIdentifier(value: string) {
   return /[^\w]/g.exec(value) ? `'${value.replace(/'/g, '\\\'')}'` : value;
 }
 
-export function literal(value: string | number | boolean | null | undefined) {
-  if (value === null) {
-    return 'null';
-  }
-  if (value === undefined) {
-    return 'undefined';
-  }
-  if (typeof value == 'string') {
-    return stringLiteral(value);
-  }
-  return value.toString();
-}
-
-export function stringLiteral(value: string) {
-  return JSON.stringify(value || '');
-
-}
-
 export function normalizeName(value: string ) {
   if (/^[^a-zA-Z]/.test(value)) {
     // \w matches digits, but we can't lead with a digit
@@ -54,7 +36,7 @@ export class TypeSyntax {
   }
 
   get node() {
-    if (!this.#node) {
+    if (this.#node === undefined) {
       // NOTE: We currently get away with putting arbitrary syntax in a type
       // reference node's "name" here. It would be more correct to to parse the
       // text here into a proper tree, but that costs extra parsing and has the
@@ -65,7 +47,7 @@ export class TypeSyntax {
   }
 
   get text() {
-    if (!this.#text) {
+    if (this.#text === undefined) {
       this.#text = printNode(this.#node!);
     }
     return this.#text;

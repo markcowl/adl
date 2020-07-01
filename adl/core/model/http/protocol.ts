@@ -219,10 +219,10 @@ function isParameterTypeAlias(declaration: TypeAliasDeclaration) {
   return false;
 }
 
-export class HttpProtocol extends Protocol {
+export class HttpProtocol extends Protocol<HttpProtocol> {
   /** @internal */
   constructor(api: ApiModel, sourceFiles?: Array<SourceFile>) {
-    super(api, sourceFiles);
+    super(HttpProtocol, api, sourceFiles);
     if(!sourceFiles) {
       // add the checkers for header types
       api.KnownAliasTypes['header'] = isHeader;
@@ -240,13 +240,6 @@ export class HttpProtocol extends Protocol {
   /** Global connections, which may be overridden by individual operations. */
   connections = new Array<Connection | Alias<Connection>>();
 
-  where(predicate: (file: SourceFile) => boolean): HttpProtocol {
-    return new HttpProtocol(this.api, this.files.filter(predicate));
-  }
-
-  from(sourceFiles: Array<SourceFile>): HttpProtocol {
-    return new HttpProtocol(this.api, sourceFiles);
-  }
 
   get operationGroups(): Array<OperationGroup> {
     // for now, just get the operation groups and assume they are http
