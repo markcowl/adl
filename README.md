@@ -21,7 +21,7 @@ Http APIs.
 
 Unfortunately, it has a few pain-points, that ratchet up the complexity the deeper you get:
 - multiple API versions - docmenting an evolving surface
-- multipe files ($refs as a means to connect peices is fragile.)
+- multipe files ($refs as a means to connect pieces is fragile.)
 - YAML/JSON as an encoding format renders the content to be merely data. 
 - JSON Schema lacks sufficent fidelity to manage a lot of cases easily
 - content aware editors are nearly non-existant
