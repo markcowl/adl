@@ -216,7 +216,7 @@ export class Files {
 async function readFiles(fileSystem: FileSystem, folder: string, directory: Project|Directory) {
   const all = new Array<Promise<any>>();
 
-  const entries = await fileSystem.readdir(folder);
+  const entries = await fileSystem.readDirectory(folder);
   for( const each of entries) {
     const fullPath = join(folder, each);
     if (each.endsWith('.ts') && await fileSystem.isFile(fullPath) ) {
