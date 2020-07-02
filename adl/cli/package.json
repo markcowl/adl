@@ -49,6 +49,7 @@
     "@azure-tools/async-io": "~4.0.0",
     "marked": "~1.1.0",
     "typescript": "~3.9.5",
-    "ts-morph": "~7.1.0"
+    "ts-morph": "~7.1.0",
+    "chalk": "~4.1.0"
   }
 }

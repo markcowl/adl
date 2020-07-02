@@ -15,7 +15,7 @@ import { ExtensionManager } from '../plugin/plugin-manager';
 import { ImportExtension } from '../serialization/openapi/import-extensions';
 import { getTags, hasTag } from '../support/doc-tag';
 import { FileSystem, UrlFileSystem } from '../support/file-system';
-import { MessageChannels } from '../support/message-channels';
+import { ProcessingMessages } from '../support/message-channels';
 import { referenceTo } from '../support/typescript';
 import { Visitor } from '../support/visitor';
 import { HttpProtocol } from './http/protocol';
@@ -296,7 +296,7 @@ export class ApiModel extends Files {
 
   readonly #protocolExtensions = new Protocols(this);
 
-  readonly messages = new MessageChannels(this);
+  readonly messages = new ProcessingMessages(this);
 
   /**
    * persistable project data (this should end up in the adl.yaml file)
@@ -351,7 +351,18 @@ export class ApiModel extends Files {
 
   constructor(public readonly fileSystem: FileSystem = new UrlFileSystem(process.cwd())) {
     super();
-    this.document = parseDocument('# ADL Project\n\n', { keepCstNodes: true });
+    this.document = parseDocument(`# ADL Project file
+name: UnnamedService
+
+# information about this service
+metadata:
+  description: Description for this service.
+
+
+# ADL Extension packages required for this service
+use: 
+- @azure-tools/adl.types.core  # ADL core types 
+`, { keepCstNodes: true });
     (<any>this.project).api = this;
     this.protocols.http = new HttpProtocol(this);
   }
@@ -465,6 +476,9 @@ export class ApiModel extends Files {
     const format = {
       indentSize: 1,
     };
+
+    // save the api.yaml file
+    await this.fileSystem.writeFile('api.yaml', this.document.toString());
 
     // print each file and save it.
     return (await Promise.all(
