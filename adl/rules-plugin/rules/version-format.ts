@@ -6,7 +6,7 @@ export default <Rule>{
   meta: {
     name: 'version-format',
     code: 'R2056',
-    type: 'error',
+    severity: 'error',
     description: 'API version must be in the format: yyyy - MM - dd, optionally followed by - preview, - alpha, -beta, -rc, -privatepreview.',
     documentationUrl: 'URL',
     category: 'SDK Error'

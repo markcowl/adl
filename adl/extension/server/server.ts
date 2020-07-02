@@ -10,8 +10,11 @@ if (process.env['no-static-loader'] === undefined && require('fs').existsSync(`$
   usingStaticLoader = true;
   require(`${__dirname}/../../dist/static-loader.js`).load(`${__dirname}/../../dist/static_modules.fs`);
 }
+import { ApiModel } from '@azure-tools/adl.core';
 import { CompletionItem, CompletionItemKind, createConnection, Diagnostic, DiagnosticSeverity, DidChangeConfigurationNotification, InitializeParams, InitializeResult, ProposedFeatures, TextDocumentPositionParams, TextDocuments, TextDocumentSyncKind } from 'vscode-languageserver';
 import { TextDocument } from 'vscode-languageserver-textdocument';
+import { ServerFileSystem } from './file-system';
+
 
 // Create a connection for the server. The connection uses Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -26,6 +29,7 @@ const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
 let hasConfigurationCapability = false;
 let hasWorkspaceFolderCapability = false;
 let hasDiagnosticRelatedInformationCapability = false;
+let apiModel: ApiModel;
 
 // HANDLE INITIALIZE EVENT
 connection.onInitialize((params: InitializeParams) => {
@@ -66,10 +70,15 @@ connection.onInitialize((params: InitializeParams) => {
 
 // HANDLE INITIALIZED EVENT
 connection.onInitialized(async () => {
+  const fs = new ServerFileSystem(connection);
+  fs.cwd = (await connection.workspace.getWorkspaceFolders())?.first?.uri || '';
+  apiModel = await new ApiModel(fs).load();
+
   if (hasConfigurationCapability) {
     // Register for all configuration changes.
     await connection.client.register(DidChangeConfigurationNotification.type, undefined);
   }
+
   if (hasWorkspaceFolderCapability) {
     connection.workspace.onDidChangeWorkspaceFolders(_event => {
       connection.console.log('Workspace folder change event received.');
@@ -129,7 +138,10 @@ documents.onDidClose(e => {
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent(async change => {
-  await validateTextDocument(change.document);
+  if (apiModel) {
+    const results = apiModel.linter.run();
+    await validateTextDocument(change.document);
+  }
 });
 
 async function validateTextDocument(textDocument: TextDocument): Promise<void> {
@@ -229,3 +241,4 @@ documents.listen(connection);
 
 // Listen on the connection
 connection.listen();
+

@@ -4,7 +4,7 @@ export default <Rule>{
   meta: {
     name: 'http-tag-required',
     code: 'R1009',
-    type: 'warning',
+    severity: 'warning',
     description: 'It is required to provide the operation and path using the http tag.',
     documentationUrl: 'PLACEHOLDER',
     category: 'SDK Warning'

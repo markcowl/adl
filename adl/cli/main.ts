@@ -19,66 +19,130 @@ adl
 
 */
 
+import { Messages } from '@azure-tools/adl.core';
+import * as chalk from 'chalk';
 import * as marked from 'marked';
 import { argv } from 'process';
 import { parseArgs } from './command-line';
 import { cmdImport } from './commands/import';
+import { cmdInit } from './commands/init';
+import { errorCount, subscribeToMessages } from './messages';
 
 require('source-map-support').install();
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const TerminalRenderer = require('marked-terminal');
+const messages = subscribeToMessages(new Messages());
 
 marked.setOptions({
   // Define custom renderer
   renderer: new TerminalRenderer({
     showSectionPrefix: false,
     tab: 2,
-
+    code: chalk.gray.bold,
+    codespan: (text: string, ...args: Array<any>) => chalk.gray.bold(`'${text}'`, ...args),
   })
 });
 
+/**
+ * Compiles markdown to HTML.
+ *
+ * @param src String of markdown source to be compiled
+ * @param callback Function called when the markdownString has been fully parsed when using async highlighting
+ * @return compiled markdown text
+ */
+export function markdown(src: string, callback?: (error: any | undefined, parseResult: string) => void): string;
 
-export const markdown = marked;
+/**
+ * Compiles markdown to HTML.
+ *
+ * @param src String of markdown source to be compiled
+ * @param options Hash of options
+ * @param callback Function called when the markdownString has been fully parsed when using async highlighting
+ * @return compiled markdown text
+ */
+export function markdown(src: string, options?: marked.MarkedOptions, callback?: (error: any | undefined, parseResult: string) => void): string;
+
+export function markdown(src: string, options?: any, callback?: any): string {
+  src = src.replace(/'/g, '`');
+  return marked(src, options, callback).trim();
+}
+
+
+export const color = chalk;
 
 const args = argv.slice(2);
 
 function help() {
-  console.log(marked(`
+  header();
+  messages.log(`
 # ADL Command line tool.
 
 ## Usage: 
-  \`adl import <...filename.yaml|json>\` -- import OpenAPI into an ADL model.
+  'adl init' -- initialize the project folder with a new ADL project.
+  'adl import <...filename.yaml|json>' -- import OpenAPI into an ADL project.
   
 
 ## Switches:
-  \`--project:<folder> \` -- the ADL project folder to work with (defaults to the current folder)
-  \`--from:<folder|URI> \` -- the base folder to import files from (input files are relative from that location)
+  '--project:<folder> ' -- the ADL project folder to work with (defaults to the current folder)
+  '--from:<folder|URI> ' -- the base folder to import files from (input files are relative from that location)
 
-`));
+`);
 }
 // temporarily disable
-// \`adl merge <...projectfolder>\` -- import OpenAPI into an ADL model.
+// 'adl merge <...projectfolder>' -- import OpenAPI into an ADL model.
+
+function version() {
+  return require(`${__dirname}/../package.json`).version;
+}
+
+function header() {
+  messages.log('');
+  messages.log(`## ADL command line utility [version: ${chalk.white.bold(version())}; node: ${chalk.white.bold(process.version)}; max-memory: ${chalk.white.bold(Math.round((require('v8').getHeapStatistics().heap_size_limit) / (1024 * 1024)) & 0xffffffff00)} gb]`);
+  messages.log(chalk.white.bold('(C) 2020 Microsoft Corporation.'));
+  messages.log('https://github.com/azure/adl');
+  messages.log('');
+}
 
 async function main() {
   const command = args.shift();
   const commandLine = parseArgs(args);
-  switch (command) {
-    case '--help':
-    case 'help':
-      return help();
+  header();
 
-    case 'import':
-      return cmdImport(commandLine);
+  try {
+    switch (command) {
+      case '--help':
+      case 'help':
+        return help();
 
-      // temporarily disable
-      // case 'merge':
-      //  return cmdMerge(commandLine);
+      case 'init':
+        return await cmdInit(messages, commandLine);
 
-    default:
-      return console.log('No command given. Use --help for more information.');
+      case 'import':
+        return await cmdImport(messages, commandLine);
+
+        // temporarily disable
+        // case 'merge':
+        //  return cmdMerge(messages,commandLine);
+
+      default:
+        if (command) {
+          return messages.error(`Unknown command '${command}'\nUse--help for more information`);
+        }
+
+        return messages.error('No command given.\nUse --help for more information.');
+    }
+
+  } catch (error) {
+    messages.error(error.message || error);
+
+    if (error.stack) {
+      messages.log(error.stack);
+    }
+  }
+  finally {
+    process.exit(errorCount);
   }
 }
-
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 main();
