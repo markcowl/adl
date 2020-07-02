@@ -1,20 +1,24 @@
-import { ApiModel, UrlFileSystem } from '@azure-tools/adl.core';
-import { isDirectory } from '@azure-tools/async-io';
+import { ApiModel, Messages, UrlFileSystem } from '@azure-tools/adl.core';
+import { isDirectory, isFile } from '@azure-tools/async-io';
+import { join } from 'path';
 import { CommandLine } from '../command-line';
 import { subscribeToMessages } from '../messages';
+import { cmdInit } from './init';
 
-export async function cmdImport(args: CommandLine) {
-  console.log(`Import: ${args.inputs.join(',')} : 
-    project: ${args.project}
-  `);
+export async function cmdImport(messages: Messages, args: CommandLine) {
+  const projectfile = join(args.project, 'api.yaml');
+
+  if (!await isDirectory(args.project) || !await isFile(projectfile)) {
+    // when there is no project init one first.
+    cmdInit(messages, args);
+  }
 
   const api = new ApiModel(new UrlFileSystem(args.project));
-  subscribeToMessages(api);
+  subscribeToMessages(api.messages);
+  await api.load();
+
   await api.importModel(new UrlFileSystem(args.inputFolder), ...args.inputPaths);
 
-  if (await isDirectory(args.project) && !args.force) {
-    throw new Error(`Project folder '${args.project}' is not empty. Use --force to overwrite output`);
-  }
 
   await api.saveADL(true);
 }
