@@ -11,5 +11,3 @@ export { FileSystem, UrlFileSystem } from './support/file-system';
 export { Messages, ProcessingMessages } from './support/message-channels';
 export * from './support/typescript';
 
-export const m = module;
-

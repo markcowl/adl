@@ -407,7 +407,6 @@ use:
               // it's not installed, 
               ext = await pkg.install();
             }
-            console.log(ext.name);
             this.tsconfig.compilerOptions.types.push(ext.name);
             this.tsconfig.compilerOptions.types = [...new Set(this.tsconfig.compilerOptions.types)];
 
@@ -468,13 +467,8 @@ use:
       this.tsconfig.compilerOptions.typeRoots = this.tsconfig.compilerOptions.typeRoots || [];
       this.tsconfig.compilerOptions.types = this.tsconfig.compilerOptions.types || [];
 
-      let tr = this.fileSystem.extensionPath;
-      tr = relative(FileUriToPath(this.fileSystem.cwd), tr);
-      console.log(tr);
-
-      this.tsconfig.compilerOptions.typeRoots.push(tr);
+      this.tsconfig.compilerOptions.typeRoots.push(relative(FileUriToPath(this.fileSystem.cwd), this.fileSystem.extensionPath));
       this.tsconfig.compilerOptions.typeRoots = [...new Set(this.tsconfig.compilerOptions.typeRoots)];
-
 
       await this.loadExtensions();
     }
