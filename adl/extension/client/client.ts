@@ -9,9 +9,8 @@ if (process.env['no-static-loader'] === undefined && require('fs').existsSync(`$
   require(`${__dirname}/../../dist/static-loader.js`).load(`${__dirname}/../../dist/static_modules.fs`);
 }
 
-import { isDirectory, readdir } from '@azure-tools/async-io';
-import { FileUriToPath, ReadUri, ResolveUri, WriteString } from '@azure-tools/uri';
 import * as path from 'path';
+import { TextDecoder, TextEncoder } from 'util';
 import { ExtensionContext, FileType, Uri, workspace } from 'vscode';
 import { LanguageClient, LanguageClientOptions, ServerOptions, TransportKind } from 'vscode-languageclient';
 import { IsDirectoryRequest, IsFileRequest, ReadDirectoryRequest, ReadFileRequest, WriteFileRequest } from '../server/requestTypes';
@@ -75,7 +74,6 @@ declare global {
 }
 
 let client: LanguageClient;
-let cwd: string;
 export async function activate(context: ExtensionContext) {
   // The server is implemented in node
   const serverModule = context.asAbsolutePath(
@@ -115,81 +113,61 @@ export async function activate(context: ExtensionContext) {
     serverOptions,
     clientOptions
   );
+  
+  // Start the client. This will also launch the server
   client.start();
   client.outputChannel.appendLine(`ADL Language Client started. [static-loader: ${usingStaticLoader}]`);
 
   await client.onReady();
-
-  // Start the client. This will also launch the server
-
-  client.onRequest(ReadFileRequest.type, async ({ pathOrRelativePath: uri }) => {
-    const headers: { [key: string]: string } = {};
-
-    // check for GitHub OAuth token
-    if (getGithubAuthToken() && uri.startsWith('https://raw.githubusercontent.com')) {
-      // console.log(`Used GitHub authentication token to request '${uri}'.`);
-      headers.authorization = `Bearer ${getGithubAuthToken()}`;
-    }
-
-    return ReadUri(uri, headers);
-  });
-
-  client.onRequest(WriteFileRequest.type, async ({ relativePath, data }) => {
-    relativePath = relativePath[0] === '/' ? `.${relativePath}` : relativePath;
-    if (relativePath.indexOf(':') > -1) {
-      throw new Error(`Relative paths may not contain ':' characters (${relativePath}) `);
-    }
-    if (cwd.startsWith('file:/')) {
-      throw new Error('Writing only supported on projects loaded from file:// uris');
-    }
-
-    const fullPath = ResolveUri(cwd, relativePath);
-
-    if (!fullPath.startsWith(cwd)) {
-      throw new Error(`Path (${fullPath}) not inside the project folder (${cwd})`);
-    }
-
-    return WriteString(fullPath, data);
-  });
-
-  client.onRequest(IsDirectoryRequest.type, async ({ relativePath }) => {
-    return await isDirectory(FileUriToPath(ResolveUri(cwd, relativePath)));
-  });
-
-  client.onRequest(IsFileRequest.type, async ({ relativePath }) => {
+  client.onRequest(ReadFileRequest.type, async ({ path }) => {
     try {
-      const s = await workspace.fs.stat(Uri.parse(ResolveUri(cwd, relativePath)));
-      return s.type === FileType.File;
+      return new TextDecoder().decode(await workspace.fs.readFile(Uri.parse( path)));
     } catch (exception) {
       client.error(exception);
     }
+    
+    return '';
+  });
+
+  client.onRequest(WriteFileRequest.type, async ({ path, data }) => {
+    try {
+      return workspace.fs.writeFile(Uri.parse( path), new TextEncoder().encode(data));
+    } catch (exception) {
+      client.error(exception);
+    }
+  });
+
+  client.onRequest(IsDirectoryRequest.type, async ({ path }) => {
+    try {
+      const file = await workspace.fs.stat(Uri.parse( path));
+      return file.type === FileType.Directory;
+    } catch (exception) {
+      client.error(exception);
+    }
+
     return false;
   });
 
-  client.onRequest(ReadDirectoryRequest.type, async ({ relativePath }) => {
-    const uri = resolve(relativePath);
-    if (uri.startsWith('file:/')) {
-      const path = FileUriToPath(uri);
-      return readdir(path);
+  client.onRequest(IsFileRequest.type, async ({ path }) => {
+    try {
+      const file = await workspace.fs.stat(Uri.parse(path));
+      return file.type === FileType.File;
+    } catch (exception) {
+      client.error(exception);
     }
-    // can't do remote filesystem readdir at the moment.
+  
+    return false;
+  });
+
+  client.onRequest(ReadDirectoryRequest.type, async ({ path }) => {
+    try {
+      return (await workspace.fs.readDirectory(Uri.parse( path))).map(f => f[0]); 
+    } catch (exception) {
+      client.error(exception);
+    }
+
     return [];
   });
-  cwd = workspace.workspaceFolders?.first?.uri.toString() || '';
-
-
-  const hello = '';
-}
-
-function resolve(pathOrRelativePath: string): string {
-  return ResolveUri(cwd, pathOrRelativePath);
-}
-function relative(absolutePath: string): string {
-  return path.relative(cwd, absolutePath);
-}
-
-function getGithubAuthToken() {
-  return process.env['github-auth-token'] || process.env['githubauthtoken'] || undefined;
 }
 
 export function deactivate(): Thenable<void> | undefined {

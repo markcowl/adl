@@ -459,7 +459,7 @@ use:
       this.tsconfig = {};
       if (await this.fileSystem.isFile('tsconfig.json')) {
         try {
-          this.tsconfig = JSON.parse(await this.fileSystem.readFile('tsconfig.json'))
+          this.tsconfig = JSON.parse(await this.fileSystem.readFile('tsconfig.json'));
         } catch {
           // stick with empty.
         }
@@ -472,11 +472,8 @@ use:
       tr = relative(FileUriToPath(this.fileSystem.cwd), tr);
       console.log(tr);
 
-      this.tsconfig.compilerOptions.typeRoots.push(tr)
+      this.tsconfig.compilerOptions.typeRoots.push(tr);
       this.tsconfig.compilerOptions.typeRoots = [...new Set(this.tsconfig.compilerOptions.typeRoots)];
-
-
-
 
 
       await this.loadExtensions();

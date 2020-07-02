@@ -8,7 +8,7 @@
     "vscode": "^1.45.0"
   },
   "activationEvents": [
-    "workspaceContains:adl.yaml"
+    "workspaceContains:api.yaml"
   ],
   "contributes": {
     "configuration": {
