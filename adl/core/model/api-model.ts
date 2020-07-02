@@ -1,9 +1,9 @@
-import { exists, rmdir } from '@azure-tools/async-io';
+import { exists } from '@azure-tools/async-io';
 import { Dictionary, items, keys, linq } from '@azure-tools/linq';
 import { isAnonymous, Path, valueOf } from '@azure-tools/sourcemap';
 import { FileUriToPath } from '@azure-tools/uri';
 import { fail } from 'assert';
-import { join } from 'path';
+import { join, relative } from 'path';
 import { Directory, EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Node, Project, QuoteKind, SourceFile, SyntaxKind, TypeAliasDeclaration } from 'ts-morph';
 import { Document, parseDocument } from 'yaml';
 import { YAMLSeq } from 'yaml/types';
@@ -331,6 +331,8 @@ export class ApiModel extends Files {
   get files() {
     return this.project?.getSourceFiles() || [];
   }
+
+  tsconfig: any = {}
   /**
    * gets access to privateData for a given node.
    *
@@ -377,6 +379,9 @@ use:
   async loadExtensions() {
     let use = this.document.get('use');
     switch (typeof use) {
+      case 'undefined':
+        break;
+
       case 'string':
         use = [use];
 
@@ -402,6 +407,10 @@ use:
               // it's not installed, 
               ext = await pkg.install();
             }
+            console.log(ext.name);
+            this.tsconfig.compilerOptions.types.push(ext.name);
+            this.tsconfig.compilerOptions.types = [...new Set(this.tsconfig.compilerOptions.types)];
+
             const exports = ext.load();
 
             // iterate thru the default exports and bind the events to the respective emitters.
@@ -446,8 +455,33 @@ use:
     if (await this.fileSystem.isFile('api.yaml')) {
       const content = await this.fileSystem.readFile('api.yaml');
       this.document = parseDocument(content, { keepCstNodes: true });
+
+      this.tsconfig = {};
+      if (await this.fileSystem.isFile('tsconfig.json')) {
+        try {
+          this.tsconfig = JSON.parse(await this.fileSystem.readFile('tsconfig.json'))
+        } catch {
+          // stick with empty.
+        }
+      }
+      this.tsconfig.compilerOptions = this.tsconfig.compilerOptions || {};
+      this.tsconfig.compilerOptions.typeRoots = this.tsconfig.compilerOptions.typeRoots || [];
+      this.tsconfig.compilerOptions.types = this.tsconfig.compilerOptions.types || [];
+
+      let tr = this.fileSystem.extensionPath;
+      tr = relative(FileUriToPath(this.fileSystem.cwd), tr);
+      console.log(tr);
+
+      this.tsconfig.compilerOptions.typeRoots.push(tr)
+      this.tsconfig.compilerOptions.typeRoots = [...new Set(this.tsconfig.compilerOptions.typeRoots)];
+
+
+
+
+
       await this.loadExtensions();
     }
+
 
     for (const each of this.#protocolExtensions.intializeProtocol()) {
       this.api.protocols[each.protocolName] = each;
@@ -467,10 +501,11 @@ use:
   async saveADL(cleanDirectory = true) {
     // save any open files to memory
     await this.project.save();
+    await this.fileSystem.writeFile('tsconfig.json', JSON.stringify(this.tsconfig, null, 2));
 
     // remove folder if required
     if (cleanDirectory) {
-      await rmdir(FileUriToPath(this.fileSystem.cwd));
+      // await rmdir(FileUriToPath(this.fileSystem.cwd));
     }
 
     const format = {
@@ -489,7 +524,6 @@ use:
         // disabled: format/organize imports
         // each.formatText(format);
         // each.organizeImports(format);
-
         await this.fileSystem.writeFile(each.getFilePath(), each.print().
           //replace(/\*\/\s*\/\*\*\s*/g, '').
           replace(/^(\s*\/\*)/g, '\n$1'));
