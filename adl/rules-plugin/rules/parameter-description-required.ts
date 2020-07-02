@@ -4,7 +4,7 @@ export default <Rule>{
   meta: {
     name: 'parameter-description-required',
     code: 'R1009',
-    type: 'warning',
+    severity: 'warning',
     description: 'Every parameter in an operation needs a description.',
     documentationUrl: 'PLACEHOLDER',
     category: 'SDK Warning'

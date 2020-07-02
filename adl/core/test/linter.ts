@@ -1,5 +1,4 @@
 import { describe } from 'mocha';
-import { ApiModel } from '../model/api-model';
 
 require('source-map-support').install();
 
@@ -11,14 +10,14 @@ describe('Test Linter', () => {
   // const folders = linq.values(readdirSync(root)).where(each => statSync(`${root}/${each}`).isDirectory()).toArray();
 
   // for (const folder of folders) {
-    
+
 
   it('Loads/lints sample project', async () => {
-    const api = await ApiModel.loadADL(scenario);
-    for( const result of api.linter.run() ) {
-      // whatever checks you expect
-      console.log( result.message);
-    } 
+    // const api = await ApiModel.loadADL(scenario);
+    // for (const result of api.linter.run()) {
+    //   // whatever checks you expect
+    //   console.log(result.message);
+    // }
 
     // const q = api.modelTypes;
     // const linter = new Linter();

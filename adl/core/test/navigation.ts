@@ -4,6 +4,7 @@ import { resolve } from 'path';
 import { ApiModel } from '../model/api-model';
 import { ResponseCollection } from '../model/http/operation';
 import { isDeclaration } from '../model/typescript/reference';
+import { UrlFileSystem } from '../support/file-system';
 
 const scenarios = `${__dirname}/../../../test/scenarios/adl`;
 
@@ -11,7 +12,7 @@ const scenarios = `${__dirname}/../../../test/scenarios/adl`;
 
   @test async 'Load and navigate ADL'() { 
     const inputRoot = resolve(scenarios, 'sampleProject');
-    const api = await ApiModel.loadADL(inputRoot);
+    const api = await new ApiModel(new UrlFileSystem(inputRoot)).load();
 
     this.navigateModels(api);
     this.navigateEnums(api);

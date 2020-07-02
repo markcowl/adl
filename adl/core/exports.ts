@@ -8,6 +8,6 @@ export { Declaration } from './model/typescript/reference';
 export { exportFromPlugin } from './plugin/export-from-plugin';
 export * from './support/doc-tag';
 export { FileSystem, UrlFileSystem } from './support/file-system';
-export { MessageChannels } from './support/message-channels';
+export { Messages, ProcessingMessages } from './support/message-channels';
 export * from './support/typescript';
 

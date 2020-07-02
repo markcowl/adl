@@ -1,16 +1,22 @@
-import { ApiModel } from '@azure-tools/adl.core';
-import { markdown } from './main';
+import { Messages } from '@azure-tools/adl.core';
+import { color, markdown } from './main';
 
-export function subscribeToMessages(apiModel: ApiModel) {
-  apiModel.messages.on('error', (text: string) => {
-    console.error(markdown(text));
+export let errorCount = 0;
+
+export function subscribeToMessages(messages: Messages) {
+
+  messages.on('error', (text: string) => {
+    errorCount++;
+    console.error(`${color.redBright('error:')} ${markdown(text)}`);
   });
 
-  apiModel.messages.on('warning', (text: string) => {
+  messages.on('warning', (text: string) => {
+    console.error(`${color.yellowBright('warning:')} ${markdown(text)}`);
+  });
+
+  messages.on('log', (text: string) => {
     console.log(markdown(text));
   });
 
-  apiModel.messages.on('processed', (file: string, msec: number) => {
-    console.log(markdown(`_Processed '${file}' in ${msec}_`));
-  });
+  return messages;
 }

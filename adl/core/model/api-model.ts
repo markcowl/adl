@@ -1,9 +1,9 @@
-import { exists, rmdir } from '@azure-tools/async-io';
+import { exists } from '@azure-tools/async-io';
 import { Dictionary, items, keys, linq } from '@azure-tools/linq';
 import { isAnonymous, Path, valueOf } from '@azure-tools/sourcemap';
 import { FileUriToPath } from '@azure-tools/uri';
 import { fail } from 'assert';
-import { join } from 'path';
+import { join, relative } from 'path';
 import { Directory, EnumDeclaration, IndentationText, InterfaceDeclaration, NewLineKind, Node, Project, QuoteKind, SourceFile, SyntaxKind, TypeAliasDeclaration } from 'ts-morph';
 import { Document, parseDocument } from 'yaml';
 import { YAMLSeq } from 'yaml/types';
@@ -15,7 +15,7 @@ import { ExtensionManager } from '../plugin/plugin-manager';
 import { ImportExtension } from '../serialization/openapi/import-extensions';
 import { getTags, hasTag } from '../support/doc-tag';
 import { FileSystem, UrlFileSystem } from '../support/file-system';
-import { MessageChannels } from '../support/message-channels';
+import { ProcessingMessages } from '../support/message-channels';
 import { referenceTo } from '../support/typescript';
 import { Visitor } from '../support/visitor';
 import { HttpProtocol } from './http/protocol';
@@ -219,7 +219,7 @@ export class Files {
 async function readFiles(fileSystem: FileSystem, folder: string, directory: Project | Directory) {
   const all = new Array<Promise<any>>();
 
-  const entries = await fileSystem.readdir(folder);
+  const entries = await fileSystem.readDirectory(folder);
   for (const each of entries) {
     const fullPath = join(folder, each);
     if (each.endsWith('.ts') && await fileSystem.isFile(fullPath)) {
@@ -288,8 +288,6 @@ export class ApiModel extends Files {
   }
 
   /** 
-   * @internal 
-   * 
    * Linter instance for this API.
   */
   readonly linter = new Linter(this);
@@ -298,7 +296,7 @@ export class ApiModel extends Files {
 
   readonly #protocolExtensions = new Protocols(this);
 
-  readonly messages = new MessageChannels(this);
+  readonly messages = new ProcessingMessages(this);
 
   /**
    * persistable project data (this should end up in the adl.yaml file)
@@ -333,6 +331,8 @@ export class ApiModel extends Files {
   get files() {
     return this.project?.getSourceFiles() || [];
   }
+
+  tsconfig: any = {}
   /**
    * gets access to privateData for a given node.
    *
@@ -353,7 +353,18 @@ export class ApiModel extends Files {
 
   constructor(public readonly fileSystem: FileSystem = new UrlFileSystem(process.cwd())) {
     super();
-    this.document = parseDocument('# ADL Project\n\n', { keepCstNodes: true });
+    this.document = parseDocument(`# ADL Project file
+name: UnnamedService
+
+# information about this service
+metadata:
+  description: Description for this service.
+
+
+# ADL Extension packages required for this service
+use: 
+- @azure-tools/adl.types.core  # ADL core types 
+`, { keepCstNodes: true });
     (<any>this.project).api = this;
     this.protocols.http = new HttpProtocol(this);
   }
@@ -368,6 +379,9 @@ export class ApiModel extends Files {
   async loadExtensions() {
     let use = this.document.get('use');
     switch (typeof use) {
+      case 'undefined':
+        break;
+
       case 'string':
         use = [use];
 
@@ -393,6 +407,9 @@ export class ApiModel extends Files {
               // it's not installed, 
               ext = await pkg.install();
             }
+            this.tsconfig.compilerOptions.types.push(ext.name);
+            this.tsconfig.compilerOptions.types = [...new Set(this.tsconfig.compilerOptions.types)];
+
             const exports = ext.load();
 
             // iterate thru the default exports and bind the events to the respective emitters.
@@ -437,8 +454,25 @@ export class ApiModel extends Files {
     if (await this.fileSystem.isFile('api.yaml')) {
       const content = await this.fileSystem.readFile('api.yaml');
       this.document = parseDocument(content, { keepCstNodes: true });
+
+      this.tsconfig = {};
+      if (await this.fileSystem.isFile('tsconfig.json')) {
+        try {
+          this.tsconfig = JSON.parse(await this.fileSystem.readFile('tsconfig.json'));
+        } catch {
+          // stick with empty.
+        }
+      }
+      this.tsconfig.compilerOptions = this.tsconfig.compilerOptions || {};
+      this.tsconfig.compilerOptions.typeRoots = this.tsconfig.compilerOptions.typeRoots || [];
+      this.tsconfig.compilerOptions.types = this.tsconfig.compilerOptions.types || [];
+
+      this.tsconfig.compilerOptions.typeRoots.push(relative(FileUriToPath(this.fileSystem.cwd), this.fileSystem.extensionPath));
+      this.tsconfig.compilerOptions.typeRoots = [...new Set(this.tsconfig.compilerOptions.typeRoots)];
+
       await this.loadExtensions();
     }
+
 
     for (const each of this.#protocolExtensions.intializeProtocol()) {
       this.api.protocols[each.protocolName] = each;
@@ -449,40 +483,28 @@ export class ApiModel extends Files {
     return await new Visitor(this, source, 'unknown', ...inputs).process();
   }
 
-  static async loadADL(path: string, fileSystem = new UrlFileSystem(path)) {
-    // path must be a directory
-    if (!await exists(path)) {
-      throw new Error(`Path '${path}' does not exist`);
-    }
-
-    if (!await fileSystem.isDirectory(path)) {
-      throw new Error(`Path '${path}' does is not a directory`);
-    }
-
-    // create a project from the contents of the folder
-    const result = new ApiModel(fileSystem);
-
-    // find the API.YAML file for the project
-    // load any extensions into the ApiModel we're creating
-    await result.initialize();
-
-    await readFiles(fileSystem, '', result.project);
-
-    return result;
+  async load() {
+    await this.initialize();
+    await readFiles(this.fileSystem, '', this.project);
+    return this;
   }
 
   async saveADL(cleanDirectory = true) {
     // save any open files to memory
     await this.project.save();
+    await this.fileSystem.writeFile('tsconfig.json', JSON.stringify(this.tsconfig, null, 2));
 
     // remove folder if required
     if (cleanDirectory) {
-      await rmdir(FileUriToPath(this.fileSystem.cwd));
+      // await rmdir(FileUriToPath(this.fileSystem.cwd));
     }
 
     const format = {
       indentSize: 1,
     };
+
+    // save the api.yaml file
+    await this.fileSystem.writeFile('api.yaml', this.document.toString());
 
     // print each file and save it.
     return (await Promise.all(
@@ -493,7 +515,6 @@ export class ApiModel extends Files {
         // disabled: format/organize imports
         // each.formatText(format);
         // each.organizeImports(format);
-
         await this.fileSystem.writeFile(each.getFilePath(), each.print().
           //replace(/\*\/\s*\/\*\*\s*/g, '').
           replace(/^(\s*\/\*)/g, '\n$1'));

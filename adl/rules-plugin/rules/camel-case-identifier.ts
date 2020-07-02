@@ -6,7 +6,7 @@ export default <Rule>{
   meta: {
     name: 'camel-case-identifiers',
     code: 'PLACEHOLDER',
-    type: 'warning',
+    severity: 'warning',
     description: 'PLACEHOLDER',
     documentationUrl: 'PLACEHOLDER',
     category: 'SDK Warning'

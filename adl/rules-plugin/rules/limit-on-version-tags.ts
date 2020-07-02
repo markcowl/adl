@@ -4,7 +4,7 @@ export default <Rule>{
   meta: {
     name: 'limit-on-version-tags',
     code: 'R2056',
-    type: 'error',
+    severity: 'error',
     description: 'Every element should only at most one "since", "deleted" and "deprecated" tag.',
     documentationUrl: 'URL',
     category: 'SDK Error'

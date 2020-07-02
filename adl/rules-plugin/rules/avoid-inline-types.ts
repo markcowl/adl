@@ -5,7 +5,7 @@ export default <Rule>{
   meta: {
     name: 'avoid-anonymous-types',
     code: 'R2056',
-    type: 'error',
+    severity: 'error',
     description: 'Inline/anonymous models must not be used, instead define a schema. This allows operations to share the models.',
     documentationUrl: 'https://github.com/Azure/azure-rest-api-specs/blob/master/documentation/openapi-authoring-automated-guidelines.md#r2026-avoidanonymoustypes',
     category: 'SDK Error'

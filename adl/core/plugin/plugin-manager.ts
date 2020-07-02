@@ -156,18 +156,18 @@ export class Package {
     return this.extensionManager.getPackageVersions(this.name);
   }
 
-  get extension(): Promise<Extension|undefined> {
+  get extension(): Promise<Extension | undefined> {
     // if the location is on disk, we can return that directly.
-    
-    if( this.resolvedInfo.type === 'directory') {
+
+    if (this.resolvedInfo.type === 'directory') {
       return Promise.resolve(new Extension(this, this.resolvedInfo.fetchSpec));
     }
 
-    return (async () =>{
+    return (async () => {
       const exts = await this.extensionManager.getInstalledExtensions();
-      return exts.find( each => each.name === this.packageMetadata.name && each.version === this.packageMetadata.version );
-      
-    } )();
+      return exts.find(each => each.name === this.packageMetadata.name && each.version === this.packageMetadata.version);
+
+    })();
   }
 }
 
@@ -183,7 +183,7 @@ export class Extension extends Package {
    * The installed location of the package.
    */
   public get location(): string {
-    if( this.resolvedInfo?.type === 'directory') {
+    if (this.resolvedInfo?.type === 'directory') {
       return normalize(this.resolvedInfo.fetchSpec);
     }
     return normalize(`${this.installationPath}/${this.name}`);
@@ -199,7 +199,7 @@ export class Extension extends Package {
    * the path to the package.json file for the npm packge.
    */
   public get packageJsonPath(): string {
-    return join(this.modulePath,'package.json');
+    return join(this.modulePath, 'package.json');
   }
 
   /** the loaded package.json information */
@@ -311,6 +311,7 @@ async function yarn(folder: string, cmd: string, ...args: Array<string>) {
     cmd,
     ...args
   ];
+
   return execute(process.execPath, cmdline, { cwd: folder });
 }
 
@@ -320,6 +321,7 @@ async function install(rootFolder: string, directory: string, pkgName: string, p
   // and the rest (dependencies) to the target/node_modules folder
   const targetFolder = directory.replace(/\\/g, '/');
   const installFolder = join(directory, 'node_modules');
+
   await mkdir(installFolder);
 
   const output = await yarn(directory,
@@ -395,7 +397,7 @@ export class ExtensionManager extends EventEmitter<Events> {
       await flushCache;
     } catch (e) {
       throw new Error(`Reset Error ${this.rootFolder} - ${e.message}`);
-    } 
+    }
   }
 
   private constructor(private rootFolder: string) {
@@ -404,7 +406,7 @@ export class ExtensionManager extends EventEmitter<Events> {
 
   async getPackageVersions(name: string): Promise<Array<string>> {
     const output = await yarn(process.cwd(), 'info', name, 'versions');
-    const data =<Array<string>> JSON.parse(output.stdout).data;
+    const data = <Array<string>>JSON.parse(output.stdout).data;
     return data.sort((b, a) => semver.compare(a, b));
   }
 
@@ -442,7 +444,7 @@ export class ExtensionManager extends EventEmitter<Events> {
 
     const installed = await this.getInstalledExtensions();
     for (const each of installed) {
-      
+
       if (name === each.name && semver.satisfies(each.version, version)) {
         return each;
       }
@@ -460,7 +462,7 @@ export class ExtensionManager extends EventEmitter<Events> {
       if (await isDirectory(fullpath)) {
         try {
           // const actualPath = org ? normalize(`${fullpath}/node_modules/${org}/${name}`) : normalize(`${fullpath}/node_modules/${name}`);
-          
+
           const pm = await fetchPackageMetadata(fullpath);
           const ext = new Extension(new Package(null, pm, this), this.rootFolder);
           if (fullpath !== ext.location) {
@@ -549,7 +551,7 @@ export class ExtensionManager extends EventEmitter<Events> {
    * Loads an extension in-proc using node's 'require' 
    * @param extension the extension to load (in-proc)
    */
-  load(extension: Extension ): any {
+  load(extension: Extension): any {
     return require(extension.modulePath);
   }
 
