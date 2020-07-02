@@ -9,7 +9,6 @@ if (process.env['no-static-loader'] === undefined && require('fs').existsSync(`$
   require(`${__dirname}/../../dist/static-loader.js`).load(`${__dirname}/../../dist/static_modules.fs`);
 }
 
-import { ResolveUri } from '@azure-tools/uri';
 import * as path from 'path';
 import { TextDecoder, TextEncoder } from 'util';
 import { ExtensionContext, FileType, Uri, workspace } from 'vscode';
@@ -75,7 +74,6 @@ declare global {
 }
 
 let client: LanguageClient;
-let cwd: string;
 export async function activate(context: ExtensionContext) {
   // The server is implemented in node
   const serverModule = context.asAbsolutePath(
@@ -121,38 +119,54 @@ export async function activate(context: ExtensionContext) {
   client.outputChannel.appendLine(`ADL Language Client started. [static-loader: ${usingStaticLoader}]`);
 
   await client.onReady();
-  cwd = workspace.workspaceFolders?.first?.uri.toString() || '';
-
-  client.onRequest(ReadFileRequest.type, async ({ pathOrRelativePath }) => {
-    return new TextDecoder().decode(await workspace.fs.readFile(Uri.parse(ResolveUri(cwd, pathOrRelativePath))));
-  });
-
-  client.onRequest(WriteFileRequest.type, async ({ relativePath, data }) => {
-    return workspace.fs.writeFile(Uri.parse(ResolveUri(cwd, relativePath)), new TextEncoder().encode(data));
-  });
-
-  client.onRequest(IsDirectoryRequest.type, async ({ relativePath }) => {
+  client.onRequest(ReadFileRequest.type, async ({ path }) => {
     try {
-      const file = await workspace.fs.stat(Uri.parse(ResolveUri(cwd, relativePath)));
+      return new TextDecoder().decode(await workspace.fs.readFile(Uri.parse( path)));
+    } catch (exception) {
+      client.error(exception);
+    }
+    
+    return '';
+  });
+
+  client.onRequest(WriteFileRequest.type, async ({ path, data }) => {
+    try {
+      return workspace.fs.writeFile(Uri.parse( path), new TextEncoder().encode(data));
+    } catch (exception) {
+      client.error(exception);
+    }
+  });
+
+  client.onRequest(IsDirectoryRequest.type, async ({ path }) => {
+    try {
+      const file = await workspace.fs.stat(Uri.parse( path));
       return file.type === FileType.Directory;
     } catch (exception) {
       client.error(exception);
     }
+
     return false;
   });
 
-  client.onRequest(IsFileRequest.type, async ({ relativePath }) => {
+  client.onRequest(IsFileRequest.type, async ({ path }) => {
     try {
-      const file = await workspace.fs.stat(Uri.parse(ResolveUri(cwd, relativePath)));
+      const file = await workspace.fs.stat(Uri.parse(path));
       return file.type === FileType.File;
     } catch (exception) {
       client.error(exception);
     }
+  
     return false;
   });
 
-  client.onRequest(ReadDirectoryRequest.type, async ({ relativePath }) => {
-    return (await workspace.fs.readDirectory(Uri.parse(ResolveUri(cwd, relativePath)))).map(f => f[0]); 
+  client.onRequest(ReadDirectoryRequest.type, async ({ path }) => {
+    try {
+      return (await workspace.fs.readDirectory(Uri.parse( path))).map(f => f[0]); 
+    } catch (exception) {
+      client.error(exception);
+    }
+
+    return [];
   });
 }
 

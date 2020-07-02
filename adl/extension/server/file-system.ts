@@ -56,34 +56,33 @@ export class ServerFileSystem implements FileSystem {
     return this.#extPath;
   }
 
-  resolve(pathOrRelativePath: string): string {
-    return ResolveUri(this.cwd, pathOrRelativePath);
+  resolve(path: string): string {
+    return ResolveUri(this.cwd, path);
   }
 
-  relative(absolutePath: string): string {
-    return relative(this.cwd, absolutePath);
+  relative(path: string): string {
+    return relative(this.cwd, path);
   }
 
-  async writeFile(relativePath: string, data: string): Promise<void> {
-    return this.connection.sendRequest(WriteFileRequest.type, { relativePath, data }); 
+  async writeFile(path: string, data: string): Promise<void> {
+    return this.connection.sendRequest(WriteFileRequest.type, {path: this.resolve(path), data }); 
   }
   
-  async isDirectory(relativePath: string): Promise<boolean>{
-    return  this.connection.sendRequest(IsDirectoryRequest.type, { relativePath } );
+  async isDirectory(path: string): Promise<boolean>{
+    return this.connection.sendRequest(IsDirectoryRequest.type, { path: this.resolve(path) } );
      
   }
 
-  async isFile(relativePath: string): Promise<boolean> {
-    return this.connection.sendRequest(IsFileRequest.type, { relativePath });
+  async isFile(path: string): Promise<boolean> {
+    return this.connection.sendRequest(IsFileRequest.type, { path: this.resolve(path) });
+  } 
+
+  async readFile(path: string): Promise<string> {
+    return this.connection.sendRequest(ReadFileRequest.type, { path: this.resolve(path)});
     
   } 
 
-  async readFile(pathOrRelativePath: string): Promise<string> {
-    return this.connection.sendRequest(ReadFileRequest.type, { pathOrRelativePath});
-    
-  } 
-
-  async readDirectory(relativePath: string): Promise<Array<string>> {
-    return this.connection.sendRequest(ReadDirectoryRequest.type, { relativePath });
+  async readDirectory(path: string): Promise<Array<string>> {
+    return this.connection.sendRequest(ReadDirectoryRequest.type, { path: this.resolve(path) });
   } 
 }

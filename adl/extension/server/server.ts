@@ -139,7 +139,7 @@ documents.onDidClose(e => {
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent(async change => {
   if (apiModel) {
-    const results = [...apiModel.where(each => each.getFilePath() === change.document.uri).api.linter.run()];
+    const results = apiModel.linter.run();
     await validateTextDocument(change.document);
   }
 });

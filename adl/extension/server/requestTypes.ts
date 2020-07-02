@@ -1,7 +1,7 @@
 import { RequestType } from 'vscode-languageserver';
 
 export interface ReadFileParams {
-  pathOrRelativePath: string;
+  path: string;
 }
 
 export namespace ReadFileRequest {
@@ -9,7 +9,7 @@ export namespace ReadFileRequest {
 }
 
 export interface WriteFileParams {
-  relativePath: string; 
+  path: string; 
   data: string;
 }
 
@@ -18,7 +18,7 @@ export namespace WriteFileRequest {
 }
 
 export interface IsDirectoryParams {
-  relativePath: string;
+  path: string;
 }
 
 export namespace IsDirectoryRequest {
@@ -26,7 +26,7 @@ export namespace IsDirectoryRequest {
 }
 
 export interface IsFileParams {
-  relativePath: string;
+  path: string;
 }
 
 export namespace IsFileRequest {
@@ -34,7 +34,7 @@ export namespace IsFileRequest {
 }
 
 export interface ReadDirectoryParams {
-  relativePath: string;
+  path: string;
 }
 
 export namespace ReadDirectoryRequest {
