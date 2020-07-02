@@ -99,7 +99,7 @@ function version() {
 function header() {
   messages.log('');
   messages.log(`## ADL command line utility [version: ${chalk.white.bold(version())}; node: ${chalk.white.bold(process.version)}; max-memory: ${chalk.white.bold(Math.round((require('v8').getHeapStatistics().heap_size_limit) / (1024 * 1024)) & 0xffffffff00)} gb]`);
-  messages.log(chalk.white.bold('(C) 2020 Microsoft Corporation.'))
+  messages.log(chalk.white.bold('(C) 2020 Microsoft Corporation.'));
   messages.log('https://github.com/azure/adl');
   messages.log('');
 }
@@ -121,9 +121,9 @@ async function main() {
       case 'import':
         return await cmdImport(messages, commandLine);
 
-      // temporarily disable
-      // case 'merge':
-      //  return cmdMerge(messages,commandLine);
+        // temporarily disable
+        // case 'merge':
+        //  return cmdMerge(messages,commandLine);
 
       default:
         if (command) {
@@ -134,7 +134,7 @@ async function main() {
     }
 
   } catch (error) {
-    messages.error(error.message || error)
+    messages.error(error.message || error);
 
     if (error.stack) {
       messages.log(error.stack);

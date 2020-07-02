@@ -10,7 +10,7 @@ export async function cmdImport(messages: Messages, args: CommandLine) {
 
   if (!await isDirectory(args.project) || !await isFile(projectfile)) {
     // when there is no project init one first.
-    cmdInit(messages, args);
+    await cmdInit(messages, args);
   }
 
   const api = new ApiModel(new UrlFileSystem(args.project));
