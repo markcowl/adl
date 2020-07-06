@@ -1,6 +1,5 @@
 import { length } from '@azure-tools/linq';
 import { common, StringFormat, v2, v3, vendorExtensions } from '@azure-tools/openapi';
-import { fail } from 'assert';
 import { Element } from '../../model/element';
 
 export async function toArray<T>(g: AsyncGenerator<T>) {
@@ -16,12 +15,6 @@ export async function push<T>(destination: Array<T>, g: AsyncGenerator<T>) {
     destination.push(each);
   }
   return destination;
-}
-
-export async function consume<T>(g: AsyncGenerator<T>) {
-  for await (const each of g) {
-    // just consume it.
-  }
 }
 
 export async function singleOrDefault<T>(generator: AsyncGenerator<T>): Promise<T | undefined> {
@@ -82,11 +75,5 @@ export function addExtensionsToAttic<T extends Element>(element: T, input: any) 
     element.addToAttic(key, value);
   }
   return element;
-}
-
-export function assert(condition?: boolean): asserts condition {
-  if (!condition) {
-    fail();
-  }
 }
 

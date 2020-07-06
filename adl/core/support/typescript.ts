@@ -1,6 +1,6 @@
 import { Path } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
-import { ClassDeclaration, EnumDeclaration, EnumMember, ImportDeclarationStructure, InterfaceDeclaration, Node, Project, SourceFile, StructureKind, SyntaxList, TypeAliasDeclaration, TypeNode, TypeReferenceNode, UnionTypeNode } from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, EnumMember, ImportDeclarationStructure, InterfaceDeclaration, Node, Project, SourceFile, StructureKind, SyntaxList, TypeAliasDeclaration, TypeNode, TypeParameterDeclaration, TypeReferenceNode, UnionTypeNode } from 'ts-morph';
 import { ApiModel } from '../model/api-model';
 import { TypeReference } from '../model/schema/type';
 import { createSandbox } from './sandbox';
@@ -175,33 +175,51 @@ export function getInnerText(declaration: InterfaceDeclaration) {
 }
 
 export function expandUnion(node: UnionTypeNode): Array<TypeNode> {
-  return node.getTypeNodes().map( each => Node.isUnionTypeNode( each ) ? expandUnion(each) : each).flat();
+  return node.getTypeNodes().map(each => Node.isUnionTypeNode( each ) ? expandUnion(each) : each).flat();
 }
 
-export function getDefinition(node: TypeReferenceNode): Node|undefined {
-  return node.getTypeName().getSymbol()?.getDeclarations()[0];
+export function getDefinition(node: TypeReferenceNode): Node {
+  const typeName = node.getTypeName();
+  const declarations = typeName.getSymbol()?.getDeclarations();
+
+  if (!declarations) {
+    throw new Error(`Cannot resolve type reference '${typeName}'.`);
+  }
+
+  if (declarations.length != 1) {
+    throw new Error(`Ambiguous type reference '${typeName}'.`);
+  }
+
+  return declarations[0];
 }
 
-export function expandLiterals( node: Node): Array<string|number> {
-  if( Node.isLiteralTypeNode(node) ) {
-    const l =node.getLiteral();
-    if (Node.isNumericLiteral(l) || Node.isStringLiteral(l) ) {
-      return [l.getLiteralValue()];
+export function expandLiterals(node: Node, allowNumbers: false): Array<string|TypeParameterDeclaration>
+export function expandLiterals(node: Node, allowNumbers?: boolean): Array<string|number|TypeParameterDeclaration>
+export function expandLiterals(node: Node, allowNumbers?: boolean): Array<string|number|TypeParameterDeclaration> {
+  allowNumbers = allowNumbers ?? true;
+
+  if (Node.isLiteralTypeNode(node) ) {
+    const literal = node.getLiteral();
+    if ((Node.isNumericLiteral(literal) && allowNumbers) || Node.isStringLiteral(literal) ) {
+      return [literal.getLiteralValue()];
     }
-    fail(`unsupported literal type '${l.getKindName()}' `);
+    fail(`unexpected literal type '${literal.getKindName()}' `);
   }
-  if( Node.isTypeReferenceNode(node)) {
-    const t = getDefinition(node);
-    if( t) {
-      if( Node.isTypeAliasDeclaration(t)) {
-        return expandLiterals(t.getTypeNode()!);
-      }
-      fail(`unsupported type reference node '${t.getKindName()}' `);
+
+  if (Node.isTypeReferenceNode(node)) {
+    const definition = getDefinition(node);
+    if (Node.isTypeAliasDeclaration(definition)) {
+      return expandLiterals(definition.getTypeNodeOrThrow(), allowNumbers);
     }
+    if (Node.isTypeParameterDeclaration(definition)) {
+      return [definition];
+    }
+    fail(`unsupported type reference node '${definition.getKindName()}' `);
   }
-  if( Node.isUnionTypeNode(node)) {
-    return expandUnion(node).map( each => expandLiterals(each)).flat();
+
+  if (Node.isUnionTypeNode(node)) {
+    return expandUnion(node).map(each => expandLiterals(each, allowNumbers)).flat();
   }
+
   fail(`unsupported type for expandLiterals '${node.getKindName()}' `);
 }
-

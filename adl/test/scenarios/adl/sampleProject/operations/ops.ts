@@ -17,7 +17,7 @@ export type responseCollection = [
   (code: 200) => {
     body: Person
   },
-  // response4<200>,
+  response4<200>,
   response1,
   response2,
   response3,
@@ -44,7 +44,6 @@ export type response4<c> = (code: c) => {
   isException: true
 }
 
-// a result interface can get confused as a model type. That's just life.
 
 /**
  * @result
