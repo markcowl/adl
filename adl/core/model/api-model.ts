@@ -154,7 +154,7 @@ export class Files {
     return (Object.getOwnPropertyNames(this).indexOf(propertyName) > -1 ? (<any>this)[propertyName] : []);
   }
 
-  where(predicate: (file: SourceFile) => boolean): Files {
+  where(predicate: (file: ExtendedSourceFile) => boolean): Files {
     return new Files(this.api, this.files.filter(predicate));
   }
 
