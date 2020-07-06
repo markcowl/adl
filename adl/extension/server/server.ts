@@ -112,7 +112,7 @@ connection.onDidChangeConfiguration(change => {
   }
 
   // Revalidate all open text documents
-  //documents.all().forEach(validateTextDocument);
+  // documents.all().forEach(validateTextDocument);
 });
 
 function getDocumentSettings(resource: string): Thenable<ExampleSettings> {

@@ -33,7 +33,7 @@ export class Linter extends EventEmitter<Events> {
     return {
       range: element.range,
       severity: ruleMetadata.severity,
-      code: ruleMetadata.code,
+      code: ruleMetadata.id,
       source: 'adl-linter',
       message: ruleResult.message|| ruleMetadata.description,
       suggestion: ruleResult.suggestion

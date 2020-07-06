@@ -2,8 +2,7 @@ import { getTagValues, Rule, setTag } from '@azure-tools/adl.core';
 export default <Rule>{
   activation: 'edit',
   meta: {
-    name: 'parameter-description-required',
-    code: 'R1009',
+    id: 'parameter-description-required',
     severity: 'warning',
     description: 'Every parameter in an operation needs a description.',
     documentationUrl: 'PLACEHOLDER',
@@ -21,7 +20,7 @@ export default <Rule>{
 
     if (missingDoc.length > 0) {
       return {
-        message: `The parameters ${missingDoc} are missing a description. Consider adding one.`,
+        message: `The parameters '${missingDoc}' are missing a description. Consider adding one.`,
         suggestion: [
           {
             description: 'Provide parameter descriptions.',

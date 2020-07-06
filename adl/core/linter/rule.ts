@@ -32,19 +32,14 @@ export declare type RuleSeverity = 'error' | 'warning' ;
 export interface RuleMetaData extends ListenerMetaData {
 
   /**
-   * The rule name
+   * The rule id.
    */
-  name: string;
+  id: number| string;
 
   /**
    * How severe the rule is. It can be a error, warning, information or hint.
    */
   severity: RuleSeverity;
-
-  /**
-   * A code associated with the rule. Usually appers in the user interface.
-   */
-  code?: number|string;
 
   /**
    * Description about the rules. 

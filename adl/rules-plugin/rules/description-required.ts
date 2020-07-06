@@ -2,8 +2,7 @@ import { NamedElement, Rule, RuleResult } from '@azure-tools/adl.core';
 export default <Rule>{
   activation: 'edit',
   meta: {
-    name: 'version-format',
-    code: 'R2056',
+    id: 'version-format',
     severity: 'error',
     description: 'API version must be in the format: yyyy - MM - dd, optionally followed by - preview, - alpha, -beta, -rc, -privatepreview.',
     documentationUrl: 'URL',
@@ -26,7 +25,7 @@ export default <Rule>{
 function checkDescription(nodeType: string, element: NamedElement<any>): RuleResult | undefined {
   if (element.description === undefined) {
     return {
-      message: `The ${nodeType} ${element.name} lacks a description. Plese consider adding one`
+      message: `The ${nodeType} '${element.name}' lacks a description. Please consider adding one.`
     };
   }
 
