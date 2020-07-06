@@ -2,8 +2,8 @@ import { suite, test } from '@testdeck/mocha';
 import { deepEqual, equal } from 'assert';
 import { resolve } from 'path';
 import { ApiModel } from '../model/api-model';
+import { isReference, Declaration } from '../model/typescript/reference';
 import { ResponseCollection } from '../model/http/operation';
-import { isDeclaration } from '../model/typescript/reference';
 import { UrlFileSystem } from '../support/file-system';
 
 const scenarios = `${__dirname}/../../../test/scenarios/adl`;
@@ -28,29 +28,39 @@ const scenarios = `${__dirname}/../../../test/scenarios/adl`;
 
     deepEqual(operations.map(each => each.name), ['first']);
 
+    const t = operations[0].node.getReturnType();
+    const s = t.getText();
+
     this.navigateResponses(api);
   }
 
   private navigateResponses(api: ApiModel) {
     const responseCollections = api.responseCollections;
-    deepEqual(responseCollections.length, 1, 'should have one response collection');
+    deepEqual(responseCollections.length, 1);
 
+    
     const col = responseCollections[0];
-
-    // strongly type the expected collections type
-    const collection = <ResponseCollection>col.target;
+    this.navigateResponseCollection(<ResponseCollection>col.definition);
+    const collection = col.definition;
     const responses = collection.responses;
 
-    deepEqual(responses.length, 6, 'should have 6 responses in the collection');
+    deepEqual(responses.length, 7);
+  }
 
-    for (const response of responses) {
-      const r = isDeclaration(response) ? response.target : response;
-      const c = r.criteria;
-      let discard = c.codes; // will throw if it's not good
-      discard = c.mediaTypes; // will throw if it's not good
-      const s = r.result;
-      if (s) {
-        const result = isDeclaration(s) ? s.target : s;
+  private navigateResponseCollection(collection: ResponseCollection) {
+    for (const each of collection.responses) {
+      const responseOrResponseCollection = isReference(each) ? each.target : each;
+      if (responseOrResponseCollection instanceof ResponseCollection) {
+        this.navigateResponseCollection(collection);
+        continue;
+      } 
+      const response = responseOrResponseCollection;
+      const criteria = response.criteria;
+      let discard = criteria.codes; // will throw if it's not good
+      discard = criteria.mediaTypes; // will throw if it's not good
+      let result = response.result;
+      if (result) {
+        result = isReference(result) ? result.target : result;
         const discard = result.body?.declaration.text;
       }
     }
@@ -58,7 +68,7 @@ const scenarios = `${__dirname}/../../../test/scenarios/adl`;
 
   private navigateModels(api: ApiModel) {
     const modelTypeNames = api.modelTypes.map(each => each.name);
-    deepEqual(modelTypeNames, ['Person', 'responseValue2']);
+    deepEqual(modelTypeNames, ['Person']);
 
     const personModel = api.modelTypes[0];
     equal(personModel.name, 'Person');

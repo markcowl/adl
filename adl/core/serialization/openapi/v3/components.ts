@@ -13,7 +13,10 @@ const { vendorExtensions } = v3;
 
 
 // eslint-disable-next-line require-yield
-export async function* processComponents(components: v3.Components, $: Context): AsyncGenerator<Element> {
+export async function processComponents(components: v3.Components | undefined, $: Context) {
+  if (!components) {
+    return;
+  }
 
   for (const [key, extension] of vendorExtensions(components)) {
     // switch(key)
@@ -55,7 +58,4 @@ export async function* processComponents(components: v3.Components, $: Context):
   // await $.process(processExamples, components.examples); // send to attic 
   // await $.process(processCallbacks, components.callbacks);  // ok skip
   // await $.process(processLinks, components.links); // ok skip
-
-
-  return undefined;
 }

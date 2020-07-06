@@ -13,13 +13,13 @@ import { EventListener } from '../eventing/event-listener';
 import { Linter } from '../linter/linter';
 import { ExtensionManager } from '../plugin/plugin-manager';
 import { ImportExtension } from '../serialization/openapi/import-extensions';
-import { getTags, hasTag } from '../support/doc-tag';
+import { getTags } from '../support/doc-tag';
 import { FileSystem, UrlFileSystem } from '../support/file-system';
 import { ProcessingMessages } from '../support/message-channels';
 import { referenceTo } from '../support/typescript';
 import { Visitor } from '../support/visitor';
 import { HttpProtocol } from './http/protocol';
-import { ParameterElement, ResponseCollection, ResponseElement, ResultElement } from './operation';
+import { Parameter, Response, ResponseCollection, Result } from './operation';
 import { ProjectData } from './project/project-data';
 import { Protocol } from './project/protocol';
 import { AliasType } from './schema/alias';
@@ -29,47 +29,68 @@ import { Primitives } from './schema/primitive';
 import { Folders, Identity } from './types';
 import { Declaration } from './typescript/reference';
 
-export function isModelTypeAlias(declaration: TypeAliasDeclaration) {
-  if (hasTag(declaration, 'model')) {
-    return true;
+function getFirstTypeTag(declaration: TypeAliasDeclaration | InterfaceDeclaration)  {
+  for (const each of getTags(declaration)) {
+    const tag = each.getTagName();
+    switch (tag) {
+      case 'http':
+      case 'model':
+      case 'responseCollection':
+      case 'response':
+      case 'result':
+        return tag;
+    }
   }
+  return undefined;
+}
 
-  // if this is an alias over a model type or primitive
-  // or it is
-
-  return false;
+export function isModelTypeAlias(declaration: TypeAliasDeclaration) {
+  switch (getFirstTypeTag(declaration)) {
+    case 'model':
+      return true;
+    default:
+      return false;
+  }
 }
 
 export function isResponseCollectionTypeAlias(declaration: TypeAliasDeclaration): boolean {
-  if (hasTag(declaration, 'responseCollection')) {
-    return true;
+  switch (getFirstTypeTag(declaration)) {
+    case 'responseCollection':
+      return true;
+    case undefined: {
+      // untagged type aliases that are tuple types are inferred to be response collections.
+      const typeNode = declaration.getTypeNode();
+      if (typeNode && Node.isTupleTypeNode(typeNode)) { //?.getKind() === SyntaxKind.TupleType
+        // they must only have children that are either functionTypeNode or TypeReferenceNode
+        // if they have anything else, ignore them. 
+        return !(typeNode.getElementTypeNodes().find(each => !(Node.isFunctionTypeNode(each) || Node.isTypeReferenceNode(each))));
+      }
+      return false;
+    }
+    default:
+      return false;
   }
-
-  // type aliases that are tupletypes are responsecollections.
-  const typeNode = declaration.getTypeNode();
-  if (typeNode && Node.isTupleTypeNode(typeNode)) { //?.getKind() === SyntaxKind.TupleType
-    // they must only have children that are either functionTypeNode or TypeReferenceNode
-    // if they have anything else, ignore them. 
-    return !(typeNode.getElementTypeNodes().find(each => !(Node.isFunctionTypeNode(each) || Node.isTypeReferenceNode(each))));
-  }
-  return false;
 }
 
 export function isResponseTypeAlias(declaration: TypeAliasDeclaration) {
-  if (hasTag(declaration, 'response')) {
-    return true;
+  switch (getFirstTypeTag(declaration)) {
+    case 'response':
+      return true;
+    case undefined:
+      // untagged type aliases that are function types are inferred to be responses.
+      return (declaration.getTypeNode()?.getKind() === SyntaxKind.FunctionType);
+    default:
+      return false;
   }
-
-  // type aliases that are function types are response declarations.
-  return (declaration.getTypeNode()?.getKind() === SyntaxKind.FunctionType);
 }
 
 export function isResultTypeAlias(declaration: TypeAliasDeclaration) {
-  if (hasTag(declaration, 'result')) {
-    return true;
+  switch (getFirstTypeTag(declaration)) {
+    case 'result':
+      return true;
+    default:
+      return false;
   }
-
-  return false;
 }
 
 export function isResourceTypeAlias(declaration: TypeAliasDeclaration) {
@@ -81,51 +102,37 @@ export function isResourceInterfaceType(declaration: InterfaceDeclaration) {
 }
 
 export function isOperationGroupInterfaceType(declaration: InterfaceDeclaration) {
-  // should only have operations
-  if (hasTag(declaration, 'http')) {
-    return true;
+  switch (getFirstTypeTag(declaration)) {
+    case 'http':
+      return true;
+    case undefined:
+      // untagged interfaces with methods are inferred to be operation groups
+      return declaration.getMethods().length > 0;
+    default:
+      return false;
   }
-
-  // operation groups have methods.
-  if (declaration.getMethods().length > 0) {
-    return true;
-  }
-  return false;
 }
 
 export function isResultInterfaceType(declaration: InterfaceDeclaration) {
-  return false;
-}
-
-export function isResponseInterfaceType(declaration: InterfaceDeclaration) {
-  return false;
+  switch (getFirstTypeTag(declaration)) {
+    case 'result':
+      return true;
+    default:
+      return false;
+  }
 }
 
 export function isModelInterface(declaration: InterfaceDeclaration) {
-  // interfaces that identify as @model are models
-  if (hasTag(declaration, 'model')) {
-    return true;
+  switch (getFirstTypeTag(declaration)) {
+    case 'model':
+      return true;
+    case undefined:
+      // untagged interfaces with no methods are inferred to be models
+      return declaration.getMethods().length == 0;
+    default:
+      return false;
   }
-  // inference based on what it looks like it is.
-
-  // model interfaces should
-  // - may have constructors (used for versioning)
-
-  // - may not have methods
-  if (declaration.getMethods().length > 0) {
-    return false;
-  }
-
-  return true;
 }
-/*
-type Queryable<T extends string,TResult >  = {
-  readonly [key in T]: Array<TResult>;
-}
-const someFiles = <Files><any>{};
-const x = someFiles.query<ModelType>('interfaces');
-*/
-
 
 export class Files {
   readonly api: ApiModel;
@@ -197,21 +204,21 @@ export class Files {
   /**
    * Gets all the globally declared responses across all the protocols
    */
-  get responses(): Array<Declaration<ResponseElement>> {
+  get responses(): Array<Declaration<Response>> {
     return linq.values(this.protocols).selectMany(protocol => protocol.responses).toArray();
   }
 
   /**
    * Gets all the globally declared results across all the protocols
    */
-  get results(): Array<Declaration<ResultElement>> {
+  get results(): Array<Declaration<Result>> {
     return linq.values(this.protocols).selectMany(protocol => protocol.results).toArray();
   }
 
   /**
    * Gets all the globally parameters across all the protocols
    */
-  get parameters(): Array<Declaration<ParameterElement>> {
+  get parameters(): Array<Declaration<Parameter>> {
     return linq.values(this.protocols).selectMany(protocol => protocol.parameters).toArray();
   }
 }
@@ -310,7 +317,6 @@ export class ApiModel extends Files {
 
   readonly KnownInterfaceTypes = <Dictionary<(declaration: InterfaceDeclaration) => boolean>>{
     model: isModelInterface,
-    response: isResponseInterfaceType,
     result: isResultInterfaceType,
     operationgroup: isOperationGroupInterfaceType,
     resource: isResourceInterfaceType,

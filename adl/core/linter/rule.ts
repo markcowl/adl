@@ -2,7 +2,7 @@ import { Activation } from '../eventing/activation';
 import { EventListener, ListenerMetaData } from '../eventing/event-listener';
 import { ApiModel } from '../model/api-model';
 import { Operation } from '../model/http/operation';
-import { OperationGroup, ParameterElement, ResponseCollection, ResponseElement, ResultElement } from '../model/operation';
+import { OperationGroup, Parameter, Response, ResponseCollection, Result } from '../model/operation';
 import { AliasType } from '../model/schema/alias';
 import { EnumType, EnumValueElement } from '../model/schema/enum';
 import { ModelType } from '../model/schema/model';
@@ -15,16 +15,16 @@ export interface Rule extends EventListener {
   meta: RuleMetaData;
   onAliasType?: (model: ApiModel, aliasType: AliasType) => RuleResult | undefined;
   onDeclaredResponseCollections?: (model: ApiModel, reponseCollection: Declaration<ResponseCollection>) => RuleResult | undefined;
-  onDeclaredResponses?: (model: ApiModel, response: Declaration<ResponseElement>) => RuleResult | undefined;
-  onDeclaredResults?: (model: ApiModel, result: Declaration<ResultElement>) => RuleResult | undefined;
-  onDeclaredParameters?: (model: ApiModel, parameter: Declaration<ParameterElement>) => RuleResult | undefined;
+  onDeclaredResponses?: (model: ApiModel, response: Declaration<Response>) => RuleResult | undefined;
+  onDeclaredResults?: (model: ApiModel, result: Declaration<Result>) => RuleResult | undefined;
+  onDeclaredParameters?: (model: ApiModel, parameter: Declaration<Parameter>) => RuleResult | undefined;
   onEnumType?: (model: ApiModel, enumType: EnumType) => RuleResult | undefined;
   onEnumValue?: (model: ApiModel, enumValue: EnumValueElement) => RuleResult | undefined;
   onModelType?: (model: ApiModel, modelType: ModelType) => RuleResult | undefined;
   onOperationGroup?: (model: ApiModel, operationGroup: OperationGroup) => RuleResult | undefined;
   onOperation?: (model: ApiModel, operation: Operation) => RuleResult | undefined;
   onProperty?: (model: ApiModel, property: Property) => RuleResult | undefined;
-  onParameter?: (model: ApiModel, parameter: ParameterElement) => RuleResult | undefined;
+  onParameter?: (model: ApiModel, parameter: Parameter) => RuleResult | undefined;
 }
 
 export declare type RuleSeverity = 'error' | 'warning' | 'info' | 'hint';

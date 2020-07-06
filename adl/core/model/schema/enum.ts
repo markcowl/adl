@@ -9,7 +9,7 @@ import { SchemaInitializer } from '../typescript/schema';
 import { TypeReference } from './type';
 
 export interface EnumInitializer extends SchemaInitializer {
-  extensible: boolean;
+  extensible?: boolean;
 }
 
 export interface EnumValue {
@@ -18,7 +18,7 @@ export interface EnumValue {
   value: any;
 }
 
-export function createEnum(api: ApiModel, identity: Identity, values: Array<EnumValue>, initializer?: Partial<EnumInitializer>): TypeReference {
+export function createEnum(api: ApiModel, identity: Identity, values: Array<EnumValue>, initializer?: EnumInitializer): TypeReference {
   if (!isAnonymous(identity)) {
     const { name, file } = api.getNameAndFile(identity, 'enum');
 
@@ -34,7 +34,6 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
       };
     }
 
-    
     // create the definition all at once.
     const type = file.addEnum({
       name,
