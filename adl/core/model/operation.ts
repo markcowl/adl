@@ -41,7 +41,7 @@ export class Parameter extends TypedElement<ParameterDeclaration> {
  */
 export class Result extends TSElement<TypeLiteralNode | InterfaceDeclaration> {
   static isAllowedNode(node: Node): node is TypeLiteralNode | InterfaceDeclaration {
-    return Node.isTypeLiteralNode(node) || Node.isInterfaceDeclaration(node); 
+    return Node.isTypeLiteralNode(node) || Node.isInterfaceDeclaration(node);
   }
 }
 
