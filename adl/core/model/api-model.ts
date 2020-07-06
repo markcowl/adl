@@ -14,7 +14,7 @@ import { Linter } from '../linter/linter';
 import { ExtensionManager } from '../plugin/plugin-manager';
 import { ImportExtension } from '../serialization/openapi/import-extensions';
 import { getTags } from '../support/doc-tag';
-import { FileSystem, UrlFileSystem } from '../support/file-system';
+import { FileSystem, getAbsolutePath, UrlFileSystem } from '../support/file-system';
 import { ProcessingMessages } from '../support/message-channels';
 import { referenceTo } from '../support/typescript';
 import { Visitor } from '../support/visitor';
@@ -29,7 +29,7 @@ import { Primitives } from './schema/primitive';
 import { Folders, Identity } from './types';
 import { Declaration } from './typescript/reference';
 
-function getFirstTypeTag(declaration: TypeAliasDeclaration | InterfaceDeclaration)  {
+function getFirstTypeTag(declaration: TypeAliasDeclaration | InterfaceDeclaration) {
   for (const each of getTags(declaration)) {
     const tag = each.getTagName();
     switch (tag) {
@@ -62,7 +62,7 @@ export function isResponseCollectionTypeAlias(declaration: TypeAliasDeclaration)
       const typeNode = declaration.getTypeNode();
       if (typeNode && Node.isTupleTypeNode(typeNode)) { //?.getKind() === SyntaxKind.TupleType
         // they must only have children that are either functionTypeNode or TypeReferenceNode
-        // if they have anything else, ignore them. 
+        // if they have anything else, ignore them.
         return !(typeNode.getElementTypeNodes().find(each => !(Node.isFunctionTypeNode(each) || Node.isTypeReferenceNode(each))));
       }
       return false;
@@ -136,9 +136,9 @@ export function isModelInterface(declaration: InterfaceDeclaration) {
 
 export class Files {
   readonly api: ApiModel;
-  readonly files!: Array<SourceFile>;
+  readonly files!: Array<ExtendedSourceFile>;
 
-  protected constructor(api?: ApiModel, sourceFiles?: Array<SourceFile>) {
+  protected constructor(api?: ApiModel, sourceFiles?: Array<ExtendedSourceFile>) {
     if (api) {
       this.files = sourceFiles || api.files;
     }
@@ -268,7 +268,7 @@ export class ApiModel extends Files {
 
   /**
    * typescript project for this model
-   * 
+   *
    * provides access to the ts project for this api.
    * @internal
    */
@@ -294,7 +294,7 @@ export class ApiModel extends Files {
     resource: this.project.createDirectory('resources'),
   }
 
-  /** 
+  /**
    * Linter instance for this API.
   */
   readonly linter = new Linter(this);
@@ -335,7 +335,7 @@ export class ApiModel extends Files {
   }
 
   get files() {
-    return this.project?.getSourceFiles() || [];
+    return <Array<ExtendedSourceFile>>this.project?.getSourceFiles() || [];
   }
 
   tsconfig: any = {}
@@ -371,6 +371,8 @@ metadata:
 use: 
 - @azure-tools/adl.types.core  # ADL core types 
 `, { keepCstNodes: true });
+
+    // add a connection to this api-model inside the project
     (<any>this.project).api = this;
     this.protocols.http = new HttpProtocol(this);
   }
@@ -399,18 +401,18 @@ use:
         if (!Array.isArray(use)) {
           throw new Error('Invalid plugin configuration ("use" is not an array of package references');
         }
-        // load plugins now 
+        // load plugins now
         this.extensionManager = this.extensionManager || await ExtensionManager.Create(this.fileSystem.extensionPath);
 
         for (const each of use) {
           try {
             // we need to see if this a local folder before trying to load the extension.
-            const fullPath = this.fileSystem.resolve(each);
+            const fullPath = getAbsolutePath(this.fileSystem,each);
 
             const pkg = (fullPath.startsWith('file:/') && await exists(FileUriToPath(fullPath))) ? await this.extensionManager.findPackage('someExtension', fullPath) : await this.extensionManager.findPackage(each);
             let ext = await pkg.extension;
             if (!ext) {
-              // it's not installed, 
+              // it's not installed,
               ext = await pkg.install();
             }
             this.tsconfig.compilerOptions.types.push(ext.name);
@@ -420,8 +422,8 @@ use:
 
             // iterate thru the default exports and bind the events to the respective emitters.
             for (const [key, xport] of items<string, EventListener, any>(exports.default)) {
-              // the key is just a string 
-              // the xport should have members that we 
+              // the key is just a string
+              // the xport should have members that we
               // use to bind to the events.
               if (typeof xport === 'object') {
                 switch (xport.activation) {
@@ -454,7 +456,7 @@ use:
 
   /** @internal */
   async initialize() {
-    // loads any extensions in the project file 
+    // loads any extensions in the project file
     // and binds their events to the model.
 
     if (await this.fileSystem.isFile('api.yaml')) {
@@ -528,13 +530,13 @@ use:
   }
 
   /** @internal */
-  getFile(identity: Identity, type: keyof Folders): SourceFile {
+  getFile(identity: Identity, type: keyof Folders): ExtendedSourceFile {
     if (isAnonymous(identity)) {
       identity = identity.name;
       type = 'anonymous';
     }
     const filename = `${(<string>identity).replace(/[^\w]+/g, '_')}.ts`;
-    return this.#folders[type].getSourceFile(filename) || this.#folders[type].createSourceFile(filename);
+    return <ExtendedSourceFile>this.#folders[type].getSourceFile(filename) || this.#folders[type].createSourceFile(filename);
   }
 
   getEnum(name: string) {
@@ -615,4 +617,9 @@ use:
     throw Error(`Type Alias has muliple type tags: ${declaration.getName()}: ${tagType.map(each => each.getTagName()).join(',')}`);
   }
 
+}
+
+export interface ExtendedSourceFile extends SourceFile {
+  readonly relativePath: string;
+  readonly fullPath: string;
 }

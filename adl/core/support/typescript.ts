@@ -3,6 +3,7 @@ import { fail } from 'assert';
 import { ClassDeclaration, EnumDeclaration, EnumMember, ImportDeclarationStructure, InterfaceDeclaration, Node, Project, SourceFile, StructureKind, SyntaxList, TypeAliasDeclaration, TypeNode, TypeParameterDeclaration, TypeReferenceNode, UnionTypeNode } from 'ts-morph';
 import { ApiModel } from '../model/api-model';
 import { TypeReference } from '../model/schema/type';
+import { getAbsolutePath } from '../support/file-system';
 import { createSandbox } from './sandbox';
 
 /**
@@ -19,9 +20,9 @@ function quote(text: string) {
  * @param node the node to create an identifier for.
  */
 export function getNodeIdentifier(node: Node) {
-  // for some nodes, we have to give it an expression that can 
+  // for some nodes, we have to give it an expression that can
   // effectively find the node we're looking for.
-  // this can be far more reliable than using the name or index 
+  // this can be far more reliable than using the name or index
   // as a means to find something.
   switch (node.getKindName()) {
     case 'SourceFile':
@@ -41,7 +42,7 @@ export function getNodeIdentifier(node: Node) {
 }
 /**
  * returns a Path to the node that we can use to find it again.
- * 
+ *
  * @param node the node to create the path for.
  */
 export function getPath(node: Node, ...args: Path): Path {
@@ -83,7 +84,7 @@ export function getNode(path: Path, from: Node | Project): Node | undefined {
 
 /**
  * Creates a reference to the node that will reacquire the target if the AST forces the node object to be forgotten or invalid.
- * 
+ *
  * @param input the node to create a reference for.
  */
 export function referenceTo<T extends Node>(input: T): T {
@@ -131,8 +132,8 @@ export function createImportFor(name: string, sourceFile: SourceFile, relativeTo
   };
 }
 
-export function addImportsTo(sourceFile: SourceFile,typeReference: TypeReference ) {
-  if (typeReference.sourceFile && sourceFile !== typeReference.sourceFile ) {
+export function addImportsTo(sourceFile: SourceFile, typeReference: TypeReference) {
+  if (typeReference.sourceFile && sourceFile !== typeReference.sourceFile) {
     const typeName = typeReference.declaration.text;
 
 
@@ -141,7 +142,7 @@ export function addImportsTo(sourceFile: SourceFile,typeReference: TypeReference
 
     for (const importDecl of importDecls) {
       if (importDecl.getModuleSpecifierSourceFile() === typeReference.sourceFile) {
-        // we've got imports from that sourcefile 
+        // we've got imports from that sourcefile
         if (!importDecl.getNamedImports().find(imp => imp.getName() === typeName)) {
           // we've referenced the file, but not imported the type.
           importDecl.addNamedImport(typeName);
@@ -175,7 +176,7 @@ export function getInnerText(declaration: InterfaceDeclaration) {
 }
 
 export function expandUnion(node: UnionTypeNode): Array<TypeNode> {
-  return node.getTypeNodes().map(each => Node.isUnionTypeNode( each ) ? expandUnion(each) : each).flat();
+  return node.getTypeNodes().map(each => Node.isUnionTypeNode(each) ? expandUnion(each) : each).flat();
 }
 
 export function getDefinition(node: TypeReferenceNode): Node {
@@ -193,14 +194,14 @@ export function getDefinition(node: TypeReferenceNode): Node {
   return declarations[0];
 }
 
-export function expandLiterals(node: Node, allowNumbers: false): Array<string|TypeParameterDeclaration>
-export function expandLiterals(node: Node, allowNumbers?: boolean): Array<string|number|TypeParameterDeclaration>
-export function expandLiterals(node: Node, allowNumbers?: boolean): Array<string|number|TypeParameterDeclaration> {
+export function expandLiterals(node: Node, allowNumbers: false): Array<string | TypeParameterDeclaration>
+export function expandLiterals(node: Node, allowNumbers?: boolean): Array<string | number | TypeParameterDeclaration>
+export function expandLiterals(node: Node, allowNumbers?: boolean): Array<string | number | TypeParameterDeclaration> {
   allowNumbers = allowNumbers ?? true;
 
-  if (Node.isLiteralTypeNode(node) ) {
+  if (Node.isLiteralTypeNode(node)) {
     const literal = node.getLiteral();
-    if ((Node.isNumericLiteral(literal) && allowNumbers) || Node.isStringLiteral(literal) ) {
+    if ((Node.isNumericLiteral(literal) && allowNumbers) || Node.isStringLiteral(literal)) {
       return [literal.getLiteralValue()];
     }
     fail(`unexpected literal type '${literal.getKindName()}' `);
@@ -223,3 +224,19 @@ export function expandLiterals(node: Node, allowNumbers?: boolean): Array<string
 
   fail(`unsupported type for expandLiterals '${node.getKindName()}' `);
 }
+
+// Add a couple properties onto ts-morph's SourceFile so we can get back more useful paths.
+Object.defineProperties(SourceFile.prototype, {
+  relativePath: {
+    get() {
+      // returns a relative path from the root (starts with './' )
+      return this.getFullPath().replace(/(^\/)|(^\w)/, './$2');
+    }
+  },
+  fullPath: {
+    get() {
+      // returns the full path based on the project that it's in.
+      return getAbsolutePath((<ApiModel>this.getProject().api).fileSystem,this.relativePath);
+    }
+  }
+});

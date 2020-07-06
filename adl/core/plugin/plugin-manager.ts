@@ -548,7 +548,7 @@ export class ExtensionManager extends EventEmitter<Events> {
   }
 
   /**
-   * Loads an extension in-proc using node's 'require' 
+   * Loads an extension in-proc using node's 'require'
    * @param extension the extension to load (in-proc)
    */
   load(extension: Extension): any {
@@ -579,7 +579,7 @@ export class ExtensionManager extends EventEmitter<Events> {
     env[PathVar] = `${join(extension.modulePath, 'node_modules', '.bin')}${delimiter}${env[PathVar]}`;
     env[PathVar] = `${join(extension.location, 'node_modules', '.bin')}${delimiter}${env[PathVar]}`;
 
-    // find appropriate path for interpreter 
+    // find appropriate path for interpreter
     switch (command[0].toLowerCase()) {
       case 'node':
       case 'node.exe':
