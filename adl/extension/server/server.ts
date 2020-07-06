@@ -73,6 +73,9 @@ connection.onInitialized(async () => {
   const fs = new ServerFileSystem(connection);
   fs.cwd = (await connection.workspace.getWorkspaceFolders())?.first?.uri || '';
   apiModel = await new ApiModel(fs).load();
+  for(const doc of documents.all()){
+    lintDocument(doc);
+  }
 
   if (hasConfigurationCapability) {
     // Register for all configuration changes.
@@ -146,15 +149,18 @@ function convertSeverity(severity: RuleSeverity): DiagnosticSeverity {
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent(async change => {
-  if (apiModel) {
-    const changedPath = getRelativePath(apiModel.fileSystem, change.document.uri);
-    const changedFile = apiModel.where(each => each.relativePath === changedPath);
-    changedFile.files[0].replaceWithText(change.document.getText());
-    const diagnostics = [...apiModel.linter.run(changedFile)];
-    processLinterDiagnostics(diagnostics, change.document.uri);
-  }
+  lintDocument(change.document);
 });
 
+function lintDocument(document: TextDocument) {
+  if (apiModel) {
+    const changedPath = getRelativePath(apiModel.fileSystem, document.uri);
+    const changedFile = apiModel.where(each => each.relativePath === changedPath);
+    changedFile.files[0].replaceWithText(document.getText());
+    const diagnostics = [...apiModel.linter.run(changedFile)];
+    processLinterDiagnostics(diagnostics, document.uri);
+  }
+}
 
 function processLinterDiagnostics(linterDiagnostic: Array<LinterDiagnostic>, uri: string){
   const diagnostics: Array<Diagnostic> = [];
