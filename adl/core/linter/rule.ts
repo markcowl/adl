@@ -27,29 +27,7 @@ export interface Rule extends EventListener {
   onParameter?: (model: ApiModel, parameter: ParameterElement) => RuleResult | undefined;
 }
 
-export declare type RuleSeverity = 'error' | 'warning' | 'info' | 'hint';
-
-/**
- * The diagnostic's severity.
- */
-export declare namespace RuleSeverity {
-  /**
-   * Reports an error.
-   */
-  const Error: 1;
-  /**
-   * Reports a warning.
-   */
-  const Warning: 2;
-  /**
-   * Reports an information.
-   */
-  const Information: 3;
-  /**
-   * Reports a hint.
-   */
-  const Hint: 4;
-}
+export declare type RuleSeverity = 'error' | 'warning' ;
 
 export interface RuleMetaData extends ListenerMetaData {
 
@@ -81,14 +59,14 @@ export interface RuleMetaData extends ListenerMetaData {
 
 
 export interface RuleResult {
-/**
- * The range at which the message applies
- */
+  /**
+   * The range at which the message applies
+   */
   range?: Range;
 
-/**
- * The rule's message. It usually appears in the user interface
- */
+  /**
+   * The rule's message. It usually appears in the user interface
+  */
   message?: string;
 
   /**
@@ -108,4 +86,39 @@ export interface Fix {
    * This function is used to provide a fix on the node.
    */
   fix?: () => void;
+}
+
+export interface LinterDiagnostic {
+  /**
+     * The range at which the message applies
+     */
+  range: Range;
+  
+  /**
+   * The diagnostic's severity. Can be omitted. If omitted it is up to the
+   * client to interpret diagnostics as error, warning, info or hint.
+   */
+  severity?: RuleSeverity;
+
+  /**
+   * The diagnostic's code, which usually appear in the user interface.
+   */
+  code?: number | string;
+
+  /**
+   * A human-readable string describing the source of this
+   * diagnostic, e.g. 'typescript' or 'super lint'. It usually
+   * appears in the user interface.
+   */
+  source?: string;
+  
+  /**
+   * The diagnostic's message. It usually appears in the user interface
+   */
+  message: string;
+
+  /**
+  * An array of possible fixes.
+  */
+  suggestion?: Array<Fix>;
 }

@@ -11,7 +11,7 @@ if (process.env['no-static-loader'] === undefined && require('fs').existsSync(`$
   require(`${__dirname}/../../dist/static-loader.js`).load(`${__dirname}/../../dist/static_modules.fs`);
 }
 import { ApiModel } from '@azure-tools/adl.core';
-import { CompletionItem, CompletionItemKind, createConnection, Diagnostic, DiagnosticSeverity, DidChangeConfigurationNotification, InitializeParams, InitializeResult, ProposedFeatures, TextDocumentPositionParams, TextDocuments, TextDocumentSyncKind } from 'vscode-languageserver';
+import { CompletionItem, CompletionItemKind, createConnection, DidChangeConfigurationNotification, InitializeParams, InitializeResult, ProposedFeatures, TextDocumentPositionParams, TextDocuments, TextDocumentSyncKind } from 'vscode-languageserver';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { ServerFileSystem } from './file-system';
 
@@ -112,7 +112,7 @@ connection.onDidChangeConfiguration(change => {
   }
 
   // Revalidate all open text documents
-  documents.all().forEach(validateTextDocument);
+  //documents.all().forEach(validateTextDocument);
 });
 
 function getDocumentSettings(resource: string): Thenable<ExampleSettings> {
@@ -140,58 +140,47 @@ documents.onDidClose(e => {
 documents.onDidChangeContent(async change => {
   if (apiModel) {
     const changedUri = apiModel.fileSystem.relative(change.document.uri);
-    const results = [...apiModel.linter.run(apiModel.where(each => each.getFilePath().replace('/', '').replace(/\//g, '\\') === changedUri))];
-    await validateTextDocument(change.document);
+    const changedFiles = apiModel.where(each => each.getFilePath().replace('/', '').replace(/\//g, '\\') === changedUri);
+    const results = [...apiModel.linter.run(changedFiles)];
+    //processResults(results);
   }
 });
 
-async function validateTextDocument(textDocument: TextDocument): Promise<void> {
-  // In this simple example we get the settings for every validate run.
-  const settings = await getDocumentSettings(textDocument.uri);
+// function processResults(results: Array<RuleResult>){
+//   for (const result of results) {
+//     const diagnostic: Diagnostic = {
+//       severity: result.,
+//       range: {
+//         start: textDocument.positionAt(m.index),
+//         end: textDocument.positionAt(m.index + m[0].length)
+//       },
+//       message: `${m[0]} is all uppercase.`,
+//       source: 'ex'
+//     };
+//     if (hasDiagnosticRelatedInformationCapability) {
+//       diagnostic.relatedInformation = [
+//         {
+//           location: {
+//             uri: textDocument.uri,
+//             range: Object.assign({}, diagnostic.range)
+//           },
+//           message: 'Spelling matters'
+//         },
+//         {
+//           location: {
+//             uri: textDocument.uri,
+//             range: Object.assign({}, diagnostic.range)
+//           },
+//           message: 'Particularly for names'
+//         }
+//       ];
+//     }
+//     diagnostics.push(diagnostic);
+//   }
 
-  // THIS IS EXAMPLE CODE -------------------------------------------------------------------
-  // The validator creates diagnostics for all uppercase words length 2 and more
-  const text = textDocument.getText();
-  const pattern = /\b[A-Z]{2,}\b/g;
-  let m: RegExpExecArray | null;
-
-  let problems = 0;
-  const diagnostics: Array<Diagnostic> = [];
-  while ((m = pattern.exec(text)) && problems < settings.maxNumberOfProblems) {
-    problems++;
-    const diagnostic: Diagnostic = {
-      severity: DiagnosticSeverity.Warning,
-      range: {
-        start: textDocument.positionAt(m.index),
-        end: textDocument.positionAt(m.index + m[0].length)
-      },
-      message: `${m[0]} is all uppercase.`,
-      source: 'ex'
-    };
-    if (hasDiagnosticRelatedInformationCapability) {
-      diagnostic.relatedInformation = [
-        {
-          location: {
-            uri: textDocument.uri,
-            range: Object.assign({}, diagnostic.range)
-          },
-          message: 'Spelling matters'
-        },
-        {
-          location: {
-            uri: textDocument.uri,
-            range: Object.assign({}, diagnostic.range)
-          },
-          message: 'Particularly for names'
-        }
-      ];
-    }
-    diagnostics.push(diagnostic);
-  }
-
-  // Send the computed diagnostics to VSCode.
-  connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
-}
+//   // Send the computed diagnostics to VSCode.
+//   connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
+// }
 
 connection.onDidChangeWatchedFiles(_change => {
   // Monitored files have change in VSCode
