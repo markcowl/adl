@@ -22,7 +22,7 @@ describe('Load ADL Projects', () => {
       const api = await new ApiModel(new UrlFileSystem(inputRoot)).load();
       const q = api.modelTypes;
 
-      notEqual(q.length, 0 , 'Should have models');
+      notEqual(q.length, 0, 'Should have models');
       console.log(`has ${q.length} models`);
     });
   }

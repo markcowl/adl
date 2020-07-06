@@ -3,7 +3,7 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 
-// using static-link'd dependencies: 
+// using static-link'd dependencies:
 let usingStaticLoader = false;
 
 if (process.env['no-static-loader'] === undefined && require('fs').existsSync(`${__dirname}/../../dist/static-loader.js`)) {
@@ -11,6 +11,7 @@ if (process.env['no-static-loader'] === undefined && require('fs').existsSync(`$
   require(`${__dirname}/../../dist/static-loader.js`).load(`${__dirname}/../../dist/static_modules.fs`);
 }
 import { ApiModel, LinterDiagnostic, RuleSeverity } from '@azure-tools/adl.core';
+import { getRelativePath } from '@azure-tools/adl.core/dist/support/file-system';
 import { CompletionItem, CompletionItemKind, createConnection, Diagnostic, DiagnosticSeverity, DidChangeConfigurationNotification, InitializeParams, InitializeResult, ProposedFeatures, TextDocumentPositionParams, TextDocuments, TextDocumentSyncKind } from 'vscode-languageserver';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { ServerFileSystem } from './file-system';
@@ -147,7 +148,7 @@ function convertSeverity(severity: RuleSeverity): DiagnosticSeverity {
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent(async change => {
   if (apiModel) {
-    const changedPath = apiModel.fileSystem.relative(change.document.uri);
+    const changedPath = getRelativePath(apiModel.fileSystem, change.document.uri);
     const changedFile = apiModel.where(each => each.getFilePath().replace('/', '').replace(/\//g, '\\') === changedPath);
     const diagnostics = [...apiModel.linter.run(changedFile)];
     processLinterDiagnostics(diagnostics, change.document.uri);
@@ -158,7 +159,7 @@ documents.onDidChangeContent(async change => {
 function processLinterDiagnostics(linterDiagnostic: Array<LinterDiagnostic>, uri: string){
   const diagnostics: Array<Diagnostic> = [];
   for (const each of linterDiagnostic) {
-    
+
     const diagnostic: Diagnostic = {
       ...each,
       severity: convertSeverity(each.severity),

@@ -1,6 +1,6 @@
 import { EventEmitter } from '../eventing/event-emitter';
 import { ApiModel, Files } from '../model/api-model';
-import { Operation, OperationGroup, ParameterElement, ResponseCollection, ResponseElement, ResultElement } from '../model/operation';
+import { Operation, OperationGroup, Parameter, Response, ResponseCollection, Result } from '../model/operation';
 import { AliasType } from '../model/schema/alias';
 import { EnumType, EnumValueElement } from '../model/schema/enum';
 import { ModelType } from '../model/schema/model';
@@ -12,16 +12,16 @@ import { LinterDiagnostic, RuleMetaData, RuleResult } from './rule';
 interface Events {
   AliasType(model: ApiModel, aliasType: AliasType): RuleResult | undefined;
   DeclaredResponseCollections(model: ApiModel, reponseCollection: Declaration<ResponseCollection>): RuleResult | undefined;
-  DeclaredResponses(model: ApiModel, response: Declaration<ResponseElement>): RuleResult | undefined;
-  DeclaredResults(model: ApiModel, result: Declaration<ResultElement>): RuleResult | undefined;
-  DeclaredParameters(model: ApiModel, parameter: Declaration<ParameterElement>): RuleResult | undefined;
+  DeclaredResponses(model: ApiModel, response: Declaration<Response>): RuleResult | undefined;
+  DeclaredResults(model: ApiModel, result: Declaration<Result>): RuleResult | undefined;
+  DeclaredParameters(model: ApiModel, parameter: Declaration<Parameter>): RuleResult | undefined;
   EnumType(model: ApiModel, enumType: EnumType): RuleResult | undefined;
   EnumValue(model: ApiModel, enumValue: EnumValueElement): RuleResult | undefined;
   ModelType(model: ApiModel, modelType: ModelType): RuleResult | undefined;
   OperationGroup(model: ApiModel, operationGroup: OperationGroup): RuleResult | undefined;
   Operation(model: ApiModel, operation: Operation): RuleResult | undefined;
   Property(model: ApiModel, property: Property): RuleResult | undefined;
-  Parameter(model: ApiModel, parameter: ParameterElement): RuleResult | undefined;
+  Parameter(model: ApiModel, parameter: Parameter): RuleResult | undefined;
 }
 
 export class Linter extends EventEmitter<Events> {

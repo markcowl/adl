@@ -1,7 +1,7 @@
 import { Element } from '../element';
 import { Contact } from './contact';
 import { License } from './license';
-import { Reference } from './reference';
+import { ReferenceInfo } from './reference';
 
 
 /** Information about the API Surface */
@@ -19,7 +19,7 @@ export class Metadata extends Element {
   licenses = new Array<License>();
 
   /** a collection of reference information regarding the API  */
-  references = new Array<Reference>();
+  references = new Array<ReferenceInfo>();
 
   constructor(public name: string, initializer?: Partial<Metadata>) {
     super();

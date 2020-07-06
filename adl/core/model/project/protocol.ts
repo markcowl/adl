@@ -1,7 +1,7 @@
 import { fail } from 'assert';
 import { SourceFile } from 'ts-morph';
 import { ApiModel } from '../api-model';
-import { OperationGroup, ParameterElement, ResponseCollection, ResponseElement, ResultElement } from '../operation';
+import { OperationGroup, Parameter, Response, ResponseCollection, Result } from '../operation';
 import { Declaration } from '../typescript/reference';
 
 
@@ -46,9 +46,9 @@ export abstract class Protocol<T extends Protocol = Protocol<any> > {
 
   abstract get responseCollections(): Array<Declaration<ResponseCollection>>;
 
-  abstract get responses(): Array<Declaration<ResponseElement>>;
+  abstract get responses(): Array<Declaration<Response>>;
 
-  abstract get results(): Array<Declaration<ResultElement>>;
+  abstract get results(): Array<Declaration<Result>>;
 
-  abstract get parameters(): Array<Declaration<ParameterElement>>;
+  abstract get parameters(): Array<Declaration<Parameter>>;
 }

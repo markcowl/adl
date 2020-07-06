@@ -6,7 +6,9 @@ import { Range } from './position';
 import { RemovableNode } from './removable-node';
 import { TSElement } from './typescript-element';
 
-export class NamedElement<TNode extends Node & NamedNodeSpecificBase<Identifier | PropertyName | BindingName> & ReferenceFindableNode & RenameableNode & RemovableNode> extends TSElement<TNode> {
+export type NamedElementNode = Node & NamedNodeSpecificBase<Identifier | PropertyName | BindingName> & ReferenceFindableNode & RenameableNode & RemovableNode
+
+export class NamedElement<TNode extends NamedElementNode> extends TSElement<TNode> {
   remove() {
     this.node.remove();
   }
@@ -24,9 +26,6 @@ export class NamedElement<TNode extends Node & NamedNodeSpecificBase<Identifier 
   set name(value: Identity) {
     if (isAnonymous(value)) {
       throw new Error('Cannot rename this node to anonymous.');
-    }
-    if (!Node.isRenameableNode(this.node)) {
-      throw new Error('This node cannot be renamed.');
     }
     this.node.rename(value);
   }

@@ -1,31 +1,18 @@
-import { FunctionTypeNode, InterfaceDeclaration, MethodSignature, ParameterDeclaration, TupleTypeNode, TypeAliasDeclaration, TypeLiteralNode } from 'ts-morph';
-import { TypeSyntax } from '../support/codegen';
-import { Element } from './element';
-import { TypeReference } from './schema/type';
+import { FunctionTypeNode, InterfaceDeclaration, MethodSignature, Node, ParameterDeclaration, TupleTypeNode, TypeLiteralNode } from 'ts-morph';
 import { NamedElement } from './typescript/named-element';
-import { Declaration } from './typescript/reference';
+import { Reference } from './typescript/reference';
+import { TypedElement } from './typescript/typed-element';
 import { TSElement } from './typescript/typescript-element';
 
-export interface ResultTypeReference extends TypeReference {
-
-}
-
-export interface ResponseTypeReference extends TypeReference {
-
-}
-export interface ResponseCollectionTypeReference extends TypeReference {
-
-}
-
 export abstract class ResponseCollection extends TSElement<TupleTypeNode> {
-  constructor(node: TupleTypeNode) {
-    super(node);
+  static isAllowedNode(node: Node): node is TupleTypeNode {
+    return Node.isTupleTypeNode(node);
   }
 
   /**
    * returns the collection of responses
    */
-  abstract get responses(): ReadonlyArray<ResponseElement | Declaration<ResponseElement>>;
+  abstract get responses(): ReadonlyArray<Response | Reference<Response | ResponseCollection>>;
 
   /**
    * Adds a new response to this collection
@@ -37,44 +24,40 @@ export abstract class ResponseCollection extends TSElement<TupleTypeNode> {
   /**
    * Adds a response to this collection using a globally defined response
    */
-  addResponse(declaration: Declaration<ResponseElement>) {
+  addResponse(declaration: Reference<Response>) {
     //todo
   }
 }
 
-export class ParameterElement extends NamedElement<ParameterDeclaration> {
-
+export class Parameter extends TypedElement<ParameterDeclaration> {
+  static isAllowedNode(node: Node): node is ParameterDeclaration {
+    return Node.isParameterDeclaration(node);
+  }
 }
 
 /**
  * A Result describes a single output from an operation.
  *
  */
-export class ResultElement extends TSElement<TypeLiteralNode | InterfaceDeclaration | TypeAliasDeclaration> implements TypeReference {
-  declaration!: TypeSyntax;
-  requiredReferences!: Array<TypeReference>;
-
-  isInline?: boolean | undefined;
+export class Result extends TSElement<TypeLiteralNode | InterfaceDeclaration> {
+  static isAllowedNode(node: Node): node is TypeLiteralNode | InterfaceDeclaration {
+    return Node.isTypeLiteralNode(node) || Node.isInterfaceDeclaration(node); 
+  }
 }
 
 export class ResponseCriteria extends TSElement<FunctionTypeNode> {
-  constructor(node: FunctionTypeNode) {
-    super(node);
-  }
 }
 
 /**
  * A Response is the combination of the Criteria and the Result for a possible output from an operation.
  */
-export class ResponseElement extends TSElement<FunctionTypeNode> implements TypeReference {
-  declaration!: TypeSyntax;
-  requiredReferences!: Array<TypeReference>;
+export abstract class Response extends TSElement<FunctionTypeNode> {
+  static isAllowedNode(node: Node): node is FunctionTypeNode {
+    return Node.isFunctionTypeNode(node);
+  }
 
-  isInline?: boolean | undefined;
-
-  readonly criteria!: ResponseCriteria;
-
-  readonly result?: ResultElement | Declaration<ResultElement>;
+  abstract readonly criteria: ResponseCriteria;
+  abstract readonly result?: Result | Reference<Result>;
 
   /**
    * Creates a new inline Result (removes any previous delared result)
@@ -93,10 +76,6 @@ export class ResponseElement extends TSElement<FunctionTypeNode> implements Type
 }
 
 export abstract class OperationGroup extends NamedElement<InterfaceDeclaration>  {
-  constructor(node: InterfaceDeclaration) {
-    super(node);
-  }
-
   abstract get operations(): Array<Operation>;
 
   get extends(): Array<string> {
@@ -105,12 +84,8 @@ export abstract class OperationGroup extends NamedElement<InterfaceDeclaration> 
 }
 
 export class Operation extends NamedElement<MethodSignature> {
-  constructor(node: MethodSignature) {
-    super(node);
-  }
-
-  get parameters(): ReadonlyArray<ParameterElement> {
-    return this.node.getParameters().map(each => new ParameterElement(each));
+  get parameters(): ReadonlyArray<Parameter> {
+    return this.node.getParameters().map(each => new Parameter(each));
   }
 
   /**
@@ -123,7 +98,7 @@ export class Operation extends NamedElement<MethodSignature> {
   /**
    * returns the Response for this operation as either a ResponseCollection the declaration of the ResponseCollection
    */
-  get responseCollection(): ResponseCollection | Declaration<ResponseCollection> | undefined {
+  get responseCollection(): ResponseCollection | Reference<ResponseCollection> | undefined {
     throw new Error('Not Implemented');
   }
 
@@ -142,7 +117,7 @@ export class Operation extends NamedElement<MethodSignature> {
   * (if you want to create a fresh inline response declaration, use {@link createResponse} )
   * @param response
   */
-  setResponseCollection(value: Declaration<ResponseCollection>) {
+  setResponseCollection(value: Reference<ResponseCollection>) {
     //todo
   }
 
@@ -155,46 +130,5 @@ export class Operation extends NamedElement<MethodSignature> {
     // todo
   }
 
-
-}
-
-export class Response extends Element {
-  /**
-   * indicates that this response should be considered and exception (an error)
-   */
-  isException?: boolean;
-
-  /** schema for the response content */
-  typeref?: TypeReference;
-  /**
-   *
-   * @param initializer the object initializer for this response
-   */
-  constructor(initializer?: Partial<Response>) {
-    super();
-    this.initialize(initializer);
-  }
-}
-
-
-export class Parameter extends Element {
-  /**
-   * extended description of the schema
-   * CommonMark syntax MAY be used for rich text representation.
-   */
-  description?: string;
-
-  /**
-   * determines whether this parameter is mandatory.
-   */
-  required?: boolean;
-
-  constructor(public name: string, public typeRef: TypeReference, initializer?: Partial<Parameter>) {
-    super();
-    this.initialize(initializer);
-  }
-}
-
-export class Request extends Element {
 
 }

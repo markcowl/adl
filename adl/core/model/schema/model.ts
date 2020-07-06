@@ -12,12 +12,12 @@ import { Property } from './property';
 import { SchemaTypeReference, TypeReference } from './type';
 
 export interface ModelTypeInitializer extends SchemaInitializer { 
-  parents: Array<TypeReference>;
-  properties: Array<PropertySignatureStructure>;
-  requiredReferences: Array<TypeReference>;
+  parents?: Array<TypeReference>;
+  properties?: Array<PropertySignatureStructure>;
+  requiredReferences?: Array<TypeReference>;
 }
 
-export function createModelType(api: ApiModel, identity: Identity, initializer?: Partial<ModelTypeInitializer> ): SchemaTypeReference {
+export function createModelType(api: ApiModel, identity: Identity, initializer?: ModelTypeInitializer): SchemaTypeReference {
   const { name, file } = api.getNameAndFile(identity, 'model');
 
   const iface = file.addInterface( {

@@ -4,7 +4,7 @@ import { URL } from '../types';
 /**
  * A tag is a bit of arbitrary information about the API.
  */
-export class Reference extends Element {
+export class ReferenceInfo extends Element {
   /** A short description about the reference. Commonmark syntax can be used for rich text representation. */
   summary?: string;
 
@@ -14,7 +14,7 @@ export class Reference extends Element {
   /** A link to additional information. */
   location?: URL;
   
-  constructor(public name: string, initializer?: Partial<Reference>) {
+  constructor(public name: string, initializer?: Partial<ReferenceInfo>) {
     super();
     this.initialize(initializer);
   }

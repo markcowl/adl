@@ -13,13 +13,13 @@ import { EventListener } from '../eventing/event-listener';
 import { Linter } from '../linter/linter';
 import { ExtensionManager } from '../plugin/plugin-manager';
 import { ImportExtension } from '../serialization/openapi/import-extensions';
-import { getTags, hasTag } from '../support/doc-tag';
-import { FileSystem, UrlFileSystem } from '../support/file-system';
+import { getTags } from '../support/doc-tag';
+import { FileSystem, getAbsolutePath, UrlFileSystem } from '../support/file-system';
 import { ProcessingMessages } from '../support/message-channels';
 import { referenceTo } from '../support/typescript';
 import { Visitor } from '../support/visitor';
 import { HttpProtocol } from './http/protocol';
-import { ParameterElement, ResponseCollection, ResponseElement, ResultElement } from './operation';
+import { Parameter, Response, ResponseCollection, Result } from './operation';
 import { ProjectData } from './project/project-data';
 import { Protocol } from './project/protocol';
 import { AliasType } from './schema/alias';
@@ -29,47 +29,68 @@ import { Primitives } from './schema/primitive';
 import { Folders, Identity } from './types';
 import { Declaration } from './typescript/reference';
 
-export function isModelTypeAlias(declaration: TypeAliasDeclaration) {
-  if (hasTag(declaration, 'model')) {
-    return true;
+function getFirstTypeTag(declaration: TypeAliasDeclaration | InterfaceDeclaration) {
+  for (const each of getTags(declaration)) {
+    const tag = each.getTagName();
+    switch (tag) {
+      case 'http':
+      case 'model':
+      case 'responseCollection':
+      case 'response':
+      case 'result':
+        return tag;
+    }
   }
+  return undefined;
+}
 
-  // if this is an alias over a model type or primitive
-  // or it is
-
-  return false;
+export function isModelTypeAlias(declaration: TypeAliasDeclaration) {
+  switch (getFirstTypeTag(declaration)) {
+    case 'model':
+      return true;
+    default:
+      return false;
+  }
 }
 
 export function isResponseCollectionTypeAlias(declaration: TypeAliasDeclaration): boolean {
-  if (hasTag(declaration, 'responseCollection')) {
-    return true;
+  switch (getFirstTypeTag(declaration)) {
+    case 'responseCollection':
+      return true;
+    case undefined: {
+      // untagged type aliases that are tuple types are inferred to be response collections.
+      const typeNode = declaration.getTypeNode();
+      if (typeNode && Node.isTupleTypeNode(typeNode)) { //?.getKind() === SyntaxKind.TupleType
+        // they must only have children that are either functionTypeNode or TypeReferenceNode
+        // if they have anything else, ignore them.
+        return !(typeNode.getElementTypeNodes().find(each => !(Node.isFunctionTypeNode(each) || Node.isTypeReferenceNode(each))));
+      }
+      return false;
+    }
+    default:
+      return false;
   }
-
-  // type aliases that are tupletypes are responsecollections.
-  const typeNode = declaration.getTypeNode();
-  if (typeNode && Node.isTupleTypeNode(typeNode)) { //?.getKind() === SyntaxKind.TupleType
-    // they must only have children that are either functionTypeNode or TypeReferenceNode
-    // if they have anything else, ignore them. 
-    return !(typeNode.getElementTypeNodes().find(each => !(Node.isFunctionTypeNode(each) || Node.isTypeReferenceNode(each))));
-  }
-  return false;
 }
 
 export function isResponseTypeAlias(declaration: TypeAliasDeclaration) {
-  if (hasTag(declaration, 'response')) {
-    return true;
+  switch (getFirstTypeTag(declaration)) {
+    case 'response':
+      return true;
+    case undefined:
+      // untagged type aliases that are function types are inferred to be responses.
+      return (declaration.getTypeNode()?.getKind() === SyntaxKind.FunctionType);
+    default:
+      return false;
   }
-
-  // type aliases that are function types are response declarations.
-  return (declaration.getTypeNode()?.getKind() === SyntaxKind.FunctionType);
 }
 
 export function isResultTypeAlias(declaration: TypeAliasDeclaration) {
-  if (hasTag(declaration, 'result')) {
-    return true;
+  switch (getFirstTypeTag(declaration)) {
+    case 'result':
+      return true;
+    default:
+      return false;
   }
-
-  return false;
 }
 
 export function isResourceTypeAlias(declaration: TypeAliasDeclaration) {
@@ -81,57 +102,43 @@ export function isResourceInterfaceType(declaration: InterfaceDeclaration) {
 }
 
 export function isOperationGroupInterfaceType(declaration: InterfaceDeclaration) {
-  // should only have operations
-  if (hasTag(declaration, 'http')) {
-    return true;
+  switch (getFirstTypeTag(declaration)) {
+    case 'http':
+      return true;
+    case undefined:
+      // untagged interfaces with methods are inferred to be operation groups
+      return declaration.getMethods().length > 0;
+    default:
+      return false;
   }
-
-  // operation groups have methods.
-  if (declaration.getMethods().length > 0) {
-    return true;
-  }
-  return false;
 }
 
 export function isResultInterfaceType(declaration: InterfaceDeclaration) {
-  return false;
-}
-
-export function isResponseInterfaceType(declaration: InterfaceDeclaration) {
-  return false;
+  switch (getFirstTypeTag(declaration)) {
+    case 'result':
+      return true;
+    default:
+      return false;
+  }
 }
 
 export function isModelInterface(declaration: InterfaceDeclaration) {
-  // interfaces that identify as @model are models
-  if (hasTag(declaration, 'model')) {
-    return true;
+  switch (getFirstTypeTag(declaration)) {
+    case 'model':
+      return true;
+    case undefined:
+      // untagged interfaces with no methods are inferred to be models
+      return declaration.getMethods().length == 0;
+    default:
+      return false;
   }
-  // inference based on what it looks like it is.
-
-  // model interfaces should
-  // - may have constructors (used for versioning)
-
-  // - may not have methods
-  if (declaration.getMethods().length > 0) {
-    return false;
-  }
-
-  return true;
 }
-/*
-type Queryable<T extends string,TResult >  = {
-  readonly [key in T]: Array<TResult>;
-}
-const someFiles = <Files><any>{};
-const x = someFiles.query<ModelType>('interfaces');
-*/
-
 
 export class Files {
   readonly api: ApiModel;
-  readonly files!: Array<SourceFile>;
+  readonly files!: Array<ExtendedSourceFile>;
 
-  protected constructor(api?: ApiModel, sourceFiles?: Array<SourceFile>) {
+  protected constructor(api?: ApiModel, sourceFiles?: Array<ExtendedSourceFile>) {
     if (api) {
       this.files = sourceFiles || api.files;
     }
@@ -197,21 +204,21 @@ export class Files {
   /**
    * Gets all the globally declared responses across all the protocols
    */
-  get responses(): Array<Declaration<ResponseElement>> {
+  get responses(): Array<Declaration<Response>> {
     return linq.values(this.protocols).selectMany(protocol => protocol.responses).toArray();
   }
 
   /**
    * Gets all the globally declared results across all the protocols
    */
-  get results(): Array<Declaration<ResultElement>> {
+  get results(): Array<Declaration<Result>> {
     return linq.values(this.protocols).selectMany(protocol => protocol.results).toArray();
   }
 
   /**
    * Gets all the globally parameters across all the protocols
    */
-  get parameters(): Array<Declaration<ParameterElement>> {
+  get parameters(): Array<Declaration<Parameter>> {
     return linq.values(this.protocols).selectMany(protocol => protocol.parameters).toArray();
   }
 }
@@ -261,7 +268,7 @@ export class ApiModel extends Files {
 
   /**
    * typescript project for this model
-   * 
+   *
    * provides access to the ts project for this api.
    * @internal
    */
@@ -287,7 +294,7 @@ export class ApiModel extends Files {
     resource: this.project.createDirectory('resources'),
   }
 
-  /** 
+  /**
    * Linter instance for this API.
   */
   readonly linter = new Linter(this);
@@ -310,7 +317,6 @@ export class ApiModel extends Files {
 
   readonly KnownInterfaceTypes = <Dictionary<(declaration: InterfaceDeclaration) => boolean>>{
     model: isModelInterface,
-    response: isResponseInterfaceType,
     result: isResultInterfaceType,
     operationgroup: isOperationGroupInterfaceType,
     resource: isResourceInterfaceType,
@@ -329,7 +335,7 @@ export class ApiModel extends Files {
   }
 
   get files() {
-    return this.project?.getSourceFiles() || [];
+    return <Array<ExtendedSourceFile>>this.project?.getSourceFiles() || [];
   }
 
   tsconfig: any = {}
@@ -365,6 +371,8 @@ metadata:
 use: 
 - @azure-tools/adl.types.core  # ADL core types 
 `, { keepCstNodes: true });
+
+    // add a connection to this api-model inside the project
     (<any>this.project).api = this;
     this.protocols.http = new HttpProtocol(this);
   }
@@ -393,21 +401,20 @@ use:
         if (!Array.isArray(use)) {
           throw new Error('Invalid plugin configuration ("use" is not an array of package references');
         }
-        // load plugins now 
+        // load plugins now
         this.extensionManager = this.extensionManager || await ExtensionManager.Create(this.fileSystem.extensionPath);
 
         for (const each of use) {
           try {
             // we need to see if this a local folder before trying to load the extension.
-            const fullPath = this.fileSystem.resolve(each);
+            const fullPath = getAbsolutePath(this.fileSystem,each);
 
             const pkg = (fullPath.startsWith('file:/') && await exists(FileUriToPath(fullPath))) ? await this.extensionManager.findPackage('someExtension', fullPath) : await this.extensionManager.findPackage(each);
             let ext = await pkg.extension;
             if (!ext) {
-              // it's not installed, 
+              // it's not installed,
               ext = await pkg.install();
             }
-            console.log(ext.name);
             this.tsconfig.compilerOptions.types.push(ext.name);
             this.tsconfig.compilerOptions.types = [...new Set(this.tsconfig.compilerOptions.types)];
 
@@ -415,8 +422,8 @@ use:
 
             // iterate thru the default exports and bind the events to the respective emitters.
             for (const [key, xport] of items<string, EventListener, any>(exports.default)) {
-              // the key is just a string 
-              // the xport should have members that we 
+              // the key is just a string
+              // the xport should have members that we
               // use to bind to the events.
               if (typeof xport === 'object') {
                 switch (xport.activation) {
@@ -449,7 +456,7 @@ use:
 
   /** @internal */
   async initialize() {
-    // loads any extensions in the project file 
+    // loads any extensions in the project file
     // and binds their events to the model.
 
     if (await this.fileSystem.isFile('api.yaml')) {
@@ -468,13 +475,8 @@ use:
       this.tsconfig.compilerOptions.typeRoots = this.tsconfig.compilerOptions.typeRoots || [];
       this.tsconfig.compilerOptions.types = this.tsconfig.compilerOptions.types || [];
 
-      let tr = this.fileSystem.extensionPath;
-      tr = relative(FileUriToPath(this.fileSystem.cwd), tr);
-      console.log(tr);
-
-      this.tsconfig.compilerOptions.typeRoots.push(tr);
+      this.tsconfig.compilerOptions.typeRoots.push(relative(FileUriToPath(this.fileSystem.cwd), this.fileSystem.extensionPath));
       this.tsconfig.compilerOptions.typeRoots = [...new Set(this.tsconfig.compilerOptions.typeRoots)];
-
 
       await this.loadExtensions();
     }
@@ -528,13 +530,13 @@ use:
   }
 
   /** @internal */
-  getFile(identity: Identity, type: keyof Folders): SourceFile {
+  getFile(identity: Identity, type: keyof Folders): ExtendedSourceFile {
     if (isAnonymous(identity)) {
       identity = identity.name;
       type = 'anonymous';
     }
     const filename = `${(<string>identity).replace(/[^\w]+/g, '_')}.ts`;
-    return this.#folders[type].getSourceFile(filename) || this.#folders[type].createSourceFile(filename);
+    return <ExtendedSourceFile>this.#folders[type].getSourceFile(filename) || this.#folders[type].createSourceFile(filename);
   }
 
   getEnum(name: string) {
@@ -615,4 +617,9 @@ use:
     throw Error(`Type Alias has muliple type tags: ${declaration.getName()}: ${tagType.map(each => each.getTagName()).join(',')}`);
   }
 
+}
+
+export interface ExtendedSourceFile extends SourceFile {
+  readonly relativePath: string;
+  readonly fullPath: string;
 }

@@ -2,7 +2,7 @@ import { common } from '@azure-tools/openapi';
 import { Contact, ContactRole } from '../../../model/project/contact';
 import { License } from '../../../model/project/license';
 import { Metadata } from '../../../model/project/metadata';
-import { Reference } from '../../../model/project/reference';
+import { ReferenceInfo } from '../../../model/project/reference';
 import { Context, OAIModel } from '../../../support/visitor';
 import { addExtensionsToAttic } from '../common';
 
@@ -58,10 +58,10 @@ export async function processInfo<TModel extends OAIModel>(info: common.Info, $:
 }
 
 
-export async function *processExternalDocs<TModel extends OAIModel>(externalDocs: common.ExternalDocumentation|undefined, $: Context<TModel>): AsyncGenerator<Reference> {
+export async function *processExternalDocs<TModel extends OAIModel>(externalDocs: common.ExternalDocumentation|undefined, $: Context<TModel>): AsyncGenerator<ReferenceInfo> {
   if(externalDocs) {
   // external docs are just a kind of reference.
-    const reference = new Reference('external-documentation', {
+    const reference = new ReferenceInfo('external-documentation', {
       location: externalDocs.url,
       description: externalDocs.description,
     });
@@ -72,8 +72,8 @@ export async function *processExternalDocs<TModel extends OAIModel>(externalDocs
 }
 
 
-export async function *processTag<TModel extends OAIModel>(tag: common.Tag, $: Context<TModel>): AsyncGenerator<Reference> {
-  const reference = new Reference(tag.name, {
+export async function *processTag<TModel extends OAIModel>(tag: common.Tag, $: Context<TModel>): AsyncGenerator<ReferenceInfo> {
+  const reference = new ReferenceInfo(tag.name, {
     summary: tag.description,
     location: tag.externalDocs ? tag.externalDocs.url : undefined,
     description: tag.externalDocs ? tag.externalDocs.description : undefined,

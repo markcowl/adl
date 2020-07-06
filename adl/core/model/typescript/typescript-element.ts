@@ -8,14 +8,13 @@ import { VersionInfo } from '../version-info';
 import { Annotations } from './annotations';
 import { Range, Rangeable } from './position';
 
-
 export class TSElement<TNode extends Node> extends Initializer implements Rangeable {
   constructor(public node: TNode, initializer?: Partial<TSElement<TNode>>) {
     super();
     this.initialize(initializer);
   }
 
-  get range(): Range{
+  get range(): Range {
     return Range.fromNode(this.node);
   }
   get fullRange(): Range {
@@ -24,7 +23,7 @@ export class TSElement<TNode extends Node> extends Initializer implements Rangea
   get filename(): string {
     return this.node.getSourceFile().getFilePath();
   }
- 
+
   get internalData() {
     const pv = this.api.getPrivateData(getPath(this.node));
     if (!pv.internalData) {
@@ -79,8 +78,12 @@ export class TSElement<TNode extends Node> extends Initializer implements Rangea
     return this.node.getSourceFile();
   }
 
-  get annotations(): Annotations|undefined {
-    if( Node.isJSDocableNode(this.node)) {
+  get fullPath() {
+    return this.node.getSourceFile().getFilePath().replace(/(^\/)|(^\w)/, './$2');
+  }
+
+  get annotations(): Annotations | undefined {
+    if (Node.isJSDocableNode(this.node)) {
       return new Annotations(this.node);
     }
     return undefined;
