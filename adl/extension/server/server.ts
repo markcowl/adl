@@ -10,8 +10,8 @@ if (process.env['no-static-loader'] === undefined && require('fs').existsSync(`$
   usingStaticLoader = true;
   require(`${__dirname}/../../dist/static-loader.js`).load(`${__dirname}/../../dist/static_modules.fs`);
 }
-import { ApiModel } from '@azure-tools/adl.core';
-import { CompletionItem, CompletionItemKind, createConnection, DidChangeConfigurationNotification, InitializeParams, InitializeResult, ProposedFeatures, TextDocumentPositionParams, TextDocuments, TextDocumentSyncKind } from 'vscode-languageserver';
+import { ApiModel, LinterDiagnostic, RuleSeverity } from '@azure-tools/adl.core';
+import { CompletionItem, CompletionItemKind, createConnection, Diagnostic, DiagnosticSeverity, DidChangeConfigurationNotification, InitializeParams, InitializeResult, ProposedFeatures, TextDocumentPositionParams, TextDocuments, TextDocumentSyncKind } from 'vscode-languageserver';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { ServerFileSystem } from './file-system';
 
@@ -135,52 +135,41 @@ documents.onDidClose(e => {
   documentSettings.delete(e.document.uri);
 });
 
+function convertSeverity(severity: RuleSeverity): DiagnosticSeverity {
+  if (severity === 'error') {
+    return 1;
+  } else {
+    return 2;
+  }
+}
+
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent(async change => {
   if (apiModel) {
-    const changedUri = apiModel.fileSystem.relative(change.document.uri);
-    const changedFiles = apiModel.where(each => each.getFilePath().replace('/', '').replace(/\//g, '\\') === changedUri);
-    const results = [...apiModel.linter.run(changedFiles)];
-    //processResults(results);
+    const changedPath = apiModel.fileSystem.relative(change.document.uri);
+    const changedFile = apiModel.where(each => each.getFilePath().replace('/', '').replace(/\//g, '\\') === changedPath);
+    const diagnostics = [...apiModel.linter.run(changedFile)];
+    processLinterDiagnostics(diagnostics, change.document.uri);
   }
 });
 
-// function processResults(results: Array<RuleResult>){
-//   for (const result of results) {
-//     const diagnostic: Diagnostic = {
-//       severity: result.,
-//       range: {
-//         start: textDocument.positionAt(m.index),
-//         end: textDocument.positionAt(m.index + m[0].length)
-//       },
-//       message: `${m[0]} is all uppercase.`,
-//       source: 'ex'
-//     };
-//     if (hasDiagnosticRelatedInformationCapability) {
-//       diagnostic.relatedInformation = [
-//         {
-//           location: {
-//             uri: textDocument.uri,
-//             range: Object.assign({}, diagnostic.range)
-//           },
-//           message: 'Spelling matters'
-//         },
-//         {
-//           location: {
-//             uri: textDocument.uri,
-//             range: Object.assign({}, diagnostic.range)
-//           },
-//           message: 'Particularly for names'
-//         }
-//       ];
-//     }
-//     diagnostics.push(diagnostic);
-//   }
 
-//   // Send the computed diagnostics to VSCode.
-//   connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
-// }
+function processLinterDiagnostics(linterDiagnostic: Array<LinterDiagnostic>, uri: string){
+  const diagnostics: Array<Diagnostic> = [];
+  for (const each of linterDiagnostic) {
+    
+    const diagnostic: Diagnostic = {
+      ...each,
+      severity: convertSeverity(each.severity),
+    };
+
+    diagnostics.push(diagnostic);
+  }
+
+  // Send the computed diagnostics to VSCode.
+  connection.sendDiagnostics({ uri: uri , diagnostics });
+}
 
 connection.onDidChangeWatchedFiles(_change => {
   // Monitored files have change in VSCode

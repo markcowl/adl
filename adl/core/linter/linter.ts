@@ -40,7 +40,7 @@ export class Linter extends EventEmitter<Events> {
     };
   }
 
-  *run(files?: Files): Iterable<RuleResult> {
+  *run(files?: Files): Iterable<LinterDiagnostic> {
     files = files || this.apiModel;
     const model = this.apiModel;
 

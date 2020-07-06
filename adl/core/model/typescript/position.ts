@@ -60,7 +60,7 @@ export interface Text extends Range {
 
 export class Range {
   static fromNode(node: Node): Range {
-    return Range.fromOffsets(node.getSourceFile(), node.getPos(), node.getEnd());
+    return Range.fromOffsets(node.getSourceFile(), node.getNonWhitespaceStart(), node.getEnd());
   }
   static fromOffset( sourceFile: SourceFile, offset: number, width: number ) {
     return Range.fromOffsets(sourceFile, offset, offset+width);
@@ -75,7 +75,7 @@ export class Range {
 
 export class Position {
   static fromNode(node: Node): Position {
-    return Position.fromOffset( node.getSourceFile(), node.getPos());
+    return Position.fromOffset(node.getSourceFile(), node.getNonWhitespaceStart());
   }
 
   static fromOffset( sourceFile: SourceFile, offset: number) {

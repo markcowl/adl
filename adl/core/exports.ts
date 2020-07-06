@@ -1,4 +1,4 @@
-export { Rule, RuleResult } from './linter/rule';
+export { LinterDiagnostic, Rule, RuleResult, RuleSeverity } from './linter/rule';
 export { ApiModel } from './model/api-model';
 export { Method } from './model/http/operation';
 export { OperationGroup } from './model/operation';

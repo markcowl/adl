@@ -98,7 +98,7 @@ export interface LinterDiagnostic {
    * The diagnostic's severity. Can be omitted. If omitted it is up to the
    * client to interpret diagnostics as error, warning, info or hint.
    */
-  severity?: RuleSeverity;
+  severity: RuleSeverity;
 
   /**
    * The diagnostic's code, which usually appear in the user interface.
