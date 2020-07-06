@@ -70,7 +70,7 @@ async function getResponseTypeReference(response: v3.Response, $: Context, optio
       }
     }
   }
-  
+
   const type = types.length == 1 ? types[0] : ts.createTupleTypeNode(types);
   return {
     declaration: new TypeSyntax(type),
@@ -95,7 +95,7 @@ async function getIndividualResponseTypeNode(response: v3.Response, schema: Type
   }
 
   return getResponseType(code, isException, mediaType, schema, headers);
- 
+
 }
 
 function getResponseTypeArguments(options: AnonymousResponseOptions): [string, boolean] {

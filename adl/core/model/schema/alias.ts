@@ -26,7 +26,7 @@ export function createTypeAlias<T extends TypeReference>(api: ApiModel, identity
     return typeReference;
   }
   const { name, file } = api.getNameAndFile(identity, 'alias');
- 
+
   // we have to add the imports of the target to this file
   addImportsTo(file, typeReference);
 
@@ -37,7 +37,7 @@ export function createTypeAlias<T extends TypeReference>(api: ApiModel, identity
     isExported: true,
     docs: createDocs(docs)
   });
-  
+
   return {
     ...typeReference,
     declaration: new TypeSyntax(name),

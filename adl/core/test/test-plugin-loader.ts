@@ -22,12 +22,12 @@ require('source-map-support').install();
   @test async 'Install Extension'() {
     await rmdir(this.tmpFolder);
     const extensionManager = await ExtensionManager.Create(this.tmpFolder);
-    // example - subscribe to messages 
+    // example - subscribe to messages
     // extensionManager.on('message', (msg, msec)=> {
     // console.log(msg);
     // });
     const dni = await extensionManager.findPackage('echo-cli', '1.0.8');
-    
+
     const installing = extensionManager.installPackage(dni, false, 5 * 60 * 1000);
 
     const extension = await installing;
@@ -46,11 +46,11 @@ require('source-map-support').install();
   }
 
   @test async 'Install Extension via star'() {
-    await rmdir( this.tmpFolder);
+    await rmdir(this.tmpFolder);
     const extensionManager = await ExtensionManager.Create(this.tmpFolder);
-    
+
     const dni = await extensionManager.findPackage('echo-cli', '*');
-    
+
     const extension = await extensionManager.installPackage(dni, false, 5 * 60 * 1000);
 
     assert.notEqual(await extension, undefined);
@@ -111,7 +111,7 @@ require('source-map-support').install();
 
     // gets a package
     const pkg = await extensionManager.findPackage('echo-cli');
-    
+
     // finds out if there are more versions
     const q = await pkg.allVersions;
     assert.strictEqual(q.length > 5, true);

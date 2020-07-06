@@ -113,18 +113,18 @@ export async function processBooleanSchema<T extends OAIModel>(schema: v3.Schema
 export async function processByteArraySchema<T extends OAIModel>(schema: v3.Schema | v2.Schema, $: Context<T>): Promise<SchemaTypeReference> {
   // throws on error.
   $.assertNoForbiddenProperties(schema, ...<any>stringProperties, ...<any>objectProperties, ...<any>numberProperties);
-    
+
   return $.api.primitives.byteArray;
 }
 
 export function wrapWithAliasIfNeeded<T extends OAIModel>(schema: v3.Schema | v2.Schema, type: SchemaTypeReference, $: Context<T>, encoding?: EncodingReference) {
   if (schema.default || schema.description || schema.title || (<any>schema).nullable || schema['x-nullable'] || (<any>schema).readOnly || encoding) {
     let alias = createTypeAlias($.api, anonymous(nameOf(schema)), type, commonProperties(schema));
-    
-    if( encoding) {
+
+    if(encoding) {
       alias = addEncoding(alias, encoding);
     }
-    
+
     if (schema.default) {
       alias = addDefault(alias, schema.default);
     }
@@ -141,9 +141,9 @@ export function wrapWithAliasIfNeeded<T extends OAIModel>(schema: v3.Schema | v2
   return type;
 }
 
-export async function processNumberSchema<T extends OAIModel>(schema: v2.Schema|v3.Schema, $: Context<T>, options?: Options ): Promise<SchemaTypeReference> {
+export async function processNumberSchema<T extends OAIModel>(schema: v2.Schema|v3.Schema, $: Context<T>, options?: Options): Promise<SchemaTypeReference> {
   $.assertNoForbiddenProperties(schema, ...<any>stringProperties, ...<any>objectProperties, ...<any>arrayProperties);
-  
+
   switch (schema.format) {
     case NumberFormat.Float:
       return $.api.primitives.float;
@@ -158,7 +158,7 @@ export async function processNumberSchema<T extends OAIModel>(schema: v2.Schema|
 }
 
 
-export async function processIntegerSchema<T extends OAIModel>(schema: v2.Schema | v3.Schema, $: Context<T>, options?: Options ): Promise<SchemaTypeReference> {
+export async function processIntegerSchema<T extends OAIModel>(schema: v2.Schema | v3.Schema, $: Context<T>, options?: Options): Promise<SchemaTypeReference> {
   $.assertNoForbiddenProperties(schema, ...<any>stringProperties, ...<any>objectProperties, ...<any>arrayProperties);
 
   switch (schema.format) {

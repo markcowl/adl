@@ -63,12 +63,12 @@ async function processOperation(path: Path, operation: v2.Operation, shared: v2.
 
   if (length(consumes) > 0 && !hasBodyParameter()) {
     // they specified a body content type, but no actual body parameter, which means
-    // they get an anonymous one added 
+    // they get an anonymous one added
     const bodyParameter: v2.BodyParameter = {
       name: 'body',
       in: v2.ParameterLocation.Body
     };
-  
+
     parameters.push(getParameterReference(bodyParameter, $.api.primitives.file, $, { isAnonymous: true, operation }));
   }
 

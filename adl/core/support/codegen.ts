@@ -1,16 +1,16 @@
 import { printNode, ts, TypeParameterDeclarationStructure } from 'ts-morph';
 
-/**  
+/**
  * Prepares a string for use as a TypeScript identifier.
- * 
+ *
  * if the string contains non alphanumeric characters, it is quoted.
- * 
+ *
 */
 export function normalizeIdentifier(value: string) {
   return /[^\w]/g.exec(value) ? `'${value.replace(/'/g, '\\\'')}'` : value;
 }
 
-export function normalizeName(value: string ) {
+export function normalizeName(value: string) {
   if (/^[^a-zA-Z]/.test(value)) {
     // \w matches digits, but we can't lead with a digit
     value = `_${value}`;

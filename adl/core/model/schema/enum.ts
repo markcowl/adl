@@ -24,9 +24,9 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
 
     const existing = api.getEnum(name);
     if (existing) {
-      // enums are a bit funny -- they can define their name inside the x-ms-enum declaration 
-      // which means there can be multiple declarations for the same enum 
-      // so, we just return the existing enum by name 
+      // enums are a bit funny -- they can define their name inside the x-ms-enum declaration
+      // which means there can be multiple declarations for the same enum
+      // so, we just return the existing enum by name
       return {
         declaration: new TypeSyntax(existing.getName()),
         sourceFile: file,
@@ -48,7 +48,7 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
       docs: createDocs(initializer)
     });
 
-    // return the reference to this enum 
+    // return the reference to this enum
     return {
       declaration: new TypeSyntax(name),
       sourceFile: file,

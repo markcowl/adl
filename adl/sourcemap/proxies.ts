@@ -15,8 +15,8 @@ enum SpecialProperties {
   Origin = '##Origin', // the source path from whence the object came.
   Destination = '##Destination', // the target path to a trackedTarget object
   OnAdd = '$onAdd', // a hidden function that can bind an object to the parent.
-  valueOf = 'valueOf', // a backdoor to get the actual un-proxied value. 
-  toString = 'toString', // ensure that toString works on proxy'd primitives 
+  valueOf = 'valueOf', // a backdoor to get the actual un-proxied value.
+  toString = 'toString', // ensure that toString works on proxy'd primitives
   ActualValue = '##actualValue',  // another backdoor
   Tracker = '##Tracker', // instance of the tracker that this object is bound to.
   IsSourceProxy = '##IsSourceProxy', // lets us know if we're in a proxy
@@ -127,7 +127,7 @@ export function using<T>(sourceValue: any, actualTargetValue: T): T | undefined 
     return <T>TrackedSource.track(typeof actualTargetValue === 'object' ? actualTargetValue : new Object(actualTargetValue), actualTargetValue, origin);
   }
 
-  // todo: sourceValue wasn't a tracked value? is this an error? 
+  // todo: sourceValue wasn't a tracked value? is this an error?
   return actualTargetValue;
 }
 
@@ -158,7 +158,7 @@ export class TrackedSource<T extends Object, instanceType> {
 
   /**
    * returns true if the property exists
-   * 
+   *
    * @param actual the actual instance being proxied
    * @param property the property requested
    */
@@ -178,10 +178,10 @@ export class TrackedSource<T extends Object, instanceType> {
   }
 
   /**
-   * Handles property set on the proxy 
-   * 
+   * Handles property set on the proxy
+   *
    * We override this to provide a virtual property for isUsed
-   * 
+   *
    * @param actual the actual object being proxied
    * @param property the property being written to
    * @param value the value to write to the object
@@ -202,7 +202,7 @@ export class TrackedSource<T extends Object, instanceType> {
           this.isUsed = true;
         } else {
           // if we have children, the final state of isUsed is dependent on all them being used.
-          // this check only happens if we set an object to used and 
+          // this check only happens if we set an object to used and
           this.isUsed = linq.values(<any>this.proxy).all(each =>isUsed(each));
         }
 
@@ -221,14 +221,14 @@ export class TrackedSource<T extends Object, instanceType> {
 
   /**
    * On being added to a target model, the sourceTracker will ask this to record the location
-   * 
-   * @param tracker the source tracker instance 
+   *
+   * @param tracker the source tracker instance
    * @param pathInTarget the path in the target that the value of this property is being assigned to
    * @param propertyValue the property value being assigned.
    */
   onAdd(tracker: Tracker, pathInTarget: Path) {
     if (tracker) {
-      // if the tracker is set, then that means there is a path 
+      // if the tracker is set, then that means there is a path
       // all the way from the target model root to the location that
       // this property is being set
       tracker.add(pathInTarget, this.origin);
@@ -237,7 +237,7 @@ export class TrackedSource<T extends Object, instanceType> {
 
   /**
    * Handles property get for the proxy
-   * 
+   *
    * @param actual the actual object being proxies
    * @param property the property requested
    * @param proxy the proxy object (this)
@@ -261,16 +261,16 @@ export class TrackedSource<T extends Object, instanceType> {
       case SpecialProperties.IsUsed:
         return this.isUsed === true;
     }
-    
+
     const value = (<any>this.instance)[property];
     // if (value === undefined || value === null) {
-    if( typeof value !== 'object') {
+    if(typeof value !== 'object') {
       return value;
     }
     switch (typeof value) {
       case 'function':
         switch (property) {
-          // these functions need to be bound to the actual object 
+          // these functions need to be bound to the actual object
           // otherwise, they don't work.
           case 'indexOf':
             return (<any>value).bind((<any>this.instance));
@@ -331,16 +331,16 @@ export class TrackedTarget<T extends Object> {
   }
 
   onAdd(tracker: Tracker, pathInTarget: Path, cache = new WeakSet()) {
-    if( cache.has(this.proxy)) {
+    if(cache.has(this.proxy)) {
       return;
     }
     cache.add(this.proxy);
-    // if the tracker for this object is already set, we've 
+    // if the tracker for this object is already set, we've
     // already met the parents and don't need to do it all again
     // (if children get added after, they'll be told to do it then)
     if (tracker && pathInTarget) {
       this.tracker = tracker;
-      // if the tracker is set, then we have a path all the way from the root of the target model 
+      // if the tracker is set, then we have a path all the way from the root of the target model
       // to the location that this property is being set.
       if (this.origin) {
         tracker.add(pathInTarget, this.origin);
@@ -356,14 +356,14 @@ export class TrackedTarget<T extends Object> {
 
           const rawValue = valueOf((<any>this.instance)[key]);
           if (rawValue !== value) {
-            // we've still got the proxy set as the raw value 
-            // which means that for certain, the property 
+            // we've still got the proxy set as the raw value
+            // which means that for certain, the property
             // hasn't met the parents yet.
             // we need to replace the value in the instance
             // with the raw value (still call onAdd too.)
             (<any>this.instance)[key] = rawValue;
           }
-          if( key === 'node') {
+          if(key === 'node') {
             continue;
           }
           // make sure the original value is used
@@ -411,7 +411,7 @@ export class TrackedTarget<T extends Object> {
 
       case 'project':
       case 'node':
-        return (<any>this.instance)[property];        
+        return (<any>this.instance)[property];
     }
     const value = actual[property];
     if (value === undefined || value === null) {
@@ -454,7 +454,7 @@ export class TrackedTarget<T extends Object> {
         return false;
     }
 
-    // if it's null or undefined, set it 
+    // if it's null or undefined, set it
     if (value === undefined || value === null) {
       actual[property] = value;
       return true;
@@ -462,7 +462,7 @@ export class TrackedTarget<T extends Object> {
 
     const rawValue = valueOf(value);
 
-    // if this isn't a proxied object, and there is one in the registry 
+    // if this isn't a proxied object, and there is one in the registry
     // for this, let's assume the user passed that in instead.
     if (typeof rawValue === 'object' && !isProxy(value)) {
       value = (<TrackedTarget<T> | undefined>TrackedTarget.registry.get(value))?.proxy ?? typeof value === 'object' ? TrackedTarget.track(value) : value;
@@ -495,14 +495,14 @@ export class TrackedTarget<T extends Object> {
         }
 
       } else {
-        // otherwise, we'd better set the value to the proxy so that 
+        // otherwise, we'd better set the value to the proxy so that
         // one day we can meet the parents.
         actual[property] = value;
       }
 
     } catch (E) {
-      // I'm not expecting this should get here, but if it does, I need 
-      // to know 
+      // I'm not expecting this should get here, but if it does, I need
+      // to know
       console.error(`Internal failure: Setting a property failed. ${E}`);
     }
 

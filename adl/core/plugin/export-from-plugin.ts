@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-// automatically pull exports from all .js files in this project that 
+// automatically pull exports from all .js files in this project that
 // have a default export
 export function exportFromPlugin(location: string, result: any = {}, container = ''): any | undefined {
   let count = 0;
@@ -15,7 +15,7 @@ export function exportFromPlugin(location: string, result: any = {}, container =
     }
 
     // .js files are checked for default exports
-    // and added to the map 
+    // and added to the map
     if (name.endsWith('.js')) {
       try {
         // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -27,7 +27,7 @@ export function exportFromPlugin(location: string, result: any = {}, container =
         }
         count++;
       } catch {
-        // ignore files that don't import cleanly. 
+        // ignore files that don't import cleanly.
       }
     }
   }
