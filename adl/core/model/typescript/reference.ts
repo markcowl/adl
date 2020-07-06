@@ -1,7 +1,7 @@
 import { FunctionTypeNode, InterfaceDeclaration, Node, ParameterDeclaration, TupleTypeNode, TypeAliasDeclaration, TypeLiteralNode, TypeNode, TypeParameterDeclaration, TypeReferenceNode } from 'ts-morph';
-import { NamedElement } from '../../exports';
 import { getDefinition } from '../../support/typescript';
 import { Parameter, Response, ResponseCollection, Result } from '../operation';
+import { NamedElement } from './named-element';
 import { TSElement } from './typescript-element';
 
 export function isReference<T>(instance: T | Reference<T>): instance is Reference<T> {
@@ -12,7 +12,7 @@ export function isDeclaration<T>(instance: T | Declaration<T>): instance is Decl
   return instance instanceof Declaration;
 }
 
-export type NodeType<T> = 
+export type NodeType<T> =
   T extends Parameter ? ParameterDeclaration :
   T extends Response ? FunctionTypeNode :
   T extends ResponseCollection ? TupleTypeNode :
@@ -20,7 +20,7 @@ export type NodeType<T> =
   T extends (Response | ResponseCollection) ? (FunctionTypeNode | TupleTypeNode) :
   Node;
 
-export interface ElementClass<T> { 
+export interface ElementClass<T> {
   new(node: NodeType<T>): T;
   isAllowedNode(node: Node): node is NodeType<T>;
 }
@@ -58,7 +58,7 @@ export class Declaration<T> extends NamedElement<TypeAliasDeclaration | Interfac
     if (Node.isTypeAliasDeclaration(node)) {
       node = node.getTypeNodeOrThrow();
     }
-    
+
     return this.#definition = newElement(this.ctor, node);
   }
 

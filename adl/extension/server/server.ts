@@ -10,8 +10,7 @@ if (process.env['no-static-loader'] === undefined && require('fs').existsSync(`$
   usingStaticLoader = true;
   require(`${__dirname}/../../dist/static-loader.js`).load(`${__dirname}/../../dist/static_modules.fs`);
 }
-import { ApiModel, LinterDiagnostic, RuleSeverity } from '@azure-tools/adl.core';
-import { getRelativePath } from '@azure-tools/adl.core/dist/support/file-system';
+import { ApiModel, getRelativePath, LinterDiagnostic, RuleSeverity } from '@azure-tools/adl.core';
 import { CompletionItem, CompletionItemKind, createConnection, Diagnostic, DiagnosticSeverity, DidChangeConfigurationNotification, InitializeParams, InitializeResult, ProposedFeatures, TextDocumentPositionParams, TextDocuments, TextDocumentSyncKind } from 'vscode-languageserver';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { ServerFileSystem } from './file-system';
@@ -149,7 +148,8 @@ function convertSeverity(severity: RuleSeverity): DiagnosticSeverity {
 documents.onDidChangeContent(async change => {
   if (apiModel) {
     const changedPath = getRelativePath(apiModel.fileSystem, change.document.uri);
-    const changedFile = apiModel.where(each => each.getFilePath().replace('/', '').replace(/\//g, '\\') === changedPath);
+    const changedFile = apiModel.where(each => each.relativePath === changedPath);
+    changedFile.files[0].replaceWithText(change.document.getText());
     const diagnostics = [...apiModel.linter.run(changedFile)];
     processLinterDiagnostics(diagnostics, change.document.uri);
   }

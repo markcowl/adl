@@ -230,7 +230,7 @@ Object.defineProperties(SourceFile.prototype, {
   relativePath: {
     get() {
       // returns a relative path from the root (starts with './' )
-      return this.getFullPath().replace(/(^\/)|(^\w)/, './$2');
+      return this.getFilePath().replace(/(^\/)|(^\w)/, './$2');
     }
   },
   fullPath: {

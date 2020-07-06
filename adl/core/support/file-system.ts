@@ -10,7 +10,7 @@ export function getAbsolutePath(fileSystem: FileSystem,pathOrRelativePath: strin
 }
 
 export function getRelativePath(fileSystem: FileSystem, absolutePath: string): string {
-  return relative(fileSystem.cwd, absolutePath).replace(/\\/g, '/');
+  return relative(fileSystem.cwd, absolutePath).replace(/\\/g, '/').replace(/(^\/)|(^\w)/, './$2');
 }
 
 export interface FileSystem {

@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
-// using static-link'd dependencies: 
+// using static-link'd dependencies:
 let usingStaticLoader = false;
 if (process.env['no-static-loader'] === undefined && require('fs').existsSync(`${__dirname}/../../dist/static-loader.js`)) {
   usingStaticLoader = true;
@@ -113,7 +113,7 @@ export async function activate(context: ExtensionContext) {
     serverOptions,
     clientOptions
   );
-  
+
   // Start the client. This will also launch the server
   client.start();
   client.outputChannel.appendLine(`ADL Language Client started. [static-loader: ${usingStaticLoader}]`);
@@ -121,17 +121,17 @@ export async function activate(context: ExtensionContext) {
   await client.onReady();
   client.onRequest(ReadFileRequest.type, async ({ path }) => {
     try {
-      return new TextDecoder().decode(await workspace.fs.readFile(Uri.parse( path)));
+      return new TextDecoder().decode(await workspace.fs.readFile(Uri.parse(path)));
     } catch (exception) {
       client.error(exception);
     }
-    
+
     return '';
   });
 
   client.onRequest(WriteFileRequest.type, async ({ path, data }) => {
     try {
-      return workspace.fs.writeFile(Uri.parse( path), new TextEncoder().encode(data));
+      return workspace.fs.writeFile(Uri.parse(path), new TextEncoder().encode(data));
     } catch (exception) {
       client.error(exception);
     }
@@ -139,7 +139,7 @@ export async function activate(context: ExtensionContext) {
 
   client.onRequest(IsDirectoryRequest.type, async ({ path }) => {
     try {
-      const file = await workspace.fs.stat(Uri.parse( path));
+      const file = await workspace.fs.stat(Uri.parse(path));
       return file.type === FileType.Directory;
     } catch (exception) {
       client.error(exception);
@@ -155,13 +155,13 @@ export async function activate(context: ExtensionContext) {
     } catch (exception) {
       client.error(exception);
     }
-  
+
     return false;
   });
 
   client.onRequest(ReadDirectoryRequest.type, async ({ path }) => {
     try {
-      return (await workspace.fs.readDirectory(Uri.parse( path))).map(f => f[0]); 
+      return (await workspace.fs.readDirectory(Uri.parse(path))).map(f => f[0]);
     } catch (exception) {
       client.error(exception);
     }

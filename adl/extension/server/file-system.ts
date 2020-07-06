@@ -13,7 +13,7 @@ function uniqueTempFolder(): string {
 }
 
 export class ServerFileSystem implements FileSystem {
-  
+
   connection: Connection;
   #cwd!: string;
   #extPath!: string;
@@ -65,24 +65,24 @@ export class ServerFileSystem implements FileSystem {
   }
 
   async writeFile(path: string, data: string): Promise<void> {
-    return this.connection.sendRequest(WriteFileRequest.type, {path: this.resolve(path), data }); 
+    return this.connection.sendRequest(WriteFileRequest.type, {path: this.resolve(path), data });
   }
-  
+
   async isDirectory(path: string): Promise<boolean>{
-    return this.connection.sendRequest(IsDirectoryRequest.type, { path: this.resolve(path) } );
-     
+    return this.connection.sendRequest(IsDirectoryRequest.type, { path: this.resolve(path) });
+
   }
 
   async isFile(path: string): Promise<boolean> {
     return this.connection.sendRequest(IsFileRequest.type, { path: this.resolve(path) });
-  } 
+  }
 
   async readFile(path: string): Promise<string> {
     return this.connection.sendRequest(ReadFileRequest.type, { path: this.resolve(path)});
-    
-  } 
+
+  }
 
   async readDirectory(path: string): Promise<Array<string>> {
     return this.connection.sendRequest(ReadDirectoryRequest.type, { path: this.resolve(path) });
-  } 
+  }
 }
