@@ -14,7 +14,7 @@ const scenarios = `${__dirname}/../../../../test/scenarios/adl`;
 
     const groups = api.operationGroups;
     const a = groups[0].annotations;
-    if(!a) {
+    if (!a) {
       throw new Error('Should return group');
     }
 

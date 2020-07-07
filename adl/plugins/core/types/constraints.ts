@@ -2,7 +2,7 @@ import { integer } from './primitives';
 import { Traits } from './traits';
 
 /** A valid regular expression to apply as a constraint on a value
- * 
+ *
  * @param T - the regular expression
 */
 export declare interface RegularExpression<T extends string> extends Traits.Constraint<string> {

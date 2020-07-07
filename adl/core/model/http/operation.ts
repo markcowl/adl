@@ -44,7 +44,7 @@ export class OperationGroup extends base.OperationGroup {
    * Creates a new HttpOperation in this operation group.
    */
   createOperation() {
-    //todo 
+    //todo
   }
 }
 
@@ -74,7 +74,7 @@ export class ResponseCollection extends base.ResponseCollection {
 }
 
 export class Operation extends base.Operation {
-  
+
   /** The HTTP method used and the path operated upon. */
   get path(): string {
     return this.annotations?.get('http')[0]?.content || '';
@@ -92,12 +92,12 @@ export class Operation extends base.Operation {
 
   /** parameters common to all the requests(overloads) for this operation */
   get parameters(){
-    return this.node.getParameters().map( p => new Parameter(p));
+    return this.node.getParameters().map(p => new Parameter(p));
   }
 
   get responseCollection(): ResponseCollection | Reference<ResponseCollection> | undefined {
     const rt = this.node.getReturnType();
-    
+
     return undefined;
   }
 

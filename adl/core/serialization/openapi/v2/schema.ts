@@ -25,27 +25,27 @@ export async function processSchema(schema: v2.Schema|v2.SchemaReference | undef
 
   // did we already process this because we went thru a $ref earlier?
   let typeRef = $.visitor.references.schema.get(here);
-  if( typeRef ) {
+  if (typeRef) {
     return typeRef;
   }
 
   const impl = async () => {
-    if( isReference(schema) ) {
+    if (isReference(schema)) {
       // this is a type reference, we need to process the target first.
 
       typeRef = $.visitor.references.schema.get($.normalizeReference(schema.$ref).$ref);
       // have we already got a reference for the target?
-      if( !typeRef )  {
+      if (!typeRef)  {
         // nope, not handled yet.
         const resolvedReference = await $.resolveReference(schema.$ref);
         typeRef = await processSchema(resolvedReference.node, resolvedReference.context);
       }
 
-      if( !(options?.isAnonymous)) {
-        // it has a name (which means it is intended to be a type alias at the top level) 
+      if (!(options?.isAnonymous)) {
+        // it has a name (which means it is intended to be a type alias at the top level)
         typeRef = createTypeAlias($.api, nameOf(schema), typeRef, commonProperties(<v2.Schema>schema));
       }
-      
+
       // return the target.
       return typeRef;
     }
@@ -58,15 +58,15 @@ export async function processSchema(schema: v2.Schema|v2.SchemaReference | undef
 
     if (length(schema.allOf) > 0) {
       // this could be composition
-      //  
-      // or a back-door way to $ref 
+      //
+      // or a back-door way to $ref
       if (length(schema.allOf) === 1) {
         // if (!schema.properties) {
         // no properties, but inheritance,
         // return processSillyRef(schema, $, options);
         // }
       }
-      // process schemas with allOf as objects 
+      // process schemas with allOf as objects
       return processObjectSchema(schema, $, options);
     }
 
@@ -111,7 +111,7 @@ export async function processSchema(schema: v2.Schema|v2.SchemaReference | undef
           // talk about properties or discriminator, pretty much mean object
           return processObjectSchema(schema, $, options);
         }
-     
+
 
         if (schema.pattern || schema.maxLength !== undefined || schema.minLength !== undefined) {
           // these only apply to strings
@@ -130,7 +130,7 @@ export async function processSchema(schema: v2.Schema|v2.SchemaReference | undef
 
   // in most cases, we're not setting it during the processing.
   $.visitor.references.schema.set(here, result);
-  
+
   // and we're done.
   return result;
 }
@@ -146,7 +146,7 @@ function constrainNumericSchema(schema: v2.Schema, $: Context<v2.Model>, options
 
     if (schema.minimum !== undefined) {
       if (schema.exclusiveMinimum) {
-        target = addConstraint( target, Constraints.exclusiveMinimum(schema.minimum));
+        target = addConstraint(target, Constraints.exclusiveMinimum(schema.minimum));
       } else {
         target = addConstraint(target, Constraints.minimum(schema.minimum));
       }
@@ -164,14 +164,14 @@ function constrainNumericSchema(schema: v2.Schema, $: Context<v2.Model>, options
   }
   // we'll have to come back to xml
   // alias.addToAttic('xml', schema.xml);
-  
+
   return options?.isAnonymous ? target : createTypeAlias<SchemaTypeReference>($.api,nameOf(schema),target, commonProperties(schema));
 }
 
 export async function processStringSchema(schema: v2.Schema, $: Context<v2.Model>, options?: Options): Promise<SchemaTypeReference> {
   switch (schema.format) {
     case StringFormat.Base64Url:
-      return addEncoding( await processByteArraySchema(schema, $), Encodings.UrlEncoding );
+      return addEncoding(await processByteArraySchema(schema, $), Encodings.UrlEncoding);
 
     case StringFormat.Byte:
     case StringFormat.Binary:
@@ -210,14 +210,14 @@ export async function processStringSchema(schema: v2.Schema, $: Context<v2.Model
   }
 
   $.assertNoForbiddenProperties(schema, ...objectProperties, ...arrayProperties, ...numberProperties);
-  
+
   // we're going to treat it as a standard string schema
-  // if this is just a plain string with no adornments, just return the common string instance. 
+  // if this is just a plain string with no adornments, just return the common string instance.
   if (!(schema.default !== undefined || schema.readOnly !== undefined || schema.minLength !== undefined || schema.maxLength !== undefined || schema.pattern !== undefined)) {
     return $.api.primitives.string;
   }
 
-  // otherwise, we have to get the standard string and make an alias for it with the adornments. 
+  // otherwise, we have to get the standard string and make an alias for it with the adornments.
   let alias = createTypeAlias($.api, anonymous('string'), $.api.primitives.string, commonProperties(schema));
 
   if (schema.default !== undefined) {
@@ -230,7 +230,7 @@ export async function processStringSchema(schema: v2.Schema, $: Context<v2.Model
   //}
 
   if (schema.maxLength !== undefined) {
-    alias = addConstraint( alias, Constraints.maxLength(schema.maxLength));
+    alias = addConstraint(alias, Constraints.maxLength(schema.maxLength));
   }
 
   if (schema.minLength !== undefined) {
@@ -247,7 +247,7 @@ export async function processStringSchema(schema: v2.Schema, $: Context<v2.Model
     return alias;
   }
   return createTypeAlias($.api, nameOf(schema), alias, commonProperties(schema));
-  
+
 }
 
 
@@ -262,7 +262,7 @@ export async function processObjectSchema(schema: v2.Schema, $: Context<v2.Model
 
   const schemaName = options?.isAnonymous ? anonymous('object') : nameOf(schema);
 
-  if(!options?.isAnonymous) {
+  if (!options?.isAnonymous) {
     // when it's not anonymous, we have to put the object typedefintion as soon as we can in case we recurse
     const { name, file } = $.api.getNameAndFile(schemaName, 'model');
 
@@ -272,13 +272,13 @@ export async function processObjectSchema(schema: v2.Schema, $: Context<v2.Model
       requiredReferences: []
     };
 
-    $.visitor.references.schema.set(refTo(schema), result );
+    $.visitor.references.schema.set(refTo(schema), result);
   }
 
   const requiredReferences = new Array<SchemaTypeReference>();
   // process the properties
   const properties = new Array<PropertySignatureStructure>();
-  for( const [propertyName, property] of items(schema.properties) ) {
+  for (const [propertyName, property] of items(schema.properties)) {
     const pTypeRef = await processSchema(property, $, { isAnonymous: true });
     const prop = createPropertySignature(propertyName, pTypeRef, {
       ...commonProperties(<v2.Schema>property),
@@ -286,21 +286,21 @@ export async function processObjectSchema(schema: v2.Schema, $: Context<v2.Model
       required: schema.required && schema.required.indexOf(propertyName) > -1,
     });
     requiredReferences.push(pTypeRef);
-    properties.push( prop);
+    properties.push(prop);
   }
 
-    
-  const parents = schema.allOf ? await Promise.all( schema.allOf.map( async parent => {
+
+  const parents = schema.allOf ? await Promise.all(schema.allOf.map(async parent => {
     const result = await processSchema(parent, $, {isAnonymous: true});
     requiredReferences.push(result);
     return result;
   })): [];
-  if( schema.additionalProperties ) {
+  if (schema.additionalProperties) {
     // true means type == any
     const elementTypeRef = schema.additionalProperties == true ? $.api.primitives.any : await processSchema(schema.additionalProperties!, $, { isAnonymous: true });
     parents.push(createDictionary(elementTypeRef));
   }
-  // creating an object schema 
+  // creating an object schema
   result = createModelType($.api, schemaName, {
     ...commonProperties(schema),
     properties,
@@ -308,14 +308,14 @@ export async function processObjectSchema(schema: v2.Schema, $: Context<v2.Model
     requiredReferences,
     ...versionInfo($, schema),
 
-  } );
+  });
 
   // todo: preserve attic things
   // result.addToAttic('example', (<any>schema).example);
   // result.addToAttic('xml', schema.xml); // we'll have to come back to xml
   // result.addToAttic('x-ms-azure-resource', schema['x-ms-azure-resource']);
   // result.addToAttic('x-ms-external', schema['x-ms-external']);
-  
+
   return result;
 }
 
@@ -333,12 +333,12 @@ function addObjectConstraints(schemaName: string, schema: v2.Schema, $: Context<
     }
 
     return createTypeAlias($.api, schemaName, type);
-  } 
+  }
   return type;
 }
 
 export async function processAdditionalProperties(schema: v2.Schema, $: Context<v2.Model>, options?: Options): Promise<SchemaTypeReference> {
-  if(!schema.additionalProperties) {
+  if (!schema.additionalProperties) {
     throw new Error('should not get here.');
   }
 
@@ -347,19 +347,19 @@ export async function processAdditionalProperties(schema: v2.Schema, $: Context<
 
   // true means type == any
   const elementTypeRef = schema.additionalProperties == true ? $.api.primitives.any : await processSchema(schema.additionalProperties!, $, {isAnonymous: true});
-  
+
   let alias = createTypeAlias($.api, schemaName, createDictionary(elementTypeRef), common);
   // todo: come back and handle attic -- we'll have to come back to xml
   // alias.addToAttic('xml', schema.xml);
 
-  if (length(common) > 0 || schema.maxProperties !== undefined || schema.minProperties !== undefined ||schema.default !== undefined ) {
+  if (length(common) > 0 || schema.maxProperties !== undefined || schema.minProperties !== undefined ||schema.default !== undefined) {
     if (schema.maxProperties !== undefined) {
       alias = addConstraint(alias, Constraints.maximumProperties(schema.maxProperties));
     }
     if (schema.minProperties !== undefined) {
       alias = addConstraint(alias, Constraints.minimumProperties(schema.minProperties));
     }
-    if (schema.default !== undefined ) {
+    if (schema.default !== undefined) {
       alias = addDefault(alias, schema.default);
     }
   }
@@ -380,7 +380,7 @@ export async function processArraySchema(schema: v2.Schema, $: Context<v2.Model>
   if ((schema.default !== undefined || schema.maxItems !== undefined || schema.minItems !== undefined || schema.uniqueItems !== undefined)) {
 
     if (schema.default) {
-      alias = addDefault( alias, schema.default);
+      alias = addDefault(alias, schema.default);
     }
 
     // if (schema.readOnly) {
@@ -390,7 +390,7 @@ export async function processArraySchema(schema: v2.Schema, $: Context<v2.Model>
       alias = addConstraint(alias, Constraints.maximumElements(schema.maxItems));
     }
     if (schema.minItems !== undefined) {
-      alias = addConstraint( alias, Constraints.minimumElements(schema.minItems));
+      alias = addConstraint(alias, Constraints.minimumElements(schema.minItems));
     }
     if (schema.uniqueItems !== undefined) {
       alias = addConstraint(alias, Constraints.uniqueElements());

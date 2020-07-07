@@ -10,7 +10,7 @@ const scenarios = `${__dirname}/../../../test/scenarios/adl`;
 
 @suite class TestNavigation {
 
-  @test async 'Load and navigate ADL'() { 
+  @test async 'Load and navigate ADL'() {
     const inputRoot = resolve(scenarios, 'sampleProject');
     const api = await new ApiModel(new UrlFileSystem(inputRoot)).load();
 
@@ -38,7 +38,7 @@ const scenarios = `${__dirname}/../../../test/scenarios/adl`;
     const responseCollections = api.responseCollections;
     deepEqual(responseCollections.length, 1);
 
-    
+
     const col = responseCollections[0];
     this.navigateResponseCollection(<ResponseCollection>col.definition);
     const collection = col.definition;
@@ -53,7 +53,7 @@ const scenarios = `${__dirname}/../../../test/scenarios/adl`;
       if (responseOrResponseCollection instanceof ResponseCollection) {
         this.navigateResponseCollection(collection);
         continue;
-      } 
+      }
       const response = responseOrResponseCollection;
       const criteria = response.criteria;
       let discard = criteria.codes; // will throw if it's not good

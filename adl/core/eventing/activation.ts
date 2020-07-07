@@ -1,5 +1,5 @@
 /**
- * Determines the an event listener is subscribed 
+ * Determines the an event listener is subscribed
  */
 export enum Activation  {
   /** Not active under any circumstances */
@@ -9,7 +9,7 @@ export enum Activation  {
   edit = 'edit',
 
   /** Linter: when manually activated */
-  demand =  'demand', 
+  demand =  'demand',
 
   /** During OAI Import */
   import = 'import',

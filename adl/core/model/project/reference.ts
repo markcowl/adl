@@ -13,7 +13,7 @@ export class ReferenceInfo extends Element {
 
   /** A link to additional information. */
   location?: URL;
-  
+
   constructor(public name: string, initializer?: Partial<ReferenceInfo>) {
     super();
     this.initialize(initializer);

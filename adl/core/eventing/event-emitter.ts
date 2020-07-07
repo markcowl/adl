@@ -122,9 +122,9 @@ export class EventEmitter<T> {
   }
 
   subscribe(listener: EventListener) {
-    if (listener.activation !== undefined && listener.activation !== Activation.disabled ) {
+    if (listener.activation !== undefined && listener.activation !== Activation.disabled) {
       for (const [name, fn] of linq.items(<Dictionary<any>><unknown>listener).where(([name, fn]) => name.length > 2 && name.startsWith('on'))) {
-        if( typeof fn === 'function') {
+        if (typeof fn === 'function') {
           fn.meta = listener.meta;
           this.on(<any>name.substr(2),fn);
         }
@@ -205,7 +205,7 @@ export class EventEmitter<T> {
 
   /** Call the listeners of an event */
   iterEmit<K extends EventKey<T>>(key: K, ...args: EventIn<T, K>): Iterable< { meta:  ListenerMetaData; result: NonNullable<Id<Out<T[K]>>> }>
-  
+
   /** Implementation */
   *iterEmit<K extends EventKey<T>>(key: K, ...args: EventIn<T, K>): Iterable<any> {
     const gen = this.listeners(key);

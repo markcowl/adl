@@ -20,6 +20,12 @@ rules:
   "no-trailing-spaces" : "error"
   "space-in-parens": "error"
   "no-cond-assign" : 'off'
+  "keyword-spacing": 
+    - 'error'
+    - overrides:
+        this: 
+          before: false 
+  
   "@typescript-eslint/no-non-null-assertion": 'off'
   "@typescript-eslint/no-use-before-define" : 'off'
   "@typescript-eslint/no-this-alias" : 'off'

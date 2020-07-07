@@ -14,10 +14,10 @@ export class ResponseCriteria extends base.ResponseCriteria {
         return expandLiterals(type);
       }
     }
-  
+
     return [];
   }
- 
+
   get mediaTypes(): Array<string | TypeParameterDeclaration> {
     const parameter = this.node.getParameter('mediaType');
     if (parameter) {
@@ -28,14 +28,14 @@ export class ResponseCriteria extends base.ResponseCriteria {
     }
 
     return [];
-  } 
+  }
 }
 
 export class Result extends base.Result {
   get body(): TypeReference | undefined {
-    if (Node.isTypeLiteralNode(this.node) || Node.isInterfaceDeclaration(this.node)) { 
+    if (Node.isTypeLiteralNode(this.node) || Node.isInterfaceDeclaration(this.node)) {
       const bodyType =  this.node.getProperty('body');
-      if(bodyType) {
+      if (bodyType) {
         return {
           declaration: new TypeSyntax(bodyType.getTypeNode()?.compilerNode ?? 'any'),
           requiredReferences: []
@@ -69,11 +69,11 @@ export class Response extends base.Response {
       return new Result(type);
     }
 
-    if (Node.isTypeReferenceNode(type) ) {
+    if (Node.isTypeReferenceNode(type)) {
       return new Reference(type, Result);
     }
-  
-    throw new Error(`Invalid result type: ${this.node.getKindName()}`); 
+
+    throw new Error(`Invalid result type: ${this.node.getKindName()}`);
   }
 }
 

@@ -20,7 +20,7 @@ export type ParameterLocation = 'query' | 'path' | 'cookie' | 'header' | 'body';
 
 /** A parameter for an HTTP call
  * @argument Location - Location where the parameter is sent. Must be one of type @see ParameterLocation
- * @argument ParameterType - the schema/type of the parameter. 
+ * @argument ParameterType - the schema/type of the parameter.
  * @argument SerializedName - the actual wire name, when different from the parameter name
   */
 export interface Parameter<Location extends ParameterLocation, ParameterType, SerializedName extends string = undefined> {

@@ -11,7 +11,7 @@ import { SchemaInitializer } from '../typescript/schema';
 import { Property } from './property';
 import { SchemaTypeReference, TypeReference } from './type';
 
-export interface ModelTypeInitializer extends SchemaInitializer { 
+export interface ModelTypeInitializer extends SchemaInitializer {
   parents?: Array<TypeReference>;
   properties?: Array<PropertySignatureStructure>;
   requiredReferences?: Array<TypeReference>;
@@ -20,19 +20,19 @@ export interface ModelTypeInitializer extends SchemaInitializer {
 export function createModelType(api: ApiModel, identity: Identity, initializer?: ModelTypeInitializer): SchemaTypeReference {
   const { name, file } = api.getNameAndFile(identity, 'model');
 
-  const iface = file.addInterface( {
+  const iface = file.addInterface({
     name,
     properties: initializer?.properties || [],
-    extends: initializer?.parents ? initializer?.parents.map( each => each.declaration.text):[],
+    extends: initializer?.parents ? initializer?.parents.map(each => each.declaration.text):[],
     docs: createDocs(initializer),
     isExported: true,
   });
-  for (const each of values(initializer?.requiredReferences )) {
+  for (const each of values(initializer?.requiredReferences)) {
     addImportsTo(file,each);
   }
-  
+
   return isAnonymous(identity) ? {
-    declaration: new TypeSyntax( getInnerText(iface)),
+    declaration: new TypeSyntax(getInnerText(iface)),
     requiredReferences: initializer?.requiredReferences || [],
   } :  {
     declaration: new TypeSyntax(name),

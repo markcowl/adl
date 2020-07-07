@@ -55,7 +55,7 @@ export async function processComponents(components: v3.Components | undefined, $
   }
 
 
-  // await $.process(processExamples, components.examples); // send to attic 
+  // await $.process(processExamples, components.examples); // send to attic
   // await $.process(processCallbacks, components.callbacks);  // ok skip
   // await $.process(processLinks, components.links); // ok skip
 }

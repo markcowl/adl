@@ -6,11 +6,11 @@ export interface anonymous extends Anonymous { }
 
 class Anonymous {
   protected anonymous: string;
-  constructor( identity: string|anonymous) {
-    
+  constructor(identity: string|anonymous) {
+
     this.anonymous = identity instanceof Anonymous ? identity.anonymous :  valueOf(identity) ||  'unknown';
   }
- 
+
   get name() {
     return `anonymous<${this.anonymous}>`;
   }
@@ -35,10 +35,10 @@ export function isAnonymous(instance: any): instance is anonymous {
 export class Tracker {
 
   add(inTarget: Path, inSource: Origin) {
-    // 
+    //
   }
 
-  track( targetMap: TargetMap, sourceMap: SourceMap ) {
-    // 
+  track(targetMap: TargetMap, sourceMap: SourceMap) {
+    //
   }
 }

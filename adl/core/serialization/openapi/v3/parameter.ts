@@ -38,11 +38,11 @@ export async function processParameter(parameter: v3.Parameter | v3.ParameterRef
       requiredReferences: schema.requiredReferences,
       location: parameter.in,
     };
-  
+
     return createTypeAlias(
       $.api,
       parameterTypeName,
-      parameterRef, { 
+      parameterRef, {
         summary: !options?.isAnonymous ? parameter.description : undefined,
       });
   };

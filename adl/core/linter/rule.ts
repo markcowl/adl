@@ -74,7 +74,11 @@ export interface Fix {
   /**
    * This includes what the fix does.
    */
+<<<<<<< HEAD
   description: string;
+=======
+  description?: string;
+>>>>>>> d508a8283423bee1931c454da34ae9f8956b4d4a
 
   /**
    * This function is used to provide a fix on the node.

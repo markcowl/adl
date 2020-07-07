@@ -5,13 +5,13 @@ export type JSDocs = Array<JSDoc>;
 export type HasNode = { node: Node };
 export type Taggable = Node | JSDocs | JSDoc | HasNode;
 
-function hasNode( target: Taggable ): target is HasNode {
+function hasNode(target: Taggable): target is HasNode {
   return !!((<any>target).node);
 }
 
 export function getDocs(target: Taggable) {
   target = hasNode(target) ? target.node : target;
-  
+
   return Array.isArray(target) ? target :
     Node.isJSDoc(target) ? [target] :
       Node.isJSDocableNode(target) ? target.getJsDocs().filter(each => !!each) :
@@ -42,9 +42,9 @@ export function getTagValue(target: Taggable, tagName: string): string | undefin
 }
 
 export function* getTagValues(target: Taggable, ...tagName: Array<string>): Iterable<string> {
-  for( const each of getTags(target,...tagName)) {
+  for (const each of getTags(target,...tagName)) {
     yield each.getStructure().text?.toString() || '';
-  } 
+  }
 }
 
 export function hasTag(target: Taggable, tagName: string) {
@@ -69,7 +69,7 @@ export function prependTag(target: Taggable, tagName: string, text?: string) {
 }
 
 export function removeTag(target: Taggable, tagName: string) {
-  // todo: investigate if this is ok -- does removing tags from from the source file reset the nodes in the sourcefile? 
+  // todo: investigate if this is ok -- does removing tags from from the source file reset the nodes in the sourcefile?
   if (tagName) {
     for (const tag of getTags(target, tagName)) {
       tag.remove();
@@ -103,7 +103,7 @@ export interface Documentation {
 }
 
 export function createDocs(documentationIntializer?: Documentation, additionalTags?: Array<JSDocTagStructure>): Array<JSDocStructure> | undefined {
-  if( documentationIntializer) {
+  if (documentationIntializer) {
     const tags = new Array<JSDocTagStructure>();
     if (documentationIntializer.extensible) {
       tags.push({
@@ -111,7 +111,7 @@ export function createDocs(documentationIntializer?: Documentation, additionalTa
         tagName: 'extensible'
       });
     }
-    
+
     if (documentationIntializer.description) {
       tags.push({
         kind: StructureKind.JSDocTag,
@@ -120,16 +120,16 @@ export function createDocs(documentationIntializer?: Documentation, additionalTa
       });
     }
 
-   
+
     if (documentationIntializer.clientName) {
       tags.push({
         kind: StructureKind.JSDocTag,
         tagName: 'clientName',
         text: documentationIntializer.clientName
       });
-    } 
-   
-    
+    }
+
+
     if (documentationIntializer.since) {
       tags.push({
         kind: StructureKind.JSDocTag,

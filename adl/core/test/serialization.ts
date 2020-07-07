@@ -61,11 +61,11 @@ function sortWithPriorty(a: any, b: any): number {
 }
 
 export const elementTag = <Schema.CustomTag>{
-  identify: (v: any) => 
-    v !== undefined && 
-    v !== null && 
-    typeof v === 'object' && 
-    !Array.isArray(v) && 
+  identify: (v: any) =>
+    v !== undefined &&
+    v !== null &&
+    typeof v === 'object' &&
+    !Array.isArray(v) &&
     (v instanceof ApiModel || v instanceof Element || v.added),
   default: true,
   tag: 'tag:yaml.org,2002:map',
@@ -92,10 +92,10 @@ export const elementTag = <Schema.CustomTag>{
       if (isAnonymous(v)) {
         v = v.name;
       }
-      if( typeof key === 'string' && key.startsWith('_')){
+      if (typeof key === 'string' && key.startsWith('_')){
         continue;
       }
-      
+
       switch (key) {
         // temporary -- this is just noisy while we only have one version to play with.
         case 'versionInfo':
@@ -129,5 +129,5 @@ export const elementTag = <Schema.CustomTag>{
 export function serialize(instance: any) {
   return 'not right now';
   //return stringify(instance, { customTags: [elementTag] }).
-  //   replace(/:$\s*(&a\d*)/gm, ': $1'); // put anchor on declaration line. 
+  //   replace(/:$\s*(&a\d*)/gm, ': $1'); // put anchor on declaration line.
 }
