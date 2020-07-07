@@ -9,31 +9,23 @@ export default <Rule>{
     category: 'SDK Error'
   },
   onProperty: (model, property) => {
-    if (property.readOnly && property) {
+    if (property.readOnly && property.required) {
       return {
         message: 'A model property cannot be both readOnly and required',
-        suggestion: [
+        suggestions: [
           {
-            description: 'Set required: false.',
+            description: 'Unmark as readonly.',
             fix: () => {
               property.readOnly = false;
             }
           },
           {
-            description: 'Set remove: false',
+            description: 'Mark as optional.',
             fix: () => {
               property.required = false;
-            }
-          },
-          {
-            description: 'Set required: false and readonly: false.',
-            fix: () => {
-              property.required = false;
-              property.readOnly = false;
             }
           }
         ]
-
       };
     }
 

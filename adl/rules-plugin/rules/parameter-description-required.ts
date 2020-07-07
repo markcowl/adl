@@ -21,7 +21,7 @@ export default <Rule>{
     if (missingDoc.length > 0) {
       return {
         message: `The parameters '${missingDoc}' are missing a description. Consider adding one.`,
-        suggestion: [
+        suggestions: [
           {
             description: 'Provide parameter descriptions.',
             fix: () => {

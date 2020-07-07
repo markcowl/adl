@@ -19,7 +19,7 @@ function checkPascalIdentifier(type: string, element: NamedElement<any>): RuleRe
   if (!element.name.toString().match(pascalCaseRegex)) {
     return {
       message: `The ${type} '${element.name.toString()}' must follow pascal case style.`,
-      suggestion: [
+      suggestions: [
         {
           description: 'Rename to follow pascal case style.',
           fix: () => {

@@ -13,7 +13,7 @@ export default <Rule>{
     if (tag !== undefined) {
       return {
         message: `The operation '${operation.name}' has the http tag missing.`,
-        suggestion: [
+        suggestions: [
           {
             description: 'Provide an http tag.',
             fix: () => {

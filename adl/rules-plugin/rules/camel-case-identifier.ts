@@ -20,7 +20,7 @@ function checkCamelCaseIdentifier(type: string, element: NamedElement<any>): Rul
   if (!element.name.toString().match(camelCaseRegex)) {
     return {
       message: `The ${type} '${element.name.toString()}' must follow camel case style.`,
-      suggestion: [
+      suggestions: [
         {
           description: 'Rename to follow camel case style.',
           fix: () => {

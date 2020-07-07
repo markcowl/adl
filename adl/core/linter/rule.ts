@@ -42,7 +42,7 @@ export interface RuleMetaData extends ListenerMetaData {
   severity: RuleSeverity;
 
   /**
-   * Description about the rules. 
+   * Description about the rules.
    */
   description: string;
 
@@ -67,20 +67,19 @@ export interface RuleResult {
   /**
   * An array of possible fixes.
   */
-  suggestion?: Array<Fix>;
+  suggestions?: Array<Fix>;
 }
 
 export interface Fix {
   /**
-   * This includes what the fix does. If there is not a programmatic fix
-   * to be applied, this provides a suggestion to the user.
+   * This includes what the fix does.
    */
-  description?: string;
-  
+  description: string;
+
   /**
    * This function is used to provide a fix on the node.
    */
-  fix?: () => void;
+  fix: () => void;
 }
 
 export interface LinterDiagnostic {
@@ -88,7 +87,7 @@ export interface LinterDiagnostic {
      * The range at which the message applies
      */
   range: Range;
-  
+
   /**
    * The diagnostic's severity. Can be omitted. If omitted it is up to the
    * client to interpret diagnostics as error, warning, info or hint.
@@ -106,7 +105,7 @@ export interface LinterDiagnostic {
    * appears in the user interface.
    */
   source?: string;
-  
+
   /**
    * The diagnostic's message. It usually appears in the user interface
    */
@@ -115,5 +114,5 @@ export interface LinterDiagnostic {
   /**
   * An array of possible fixes.
   */
-  suggestion?: Array<Fix>;
+  suggestions?: Array<Fix>;
 }

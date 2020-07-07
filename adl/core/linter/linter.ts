@@ -25,7 +25,7 @@ interface Events {
 }
 
 export class Linter extends EventEmitter<Events> {
-  constructor(protected apiModel: ApiModel ) {
+  constructor(protected apiModel: ApiModel) {
     super();
   }
 
@@ -36,7 +36,7 @@ export class Linter extends EventEmitter<Events> {
       code: ruleMetadata.id,
       source: 'adl-linter',
       message: ruleResult.message|| ruleMetadata.description,
-      suggestion: ruleResult.suggestion
+      suggestions: ruleResult.suggestions
     };
   }
 
@@ -46,7 +46,7 @@ export class Linter extends EventEmitter<Events> {
 
     // aliasTypes
     for (const aliasType of files.aliasTypes) {
-      for (const {meta, result} of this.iterEmit('AliasType', model, aliasType) ){
+      for (const {meta, result} of this.iterEmit('AliasType', model, aliasType)){
         yield this.getLinterDiagnostic(aliasType, <RuleMetaData>meta, result);
       }
     }
@@ -87,7 +87,7 @@ export class Linter extends EventEmitter<Events> {
       for (const { meta, result } of this.iterEmit('EnumType', model, enumType)) {
         yield this.getLinterDiagnostic(enumType, <RuleMetaData>meta, result);
       }
-      
+
       for (const value of enumType.values) {
         for (const { meta, result } of this.iterEmit('EnumValue', model, value)) {
           yield this.getLinterDiagnostic(value, <RuleMetaData>meta, result);
