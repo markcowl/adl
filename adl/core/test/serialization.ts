@@ -92,7 +92,7 @@ export const elementTag = <Schema.CustomTag>{
       if (isAnonymous(v)) {
         v = v.name;
       }
-      if(typeof key === 'string' && key.startsWith('_')){
+      if (typeof key === 'string' && key.startsWith('_')){
         continue;
       }
 

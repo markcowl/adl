@@ -68,7 +68,7 @@ require('source-map-support').install();
     try {
       const main = extensionManager.load(extension);
     }
-    catch(e) {
+    catch (e) {
       assert.equal(true,false, 'extension loader threw exception');
     }
     assert.equal(true, true, 'extension loader loaded module');

@@ -264,7 +264,7 @@ export class TrackedSource<T extends Object, instanceType> {
 
     const value = (<any>this.instance)[property];
     // if (value === undefined || value === null) {
-    if(typeof value !== 'object') {
+    if (typeof value !== 'object') {
       return value;
     }
     switch (typeof value) {
@@ -331,7 +331,7 @@ export class TrackedTarget<T extends Object> {
   }
 
   onAdd(tracker: Tracker, pathInTarget: Path, cache = new WeakSet()) {
-    if(cache.has(this.proxy)) {
+    if (cache.has(this.proxy)) {
       return;
     }
     cache.add(this.proxy);
@@ -363,7 +363,7 @@ export class TrackedTarget<T extends Object> {
             // with the raw value (still call onAdd too.)
             (<any>this.instance)[key] = rawValue;
           }
-          if(key === 'node') {
+          if (key === 'node') {
             continue;
           }
           // make sure the original value is used

@@ -17,7 +17,7 @@ export default <Rule>{
       'PATCH',
       'HEAD',
       'OPTIONS',
-      'POST', 
+      'POST',
       'TRACE'
     ];
 

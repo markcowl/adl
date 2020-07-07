@@ -1,3 +1,4 @@
+import { ts } from 'ts-morph';
 import { TypeSyntax } from '../../support/codegen';
 import { TypeReference } from './type';
 
@@ -22,15 +23,24 @@ export function createPrimitiveType(declaration: string): TypeReference {
   };
 }
 
+export function createKnownType(kind: ts.KeywordTypeNode['kind']): TypeReference{
+  return {
+    declaration: new TypeSyntax(ts.createKeywordTypeNode(kind)),
+    requiredReferences: []
+  };
+
+}
+
 export const Primitives = {
-  any: createPrimitiveType('any'),
-  string: createPrimitiveType('string'),
+  any: createKnownType(ts.SyntaxKind.AnyKeyword),
+
+  string: createKnownType(ts.SyntaxKind.StringKeyword),
   char: createPrimitiveType('char'),
   byte: createPrimitiveType('byte'),
   int16: createPrimitiveType('int16'),
   int32: createPrimitiveType('int32'),
   int64: createPrimitiveType('int64'),
-  boolean: createPrimitiveType('boolean'),
+  boolean: createKnownType(ts.SyntaxKind.BooleanKeyword),
   double: createPrimitiveType('double'),
   float: createPrimitiveType('float'),
   byteArray: createPrimitiveType('Array<byte>'),

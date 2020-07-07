@@ -42,7 +42,7 @@ export function getTagValue(target: Taggable, tagName: string): string | undefin
 }
 
 export function* getTagValues(target: Taggable, ...tagName: Array<string>): Iterable<string> {
-  for(const each of getTags(target,...tagName)) {
+  for (const each of getTags(target,...tagName)) {
     yield each.getStructure().text?.toString() || '';
   }
 }
@@ -103,7 +103,7 @@ export interface Documentation {
 }
 
 export function createDocs(documentationIntializer?: Documentation, additionalTags?: Array<JSDocTagStructure>): Array<JSDocStructure> | undefined {
-  if(documentationIntializer) {
+  if (documentationIntializer) {
     const tags = new Array<JSDocTagStructure>();
     if (documentationIntializer.extensible) {
       tags.push({

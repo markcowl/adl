@@ -25,23 +25,23 @@ export async function processSchema(schema: v3.Schema|v3.SchemaReference|undefin
 
   // did we already process this because we went thru a $ref earlier?
   let typeRef = $.visitor.references.schema.get(here);
-  if(typeRef) {
+  if (typeRef) {
     return typeRef;
   }
 
   const impl = async () => {
-    if(isReference(schema)) {
+    if (isReference(schema)) {
       // this is a type reference, we need to process the target first.
 
       typeRef = $.visitor.references.schema.get($.normalizeReference(schema.$ref).$ref);
       // have we already got a reference for the target?
-      if(!typeRef)  {
+      if (!typeRef)  {
         // nope, not handled yet.
         const resolvedReference = await $.resolveReference(schema.$ref);
         typeRef = await processSchema(resolvedReference.node, resolvedReference.context);
       }
 
-      if(!(options?.isAnonymous)) {
+      if (!(options?.isAnonymous)) {
         // it has a name (which means it is intended to be a type alias at the top level)
         typeRef = createTypeAlias($.api, nameOf(schema), typeRef, commonProperties(<v3.Schema><unknown>schema));
       }
@@ -377,7 +377,7 @@ export async function processObjectSchema(schema: v3.Schema, $: Context<v3.Model
 
   const schemaName = options?.isAnonymous ? anonymous('object') : nameOf(schema);
 
-  if(!options?.isAnonymous) {
+  if (!options?.isAnonymous) {
     // when it's not anonymous, we have to put the object typedefintion as soon as we can in case we recurse
     const { name, file } = $.api.getNameAndFile(schemaName, 'model');
 
@@ -393,7 +393,7 @@ export async function processObjectSchema(schema: v3.Schema, $: Context<v3.Model
   const requiredReferences = new Array<SchemaTypeReference>();
   // process the properties
   const properties = new Array<PropertySignatureStructure>();
-  for(const [propertyName, property] of items(schema.properties)) {
+  for (const [propertyName, property] of items(schema.properties)) {
     const pTypeRef = await processSchema(property, $, { isAnonymous: true });
     const prop = createPropertySignature(propertyName, pTypeRef, {
       ...commonProperties(<v3.Schema>property),
@@ -410,7 +410,7 @@ export async function processObjectSchema(schema: v3.Schema, $: Context<v3.Model
     return result;
   })) : [];
 
-  if(schema.additionalProperties) {
+  if (schema.additionalProperties) {
     // true means type == any
     const elementTypeRef = schema.additionalProperties == true ? $.api.primitives.any : await processSchema(schema.additionalProperties!, $, { isAnonymous: true });
     parents.push(createDictionary(elementTypeRef));
@@ -453,7 +453,7 @@ function addObjectConstraints(schemaName: string, schema: v3.Schema, $: Context<
 }
 
 export async function processAdditionalProperties(schema: v3.Schema, $: Context<v3.Model>, options?: Options): Promise<SchemaTypeReference> {
-  if(!schema.additionalProperties) {
+  if (!schema.additionalProperties) {
     throw new Error('should not get here.');
   }
 

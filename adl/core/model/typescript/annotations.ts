@@ -65,7 +65,7 @@ export class Annotation implements Rangeable {
    */
   private initialize() {
     // just once.
-    if(this.#initialized) {
+    if (this.#initialized) {
       return;
     }
     this.#initialized = true;
@@ -201,7 +201,7 @@ export class Annotations {
   set(name: string, value?: string) {
     let tags = this.tags.where(each => each.getTagName() === name);
 
-    if(tags.length > 0) {
+    if (tags.length > 0) {
       tags[0].set({
         kind: StructureKind.JSDocTag,
         tagName: name,
@@ -210,7 +210,7 @@ export class Annotations {
     }
 
     // remove other values that shouldn't be there.
-    while(tags.length > 1) {
+    while (tags.length > 1) {
       tags = this.tags.where(each => each.getTagName() === name);
       tags.last!.remove();
     }

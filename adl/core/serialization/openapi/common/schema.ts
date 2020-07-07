@@ -121,7 +121,7 @@ export function wrapWithAliasIfNeeded<T extends OAIModel>(schema: v3.Schema | v2
   if (schema.default || schema.description || schema.title || (<any>schema).nullable || schema['x-nullable'] || (<any>schema).readOnly || encoding) {
     let alias = createTypeAlias($.api, anonymous(nameOf(schema)), type, commonProperties(schema));
 
-    if(encoding) {
+    if (encoding) {
       alias = addEncoding(alias, encoding);
     }
 

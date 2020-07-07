@@ -223,7 +223,7 @@ export class HttpProtocol extends Protocol<HttpProtocol> {
   /** @internal */
   constructor(api: ApiModel, sourceFiles?: Array<SourceFile>) {
     super(HttpProtocol, api, sourceFiles);
-    if(!sourceFiles) {
+    if (!sourceFiles) {
       // add the checkers for header types
       api.KnownAliasTypes['header'] = isHeader;
     }

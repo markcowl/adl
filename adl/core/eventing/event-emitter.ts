@@ -124,7 +124,7 @@ export class EventEmitter<T> {
   subscribe(listener: EventListener) {
     if (listener.activation !== undefined && listener.activation !== Activation.disabled) {
       for (const [name, fn] of linq.items(<Dictionary<any>><unknown>listener).where(([name, fn]) => name.length > 2 && name.startsWith('on'))) {
-        if(typeof fn === 'function') {
+        if (typeof fn === 'function') {
           fn.meta = listener.meta;
           this.on(<any>name.substr(2),fn);
         }

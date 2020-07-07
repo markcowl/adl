@@ -35,7 +35,7 @@ export class Result extends base.Result {
   get body(): TypeReference | undefined {
     if (Node.isTypeLiteralNode(this.node) || Node.isInterfaceDeclaration(this.node)) {
       const bodyType =  this.node.getProperty('body');
-      if(bodyType) {
+      if (bodyType) {
         return {
           declaration: new TypeSyntax(bodyType.getTypeNode()?.compilerNode ?? 'any'),
           requiredReferences: []

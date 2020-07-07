@@ -59,7 +59,7 @@ export async function processInfo<TModel extends OAIModel>(info: common.Info, $:
 
 
 export async function *processExternalDocs<TModel extends OAIModel>(externalDocs: common.ExternalDocumentation|undefined, $: Context<TModel>): AsyncGenerator<ReferenceInfo> {
-  if(externalDocs) {
+  if (externalDocs) {
   // external docs are just a kind of reference.
     const reference = new ReferenceInfo('external-documentation', {
       location: externalDocs.url,

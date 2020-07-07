@@ -42,7 +42,7 @@ export async function cmdMerge(messages: Messages, args: CommandLine) {
     let propertyAddedCount = 0;
     let propertyDeletedCount = 0;
     let enumClarificationCount = 0;
-  
+
     let first = true;
     for( const each of args.inputPaths) {
       const apiversion = each;
@@ -52,36 +52,36 @@ export async function cmdMerge(messages: Messages, args: CommandLine) {
       const d  = input.getDirectories();
       const enums = d.filter(each => each.getBaseName() === 'enums')[0] || fail('no enums');
       const models = d.filter(each => each.getBaseName() === 'models')[0] || fail('no models');
-     
-      
+
+
       for( const sourceEnumFile of enums.getSourceFiles()) {
         const fullName = sourceEnumFile.getFilePath();
         const fileName = path.basename(fullName);
-        
+
         if( first ) {
           // just copy the file to the target
           targetEnumFolder.createSourceFile(fileName).insertText(0, sourceEnumFile.getFullText());
           continue;
         }
-  
+
         // not the first api version that we're processing
-        
+
         // if this has never been created
         let targetEnumFile = targetEnumFolder.getSourceFile(fileName);
         if(!targetEnumFile ) {
           // create a new enum and new enums should get a @since tag
           targetEnumFile = targetEnumFolder.createSourceFile(fileName);
           targetEnumFile.insertText(0, sourceEnumFile.getFullText());
-  
+
           for( const eachEnum of targetEnumFile.getEnums()) {
             setTag(eachEnum, 'since', apiversion );
           }
           continue;
         }
-  
+
         // if the file has been here, we need to update it.
         for( const sourceEnum of sourceEnumFile.getEnums()) {
-          
+
           let targetEnum = targetEnumFile.getEnum(sourceEnum.getName()) ;
           if( !targetEnum) {
             targetEnum = targetEnumFile.addEnum( sourceEnum.getStructure());
@@ -89,7 +89,7 @@ export async function cmdMerge(messages: Messages, args: CommandLine) {
             setTag(targetEnum, 'since', apiversion);
             continue;
           }
-  
+
           // there is an enum here that we may have to modify
           for( const sourceMember of sourceEnum.getMembers()) {
             let targetMember = targetEnum.getMember(sourceMember.getName());
@@ -97,15 +97,15 @@ export async function cmdMerge(messages: Messages, args: CommandLine) {
               // skip it on enums, thanks
               continue;
             }
-  
+
             // otherwise, we have to add a new member here
             targetMember = targetEnum.addMember({
               name: sourceMember.getName(),
               value: sourceMember.getValue(),
-              
+
             });
             enumValueAddedCount++;
-  
+
             const docs = sourceMember.getJsDocs() || [];
             for( const doc of docs ) {
               targetMember.addJsDoc( doc.getStructure() );
@@ -114,49 +114,49 @@ export async function cmdMerge(messages: Messages, args: CommandLine) {
           }
         }
       }
-  
+
       // reset first for models
       for (const sourceModelFile of models.getSourceFiles()) {
         const fullName = sourceModelFile.getFilePath();
         const fileName = path.basename(fullName);
-  
+
         if (first) {
           // just copy the file to the target
           targetModelFolder.createSourceFile(fileName).insertText(0, sourceModelFile.getFullText());
           continue;
         }
-  
+
         // not the first api version that we're processing
-  
+
         // if this has never been created
         let targetModelFile = targetModelFolder.getSourceFile(fileName);
         if (!targetModelFile) {
           // create a new model and new models should get a @since tag
           targetModelFile = targetModelFolder.createSourceFile(fileName);
           targetModelFile.insertText(0, sourceModelFile.getFullText());
-  
+
           for (const eachModel of targetModelFile.getInterfaces()) {
             setTag(eachModel, 'since', apiversion);
           }
           continue;
         }
-  
+
         const sourceImports = sourceModelFile.getImportDeclarations();
         // const targetImports = targetModelFile.getImportDeclarations();
         for( const si of sourceImports ) {
           targetModelFile.addImportDeclaration( si.getStructure() );
         }
-  
+
         // if the file has been here, we need to update it.
         for (const sourceModel of sourceModelFile.getInterfaces()) {
-  
+
           let targetModel = targetModelFile.getInterface(sourceModel.getName());
           if (!targetModel) {
             targetModel = targetModelFile.addInterface( sourceModel.getStructure());
             setTag(targetModel, 'since', apiversion);
             continue;
           }
-  
+
           for (const targetProperty of targetModel.getProperties()) {
             const sourceProperty = sourceModel.getProperty(targetProperty.getName());
             if (!sourceProperty) {
@@ -167,19 +167,19 @@ export async function cmdMerge(messages: Messages, args: CommandLine) {
               }
             }
           }
-  
-  
+
+
           // there is an model here that we may have to modify
           for (const sourceProperty of sourceModel.getProperties()) {
             let targetProperty = targetModel.getProperty(sourceProperty.getName());
             if (targetProperty) {
-              
-  
+
+
               const s = sourceProperty.getStructure();
               const t = targetProperty.getStructure();
               t.docs = undefined;
               s.docs = undefined;
-  
+
               if( JSON.stringify(s) !== JSON.stringify(t)) {
                 // check to see if the type is the same (it's more that jsdocs)
                 let other = true;
@@ -205,7 +205,7 @@ export async function cmdMerge(messages: Messages, args: CommandLine) {
                   optionalChangeCount++;
                   other = false;
                 }
-  
+
                 if (s.type !== t.type) {
                   if( t.type === 'string' && `${s.type}`.indexOf('| string') > -1 ) {
                     appendTag(targetProperty, 'StringToEnum', ` '${apiversion}' - type changed from '${t.type}' to '${s.type}'`);
@@ -222,16 +222,16 @@ export async function cmdMerge(messages: Messages, args: CommandLine) {
                   typeChangeCount++;
                   other = false;
                 }
-  
+
                 if( other ) {
                   console.log(`found a change. ${sourceProperty.getName()} - \n${JSON.stringify(s, undefined, 2)}\n ${JSON.stringify(t, undefined, 2)}`);
                 }
-  
+
               }
-              
+
               continue;
             }
-  
+
             // otherwise, we have to add a new member here
             const p = sourceProperty.getStructure();
             targetProperty = targetModel.addProperty(p);
@@ -240,19 +240,19 @@ export async function cmdMerge(messages: Messages, args: CommandLine) {
           }
         }
       }
-  
-  
+
+
       // we're done with the first one, after this, we're versioning things.
       first = false;
     }
     for( const file of p.getSourceFiles()) {
       file.organizeImports();
     }
-  
+
     p.save();
-  
+
     console.log(`Stats:
-    
+
      EnumValueAdded:  ${enumValueAddedCount}
      StringToEnum:    ${enumClarificationCount}
      PropertyAdded:   ${propertyAddedCount}
@@ -260,7 +260,7 @@ export async function cmdMerge(messages: Messages, args: CommandLine) {
      ReadOnlyChanges: ${readonlyChangeCount}
      OptionalChanges: ${optionalChangeCount}
      TypeChanges:     ${typeChangeCount}
-  
+
     `);
     */
 }

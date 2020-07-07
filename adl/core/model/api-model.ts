@@ -60,7 +60,7 @@ export function isResponseCollectionTypeAlias(declaration: TypeAliasDeclaration)
     case undefined: {
       // untagged type aliases that are tuple types are inferred to be response collections.
       const typeNode = declaration.getTypeNode();
-      if (typeNode && Node.isTupleTypeNode(typeNode)) { //?.getKind() === SyntaxKind.TupleType
+      if (typeNode && Node.isTupleTypeNode(typeNode)) {
         // they must only have children that are either functionTypeNode or TypeReferenceNode
         // if they have anything else, ignore them.
         return !(typeNode.getElementTypeNodes().find(each => !(Node.isFunctionTypeNode(each) || Node.isTypeReferenceNode(each))));
