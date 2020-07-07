@@ -5,11 +5,11 @@ export interface ReadFileParams {
 }
 
 export namespace ReadFileRequest {
- export const type = new RequestType<ReadFileParams,string, void, void>('adl/readFile'); 
+ export const type = new RequestType<ReadFileParams,string, void, void>('adl/readFile');
 }
 
 export interface WriteFileParams {
-  path: string; 
+  path: string;
   data: string;
 }
 

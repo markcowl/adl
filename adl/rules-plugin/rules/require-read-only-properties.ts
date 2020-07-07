@@ -14,7 +14,7 @@ export default <Rule>{
         message: 'A model property cannot be both readOnly and required',
         suggestions: [
           {
-            description: 'Unmark as readonly.',
+            description: 'Remove readonly keyword.',
             fix: () => {
               property.readOnly = false;
             }
