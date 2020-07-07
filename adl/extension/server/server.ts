@@ -51,10 +51,14 @@ connection.onInitialize((params: InitializeParams) => {
 
   const result: InitializeResult = {
     capabilities: {
+      codeActionProvider: true,
       textDocumentSync: TextDocumentSyncKind.Incremental,
       // Tell the client that the server supports code completion
       completionProvider: {
         resolveProvider: true
+      },
+      executeCommandProvider: {
+        commands: ['sample.fixMe']
       }
     }
   };
@@ -206,25 +210,61 @@ connection.onCompletion(
   }
 );
 
-// This handler resolves additional information for the item selected in
-// the completion list.
-connection.onCompletionResolve(
-  (item: CompletionItem): CompletionItem => {
-    if (item.data === 1) {
-      item.detail = 'TypeScript details';
-      item.documentation = 'TypeScript documentation';
-    } else if (item.data === 2) {
-      item.detail = 'JavaScript details';
-      item.documentation = 'JavaScript documentation';
-    }
-    return item;
-  }
-);
+// // This handler resolves additional information for the item selected in
+// // the completion list.
+// connection.onCompletionResolve(
+//   (item: CompletionItem): CompletionItem => {
+//     if (item.data === 1) {
+//       item.detail = 'TypeScript details';
+//       item.documentation = 'TypeScript documentation';
+//     } else if (item.data === 2) {
+//       item.detail = 'JavaScript details';
+//       item.documentation = 'JavaScript documentation';
+//     }
+//     return item;
+//   }
+// );
 
-// Make the text document manager listen on the connection
-// for open, change and close text document events
-documents.listen(connection);
+// // Make the text document manager listen on the connection
+// // for open, change and close text document events
+// documents.listen(connection);
 
-// Listen on the connection
-connection.listen();
+// // Listen on the connection
+// connection.listen();
 
+// connection.onCodeAction((params) => {
+//   const textDocument = documents.get(params.textDocument.uri);
+//   if (textDocument === undefined) {
+//     return undefined;
+//   }
+
+//   const actions = new Array<CodeAction>();
+//   // for (const diagnostic of params.context.diagnostics) {
+//   //   const codeAction = CodeAction.create(
+//   //     diagnostic.
+//   //   )
+//     actions.push();
+//   }
+
+//   return actions;
+// });
+
+
+// connection.onExecuteCommand(async (params) => {
+//   if (params.command !== 'applyFix' || params.arguments === undefined) {
+//     return;
+//   }
+
+//   const textDocument = documents.get(params.arguments[0]);
+//   if (textDocument === undefined) {
+//     return;
+//   }
+//   const newText = typeof params.arguments[1] === 'string' ? params.arguments[1] : 'Eclipse';
+//   await connection.workspace.applyEdit({
+//     documentChanges: [
+//       TextDocumentEdit.create({ uri: textDocument.uri, version: textDocument.version }, [
+//         TextEdit.insert(Position.create(0, 0), newText)
+//       ])
+//     ]
+//   });
+// });
