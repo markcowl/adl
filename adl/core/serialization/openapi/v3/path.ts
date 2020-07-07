@@ -49,7 +49,7 @@ export async function processOperation(path: Path, operation: v3.Operation, shar
   const parameters = new Array<ParameterTypeReference>();
   await processOperationParameters(shared.parameters, $, parameters);
   await processOperationParameters(operation.parameters, $, parameters);
-  
+
   const requestBody = operation.requestBody ? await processRequestBody(operation.requestBody, $, { isAnonymous: true }) : undefined;
 
   const responses = new Array<ResponseTypeReference>();
@@ -80,7 +80,7 @@ export async function processOperation(path: Path, operation: v3.Operation, shar
   // for await (const requirement of $.processArray(authenticationRequirement, operation.security)) {
   //   result.authenticationRequirements.push(requirement);
   // }
-  
+
   // for await (const server of $.processArray(processServer, operation.servers)) {
   //   result.connections.push(server);
   // }
@@ -90,7 +90,7 @@ export async function processOperation(path: Path, operation: v3.Operation, shar
 
 async function processOperationParameters<T>(
   parameters: ReadonlyArray<v3.Parameter | v3.ParameterReference> | undefined,
-  $: Context, 
+  $: Context,
   result: Array<ParameterTypeReference>
 ) {
   for (const each of values(parameters)) {

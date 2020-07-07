@@ -3,8 +3,7 @@ import { getPascalIdentifier } from '../utils';
 export default <Rule>{
   activation: 'edit',
   meta: {
-    name: 'pascal-case-identifiers',
-    code: 'PLACEHOLDER',
+    id: 'pascal-case-identifiers',
     severity: 'warning',
     description: 'PLACEHOLDER',
     documentationUrl: 'PLACEHOLDER',
@@ -19,7 +18,7 @@ function checkPascalIdentifier(type: string, element: NamedElement<any>): RuleRe
   const pascalCaseRegex = /^[A-Z][a-z0-9]+\.([A-Z]+[a-z0-9]+)+$/g;
   if (!element.versionInfo.since?.match(pascalCaseRegex)) {
     return {
-      message: `The ${type}: ${element.name.toString()} must follow pascal case style.`,
+      message: `The ${type} '${element.name.toString()}' must follow pascal case style.`,
       suggestion: [
         {
           description: 'Rename to follow pascal case style.',

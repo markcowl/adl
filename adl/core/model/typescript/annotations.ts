@@ -50,7 +50,7 @@ export class Annotation implements Rangeable {
   ]
 
   constructor(public node: JSDocTag) {
-    
+
   }
   #initialized = false;
   #name!: Text;
@@ -59,13 +59,13 @@ export class Annotation implements Rangeable {
 
   /**
    * Intializes the values in the Annotation
-   * 
-   * This is done in a separate fn because the locations and values are so dependent on the 
+   *
+   * This is done in a separate fn because the locations and values are so dependent on the
    * rest of the tag, that it's just better to do it all at once.
    */
   private initialize() {
-    // just once. 
-    if( this.#initialized) {
+    // just once.
+    if (this.#initialized) {
       return;
     }
     this.#initialized = true;
@@ -113,7 +113,7 @@ export class Annotation implements Rangeable {
   }
 
   get fullRange(): Range {
-    return Range.fromNode( this.node);
+    return Range.fromNode(this.node);
   }
 
   get filename(): string{
@@ -194,23 +194,23 @@ export class Annotations {
   /**
    * Sets an annotation to the given value.
    * Removes any existing annotations with that name.
-   * 
+   *
    * @param name the annotation name
    * @param value the annontation value
    */
   set(name: string, value?: string) {
-    let tags = this.tags.where( each => each.getTagName() === name );
-    
-    if( tags.length > 0 ) {
+    let tags = this.tags.where(each => each.getTagName() === name);
+
+    if (tags.length > 0) {
       tags[0].set({
         kind: StructureKind.JSDocTag,
-        tagName: name, 
+        tagName: name,
         text: value
       });
     }
 
-    // remove other values that shouldn't be there. 
-    while( tags.length > 1 ) {
+    // remove other values that shouldn't be there.
+    while (tags.length > 1) {
       tags = this.tags.where(each => each.getTagName() === name);
       tags.last!.remove();
     }

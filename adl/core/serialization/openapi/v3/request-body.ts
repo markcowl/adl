@@ -24,10 +24,10 @@ export async function processRequestBody(requestBody: v3.RequestBody | v3.Reques
       }
       return requestBodyRef;
     }
-    
+
     const requests = new Array<ts.TypeNode>();
     const requiredReferences = new Array<TypeReference>();
-    
+
     for (const [mediaType, type] of items(requestBody.content)) {
       const typeref = await processSchema(type.schema, $, { isAnonymous: true });
       const request = ts.createTypeReferenceNode(
@@ -45,7 +45,7 @@ export async function processRequestBody(requestBody: v3.RequestBody | v3.Reques
       description: options?.isAnonymous ? requestBody.description : undefined,
       required: requestBody.required ?? false,
     };
-    
+
     const requestBodyTypeName = options?.isAnonymous ? anonymous('parameter') : nameOf(requestBody);
     return createTypeAlias(
       $.api,

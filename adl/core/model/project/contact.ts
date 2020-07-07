@@ -13,7 +13,7 @@ export class Contact extends Element {
 
   /** The email address of the contact person/organization. MUST be in the format of an email address */
   url?: string;
-  
+
   constructor(public role: ContactRole, initializer?: Partial<Contact>) {
     super();
     this.initialize(initializer);

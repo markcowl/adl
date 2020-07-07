@@ -7,7 +7,7 @@ import { Context } from './serializer';
 
 // NOTE: headers cannot be referenced in v2. They are always inline/anonymous
 export async function processHeader(header: v2.Header, $: Context, options: {isAnonymous: true; wireName: string}): Promise<HeaderTypeReference> {
-  // get the schema for the header 
+  // get the schema for the header
   const schema = await processSchema(<v2.Schema>header, $, { isAnonymous: true });
   const headerType = ts.createTypeReferenceNode(
     'Header', [

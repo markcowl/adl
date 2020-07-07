@@ -5,10 +5,10 @@ import { ApiModel, isOperationGroupInterfaceType, isResponseCollectionTypeAlias,
 import { Element } from '../element';
 import { Protocol } from '../project/protocol';
 import { Declaration } from '../typescript/reference';
-import { HeaderElement } from './header';
+import { Header } from './header';
 import { OperationGroup, ResponseCollection } from './operation';
-import { ParameterElement } from './parameter';
-import { ResponseElement, ResultElement } from './response';
+import { Parameter } from './parameter';
+import { Response, Result } from './response';
 
 export enum AuthenticationType {
   ApiKey = 'apikey',
@@ -223,7 +223,7 @@ export class HttpProtocol extends Protocol<HttpProtocol> {
   /** @internal */
   constructor(api: ApiModel, sourceFiles?: Array<SourceFile>) {
     super(HttpProtocol, api, sourceFiles);
-    if(!sourceFiles) {
+    if (!sourceFiles) {
       // add the checkers for header types
       api.KnownAliasTypes['header'] = isHeader;
     }
@@ -250,24 +250,24 @@ export class HttpProtocol extends Protocol<HttpProtocol> {
     return this.files.map(each => each.getTypeAliases().filter(isResponseCollectionTypeAlias)).flat().map(each => new Declaration(each, ResponseCollection));
   }
 
-  get responses(): Array<Declaration<ResponseElement>> {
-    return this.files.map(each => each.getTypeAliases().filter(isResponseTypeAlias)).flat().map(each => new Declaration(each, ResponseElement));
+  get responses(): Array<Declaration<Response>> {
+    return this.files.map(each => each.getTypeAliases().filter(isResponseTypeAlias)).flat().map(each => new Declaration(each, Response));
   }
 
-  get results(): Array<Declaration<ResultElement>> {
+  get results(): Array<Declaration<Result>> {
     return [
-      ... this.files.map(each => each.getTypeAliases().filter(isResultTypeAlias)).flat().map(each => new Declaration(each, ResultElement)),
-      ... this.files.map(each => each.getInterfaces().filter(isResultInterfaceType)).flat().map(each => new Declaration(each, ResultElement)),
+      ... this.files.map(each => each.getTypeAliases().filter(isResultTypeAlias)).flat().map(each => new Declaration(each, Result)),
+      ... this.files.map(each => each.getInterfaces().filter(isResultInterfaceType)).flat().map(each => new Declaration(each, Result))
     ];
   }
 
-  get parameters(): Array<Declaration<ParameterElement>> {
+  get parameters(): Array<Declaration<Parameter>> {
     // Query, Body, Header, Cookie
-    return this.files.map(each => each.getTypeAliases().filter(isParameterTypeAlias)).flat().map(each => new Declaration(each, ParameterElement));
+    return this.files.map(each => each.getTypeAliases().filter(isParameterTypeAlias)).flat().map(each => new Declaration(each, Parameter));
   }
 
-  get headers(): Array<Declaration<HeaderElement>> {
-    return this.files.map(each => each.getTypeAliases().filter(isHeader)).flat().map(each => new Declaration(each, ParameterElement));
+  get headers(): Array<Declaration<Header>> {
+    return this.files.map(each => each.getTypeAliases().filter(isHeader)).flat().map(each => new Declaration(each, Header));
   }
 
 
@@ -275,15 +275,7 @@ export class HttpProtocol extends Protocol<HttpProtocol> {
     // todo
   }
 
-  //  createResource() {
-  // todo
-  // }
-
   createOperationResultAlias() {
     // todo
   }
-
-  // get resources() {
-  // ??
-  // }
 }

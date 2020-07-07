@@ -29,11 +29,11 @@ export async function processHeader(header: v3.Header | v3.HeaderReference, $: C
     // these are in the OAI schema, but should not be in headers - freakout if they are used
     header.explode && $.error('header definitions must not contain property \'explode\'', header.explode);
     header.required && $.warn('header definitions should not contain property \'required\'', header.required);
-    
+
     // style can only be simple
     header.style != undefined && header.style != 'simple' && $.error('header style must be \'simple\'', header);
 
-    // get the schema for the header 
+    // get the schema for the header
     const schema = await processSchema(header.schema, $, { isAnonymous: true });
 
     const headerRef = getHeaderReference(schema, options?.wireName);
@@ -51,7 +51,7 @@ function getHeaderReference(schema: SchemaTypeReference, wireName?: string): Hea
   let typeParameters: Array<TypeParameterDeclarationStructure> | undefined;
   const typeArguments = [schema.declaration.node];
 
-  if (wireName) {  
+  if (wireName) {
     typeParameters = undefined;
     typeArguments.push(ts.createLiteralTypeNode(ts.createStringLiteral(wireName)));
   } else {
@@ -69,7 +69,7 @@ function getHeaderReference(schema: SchemaTypeReference, wireName?: string): Hea
 function specializeWithName(headerRef: HeaderTypeReference, clientName: string) {
   const type = <ts.TypeReferenceNode>headerRef.declaration.node;
   const specializedType = ts.createTypeReferenceNode(
-    type.typeName, 
+    type.typeName,
     [ts.createLiteralTypeNode(ts.createStringLiteral(clientName))]);
 
   return {

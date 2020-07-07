@@ -1,5 +1,6 @@
 import { EventEmitter } from '../eventing/event-emitter';
 import { ApiModel } from '../model/api-model';
+import { getRelativePath } from './file-system';
 import { Stopwatch } from './stopwatch';
 
 interface MessageEvents {
@@ -36,16 +37,16 @@ export class Messages extends EventEmitter<ProcessingEvents> {
 export class ProcessingMessages extends Messages implements EventEmitter<ProcessingEvents> {
 
   loaded(path: string, duration: number): void {
-    this.emit('loaded', this.apiModel.fileSystem.relative(path), duration, this.stopwatch.total);
+    this.emit('loaded', getRelativePath(this.apiModel.fileSystem, path), duration, this.stopwatch.total);
   }
   parsed(path: string, duration: number): void {
-    this.emit('parsed', this.apiModel.fileSystem.relative(path), duration, this.stopwatch.total);
+    this.emit('parsed', getRelativePath(this.apiModel.fileSystem,path), duration, this.stopwatch.total);
   }
   attic(path: string, duration: number): void {
-    this.emit('attic', this.apiModel.fileSystem.relative(path), duration, this.stopwatch.total);
+    this.emit('attic', getRelativePath(this.apiModel.fileSystem,path), duration, this.stopwatch.total);
   }
   processed(path: string, duration: number): void {
-    this.emit('processed', this.apiModel.fileSystem.relative(path), duration, this.stopwatch.total);
+    this.emit('processed', getRelativePath(this.apiModel.fileSystem,path), duration, this.stopwatch.total);
   }
 
   constructor(public readonly apiModel: ApiModel) {

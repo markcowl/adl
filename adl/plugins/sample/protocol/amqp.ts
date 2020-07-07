@@ -22,5 +22,5 @@ class AmqpProtocol extends Protocol {
 export default {  //<ProtocolExtension>
   onInitializeProtocol: () => {
     return AmqpProtocol;
-  } 
+  }
 };

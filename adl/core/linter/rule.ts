@@ -2,7 +2,7 @@ import { Activation } from '../eventing/activation';
 import { EventListener, ListenerMetaData } from '../eventing/event-listener';
 import { ApiModel } from '../model/api-model';
 import { Operation } from '../model/http/operation';
-import { OperationGroup, ParameterElement, ResponseCollection, ResponseElement, ResultElement } from '../model/operation';
+import { OperationGroup, Parameter, Response, ResponseCollection, Result } from '../model/operation';
 import { AliasType } from '../model/schema/alias';
 import { EnumType, EnumValueElement } from '../model/schema/enum';
 import { ModelType } from '../model/schema/model';
@@ -15,48 +15,26 @@ export interface Rule extends EventListener {
   meta: RuleMetaData;
   onAliasType?: (model: ApiModel, aliasType: AliasType) => RuleResult | undefined;
   onDeclaredResponseCollections?: (model: ApiModel, reponseCollection: Declaration<ResponseCollection>) => RuleResult | undefined;
-  onDeclaredResponses?: (model: ApiModel, response: Declaration<ResponseElement>) => RuleResult | undefined;
-  onDeclaredResults?: (model: ApiModel, result: Declaration<ResultElement>) => RuleResult | undefined;
-  onDeclaredParameters?: (model: ApiModel, parameter: Declaration<ParameterElement>) => RuleResult | undefined;
+  onDeclaredResponses?: (model: ApiModel, response: Declaration<Response>) => RuleResult | undefined;
+  onDeclaredResults?: (model: ApiModel, result: Declaration<Result>) => RuleResult | undefined;
+  onDeclaredParameters?: (model: ApiModel, parameter: Declaration<Parameter>) => RuleResult | undefined;
   onEnumType?: (model: ApiModel, enumType: EnumType) => RuleResult | undefined;
   onEnumValue?: (model: ApiModel, enumValue: EnumValueElement) => RuleResult | undefined;
   onModelType?: (model: ApiModel, modelType: ModelType) => RuleResult | undefined;
   onOperationGroup?: (model: ApiModel, operationGroup: OperationGroup) => RuleResult | undefined;
   onOperation?: (model: ApiModel, operation: Operation) => RuleResult | undefined;
   onProperty?: (model: ApiModel, property: Property) => RuleResult | undefined;
-  onParameter?: (model: ApiModel, parameter: ParameterElement) => RuleResult | undefined;
+  onParameter?: (model: ApiModel, parameter: Parameter) => RuleResult | undefined;
 }
 
-export declare type RuleSeverity = 'error' | 'warning' | 'info' | 'hint';
-
-/**
- * The diagnostic's severity.
- */
-export declare namespace RuleSeverity {
-  /**
-   * Reports an error.
-   */
-  const Error: 1;
-  /**
-   * Reports a warning.
-   */
-  const Warning: 2;
-  /**
-   * Reports an information.
-   */
-  const Information: 3;
-  /**
-   * Reports a hint.
-   */
-  const Hint: 4;
-}
+export declare type RuleSeverity = 'error' | 'warning' ;
 
 export interface RuleMetaData extends ListenerMetaData {
 
   /**
-   * The rule name
+   * The rule id.
    */
-  name: string;
+  id: number| string;
 
   /**
    * How severe the rule is. It can be a error, warning, information or hint.
@@ -64,12 +42,7 @@ export interface RuleMetaData extends ListenerMetaData {
   severity: RuleSeverity;
 
   /**
-   * A code associated with the rule. Usually appers in the user interface.
-   */
-  code?: number|string;
-
-  /**
-   * Description about the rules. 
+   * Description about the rules.
    */
   description: string;
 
@@ -81,14 +54,14 @@ export interface RuleMetaData extends ListenerMetaData {
 
 
 export interface RuleResult {
-/**
- * The range at which the message applies
- */
+  /**
+   * The range at which the message applies
+   */
   range?: Range;
 
-/**
- * The rule's message. It usually appears in the user interface
- */
+  /**
+   * The rule's message. It usually appears in the user interface
+  */
   message?: string;
 
   /**
@@ -103,9 +76,44 @@ export interface Fix {
    * to be applied, this provides a suggestion to the user.
    */
   description?: string;
-  
+
   /**
    * This function is used to provide a fix on the node.
    */
   fix?: () => void;
+}
+
+export interface LinterDiagnostic {
+  /**
+     * The range at which the message applies
+     */
+  range: Range;
+
+  /**
+   * The diagnostic's severity. Can be omitted. If omitted it is up to the
+   * client to interpret diagnostics as error, warning, info or hint.
+   */
+  severity: RuleSeverity;
+
+  /**
+   * The diagnostic's code, which usually appear in the user interface.
+   */
+  code?: number | string;
+
+  /**
+   * A human-readable string describing the source of this
+   * diagnostic, e.g. 'typescript' or 'super lint'. It usually
+   * appears in the user interface.
+   */
+  source?: string;
+
+  /**
+   * The diagnostic's message. It usually appears in the user interface
+   */
+  message: string;
+
+  /**
+  * An array of possible fixes.
+  */
+  suggestion?: Array<Fix>;
 }

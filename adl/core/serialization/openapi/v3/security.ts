@@ -69,7 +69,7 @@ function *apiKeyAuthentication(scheme: v3.ApiKeySecurityScheme, $: Context) {
 }
 
 function *httpAuthentication(scheme: v3.HttpSecurityScheme, $: Context) {
-  yield addExtensionsToAttic( new HttpAuthentication(nameOf(scheme), scheme.scheme, {
+  yield addExtensionsToAttic(new HttpAuthentication(nameOf(scheme), scheme.scheme, {
     bearerFormat: scheme.bearerFormat,
     description: scheme.description,
   }), scheme);

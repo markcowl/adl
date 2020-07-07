@@ -5,6 +5,14 @@ import { tmpdir } from 'os';
 import { relative, resolve } from 'path';
 import { cwd } from 'process';
 
+export function getAbsolutePath(fileSystem: FileSystem,pathOrRelativePath: string): string {
+  return ResolveUri(fileSystem.cwd, pathOrRelativePath);
+}
+
+export function getRelativePath(fileSystem: FileSystem, absolutePath: string): string {
+  return relative(fileSystem.cwd, absolutePath).replace(/\\/g, '/').replace(/(^\/)|(^\w)/, './$2');
+}
+
 export interface FileSystem {
   cwd: string;
 
@@ -12,8 +20,6 @@ export interface FileSystem {
   readonly apiPath: string;
 
   readFile(pathOrRelativePath: string): Promise<string>;
-  resolve(pathOrRelativePath: string): string;
-  relative(absolutePath: string): string;
 
   writeFile(relativePath: string, data: string): Promise<void>;
   isDirectory(relativePath: string): Promise<boolean>;
@@ -95,14 +101,9 @@ export class UrlFileSystem implements FileSystem {
   async isFile(relativePath: string): Promise<boolean> {
     return isFile(FileUriToPath(ResolveUri(this.#cwd, relativePath)));
   }
-  resolve(pathOrRelativePath: string): string {
-    return ResolveUri(this.cwd, pathOrRelativePath);
-  }
-  relative(absolutePath: string): string {
-    return relative(this.cwd, absolutePath);
-  }
+
   async readFile(pathOrRelativePath: string): Promise<string> {
-    const uri = this.resolve(pathOrRelativePath);
+    const uri = getAbsolutePath(this, pathOrRelativePath);
 
     const headers: { [key: string]: string } = {};
 
@@ -114,7 +115,7 @@ export class UrlFileSystem implements FileSystem {
     return ReadUri(uri, headers);
   }
   async readDirectory(relativePath: string): Promise<Array<string>> {
-    const uri = this.resolve(relativePath);
+    const uri = getAbsolutePath(this,relativePath);
     if (uri.startsWith('file:/')) {
       const path = FileUriToPath(uri);
       return readdir(path);

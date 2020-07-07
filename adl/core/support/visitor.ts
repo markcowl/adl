@@ -11,7 +11,7 @@ import { Element } from '../model/element';
 import { HeaderTypeReference, ParameterTypeReference, RequestBodyTypeReference, ResponseTypeReference, SchemaTypeReference } from '../model/schema/type';
 import { processOpenApi2 } from '../serialization/openapi/v2/serializer';
 import { processOpenApi3 } from '../serialization/openapi/v3/serializer';
-import { FileSystem } from './file-system';
+import { FileSystem, getAbsolutePath } from './file-system';
 import { Stopwatch } from './stopwatch';
 
 export interface Options {
@@ -78,7 +78,8 @@ export class Visitor<TSourceModel extends OAIModel> {
     // the source files are going to be YAML/JSON files for this
     // so we can speed up the process and grab them all and hold onto them
     for (const each of new Set(sourceFiles)) {
-      this.sourceFiles.set(this.fileSystem.resolve(each), this.loadInput(this.fileSystem.resolve(each)));
+      const absolutePath = getAbsolutePath(this.fileSystem,each);
+      this.sourceFiles.set(absolutePath, this.loadInput(absolutePath));
     }
   }
 
@@ -411,7 +412,7 @@ export class Context<TSourceModel extends OAIModel> {
       // file = getSourceFile(ref)?.filename || fail(`unable to get filename of $ref ${ref}`);
       file = this.sourceFile;
     } else {
-      file = this.visitor.fileSystem.resolve(file);
+      file = getAbsolutePath(this.visitor.fileSystem,file);
     }
 
     return {

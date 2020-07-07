@@ -6,9 +6,9 @@ export interface ConstraintReference  {
   implementation: string;
 }
 
-function createConstraint( constraintName: string, ... parameters: Array<string|number>  ): ConstraintReference {
-  return { 
-    implementation: parameters.length ?   `${constraintName}<${parameters.map( each => typeof each === 'string' ? `'${each}'` : each ).join(',')}>` :  constraintName
+function createConstraint(constraintName: string, ... parameters: Array<string|number>): ConstraintReference {
+  return {
+    implementation: parameters.length ?   `${constraintName}<${parameters.map(each => typeof each === 'string' ? `'${each}'` : each).join(',')}>` :  constraintName
   };
 }
 
@@ -29,7 +29,7 @@ export const Constraints = {
   uniqueElements : () => createConstraint('UniqueElements'),
 };
 
-export function addConstraint( type: TypeReference, constraint: ConstraintReference): TypeReference {
+export function addConstraint(type: TypeReference, constraint: ConstraintReference): TypeReference {
   return {
     ... type,
     declaration: new TypeSyntax(`${type.declaration} & ${constraint.implementation}`)
@@ -43,7 +43,7 @@ export interface EncodingReference {
 export const Encodings= {
   UrlEncoding: { implementation: 'UrlEncoding' },
   RFC1123: { implementation: 'RFC1123' },
-  
+
 };
 
 export function addEncoding(type: TypeReference, encoding: EncodingReference): TypeReference {

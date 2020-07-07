@@ -2,8 +2,7 @@ import { getTagValue, Rule } from '@azure-tools/adl.core';
 export default <Rule>{
   activation: 'edit',
   meta: {
-    name: 'http-tag-valid-verb',
-    code: 'R1009',
+    id: 'http-tag-valid-verb',
     severity: 'warning',
     description: 'Each operation definition must have a HTTP verb specified. This verb is specified is in the http tag. The permissible values are DELETE/GET/PUT/PATCH/HEAD/OPTIONS/POST/TRACE.',
     documentationUrl: 'PLACEHOLDER',
@@ -18,7 +17,7 @@ export default <Rule>{
       'PATCH',
       'HEAD',
       'OPTIONS',
-      'POST', 
+      'POST',
       'TRACE'
     ];
 

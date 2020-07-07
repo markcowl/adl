@@ -1,9 +1,9 @@
 /** attributes to mark primitive types with purpose */
 export declare namespace Type {
   /**
-   * @type 
+   * @type
    */
-  interface Model { 
+  interface Model {
     $type?: 'model';
   }
 
@@ -22,34 +22,34 @@ export declare namespace Type {
   }
 
 
-  /** 
+  /**
    * a whole number; a number that is not a fraction.
-   * 
+   *
    * @type
    */
   interface Integer {
     $type?: 'integer';
   }
 
-  /** 
-   * a whole number; a number that is not a fraction. 
-   * 
+  /**
+   * a whole number; a number that is not a fraction.
+   *
    * @type
    */
   interface FloatingPoint {
     $type?: 'floatingpoint';
   }
 
-  /** 
-   * a value representing a Calendar date 
-   * 
+  /**
+   * a value representing a Calendar date
+   *
    * @type
    */
   interface Date {
     $type?: 'date';
   }
 
-  /** 
+  /**
    * a value representing a Time
    * @type
    */

@@ -3,14 +3,14 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 
-// using static-link'd dependencies: 
+// using static-link'd dependencies:
 let usingStaticLoader = false;
 
 if (process.env['no-static-loader'] === undefined && require('fs').existsSync(`${__dirname}/../../dist/static-loader.js`)) {
   usingStaticLoader = true;
   require(`${__dirname}/../../dist/static-loader.js`).load(`${__dirname}/../../dist/static_modules.fs`);
 }
-import { ApiModel } from '@azure-tools/adl.core';
+import { ApiModel, getRelativePath, LinterDiagnostic, RuleSeverity } from '@azure-tools/adl.core';
 import { CompletionItem, CompletionItemKind, createConnection, Diagnostic, DiagnosticSeverity, DidChangeConfigurationNotification, InitializeParams, InitializeResult, ProposedFeatures, TextDocumentPositionParams, TextDocuments, TextDocumentSyncKind } from 'vscode-languageserver';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { ServerFileSystem } from './file-system';
@@ -112,7 +112,7 @@ connection.onDidChangeConfiguration(change => {
   }
 
   // Revalidate all open text documents
-  documents.all().forEach(validateTextDocument);
+  // documents.all().forEach(validateTextDocument);
 });
 
 function getDocumentSettings(resource: string): Thenable<ExampleSettings> {
@@ -135,61 +135,41 @@ documents.onDidClose(e => {
   documentSettings.delete(e.document.uri);
 });
 
+function convertSeverity(severity: RuleSeverity): DiagnosticSeverity {
+  if (severity === 'error') {
+    return 1;
+  } else {
+    return 2;
+  }
+}
+
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent(async change => {
   if (apiModel) {
-    const results = apiModel.linter.run();
-    await validateTextDocument(change.document);
+    const changedPath = getRelativePath(apiModel.fileSystem, change.document.uri);
+    const changedFile = apiModel.where(each => each.relativePath === changedPath);
+    changedFile.files[0].replaceWithText(change.document.getText());
+    const diagnostics = [...apiModel.linter.run(changedFile)];
+    processLinterDiagnostics(diagnostics, change.document.uri);
   }
 });
 
-async function validateTextDocument(textDocument: TextDocument): Promise<void> {
-  // In this simple example we get the settings for every validate run.
-  const settings = await getDocumentSettings(textDocument.uri);
 
-  // THIS IS EXAMPLE CODE -------------------------------------------------------------------
-  // The validator creates diagnostics for all uppercase words length 2 and more
-  const text = textDocument.getText();
-  const pattern = /\b[A-Z]{2,}\b/g;
-  let m: RegExpExecArray | null;
-
-  let problems = 0;
+function processLinterDiagnostics(linterDiagnostic: Array<LinterDiagnostic>, uri: string){
   const diagnostics: Array<Diagnostic> = [];
-  while ((m = pattern.exec(text)) && problems < settings.maxNumberOfProblems) {
-    problems++;
+  for (const each of linterDiagnostic) {
+
     const diagnostic: Diagnostic = {
-      severity: DiagnosticSeverity.Warning,
-      range: {
-        start: textDocument.positionAt(m.index),
-        end: textDocument.positionAt(m.index + m[0].length)
-      },
-      message: `${m[0]} is all uppercase.`,
-      source: 'ex'
+      ...each,
+      severity: convertSeverity(each.severity),
     };
-    if (hasDiagnosticRelatedInformationCapability) {
-      diagnostic.relatedInformation = [
-        {
-          location: {
-            uri: textDocument.uri,
-            range: Object.assign({}, diagnostic.range)
-          },
-          message: 'Spelling matters'
-        },
-        {
-          location: {
-            uri: textDocument.uri,
-            range: Object.assign({}, diagnostic.range)
-          },
-          message: 'Particularly for names'
-        }
-      ];
-    }
+
     diagnostics.push(diagnostic);
   }
 
   // Send the computed diagnostics to VSCode.
-  connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
+  connection.sendDiagnostics({ uri: uri , diagnostics });
 }
 
 connection.onDidChangeWatchedFiles(_change => {

@@ -1,16 +1,16 @@
 import { fail } from 'assert';
-import { JSDoc, JSDocTagStructure, MethodSignatureStructure, Node, ParameterDeclarationStructure, printNode, StructureKind, ts } from 'ts-morph';
+import { FunctionTypeNode, JSDoc, JSDocTagStructure, MethodSignatureStructure, Node, ParameterDeclarationStructure, printNode, StructureKind, ts, TupleTypeNode } from 'ts-morph';
 import { normalizeIdentifier, normalizeName } from '../../support/codegen';
 import { createDocs } from '../../support/doc-tag';
 import { Alias } from '../alias';
 import { ApiModel } from '../api-model';
 import * as base from '../operation';
-import { Reference } from '../project/reference';
+import { ReferenceInfo } from '../project/reference';
 import { HeaderTypeReference, ParameterTypeReference, RequestBodyTypeReference, ResponseTypeReference, TypeReference } from '../schema/type';
-import { Declaration } from '../typescript/reference';
+import { ElementFactory, Reference } from '../typescript/reference';
 import { VersionedElement } from '../typescript/versioned-element';
-import { ParameterElement } from './parameter';
-import { ResponseElement } from './response';
+import { Parameter } from './parameter';
+import { Response } from './response';
 
 
 export enum Method {
@@ -44,35 +44,37 @@ export class OperationGroup extends base.OperationGroup {
    * Creates a new HttpOperation in this operation group.
    */
   createOperation() {
-    //todo 
+    //todo
   }
 }
 
-export class ResponseCollection extends base.ResponseCollection {
+class ResponseOrResponseCollectionFactory implements ElementFactory<Response | ResponseCollection> {
+  createElement(node: FunctionTypeNode | TupleTypeNode): Response | ResponseCollection {
+    return Node.isFunctionTypeNode(node) ? new Response(node) : new ResponseCollection(node);
+  }
+  isAllowedNode(node: Node): node is FunctionTypeNode | TupleTypeNode {
+    return Node.isFunctionTypeNode(node) || Node.isTupleTypeNode(node);
+  }
+}
 
-  get responses(): ReadonlyArray<ResponseElement | Declaration<ResponseElement>> {
+const ResponseOrResponseCollection = new ResponseOrResponseCollectionFactory();
+
+export class ResponseCollection extends base.ResponseCollection {
+  get responses(): ReadonlyArray<Response | Reference<Response | ResponseCollection>> {
     return this.node.getElementTypeNodes().map(each => {
       if (Node.isFunctionTypeNode(each)) {
-        return new ResponseElement(each);
+        return new Response(each);
       }
       if (Node.isTypeReferenceNode(each)) {
-        const target = each?.getTypeName()?.getSymbol()?.getDeclarations()?.[0];
-        if (target && (Node.isTypeAliasDeclaration(target) || Node.isInterfaceDeclaration(target))) {
-          return new Declaration(target, ResponseElement);
-        }
-        fail(`Type Reference Node is a ${target?.getKindName()} in ResponseCollection `);
+        return new Reference(each, ResponseOrResponseCollection);
       }
-      // we don't support any other kind of node right now in a responseCollection
-      fail(`Unrecognized Node Type ${each.getKindName()} in ResponseCollection `);
+      fail('Invalid response type');
     });
-
-    // to get the actual target of a ts TypeReference : 
-    // t[3].getTypeName().getSymbol().getDeclarations()[0]  // .getText()
   }
 }
 
 export class Operation extends base.Operation {
-  
+
   /** The HTTP method used and the path operated upon. */
   get path(): string {
     return this.annotations?.get('http')[0]?.content || '';
@@ -90,12 +92,12 @@ export class Operation extends base.Operation {
 
   /** parameters common to all the requests(overloads) for this operation */
   get parameters(){
-    return this.node.getParameters().map( p => new ParameterElement(p));
+    return this.node.getParameters().map(p => new Parameter(p));
   }
 
-  get responseCollection(): ResponseCollection | Declaration<ResponseCollection> | undefined {
+  get responseCollection(): ResponseCollection | Reference<ResponseCollection> | undefined {
     const rt = this.node.getReturnType();
-    
+
     return undefined;
   }
 
@@ -117,7 +119,7 @@ export interface OperationInitializer extends VersionedElement {
   parameters: Array<ParameterTypeReference>;
   requestBody: RequestBodyTypeReference;
   responses: Array<ResponseTypeReference>;
-  references: Array<Reference>;
+  references: Array<ReferenceInfo>;
 }
 
 export interface OperationStructure extends MethodSignatureStructure {

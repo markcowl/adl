@@ -5,8 +5,8 @@ import { StructureKind, ts, TypeParameterDeclarationStructure } from 'ts-morph';
 import { getMediaTypeUnion, getResponseType } from '../../../model/http/operation';
 import { createTypeAlias } from '../../../model/schema/alias';
 import { HeaderTypeReference, ResponseTypeReference } from '../../../model/schema/type';
+import { assert } from '../../../support/assert';
 import { TypeSyntax } from '../../../support/codegen';
-import { assert } from '../common';
 import { processHeader } from './header';
 import { processSchema } from './schema';
 import { Context } from './serializer';
@@ -46,12 +46,12 @@ export async function processResponse(response: v2.Response | v2.ResponseReferen
 async function getResponseTypeReference(response: v2.Response, $: Context, options: ResponseOptions): Promise<ResponseTypeReference> {
   const schema = response.schema ? (await processSchema(response.schema, $, { isAnonymous: true })) : undefined;
   const headers = await processResponseHeaders(response, $);
-  
+
   let code: string | ts.TypeNode;
   let isException: boolean | ts.TypeNode;
   let typeParameters: Array<TypeParameterDeclarationStructure> | undefined;
   let mediaType: ts.TypeNode | undefined;
-  
+
   if (options.isAnonymous) {
     [code, isException, mediaType] = getResponseTypeArguments($, options);
   } else {
@@ -66,7 +66,7 @@ async function getResponseTypeReference(response: v2.Response, $: Context, optio
   }
 
   const type = getResponseType(code, isException, mediaType, schema, headers);
-  return { 
+  return {
     declaration: new TypeSyntax(type),
     requiredReferences: schema?.requiredReferences ?? [],
     typeParameters,

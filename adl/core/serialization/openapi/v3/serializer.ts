@@ -1,7 +1,6 @@
 import { Dictionary, JsonReference, v3, vendorExtensions } from '@azure-tools/openapi';
 import { HttpProtocol } from '../../../model/http/protocol';
 import { Context as Ctx } from '../../../support/visitor';
-import { consume } from '../common';
 import { processExternalDocs, processInfo, processTag } from '../common/info';
 import { processPaths } from '../v3/path';
 import { processComponents } from './components';
@@ -50,7 +49,7 @@ export async function processOpenApi3(oai3: v3.Model, $: Context) {
   }
 
   // components will have to be early, since other things will $ref them
-  await consume($.process(processComponents, oai3.components));
+  await processComponents(oai3.components, $);
 
   for await (const server of $.processArray(processServer, oai3.servers)) {
     (<HttpProtocol>$.api.protocols.http).connections.push(server);

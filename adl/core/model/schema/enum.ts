@@ -9,7 +9,7 @@ import { SchemaInitializer } from '../typescript/schema';
 import { TypeReference } from './type';
 
 export interface EnumInitializer extends SchemaInitializer {
-  extensible: boolean;
+  extensible?: boolean;
 }
 
 export interface EnumValue {
@@ -18,15 +18,15 @@ export interface EnumValue {
   value: any;
 }
 
-export function createEnum(api: ApiModel, identity: Identity, values: Array<EnumValue>, initializer?: Partial<EnumInitializer>): TypeReference {
+export function createEnum(api: ApiModel, identity: Identity, values: Array<EnumValue>, initializer?: EnumInitializer): TypeReference {
   if (!isAnonymous(identity)) {
     const { name, file } = api.getNameAndFile(identity, 'enum');
 
     const existing = api.getEnum(name);
     if (existing) {
-      // enums are a bit funny -- they can define their name inside the x-ms-enum declaration 
-      // which means there can be multiple declarations for the same enum 
-      // so, we just return the existing enum by name 
+      // enums are a bit funny -- they can define their name inside the x-ms-enum declaration
+      // which means there can be multiple declarations for the same enum
+      // so, we just return the existing enum by name
       return {
         declaration: new TypeSyntax(existing.getName()),
         sourceFile: file,
@@ -34,7 +34,6 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
       };
     }
 
-    
     // create the definition all at once.
     const type = file.addEnum({
       name,
@@ -49,7 +48,7 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
       docs: createDocs(initializer)
     });
 
-    // return the reference to this enum 
+    // return the reference to this enum
     return {
       declaration: new TypeSyntax(name),
       sourceFile: file,
