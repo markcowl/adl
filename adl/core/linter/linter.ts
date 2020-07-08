@@ -31,7 +31,7 @@ export class Linter extends EventEmitter<Events> {
 
   getLinterDiagnostic(element: TSElement<any>, ruleMetadata: RuleMetaData, ruleResult: RuleResult): LinterDiagnostic {
     return {
-      range: element.range,
+      range: ruleResult.range || element.range,
       severity: ruleMetadata.severity,
       code: ruleMetadata.id,
       source: 'adl-linter',

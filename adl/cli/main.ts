@@ -24,6 +24,7 @@ import * as chalk from 'chalk';
 import * as marked from 'marked';
 import { argv } from 'process';
 import { parseArgs } from './command-line';
+import { cmdCode } from './commands/code';
 import { cmdImport } from './commands/import';
 import { cmdInit } from './commands/init';
 import { errorCount, subscribeToMessages } from './messages';
@@ -40,7 +41,9 @@ marked.setOptions({
     showSectionPrefix: false,
     tab: 2,
     code: chalk.gray.bold,
-    codespan: (text: string, ...args: Array<any>) => chalk.gray.bold(`'${text}'`, ...args),
+    href: chalk.blueBright.underline,
+    firstHeading: chalk.cyan.underline,
+    codespan: (text: string, ...args: Array<any>) => chalk.white.bold(`${text}`, ...args),
   })
 });
 
@@ -74,18 +77,22 @@ export const color = chalk;
 const args = argv.slice(2);
 
 function help() {
-  header();
   messages.log(`
-# ADL Command line tool.
-
 ## Usage: 
-  'adl init' -- initialize the project folder with a new ADL project.
-  'adl import <...filename.yaml|json>' -- import OpenAPI into an ADL project.
+  'adl init' initialize the project folder with a new ADL project.
+
+  'adl import <...filename.yaml|json>' import OpenAPI into an ADL project.
+    '--from:<folder|URI>' the base folder to import files from (input files are relative from that location)
+
+  'adl code' install latest vscode extension for ADL from github.
+    '--remove' removes the vscode extension 
+    '--insiders' operate on the vscode insiders build instead
+    '--force' force install/overwrite of the extension 
   
 
-## Switches:
-  '--project:<folder> ' -- the ADL project folder to work with (defaults to the current folder)
-  '--from:<folder|URI> ' -- the base folder to import files from (input files are relative from that location)
+## Common Switches:
+  '--project:<folder>' the ADL project folder to work with (defaults to the current folder)
+   
 
 `);
 }
@@ -117,6 +124,9 @@ async function main() {
 
       case 'init':
         return await cmdInit(messages, commandLine);
+
+      case 'code':
+        return await cmdCode(messages, commandLine);
 
       case 'import':
         return await cmdImport(messages, commandLine);
