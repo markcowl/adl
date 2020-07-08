@@ -17,10 +17,10 @@ export class TypedElement<TNode extends TypedElementNode> extends NamedElement<T
   }
 
   get required() {
-    return this.node.hasQuestionToken();
+    return !this.node.hasQuestionToken();
   }
 
   set required(value: boolean) {
-    this.node.setHasQuestionToken(value);
+    this.node.setHasQuestionToken(!value);
   }
 }

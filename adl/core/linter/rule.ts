@@ -67,20 +67,19 @@ export interface RuleResult {
   /**
   * An array of possible fixes.
   */
-  suggestion?: Array<Fix>;
+  suggestions?: Array<Fix>;
 }
 
 export interface Fix {
   /**
-   * This includes what the fix does. If there is not a programmatic fix
-   * to be applied, this provides a suggestion to the user.
+   * This includes what the fix does.
    */
-  description?: string;
+  description: string;
 
   /**
    * This function is used to provide a fix on the node.
    */
-  fix?: () => void;
+  fix: () => void;
 }
 
 export interface LinterDiagnostic {
@@ -115,5 +114,5 @@ export interface LinterDiagnostic {
   /**
   * An array of possible fixes.
   */
-  suggestion?: Array<Fix>;
+  suggestions?: Array<Fix>;
 }

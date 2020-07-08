@@ -1,8 +1,8 @@
 import { NamedElement, Rule, RuleResult } from '@azure-tools/adl.core';
-import { getPascalIdentifier } from '../utils';
+import { camelCase } from '../utils';
 
 export default <Rule>{
-  activation: 'disabled',
+  activation: 'edit',
   meta: {
     id: 'camel-case-identifiers',
     severity: 'warning',
@@ -12,19 +12,19 @@ export default <Rule>{
   },
   onParameter: (model, parameter) => checkCamelCaseIdentifier('parameter', parameter),
   onProperty: (model, property) => checkCamelCaseIdentifier('property', property),
-  onEnumValue: (model, enumValue) => checkCamelCaseIdentifier('enumValue', enumValue)
+  onEnumValue: (model, enumValue) => checkCamelCaseIdentifier('enumValue', enumValue),
 };
 
 function checkCamelCaseIdentifier(type: string, element: NamedElement<any>): RuleResult | undefined {
-  const camelCaseRegex = /^[a-z][a-z0-9]+\.([A-Z]+[a-z0-9]+)+$/g;
-  if (!element.versionInfo.since?.match(camelCaseRegex)) {
+  const camelCaseRegex = /^[a-z]+(?:[A-Z][a-z]+)*$/g;
+  if (!element.name.toString().match(camelCaseRegex)) {
     return {
-      message: `The ${type} '${element.name.toString()}' must follow pascal case style.`,
-      suggestion: [
+      message: `The ${type} '${element.name.toString()}' must follow camel case style.`,
+      suggestions: [
         {
-          description: 'Rename to follow pascal case style.',
+          description: 'Rename to follow camel case style.',
           fix: () => {
-            element.name = getPascalIdentifier(element.name.toString());
+            element.name = camelCase(element.name.toString());
           }
         }
       ]

@@ -36,7 +36,7 @@ export class Linter extends EventEmitter<Events> {
       code: ruleMetadata.id,
       source: 'adl-linter',
       message: ruleResult.message|| ruleMetadata.description,
-      suggestion: ruleResult.suggestion
+      suggestions: ruleResult.suggestions
     };
   }
 

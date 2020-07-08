@@ -10,8 +10,8 @@ if (process.env['no-static-loader'] === undefined && require('fs').existsSync(`$
   usingStaticLoader = true;
   require(`${__dirname}/../../dist/static-loader.js`).load(`${__dirname}/../../dist/static_modules.fs`);
 }
-import { ApiModel, getRelativePath, LinterDiagnostic, RuleSeverity } from '@azure-tools/adl.core';
-import { CompletionItem, CompletionItemKind, createConnection, Diagnostic, DiagnosticSeverity, DidChangeConfigurationNotification, InitializeParams, InitializeResult, ProposedFeatures, TextDocumentPositionParams, TextDocuments, TextDocumentSyncKind } from 'vscode-languageserver';
+import { ApiModel, Fix, getRelativePath, LinterDiagnostic, Range, RuleSeverity } from '@azure-tools/adl.core';
+import { CodeAction, CodeActionKind, Command, CompletionItem, CompletionItemKind, createConnection, Diagnostic, DiagnosticSeverity, DidChangeConfigurationNotification, InitializeParams, InitializeResult, ProposedFeatures, TextDocumentEdit, TextDocumentPositionParams, TextDocuments, TextDocumentSyncKind, TextEdit } from 'vscode-languageserver';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { ServerFileSystem } from './file-system';
 
@@ -51,10 +51,14 @@ connection.onInitialize((params: InitializeParams) => {
 
   const result: InitializeResult = {
     capabilities: {
+      codeActionProvider: true,
       textDocumentSync: TextDocumentSyncKind.Incremental,
       // Tell the client that the server supports code completion
       completionProvider: {
         resolveProvider: true
+      },
+      executeCommandProvider: {
+        commands: [FIX_COMMAND]
       }
     }
   };
@@ -73,6 +77,9 @@ connection.onInitialized(async () => {
   const fs = new ServerFileSystem(connection);
   fs.cwd = (await connection.workspace.getWorkspaceFolders())?.first?.uri || '';
   apiModel = await new ApiModel(fs).load();
+  for (const doc of documents.all()){
+    lintDocument(doc);
+  }
 
   if (hasConfigurationCapability) {
     // Register for all configuration changes.
@@ -146,30 +153,46 @@ function convertSeverity(severity: RuleSeverity): DiagnosticSeverity {
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent(async change => {
-  if (apiModel) {
-    const changedPath = getRelativePath(apiModel.fileSystem, change.document.uri);
-    const changedFile = apiModel.where(each => each.relativePath === changedPath);
-    changedFile.files[0].replaceWithText(change.document.getText());
-    const diagnostics = [...apiModel.linter.run(changedFile)];
-    processLinterDiagnostics(diagnostics, change.document.uri);
-  }
+  lintDocument(change.document);
 });
 
+function lintDocument(document: TextDocument) {
+  if (apiModel) {
+    const changedPath = getRelativePath(apiModel.fileSystem, document.uri);
+    const changedFile = apiModel.where(each => each.relativePath === changedPath);
+    changedFile.files[0].replaceWithText(document.getText());
+    const diagnostics = [...apiModel.linter.run(changedFile)];
+    processLinterDiagnostics(diagnostics, document.uri);
+  }
+}
 
-function processLinterDiagnostics(linterDiagnostic: Array<LinterDiagnostic>, uri: string){
+const codeActions = new Map<string,Map<string, Array<Fix>>>();
+function processLinterDiagnostics(linterDiagnostics: Array<LinterDiagnostic>, uri: string){
   const diagnostics: Array<Diagnostic> = [];
-  for (const each of linterDiagnostic) {
+  if (codeActions.get(uri) === undefined) {
+    codeActions.set(uri, new Map<string, Array<Fix>>());
+  }
+
+  for (const linterDiagnostic of linterDiagnostics) {
 
     const diagnostic: Diagnostic = {
-      ...each,
-      severity: convertSeverity(each.severity),
+      ...linterDiagnostic,
+      severity: convertSeverity(linterDiagnostic.severity),
     };
 
     diagnostics.push(diagnostic);
+    if (linterDiagnostic.suggestions !== undefined) {
+        codeActions.get(uri)?.set(computeKey(diagnostic), linterDiagnostic.suggestions);
+    }
   }
 
   // Send the computed diagnostics to VSCode.
   connection.sendDiagnostics({ uri: uri , diagnostics });
+}
+
+function computeKey(diagnostic: Diagnostic): string {
+  const range = diagnostic.range;
+  return `[${range.start.line},${range.start.character},${range.end.line},${range.end.character}]-${diagnostic.code}`;
 }
 
 connection.onDidChangeWatchedFiles(_change => {
@@ -222,3 +245,72 @@ documents.listen(connection);
 // Listen on the connection
 connection.listen();
 
+connection.onCodeAction((params) => {
+  const textDocument = documents.get(params.textDocument.uri);
+  if (textDocument === undefined) {
+    return undefined;
+  }
+
+  const actions = new Array<CodeAction>();
+  for (const diagnostic of params.context.diagnostics) {
+    const suggestions = codeActions.get(textDocument.uri)?.get(computeKey(diagnostic));
+    if (suggestions !== undefined) {
+      for (let i = 0; i < suggestions.length; i++) {
+        const title = suggestions[i].description || 'Fix this problem.';
+        const action = CodeAction.create(
+          title,
+          Command.create(title, FIX_COMMAND, textDocument.uri, computeKey(diagnostic), i),
+          CodeActionKind.QuickFix
+        );
+
+        //linterDiagnostic.
+        actions.push(action);
+      }
+
+    }
+  }
+
+  return actions;
+});
+
+
+const FIX_COMMAND = 'adlLinter.fix' ;
+connection.onExecuteCommand(async (params) => {
+  if (params.command !== FIX_COMMAND || params.arguments === undefined) {
+    return;
+  }
+
+  const textDocument = documents.get(params.arguments[0]);
+  if (textDocument === undefined) {
+    return;
+  }
+
+  const suggestions = codeActions.get(textDocument.uri)?.get(params.arguments[1]);
+  if (suggestions === undefined) {
+    return;
+  }
+
+  const suggestion = suggestions[params.arguments[2]];
+  if (suggestion === undefined) {
+    return;
+  }
+
+  // get file info
+  const changedPath = getRelativePath(apiModel.fileSystem, textDocument.uri);
+  const changedFile = apiModel.where(each => each.relativePath === changedPath);
+  const file = changedFile.files[0];
+
+  // previous state
+  const originalFileRange = Range.fromFile(file);
+
+  // apply fix
+  suggestion.fix();
+
+  await connection.workspace.applyEdit({
+    documentChanges: [
+      TextDocumentEdit.create(
+        { uri: textDocument.uri, version: textDocument.version },
+        [TextEdit.replace(originalFileRange, file.getFullText())]
+      )]
+  });
+});

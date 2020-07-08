@@ -62,14 +62,20 @@ export class Range {
   static fromNode(node: Node): Range {
     return Range.fromOffsets(node.getSourceFile(), node.getNonWhitespaceStart(), node.getEnd());
   }
+
   static fromOffset(sourceFile: SourceFile, offset: number, width: number) {
     return Range.fromOffsets(sourceFile, offset, offset+width);
   }
+
   static fromOffsets(sourceFile: SourceFile, startOffset: number, endOffset: number) {
     return {
       start: Position.fromOffset(sourceFile, startOffset),
       end: Position.fromOffset(sourceFile,endOffset)
     };
+  }
+
+  static fromFile(sourceFile: SourceFile) {
+    return Range.fromOffsets(sourceFile, 0, sourceFile.getEnd());
   }
 }
 

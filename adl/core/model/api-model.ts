@@ -478,6 +478,8 @@ use:
       this.tsconfig.compilerOptions.typeRoots.push(relative(FileUriToPath(this.fileSystem.cwd), this.fileSystem.extensionPath));
       this.tsconfig.compilerOptions.typeRoots = [...new Set(this.tsconfig.compilerOptions.typeRoots)];
 
+      this.tsconfig.compilerOptions.skipDefaultLibCheck = true;
+
       await this.loadExtensions();
     }
 

@@ -3,7 +3,7 @@
  */
 
 export interface BookStoreOperations {
-  checkAvailability(name: string): [
+  CheckAvailability(Aame: string): [
     (code: 200) => {
       body: boolean
     }

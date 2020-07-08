@@ -15,11 +15,11 @@ export default <Rule>{
 };
 
 function checkPascalIdentifier(type: string, element: NamedElement<any>): RuleResult | undefined {
-  const pascalCaseRegex = /^[A-Z][a-z0-9]+\.([A-Z]+[a-z0-9]+)+$/g;
-  if (!element.versionInfo.since?.match(pascalCaseRegex)) {
+  const pascalCaseRegex = /^[A-Z][a-z]+(?:[A-Z][a-z]+)*$/g;
+  if (!element.name.toString().match(pascalCaseRegex)) {
     return {
       message: `The ${type} '${element.name.toString()}' must follow pascal case style.`,
-      suggestion: [
+      suggestions: [
         {
           description: 'Rename to follow pascal case style.',
           fix: () => {

@@ -14,7 +14,7 @@ export default <Rule>{
     if (type.isInline) {
       return {
         message: 'The type of this property is inlined.',
-        suggestion: [
+        suggestions: [
           {
 
             description: 'Extract contents and create a model definition for this type.',

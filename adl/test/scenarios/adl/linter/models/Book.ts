@@ -8,13 +8,8 @@ export interface Book {
   /**
    * @description dasdas
    */
-  id: string;
-
+  dasda: string;
   title: string;
   author: string;
+  readonly name: string;
 }
-
-
-
-
-
