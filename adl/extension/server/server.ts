@@ -77,7 +77,7 @@ connection.onInitialized(async () => {
   const fs = new ServerFileSystem(connection);
   fs.cwd = (await connection.workspace.getWorkspaceFolders())?.first?.uri || '';
   apiModel = await new ApiModel(fs).load();
-  for(const doc of documents.all()){
+  for (const doc of documents.all()){
     lintDocument(doc);
   }
 
