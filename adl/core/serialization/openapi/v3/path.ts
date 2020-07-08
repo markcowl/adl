@@ -58,7 +58,6 @@ export async function processOperation(method: Method, path: string, operation: 
   }
 
   return createOperationStructure(
-    $.api,
     method,
     path,
     group,

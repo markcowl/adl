@@ -129,7 +129,6 @@ export function createOperationGroup(
 }
 
 export function createOperationStructure(
-  api: ApiModel,
   method: Method,
   path: string,
   group: string,
@@ -310,7 +309,6 @@ function getResponseCriteria(code: string | ts.TypeNode, mediaType?: string | ts
   if (mediaTypeParameter) {
     parameters.push(mediaTypeParameter);
   }
-
 
   return parameters;
 }

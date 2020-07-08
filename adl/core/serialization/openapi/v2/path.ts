@@ -77,7 +77,6 @@ async function processOperation(method: Method, path: string, operation: v2.Oper
   }
 
   return createOperationStructure(
-    $.api,
     method,
     path,
     group,
