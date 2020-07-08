@@ -566,17 +566,18 @@ use:
   }
 
   createModelType(identity: Identity, initializer: any): any {
-    // todo
+    throw new Error('not implemented');
   }
 
   createEnumType(name: string) {
-    const file = this.project.createSourceFile(`${this.api.#folders.enum.getPath()}/${name}.ts`);
+    // const file = this.project.createSourceFile(`${this.api.#folders.enum.getPath()}/${name}.ts`);
     // const e = file.addEnum(initializer);
     // there is already a function called create Enum
+    throw new Error('not implemented');
   }
 
   createTypeAlias(name: string) {
-    // todo
+    throw new Error('not implemented');
   }
 
 

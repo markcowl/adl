@@ -272,10 +272,10 @@ export class HttpProtocol extends Protocol<HttpProtocol> {
 
 
   createOperationGroup() {
-    // todo
+    throw new Error('not implemented');
   }
 
   createOperationResultAlias() {
-    // todo
+    throw new Error('not implemented');
   }
 }

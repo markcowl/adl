@@ -18,14 +18,14 @@ export abstract class ResponseCollection extends TSElement<TupleTypeNode> {
    * Adds a new response to this collection
    */
   createResponse() {
-    // todo
+    throw new Error('not implemented');
   }
 
   /**
    * Adds a response to this collection using a globally defined response
    */
   addResponse(declaration: Reference<Response>) {
-    //todo
+    throw new Error('not implemented');
   }
 }
 
@@ -66,11 +66,11 @@ export abstract class Response extends TSElement<FunctionTypeNode> {
    */
   createResult() {
 
-    // todo
+    throw new Error('not implemented');
   }
 
   setResult() {
-    // todo
+    throw new Error('not implemented');
   }
 
 }
@@ -92,7 +92,7 @@ export abstract class Operation extends NamedElement<MethodSignature> {
    * creates a new parameter in this operation
    */
   createParameter(name: string,) {
-    // todo
+    throw new Error('not implemented');
   }
 
   /**
@@ -106,7 +106,7 @@ export abstract class Operation extends NamedElement<MethodSignature> {
    * (if you want to use a declared response declaration, use {@link setResponse} )
    */
   createResponseCollection(){
-    // todo
+    throw new Error('not implemented');
   }
 
   /**
@@ -116,7 +116,7 @@ export abstract class Operation extends NamedElement<MethodSignature> {
   * @param response
   */
   setResponseCollection(value: Reference<ResponseCollection>) {
-    //todo
+    throw new Error('not implemented');
   }
 
   /**
@@ -125,6 +125,6 @@ export abstract class Operation extends NamedElement<MethodSignature> {
    * does not alter the declaration if the current response is declared globally.
    */
   removeResponse(){
-    // todo
+    throw new Error('not implemented');
   }
 }

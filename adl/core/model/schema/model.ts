@@ -58,7 +58,7 @@ export class ModelType extends NamedElement<InterfaceDeclaration> implements Typ
   }
 
   createProperty(name: string) {
-    //ssh
+    throw new Error('not implemented');
   }
 }
 
