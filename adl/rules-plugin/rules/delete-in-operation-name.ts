@@ -2,11 +2,10 @@ import { Method, Rule } from '@azure-tools/adl.core';
 export default <Rule>{
   activation: 'edit',
   meta: {
-    id: 'DeleteInOperationName',
     severity: 'warning',
     description: 'DELETE operation should use the method name \'delete\'',
     documentationUrl: 'https://github.com/Azure/azure-rest-api-specs/blob/master/documentation/openapi-authoring-automated-guidelines.md#r1009-deleteinoperationname',
-    category: 'SDK Warning'
+
   },
   onOperation: (model, operation) => {
     const name = operation.name;

@@ -5,8 +5,10 @@ import { mkdtempSync } from 'fs';
 import { tmpdir } from 'os';
 import { relative } from 'path';
 import { cwd } from 'process';
+import { } from 'url';
 import { Connection } from 'vscode-languageserver';
 import { IsDirectoryRequest, IsFileRequest, ReadDirectoryRequest, ReadFileRequest, WriteFileRequest } from './requestTypes';
+import { documents } from './server';
 
 function uniqueTempFolder(): string {
   return mkdtempSync(`${tmpdir()}/adl-temp$`);
@@ -70,7 +72,6 @@ export class ServerFileSystem implements FileSystem {
 
   async isDirectory(path: string): Promise<boolean>{
     return this.connection.sendRequest(IsDirectoryRequest.type, { path: this.resolve(path) });
-
   }
 
   async isFile(path: string): Promise<boolean> {
@@ -78,8 +79,9 @@ export class ServerFileSystem implements FileSystem {
   }
 
   async readFile(path: string): Promise<string> {
-    return this.connection.sendRequest(ReadFileRequest.type, { path: this.resolve(path)});
-
+    path = this.resolve(path);
+    const txt = documents.all().where(each => decodeURIComponent(each.uri) === path).first?.getText();
+    return txt || this.connection.sendRequest(ReadFileRequest.type, { path: this.resolve(path)});
   }
 
   async readDirectory(path: string): Promise<Array<string>> {

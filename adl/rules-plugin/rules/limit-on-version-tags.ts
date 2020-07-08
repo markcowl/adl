@@ -2,11 +2,10 @@ import { getTagValues, NamedElement, Rule, RuleResult } from '@azure-tools/adl.c
 export default <Rule>{
   activation: 'edit',
   meta: {
-    id: 'limit-on-version-tags',
     severity: 'error',
     description: 'Every element should only at most one "since", "deleted" and "deprecated" tag.',
     documentationUrl: 'URL',
-    category: 'SDK Error'
+
   },
   onAliasType: (model, alias) => checkVersionTags('alias', alias),
   onDeclaredResponseCollections: (model, reponseCollection) => checkVersionTags('reponseCollection', reponseCollection),
@@ -25,7 +24,8 @@ function checkVersionTags(nodeType: string, element: NamedElement<any>): RuleRes
   const sinceTagsCount = [...getTagValues(element, 'since')].length;
   const deletedTagsCount = [...getTagValues(element, 'deleted')].length;
   const deprecatedTagsCount = [...getTagValues(element, 'deprecated')].length;
-  if (sinceTagsCount > 0 || deletedTagsCount > 0 || deprecatedTagsCount > 0) {
+
+  if (sinceTagsCount > 1 || deletedTagsCount > 1 || deprecatedTagsCount > 1) {
     return {
       message: `The ${nodeType} '${element.name}' contains multiple version related tags of the same kind. There should be at most one 'since', 'deleted' and 'deprecated' tag.`
     };

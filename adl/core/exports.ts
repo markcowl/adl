@@ -11,4 +11,5 @@ export * from './support/doc-tag';
 export { FileSystem, getAbsolutePath, getRelativePath, UrlFileSystem } from './support/file-system';
 export { Messages, ProcessingMessages } from './support/message-channels';
 export * from './support/typescript';
-
+import { TSElement } from './model/typescript/typescript-element';
+export type Element  = TSElement<any>;

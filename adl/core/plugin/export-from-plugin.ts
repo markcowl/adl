@@ -3,14 +3,14 @@ import * as path from 'path';
 
 // automatically pull exports from all .js files in this project that
 // have a default export
-export function exportFromPlugin(location: string, result: any = {}, container = ''): any | undefined {
+export function exportFromPlugin(container: string, location: string, result: any = {}): any | undefined {
   let count = 0;
   for (const name of fs.readdirSync(location)) {
     const fullPath = path.resolve(location, name);
     const stat = fs.statSync(fullPath);
     // directories should be recursed
     if (stat.isDirectory()) {
-      exportFromPlugin(fullPath, result, path.join(container, name));
+      exportFromPlugin(path.join(container, name), fullPath, result);
       continue;
     }
 

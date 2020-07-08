@@ -250,7 +250,7 @@ class Protocols extends EventEmitter<ProtocolEvents> {
     super();
   }
   intializeProtocol(): Iterable<Protocol> {
-    return [... this.iterEmit('InitializeProtocol', this.apiModel)].select(each => each.result);
+    return [... this.iterEmit(Activation.import, 'InitializeProtocol', this.apiModel)].select(each => each.result);
   }
 
 }
@@ -384,8 +384,22 @@ use:
     return this.projectData.attic.unprocessed;
   }
 
+  private merge<T>(override: T|undefined, xport: T) {
+    if (!override) {
+      return xport;
+    }
+
+    return <T> {
+      ...xport,
+      ...override,
+    };
+  }
+
   async loadExtensions() {
     let use = this.document.get('use');
+    const o  = this.document.get('override');
+    const overrides = o?.toJSON ? <Dictionary<EventListener>> o.toJSON() :undefined;
+
     switch (typeof use) {
       case 'undefined':
         break;
@@ -421,11 +435,17 @@ use:
             const exports = ext.load();
 
             // iterate thru the default exports and bind the events to the respective emitters.
-            for (const [key, xport] of items<string, EventListener, any>(exports.default)) {
+            // eslint-disable-next-line prefer-const
+            for (let [key, xport] of items<string, EventListener, any>(exports.default)) {
               // the key is just a string
               // the xport should have members that we
               // use to bind to the events.
               if (typeof xport === 'object') {
+                xport.id = key;
+                for (const [k, override] of linq.items(overrides).where(([k, v]) => !!new RegExp(`^${k}$`).exec(key))) {
+                  xport = this.merge(override, xport);
+                }
+
                 switch (xport.activation) {
                   case undefined:
                   case Activation.disabled:
@@ -454,11 +474,10 @@ use:
     }
   }
 
-  /** @internal */
+  /**  */
   async initialize() {
     // loads any extensions in the project file
     // and binds their events to the model.
-
     if (await this.fileSystem.isFile('api.yaml')) {
       const content = await this.fileSystem.readFile('api.yaml');
       this.document = parseDocument(content, { keepCstNodes: true });
@@ -495,6 +514,7 @@ use:
 
   async load() {
     await this.initialize();
+    this.messages.log('hiiii');
     await readFiles(this.fileSystem, '', this.project);
     return this;
   }

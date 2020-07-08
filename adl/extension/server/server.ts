@@ -11,7 +11,9 @@ if (process.env['no-static-loader'] === undefined && require('fs').existsSync(`$
   require(`${__dirname}/../../dist/static-loader.js`).load(`${__dirname}/../../dist/static_modules.fs`);
 }
 import { ApiModel, Fix, getRelativePath, LinterDiagnostic, Range, RuleSeverity } from '@azure-tools/adl.core';
-import { CodeAction, CodeActionKind, Command, CompletionItem, CompletionItemKind, createConnection, Diagnostic, DiagnosticSeverity, DidChangeConfigurationNotification, InitializeParams, InitializeResult, ProposedFeatures, TextDocumentEdit, TextDocumentPositionParams, TextDocuments, TextDocumentSyncKind, TextEdit } from 'vscode-languageserver';
+import { Activation } from '@azure-tools/adl.core/dist/eventing/activation';
+import { Delay } from '@azure-tools/tasks';
+import { CodeAction, CodeActionKind, Command, CompletionItem, CompletionItemKind, createConnection, Diagnostic, DiagnosticSeverity, DidChangeConfigurationNotification, InitializeParams, InitializeResult, ProposedFeatures, TextDocumentChangeEvent, TextDocumentEdit, TextDocumentPositionParams, TextDocuments, TextDocumentSyncKind, TextEdit } from 'vscode-languageserver';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { ServerFileSystem } from './file-system';
 
@@ -24,12 +26,12 @@ connection.console.info(`ADL Language Server started. [static-loader: ${usingSta
 
 // Create a simple text document manager. The text document manager
 // supports full document sync only
-const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
+export const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
 
 let hasConfigurationCapability = false;
 let hasWorkspaceFolderCapability = false;
 let hasDiagnosticRelatedInformationCapability = false;
-let apiModel: ApiModel;
+let apiModel: ApiModel| undefined;
 
 // HANDLE INITIALIZE EVENT
 connection.onInitialize((params: InitializeParams) => {
@@ -72,14 +74,17 @@ connection.onInitialize((params: InitializeParams) => {
   return result;
 });
 
-// HANDLE INITIALIZED EVENT
-connection.onInitialized(async () => {
+async function init() {
   const fs = new ServerFileSystem(connection);
   fs.cwd = (await connection.workspace.getWorkspaceFolders())?.first?.uri || '';
   apiModel = await new ApiModel(fs).load();
-  for (const doc of documents.all()){
-    lintDocument(doc);
-  }
+  apiModel.messages.on('log', (x) => connection.console.info(x));
+  await Promise.all(documents.all().select(each => lintDocument(each)));
+}
+
+// HANDLE INITIALIZED EVENT
+connection.onInitialized(async () => {
+  await init();
 
   if (hasConfigurationCapability) {
     // Register for all configuration changes.
@@ -143,25 +148,51 @@ documents.onDidClose(e => {
 });
 
 function convertSeverity(severity: RuleSeverity): DiagnosticSeverity {
-  if (severity === 'error') {
-    return 1;
-  } else {
-    return 2;
+  return <DiagnosticSeverity>['','error', 'warning', 'info', 'hint'].indexOf(severity);
+
+}
+
+async function documentChanged(change: TextDocumentChangeEvent<TextDocument>) {
+  if (!apiModel) {
+    await Delay(200);
+  }
+
+  if (apiModel) {
+    // only process this if we're already done initializing the apiModel
+    if (change.document.uri.endsWith('/api.yaml')) {
+      return;
+    }
+    const changedPath = getRelativePath(apiModel.fileSystem, change.document.uri);
+    const changedFile = apiModel.where(each => each.relativePath === changedPath);
+    if (changedFile.files[0]) {
+      changedFile.files[0].replaceWithText(change.document.getText());
+    }
+    await lintDocument(change.document);
   }
 }
 
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
-documents.onDidChangeContent(async change => {
-  lintDocument(change.document);
+documents.onDidChangeContent(documentChanged);
+
+documents.onDidSave(async (change)=>{
+  if (change.document.uri.endsWith('/api.yaml')) {
+    // this is a configuration change, let's re init the workspace
+    apiModel = undefined;
+    await init();
+  }
 });
 
-function lintDocument(document: TextDocument) {
+async function lintDocument(document: TextDocument) {
+  if (!apiModel) {
+    await Delay(200);
+  }
+
   if (apiModel) {
-    const changedPath = getRelativePath(apiModel.fileSystem, document.uri);
-    const changedFile = apiModel.where(each => each.relativePath === changedPath);
-    changedFile.files[0].replaceWithText(document.getText());
-    const diagnostics = [...apiModel.linter.run(changedFile)];
+    const path = getRelativePath(apiModel.fileSystem, document.uri);
+    const file = apiModel.where(each => each.relativePath === path);
+
+    const diagnostics = [...apiModel.linter.run(Activation.edit,file)];
     processLinterDiagnostics(diagnostics, document.uri);
   }
 }
@@ -266,7 +297,6 @@ connection.onCodeAction((params) => {
         //linterDiagnostic.
         actions.push(action);
       }
-
     }
   }
 
@@ -276,41 +306,43 @@ connection.onCodeAction((params) => {
 
 const FIX_COMMAND = 'adlLinter.fix' ;
 connection.onExecuteCommand(async (params) => {
-  if (params.command !== FIX_COMMAND || params.arguments === undefined) {
-    return;
+  if (apiModel) {
+    if (params.command !== FIX_COMMAND || params.arguments === undefined) {
+      return;
+    }
+
+    const textDocument = documents.get(params.arguments[0]);
+    if (textDocument === undefined) {
+      return;
+    }
+
+    const suggestions = codeActions.get(textDocument.uri)?.get(params.arguments[1]);
+    if (suggestions === undefined) {
+      return;
+    }
+
+    const suggestion = suggestions[params.arguments[2]];
+    if (suggestion === undefined) {
+      return;
+    }
+
+    // get file info
+    const changedPath = getRelativePath(apiModel.fileSystem, textDocument.uri);
+    const changedFile = apiModel.where(each => each.relativePath === changedPath);
+    const file = changedFile.files[0];
+
+    // previous state
+    const originalFileRange = Range.fromFile(file);
+
+    // apply fix
+    suggestion.fix();
+
+    await connection.workspace.applyEdit({
+      documentChanges: [
+        TextDocumentEdit.create(
+          { uri: textDocument.uri, version: textDocument.version },
+          [TextEdit.replace(originalFileRange, file.getFullText())]
+        )]
+    });
   }
-
-  const textDocument = documents.get(params.arguments[0]);
-  if (textDocument === undefined) {
-    return;
-  }
-
-  const suggestions = codeActions.get(textDocument.uri)?.get(params.arguments[1]);
-  if (suggestions === undefined) {
-    return;
-  }
-
-  const suggestion = suggestions[params.arguments[2]];
-  if (suggestion === undefined) {
-    return;
-  }
-
-  // get file info
-  const changedPath = getRelativePath(apiModel.fileSystem, textDocument.uri);
-  const changedFile = apiModel.where(each => each.relativePath === changedPath);
-  const file = changedFile.files[0];
-
-  // previous state
-  const originalFileRange = Range.fromFile(file);
-
-  // apply fix
-  suggestion.fix();
-
-  await connection.workspace.applyEdit({
-    documentChanges: [
-      TextDocumentEdit.create(
-        { uri: textDocument.uri, version: textDocument.version },
-        [TextEdit.replace(originalFileRange, file.getFullText())]
-      )]
-  });
 });
