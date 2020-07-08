@@ -29,7 +29,7 @@ export abstract class ResponseCollection extends TSElement<TupleTypeNode> {
   }
 }
 
-export class Parameter extends TypedElement<ParameterDeclaration> {
+export abstract class Parameter extends TypedElement<ParameterDeclaration> {
   static isAllowedNode(node: Node): node is ParameterDeclaration {
     return Node.isParameterDeclaration(node);
   }
@@ -39,13 +39,13 @@ export class Parameter extends TypedElement<ParameterDeclaration> {
  * A Result describes a single output from an operation.
  *
  */
-export class Result extends TSElement<TypeLiteralNode | InterfaceDeclaration> {
+export abstract class Result extends TSElement<TypeLiteralNode | InterfaceDeclaration> {
   static isAllowedNode(node: Node): node is TypeLiteralNode | InterfaceDeclaration {
     return Node.isTypeLiteralNode(node) || Node.isInterfaceDeclaration(node);
   }
 }
 
-export class ResponseCriteria extends TSElement<FunctionTypeNode> {
+export abstract class ResponseCriteria extends TSElement<FunctionTypeNode> {
 }
 
 /**
@@ -65,7 +65,6 @@ export abstract class Response extends TSElement<FunctionTypeNode> {
    * (if you want to set the result to a globally defined result, use {@link setResult})
    */
   createResult() {
-
     throw new Error('not implemented');
   }
 
@@ -84,14 +83,12 @@ export abstract class OperationGroup extends NamedElement<InterfaceDeclaration> 
 }
 
 export abstract class Operation extends NamedElement<MethodSignature> {
-  get parameters(): ReadonlyArray<Parameter> {
-    return this.node.getParameters().map(each => new Parameter(each));
-  }
+  abstract get parameters(): ReadonlyArray<Parameter>;
 
   /**
    * creates a new parameter in this operation
    */
-  createParameter(name: string,) {
+  createParameter(name: string) {
     throw new Error('not implemented');
   }
 

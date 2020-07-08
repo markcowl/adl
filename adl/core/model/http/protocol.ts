@@ -240,7 +240,6 @@ export class HttpProtocol extends Protocol<HttpProtocol> {
   /** Global connections, which may be overridden by individual operations. */
   connections = new Array<Connection | Alias<Connection>>();
 
-
   get operationGroups(): Array<OperationGroup> {
     // for now, just get the operation groups and assume they are http
     return this.files.map(each => each.getInterfaces().filter(isOperationGroupInterfaceType).map(each => new OperationGroup(each))).flat();
@@ -269,7 +268,6 @@ export class HttpProtocol extends Protocol<HttpProtocol> {
   get headers(): Array<Declaration<Header>> {
     return this.files.map(each => each.getTypeAliases().filter(isHeader)).flat().map(each => new Declaration(each, Header));
   }
-
 
   createOperationGroup() {
     throw new Error('not implemented');
