@@ -33,12 +33,15 @@ if (process.argv[2] === '--reset') {
     updateVersion(name, project, location, 0);
   })
 } else {
+
   // Sets the patch version on each package.json in the project.
   forEachProject((name, location, project) => {
-    exec(`git rev-list --parents HEAD --count --full-history .`, { cwd: location }, (o, stdout) => {
-      const patch = (parseInt(stdout.trim()) + (Number(project.patchOffset) || -1));
-      updateVersion(name, project, location, patch);
-    });
+    if (!process.argv[2] || process.argv[2] === name) {
+      exec(`git rev-list --parents HEAD --count --full-history .`, { cwd: location }, (o, stdout) => {
+        const patch = (parseInt(stdout.trim()) + (Number(project.patchOffset) || -1));
+        updateVersion(name, project, location, patch);
+      });
+    }
   });
 }
 

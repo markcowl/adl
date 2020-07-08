@@ -3,11 +3,10 @@ import { isReference, Rule } from '@azure-tools/adl.core';
 export default <Rule>{
   activation: 'edit',
   meta: {
-    id: 'missing-operation-response',
     severity: 'error',
     description: 'Every operation should have at least one response specified.',
     documentationUrl: 'PLACEHOLDER',
-    category: 'SDK Error'
+
   },
   onOperation: (model, operation) => {
     let responses = operation.responseCollection;

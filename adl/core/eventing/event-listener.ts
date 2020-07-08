@@ -9,8 +9,9 @@ export interface EventListener {
    *
    */
   activation: Activation;
-
+  id?: string;
   meta: ListenerMetaData;
+  data?: any;
 }
 
 export interface ListenerMetaData {

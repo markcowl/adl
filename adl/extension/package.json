@@ -1,6 +1,6 @@
 {
   "name": "adl-language",
-  "version": "0.0.174",
+  "version": "0.0.175",
   "publisher": "ms-vscode",
   "description": "ADL Language Service",
   "main": "dist/client/client",
@@ -79,6 +79,7 @@
     "@azure-tools/uri": "~4.0.0",
     "@azure-tools/linq": "~4.0.0",
     "@azure-tools/async-io": "~4.0.0",
+    "@azure-tools/tasks": "~4.0.0",
     "@azure-tools/adl.core": "~1.0.0",
     "vsce": "~1.77.0"
   },
@@ -91,6 +92,7 @@
       "@azure-tools/uri": "~4.0.0",
       "@azure-tools/linq": "~4.0.0",
       "@azure-tools/async-io": "~4.0.0",
+      "@azure-tools/tasks": "~4.0.0",
       "@azure-tools/adl.core": "~1.0.0"
     }
   }

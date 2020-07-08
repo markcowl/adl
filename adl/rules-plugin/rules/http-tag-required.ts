@@ -1,16 +1,15 @@
-import { getTagValue, Rule, setTag } from '@azure-tools/adl.core';
+import { Rule, setTag } from '@azure-tools/adl.core';
 export default <Rule>{
   activation: 'edit',
   meta: {
-    id: 'http-tag-required',
     severity: 'warning',
     description: 'It is required to provide the operation and path using the http tag.',
     documentationUrl: 'PLACEHOLDER',
-    category: 'SDK Warning'
+
   },
   onOperation: (model, operation) => {
-    const tag = getTagValue(operation, 'http');
-    if (tag !== undefined) {
+    const annotation = operation.annotations?.get('http');
+    if (annotation === undefined) {
       return {
         message: `The operation '${operation.name}' has the http tag missing.`,
         suggestions: [

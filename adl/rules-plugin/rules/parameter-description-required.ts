@@ -2,11 +2,9 @@ import { getTagValues, Rule, setTag } from '@azure-tools/adl.core';
 export default <Rule>{
   activation: 'edit',
   meta: {
-    id: 'parameter-description-required',
     severity: 'warning',
     description: 'Every parameter in an operation needs a description.',
     documentationUrl: 'PLACEHOLDER',
-    category: 'SDK Warning'
   },
   onOperation: (model, operation) => {
     const parameterNames = operation.parameters.map(p => p.name);

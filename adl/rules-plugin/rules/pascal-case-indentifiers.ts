@@ -3,11 +3,10 @@ import { getPascalIdentifier } from '../utils';
 export default <Rule>{
   activation: 'edit',
   meta: {
-    id: 'pascal-case-identifiers',
     severity: 'warning',
     description: 'PLACEHOLDER',
     documentationUrl: 'PLACEHOLDER',
-    category: 'SDK Warning'
+
   },
   onModelType: (model, modelType) => checkPascalIdentifier('modelType', modelType),
   onEnumType: (model, e) => checkPascalIdentifier('enumType', e),

@@ -1,7 +1,7 @@
 // Imported source for this from https://github.com/aleclarson/ee-ts
 
-import { Dictionary, linq } from '@azure-tools/linq';
-import { EventListener, ListenerMetaData } from '../eventing/event-listener';
+import { Dictionary, items, linq } from '@azure-tools/linq';
+import { EventListener } from '../eventing/event-listener';
 import { Activation } from './activation';
 
 /* Original License Text
@@ -28,6 +28,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+export interface Result<T, K extends EventKey<T>> extends EventListener {
+  result: NonNullable<Id<Out<T[K]>>>;
+}
 
 /* eslint-disable no-constant-condition */
 /* eslint-disable no-dupe-class-members */
@@ -125,7 +129,11 @@ export class EventEmitter<T> {
     if (listener.activation !== undefined && listener.activation !== Activation.disabled) {
       for (const [name, fn] of linq.items(<Dictionary<any>><unknown>listener).where(([name, fn]) => name.length > 2 && name.startsWith('on'))) {
         if (typeof fn === 'function') {
-          fn.meta = listener.meta;
+          for (const [key, value] of items(<any>listener)) {
+            if (value && typeof value !== 'function') {
+              fn[key] = value;
+            }
+          }
           this.on(<any>name.substr(2),fn);
         }
       }
@@ -204,22 +212,37 @@ export class EventEmitter<T> {
   }
 
   /** Call the listeners of an event */
-  iterEmit<K extends EventKey<T>>(key: K, ...args: EventIn<T, K>): Iterable< { meta:  ListenerMetaData; result: NonNullable<Id<Out<T[K]>>> }>
+  iterEmit<K extends EventKey<T>>(activation: Activation, key: K,  ...args: EventIn<T, K>): Iterable< Result<T,K>>
 
   /** Implementation */
-  *iterEmit<K extends EventKey<T>>(key: K, ...args: EventIn<T, K>): Iterable<any> {
+  *iterEmit<K extends EventKey<T>>(activation: Activation,key: K,  ...args: EventIn<T, K>): Iterable<any> {
     const gen = this.listeners(key);
     while (true) {
       const { value: listener, done } = gen.next();
       if (done) {
         return;
       } else {
-        const generated = listener(...args);
-        if (generated !== undefined) {
-          yield {
-            meta: listener.meta,
-            result:  generated,
-          };
+        if (listener.activation === activation) {
+          const generated = listener(...args,listener.data);
+          if (generated !== undefined) {
+
+            if (generated[Symbol.iterator]) {
+            // if it has an iterator, loop thru the results
+              for (const each of generated) {
+                yield {
+                  ...listener,
+                  result: each,
+                };
+              }
+
+            } else {
+            // otherwise, just return the result itself.
+              yield {
+                ...listener,
+                result:  generated,
+              };
+            }
+          }
         }
       }
     }

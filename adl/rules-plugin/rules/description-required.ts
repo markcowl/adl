@@ -2,32 +2,40 @@ import { NamedElement, Rule, RuleResult } from '@azure-tools/adl.core';
 export default <Rule>{
   activation: 'edit',
   meta: {
-    id: 'version-format',
     severity: 'error',
-    description: 'API version must be in the format: yyyy - MM - dd, optionally followed by - preview, - alpha, -beta, -rc, -privatepreview.',
+    description: 'The element lacks a description',
     documentationUrl: 'URL',
-    category: 'SDK Error'
+
   },
-  onAliasType: (model, alias) => checkDescription('alias', alias),
-  onDeclaredResponseCollections: (model, reponseCollection) => checkDescription('reponseCollection', reponseCollection),
-  onDeclaredResponses: (model, response) => checkDescription('response', response),
-  onDeclaredResults: (model, result) => checkDescription('result', result),
-  onDeclaredParameters: (model, parameter) => checkDescription('parameter', parameter),
-  onEnumType: (model, enumType) => checkDescription('enumType', enumType),
-  onEnumValue: (model, enumValue) => checkDescription('enumValue', enumValue),
-  onModelType: (model, modelType) => checkDescription('modelType', modelType),
-  onOperationGroup: (model, operationGroup) => checkDescription('operationGroup', operationGroup),
-  onOperation: (model, operation) => checkDescription('operation', operation),
-  onProperty: (model, property) => checkDescription('property', property),
+  data: {
+    minLength: 10
+  },
+  onAliasType: (model, alias,data) => checkDescription('alias', alias,data),
+  onDeclaredResponseCollections: (model, reponseCollection, data) => checkDescription('reponseCollection', reponseCollection,data),
+  onDeclaredResponses: (model, response, data) => checkDescription('response', response, data),
+  onDeclaredResults: (model, result, data) => checkDescription('result', result, data),
+  onDeclaredParameters: (model, parameter, data) => checkDescription('parameter', parameter, data),
+  onEnumType: (model, enumType, data) => checkDescription('enumType', enumType, data),
+  onEnumValue: (model, enumValue, data) => checkDescription('enumValue', enumValue, data),
+  onModelType: (model, modelType, data) => checkDescription('modelType', modelType, data),
+  onOperationGroup: (model, operationGroup, data) => checkDescription('operationGroup', operationGroup, data),
+  onOperation: (model, operation, data) => checkDescription('operation', operation, data),
+  onProperty: (model, property, data) => checkDescription('property', property, data),
   // onParameter: (model, parameter) => checkDescription('parameter', parameter)
 };
 
-function checkDescription(nodeType: string, element: NamedElement<any>): RuleResult | undefined {
+function* checkDescription(nodeType: string, element: NamedElement<any>, data: any): Iterator<RuleResult>  {
   if (element.description === undefined) {
-    return {
+    yield {
       message: `The ${nodeType} '${element.name}' lacks a description. Please consider adding one.`
     };
+  } else {
+    if (element.description.length < data.minLength) {
+      yield {
+        message: `The description '${element.name}' is too short. Please make it longer.`,
+        range: element.annotations?.get('description')[0].contentRange
+      };
+    }
   }
 
-  return;
 }

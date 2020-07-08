@@ -99,7 +99,7 @@ export async function activate(context: ExtensionContext) {
     // Register the server for plain text documents
     // warning: if you put a scheme in documentSelector, it won't work for new (untitled) files.
 
-    documentSelector: [{ language: 'typescript' }],
+    documentSelector: [{ language: 'typescript' }, {pattern:'**/api.yaml'}],
     synchronize: {
       // Notify the server about file changes to '.clientrc files contained in the workspace
       fileEvents: workspace.createFileSystemWatcher('**/.clientrc')

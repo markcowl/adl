@@ -13,29 +13,23 @@ import { Declaration } from '../model/typescript/reference';
 export interface Rule extends EventListener {
   activation: Activation.disabled | Activation.edit | Activation.demand;
   meta: RuleMetaData;
-  onAliasType?: (model: ApiModel, aliasType: AliasType) => RuleResult | undefined;
-  onDeclaredResponseCollections?: (model: ApiModel, reponseCollection: Declaration<ResponseCollection>) => RuleResult | undefined;
-  onDeclaredResponses?: (model: ApiModel, response: Declaration<Response>) => RuleResult | undefined;
-  onDeclaredResults?: (model: ApiModel, result: Declaration<Result>) => RuleResult | undefined;
-  onDeclaredParameters?: (model: ApiModel, parameter: Declaration<Parameter>) => RuleResult | undefined;
-  onEnumType?: (model: ApiModel, enumType: EnumType) => RuleResult | undefined;
-  onEnumValue?: (model: ApiModel, enumValue: EnumValueElement) => RuleResult | undefined;
-  onModelType?: (model: ApiModel, modelType: ModelType) => RuleResult | undefined;
-  onOperationGroup?: (model: ApiModel, operationGroup: OperationGroup) => RuleResult | undefined;
-  onOperation?: (model: ApiModel, operation: Operation) => RuleResult | undefined;
-  onProperty?: (model: ApiModel, property: Property) => RuleResult | undefined;
-  onParameter?: (model: ApiModel, parameter: Parameter) => RuleResult | undefined;
+  onAliasType?: (model: ApiModel, aliasType: AliasType, data: any) => RuleResult | Iterable<RuleResult> | undefined;
+  onDeclaredResponseCollections?: (model: ApiModel, reponseCollection: Declaration<ResponseCollection>, data: any) => RuleResult | Iterable<RuleResult> | undefined;
+  onDeclaredResponses?: (model: ApiModel, response: Declaration<Response>, data: any) =>  RuleResult | Iterable<RuleResult> | undefined;
+  onDeclaredResults?: (model: ApiModel, result: Declaration<Result>, data: any) =>  RuleResult | Iterable<RuleResult> | undefined;
+  onDeclaredParameters?: (model: ApiModel, parameter: Declaration<Parameter>, data: any) =>  RuleResult | Iterable<RuleResult> | undefined;
+  onEnumType?: (model: ApiModel, enumType: EnumType, data: any) =>  RuleResult | Iterable<RuleResult> | undefined;
+  onEnumValue?: (model: ApiModel, enumValue: EnumValueElement, data: any) =>  RuleResult | Iterable<RuleResult> | undefined;
+  onModelType?: (model: ApiModel, modelType: ModelType, data: any) =>  RuleResult | Iterable<RuleResult> | undefined;
+  onOperationGroup?: (model: ApiModel, operationGroup: OperationGroup, data: any) =>  RuleResult | Iterable<RuleResult> | undefined;
+  onOperation?: (model: ApiModel, operation: Operation, data: any) =>  RuleResult | Iterable<RuleResult> | undefined;
+  onProperty?: (model: ApiModel, property: Property, data: any) => RuleResult | Iterable<RuleResult> | undefined;
+  onParameter?: (model: ApiModel, parameter: Parameter, data: any) =>  RuleResult | Iterable<RuleResult> | undefined;
 }
 
-export declare type RuleSeverity = 'error' | 'warning' ;
+export declare type RuleSeverity = 'error' | 'warning' | 'info' | 'hint';
 
 export interface RuleMetaData extends ListenerMetaData {
-
-  /**
-   * The rule id.
-   */
-  id: number| string;
-
   /**
    * How severe the rule is. It can be a error, warning, information or hint.
    */

@@ -1,4 +1,5 @@
-import { EventEmitter } from '../eventing/event-emitter';
+import { Activation } from '../eventing/activation';
+import { EventEmitter, EventKey, Result as EventResult } from '../eventing/event-emitter';
 import { ApiModel, Files } from '../model/api-model';
 import { Operation, OperationGroup, Parameter, Response, ResponseCollection, Result } from '../model/operation';
 import { AliasType } from '../model/schema/alias';
@@ -29,96 +30,98 @@ export class Linter extends EventEmitter<Events> {
     super();
   }
 
-  getLinterDiagnostic(element: TSElement<any>, ruleMetadata: RuleMetaData, ruleResult: RuleResult): LinterDiagnostic {
+  getLinterDiagnostic<T, K extends EventKey<T>>(element: TSElement<any>, data: EventResult<T,K>): LinterDiagnostic {
+    const result = <RuleResult>data.result;
+    const meta = <RuleMetaData>data.meta;
     return {
-      range: ruleResult.range || element.range,
-      severity: ruleMetadata.severity,
-      code: ruleMetadata.id,
+      range: result.range || element.range,
+      severity: meta.severity,
+      code: data.id,
       source: 'adl-linter',
-      message: ruleResult.message|| ruleMetadata.description,
-      suggestions: ruleResult.suggestions
+      message: result.message|| meta.description,
+      suggestions: result.suggestions
     };
   }
 
-  *run(files?: Files): Iterable<LinterDiagnostic> {
+  *run(activation: Activation, files?: Files): Iterable<LinterDiagnostic> {
     files = files || this.apiModel;
     const model = this.apiModel;
 
     // aliasTypes
     for (const aliasType of files.aliasTypes) {
-      for (const {meta, result} of this.iterEmit('AliasType', model, aliasType)){
-        yield this.getLinterDiagnostic(aliasType, <RuleMetaData>meta, result);
+      for (const each of this.iterEmit(activation, 'AliasType', model, aliasType)){
+        yield this.getLinterDiagnostic(aliasType,each);
       }
     }
 
     // globally declared stuff
     for (const responseCollection of files.responseCollections) {
-      for (const { meta, result } of this.iterEmit('DeclaredResponseCollections', model, responseCollection)) {
-        yield this.getLinterDiagnostic(responseCollection, <RuleMetaData>meta, result);
+      for (const each of this.iterEmit(activation, 'DeclaredResponseCollections', model, responseCollection)) {
+        yield this.getLinterDiagnostic(responseCollection, each);
       }
     }
 
     for (const response of files.responses) {
-      for (const { meta, result } of this.iterEmit('DeclaredResponses', model, response)) {
-        yield this.getLinterDiagnostic(response, <RuleMetaData>meta, result);
+      for (const each of this.iterEmit(activation, 'DeclaredResponses', model, response)) {
+        yield this.getLinterDiagnostic(response, each);
       }
     }
 
     for (const result of files.results) {
-      for (const { meta, result:ruleResult } of this.iterEmit('DeclaredResults', model, result)) {
-        yield this.getLinterDiagnostic(result, <RuleMetaData>meta, ruleResult);
+      for (const each of this.iterEmit(activation, 'DeclaredResults', model, result)) {
+        yield this.getLinterDiagnostic(result,each);
       }
     }
 
     for (const parameter of files.parameters) {
-      for (const { meta, result } of this.iterEmit('DeclaredParameters', model, parameter)) {
-        yield this.getLinterDiagnostic(parameter, <RuleMetaData>meta, result);
+      for (const each of this.iterEmit(activation, 'DeclaredParameters', model, parameter)) {
+        yield this.getLinterDiagnostic(parameter, each);
       }
     }
 
     for (const responseCollection of files.responseCollections) {
-      for (const { meta, result } of this.iterEmit('DeclaredResponseCollections', model, responseCollection)) {
-        yield this.getLinterDiagnostic(responseCollection, <RuleMetaData>meta, result);
+      for (const each of this.iterEmit(activation, 'DeclaredResponseCollections', model, responseCollection)) {
+        yield this.getLinterDiagnostic(responseCollection, each);
       }
     }
 
     // enumTypes and values
     for (const enumType of files.enumTypes) {
-      for (const { meta, result } of this.iterEmit('EnumType', model, enumType)) {
-        yield this.getLinterDiagnostic(enumType, <RuleMetaData>meta, result);
+      for (const each of this.iterEmit(activation, 'EnumType', model, enumType)) {
+        yield this.getLinterDiagnostic(enumType, each);
       }
 
       for (const value of enumType.values) {
-        for (const { meta, result } of this.iterEmit('EnumValue', model, value)) {
-          yield this.getLinterDiagnostic(value, <RuleMetaData>meta, result);
+        for (const each of this.iterEmit(activation, 'EnumValue', model, value)) {
+          yield this.getLinterDiagnostic(value, each);
         }
       }
     }
 
     // modelTypes and properties
     for (const modelType of files.modelTypes) {
-      for (const { meta, result } of this.iterEmit('ModelType', model, modelType)) {
-        yield this.getLinterDiagnostic(modelType, <RuleMetaData>meta, result);
+      for (const each of this.iterEmit(activation, 'ModelType', model, modelType)) {
+        yield this.getLinterDiagnostic(modelType, each);
       }
       for (const property of modelType.properties) {
-        for (const { meta, result } of this.iterEmit('Property', model, property)) {
-          yield this.getLinterDiagnostic(property, <RuleMetaData>meta, result);
+        for (const each of this.iterEmit(activation, 'Property', model, property)) {
+          yield this.getLinterDiagnostic(property, each);
         }
       }
     }
 
     // operationGroups, operations, parameters
     for (const group of files.operationGroups) {
-      for (const { meta, result } of this.iterEmit('OperationGroup', model, group)) {
-        yield this.getLinterDiagnostic(group, <RuleMetaData>meta, result);
+      for (const each of this.iterEmit(activation, 'OperationGroup', model, group)) {
+        yield this.getLinterDiagnostic(group, each);
       }
       for (const operation of group.operations) {
-        for (const { meta, result } of this.iterEmit('Operation', model, operation)) {
-          yield this.getLinterDiagnostic(operation, <RuleMetaData>meta, result);
+        for (const each of this.iterEmit(activation, 'Operation', model, operation)) {
+          yield this.getLinterDiagnostic(operation, each);
         }
         for (const parameter of operation.parameters) {
-          for (const { meta, result } of this.iterEmit('Parameter', model, parameter)) {
-            yield this.getLinterDiagnostic(parameter, <RuleMetaData>meta, result);
+          for (const each of this.iterEmit(activation, 'Parameter', model, parameter)) {
+            yield this.getLinterDiagnostic(parameter, each);
           }
         }
       }

@@ -172,3 +172,5 @@ common/temp/**
 package-deps.json
 
 common/config/rush/shrinkwrap.yaml
+
+*.vsix

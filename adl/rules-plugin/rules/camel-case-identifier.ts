@@ -4,11 +4,10 @@ import { camelCase } from '../utils';
 export default <Rule>{
   activation: 'edit',
   meta: {
-    id: 'camel-case-identifiers',
     severity: 'warning',
     description: 'PLACEHOLDER',
     documentationUrl: 'PLACEHOLDER',
-    category: 'SDK Warning'
+
   },
   onParameter: (model, parameter) => checkCamelCaseIdentifier('parameter', parameter),
   onProperty: (model, property) => checkCamelCaseIdentifier('property', property),

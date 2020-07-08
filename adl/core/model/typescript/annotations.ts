@@ -89,12 +89,12 @@ export class Annotation implements Rangeable {
     const content = (this.ContentForWellKnownAnnotation[tn] || wholeLine)(text);
 
     this.#identity = identity ? {
-      ...Range.fromOffset(sf, pStart, identity.length),
+      ...Range.fromOffset(sf, pStart+1, identity.length),
       value: identity
     } : undefined;
 
     this.#content = content ? {
-      ...Range.fromOffset(sf, pStart + (identity?.length || 0), content.length),
+      ...Range.fromOffset(sf, pStart + (identity?.length || 0)+1, content.length),
       value: content
     } : undefined;
   }
