@@ -85,9 +85,21 @@ export class Operation extends base.Operation {
   }
 
   get responseCollection(): ResponseCollection | Reference<ResponseCollection> | undefined {
-    const rt = this.node.getReturnType();
+    const returnType = this.node.getReturnTypeNode();
 
-    return undefined;
+    if (!returnType) {
+      return undefined;
+    }
+
+    if (Node.isTupleTypeNode(returnType)) {
+      return new ResponseCollection(returnType);
+    }
+
+    if (Node.isTypeReferenceNode(returnType)) {
+      return new Reference(returnType, ResponseCollection);
+    }
+
+    throw new Error('Invalid repsonse collection type');
   }
 
   /**

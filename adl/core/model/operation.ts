@@ -83,7 +83,7 @@ export abstract class OperationGroup extends NamedElement<InterfaceDeclaration> 
   }
 }
 
-export class Operation extends NamedElement<MethodSignature> {
+export abstract class Operation extends NamedElement<MethodSignature> {
   get parameters(): ReadonlyArray<Parameter> {
     return this.node.getParameters().map(each => new Parameter(each));
   }
@@ -98,9 +98,7 @@ export class Operation extends NamedElement<MethodSignature> {
   /**
    * returns the Response for this operation as either a ResponseCollection the declaration of the ResponseCollection
    */
-  get responseCollection(): ResponseCollection | Reference<ResponseCollection> | undefined {
-    throw new Error('Not Implemented');
-  }
+  abstract get responseCollection(): ResponseCollection | Reference<ResponseCollection> | undefined;
 
   /**
    * creates a new Response collection as a literal on this operation
@@ -129,6 +127,4 @@ export class Operation extends NamedElement<MethodSignature> {
   removeResponse(){
     // todo
   }
-
-
 }
