@@ -48,6 +48,7 @@ export class ModelType extends NamedElement<InterfaceDeclaration> implements Typ
   constructor(node: InterfaceDeclaration) {
     super(node);
   }
+
   get declaration() {
     return new TypeSyntax(this.node.getName());
   }
