@@ -1,6 +1,6 @@
 {
   "name": "adl-language",
-  "version": "1.0.0",
+  "version": "0.0.174",
   "publisher": "ms-vscode",
   "description": "ADL Language Service",
   "main": "dist/client/client",
@@ -42,6 +42,8 @@
     "eslint": "eslint  . --ext .ts",
     "build": "tsc -p .",
     "watch": "tsc -p . --watch",
+    "setversion": "node ../../.scripts/set-versions.js adl-language",
+    "pkg": "npm run setversion && vsce package",
     "prepare": "npm run build",
     "test": "npm run build && echo - no tests yet mocha dist/test"
   },
@@ -77,7 +79,8 @@
     "@azure-tools/uri": "~4.0.0",
     "@azure-tools/linq": "~4.0.0",
     "@azure-tools/async-io": "~4.0.0",
-    "@azure-tools/adl.core": "~1.0.0"
+    "@azure-tools/adl.core": "~1.0.0",
+    "vsce": "~1.77.0"
   },
   "static-link": {
     "entrypoints": [],
