@@ -2,8 +2,8 @@ import { suite, test } from '@testdeck/mocha';
 import { deepEqual, equal } from 'assert';
 import { resolve } from 'path';
 import { ApiModel } from '../model/api-model';
-import { isReference, Declaration } from '../model/typescript/reference';
 import { ResponseCollection } from '../model/http/operation';
+import { isReference } from '../model/typescript/reference';
 import { UrlFileSystem } from '../support/file-system';
 
 const scenarios = `${__dirname}/../../../test/scenarios/adl`;
@@ -25,33 +25,29 @@ const scenarios = `${__dirname}/../../../test/scenarios/adl`;
     deepEqual(groups.map(each => each.name), ['myOperations']);
 
     const operations = groups[0].operations;
+    deepEqual(operations.map(each => each.name), ['first', 'second', 'third', 'fourth']);
 
-    deepEqual(operations.map(each => each.name), ['first']);
-
-    const t = operations[0].node.getReturnType();
-    const s = t.getText();
+    const operation = operations[0];
+    const operationResponses = operation.responseCollection;
 
     this.navigateResponses(api);
   }
 
   private navigateResponses(api: ApiModel) {
     const responseCollections = api.responseCollections;
-    deepEqual(responseCollections.length, 1);
+    deepEqual(responseCollections.length, 2);
 
-
-    const col = responseCollections[0];
-    this.navigateResponseCollection(<ResponseCollection>col.definition);
-    const collection = col.definition;
-    const responses = collection.responses;
-
-    deepEqual(responses.length, 7);
+    for (const each of responseCollections) {
+      const collection = <ResponseCollection>each.definition;
+      this.navigateResponseCollection(collection);
+    }
   }
 
   private navigateResponseCollection(collection: ResponseCollection) {
     for (const each of collection.responses) {
       const responseOrResponseCollection = isReference(each) ? each.target : each;
       if (responseOrResponseCollection instanceof ResponseCollection) {
-        this.navigateResponseCollection(collection);
+        this.navigateResponseCollection(responseOrResponseCollection);
         continue;
       }
       const response = responseOrResponseCollection;
@@ -75,7 +71,7 @@ const scenarios = `${__dirname}/../../../test/scenarios/adl`;
 
     const properties = personModel.properties;
     const propertyNames = properties.map(each => each.name);
-    deepEqual(propertyNames, [ 'name', 'age' ]);
+    deepEqual(propertyNames, ['name', 'age']);
 
     const propertyTypes = properties.map(each => each.type.declaration.text);
     deepEqual(propertyTypes, ['string', 'number']);
