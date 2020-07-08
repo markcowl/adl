@@ -297,9 +297,9 @@ export class ApiModel extends Files {
   /**
    * Linter instance for this API.
   */
-  linter = new Linter(this);
+  readonly linter = new Linter(this);
 
-  oaiExtensions = new ImportExtension(this);
+  readonly oaiExtensions = new ImportExtension(this);
 
   readonly #protocolExtensions = new Protocols(this);
 
@@ -398,9 +398,7 @@ use:
   async loadExtensions() {
     let use = this.document.get('use');
     const o  = this.document.get('override');
-    const override = o?.toJSON ? <Dictionary<EventListener>> o.toJSON() :undefined;
-    this.linter = new Linter(this);
-    this.oaiExtensions = new ImportExtension(this);
+    const overrides = o?.toJSON ? <Dictionary<EventListener>> o.toJSON() :undefined;
 
     switch (typeof use) {
       case 'undefined':
@@ -444,10 +442,9 @@ use:
               // use to bind to the events.
               if (typeof xport === 'object') {
                 xport.id = key;
-                for (const [k, ov] of linq.items(override).where(([k, v]) => !!new RegExp(`^${k}$`).exec(key))) {
-                  xport = this.merge(ov, xport);
+                for (const [k, override] of linq.items(overrides).where(([k, v]) => !!new RegExp(`^${k}$`).exec(key))) {
+                  xport = this.merge(override, xport);
                 }
-
 
                 switch (xport.activation) {
                   case undefined:
