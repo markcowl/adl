@@ -23,7 +23,7 @@
       "path": "adl/plugins/sample/tsconfig.json"
     },
     {
-      "path": "adl/rules-plugin/tsconfig.json"
+      "path": "adl/plugins/azure/tsconfig.json"
     },
   ]
 }
