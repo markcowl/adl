@@ -93,10 +93,10 @@
       "shouldPublish": false
     },
     {
-      "packageName": "rules-plugin",
-      "projectFolder": "adl/rules-plugin",
+      "packageName": "@azure-tools/adl.rules.azure",
+      "projectFolder": "adl/plugins/azure",
       "reviewCategory": "production",
-      "shouldPublish": false
+      "shouldPublish": true
     }
   ]
 }
