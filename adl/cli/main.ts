@@ -88,6 +88,7 @@ function help() {
     '--remove' removes the vscode extension 
     '--insiders' operate on the vscode insiders build instead
     '--force' force install/overwrite of the extension 
+    '--version:<#.#.#>' install specific version of the extension
   
 
 ## Common Switches:
