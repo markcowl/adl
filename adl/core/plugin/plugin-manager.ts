@@ -482,6 +482,8 @@ export class ExtensionManager extends EventEmitter<Events> {
   }
 
   async installPackage(pkg: Package, force?: boolean, maxWait: number = 5 * 60 * 1000): Promise<Extension> {
+    const origDir = process.cwd();
+
     this.progress(`Starting Installation ${pkg.name}`, 0);
 
     if (!await exists(this.rootFolder)) {
@@ -538,6 +540,7 @@ export class ExtensionManager extends EventEmitter<Events> {
       throw new Error(`Package Installation Error ${pkg.name}:${pkg.version} -- ${e.message}\n${e.stack}`);
     } finally {
       this.progress('Completed', 100);
+      process.chdir(origDir);
     }
   }
 
