@@ -86,6 +86,10 @@ export class Reference<T> extends TSElement<TypeReferenceNode> {
     return this.#target = newElement(this.ctor, node);
   }
 
+  get typeName(): string {
+    return this.node.getTypeName().getText();
+  }
+
   get typeArguments(): Array<TypeNode> {
     return this.node.getTypeArguments();
   }

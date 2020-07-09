@@ -17,7 +17,7 @@ export type responseCollection1 = [
   (code: 200) => {
     body: Person
   },
-  response4<200>,
+  response4<200, 'application/xml'>,
   response1,
   response2,
   response3,
@@ -43,9 +43,12 @@ export type responseValue = {
   body: Person;
 }
 
-export type response4<c> = (code: c) => {
+export type header1 = Header<string, 'x-header'>;
+export type response4<c, m> = (code: c, mediaType: m) => {
   body: Person,
-  isException: true
+  isException: true,
+  headers: [header1],
+  message: 'some message'
 }
 
 
