@@ -121,5 +121,5 @@ You can go hover over errors and see what the problem is.
 
 The presence of the light bulb will tell you there is a fix available for that. clicking on it:
 
-![adl add](./media1.gif)
+![adl add](./media2.gif)
 
