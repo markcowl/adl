@@ -17,4 +17,5 @@ yarn.lock                    merge=binary
 #
 *.json                       linguist-language=JSON-with-Comments
 *.png               binary
+*.gif               binary
 *.mp4               binary

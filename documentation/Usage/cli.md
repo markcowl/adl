@@ -121,8 +121,5 @@ You can go hover over errors and see what the problem is.
 
 The presence of the light bulb will tell you there is a fix available for that. clicking on it:
 
-<video  width="1280" height="720" autoplay controls >
- <source src="./media1.mp4" type="video/mp4">
-</video>
-
+![adl add](./media1.gif)
 
