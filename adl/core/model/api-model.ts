@@ -1,5 +1,5 @@
 import { exists } from '@azure-tools/async-io';
-import { Dictionary, items, keys, linq } from '@azure-tools/linq';
+import { Dictionary, items, keys, linq, values } from '@azure-tools/linq';
 import { isAnonymous, Path, valueOf } from '@azure-tools/sourcemap';
 import { FileUriToPath } from '@azure-tools/uri';
 import { fail } from 'assert';
@@ -464,7 +464,7 @@ use:
             }
 
           } catch (E) {
-            this.messages.warning(`Unable to load extension ${each} -- ${E.message}`, undefined);
+            this.messages.warning(`Unable to load extension ${each} -- ${E.message} -- ${E.stack}`, undefined);
           }
         }
         break;
@@ -472,6 +472,36 @@ use:
       default:
         throw new Error('Invalid plugin configuration');
     }
+  }
+
+  async addUse(pkgRef: string) {
+    this.extensionManager = this.extensionManager || await ExtensionManager.Create(this.fileSystem.extensionPath);
+
+    // find package first
+    const pkg = (pkgRef.startsWith('file:/') && await exists(FileUriToPath(pkgRef))) ? await this.extensionManager!.findPackage('someExtension', pkgRef) : await this.extensionManager!.findPackage(pkgRef);
+    const use = this.document.get('use');
+    switch (typeof use) {
+      case 'undefined':
+        // no use line, add it to the document
+        this.document.set('use',pkgRef);
+        return true;
+
+      case 'string':
+        if (use === pkgRef) {
+          return false;
+        }
+        this.document.set('use', [use,pkgRef]);
+        return true;
+
+      case 'object':
+        if ([...values(use.toJSON())].find(each => each === pkgRef)) {
+          return false;
+        }
+        use.add(pkgRef);
+        return true;
+    }
+
+    throw Error('unable to edit package references.');
   }
 
   /**  */
@@ -514,27 +544,34 @@ use:
 
   async load() {
     await this.initialize();
-    this.messages.log('hiiii');
     await readFiles(this.fileSystem, '', this.project);
     return this;
+  }
+
+  async saveConfig() {
+
+    // save the tsconfig
+    await this.fileSystem.writeFile('tsconfig.json', JSON.stringify(this.tsconfig, null, 2));
+
+    // save the api.yaml file
+    await this.fileSystem.writeFile('api.yaml', this.document.toString());
+
   }
 
   async saveADL(cleanDirectory = true) {
     // save any open files to memory
     await this.project.save();
-    await this.fileSystem.writeFile('tsconfig.json', JSON.stringify(this.tsconfig, null, 2));
 
     // remove folder if required
     if (cleanDirectory) {
       // await rmdir(FileUriToPath(this.fileSystem.cwd));
     }
 
+    await this.saveConfig();
+
     const format = {
       indentSize: 1,
     };
-
-    // save the api.yaml file
-    await this.fileSystem.writeFile('api.yaml', this.document.toString());
 
     // print each file and save it.
     return (await Promise.all(

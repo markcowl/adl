@@ -14,12 +14,15 @@ function onlyOne(values: Array<string>, errorMessage: string) {
       return values[0];
   }
   throw new Error(errorMessage);
-
 }
 
 export class CommandLine {
   inputs = new Array<string>();
   switches: switches = {};
+
+  switch(name: string, errorMessage: string) {
+    return onlyOne(this.switches[name], errorMessage);
+  }
 
   #project!: string;
   get project() {

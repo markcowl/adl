@@ -1,6 +1,6 @@
 {
   "name": "adl-language",
-  "version": "0.0.175",
+  "version": "0.0.177",
   "publisher": "ms-vscode",
   "description": "ADL Language Service",
   "main": "dist/client/client",

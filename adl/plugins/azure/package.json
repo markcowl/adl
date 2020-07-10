@@ -1,7 +1,7 @@
 {
-  "name": "rules-plugin",
+  "name": "@azure-tools/adl.rules.azure",
   "version": "1.0.0",
-  "description": "ADL sample plugin",
+  "description": "Azure rules plugin for ADL",
   "main": "dist/exports.js",
   "engines": {
     "node": ">=10.12.0"
@@ -19,8 +19,7 @@
     "url": "git+https://github.com/Azure/adl.git"
   },
   "keywords": [
-    "adl",
-    "cli"
+    "adl"
   ],
   "author": "",
   "license": "MIT",

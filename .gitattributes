@@ -5,6 +5,7 @@ shrinkwrap.yaml              merge=binary
 npm-shrinkwrap.json          merge=binary
 yarn.lock                    merge=binary
 
+
 # Use unix line endings always, even on Windows
 *                            text eol=lf
 
@@ -15,3 +16,6 @@ yarn.lock                    merge=binary
 # For more information, see this issue: https://github.com/Microsoft/web-build-tools/issues/1088
 #
 *.json                       linguist-language=JSON-with-Comments
+*.png               binary
+*.gif               binary
+*.mp4               binary

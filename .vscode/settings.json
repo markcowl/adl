@@ -96,7 +96,7 @@
     },
     {
       "changeProcessCWD": true,
-      "directory": "./adl/rules-plugin",
+      "directory": "./adl/plugins/azure",
     }
   ],
   "git.ignoreLimitWarning": true,

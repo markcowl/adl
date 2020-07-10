@@ -24,6 +24,7 @@ import * as chalk from 'chalk';
 import * as marked from 'marked';
 import { argv } from 'process';
 import { parseArgs } from './command-line';
+import { cmdAdd } from './commands/add';
 import { cmdCode } from './commands/code';
 import { cmdImport } from './commands/import';
 import { cmdInit } from './commands/init';
@@ -88,7 +89,10 @@ function help() {
     '--remove' removes the vscode extension 
     '--insiders' operate on the vscode insiders build instead
     '--force' force install/overwrite of the extension 
+    '--version:<#.#.#>' install specific version of the extension
   
+  'adl add ' adds a package reference to the project 
+    '--pkg:<pkgRef>' local dir or npm package ref
 
 ## Common Switches:
   '--project:<folder>' the ADL project folder to work with (defaults to the current folder)
@@ -130,6 +134,9 @@ async function main() {
 
       case 'import':
         return await cmdImport(messages, commandLine);
+
+      case 'add':
+        return await cmdAdd(messages, commandLine);
 
         // temporarily disable
         // case 'merge':
