@@ -5,12 +5,11 @@ export default <Rule>{
     severity: 'error',
     description: 'A model property cannot be both readOnly and required. A readOnly property is something that the server sets when returning the model object while required is a property to be set when sending it as a part of the request body.',
     documentationUrl: 'https://github.com/Azure/azure-rest-api-specs/blob/master/documentation/openapi-authoring-automated-guidelines.md#r2056-requiredreadonlyproperties',
-
   },
   onProperty: (model, property) => {
     if (property.readOnly && property.required) {
       return {
-        message: 'A model property cannot be both readOnly and required',
+        message: `The property '${property.name}' is marked both as readOnly and required, which is forbidden.`,
         suggestions: [
           {
             description: 'Remove readonly keyword.',
@@ -19,7 +18,7 @@ export default <Rule>{
             }
           },
           {
-            description: 'Mark as optional.',
+            description: 'Mark this property as optional.',
             fix: () => {
               property.required = false;
             }
