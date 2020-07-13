@@ -41,3 +41,11 @@ export namespace ReadDirectoryRequest {
   export const type = new RequestType<IsDirectoryParams, Array<string>, void, void>('adl/readDirectory');
 }
 
+export interface OpenLinkParams {
+  url: string;
+}
+
+export namespace OpenLinkRequest {
+  export const type = new RequestType<OpenLinkParams, void, void, void>('adl/openlink');
+}
+
