@@ -213,9 +213,7 @@ function processLinterDiagnostics(linterDiagnostics: Array<LinterDiagnostic>, ur
     };
 
     diagnostics.push(diagnostic);
-    if (linterDiagnostic.suggestions !== undefined) {
-        codeActions.get(uri)?.set(computeKey(diagnostic), linterDiagnostic);
-    }
+    codeActions.get(uri)?.set(computeKey(diagnostic), linterDiagnostic);
   }
 
   // Send the computed diagnostics to VSCode.

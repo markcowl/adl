@@ -5,7 +5,6 @@ export default <Rule>{
     severity: 'error',
     description: 'The element lacks a description',
     documentationUrl: 'URL',
-
   },
   data: {
     minLength: 10
