@@ -5,14 +5,14 @@ export default <Rule>{
   activation: 'edit',
   meta: {
     severity: 'error',
-    description: 'API version must be in the format: yyyy - MM - dd, optionally followed by - preview, - alpha, -beta, -rc, -privatepreview.',
+    description: 'API version must be in the format: yyyy-mm-dd, optionally followed by - preview, - alpha, -beta, -rc, -privatepreview.',
     documentationUrl: 'URL',
 
   },
   onAliasType: (model, alias) => checkVersionFormat(alias),
   onDeclaredResponseCollections: (model, reponseCollection) => checkVersionFormat(reponseCollection),
   onDeclaredResponses: (model, response) => checkVersionFormat(response),
-  onDeclaredResults: (model, result) =>  checkVersionFormat(result),
+  onDeclaredResults: (model, result) => checkVersionFormat(result),
   onDeclaredParameters: (model, parameter) => checkVersionFormat(parameter),
   onEnumType: (model, enumType) => checkVersionFormat(enumType),
   onEnumValue: (model, enumValue) => checkVersionFormat(enumValue),
@@ -22,16 +22,19 @@ export default <Rule>{
   onProperty: (model, property) => checkVersionFormat(property)
 };
 
-function *checkVersionFormat(element: Element): Iterable<RuleResult> {
+function* checkVersionFormat(element: Element): Iterable<RuleResult> {
+  const getVersionMessage = (tag: string, version: string) => {
+    return `
+    The ${tag} api version: ${version} does not have the correct format. 
+    API version must be in the format: yyyy-mm-dd, optionally followed 
+     - preview, -alpha, -beta, -rc, -privatepreview.`;
+  };
+
   const versionRegex = /^(20\d{2})-(0[1-9]|1[0-2])-((0[1-9])|[12][0-9]|3[01])(-(preview|alpha|beta|rc|privatepreview))?$/g;
+
   if (element.versionInfo.since !== undefined && !element.versionInfo.since?.match(versionRegex)) {
-
     yield {
-      message: `
-The @since api version: ${element.versionInfo.since} does not have the correct format. 
-API version must be in the format: yyyy - MM - dd, optionally followed 
- - preview, -alpha, -beta, -rc, -privatepreview.`,
-
+      message: getVersionMessage('@since', element.versionInfo.since),
       range: element.annotations?.get('since')[0].identityRange
     };
   }
@@ -39,11 +42,7 @@ API version must be in the format: yyyy - MM - dd, optionally followed
   if (element.versionInfo.deleted !== undefined && !element.versionInfo.deleted?.match(versionRegex)) {
 
     yield {
-      message: `
-The @deleted api version: ${element.versionInfo.since} does not have the correct format. 
-API version must be in the format: yyyy - MM - dd, optionally followed 
- - preview, -alpha, -beta, -rc, -privatepreview.`,
-
+      message: getVersionMessage('@deleted', element.versionInfo.deleted),
       range: element.annotations?.get('deleted')[0].identityRange
     };
   }

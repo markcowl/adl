@@ -11,9 +11,9 @@ if (process.env['no-static-loader'] === undefined && require('fs').existsSync(`$
 
 import * as path from 'path';
 import { TextDecoder, TextEncoder } from 'util';
-import { ExtensionContext, FileType, Uri, workspace } from 'vscode';
+import { env, ExtensionContext, FileType, Uri, workspace } from 'vscode';
 import { LanguageClient, LanguageClientOptions, ServerOptions, TransportKind } from 'vscode-languageclient';
-import { IsDirectoryRequest, IsFileRequest, ReadDirectoryRequest, ReadFileRequest, WriteFileRequest } from '../server/requestTypes';
+import { IsDirectoryRequest, IsFileRequest, OpenLinkRequest, ReadDirectoryRequest, ReadFileRequest, WriteFileRequest } from '../server/requestTypes';
 
 
 declare global {
@@ -167,6 +167,14 @@ export async function activate(context: ExtensionContext) {
     }
 
     return [];
+  });
+
+  client.onRequest(OpenLinkRequest.type, async ({ url }) => {
+    try {
+      (await env.openExternal(Uri.parse(url)));
+    } catch (exception) {
+      client.error(exception);
+    }
   });
 }
 

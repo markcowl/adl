@@ -39,7 +39,8 @@ export class Linter extends EventEmitter<Events> {
       code: data.id,
       source: 'adl-linter',
       message: result.message|| meta.description,
-      suggestions: result.suggestions
+      suggestions: result.suggestions,
+      documentationUrl: meta.documentationUrl
     };
   }
 
