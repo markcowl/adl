@@ -1,5 +1,5 @@
-import { MediaHeight } from '../aliases/MediaHeight';
-import { MediaWidth } from '../aliases/MediaWidth';
+import { MediaHeight } from "../aliases/MediaHeight";
+import { MediaWidth } from "../aliases/MediaWidth";
 /**
  * @description Represent the information for the URL image
  * @since 2.3

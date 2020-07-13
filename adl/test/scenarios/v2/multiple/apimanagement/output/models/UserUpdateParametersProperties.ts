@@ -1,4 +1,4 @@
-import { UserEntityBaseParameters } from './UserEntityBaseParameters';
+import { UserEntityBaseParameters } from "./UserEntityBaseParameters";
 /**
  * @description Parameters supplied to the Update User operation.
  * @since 2019-12-01

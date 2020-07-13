@@ -1,6 +1,6 @@
-import { MediaHeight } from '../aliases/MediaHeight';
-import { MediaKey } from '../aliases/MediaKey';
-import { MediaWidth } from '../aliases/MediaWidth';
+import { MediaHeight } from "../aliases/MediaHeight";
+import { MediaKey } from "../aliases/MediaKey";
+import { MediaWidth } from "../aliases/MediaWidth";
 /**
  * @description This contains the list of the fields that are common to all media returned.
  * @since 2.3

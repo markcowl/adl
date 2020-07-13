@@ -1,6 +1,6 @@
-import { PrivateEndpoint } from './PrivateEndpoint';
-import { PrivateLinkServiceConnectionState } from './PrivateLinkServiceConnectionState';
-import { PrivateEndpointConnectionProvisioningState } from '../enums/PrivateEndpointConnectionProvisioningState';
+import { PrivateEndpoint } from "./PrivateEndpoint";
+import { PrivateLinkServiceConnectionState } from "./PrivateLinkServiceConnectionState";
+import { PrivateEndpointConnectionProvisioningState } from "../enums/PrivateEndpointConnectionProvisioningState";
 /**
  * @description Properties of the private endpoint connection resource.
  * @since 2019-09-01

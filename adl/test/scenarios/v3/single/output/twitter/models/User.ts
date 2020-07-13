@@ -1,9 +1,9 @@
-import { FullTextEntities } from './FullTextEntities';
-import { UrlEntity } from './UrlEntity';
-import { UserID } from '../aliases/UserID';
-import { TweetID } from '../aliases/TweetID';
-import { UserName } from '../aliases/UserName';
-import { UserWithheld } from './UserWithheld';
+import { FullTextEntities } from "./FullTextEntities";
+import { UrlEntity } from "./UrlEntity";
+import { UserID } from "../aliases/UserID";
+import { TweetID } from "../aliases/TweetID";
+import { UserName } from "../aliases/UserName";
+import { UserWithheld } from "./UserWithheld";
 /**
  * @description The Twitter User object
  * @since 2.3

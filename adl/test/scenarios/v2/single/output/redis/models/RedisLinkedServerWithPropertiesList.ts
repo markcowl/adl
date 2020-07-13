@@ -1,4 +1,4 @@
-import { RedisLinkedServerWithProperties } from './RedisLinkedServerWithProperties';
+import { RedisLinkedServerWithProperties } from "./RedisLinkedServerWithProperties";
 /**
  * @description List of linked servers (with properties) of a Redis cache.
  * @since 2018-03-01

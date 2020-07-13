@@ -1,6 +1,6 @@
-import { Tweet } from './Tweet';
-import { Problem } from '../aliases/Problem';
-import { Expansions } from './Expansions';
+import { Tweet } from "./Tweet";
+import { Problem } from "../aliases/Problem";
+import { Expansions } from "./Expansions";
 /**
  *
  * @since 2.3

@@ -1,4 +1,4 @@
-import { RedisLinkedServerCreateProperties } from './RedisLinkedServerCreateProperties';
+import { RedisLinkedServerCreateProperties } from "./RedisLinkedServerCreateProperties";
 /**
  * @description Properties of a linked server to be returned in get/put response
  * @since 2018-03-01

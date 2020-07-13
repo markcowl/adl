@@ -1,4 +1,4 @@
-import { CacheContract } from './CacheContract';
+import { CacheContract } from "./CacheContract";
 /**
  * @description Paged Caches list representation.
  * @since 2019-12-01

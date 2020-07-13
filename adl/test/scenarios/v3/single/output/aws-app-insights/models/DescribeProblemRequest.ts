@@ -1,4 +1,4 @@
-import { ProblemId } from '../aliases/ProblemId';
+import { ProblemId } from "../aliases/ProblemId";
 /**
  * DescribeProblemRequest
  * @since 2018-11-25

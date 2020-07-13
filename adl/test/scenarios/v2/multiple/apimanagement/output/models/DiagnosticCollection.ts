@@ -1,4 +1,4 @@
-import { DiagnosticContract } from './DiagnosticContract';
+import { DiagnosticContract } from "./DiagnosticContract";
 /**
  * @description Paged Diagnostic list representation.
  * @since 2019-12-01

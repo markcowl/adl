@@ -1,4 +1,4 @@
-import { ConfigurationEventList } from '../aliases/ConfigurationEventList';
+import { ConfigurationEventList } from "../aliases/ConfigurationEventList";
 /**
  *
  * @since 2018-11-25

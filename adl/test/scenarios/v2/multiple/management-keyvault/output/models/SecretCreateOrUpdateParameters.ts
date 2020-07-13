@@ -1,4 +1,4 @@
-import { SecretProperties } from './SecretProperties';
+import { SecretProperties } from "./SecretProperties";
 /**
  * @description Parameters for creating or updating a secret
  * @since 2019-09-01

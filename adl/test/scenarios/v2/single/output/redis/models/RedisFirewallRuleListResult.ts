@@ -1,4 +1,4 @@
-import { RedisFirewallRule } from './RedisFirewallRule';
+import { RedisFirewallRule } from "./RedisFirewallRule";
 /**
  * @description The response of list firewall rules Redis operation.
  * @since 2018-03-01

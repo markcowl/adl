@@ -1,5 +1,5 @@
-import { actor } from './actor';
-import { user } from './user';
+import { actor } from "./actor";
+import { user } from "./user";
 /**
  *
  * @since v3

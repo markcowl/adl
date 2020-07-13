@@ -1,4 +1,4 @@
-import { Resource } from './Resource';
+import { Resource } from "./Resource";
 /**
  * @description The resource model definition for a ARM tracked top level resource
  * @since 2018-03-01

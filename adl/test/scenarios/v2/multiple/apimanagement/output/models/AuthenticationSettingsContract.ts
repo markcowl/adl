@@ -1,5 +1,5 @@
-import { OAuth2AuthenticationSettingsContract } from './OAuth2AuthenticationSettingsContract';
-import { OpenIdAuthenticationSettingsContract } from './OpenIdAuthenticationSettingsContract';
+import { OAuth2AuthenticationSettingsContract } from "./OAuth2AuthenticationSettingsContract";
+import { OpenIdAuthenticationSettingsContract } from "./OpenIdAuthenticationSettingsContract";
 /**
  * @description API Authentication Settings.
  * @since 2019-12-01

@@ -1,4 +1,4 @@
-import { PolicyDescriptionContract } from './PolicyDescriptionContract';
+import { PolicyDescriptionContract } from "./PolicyDescriptionContract";
 /**
  * @description Descriptions of APIM policies.
  * @since 2019-12-01

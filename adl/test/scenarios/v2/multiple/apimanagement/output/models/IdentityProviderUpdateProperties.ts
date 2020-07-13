@@ -1,4 +1,4 @@
-import { IdentityProviderBaseParameters } from './IdentityProviderBaseParameters';
+import { IdentityProviderBaseParameters } from "./IdentityProviderBaseParameters";
 /**
  * @description Parameters supplied to the Update Identity Provider operation.
  * @since 2019-12-01

@@ -1,4 +1,4 @@
-import { NotificationContract } from './NotificationContract';
+import { NotificationContract } from "./NotificationContract";
 /**
  * @description Paged Notification list representation.
  * @since 2019-12-01

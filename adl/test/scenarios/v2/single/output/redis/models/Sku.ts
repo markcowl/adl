@@ -1,5 +1,5 @@
-import { SkuName } from '../enums/SkuName';
-import { SkuFamily } from '../enums/SkuFamily';
+import { SkuName } from "../enums/SkuName";
+import { SkuFamily } from "../enums/SkuFamily";
 /**
  * @description SKU parameters supplied to the create Redis operation.
  * @since 2018-03-01

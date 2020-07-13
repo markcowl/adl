@@ -1,4 +1,4 @@
-import { RedisResource } from './RedisResource';
+import { RedisResource } from "./RedisResource";
 /**
  * @description The response of list Redis operation.
  * @since 2018-03-01

@@ -1,4 +1,4 @@
-import { VaultAccessPolicyProperties } from './VaultAccessPolicyProperties';
+import { VaultAccessPolicyProperties } from "./VaultAccessPolicyProperties";
 /**
  * @description Parameters for updating the access policy in a vault
  * @since 2019-09-01

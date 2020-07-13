@@ -1,4 +1,4 @@
-import { UserIdentityContract } from './UserIdentityContract';
+import { UserIdentityContract } from "./UserIdentityContract";
 /**
  * @description List of Users Identity list representation.
  * @since 2019-12-01

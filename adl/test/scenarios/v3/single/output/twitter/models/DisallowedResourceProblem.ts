@@ -1,4 +1,4 @@
-import { ProblemFields } from './ProblemFields';
+import { ProblemFields } from "./ProblemFields";
 /**
  * @description A problem that indicates that the resource requested violates the precepts of this API.
  * @since 2.3

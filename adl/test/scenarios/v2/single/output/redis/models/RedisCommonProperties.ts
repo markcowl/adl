@@ -1,4 +1,4 @@
-import { TlsVersion } from '../enums/TlsVersion';
+import { TlsVersion } from "../enums/TlsVersion";
 /**
  * @description Create/Update/Get common properties of the redis cache.
  * @since 2018-03-01

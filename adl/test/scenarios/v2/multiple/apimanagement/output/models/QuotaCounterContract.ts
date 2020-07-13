@@ -1,4 +1,4 @@
-import { QuotaCounterValueContractProperties } from './QuotaCounterValueContractProperties';
+import { QuotaCounterValueContractProperties } from "./QuotaCounterValueContractProperties";
 /**
  * @description Quota counter details.
  * @since 2019-12-01

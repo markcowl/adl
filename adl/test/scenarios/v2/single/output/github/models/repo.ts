@@ -1,5 +1,5 @@
-import { organization } from './organization';
-import { actor } from './actor';
+import { organization } from "./organization";
+import { actor } from "./actor";
 /**
  *
  * @since v3

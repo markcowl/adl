@@ -1,5 +1,5 @@
-import { ResourceGroupName } from '../aliases/ResourceGroupName';
-import { ResourceList } from '../aliases/ResourceList';
+import { ResourceGroupName } from "../aliases/ResourceGroupName";
+import { ResourceList } from "../aliases/ResourceList";
 /**
  * UpdateComponentRequest
  * @since 2018-11-25

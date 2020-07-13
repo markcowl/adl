@@ -1,6 +1,6 @@
-import { AsyncOperationStatus } from '../enums/AsyncOperationStatus';
-import { ErrorResponseBody } from './ErrorResponseBody';
-import { OperationResultLogItemContract } from './OperationResultLogItemContract';
+import { AsyncOperationStatus } from "../enums/AsyncOperationStatus";
+import { ErrorResponseBody } from "./ErrorResponseBody";
+import { OperationResultLogItemContract } from "./OperationResultLogItemContract";
 /**
  * @description Operation Result.
  * @since 2019-12-01

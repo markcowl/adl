@@ -1,7 +1,7 @@
-import { ProvisioningState } from '../enums/ProvisioningState';
-import { RedisAccessKeys } from './RedisAccessKeys';
-import { RedisLinkedServer } from './RedisLinkedServer';
-import { RedisCreateProperties } from './RedisCreateProperties';
+import { ProvisioningState } from "../enums/ProvisioningState";
+import { RedisAccessKeys } from "./RedisAccessKeys";
+import { RedisLinkedServer } from "./RedisLinkedServer";
+import { RedisCreateProperties } from "./RedisCreateProperties";
 /**
  * @description Properties of the redis cache.
  * @since 2018-03-01

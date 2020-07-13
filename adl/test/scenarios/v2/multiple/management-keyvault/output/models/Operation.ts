@@ -1,4 +1,4 @@
-import { OperationProperties } from './OperationProperties';
+import { OperationProperties } from "./OperationProperties";
 /**
  * @description Key Vault REST API operation definition.
  * @since 2019-09-01

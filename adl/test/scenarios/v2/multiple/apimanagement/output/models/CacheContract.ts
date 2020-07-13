@@ -1,5 +1,5 @@
-import { CacheContractProperties } from './CacheContractProperties';
-import { Resource } from './Resource';
+import { CacheContractProperties } from "./CacheContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description Cache details.
  * @since 2019-12-01

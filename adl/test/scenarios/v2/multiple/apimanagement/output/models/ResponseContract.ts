@@ -1,5 +1,5 @@
-import { RepresentationContract } from './RepresentationContract';
-import { ParameterContract } from './ParameterContract';
+import { RepresentationContract } from "./RepresentationContract";
+import { ParameterContract } from "./ParameterContract";
 /**
  * @description Operation response details.
  * @since 2019-12-01

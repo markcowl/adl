@@ -1,4 +1,4 @@
-import { Recipient } from './Recipient';
+import { Recipient } from "./Recipient";
 /**
  *
  * @since 1.1.0

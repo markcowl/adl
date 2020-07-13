@@ -1,4 +1,4 @@
-import { Reason } from '../enums/Reason';
+import { Reason } from "../enums/Reason";
 /**
  * @description The CheckNameAvailability operation response.
  * @since 2019-09-01

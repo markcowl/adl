@@ -1,4 +1,4 @@
-import { NamedValueEntityBaseParameters } from './NamedValueEntityBaseParameters';
+import { NamedValueEntityBaseParameters } from "./NamedValueEntityBaseParameters";
 /**
  * @description NamedValue Contract properties.
  * @since 2019-12-01

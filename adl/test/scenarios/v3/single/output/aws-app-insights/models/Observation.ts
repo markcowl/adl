@@ -1,12 +1,12 @@
-import { ObservationId } from '../aliases/ObservationId';
-import { LogFilter } from '../enums/LogFilter';
-import { Value } from '../aliases/Value';
-import { CloudWatchEventSource } from '../enums/CloudWatchEventSource';
-import { XRayFaultPercent } from '../aliases/XRayFaultPercent';
-import { XRayThrottlePercent } from '../aliases/XRayThrottlePercent';
-import { XRayErrorPercent } from '../aliases/XRayErrorPercent';
-import { XRayRequestCount } from '../aliases/XRayRequestCount';
-import { XRayRequestAverageLatency } from '../aliases/XRayRequestAverageLatency';
+import { ObservationId } from "../aliases/ObservationId";
+import { LogFilter } from "../enums/LogFilter";
+import { Value } from "../aliases/Value";
+import { CloudWatchEventSource } from "../enums/CloudWatchEventSource";
+import { XRayFaultPercent } from "../aliases/XRayFaultPercent";
+import { XRayThrottlePercent } from "../aliases/XRayThrottlePercent";
+import { XRayErrorPercent } from "../aliases/XRayErrorPercent";
+import { XRayRequestCount } from "../aliases/XRayRequestCount";
+import { XRayRequestAverageLatency } from "../aliases/XRayRequestAverageLatency";
 /**
  * @description Describes an anomaly or error with the application.
  * @since 2018-11-25

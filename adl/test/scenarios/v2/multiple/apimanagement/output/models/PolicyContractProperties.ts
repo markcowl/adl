@@ -1,4 +1,4 @@
-import { PolicyContentFormat } from '../enums/PolicyContentFormat';
+import { PolicyContentFormat } from "../enums/PolicyContentFormat";
 /**
  * @description Policy contract Properties.
  * @since 2019-12-01

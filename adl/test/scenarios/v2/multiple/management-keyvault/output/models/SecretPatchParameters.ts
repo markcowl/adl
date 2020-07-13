@@ -1,4 +1,4 @@
-import { SecretPatchProperties } from './SecretPatchProperties';
+import { SecretPatchProperties } from "./SecretPatchProperties";
 /**
  * @description Parameters for patching a secret
  * @since 2019-09-01

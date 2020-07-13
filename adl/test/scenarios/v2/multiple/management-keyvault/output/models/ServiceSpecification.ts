@@ -1,4 +1,4 @@
-import { LogSpecification } from './LogSpecification';
+import { LogSpecification } from "./LogSpecification";
 /**
  * @description One property of operation, include log specifications.
  * @since 2019-09-01

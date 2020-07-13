@@ -1,5 +1,5 @@
-import { ContextAnnotationDomainFields } from './ContextAnnotationDomainFields';
-import { ContextAnnotationEntityFields } from './ContextAnnotationEntityFields';
+import { ContextAnnotationDomainFields } from "./ContextAnnotationDomainFields";
+import { ContextAnnotationEntityFields } from "./ContextAnnotationEntityFields";
 /**
  * @description Annotation inferred from the tweet text.
  * @since 2.3

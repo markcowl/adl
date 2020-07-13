@@ -1,4 +1,4 @@
-import { RedisFirewallRuleProperties } from './RedisFirewallRuleProperties';
+import { RedisFirewallRuleProperties } from "./RedisFirewallRuleProperties";
 /**
  * @description Parameters required for creating a firewall rule on redis cache.
  * @since 2018-03-01

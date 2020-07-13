@@ -1,5 +1,5 @@
-import { Tier } from '../enums/Tier';
-import { ComponentConfiguration } from '../aliases/ComponentConfiguration';
+import { Tier } from "../enums/Tier";
+import { ComponentConfiguration } from "../aliases/ComponentConfiguration";
 /**
  *
  * @since 2018-11-25

@@ -1,4 +1,4 @@
-import { RecipientUserContract } from './RecipientUserContract';
+import { RecipientUserContract } from "./RecipientUserContract";
 /**
  * @description Paged Recipient User list representation.
  * @since 2019-12-01

@@ -1,5 +1,5 @@
-import { Sku } from './Sku';
-import { RedisCommonProperties } from './RedisCommonProperties';
+import { Sku } from "./Sku";
+import { RedisCommonProperties } from "./RedisCommonProperties";
 /**
  * @description Patchable properties of the redis cache.
  * @since 2018-03-01

@@ -1,4 +1,4 @@
-import { RedisPatchSchedule } from './RedisPatchSchedule';
+import { RedisPatchSchedule } from "./RedisPatchSchedule";
 /**
  * @description The response of list patch schedules Redis operation.
  * @since 2018-03-01

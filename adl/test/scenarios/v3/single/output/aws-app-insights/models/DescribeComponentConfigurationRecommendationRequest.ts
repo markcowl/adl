@@ -1,5 +1,5 @@
-import { ResourceGroupName } from '../aliases/ResourceGroupName';
-import { Tier } from '../enums/Tier';
+import { ResourceGroupName } from "../aliases/ResourceGroupName";
+import { Tier } from "../enums/Tier";
 /**
  * DescribeComponentConfigurationRecommendationRequest
  * @since 2018-11-25

@@ -1,4 +1,4 @@
-import { ServiceSpecification } from './ServiceSpecification';
+import { ServiceSpecification } from "./ServiceSpecification";
 /**
  * @description Properties of operation, include metric specifications.
  * @since 2019-09-01

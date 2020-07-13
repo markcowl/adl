@@ -1,4 +1,4 @@
-import { SamplingType } from '../enums/SamplingType';
+import { SamplingType } from "../enums/SamplingType";
 /**
  * @description Sampling settings for Diagnostic.
  * @since 2019-12-01

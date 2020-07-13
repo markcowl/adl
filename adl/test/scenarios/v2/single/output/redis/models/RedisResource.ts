@@ -1,5 +1,5 @@
-import { RedisProperties } from './RedisProperties';
-import { TrackedResource } from './TrackedResource';
+import { RedisProperties } from "./RedisProperties";
+import { TrackedResource } from "./TrackedResource";
 /**
  * @description A single Redis item in List or Get Operation.
  * @since 2018-03-01

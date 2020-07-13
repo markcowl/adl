@@ -1,4 +1,4 @@
-import { QuotaCounterContract } from './QuotaCounterContract';
+import { QuotaCounterContract } from "./QuotaCounterContract";
 /**
  * @description Paged Quota Counter list representation.
  * @since 2019-12-01

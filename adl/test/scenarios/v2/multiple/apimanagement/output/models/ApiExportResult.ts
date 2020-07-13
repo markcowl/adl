@@ -1,4 +1,4 @@
-import { ExportResultFormat } from '../enums/ExportResultFormat';
+import { ExportResultFormat } from "../enums/ExportResultFormat";
 /**
  * @description API Export result.
  * @since 2019-12-01

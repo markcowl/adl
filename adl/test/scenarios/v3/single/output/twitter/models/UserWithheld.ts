@@ -1,4 +1,4 @@
-import { CountryCode } from '../aliases/CountryCode';
+import { CountryCode } from "../aliases/CountryCode";
 /**
  * @description Indicates withholding details for [withheld content](https://help.twitter.com/en/rules-and-policies/tweet-withheld-by-country).
  * @since 2.3

@@ -1,4 +1,4 @@
-import { UpgradeNotification } from './UpgradeNotification';
+import { UpgradeNotification } from "./UpgradeNotification";
 /**
  * @description The response of listUpgradeNotifications.
  * @since 2018-03-01

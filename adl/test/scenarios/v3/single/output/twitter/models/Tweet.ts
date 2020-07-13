@@ -1,11 +1,11 @@
-import { MediaKey } from '../aliases/MediaKey';
-import { PollId } from '../aliases/PollId';
-import { UserID } from '../aliases/UserID';
-import { ContextAnnotation } from './ContextAnnotation';
-import { FullTextEntities } from './FullTextEntities';
-import { Point } from './Point';
-import { TweetID } from '../aliases/TweetID';
-import { TweetWithheld } from './TweetWithheld';
+import { MediaKey } from "../aliases/MediaKey";
+import { PollId } from "../aliases/PollId";
+import { UserID } from "../aliases/UserID";
+import { ContextAnnotation } from "./ContextAnnotation";
+import { FullTextEntities } from "./FullTextEntities";
+import { Point } from "./Point";
+import { TweetID } from "../aliases/TweetID";
+import { TweetWithheld } from "./TweetWithheld";
 /**
  *
  * @since 2.3

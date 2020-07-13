@@ -1,7 +1,7 @@
-import { NetworkRuleBypassOptions } from '../enums/NetworkRuleBypassOptions';
-import { NetworkRuleAction } from '../enums/NetworkRuleAction';
-import { IPRule } from './IPRule';
-import { VirtualNetworkRule } from './VirtualNetworkRule';
+import { NetworkRuleBypassOptions } from "../enums/NetworkRuleBypassOptions";
+import { NetworkRuleAction } from "../enums/NetworkRuleAction";
+import { IPRule } from "./IPRule";
+import { VirtualNetworkRule } from "./VirtualNetworkRule";
 /**
  * @description A set of rules governing the network accessibility of a vault.
  * @since 2019-09-01

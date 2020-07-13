@@ -1,4 +1,4 @@
-import { air1_MapData } from './air1_MapData';
+import { air1_MapData } from "./air1_MapData";
 /**
  * @description Map Output Object
  * @since 0.0.0

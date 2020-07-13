@@ -1,5 +1,5 @@
-import { ScheduleEntries } from './ScheduleEntries';
-import { ProxyResource } from './ProxyResource';
+import { ScheduleEntries } from "./ScheduleEntries";
+import { ProxyResource } from "./ProxyResource";
 /**
  * @description Response to put/get patch schedules for Redis cache.
  * @since 2018-03-01

@@ -1,4 +1,4 @@
-import { UserContract } from './UserContract';
+import { UserContract } from "./UserContract";
 /**
  * @description Paged Users list representation.
  * @since 2019-12-01

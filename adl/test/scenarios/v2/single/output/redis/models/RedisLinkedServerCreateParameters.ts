@@ -1,4 +1,4 @@
-import { RedisLinkedServerCreateProperties } from './RedisLinkedServerCreateProperties';
+import { RedisLinkedServerCreateProperties } from "./RedisLinkedServerCreateProperties";
 /**
  * @description Parameter required for creating a linked server to redis cache.
  * @since 2018-03-01

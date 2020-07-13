@@ -1,5 +1,5 @@
-import { RedisLinkedServerProperties } from './RedisLinkedServerProperties';
-import { ProxyResource } from './ProxyResource';
+import { RedisLinkedServerProperties } from "./RedisLinkedServerProperties";
+import { ProxyResource } from "./ProxyResource";
 /**
  * @description Response to put/get linked server (with properties) for Redis cache.
  * @since 2018-03-01

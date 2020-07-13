@@ -1,4 +1,4 @@
-import { RedisCreateProperties } from './RedisCreateProperties';
+import { RedisCreateProperties } from "./RedisCreateProperties";
 /**
  * @description Parameters supplied to the Create Redis operation.
  * @since 2018-03-01

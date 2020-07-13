@@ -1,4 +1,4 @@
-import { VaultProperties } from './VaultProperties';
+import { VaultProperties } from "./VaultProperties";
 /**
  * @description Resource information with extended details.
  * @since 2019-09-01

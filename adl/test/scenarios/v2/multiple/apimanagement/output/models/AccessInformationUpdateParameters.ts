@@ -1,4 +1,4 @@
-import { AccessInformationUpdateParameterProperties } from './AccessInformationUpdateParameterProperties';
+import { AccessInformationUpdateParameterProperties } from "./AccessInformationUpdateParameterProperties";
 /**
  * @description Tenant access information update parameters.
  * @since 2019-12-01

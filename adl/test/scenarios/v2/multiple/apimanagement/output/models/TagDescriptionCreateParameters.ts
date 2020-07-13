@@ -1,4 +1,4 @@
-import { TagDescriptionBaseProperties } from './TagDescriptionBaseProperties';
+import { TagDescriptionBaseProperties } from "./TagDescriptionBaseProperties";
 /**
  * @description Parameters supplied to the Create TagDescription operation.
  * @since 2019-12-01

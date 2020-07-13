@@ -1,8 +1,8 @@
-import { AlwaysLog } from '../enums/AlwaysLog';
-import { SamplingSettings } from './SamplingSettings';
-import { PipelineDiagnosticSettings } from './PipelineDiagnosticSettings';
-import { HttpCorrelationProtocol } from '../enums/HttpCorrelationProtocol';
-import { Verbosity } from '../enums/Verbosity';
+import { AlwaysLog } from "../enums/AlwaysLog";
+import { SamplingSettings } from "./SamplingSettings";
+import { PipelineDiagnosticSettings } from "./PipelineDiagnosticSettings";
+import { HttpCorrelationProtocol } from "../enums/HttpCorrelationProtocol";
+import { Verbosity } from "../enums/Verbosity";
 /**
  * @description Diagnostic Entity Properties
  * @since 2019-12-01

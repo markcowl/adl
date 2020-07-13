@@ -1,4 +1,4 @@
-import { IssueContract } from './IssueContract';
+import { IssueContract } from "./IssueContract";
 /**
  * @description Paged Issue list representation.
  * @since 2019-12-01

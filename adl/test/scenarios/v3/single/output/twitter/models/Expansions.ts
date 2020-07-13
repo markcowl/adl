@@ -1,8 +1,8 @@
-import { Media } from '../aliases/Media';
-import { Place } from './Place';
-import { Poll } from './Poll';
-import { Tweet } from './Tweet';
-import { User } from './User';
+import { Media } from "../aliases/Media";
+import { Place } from "./Place";
+import { Poll } from "./Poll";
+import { Tweet } from "./Tweet";
+import { User } from "./User";
 /**
  *
  * @since 2.3

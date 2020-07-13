@@ -1,6 +1,6 @@
-import { ContentFormat } from '../enums/ContentFormat';
-import { SoapApiType } from '../enums/SoapApiType';
-import { ApiContractProperties } from './ApiContractProperties';
+import { ContentFormat } from "../enums/ContentFormat";
+import { SoapApiType } from "../enums/SoapApiType";
+import { ApiContractProperties } from "./ApiContractProperties";
 /**
  * @description Api Create or Update Properties.
  * @since 2019-12-01

@@ -1,4 +1,4 @@
-import { ObservationList } from '../aliases/ObservationList';
+import { ObservationList } from "../aliases/ObservationList";
 /**
  * @description Describes observations related to the problem.
  * @since 2018-11-25

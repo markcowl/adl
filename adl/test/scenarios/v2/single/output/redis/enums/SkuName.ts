@@ -5,7 +5,7 @@
  * @since 2018-03-01
  */
 export enum SkuName {
-    Basic = 'Basic',
-    Standard = 'Standard',
-    Premium = 'Premium'
+    Basic = "Basic",
+    Standard = "Standard",
+    Premium = "Premium"
 }

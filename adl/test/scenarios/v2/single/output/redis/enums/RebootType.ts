@@ -5,7 +5,7 @@
  * @since 2018-03-01
  */
 export enum RebootType {
-    PrimaryNode = 'PrimaryNode',
-    SecondaryNode = 'SecondaryNode',
-    AllNodes = 'AllNodes'
+    PrimaryNode = "PrimaryNode",
+    SecondaryNode = "SecondaryNode",
+    AllNodes = "AllNodes"
 }

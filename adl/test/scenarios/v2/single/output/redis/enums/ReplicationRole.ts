@@ -4,6 +4,6 @@
  * @since 2018-03-01
  */
 export enum ReplicationRole {
-    Primary = 'Primary',
-    Secondary = 'Secondary'
+    Primary = "Primary",
+    Secondary = "Secondary"
 }

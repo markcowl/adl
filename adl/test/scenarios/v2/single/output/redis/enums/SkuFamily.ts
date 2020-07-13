@@ -5,6 +5,6 @@
  * @since 2018-03-01
  */
 export enum SkuFamily {
-    C = 'C',
-    P = 'P'
+    C = "C",
+    P = "P"
 }

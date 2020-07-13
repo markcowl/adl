@@ -1,4 +1,4 @@
-import { RedisUpdateProperties } from './RedisUpdateProperties';
+import { RedisUpdateProperties } from "./RedisUpdateProperties";
 /**
  * @description Parameters supplied to the Update Redis operation.
  * @since 2018-03-01

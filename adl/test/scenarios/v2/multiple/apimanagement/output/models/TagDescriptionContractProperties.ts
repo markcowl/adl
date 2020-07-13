@@ -1,4 +1,4 @@
-import { TagDescriptionBaseProperties } from './TagDescriptionBaseProperties';
+import { TagDescriptionBaseProperties } from "./TagDescriptionBaseProperties";
 /**
  * @description TagDescription contract Properties.
  * @since 2019-12-01

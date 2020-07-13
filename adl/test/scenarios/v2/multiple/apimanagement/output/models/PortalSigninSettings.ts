@@ -1,5 +1,5 @@
-import { PortalSigninSettingProperties } from './PortalSigninSettingProperties';
-import { Resource } from './Resource';
+import { PortalSigninSettingProperties } from "./PortalSigninSettingProperties";
+import { Resource } from "./Resource";
 /**
  * @description Sign-In settings for the Developer Portal.
  * @since 2019-12-01

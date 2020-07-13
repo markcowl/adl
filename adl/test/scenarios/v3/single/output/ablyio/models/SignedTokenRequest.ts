@@ -1,4 +1,4 @@
-import { TokenRequest } from './TokenRequest';
+import { TokenRequest } from "./TokenRequest";
 /**
  *
  * @since 1.1.0

@@ -1,4 +1,4 @@
-import { RedisKeyType } from '../enums/RedisKeyType';
+import { RedisKeyType } from "../enums/RedisKeyType";
 /**
  * @description Specifies which Redis access keys to reset.
  * @since 2018-03-01

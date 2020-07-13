@@ -1,7 +1,7 @@
-import { CashtagEntity } from './CashtagEntity';
-import { HashtagEntity } from './HashtagEntity';
-import { MentionEntity } from './MentionEntity';
-import { UrlEntity } from './UrlEntity';
+import { CashtagEntity } from "./CashtagEntity";
+import { HashtagEntity } from "./HashtagEntity";
+import { MentionEntity } from "./MentionEntity";
+import { UrlEntity } from "./UrlEntity";
 /**
  *
  * @since 2.3

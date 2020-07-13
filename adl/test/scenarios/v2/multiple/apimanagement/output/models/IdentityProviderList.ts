@@ -1,4 +1,4 @@
-import { IdentityProviderContract } from './IdentityProviderContract';
+import { IdentityProviderContract } from "./IdentityProviderContract";
 /**
  * @description List of all the Identity Providers configured on the service instance.
  * @since 2019-12-01

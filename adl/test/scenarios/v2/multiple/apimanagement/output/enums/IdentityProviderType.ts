@@ -6,15 +6,15 @@
  */
 export enum IdentityProviderType {
     /** Facebook as Identity provider. */
-    facebook = 'facebook',
+    facebook = "facebook",
     /** Google as Identity provider. */
-    google = 'google',
+    google = "google",
     /** Microsoft Live as Identity provider. */
-    microsoft = 'microsoft',
+    microsoft = "microsoft",
     /** Twitter as Identity provider. */
-    twitter = 'twitter',
+    twitter = "twitter",
     /** Azure Active Directory as Identity provider. */
-    aad = 'aad',
+    aad = "aad",
     /** Azure Active Directory B2C as Identity provider. */
-    aadB2C = 'aadB2C'
+    aadB2C = "aadB2C"
 }

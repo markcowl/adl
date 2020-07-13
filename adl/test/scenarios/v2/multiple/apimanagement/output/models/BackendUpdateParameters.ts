@@ -1,4 +1,4 @@
-import { BackendUpdateParameterProperties } from './BackendUpdateParameterProperties';
+import { BackendUpdateParameterProperties } from "./BackendUpdateParameterProperties";
 /**
  * @description Backend update parameters.
  * @since 2019-12-01

@@ -1,8 +1,8 @@
-import { Sku } from './Sku';
-import { AccessPolicyEntry } from './AccessPolicyEntry';
-import { CreateMode } from '../enums/CreateMode';
-import { NetworkRuleSet } from './NetworkRuleSet';
-import { PrivateEndpointConnectionItem } from './PrivateEndpointConnectionItem';
+import { Sku } from "./Sku";
+import { AccessPolicyEntry } from "./AccessPolicyEntry";
+import { CreateMode } from "../enums/CreateMode";
+import { NetworkRuleSet } from "./NetworkRuleSet";
+import { PrivateEndpointConnectionItem } from "./PrivateEndpointConnectionItem";
 /**
  * @description Properties of the vault
  * @since 2019-09-01

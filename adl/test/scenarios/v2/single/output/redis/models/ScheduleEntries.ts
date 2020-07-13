@@ -1,4 +1,4 @@
-import { ScheduleEntry } from './ScheduleEntry';
+import { ScheduleEntry } from "./ScheduleEntry";
 /**
  * @description List of patch schedules for a Redis cache.
  * @since 2018-03-01

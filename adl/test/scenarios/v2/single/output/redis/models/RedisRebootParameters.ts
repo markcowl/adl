@@ -1,4 +1,4 @@
-import { RebootType } from '../enums/RebootType';
+import { RebootType } from "../enums/RebootType";
 /**
  * @description Specifies which Redis node(s) to reboot.
  * @since 2018-03-01

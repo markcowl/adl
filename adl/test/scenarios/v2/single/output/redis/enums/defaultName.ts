@@ -5,5 +5,5 @@
  * @since 2018-03-01
  */
 export enum defaultName {
-    default = 'default'
+    default = "default"
 }

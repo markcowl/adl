@@ -1,5 +1,5 @@
-import { Sku } from './Sku';
-import { RedisCommonProperties } from './RedisCommonProperties';
+import { Sku } from "./Sku";
+import { RedisCommonProperties } from "./RedisCommonProperties";
 /**
  * @description Properties supplied to Create Redis operation.
  * @since 2018-03-01

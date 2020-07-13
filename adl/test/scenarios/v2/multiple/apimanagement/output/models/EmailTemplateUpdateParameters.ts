@@ -1,4 +1,4 @@
-import { EmailTemplateUpdateParameterProperties } from './EmailTemplateUpdateParameterProperties';
+import { EmailTemplateUpdateParameterProperties } from "./EmailTemplateUpdateParameterProperties";
 /**
  * @description Email Template update Parameters.
  * @since 2019-12-01

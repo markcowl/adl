@@ -1,4 +1,4 @@
-import { DayOfWeek } from '../enums/DayOfWeek';
+import { DayOfWeek } from "../enums/DayOfWeek";
 /**
  * @description Patch schedule entry for a Premium Redis Cache.
  * @since 2018-03-01

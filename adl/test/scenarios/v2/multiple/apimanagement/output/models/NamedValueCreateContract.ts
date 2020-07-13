@@ -1,5 +1,5 @@
-import { NamedValueCreateContractProperties } from './NamedValueCreateContractProperties';
-import { Resource } from './Resource';
+import { NamedValueCreateContractProperties } from "./NamedValueCreateContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description NamedValue details.
  * @since 2019-12-01

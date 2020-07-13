@@ -1,6 +1,6 @@
-import { Protocol } from '../enums/Protocol';
-import { ApiVersionSetContractDetails } from './ApiVersionSetContractDetails';
-import { ApiEntityBaseContract } from './ApiEntityBaseContract';
+import { Protocol } from "../enums/Protocol";
+import { ApiVersionSetContractDetails } from "./ApiVersionSetContractDetails";
+import { ApiEntityBaseContract } from "./ApiEntityBaseContract";
 /**
  * @description Api Entity Properties
  * @since 2019-12-01

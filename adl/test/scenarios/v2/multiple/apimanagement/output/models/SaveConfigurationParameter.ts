@@ -1,4 +1,4 @@
-import { SaveConfigurationParameterProperties } from './SaveConfigurationParameterProperties';
+import { SaveConfigurationParameterProperties } from "./SaveConfigurationParameterProperties";
 /**
  * @description Save Tenant Configuration Contract details.
  * @since 2019-12-01

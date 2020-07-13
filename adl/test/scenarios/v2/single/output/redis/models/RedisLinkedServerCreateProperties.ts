@@ -1,4 +1,4 @@
-import { ReplicationRole } from '../enums/ReplicationRole';
+import { ReplicationRole } from "../enums/ReplicationRole";
 /**
  * @description Create properties for a linked server
  * @since 2018-03-01

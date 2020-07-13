@@ -1,5 +1,5 @@
-import { URLImage } from './URLImage';
-import { HTTPStatusCode } from '../aliases/HTTPStatusCode';
+import { URLImage } from "./URLImage";
+import { HTTPStatusCode } from "../aliases/HTTPStatusCode";
 /**
  * @description Represent the portion of text recognized as a URL.
  * @since 2.3

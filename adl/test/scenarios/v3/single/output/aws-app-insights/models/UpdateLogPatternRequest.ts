@@ -1,8 +1,8 @@
-import { ResourceGroupName } from '../aliases/ResourceGroupName';
-import { LogPatternSetName } from '../aliases/LogPatternSetName';
-import { LogPatternName } from '../aliases/LogPatternName';
-import { LogPatternRegex } from '../aliases/LogPatternRegex';
-import { LogPatternRank } from '../aliases/LogPatternRank';
+import { ResourceGroupName } from "../aliases/ResourceGroupName";
+import { LogPatternSetName } from "../aliases/LogPatternSetName";
+import { LogPatternName } from "../aliases/LogPatternName";
+import { LogPatternRegex } from "../aliases/LogPatternRegex";
+import { LogPatternRank } from "../aliases/LogPatternRank";
 /**
  * UpdateLogPatternRequest
  * @since 2018-11-25

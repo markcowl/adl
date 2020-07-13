@@ -1,4 +1,4 @@
-import { ProductEntityBaseParameters } from './ProductEntityBaseParameters';
+import { ProductEntityBaseParameters } from "./ProductEntityBaseParameters";
 /**
  * @description Parameters supplied to the Update Product operation.
  * @since 2019-12-01

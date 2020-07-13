@@ -1,5 +1,5 @@
-import { EmailTemplateContractProperties } from './EmailTemplateContractProperties';
-import { Resource } from './Resource';
+import { EmailTemplateContractProperties } from "./EmailTemplateContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description Email Template details.
  * @since 2019-12-01

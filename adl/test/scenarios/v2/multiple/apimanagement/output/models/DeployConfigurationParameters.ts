@@ -1,4 +1,4 @@
-import { DeployConfigurationParameterProperties } from './DeployConfigurationParameterProperties';
+import { DeployConfigurationParameterProperties } from "./DeployConfigurationParameterProperties";
 /**
  * @description Deploy Tenant Configuration Contract.
  * @since 2019-12-01

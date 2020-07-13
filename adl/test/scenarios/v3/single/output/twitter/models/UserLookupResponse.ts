@@ -1,6 +1,6 @@
-import { User } from './User';
-import { Problem } from '../aliases/Problem';
-import { Expansions } from './Expansions';
+import { User } from "./User";
+import { Problem } from "../aliases/Problem";
+import { Expansions } from "./Expansions";
 /**
  *
  * @since 2.3

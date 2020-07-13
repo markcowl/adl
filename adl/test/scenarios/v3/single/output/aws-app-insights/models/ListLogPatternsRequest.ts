@@ -1,6 +1,6 @@
-import { ResourceGroupName } from '../aliases/ResourceGroupName';
-import { LogPatternSetName } from '../aliases/LogPatternSetName';
-import { MaxEntities } from '../aliases/MaxEntities';
+import { ResourceGroupName } from "../aliases/ResourceGroupName";
+import { LogPatternSetName } from "../aliases/LogPatternSetName";
+import { MaxEntities } from "../aliases/MaxEntities";
 /**
  * ListLogPatternsRequest
  * @since 2018-11-25

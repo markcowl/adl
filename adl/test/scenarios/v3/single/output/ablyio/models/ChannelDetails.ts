@@ -1,4 +1,4 @@
-import { ChannelStatus } from './ChannelStatus';
+import { ChannelStatus } from "./ChannelStatus";
 /**
  *
  * @since 1.1.0

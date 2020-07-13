@@ -1,5 +1,5 @@
-import { RecipientUsersContractProperties } from './RecipientUsersContractProperties';
-import { Resource } from './Resource';
+import { RecipientUsersContractProperties } from "./RecipientUsersContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description Recipient User details.
  * @since 2019-12-01

@@ -9,7 +9,7 @@
  */
 export enum SoapApiType {
     /** Imports a SOAP API having a RESTful front end. */
-    SoapToRest = 'http',
+    SoapToRest = "http",
     /** Imports the Soap API having a SOAP front end. */
-    SoapPassThrough = 'soap'
+    SoapPassThrough = "soap"
 }

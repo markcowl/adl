@@ -1,5 +1,5 @@
-import { TagDescriptionContractProperties } from './TagDescriptionContractProperties';
-import { Resource } from './Resource';
+import { TagDescriptionContractProperties } from "./TagDescriptionContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description Contract details.
  * @since 2019-12-01

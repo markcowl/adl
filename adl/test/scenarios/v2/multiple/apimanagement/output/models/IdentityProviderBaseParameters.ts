@@ -1,4 +1,4 @@
-import { IdentityProviderType } from '../enums/IdentityProviderType';
+import { IdentityProviderType } from "../enums/IdentityProviderType";
 /**
  * @description Identity Provider Base Parameter Properties.
  * @since 2019-12-01

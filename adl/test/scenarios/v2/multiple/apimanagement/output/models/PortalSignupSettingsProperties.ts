@@ -1,4 +1,4 @@
-import { TermsOfServiceProperties } from './TermsOfServiceProperties';
+import { TermsOfServiceProperties } from "./TermsOfServiceProperties";
 /**
  * @description Sign-up settings contract properties.
  * @since 2019-12-01

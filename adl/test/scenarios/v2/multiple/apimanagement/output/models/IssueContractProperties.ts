@@ -1,4 +1,4 @@
-import { IssueContractBaseProperties } from './IssueContractBaseProperties';
+import { IssueContractBaseProperties } from "./IssueContractBaseProperties";
 /**
  * @description Issue contract Properties.
  * @since 2019-12-01

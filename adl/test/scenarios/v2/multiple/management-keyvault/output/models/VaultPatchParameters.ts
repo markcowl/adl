@@ -1,4 +1,4 @@
-import { VaultPatchProperties } from './VaultPatchProperties';
+import { VaultPatchProperties } from "./VaultPatchProperties";
 /**
  * @description Parameters for creating or updating a vault
  * @since 2019-09-01
