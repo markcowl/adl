@@ -1,7 +1,7 @@
 import { items, length, values } from '@azure-tools/linq';
 import { common, isReference, v2 } from '@azure-tools/openapi';
 import { nameOf } from '@azure-tools/sourcemap';
-import { createOperationGroup, createOperationStructure, Method, OperationStructure, Path } from '../../../model/http/operation';
+import { createOperationGroup, createOperationStructure, Method, OperationStructure } from '../../../model/http/operation';
 import { ParameterTypeReference, ResponseTypeReference } from '../../../model/schema/type';
 import { getGroupAndName } from '../common/path';
 import { versionInfo } from '../common/schema';
@@ -36,14 +36,14 @@ async function* processPath(pathItem: v2.PathItem, $: Context): AsyncGenerator<O
   const path = nameOf(pathItem);
   for (const method of values(common.HttpMethod)) {
     if (method in pathItem) {
-      yield processOperation({method: <Method><unknown>method, path}, pathItem[<common.HttpMethod>method], pathItem, $);
+      yield processOperation(<Method><unknown>method, path, pathItem[<common.HttpMethod>method], pathItem, $);
     }
   }
   // addExtensionsToAttic($.api.http, pathItem);
 }
 
-async function processOperation(path: Path, operation: v2.Operation, shared: v2.PathItem, $: Context): Promise<OperationStructure> {
-  const [group, name] = getGroupAndName(operation, path.path);
+async function processOperation(method: Method, path: string, operation: v2.Operation, shared: v2.PathItem, $: Context): Promise<OperationStructure> {
+  const [group, name] = getGroupAndName(operation, path);
 
   const parameters = new Array<ParameterTypeReference>();
   const responses = new Array<ResponseTypeReference>();
@@ -77,7 +77,7 @@ async function processOperation(path: Path, operation: v2.Operation, shared: v2.
   }
 
   return createOperationStructure(
-    $.api,
+    method,
     path,
     group,
     name, {

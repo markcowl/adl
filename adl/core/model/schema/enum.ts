@@ -106,6 +106,6 @@ export class EnumType extends NamedElement<EnumDeclaration> implements TypeRefer
   }
 
   createValue() {
-    // shh
+    throw new Error('not implemented');
   }
 }

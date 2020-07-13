@@ -1,6 +1,6 @@
-import { Node, TypeParameterDeclaration } from 'ts-morph';
+import { Node, ts, TypeParameterDeclaration } from 'ts-morph';
 import { TypeSyntax } from '../../support/codegen';
-import { expandLiterals } from '../../support/typescript';
+import { expandLiterals, getDefinition } from '../../support/typescript';
 import * as base from '../operation';
 import { TypeReference } from '../schema/type';
 import { Reference } from '../typescript/reference';
@@ -33,28 +33,73 @@ export class ResponseCriteria extends base.ResponseCriteria {
 
 export class Result extends base.Result {
   get body(): TypeReference | undefined {
-    if (Node.isTypeLiteralNode(this.node) || Node.isInterfaceDeclaration(this.node)) {
-      const bodyType =  this.node.getProperty('body');
-      if (bodyType) {
-        return {
-          declaration: new TypeSyntax(bodyType.getTypeNode()?.compilerNode ?? 'any'),
-          requiredReferences: []
-        };
-      }
+    const bodyType =  this.node.getProperty('body');
+    if (bodyType) {
+      return {
+        declaration: new TypeSyntax(bodyType.getTypeNode()?.compilerNode ?? ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)),
+        requiredReferences: []
+      };
     }
+
     return undefined;
   }
 
   get headers(): Array<TypeReference> {
-    return []; // TODO
+    const headersType = this.node.getProperty('headers')?.getTypeNode();
+    if (headersType && Node.isTupleTypeNode(headersType)) {
+      return headersType.getElementTypeNodes().map(t => ({
+        declaration: new TypeSyntax(t.compilerNode ?? ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)),
+        requiredReferences: []
+      }));
+    }
+
+    return [];
   }
 
   get isException(): boolean | TypeParameterDeclaration {
-    return false;
+    const isExceptionType = this.node.getProperty('isException')?.getTypeNode();
+    if (!isExceptionType) {
+      return false;
+    }
+
+    if (Node.isLiteralTypeNode(isExceptionType)) {
+      const literal = isExceptionType.getLiteral();
+      if (Node.isBooleanLiteral(literal)) {
+        return literal.getLiteralValue();
+      }
+    }
+
+    if (Node.isTypeReferenceNode(isExceptionType)) {
+      const definition = getDefinition(isExceptionType);
+      if (Node.isTypeParameterDeclaration(definition)) {
+        return definition;
+      }
+    }
+
+    throw new Error('Invalid type for isException');
   }
 
   get message(): string | undefined | TypeParameterDeclaration  {
-    return undefined;
+    const messageType = this.node.getProperty('message')?.getTypeNode();
+    if (!messageType) {
+      return undefined;
+    }
+
+    if (Node.isLiteralTypeNode(messageType)) {
+      const literal = messageType.getLiteral();
+      if (Node.isStringLiteral(literal)) {
+        return literal.getLiteralValue();
+      }
+    }
+
+    if (Node.isTypeReferenceNode(messageType)) {
+      const definition = getDefinition(messageType);
+      if (Node.isTypeParameterDeclaration(definition)) {
+        return definition;
+      }
+    }
+
+    throw new Error('Invalid type for message');
   }
 }
 
