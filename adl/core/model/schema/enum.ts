@@ -1,6 +1,6 @@
 import { isAnonymous } from '@azure-tools/sourcemap';
 import { EnumDeclaration, EnumMember, ts } from 'ts-morph';
-import { normalizeIdentifier, TypeSyntax } from '../../support/codegen';
+import { normalizeMemberName, TypeSyntax } from '../../support/codegen';
 import { createDocs, hasTag, setTag } from '../../support/doc-tag';
 import { ApiModel } from '../api-model';
 import { Identity } from '../types';
@@ -39,7 +39,7 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
       name,
       isExported: true,
       members: values.map(value => ({
-        name: value.name || normalizeIdentifier(value.value),
+        name: value.name || normalizeMemberName(value.value),
         value: typeof value.value !== 'string' && typeof value.value !== 'number' ?
           `/* ${typeof value.value} */${value.value}` :  // TODO: how would we represent enum of non-string, non-number?
           value.value,

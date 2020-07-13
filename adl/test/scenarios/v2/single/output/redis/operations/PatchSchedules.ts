@@ -20,10 +20,10 @@ export interface PatchSchedules {
      * @tag PatchSchedules
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the redis cache.
-     * @param default - Default string modeled as parameter for auto generation to work correctly.
+     * @param _default - Default string modeled as parameter for auto generation to work correctly.
      * @return 200 - Response of get patch schedules.
      */
-    Get(resourceGroupName: string, name: string, : defaultName, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    Get(resourceGroupName: string, name: string, _default: Path<defaultName, "default">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: RedisPatchSchedule;
     }];
     /**
@@ -34,12 +34,12 @@ export interface PatchSchedules {
      * @tag PatchSchedules
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the Redis cache.
-     * @param default - Default string modeled as parameter for auto generation to work correctly.
+     * @param _default - Default string modeled as parameter for auto generation to work correctly.
      * @param parameters - Parameters to set the patching schedule for Redis cache.
      * @return 200 - The patch schedule was successfully updated.
      * @return 201 - The patch schedule was successfully created.
      */
-    CreateOrUpdate(resourceGroupName: string, name: string, : defaultName, parameters: Body<RedisPatchSchedule, "application/json">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
+    CreateOrUpdate(resourceGroupName: string, name: string, _default: Path<defaultName, "default">, parameters: Body<RedisPatchSchedule, "application/json">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: RedisPatchSchedule;
     }, (code: 201, mediaType: "application/json") => {
         body: RedisPatchSchedule;
@@ -52,9 +52,9 @@ export interface PatchSchedules {
      * @tag PatchSchedules
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the redis cache.
-     * @param default - Default string modeled as parameter for auto generation to work correctly.
+     * @param _default - Default string modeled as parameter for auto generation to work correctly.
      * @return 200 - Success.
      * @return 204 - Success.
      */
-    Delete(resourceGroupName: string, name: string, : defaultName, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {}, (code: 204, mediaType: "application/json") => {}];
+    Delete(resourceGroupName: string, name: string, _default: Path<defaultName, "default">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {}, (code: 204, mediaType: "application/json") => {}];
 }

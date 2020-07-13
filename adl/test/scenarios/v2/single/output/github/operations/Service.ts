@@ -1472,7 +1472,7 @@ export interface Service {
      * for details.
      *
      */
-    '...'(owner: string, repo: string, baseId: string, headId: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    "..."(owner: string, repo: string, baseId: string, headId: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: compare_commits;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {

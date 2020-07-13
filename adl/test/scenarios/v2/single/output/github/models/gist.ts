@@ -33,7 +33,7 @@ export interface gist {
          *
          * @since v3
          */
-        'ring.erl'?: {
+        "ring.erl"?: {
             /**
              *
              * @since v3

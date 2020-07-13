@@ -53,10 +53,10 @@ export interface Secrets {
      * @tag Secrets
      * @param resourceGroupName - The name of the Resource Group to which the vault belongs.
      * @param vaultName - The name of the vault.
-     * @param __top - Maximum number of results to return.
+     * @param $top - Maximum number of results to return.
      * @return 200 - Get information about secrets in the specified vault.
      */
-    List(resourceGroupName: string, vaultName: string, __top?: Query<int32, "$top">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    List(resourceGroupName: string, vaultName: string, $top?: Query<int32>, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: SecretListResult;
     }];
 }

@@ -18,12 +18,12 @@ export interface patchGist {
          *
          * @since v3
          */
-        'delete_this_file.txt'?: string;
+        "delete_this_file.txt"?: string;
         /**
          *
          * @since v3
          */
-        'file1.txt'?: {
+        "file1.txt"?: {
             /**
              *
              * @since v3
@@ -34,7 +34,7 @@ export interface patchGist {
          *
          * @since v3
          */
-        'new_file.txt'?: {
+        "new_file.txt"?: {
             /**
              *
              * @since v3
@@ -45,7 +45,7 @@ export interface patchGist {
          *
          * @since v3
          */
-        'old_name.txt'?: {
+        "old_name.txt"?: {
             /**
              *
              * @since v3

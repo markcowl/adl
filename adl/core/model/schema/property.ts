@@ -1,5 +1,5 @@
 import { PropertySignature, PropertySignatureStructure, StructureKind } from 'ts-morph';
-import { normalizeIdentifier } from '../../support/codegen';
+import { normalizeMemberName } from '../../support/codegen';
 import { createDocs } from '../../support/doc-tag';
 import { addNullable } from '../../support/typescript';
 import { SchemaInitializer } from '../typescript/schema';
@@ -23,7 +23,7 @@ export function createPropertySignature(name: string, typeReference: TypeReferen
   return {
     kind: StructureKind.PropertySignature,
     //todo: do a better 'fix-the-bad-name' (ie, perks/codegen)
-    name: normalizeIdentifier(name),
+    name: normalizeMemberName(name),
     type: initializer?.nullable ? addNullable(typeReference.declaration.text) : typeReference.declaration.text,
     isReadonly: initializer?.readOnly,
     hasQuestionToken: !(initializer?.required),

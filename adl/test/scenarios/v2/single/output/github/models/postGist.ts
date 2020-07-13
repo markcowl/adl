@@ -18,7 +18,7 @@ export interface postGist {
          *
          * @since v3
          */
-        'file1.txt'?: {
+        "file1.txt"?: {
             /**
              *
              * @since v3

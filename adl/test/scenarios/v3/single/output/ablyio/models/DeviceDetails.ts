@@ -38,10 +38,10 @@ export interface DeviceDetails {
      *
      * @since 1.1.0
      */
-    'push.recipient'?: Recipient;
+    "push.recipient"?: Recipient;
     /**
      * @description the current state of the push device.
      * @since 1.1.0
      */
-    readonly 'push.state'?: "Active" | "Failing" | "Failed";
+    readonly "push.state"?: "Active" | "Failing" | "Failed";
 }

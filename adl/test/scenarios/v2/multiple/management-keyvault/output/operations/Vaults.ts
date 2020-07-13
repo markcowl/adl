@@ -77,10 +77,10 @@ export interface Vaults {
      * @http GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults
      * @tag Vaults
      * @param resourceGroupName - The name of the Resource Group to which the vault belongs.
-     * @param __top - Maximum number of results to return.
+     * @param $top - Maximum number of results to return.
      * @return 200 - Get information about all key vaults in the specified resource group.
      */
-    ListByResourceGroup(resourceGroupName: string, __top?: Query<int32, "$top">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    ListByResourceGroup(resourceGroupName: string, $top?: Query<int32>, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: VaultListResult;
     }];
     /**
@@ -88,10 +88,10 @@ export interface Vaults {
      * @since 2019-09-01
      * @http GET /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/vaults
      * @tag Vaults
-     * @param __top - Maximum number of results to return.
+     * @param $top - Maximum number of results to return.
      * @return 200 - Get information about all key vaults in the specified subscription.
      */
-    ListBySubscription(__top?: Query<int32, "$top">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    ListBySubscription($top?: Query<int32>, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: VaultListResult;
     }];
     /**
@@ -132,12 +132,12 @@ export interface Vaults {
      * @since 2019-09-01
      * @http GET /subscriptions/{subscriptionId}/resources
      * @tag Vaults
-     * @param __filter - The filter to apply on the operation.
-     * @param __top - Maximum number of results to return.
+     * @param $filter - The filter to apply on the operation.
+     * @param $top - Maximum number of results to return.
      * @param api_version - Azure Resource Manager Api Version.
      * @return 200 - Get information about all key vaults in the subscription.
      */
-    List(__filter: Query<"resourceType eq 'Microsoft.KeyVault/vaults'", "$filter">, __top?: Query<int32, "$top">, api_version: Query<"2015-11-01", "api-version">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
+    List($filter: Query<"resourceType eq 'Microsoft.KeyVault/vaults'">, $top?: Query<int32>, api_version: Query<"2015-11-01", "api-version">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: ResourceListResult;
     }];
     /**

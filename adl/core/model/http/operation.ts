@@ -1,6 +1,6 @@
 import { fail } from 'assert';
 import { FunctionTypeNode, JSDocTagStructure, MethodSignatureStructure, Node, ParameterDeclarationStructure, printNode, StructureKind, ts, TupleTypeNode } from 'ts-morph';
-import { normalizeIdentifier, normalizeName } from '../../support/codegen';
+import { normalizeIdentifier, normalizeMemberName } from '../../support/codegen';
 import { createDocs } from '../../support/doc-tag';
 import { Alias } from '../alias';
 import { ApiModel } from '../api-model';
@@ -157,7 +157,7 @@ export function createOperationStructure(
   return {
     kind: StructureKind.MethodSignature,
     group: normalizeIdentifier(group),
-    name: normalizeIdentifier(name),
+    name: normalizeMemberName(name),
     returnType: responseStructures.type,
     parameters: [
       ...parameterStructures.parameters,
@@ -200,7 +200,7 @@ function createParameterStructures(parameters?: Array<ParameterTypeReference>) {
   const tagStructures = new Array<JSDocTagStructure>();
 
   for (const parameter of parameters ?? []) {
-    const name = normalizeName(parameter.name);
+    const name = normalizeIdentifier(parameter.name);
     const type = parameter.declaration.text;
 
     parameterStructures.push({

@@ -1,22 +1,47 @@
 import { printNode, ts, TypeParameterDeclarationStructure } from 'ts-morph';
 
 /**
- * Prepares a string for use as a TypeScript identifier.
+ * Prepares a string for use as a TypeScript interface member name
  *
- * if the string contains non alphanumeric characters, it is quoted.
- *
+ * If necessary, the string is quoted and escaped
 */
-export function normalizeIdentifier(value: string) {
-  return /[^\w]/g.exec(value) ? `'${value.replace(/'/g, '\\\'')}'` : value;
-}
-
-export function normalizeName(value: string) {
-  if (/^[^a-zA-Z]/.test(value)) {
-    // \w matches digits, but we can't lead with a digit
-    value = `_${value}`;
+export function normalizeMemberName(value: string) {
+  if (!isValidIdentifier(value, true)) {
+    value = JSON.stringify(value);
   }
 
-  return value.replace(/[^\w]+/g, '_');
+  return value;
+}
+
+/**
+ * Prepares a string to be used as a TypeScript identifier
+ *
+ * If it is not a valid identifier, anything but A-Z, a-z, 0-9, _, or $ is
+ * replaced by _. If it is still not a valid identifier, a leading _ is
+ * prepended.
+ */
+export function normalizeIdentifier(value: string) {
+  if (!isValidIdentifier(value)) {
+    value = value.replace(/[^A-Za-z0-9_$]+/g, '_');
+    if (!isValidIdentifier(value)) {
+      value = '_' + value;
+    }
+  }
+
+  return value;
+}
+
+export function isValidIdentifier(value: string, allowReserved = false) {
+  const scanner = ts.createScanner(
+    ts.ScriptTarget.Latest,
+    false,
+    ts.LanguageVariant.Standard,
+    value);
+
+  const kind = scanner.scan();
+  return (scanner.isIdentifier() || (allowReserved && scanner.isReservedWord())) &&
+    scanner.getTokenPos() == 0 &&
+    scanner.getTextPos() == value.length;
 }
 
 /**

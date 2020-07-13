@@ -16,7 +16,7 @@ export interface Service {
      * @param start_index - An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
      * @return 200 - Successful response
      */
-    'analytics.data.get'(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, ids: Query<string>, start_date: Query<string, "start-date">, end_date: Query<string, "end-date">, metrics: Query<string>, dimensions?: Query<string>, filters?: Query<string>, max_results?: Query<int64, "max-results">, segment?: Query<string>, sort?: Query<string>, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
+    "analytics.data.get"(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, ids: Query<string>, start_date: Query<string, "start-date">, end_date: Query<string, "end-date">, metrics: Query<string>, dimensions?: Query<string>, filters?: Query<string>, max_results?: Query<int64, "max-results">, segment?: Query<string>, sort?: Query<string>, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
     /**
      * @description Lists all accounts to which the user has access.
      * @since v2.4
@@ -26,7 +26,7 @@ export interface Service {
      * @param start_index - An index of the first account to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
      * @return 200 - Successful response
      */
-    'analytics.management.accounts.list'(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, max_results?: Query<int64, "max-results">, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
+    "analytics.management.accounts.list"(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, max_results?: Query<int64, "max-results">, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
     /**
      * @description Lists web properties to which the user has access.
      * @since v2.4
@@ -37,7 +37,7 @@ export interface Service {
      * @param start_index - An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
      * @return 200 - Successful response
      */
-    'analytics.management.webproperties.list'(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, accountId: string, max_results?: Query<int64, "max-results">, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
+    "analytics.management.webproperties.list"(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, accountId: string, max_results?: Query<int64, "max-results">, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
     /**
      * @description Lists views (profiles) to which the user has access.
      * @since v2.4
@@ -49,7 +49,7 @@ export interface Service {
      * @param start_index - An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
      * @return 200 - Successful response
      */
-    'analytics.management.profiles.list'(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, accountId: string, webPropertyId: string, max_results?: Query<int64, "max-results">, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
+    "analytics.management.profiles.list"(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, accountId: string, webPropertyId: string, max_results?: Query<int64, "max-results">, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
     /**
      * @description Lists goals to which the user has access.
      * @since v2.4
@@ -62,7 +62,7 @@ export interface Service {
      * @param start_index - An index of the first goal to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
      * @return 200 - Successful response
      */
-    'analytics.management.goals.list'(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, accountId: string, webPropertyId: string, profileId: string, max_results?: Query<int64, "max-results">, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
+    "analytics.management.goals.list"(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, accountId: string, webPropertyId: string, profileId: string, max_results?: Query<int64, "max-results">, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
     /**
      * @description Lists advanced segments to which the user has access.
      * @since v2.4
@@ -72,5 +72,5 @@ export interface Service {
      * @param start_index - An index of the first advanced segment to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
      * @return 200 - Successful response
      */
-    'analytics.management.segments.list'(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, max_results?: Query<int64, "max-results">, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
+    "analytics.management.segments.list"(alt?: alt, fields?: fields, key?: key, oauth_token?: oauth_token, prettyPrint?: prettyPrint, quotaUser?: quotaUser, userIp?: userIp, max_results?: Query<int64, "max-results">, start_index?: Query<int64 & Minimum<1>, "start-index">): [(code: 200) => {}];
 }
