@@ -1,6 +1,6 @@
 {
   "name": "@azure-tools/adl-plugin-sample",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "ADL sample plugin",
   "types": "./dist/index",
   "main": "dist/exports.js",

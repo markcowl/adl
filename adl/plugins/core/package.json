@@ -1,6 +1,6 @@
 {
   "name": "@azure-tools/adl.types.core",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "ADL Type Definitions for HTTP APIs",
   "types": "./dist/index",
   "main": "dist/exports.js",

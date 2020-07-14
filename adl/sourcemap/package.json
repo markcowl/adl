@@ -1,6 +1,6 @@
 {
   "name": "@azure-tools/sourcemap",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "sourcemap creation support",
   "main": "dist/exports",
   "typings": "dist/exports.d.ts",
