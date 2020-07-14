@@ -1,6 +1,6 @@
 {
   "name": "@azure-tools/adl",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "ADL cli tool",
   "main": "dist/main.js",
   "bin": {
