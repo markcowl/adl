@@ -2,7 +2,7 @@ import { isAnonymous } from '@azure-tools/sourcemap';
 import { ts, TypeAliasDeclaration } from 'ts-morph';
 import { TypeSyntax } from '../../support/codegen';
 import { createDocs, Documentation } from '../../support/doc-tag';
-import { addImportsTo } from '../../support/typescript';
+import { addImportsTo, createImportsFor } from '../../support/typescript';
 import { ApiModel } from '../api-model';
 import { Identity } from '../types';
 import { NamedElement } from '../typescript/named-element';
@@ -28,7 +28,8 @@ export function createTypeAlias<T extends TypeReference>(api: ApiModel, identity
   const { name, file } = api.getNameAndFile(identity, 'alias');
 
   // we have to add the imports of the target to this file
-  addImportsTo(file, typeReference);
+  const imports = createImportsFor(file, typeReference);
+  addImportsTo(file, imports);
 
   file.addTypeAlias({
     name,

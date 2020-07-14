@@ -1,9 +1,9 @@
 import { values } from '@azure-tools/linq';
 import { isAnonymous } from '@azure-tools/sourcemap';
-import { InterfaceDeclaration, ts } from 'ts-morph';
+import { ImportDeclarationStructure, InterfaceDeclaration, ts } from 'ts-morph';
 import { TypeSyntax } from '../../support/codegen';
 import { createDocs } from '../../support/doc-tag';
-import { addImportsTo } from '../../support/typescript';
+import { addImportsTo, createImportsFor } from '../../support/typescript';
 import { ApiModel } from '../api-model';
 import { Identity } from '../types';
 import { NamedElement } from '../typescript/named-element';
@@ -35,6 +35,13 @@ export function createModelType(api: ApiModel, identity: Identity, initializer?:
 
   const { name, file } = api.getNameAndFile(identity, 'model');
 
+  const imports = new Array<ImportDeclarationStructure>();
+  for (const each of values(initializer?.requiredReferences)) {
+    imports.push(...createImportsFor(file,each));
+  }
+
+  addImportsTo(file, imports);
+
   const iface = file.addInterface({
     name,
     properties: initializer?.properties || [],
@@ -42,10 +49,6 @@ export function createModelType(api: ApiModel, identity: Identity, initializer?:
     docs: createDocs(initializer),
     isExported: true,
   });
-
-  for (const each of values(initializer?.requiredReferences)) {
-    addImportsTo(file,each);
-  }
 
   return {
     declaration: new TypeSyntax(ts.createTypeReferenceNode(name, undefined)),

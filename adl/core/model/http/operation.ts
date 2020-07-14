@@ -1,8 +1,8 @@
 import { fail } from 'assert';
-import { FunctionTypeNode, JSDocTagStructure, MethodSignatureStructure, Node, ParameterDeclarationStructure, printNode, StructureKind, ts, TupleTypeNode } from 'ts-morph';
+import { FunctionTypeNode, ImportDeclarationStructure, JSDocTagStructure, MethodSignatureStructure, Node, ParameterDeclarationStructure, printNode, StructureKind, ts, TupleTypeNode } from 'ts-morph';
 import { normalizeIdentifier, normalizeMemberName } from '../../support/codegen';
 import { createDocs } from '../../support/doc-tag';
-import { addImportsTo } from '../../support/typescript';
+import { addImportsTo, createImportsFor } from '../../support/typescript';
 import { ApiModel } from '../api-model';
 import * as base from '../operation';
 import { ReferenceInfo } from '../project/reference';
@@ -134,17 +134,21 @@ export function createOperationGroup(
   operations: Array<OperationStructure>
 ) {
   const file = api.getFile(group, 'group');
+  const imports = new Array<ImportDeclarationStructure>();
+
+  for (const operation of operations) {
+    for (const ref of operation.requiredReferences) {
+      imports.push(...createImportsFor(file, ref));
+    }
+  }
+
+  addImportsTo(file, imports);
+
   file.addInterface({
     name: group,
     isExported: true,
     methods: operations,
   });
-
-  for (const operation of operations) {
-    for (const ref of operation.requiredReferences) {
-      addImportsTo(file, ref);
-    }
-  }
 }
 
 export function createOperationStructure(
