@@ -10,10 +10,6 @@ export interface AssociationContract extends Resource {
      * @since 2019-12-01
      */
     properties?: {
-        /**
-         * @description Provisioning state.
-         * @since 2019-12-01
-         */
         provisioningState?: ProvisioningState;
     };
 }

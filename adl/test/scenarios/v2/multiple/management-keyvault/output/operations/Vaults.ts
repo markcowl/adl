@@ -22,7 +22,7 @@ export interface Vaults {
      * @return 200 - Created or updated vault
      * @return 201 - Created or updated vault
      */
-    CreateOrUpdate(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, api_version: ApiVersionParameter, parameters: Body<VaultCreateOrUpdateParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
+    CreateOrUpdate(resourceGroupName: string, vaultName: string & RegularExpression<"^[a-zA-Z0-9-]{3,24}$">, api_version: ApiVersionParameter, parameters: Body<VaultCreateOrUpdateParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: Vault;
     }, (code: 201, mediaType: "application/json") => {
         body: Vault;
@@ -49,7 +49,7 @@ export interface Vaults {
      * @return 200 - Patched vault
      * @return 201 - Patched vault
      */
-    Update(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, api_version: ApiVersionParameter, parameters: Body<VaultPatchParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
+    Update(resourceGroupName: string, vaultName: string & RegularExpression<"^[a-zA-Z0-9-]{3,24}$">, api_version: ApiVersionParameter, parameters: Body<VaultPatchParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: Vault;
     }, (code: 201, mediaType: "application/json") => {
         body: Vault;
@@ -66,7 +66,7 @@ export interface Vaults {
      * @return 200 - The updated access policies
      * @return 201 - The updated access policies
      */
-    UpdateAccessPolicy(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, operationKind: AccessPolicyUpdateKind, api_version: ApiVersionParameter, parameters: Body<VaultAccessPolicyParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
+    UpdateAccessPolicy(resourceGroupName: string, vaultName: string & RegularExpression<"^[a-zA-Z0-9-]{3,24}$">, operationKind: AccessPolicyUpdateKind, api_version: ApiVersionParameter, parameters: Body<VaultAccessPolicyParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: VaultAccessPolicyParameters;
     }, (code: 201, mediaType: "application/json") => {
         body: VaultAccessPolicyParameters;

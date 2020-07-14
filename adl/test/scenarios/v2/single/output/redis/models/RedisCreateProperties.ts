@@ -14,10 +14,10 @@ export interface RedisCreateProperties extends RedisCommonProperties {
      * @description The full resource ID of a subnet in a virtual network to deploy the Redis cache in. Example format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1
      * @since 2018-03-01
      */
-    subnetId?: string & RegularExpression<'^/subscriptions/[^/]*/resourceGroups/[^/]*/providers/Microsoft.(ClassicNetwork|Network)/virtualNetworks/[^/]*/subnets/[^/]*$'>;
+    subnetId?: string & RegularExpression<"^/subscriptions/[^/]*/resourceGroups/[^/]*/providers/Microsoft.(ClassicNetwork|Network)/virtualNetworks/[^/]*/subnets/[^/]*$">;
     /**
      * @description Static IP address. Required when deploying a Redis cache inside an existing Azure Virtual Network.
      * @since 2018-03-01
      */
-    staticIP?: string & RegularExpression<'^\d+\.\d+\.\d+\.\d+$'>;
+    staticIP?: string & RegularExpression<"^\\d+\\.\\d+\\.\\d+\\.\\d+$">;
 }

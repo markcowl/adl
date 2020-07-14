@@ -16,15 +16,7 @@ export interface Tweet {
      * @since 2.3
      */
     attachments?: {
-        /**
-         * @description A list of Media Keys for each one of the media attachments (if media are attached).
-         * @since 2.3
-         */
         media_keys?: Array<MediaKey> & MinimumElements<1>;
-        /**
-         * @description A list of poll IDs (if polls are attached).
-         * @since 2.3
-         */
         poll_ids?: Array<PollId> & MinimumElements<1>;
     };
     /**
@@ -52,15 +44,7 @@ export interface Tweet {
      * @since 2.3
      */
     geo?: {
-        /**
-         *
-         * @since 2.3
-         */
         coordinates?: Point;
-        /**
-         *
-         * @since 2.3
-         */
         place_id?: string;
     };
     /**
@@ -88,25 +72,9 @@ export interface Tweet {
      * @since 2.3
      */
     public_metrics?: {
-        /**
-         * @description Number of times this Tweet has been liked.
-         * @since 2.3
-         */
         like_count: int64;
-        /**
-         * @description Number of times this Tweet has been quoted.
-         * @since 2.3
-         */
         quote_count?: int64;
-        /**
-         * @description Number of times this Tweet has been replied to.
-         * @since 2.3
-         */
         reply_count: int64;
-        /**
-         * @description Number of times this Tweet has been Retweeted.
-         * @since 2.3
-         */
         retweet_count: int64;
     };
     /**
@@ -114,15 +82,7 @@ export interface Tweet {
      * @since 2.3
      */
     referenced_tweets?: Array<{
-        /**
-         *
-         * @since 2.3
-         */
         id: TweetID;
-        /**
-         *
-         * @since 2.3
-         */
         type: "retweeted" | "quoted" | "replied_to";
     }> & MinimumElements<1>;
     /**

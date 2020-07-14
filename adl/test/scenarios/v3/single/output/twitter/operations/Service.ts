@@ -38,7 +38,7 @@ export interface Service {
      * @param next_token - This parameter is used to get the next 'page' of results. The value used with the parameter is pulled directly from the response provided by the API, and should not be modified.
      * @return 200 - Tweets recent search response
      */
-    tweetsRecentSearch(query: Query<string & MaxLength<512> & MinLength<1>>, start_time?: Query<dateTime>, end_time?: Query<dateTime>, since_id?: Query<TweetID>, until_id?: Query<TweetID>, max_results?: Query<int32 /* todo: add defaultValue '10' */ & Minimum<10> & Maximum<100>>, next_token?: Query<string>, expansions?: TweetExpansionsParameter, tweet_fields?: TweetFieldsParameter, user_fields?: UserFieldsParameter, media_fields?: MediaFieldsParameter, place_fields?: PlaceFieldsParameter, poll_fields?: PollFieldsParameter): [(code: 200, mediaType: "application/json") => {
+    tweetsRecentSearch(query: Query<string & MaxLength<512> & MinLength<1>>, start_time?: Query<dateTime>, end_time?: Query<dateTime>, since_id?: Query<TweetID>, until_id?: Query<TweetID>, max_results?: Query<int32 & Minimum<10> & Maximum<100>>, next_token?: Query<string>, expansions?: TweetExpansionsParameter, tweet_fields?: TweetFieldsParameter, user_fields?: UserFieldsParameter, media_fields?: MediaFieldsParameter, place_fields?: PlaceFieldsParameter, poll_fields?: PollFieldsParameter): [(code: 200, mediaType: "application/json") => {
         body: TweetSearchResponse;
     }, HttpErrorResponse<"default", true>];
     /**
@@ -63,22 +63,10 @@ export interface Service {
      * @return 200 - A successful response. The reply has been hidden.
      */
     hideReplyById(id: TweetID, body?: Body<{
-        /**
-         *
-         * @since 2.3
-         */
         hidden?: true;
     }, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: {
-            /**
-             *
-             * @since 2.3
-             */
             data?: {
-                /**
-                 *
-                 * @since 2.3
-                 */
                 hidden?: true;
             };
         };

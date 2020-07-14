@@ -9,20 +9,8 @@ export interface contents_path {
      * @since v3
      */
     _links?: {
-        /**
-         *
-         * @since v3
-         */
         git?: string;
-        /**
-         *
-         * @since v3
-         */
         html?: string;
-        /**
-         *
-         * @since v3
-         */
         self?: string;
     };
     /**

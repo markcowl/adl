@@ -24,7 +24,7 @@ export interface Secrets {
      * @return 200 - Created or updated secret
      * @return 201 - Created or updated vault
      */
-    CreateOrUpdate(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, secretName: string & RegularExpression<'^[a-zA-Z0-9-]{1,127}$'>, api_version: ApiVersionParameter, parameters: Body<SecretCreateOrUpdateParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
+    CreateOrUpdate(resourceGroupName: string, vaultName: string & RegularExpression<"^[a-zA-Z0-9-]{3,24}$">, secretName: string & RegularExpression<"^[a-zA-Z0-9-]{1,127}$">, api_version: ApiVersionParameter, parameters: Body<SecretCreateOrUpdateParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: Secret;
     }, (code: 201, mediaType: "application/json") => {
         body: Secret;
@@ -41,7 +41,7 @@ export interface Secrets {
      * @return 200 - Patched secret
      * @return 201 - Patched secret
      */
-    Update(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, secretName: string & RegularExpression<'^[a-zA-Z0-9-]{1,127}$'>, api_version: ApiVersionParameter, parameters: Body<SecretPatchParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
+    Update(resourceGroupName: string, vaultName: string & RegularExpression<"^[a-zA-Z0-9-]{3,24}$">, secretName: string & RegularExpression<"^[a-zA-Z0-9-]{1,127}$">, api_version: ApiVersionParameter, parameters: Body<SecretPatchParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: Secret;
     }, (code: 201, mediaType: "application/json") => {
         body: Secret;

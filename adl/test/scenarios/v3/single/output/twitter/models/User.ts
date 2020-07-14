@@ -24,20 +24,8 @@ export interface User {
      * @since 2.3
      */
     entities?: {
-        /**
-         *
-         * @since 2.3
-         */
         description?: FullTextEntities;
-        /**
-         * @description Expanded details for the URL specified in the user's profile, with start and end indices.
-         * @since 2.3
-         */
         url?: {
-            /**
-             *
-             * @since 2.3
-             */
             urls?: Array<UrlEntity> & MinimumElements<1>;
         };
     };
@@ -76,25 +64,9 @@ export interface User {
      * @since 2.3
      */
     public_metrics?: {
-        /**
-         * @description Number of users who are following this user.
-         * @since 2.3
-         */
         followers_count: int64;
-        /**
-         * @description Number of users this user is following.
-         * @since 2.3
-         */
         following_count: int64;
-        /**
-         * @description The number of lists that include this user.
-         * @since 2.3
-         */
         listed_count: int64;
-        /**
-         * @description The number of Tweets (including Retweets) posted by this user.
-         * @since 2.3
-         */
         tweet_count: int64;
     };
     /**

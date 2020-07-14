@@ -14,25 +14,9 @@ export interface Operation {
      * @since 2019-09-01
      */
     display?: {
-        /**
-         * @description Service provider: Microsoft Key Vault.
-         * @since 2019-09-01
-         */
         provider?: string;
-        /**
-         * @description Resource on which the operation is performed etc.
-         * @since 2019-09-01
-         */
         resource?: string;
-        /**
-         * @description Type of operation: get, read, delete, etc.
-         * @since 2019-09-01
-         */
         operation?: string;
-        /**
-         * @description Description of operation.
-         * @since 2019-09-01
-         */
         description?: string;
     };
     /**

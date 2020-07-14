@@ -9,15 +9,7 @@ export interface InvalidRequestProblem extends ProblemFields {
      * @since 2.3
      */
     errors?: Array<{
-        /**
-         *
-         * @since 2.3
-         */
         message?: string;
-        /**
-         *
-         * @since 2.3
-         */
         parameters?: Dictionary<Array<string>>;
     }>;
     /**

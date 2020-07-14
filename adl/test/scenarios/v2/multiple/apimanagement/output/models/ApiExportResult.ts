@@ -20,10 +20,6 @@ export interface ApiExportResult {
      * @since 2019-12-01
      */
     value?: {
-        /**
-         * @description Link to the Storage Blob containing the result of the export operation. The Blob Uri is only valid for 5 minutes.
-         * @since 2019-12-01
-         */
         link?: string;
     };
 }

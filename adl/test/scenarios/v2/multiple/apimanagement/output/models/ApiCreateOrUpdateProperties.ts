@@ -22,15 +22,7 @@ export interface ApiCreateOrUpdateProperties extends ApiContractProperties {
      * @since 2019-12-01
      */
     wsdlSelector?: {
-        /**
-         * @description Name of service to import from WSDL
-         * @since 2019-12-01
-         */
         wsdlServiceName?: string;
-        /**
-         * @description Name of endpoint(port) to import from WSDL
-         * @since 2019-12-01
-         */
         wsdlEndpointName?: string;
     };
     /**
