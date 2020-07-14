@@ -1,3 +1,8 @@
+import { ApiVersionParameter } from "../aliases/ApiVersionParameter";
+import { SubscriptionIdParameter } from "../aliases/SubscriptionIdParameter";
+import { RedisFirewallRuleListResult } from "../models/RedisFirewallRuleListResult";
+import { RedisFirewallRule } from "../models/RedisFirewallRule";
+import { RedisFirewallRuleCreateParameters } from "../models/RedisFirewallRuleCreateParameters";
 export interface FirewallRules {
     /**
      * @description Gets all firewall rules in the specified redis cache.

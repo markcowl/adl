@@ -1,3 +1,10 @@
+import { alt } from "../aliases/alt";
+import { fields } from "../aliases/fields";
+import { key } from "../aliases/key";
+import { oauth_token } from "../aliases/oauth_token";
+import { prettyPrint } from "../aliases/prettyPrint";
+import { quotaUser } from "../aliases/quotaUser";
+import { userIp } from "../aliases/userIp";
 export interface Service {
     /**
      * @description Returns Analytics report data for a view (profile).

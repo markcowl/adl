@@ -1,3 +1,6 @@
+import { Pets } from "../aliases/Pets";
+import { Error } from "../models/Error";
+import { Pet } from "../models/Pet";
 export interface Service {
     /**
      * List all pets

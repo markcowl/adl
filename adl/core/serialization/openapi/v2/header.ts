@@ -17,7 +17,7 @@ export async function processHeader(header: v2.Header, $: Context, options: {isA
 
   const headerRef: HeaderTypeReference = {
     declaration: new TypeSyntax(headerType),
-    requiredReferences: schema.requiredReferences,
+    requiredReferences: [schema],
   };
 
   return headerRef;

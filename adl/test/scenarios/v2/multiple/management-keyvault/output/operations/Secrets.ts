@@ -1,3 +1,9 @@
+import { ApiVersionParameter } from "../aliases/ApiVersionParameter";
+import { SubscriptionIdParameter } from "../aliases/SubscriptionIdParameter";
+import { Secret } from "../models/Secret";
+import { SecretCreateOrUpdateParameters } from "../models/SecretCreateOrUpdateParameters";
+import { SecretPatchParameters } from "../models/SecretPatchParameters";
+import { SecretListResult } from "../models/SecretListResult";
 export interface Secrets {
     /**
      * @description Gets the specified secret.  NOTE: This API is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets.

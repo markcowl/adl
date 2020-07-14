@@ -1,3 +1,19 @@
+import { TweetID } from "../aliases/TweetID";
+import { TweetExpansionsParameter } from "../aliases/TweetExpansionsParameter";
+import { TweetFieldsParameter } from "../aliases/TweetFieldsParameter";
+import { UserFieldsParameter } from "../aliases/UserFieldsParameter";
+import { MediaFieldsParameter } from "../aliases/MediaFieldsParameter";
+import { PlaceFieldsParameter } from "../aliases/PlaceFieldsParameter";
+import { PollFieldsParameter } from "../aliases/PollFieldsParameter";
+import { TweetLookupResponse } from "../models/TweetLookupResponse";
+import { HttpErrorResponse } from "../aliases/HttpErrorResponse";
+import { TweetSearchResponse } from "../models/TweetSearchResponse";
+import { SingleTweetLookupResponse } from "../models/SingleTweetLookupResponse";
+import { UserID } from "../aliases/UserID";
+import { UserExpansionsParameter } from "../aliases/UserExpansionsParameter";
+import { UserLookupResponse } from "../models/UserLookupResponse";
+import { UserName } from "../aliases/UserName";
+import { SingleUserLookupResponse } from "../models/SingleUserLookupResponse";
 export interface Service {
     /**
      * Returns the open api spec document.

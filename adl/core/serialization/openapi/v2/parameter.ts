@@ -57,7 +57,7 @@ export function getParameterReference(parameter: v2.Parameter, schema: SchemaTyp
     required: parameter.required ?? false,
     declaration: syntax.type,
     typeParameters: syntax.typeParameters,
-    requiredReferences: schema.requiredReferences,
+    requiredReferences: [schema],
     location: parameter.in,
   };
 }
@@ -144,7 +144,9 @@ function specializeWithMediaType(parameterRef: ParameterTypeReference, $: Contex
   return {
     ...parameterRef,
     typeParameters: undefined,
-    declaration: new TypeSyntax(specializedType)
+    sourceFile: undefined,
+    requiredReferences: [parameterRef],
+    declaration: new TypeSyntax(specializedType),
   };
 }
 

@@ -1,3 +1,10 @@
+import { SubscriptionIdParameter } from "../aliases/SubscriptionIdParameter";
+import { ResourceGroupName } from "../aliases/ResourceGroupName";
+import { VaultName } from "../aliases/VaultName";
+import { PrivateEndpointConnectionName } from "../aliases/PrivateEndpointConnectionName";
+import { ApiVersionParameter } from "../aliases/ApiVersionParameter";
+import { PrivateEndpointConnection } from "../models/PrivateEndpointConnection";
+import { CloudError } from "../models/CloudError";
 export interface PrivateEndpointConnections {
     /**
      * @description Gets the specified private endpoint connection associated with the key vault.

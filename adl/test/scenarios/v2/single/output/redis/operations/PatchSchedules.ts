@@ -1,3 +1,8 @@
+import { ApiVersionParameter } from "../aliases/ApiVersionParameter";
+import { SubscriptionIdParameter } from "../aliases/SubscriptionIdParameter";
+import { RedisPatchScheduleListResult } from "../models/RedisPatchScheduleListResult";
+import { defaultName } from "../enums/defaultName";
+import { RedisPatchSchedule } from "../models/RedisPatchSchedule";
 export interface PatchSchedules {
     /**
      * @description Gets all patch schedules in the specified redis cache (there is only one).

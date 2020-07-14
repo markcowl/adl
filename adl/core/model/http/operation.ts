@@ -2,7 +2,7 @@ import { fail } from 'assert';
 import { FunctionTypeNode, JSDocTagStructure, MethodSignatureStructure, Node, ParameterDeclarationStructure, printNode, StructureKind, ts, TupleTypeNode } from 'ts-morph';
 import { normalizeIdentifier, normalizeMemberName } from '../../support/codegen';
 import { createDocs } from '../../support/doc-tag';
-import { Alias } from '../alias';
+import { addImportsTo } from '../../support/typescript';
 import { ApiModel } from '../api-model';
 import * as base from '../operation';
 import { ReferenceInfo } from '../project/reference';
@@ -125,12 +125,13 @@ export interface OperationInitializer extends VersionedElement {
 
 export interface OperationStructure extends MethodSignatureStructure {
   group: string;
+  requiredReferences: Array<TypeReference>;
 }
 
 export function createOperationGroup(
   api: ApiModel,
   group: string,
-  operations: Array<MethodSignatureStructure>
+  operations: Array<OperationStructure>
 ) {
   const file = api.getFile(group, 'group');
   file.addInterface({
@@ -138,6 +139,12 @@ export function createOperationGroup(
     isExported: true,
     methods: operations,
   });
+
+  for (const operation of operations) {
+    for (const ref of operation.requiredReferences) {
+      addImportsTo(file, ref);
+    }
+  }
 }
 
 export function createOperationStructure(
@@ -170,6 +177,11 @@ export function createOperationStructure(
       ...requestStructures.tags,
       ...responseStructures.tags
     ]),
+    requiredReferences: [
+      ...parameterStructures.requiredReferences,
+      ...requestStructures.requiredReferences,
+      ...responseStructures.requiredReferences
+    ]
   };
 }
 
@@ -198,10 +210,12 @@ function createTagStructures(tags?: Array<string>) {
 function createParameterStructures(parameters?: Array<ParameterTypeReference>) {
   const parameterStructures = new Array<ParameterDeclarationStructure>();
   const tagStructures = new Array<JSDocTagStructure>();
+  const requiredReferences = new Array<TypeReference>();
 
   for (const parameter of parameters ?? []) {
     const name = normalizeIdentifier(parameter.name);
     const type = parameter.declaration.text;
+    requiredReferences.push(parameter);
 
     parameterStructures.push({
       kind: StructureKind.Parameter,
@@ -220,12 +234,17 @@ function createParameterStructures(parameters?: Array<ParameterTypeReference>) {
     }
   }
 
-  return { parameters: parameterStructures, tags: tagStructures };
+  return {
+    parameters: parameterStructures,
+    tags: tagStructures,
+    requiredReferences
+  };
 }
 
 function createRequestStructures(requestBody?: RequestBodyTypeReference) {
   const parameterStructures = new Array<ParameterDeclarationStructure>();
   const tagStructures = new Array<JSDocTagStructure>();
+  const requiredReferences = new Array<TypeReference>();
 
   if (requestBody) {
     parameterStructures.push({
@@ -234,6 +253,7 @@ function createRequestStructures(requestBody?: RequestBodyTypeReference) {
       name: 'body',
       type: requestBody.declaration.text,
     });
+    requiredReferences.push(requestBody);
 
     if (requestBody.description) {
       const doc = `body - ${requestBody.description}`;
@@ -245,20 +265,25 @@ function createRequestStructures(requestBody?: RequestBodyTypeReference) {
     }
   }
 
-  return { parameters: parameterStructures, tags: tagStructures };
+  return {
+    parameters: parameterStructures,
+    tags: tagStructures,
+    requiredReferences
+  };
 }
 
 function createResponseStructures(responses?: Array<ResponseTypeReference>) {
-  const reponseTypes = new Array<ts.FunctionTypeNode>();
+  const reponseTypes = new Array<ts.TypeNode>();
   const tagStructures = new Array<JSDocTagStructure>();
+  const requiredReferences = new Array<TypeReference>();
 
   for (const each of responses ?? []) {
-    const response = each instanceof Alias ? each.target : each;
-    const type = response.declaration.node;
+    const type = each.declaration.node;
     reponseTypes.push(type);
+    requiredReferences.push(each);
 
-    if (response.description) {
-      const doc = `${response.code} - ${response.description}`;
+    if (each.description) {
+      const doc = `${each.code} - ${each.description}`;
       tagStructures.push({
         kind: StructureKind.JSDocTag,
         tagName: 'return',
@@ -270,7 +295,8 @@ function createResponseStructures(responses?: Array<ResponseTypeReference>) {
   const returnType = ts.createTupleTypeNode(reponseTypes);
   return {
     type: printNode(returnType),
-    tags: tagStructures
+    tags: tagStructures,
+    requiredReferences
   };
 }
 

@@ -61,7 +61,7 @@ function getHeaderReference(schema: SchemaTypeReference, wireName?: string): Hea
 
   return {
     declaration: new TypeSyntax(ts.createTypeReferenceNode('Header', typeArguments)),
-    requiredReferences: schema.requiredReferences,
+    requiredReferences: [schema],
     typeParameters
   };
 }
@@ -75,6 +75,8 @@ function specializeWithName(headerRef: HeaderTypeReference, clientName: string) 
   return {
     ...headerRef,
     typeParameters: undefined,
-    declaration: new TypeSyntax(specializedType)
+    sourceFile: undefined,
+    declaration: new TypeSyntax(specializedType),
+    requiredReferences: [headerRef],
   };
 }

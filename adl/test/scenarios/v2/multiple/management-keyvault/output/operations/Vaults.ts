@@ -1,3 +1,16 @@
+import { ApiVersionParameter } from "../aliases/ApiVersionParameter";
+import { SubscriptionIdParameter } from "../aliases/SubscriptionIdParameter";
+import { Vault } from "../models/Vault";
+import { VaultCreateOrUpdateParameters } from "../models/VaultCreateOrUpdateParameters";
+import { VaultPatchParameters } from "../models/VaultPatchParameters";
+import { AccessPolicyUpdateKind } from "../enums/AccessPolicyUpdateKind";
+import { VaultAccessPolicyParameters } from "../models/VaultAccessPolicyParameters";
+import { VaultListResult } from "../models/VaultListResult";
+import { DeletedVaultListResult } from "../models/DeletedVaultListResult";
+import { DeletedVault } from "../models/DeletedVault";
+import { ResourceListResult } from "../models/ResourceListResult";
+import { VaultCheckNameAvailabilityParameters } from "../models/VaultCheckNameAvailabilityParameters";
+import { CheckNameAvailabilityResult } from "../models/CheckNameAvailabilityResult";
 export interface Vaults {
     /**
      * @description Gets the specified Azure key vault.

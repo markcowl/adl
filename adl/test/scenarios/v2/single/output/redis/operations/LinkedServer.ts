@@ -1,3 +1,8 @@
+import { ApiVersionParameter } from "../aliases/ApiVersionParameter";
+import { SubscriptionIdParameter } from "../aliases/SubscriptionIdParameter";
+import { RedisLinkedServerWithProperties } from "../models/RedisLinkedServerWithProperties";
+import { RedisLinkedServerCreateParameters } from "../models/RedisLinkedServerCreateParameters";
+import { RedisLinkedServerWithPropertiesList } from "../models/RedisLinkedServerWithPropertiesList";
 export interface LinkedServer {
     /**
      * @description Gets the detailed information about a linked server of a redis cache (requires Premium SKU).

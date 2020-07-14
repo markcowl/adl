@@ -1,3 +1,17 @@
+import { CheckNameAvailabilityParameters } from "../models/CheckNameAvailabilityParameters";
+import { ApiVersionParameter } from "../aliases/ApiVersionParameter";
+import { SubscriptionIdParameter } from "../aliases/SubscriptionIdParameter";
+import { NotificationListResponse } from "../models/NotificationListResponse";
+import { RedisResource } from "../models/RedisResource";
+import { RedisCreateParameters } from "../models/RedisCreateParameters";
+import { RedisUpdateParameters } from "../models/RedisUpdateParameters";
+import { RedisListResult } from "../models/RedisListResult";
+import { RedisAccessKeys } from "../models/RedisAccessKeys";
+import { RedisRegenerateKeyParameters } from "../models/RedisRegenerateKeyParameters";
+import { RedisRebootParameters } from "../models/RedisRebootParameters";
+import { RedisForceRebootResponse } from "../models/RedisForceRebootResponse";
+import { ImportRDBParameters } from "../models/ImportRDBParameters";
+import { ExportRDBParameters } from "../models/ExportRDBParameters";
 export interface Redis {
     /**
      * @description Checks that the redis cache name is valid and is not already in use.

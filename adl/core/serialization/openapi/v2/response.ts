@@ -47,6 +47,11 @@ async function getResponseTypeReference(response: v2.Response, $: Context, optio
   const schema = response.schema ? (await processSchema(response.schema, $, { isAnonymous: true })) : undefined;
   const headers = await processResponseHeaders(response, $);
 
+  const requiredReferences = [...headers];
+  if (schema) {
+    requiredReferences.push(schema);
+  }
+
   let code: string | ts.TypeNode;
   let isException: boolean | ts.TypeNode;
   let typeParameters: Array<TypeParameterDeclarationStructure> | undefined;
@@ -68,7 +73,7 @@ async function getResponseTypeReference(response: v2.Response, $: Context, optio
   const type = getResponseType(code, isException, mediaType, schema, headers);
   return {
     declaration: new TypeSyntax(type),
-    requiredReferences: schema?.requiredReferences ?? [],
+    requiredReferences,
     typeParameters,
     description: options?.isAnonymous ? response.description : undefined,
     code: options?.isAnonymous ? options.code : undefined,
@@ -111,6 +116,8 @@ function specializeResponse(responseRef: ResponseTypeReference, $: Context, opti
   return {
     ...responseRef,
     typeParameters: undefined,
+    sourceFile: undefined,
+    requiredReferences: [responseRef],
     declaration: new TypeSyntax(specializedType),
   };
 }
