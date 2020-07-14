@@ -34,6 +34,8 @@ export const Constraints = {
 export function addConstraint(type: TypeReference, constraint: ConstraintReference): TypeReference {
   return {
     ... type,
+    sourceFile: undefined,
+    requiredReferences: [type],
     declaration: new TypeSyntax(createIntersectionTypeNode(type.declaration.node, constraint.implementation))
   };
 }

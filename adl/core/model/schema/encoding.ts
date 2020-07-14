@@ -1,5 +1,5 @@
 import { ts } from 'ts-morph';
-import { TypeSyntax } from '../../support/codegen';
+import { createIntersectionTypeNode, TypeSyntax } from '../../support/codegen';
 import { TypeReference } from './type';
 
 export interface EncodingReference {
@@ -14,6 +14,8 @@ export const Encodings = {
 export function addEncoding(type: TypeReference, encoding: EncodingReference): TypeReference {
   return {
     ...type,
-    declaration: new TypeSyntax(ts.createIntersectionTypeNode([type.declaration.node, encoding.implementation]))
+    sourceFile: undefined,
+    requiredReferences: [type],
+    declaration: new TypeSyntax(createIntersectionTypeNode(type.declaration.node, encoding.implementation))
   };
 }

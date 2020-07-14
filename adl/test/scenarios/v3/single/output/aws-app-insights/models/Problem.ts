@@ -2,6 +2,7 @@ import { ProblemId } from "../aliases/ProblemId";
 import { Status } from "../enums/Status";
 import { SeverityLevel } from "../enums/SeverityLevel";
 import { ResourceGroupName } from "../aliases/ResourceGroupName";
+import { Feedback } from "../aliases/Feedback";
 /**
  * @description Describes a problem that is detected by correlating observations.
  * @since 2018-11-25
