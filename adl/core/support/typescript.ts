@@ -1,9 +1,10 @@
 import { Path } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
-import { ClassDeclaration, EnumDeclaration, EnumMember, ImportDeclarationStructure, InterfaceDeclaration, Node, Project, SourceFile, StructureKind, SyntaxList, TypeAliasDeclaration, TypeNode, TypeParameterDeclaration, TypeReferenceNode, UnionTypeNode } from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, EnumMember, ImportDeclarationStructure, InterfaceDeclaration, Node, printNode, Project, SourceFile, StructureKind, SyntaxList, ts, TypeAliasDeclaration, TypeNode, TypeParameterDeclaration, TypeReferenceNode, UnionTypeNode } from 'ts-morph';
 import { ApiModel } from '../model/api-model';
 import { TypeReference } from '../model/schema/type';
 import { getAbsolutePath } from '../support/file-system';
+import { createUnionTypeNode, normalizeIdentifier, TypeSyntax } from './codegen';
 import { createSandbox } from './sandbox';
 
 /**
@@ -127,16 +128,14 @@ export function getImportFor(type: EnumDeclaration | InterfaceDeclaration | Type
 export function createImportFor(name: string, sourceFile: SourceFile, relativeToSourceFile: SourceFile): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
-    namedImports: [name],
+    namedImports: [normalizeIdentifier(name)],
     moduleSpecifier: relativeToSourceFile.getRelativePathAsModuleSpecifierTo(sourceFile)
   };
 }
 
 export function addImportsTo(sourceFile: SourceFile, typeReference: TypeReference) {
-  if (typeReference.sourceFile && sourceFile !== typeReference.sourceFile) {
-    const typeName = typeReference.declaration.text;
-
-
+  if (typeReference.sourceFile && sourceFile !== typeReference.sourceFile && ts.isTypeReferenceNode(typeReference.declaration.node)) {
+    const typeName = printNode(typeReference.declaration.node.typeName);
     const importDecls = sourceFile.getImportDeclarations();
     let found = false;
 
@@ -166,8 +165,13 @@ export function addImportsTo(sourceFile: SourceFile, typeReference: TypeReferenc
   }
 }
 
-export function addNullable(declaration: string) {
-  return declaration.endsWith('| null') ? declaration : `${declaration} | null`;
+export function addNullable(typeReference: TypeReference): TypeReference {
+  return {
+    ...typeReference,
+    sourceFile: undefined,
+    requiredReferences: [typeReference],
+    declaration: new TypeSyntax(createUnionTypeNode(typeReference.declaration.node, ts.createKeywordTypeNode(ts.SyntaxKind.NullKeyword)))
+  };
 }
 
 export function getInnerText(declaration: InterfaceDeclaration) {

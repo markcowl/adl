@@ -31,49 +31,53 @@ export function normalizeIdentifier(value: string) {
   return value;
 }
 
-export function isValidIdentifier(value: string, allowReserved = false) {
+/**
+ * Determine if the given text is a valid TypeScript identifier
+ *
+ * @param allowReserved Allow reserved words in identifier
+ */
+export function isValidIdentifier(text: string, allowReserved = false) {
   const scanner = ts.createScanner(
     ts.ScriptTarget.Latest,
     false,
     ts.LanguageVariant.Standard,
-    value);
+    text);
 
   const kind = scanner.scan();
   return (scanner.isIdentifier() || (allowReserved && scanner.isReservedWord())) &&
     scanner.getTokenPos() == 0 &&
-    scanner.getTextPos() == value.length;
+    scanner.getTextPos() == text.length;
 }
 
 /**
- * Represents syntax for a type. Can be constructed from raw source text or from
- * a compiler node, and converted to either lazily.
+ * Create a new intersection type compiler node.
+ *
+ * Avoid unnecessary parentheses when left is already an intersection.
  */
+export function createIntersectionTypeNode(left: ts.TypeNode, right: ts.TypeNode) {
+  const types = ts.isIntersectionTypeNode(left) ? [...left.types, right] : [left, right];
+  return ts.createIntersectionTypeNode(types);
+}
+
+/**
+ * Create a new intersection type compiler node.
+ *
+ * Avoid unnecessary parentheses when left is already an intersection.
+ */
+export function createUnionTypeNode(left: ts.TypeNode, right: ts.TypeNode) {
+  const types = ts.isUnionTypeNode(left) ? [...left.types, right] : [left, right];
+  return ts.createUnionTypeNode(types);
+}
+
 export class TypeSyntax {
+  constructor(public readonly node: ts.TypeNode, preservedText?: string) {
+    this.#text = preservedText;
+  }
+
   #text?: string;
-  #node?: ts.TypeNode;
-
-  constructor(declaration: string | ts.TypeNode) {
-    if (typeof declaration === 'string') {
-      this.#text = declaration;
-    } else {
-      this.#node = declaration;
-    }
-  }
-
-  get node() {
-    if (this.#node === undefined) {
-      // NOTE: We currently get away with putting arbitrary syntax in a type
-      // reference node's "name" here. It would be more correct to to parse the
-      // text here into a proper tree, but that costs extra parsing and has the
-      // side effect of losing trivia and formatting.
-      this.#node = ts.createTypeReferenceNode(this.#text!, undefined);
-    }
-    return this.#node;
-  }
-
   get text() {
     if (this.#text === undefined) {
-      this.#text = printNode(this.#node!);
+      this.#text = printNode(this.node);
     }
     return this.#text;
   }

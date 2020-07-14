@@ -1,14 +1,14 @@
 import { items, length } from '@azure-tools/linq';
 import { isReference, StringFormat, v2 } from '@azure-tools/openapi';
 import { anonymous, nameOf, refTo } from '@azure-tools/sourcemap';
-import { PropertySignatureStructure } from 'ts-morph';
+import { ts } from 'ts-morph';
 import { createTypeAlias } from '../../../model/schema/alias';
 import { addConstraint, Constraints } from '../../../model/schema/constraint';
 import { addDefault } from '../../../model/schema/default';
 import { addEncoding, Encodings } from '../../../model/schema/encoding';
 import { createModelType } from '../../../model/schema/model';
 import { createArray, createDictionary } from '../../../model/schema/primitive';
-import { createPropertySignature } from '../../../model/schema/property';
+import { createPropertySignature, ModelPropertySignatureStructure } from '../../../model/schema/property';
 import { SchemaTypeReference } from '../../../model/schema/type';
 import { Identity } from '../../../model/types';
 import { TypeSyntax } from '../../../support/codegen';
@@ -268,7 +268,7 @@ export async function processObjectSchema(schema: v2.Schema, $: Context<v2.Model
 
     result = <SchemaTypeReference> {
       sourceFile: file,
-      declaration: new TypeSyntax(name),
+      declaration: new TypeSyntax(ts.createTypeReferenceNode(name, undefined)),
       requiredReferences: []
     };
 
@@ -277,7 +277,7 @@ export async function processObjectSchema(schema: v2.Schema, $: Context<v2.Model
 
   const requiredReferences = new Array<SchemaTypeReference>();
   // process the properties
-  const properties = new Array<PropertySignatureStructure>();
+  const properties = new Array<ModelPropertySignatureStructure>();
   for (const [propertyName, property] of items(schema.properties)) {
     const pTypeRef = await processSchema(property, $, { isAnonymous: true });
     const prop = createPropertySignature(propertyName, pTypeRef, {

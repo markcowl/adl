@@ -28,7 +28,7 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
       // which means there can be multiple declarations for the same enum
       // so, we just return the existing enum by name
       return {
-        declaration: new TypeSyntax(existing.getName()),
+        declaration: new TypeSyntax(ts.createTypeReferenceNode(existing.getName(), undefined)),
         sourceFile: file,
         requiredReferences: [],
       };
@@ -50,7 +50,7 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
 
     // return the reference to this enum
     return {
-      declaration: new TypeSyntax(name),
+      declaration: new TypeSyntax(ts.createTypeReferenceNode(name, undefined)),
       sourceFile: file,
       requiredReferences: []
     };
@@ -91,7 +91,7 @@ export class EnumType extends NamedElement<EnumDeclaration> implements TypeRefer
   }
 
   get declaration() {
-    return new TypeSyntax(this.node.getName());
+    return new TypeSyntax(ts.createTypeReferenceNode(this.node.getName(), undefined));
   }
 
   get values(): Array<EnumValueElement> {

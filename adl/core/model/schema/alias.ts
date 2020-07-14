@@ -1,5 +1,5 @@
 import { isAnonymous } from '@azure-tools/sourcemap';
-import { TypeAliasDeclaration } from 'ts-morph';
+import { ts, TypeAliasDeclaration } from 'ts-morph';
 import { TypeSyntax } from '../../support/codegen';
 import { createDocs, Documentation } from '../../support/doc-tag';
 import { addImportsTo } from '../../support/typescript';
@@ -40,7 +40,7 @@ export function createTypeAlias<T extends TypeReference>(api: ApiModel, identity
 
   return {
     ...typeReference,
-    declaration: new TypeSyntax(name),
+    declaration: new TypeSyntax(ts.createTypeReferenceNode(name, undefined)),
     sourceFile: file,
     requiredReferences: [],
   };

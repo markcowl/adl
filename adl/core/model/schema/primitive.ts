@@ -4,21 +4,25 @@ import { TypeReference } from './type';
 
 export function createDictionary(elementTypeReference: TypeReference): TypeReference {
   return {
-    declaration: new TypeSyntax(`Dictionary<${elementTypeReference.declaration}>`),
+    declaration: new TypeSyntax(ts.createTypeReferenceNode('Dictionary', [elementTypeReference.declaration.node])),
     requiredReferences: [...elementTypeReference.requiredReferences, elementTypeReference],
   };
 }
 
 export function createArray(elementTypeReference: TypeReference): TypeReference {
   return {
-    declaration: new TypeSyntax(`Array<${elementTypeReference.declaration}>`),
+    declaration: new TypeSyntax(ts.createTypeReferenceNode('Array', [elementTypeReference.declaration.node])),
     requiredReferences: [...elementTypeReference.requiredReferences, elementTypeReference],
   };
 }
 
-export function createPrimitiveType(declaration: string): TypeReference {
+export function createPrimitiveType(typeName: string, typeArguments?: Array<string>): TypeReference {
+  let args: Array<ts.TypeNode> | undefined = undefined;
+  if (typeArguments) {
+    args = typeArguments.map(a => ts.createTypeReferenceNode(a, undefined));
+  }
   return {
-    declaration: new TypeSyntax(declaration),
+    declaration: new TypeSyntax(ts.createTypeReferenceNode(typeName, args)),
     requiredReferences: []
   };
 }
@@ -43,7 +47,7 @@ export const Primitives = {
   boolean: createKnownType(ts.SyntaxKind.BooleanKeyword),
   double: createPrimitiveType('double'),
   float: createPrimitiveType('float'),
-  byteArray: createPrimitiveType('Array<byte>'),
+  byteArray: createPrimitiveType('Array', ['byte']),
   date: createPrimitiveType('date'),
   time: createPrimitiveType('time'),
   unixtime: createPrimitiveType('unixtime'),

@@ -1,23 +1,38 @@
 import { values } from '@azure-tools/linq';
 import { isAnonymous } from '@azure-tools/sourcemap';
-import { InterfaceDeclaration, PropertySignatureStructure } from 'ts-morph';
+import { InterfaceDeclaration, ts } from 'ts-morph';
 import { TypeSyntax } from '../../support/codegen';
 import { createDocs } from '../../support/doc-tag';
-import { addImportsTo, getInnerText } from '../../support/typescript';
+import { addImportsTo } from '../../support/typescript';
 import { ApiModel } from '../api-model';
 import { Identity } from '../types';
 import { NamedElement } from '../typescript/named-element';
 import { SchemaInitializer } from '../typescript/schema';
-import { Property } from './property';
+import { ModelPropertySignatureStructure, Property } from './property';
 import { SchemaTypeReference, TypeReference } from './type';
 
 export interface ModelTypeInitializer extends SchemaInitializer {
   parents?: Array<TypeReference>;
-  properties?: Array<PropertySignatureStructure>;
+  properties?: Array<ModelPropertySignatureStructure>;
   requiredReferences?: Array<TypeReference>;
 }
 
 export function createModelType(api: ApiModel, identity: Identity, initializer?: ModelTypeInitializer): SchemaTypeReference {
+  if (isAnonymous(identity)) {
+    const properties = initializer?.properties ?? [];
+    return {
+      requiredReferences: properties.map(p => p.typeReference),
+      declaration: new TypeSyntax(
+        ts.createTypeLiteralNode(initializer?.properties?.map(p =>
+          ts.createPropertySignature(
+            p.isReadonly ? [ts.createModifier(ts.SyntaxKind.ReadonlyKeyword)] : undefined,
+            p.name,
+            p.hasQuestionToken ? ts.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+            p.typeReference.declaration.node,
+            undefined))))
+    };
+  }
+
   const { name, file } = api.getNameAndFile(identity, 'model');
 
   const iface = file.addInterface({
@@ -27,15 +42,13 @@ export function createModelType(api: ApiModel, identity: Identity, initializer?:
     docs: createDocs(initializer),
     isExported: true,
   });
+
   for (const each of values(initializer?.requiredReferences)) {
     addImportsTo(file,each);
   }
 
-  return isAnonymous(identity) ? {
-    declaration: new TypeSyntax(getInnerText(iface)),
-    requiredReferences: initializer?.requiredReferences || [],
-  } :  {
-    declaration: new TypeSyntax(name),
+  return {
+    declaration: new TypeSyntax(ts.createTypeReferenceNode(name, undefined)),
     sourceFile: file,
     requiredReferences: []
   };
@@ -50,7 +63,7 @@ export class ModelType extends NamedElement<InterfaceDeclaration> implements Typ
   }
 
   get declaration() {
-    return new TypeSyntax(this.node.getName());
+    return new TypeSyntax(ts.createTypeReferenceNode(this.node.getName(), undefined));
   }
 
   get properties(): Array<Property> {

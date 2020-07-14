@@ -19,12 +19,17 @@ export class Property extends TypedElement<PropertySignature> {
   }
 }
 
-export function createPropertySignature(name: string, typeReference: TypeReference, initializer?: PropertyInitializer): PropertySignatureStructure {
+export interface ModelPropertySignatureStructure extends PropertySignatureStructure {
+  typeReference: TypeReference;
+}
+
+export function createPropertySignature(name: string, typeReference: TypeReference, initializer?: PropertyInitializer): ModelPropertySignatureStructure {
+  typeReference = initializer?.nullable ? addNullable(typeReference) : typeReference;
   return {
     kind: StructureKind.PropertySignature,
-    //todo: do a better 'fix-the-bad-name' (ie, perks/codegen)
     name: normalizeMemberName(name),
-    type: initializer?.nullable ? addNullable(typeReference.declaration.text) : typeReference.declaration.text,
+    typeReference: typeReference,
+    type: typeReference.declaration.text,
     isReadonly: initializer?.readOnly,
     hasQuestionToken: !(initializer?.required),
     docs: createDocs(initializer),
