@@ -1,5 +1,5 @@
 import { fail } from 'assert';
-import { FunctionTypeNode, JSDoc, JSDocTagStructure, MethodSignatureStructure, Node, ParameterDeclarationStructure, printNode, StructureKind, ts, TupleTypeNode } from 'ts-morph';
+import { FunctionTypeNode, JSDocTagStructure, MethodSignatureStructure, Node, ParameterDeclarationStructure, printNode, StructureKind, ts, TupleTypeNode } from 'ts-morph';
 import { normalizeIdentifier, normalizeName } from '../../support/codegen';
 import { createDocs } from '../../support/doc-tag';
 import { Alias } from '../alias';
@@ -24,16 +24,6 @@ export enum Method {
   Trace = 'TRACE'
 }
 
-export interface Path {
-  method: Method;
-  path: string;
-}
-
-export class TagCollection {
-  constructor(private node: Node | Array<JSDoc> | JSDoc) {
-  }
-}
-
 export class OperationGroup extends base.OperationGroup {
 
   get operations(): Array<Operation> {
@@ -44,7 +34,7 @@ export class OperationGroup extends base.OperationGroup {
    * Creates a new HttpOperation in this operation group.
    */
   createOperation() {
-    //todo
+    throw new Error('not implemented');
   }
 }
 
@@ -90,15 +80,26 @@ export class Operation extends base.Operation {
     this.annotations?.set('http', `${value} ${this.path}`);
   }
 
-  /** parameters common to all the requests(overloads) for this operation */
   get parameters(){
     return this.node.getParameters().map(p => new Parameter(p));
   }
 
   get responseCollection(): ResponseCollection | Reference<ResponseCollection> | undefined {
-    const rt = this.node.getReturnType();
+    const returnType = this.node.getReturnTypeNode();
 
-    return undefined;
+    if (!returnType) {
+      return undefined;
+    }
+
+    if (Node.isTupleTypeNode(returnType)) {
+      return new ResponseCollection(returnType);
+    }
+
+    if (Node.isTypeReferenceNode(returnType)) {
+      return new Reference(returnType, ResponseCollection);
+    }
+
+    throw new Error('Invalid repsonse collection type');
   }
 
   /**
@@ -140,8 +141,8 @@ export function createOperationGroup(
 }
 
 export function createOperationStructure(
-  api: ApiModel,
-  path: Path,
+  method: Method,
+  path: string,
   group: string,
   name: string,
   initializer: Partial<OperationInitializer>
@@ -151,7 +152,7 @@ export function createOperationStructure(
   const requestStructures = createRequestStructures(initializer.requestBody);
   const responseStructures = createResponseStructures(initializer.responses);
   const tagStructures = createTagStructures(initializer.tags);
-  const pathStructure = createPathStructure(path);
+  const pathStructure = createPathStructure(method, path);
 
   return {
     kind: StructureKind.MethodSignature,
@@ -172,11 +173,11 @@ export function createOperationStructure(
   };
 }
 
-function createPathStructure(path: Path): JSDocTagStructure {
+function createPathStructure(method: Method, path: string): JSDocTagStructure {
   return {
     kind: StructureKind.JSDocTag,
     tagName: 'http',
-    text: `${path.method.toUpperCase()} ${path.path}`,
+    text: `${method.toUpperCase()} ${path}`,
   };
 }
 
@@ -320,7 +321,6 @@ function getResponseCriteria(code: string | ts.TypeNode, mediaType?: string | ts
   if (mediaTypeParameter) {
     parameters.push(mediaTypeParameter);
   }
-
 
   return parameters;
 }

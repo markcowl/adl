@@ -10,12 +10,13 @@ if (process.env['no-static-loader'] === undefined && require('fs').existsSync(`$
   usingStaticLoader = true;
   require(`${__dirname}/../../dist/static-loader.js`).load(`${__dirname}/../../dist/static_modules.fs`);
 }
-import { ApiModel, Fix, getRelativePath, LinterDiagnostic, Range, RuleSeverity } from '@azure-tools/adl.core';
+import { ApiModel, getRelativePath, LinterDiagnostic, Range, RuleSeverity } from '@azure-tools/adl.core';
 import { Activation } from '@azure-tools/adl.core/dist/eventing/activation';
 import { Delay } from '@azure-tools/tasks';
 import { CodeAction, CodeActionKind, Command, CompletionItem, CompletionItemKind, createConnection, Diagnostic, DiagnosticSeverity, DidChangeConfigurationNotification, InitializeParams, InitializeResult, ProposedFeatures, TextDocumentChangeEvent, TextDocumentEdit, TextDocumentPositionParams, TextDocuments, TextDocumentSyncKind, TextEdit } from 'vscode-languageserver';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { ServerFileSystem } from './file-system';
+import { OpenLinkRequest } from './requestTypes';
 
 
 // Create a connection for the server. The connection uses Node's IPC as a transport.
@@ -60,7 +61,7 @@ connection.onInitialize((params: InitializeParams) => {
         resolveProvider: true
       },
       executeCommandProvider: {
-        commands: [FIX_COMMAND]
+        commands: [COMMAND.FIX, COMMAND.LEARN_MORE]
       }
     }
   };
@@ -197,11 +198,11 @@ async function lintDocument(document: TextDocument) {
   }
 }
 
-const codeActions = new Map<string,Map<string, Array<Fix>>>();
+const codeActions = new Map<string,Map<string, LinterDiagnostic>>();
 function processLinterDiagnostics(linterDiagnostics: Array<LinterDiagnostic>, uri: string){
   const diagnostics: Array<Diagnostic> = [];
   if (codeActions.get(uri) === undefined) {
-    codeActions.set(uri, new Map<string, Array<Fix>>());
+    codeActions.set(uri, new Map<string, LinterDiagnostic>());
   }
 
   for (const linterDiagnostic of linterDiagnostics) {
@@ -212,9 +213,7 @@ function processLinterDiagnostics(linterDiagnostics: Array<LinterDiagnostic>, ur
     };
 
     diagnostics.push(diagnostic);
-    if (linterDiagnostic.suggestions !== undefined) {
-        codeActions.get(uri)?.set(computeKey(diagnostic), linterDiagnostic.suggestions);
-    }
+    codeActions.get(uri)?.set(computeKey(diagnostic), linterDiagnostic);
   }
 
   // Send the computed diagnostics to VSCode.
@@ -276,6 +275,7 @@ documents.listen(connection);
 // Listen on the connection
 connection.listen();
 
+
 connection.onCodeAction((params) => {
   const textDocument = documents.get(params.textDocument.uri);
   if (textDocument === undefined) {
@@ -284,65 +284,102 @@ connection.onCodeAction((params) => {
 
   const actions = new Array<CodeAction>();
   for (const diagnostic of params.context.diagnostics) {
-    const suggestions = codeActions.get(textDocument.uri)?.get(computeKey(diagnostic));
-    if (suggestions !== undefined) {
-      for (let i = 0; i < suggestions.length; i++) {
-        const title = suggestions[i].description || 'Fix this problem.';
-        const action = CodeAction.create(
-          title,
-          Command.create(title, FIX_COMMAND, textDocument.uri, computeKey(diagnostic), i),
-          CodeActionKind.QuickFix
+    const linterDiagnostic = codeActions.get(textDocument.uri)?.get(computeKey(diagnostic));
+    if (linterDiagnostic) {
+      // get codeactions for suggestions
+      if (linterDiagnostic.suggestions) {
+        const suggest = linterDiagnostic.suggestions;
+        for (let i = 0; i < suggest.length; i++) {
+          const title = suggest[i].description || 'Fix this problem.';
+          const action = CodeAction.create(
+            title,
+            Command.create(title, COMMAND.FIX, textDocument.uri, computeKey(diagnostic), i),
+            CodeActionKind.QuickFix
+          );
+
+          //linterDiagnostic.
+          actions.push(action);
+        }
+      }
+
+
+      // get codeaction for documentation
+      if (linterDiagnostic.documentationUrl) {
+        const urlDocAction = CodeAction.create(
+          'Learn more...',
+          Command.create('Learn more about this rule', COMMAND.LEARN_MORE, linterDiagnostic.documentationUrl),
+          CodeActionKind.Empty
         );
 
-        //linterDiagnostic.
-        actions.push(action);
+        actions.push(urlDocAction);
       }
     }
   }
+
 
   return actions;
 });
 
 
-const FIX_COMMAND = 'adlLinter.fix' ;
+namespace COMMAND {
+  export const FIX = 'adlLinter.fix';
+  export const LEARN_MORE = 'adlLinter.getDocumentation';
+}
+
 connection.onExecuteCommand(async (params) => {
-  if (apiModel) {
-    if (params.command !== FIX_COMMAND || params.arguments === undefined) {
-      return;
+  if (apiModel && params.arguments !== undefined) {
+    if (params.command === COMMAND.FIX) {
+      if (params.command !== COMMAND.FIX) {
+        return;
+      }
+
+      const textDocument = documents.get(params.arguments[0]);
+      if (textDocument === undefined) {
+        return;
+      }
+
+      const linterDiagnostic = codeActions.get(textDocument.uri)?.get(params.arguments[1]);
+      if (linterDiagnostic === undefined) {
+        return;
+      }
+
+      const suggestions = linterDiagnostic.suggestions;
+      if (suggestions === undefined) {
+        return;
+      }
+
+      const suggestion = suggestions[params.arguments[2]];
+      if (suggestion === undefined) {
+        return;
+      }
+
+      // get file info
+      const changedPath = getRelativePath(apiModel.fileSystem, textDocument.uri);
+      const changedFile = apiModel.where(each => each.relativePath === changedPath);
+      const file = changedFile.files[0];
+
+      // previous state
+      const originalFileRange = Range.fromFile(file);
+
+      // apply fix
+      suggestion.fix();
+
+      await connection.workspace.applyEdit({
+        documentChanges: [
+          TextDocumentEdit.create(
+            { uri: textDocument.uri, version: textDocument.version },
+            [TextEdit.replace(originalFileRange, file.getFullText())]
+          )]
+      });
     }
 
-    const textDocument = documents.get(params.arguments[0]);
-    if (textDocument === undefined) {
-      return;
+    if (params.command === COMMAND.LEARN_MORE) {
+      const url = params.arguments[0];
+      if (url === undefined) {
+        return;
+      }
+
+      await connection.sendRequest(OpenLinkRequest.type, {url});
     }
-
-    const suggestions = codeActions.get(textDocument.uri)?.get(params.arguments[1]);
-    if (suggestions === undefined) {
-      return;
-    }
-
-    const suggestion = suggestions[params.arguments[2]];
-    if (suggestion === undefined) {
-      return;
-    }
-
-    // get file info
-    const changedPath = getRelativePath(apiModel.fileSystem, textDocument.uri);
-    const changedFile = apiModel.where(each => each.relativePath === changedPath);
-    const file = changedFile.files[0];
-
-    // previous state
-    const originalFileRange = Range.fromFile(file);
-
-    // apply fix
-    suggestion.fix();
-
-    await connection.workspace.applyEdit({
-      documentChanges: [
-        TextDocumentEdit.create(
-          { uri: textDocument.uri, version: textDocument.version },
-          [TextEdit.replace(originalFileRange, file.getFullText())]
-        )]
-    });
   }
 });

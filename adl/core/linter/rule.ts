@@ -109,4 +109,9 @@ export interface LinterDiagnostic {
   * An array of possible fixes.
   */
   suggestions?: Array<Fix>;
+
+/**
+ * Additional documntation for the rule can be found at the url
+ */
+  documentationUrl?: string;
 }

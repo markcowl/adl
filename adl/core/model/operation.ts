@@ -18,18 +18,18 @@ export abstract class ResponseCollection extends TSElement<TupleTypeNode> {
    * Adds a new response to this collection
    */
   createResponse() {
-    // todo
+    throw new Error('not implemented');
   }
 
   /**
    * Adds a response to this collection using a globally defined response
    */
   addResponse(declaration: Reference<Response>) {
-    //todo
+    throw new Error('not implemented');
   }
 }
 
-export class Parameter extends TypedElement<ParameterDeclaration> {
+export abstract class Parameter extends TypedElement<ParameterDeclaration> {
   static isAllowedNode(node: Node): node is ParameterDeclaration {
     return Node.isParameterDeclaration(node);
   }
@@ -39,13 +39,13 @@ export class Parameter extends TypedElement<ParameterDeclaration> {
  * A Result describes a single output from an operation.
  *
  */
-export class Result extends TSElement<TypeLiteralNode | InterfaceDeclaration> {
+export abstract class Result extends TSElement<TypeLiteralNode | InterfaceDeclaration> {
   static isAllowedNode(node: Node): node is TypeLiteralNode | InterfaceDeclaration {
     return Node.isTypeLiteralNode(node) || Node.isInterfaceDeclaration(node);
   }
 }
 
-export class ResponseCriteria extends TSElement<FunctionTypeNode> {
+export abstract class ResponseCriteria extends TSElement<FunctionTypeNode> {
 }
 
 /**
@@ -65,12 +65,11 @@ export abstract class Response extends TSElement<FunctionTypeNode> {
    * (if you want to set the result to a globally defined result, use {@link setResult})
    */
   createResult() {
-
-    // todo
+    throw new Error('not implemented');
   }
 
   setResult() {
-    // todo
+    throw new Error('not implemented');
   }
 
 }
@@ -83,24 +82,20 @@ export abstract class OperationGroup extends NamedElement<InterfaceDeclaration> 
   }
 }
 
-export class Operation extends NamedElement<MethodSignature> {
-  get parameters(): ReadonlyArray<Parameter> {
-    return this.node.getParameters().map(each => new Parameter(each));
-  }
+export abstract class Operation extends NamedElement<MethodSignature> {
+  abstract get parameters(): ReadonlyArray<Parameter>;
 
   /**
    * creates a new parameter in this operation
    */
-  createParameter(name: string,) {
-    // todo
+  createParameter(name: string) {
+    throw new Error('not implemented');
   }
 
   /**
    * returns the Response for this operation as either a ResponseCollection the declaration of the ResponseCollection
    */
-  get responseCollection(): ResponseCollection | Reference<ResponseCollection> | undefined {
-    throw new Error('Not Implemented');
-  }
+  abstract get responseCollection(): ResponseCollection | Reference<ResponseCollection> | undefined;
 
   /**
    * creates a new Response collection as a literal on this operation
@@ -108,7 +103,7 @@ export class Operation extends NamedElement<MethodSignature> {
    * (if you want to use a declared response declaration, use {@link setResponse} )
    */
   createResponseCollection(){
-    // todo
+    throw new Error('not implemented');
   }
 
   /**
@@ -118,7 +113,7 @@ export class Operation extends NamedElement<MethodSignature> {
   * @param response
   */
   setResponseCollection(value: Reference<ResponseCollection>) {
-    //todo
+    throw new Error('not implemented');
   }
 
   /**
@@ -127,8 +122,6 @@ export class Operation extends NamedElement<MethodSignature> {
    * does not alter the declaration if the current response is declared globally.
    */
   removeResponse(){
-    // todo
+    throw new Error('not implemented');
   }
-
-
 }

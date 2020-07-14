@@ -7,7 +7,7 @@ type FiveHundred = 500;
 
 type TheseResponses = FourHundred | FiveHundred;
 
-export type responseCollection = [
+export type responseCollection1 = [
   (code: TheseResponses, mediaType: 'application/json') => {
     isException: true
   },
@@ -17,12 +17,16 @@ export type responseCollection = [
   (code: 200) => {
     body: Person
   },
-  response4<200>,
+  response4<200, 'application/xml'>,
   response1,
   response2,
   response3,
-
 ]
+
+export type responseCollection2 = [
+  responseCollection1,
+  (code: 501) => { isException: true }
+];
 
 /** response has result declared inline */
 export type response1 = (code: 500) => {
@@ -39,9 +43,12 @@ export type responseValue = {
   body: Person;
 }
 
-export type response4<c> = (code: c) => {
+export type header1 = Header<string, 'x-header'>;
+export type response4<c, m> = (code: c, mediaType: m) => {
   body: Person,
-  isException: true
+  isException: true,
+  headers: [header1],
+  message: 'some message'
 }
 
 
@@ -75,4 +82,10 @@ export interface myOperations {
       body: Person;
     }
   ]
+
+  second(person: string): responseCollection1;
+
+  third(person: string): responseCollection2;
+
+  fourth(person: string);
 }

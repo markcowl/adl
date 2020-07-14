@@ -5,7 +5,6 @@ export default <Rule>{
     severity: 'error',
     description: 'The element lacks a description',
     documentationUrl: 'URL',
-
   },
   data: {
     minLength: 10
@@ -24,18 +23,12 @@ export default <Rule>{
   // onParameter: (model, parameter) => checkDescription('parameter', parameter)
 };
 
-function* checkDescription(nodeType: string, element: NamedElement<any>, data: any): Iterator<RuleResult>  {
+function checkDescription(nodeType: string, element: NamedElement<any>, data: any): RuleResult |undefined  {
   if (element.description === undefined) {
-    yield {
+    return {
       message: `The ${nodeType} '${element.name}' lacks a description. Please consider adding one.`
     };
-  } else {
-    if (element.description.length < data.minLength) {
-      yield {
-        message: `The description '${element.name}' is too short. Please make it longer.`,
-        range: element.annotations?.get('description')[0].contentRange
-      };
-    }
   }
 
+  return;
 }
