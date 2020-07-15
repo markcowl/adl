@@ -4,7 +4,7 @@ import { ClassDeclaration, EnumDeclaration, EnumMember, ImportDeclarationStructu
 import { ApiModel } from '../model/api-model';
 import { TypeReference } from '../model/schema/type';
 import { getAbsolutePath } from '../support/file-system';
-import { createUnionTypeNode, normalizeIdentifier, TypeSyntax } from './codegen';
+import { createUnionTypeNode, TypeSyntax } from './codegen';
 import { createSandbox } from './sandbox';
 
 /**
@@ -120,7 +120,7 @@ export function IsTypeDeclaration(node?: Node): node is TypeDeclaration {
 export function createImportFor(name: string, sourceFile: SourceFile, relativeToSourceFile: SourceFile): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
-    namedImports: [normalizeIdentifier(name)],
+    namedImports: [name],
     moduleSpecifier: relativeToSourceFile.getRelativePathAsModuleSpecifierTo(sourceFile)
   };
 }

@@ -60,19 +60,20 @@ export function createIntersectionTypeNode(left: ts.TypeNode, right: ts.TypeNode
 }
 
 /**
- * Create a new intersection type compiler node.
+ * Create a new union type compiler node.
  *
- * Avoid unnecessary parentheses when left is already an intersection.
+ * Avoid unnecessary parentheses when left is already a union.
  */
 export function createUnionTypeNode(left: ts.TypeNode, right: ts.TypeNode) {
   const types = ts.isUnionTypeNode(left) ? [...left.types, right] : [left, right];
   return ts.createUnionTypeNode(types);
 }
 
+/**
+ * Holds a compiler type node and pretty-printed text, which is computed on demand.
+ */
 export class TypeSyntax {
-  constructor(public readonly node: ts.TypeNode, preservedText?: string) {
-    this.#text = preservedText;
-  }
+  constructor(public readonly node: ts.TypeNode) {}
 
   #text?: string;
   get text() {
