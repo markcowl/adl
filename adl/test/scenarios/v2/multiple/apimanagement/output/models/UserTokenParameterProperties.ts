@@ -1,4 +1,4 @@
-import { KeyType } from '../enums/KeyType';
+import { KeyType } from "../enums/KeyType";
 /**
  * @description Parameters supplied to the Get User Token operation.
  * @since 2019-12-01

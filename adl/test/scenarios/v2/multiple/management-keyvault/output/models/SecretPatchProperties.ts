@@ -1,4 +1,4 @@
-import { SecretAttributes } from './SecretAttributes';
+import { SecretAttributes } from "./SecretAttributes";
 /**
  * @description Properties of the secret
  * @since 2019-09-01

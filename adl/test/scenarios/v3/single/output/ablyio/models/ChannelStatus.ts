@@ -1,4 +1,4 @@
-import { Occupancy } from './Occupancy';
+import { Occupancy } from "./Occupancy";
 /**
  * @description A ChannelStatus instance.
  * @since 1.1.0

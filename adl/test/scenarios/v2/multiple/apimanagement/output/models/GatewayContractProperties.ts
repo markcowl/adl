@@ -1,4 +1,4 @@
-import { ResourceLocationDataContract } from './ResourceLocationDataContract';
+import { ResourceLocationDataContract } from "./ResourceLocationDataContract";
 /**
  * @description Properties of the Gateway contract.
  * @since 2019-12-01

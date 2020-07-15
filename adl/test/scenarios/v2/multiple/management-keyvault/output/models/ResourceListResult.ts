@@ -1,4 +1,4 @@
-import { Resource } from './Resource';
+import { Resource } from "./Resource";
 /**
  * @description List of vault resources.
  * @since 2019-09-01

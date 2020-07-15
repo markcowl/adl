@@ -1,4 +1,4 @@
-import { AmazonResourceName } from '../aliases/AmazonResourceName';
+import { AmazonResourceName } from "../aliases/AmazonResourceName";
 /**
  * ListTagsForResourceRequest
  * @since 2018-11-25

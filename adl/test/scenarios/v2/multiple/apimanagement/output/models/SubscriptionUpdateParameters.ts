@@ -1,4 +1,4 @@
-import { SubscriptionUpdateParameterProperties } from './SubscriptionUpdateParameterProperties';
+import { SubscriptionUpdateParameterProperties } from "./SubscriptionUpdateParameterProperties";
 /**
  * @description Subscription update details.
  * @since 2019-12-01

@@ -1,4 +1,4 @@
-import { RequestReportRecordContract } from './RequestReportRecordContract';
+import { RequestReportRecordContract } from "./RequestReportRecordContract";
 /**
  * @description Paged Report records list representation.
  * @since 2019-12-01

@@ -1,4 +1,4 @@
-import { SubscriptionState } from '../enums/SubscriptionState';
+import { SubscriptionState } from "../enums/SubscriptionState";
 /**
  * @description Subscription details.
  * @since 2019-12-01

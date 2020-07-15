@@ -1,4 +1,4 @@
-import { ErrorResponseBody } from './ErrorResponseBody';
+import { ErrorResponseBody } from "./ErrorResponseBody";
 /**
  * @description Error Response.
  * @since 2019-12-01

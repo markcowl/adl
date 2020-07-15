@@ -1,4 +1,4 @@
-import { BackendServiceFabricClusterProperties } from './BackendServiceFabricClusterProperties';
+import { BackendServiceFabricClusterProperties } from "./BackendServiceFabricClusterProperties";
 /**
  * @description Properties specific to the Backend Type.
  * @since 2019-12-01

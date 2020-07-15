@@ -1,4 +1,4 @@
-import { ApiCreateOrUpdateProperties } from './ApiCreateOrUpdateProperties';
+import { ApiCreateOrUpdateProperties } from "./ApiCreateOrUpdateProperties";
 /**
  * @description API Create or Update Parameters.
  * @since 2019-12-01

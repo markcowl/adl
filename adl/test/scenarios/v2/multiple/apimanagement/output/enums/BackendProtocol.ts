@@ -6,7 +6,7 @@
  */
 export enum BackendProtocol {
     /** The Backend is a RESTful service. */
-    http = 'http',
+    http = "http",
     /** The Backend is a SOAP service. */
-    soap = 'soap'
+    soap = "soap"
 }

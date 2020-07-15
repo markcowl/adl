@@ -1,6 +1,6 @@
-import { ParameterContract } from './ParameterContract';
-import { RequestContract } from './RequestContract';
-import { ResponseContract } from './ResponseContract';
+import { ParameterContract } from "./ParameterContract";
+import { RequestContract } from "./RequestContract";
+import { ResponseContract } from "./ResponseContract";
 /**
  * @description Api Operation Entity Base Contract details.
  * @since 2019-12-01

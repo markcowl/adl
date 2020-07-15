@@ -1,4 +1,4 @@
-import { Vault } from './Vault';
+import { Vault } from "./Vault";
 /**
  * @description List of vaults
  * @since 2019-09-01

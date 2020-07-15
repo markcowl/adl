@@ -1,4 +1,4 @@
-import { SubscriptionState } from '../enums/SubscriptionState';
+import { SubscriptionState } from "../enums/SubscriptionState";
 /**
  * @description Parameters supplied to the Create subscription operation.
  * @since 2019-12-01

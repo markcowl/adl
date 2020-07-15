@@ -1,4 +1,4 @@
-import { RecipientsContractProperties } from './RecipientsContractProperties';
+import { RecipientsContractProperties } from "./RecipientsContractProperties";
 /**
  * @description Notification Contract properties.
  * @since 2019-12-01

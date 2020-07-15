@@ -1,4 +1,4 @@
-import { ApiContractUpdateProperties } from './ApiContractUpdateProperties';
+import { ApiContractUpdateProperties } from "./ApiContractUpdateProperties";
 /**
  * @description API update contract details.
  * @since 2019-12-01

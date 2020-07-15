@@ -1,4 +1,4 @@
-import { IdentityProviderUpdateProperties } from './IdentityProviderUpdateProperties';
+import { IdentityProviderUpdateProperties } from "./IdentityProviderUpdateProperties";
 /**
  * @description Parameters supplied to update Identity Provider
  * @since 2019-12-01

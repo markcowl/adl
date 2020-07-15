@@ -1,5 +1,5 @@
-import { UserContractProperties } from './UserContractProperties';
-import { Resource } from './Resource';
+import { UserContractProperties } from "./UserContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description User details.
  * @since 2019-12-01

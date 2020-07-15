@@ -1,4 +1,4 @@
-import { RegionContract } from './RegionContract';
+import { RegionContract } from "./RegionContract";
 /**
  * @description Lists Regions operation response details.
  * @since 2019-12-01

@@ -1,4 +1,4 @@
-import { EmailTemplateContract } from './EmailTemplateContract';
+import { EmailTemplateContract } from "./EmailTemplateContract";
 /**
  * @description Paged email template list representation.
  * @since 2019-12-01

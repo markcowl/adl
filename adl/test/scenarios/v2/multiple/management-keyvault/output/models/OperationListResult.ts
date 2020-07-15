@@ -1,4 +1,4 @@
-import { Operation } from './Operation';
+import { Operation } from "./Operation";
 /**
  * @description Result of the request to list Storage operations. It contains a list of operations and a URL link to get the next set of results.
  * @since 2019-09-01

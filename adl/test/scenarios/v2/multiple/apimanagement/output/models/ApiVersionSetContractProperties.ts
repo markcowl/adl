@@ -1,5 +1,5 @@
-import { versioningScheme } from '../enums/versioningScheme';
-import { ApiVersionSetEntityBase } from './ApiVersionSetEntityBase';
+import { versioningScheme } from "../enums/versioningScheme";
+import { ApiVersionSetEntityBase } from "./ApiVersionSetEntityBase";
 /**
  * @description Properties of an API Version Set.
  * @since 2019-12-01

@@ -1,5 +1,5 @@
-import { AmazonResourceName } from '../aliases/AmazonResourceName';
-import { TagList } from '../aliases/TagList';
+import { AmazonResourceName } from "../aliases/AmazonResourceName";
+import { TagList } from "../aliases/TagList";
 /**
  * TagResourceRequest
  * @since 2018-11-25

@@ -1,4 +1,4 @@
-import { Secret } from './Secret';
+import { Secret } from "./Secret";
 /**
  * @description List of secrets
  * @since 2019-09-01

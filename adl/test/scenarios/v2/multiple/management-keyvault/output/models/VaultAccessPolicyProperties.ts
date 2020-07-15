@@ -1,4 +1,4 @@
-import { AccessPolicyEntry } from './AccessPolicyEntry';
+import { AccessPolicyEntry } from "./AccessPolicyEntry";
 /**
  * @description Properties of the vault access policy
  * @since 2019-09-01

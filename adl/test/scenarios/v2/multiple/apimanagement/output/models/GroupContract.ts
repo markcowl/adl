@@ -1,5 +1,5 @@
-import { GroupContractProperties } from './GroupContractProperties';
-import { Resource } from './Resource';
+import { GroupContractProperties } from "./GroupContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description Contract details.
  * @since 2019-12-01

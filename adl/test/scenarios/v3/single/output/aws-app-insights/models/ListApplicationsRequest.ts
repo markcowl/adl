@@ -1,4 +1,4 @@
-import { MaxEntities } from '../aliases/MaxEntities';
+import { MaxEntities } from "../aliases/MaxEntities";
 /**
  * ListApplicationsRequest
  * @since 2018-11-25

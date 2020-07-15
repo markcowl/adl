@@ -1,5 +1,5 @@
-import { actor } from './actor';
-import { organization } from './organization';
+import { actor } from "./actor";
+import { organization } from "./organization";
 /**
  *
  * @since v3
@@ -40,20 +40,8 @@ export interface event {
      * @since v3
      */
     repo?: {
-        /**
-         *
-         * @since v3
-         */
         id?: int64;
-        /**
-         *
-         * @since v3
-         */
         name?: string;
-        /**
-         *
-         * @since v3
-         */
         url?: string;
     };
     /**

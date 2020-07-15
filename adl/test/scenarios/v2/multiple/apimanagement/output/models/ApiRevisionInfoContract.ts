@@ -1,4 +1,4 @@
-import { ApiVersionSetContractDetails } from './ApiVersionSetContractDetails';
+import { ApiVersionSetContractDetails } from "./ApiVersionSetContractDetails";
 /**
  * @description Object used to create an API Revision or Version based on an existing API Revision
  * @since 2019-12-01

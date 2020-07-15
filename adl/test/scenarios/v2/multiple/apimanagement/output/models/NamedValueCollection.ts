@@ -1,4 +1,4 @@
-import { NamedValueContract } from './NamedValueContract';
+import { NamedValueContract } from "./NamedValueContract";
 /**
  * @description Paged NamedValue list representation.
  * @since 2019-12-01

@@ -1,4 +1,4 @@
-import { LoggerContract } from './LoggerContract';
+import { LoggerContract } from "./LoggerContract";
 /**
  * @description Paged Logger list representation.
  * @since 2019-12-01

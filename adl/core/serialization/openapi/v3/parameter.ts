@@ -35,7 +35,7 @@ export async function processParameter(parameter: v3.Parameter | v3.ParameterRef
       description: options?.isAnonymous ? parameter.description : undefined,
       required: parameter.required ?? false,
       declaration: parameterTypeSyntax,
-      requiredReferences: schema.requiredReferences,
+      requiredReferences: [schema],
       location: parameter.in,
     };
 

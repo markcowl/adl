@@ -1,2 +1,2 @@
-import { download } from '../models/download';
+import { download } from "../models/download";
 export type downloads = Array<download>;

@@ -1,4 +1,4 @@
-import { CertificateContract } from './CertificateContract';
+import { CertificateContract } from "./CertificateContract";
 /**
  * @description Paged Certificates list representation.
  * @since 2019-12-01

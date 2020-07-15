@@ -1,4 +1,4 @@
-import { ProductContract } from './ProductContract';
+import { ProductContract } from "./ProductContract";
 /**
  * @description Paged Products list representation.
  * @since 2019-12-01

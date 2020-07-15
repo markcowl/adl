@@ -1,4 +1,4 @@
-import { Extras } from './Extras';
+import { Extras } from "./Extras";
 /**
  *
  * @since 1.1.0

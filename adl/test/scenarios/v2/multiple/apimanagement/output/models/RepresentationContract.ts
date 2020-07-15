@@ -1,4 +1,4 @@
-import { ParameterContract } from './ParameterContract';
+import { ParameterContract } from "./ParameterContract";
 /**
  * @description Operation request/response representation details.
  * @since 2019-12-01

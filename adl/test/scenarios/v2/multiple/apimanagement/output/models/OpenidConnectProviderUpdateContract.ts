@@ -1,4 +1,4 @@
-import { OpenidConnectProviderUpdateContractProperties } from './OpenidConnectProviderUpdateContractProperties';
+import { OpenidConnectProviderUpdateContractProperties } from "./OpenidConnectProviderUpdateContractProperties";
 /**
  * @description Parameters supplied to the Update OpenID Connect Provider operation.
  * @since 2019-12-01

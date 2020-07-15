@@ -1,4 +1,4 @@
-import { ProductState } from '../enums/ProductState';
+import { ProductState } from "../enums/ProductState";
 /**
  * @description Product Entity Base Parameters
  * @since 2019-12-01

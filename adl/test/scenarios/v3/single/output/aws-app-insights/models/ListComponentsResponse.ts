@@ -1,4 +1,4 @@
-import { ApplicationComponentList } from '../aliases/ApplicationComponentList';
+import { ApplicationComponentList } from "../aliases/ApplicationComponentList";
 /**
  *
  * @since 2018-11-25

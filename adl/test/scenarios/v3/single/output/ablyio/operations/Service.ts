@@ -1,3 +1,26 @@
+import { versionHeader } from "../aliases/versionHeader";
+import { responseFormat } from "../aliases/responseFormat";
+import { Link } from "../aliases/Link";
+import { ChannelDetails } from "../models/ChannelDetails";
+import { Error } from "../aliases/Error";
+import { channelId } from "../aliases/channelId";
+import { ServerId } from "../aliases/ServerId";
+import { filterStart } from "../aliases/filterStart";
+import { filterLimit } from "../aliases/filterLimit";
+import { filterEnd } from "../aliases/filterEnd";
+import { filterDirection } from "../aliases/filterDirection";
+import { Message } from "../models/Message";
+import { ErrorCode } from "../aliases/ErrorCode";
+import { ErrorMessage } from "../aliases/ErrorMessage";
+import { PresenceMessage } from "../models/PresenceMessage";
+import { key_name } from "../aliases/key_name";
+import { TokenRequest } from "../models/TokenRequest";
+import { SignedTokenRequest } from "../models/SignedTokenRequest";
+import { TokenDetails } from "../models/TokenDetails";
+import { DeviceDetails } from "../models/DeviceDetails";
+import { deviceId } from "../aliases/deviceId";
+import { Push } from "../models/Push";
+import { Recipient } from "../models/Recipient";
 export interface Service {
     /**
      * Enumerate all active channels of the application
@@ -9,7 +32,7 @@ export interface Service {
      * @param by - optionally specifies whether to return just channel names (by=id) or ChannelDetails (by=value)
      * @return 2XX - OK
      */
-    getMetadataOfAllChannels(X_Ably_Version?: versionHeader, format?: responseFormat, limit?: Query<int64 /* todo: add defaultValue '100' */>, prefix?: Query<string>, by?: Query<"value" | "id">): [[(code: "2XX", mediaType: "application/json") => {
+    getMetadataOfAllChannels(X_Ably_Version?: versionHeader, format?: responseFormat, limit?: Query<int64>, prefix?: Query<string>, by?: Query<"value" | "id">): [[(code: "2XX", mediaType: "application/json") => {
         body: Xor<Array<ChannelDetails>, Array<string>>;
         headers: [Link<"link">];
     }, (code: "2XX", mediaType: "application/x-msgpack") => {
@@ -63,43 +86,19 @@ export interface Service {
      */
     publishMessagesToChannel(X_Ably_Version?: versionHeader, format?: responseFormat, channel_id: channelId, body?: Body<Message, "application/json"> | Body<Message, "application/x-msgpack"> | Body<Message, "application/x-www-form-urlencoded">): [[(code: "2XX", mediaType: "application/json") => {
         body: {
-            /**
-             *
-             * @since 1.1.0
-             */
             channel?: string;
-            /**
-             *
-             * @since 1.1.0
-             */
             messageId?: string;
         };
         headers: [ServerId<"x-ably-serverid">];
     }, (code: "2XX", mediaType: "application/x-msgpack") => {
         body: {
-            /**
-             *
-             * @since 1.1.0
-             */
             channel?: string;
-            /**
-             *
-             * @since 1.1.0
-             */
             messageId?: string;
         };
         headers: [ServerId<"x-ably-serverid">];
     }, (code: "2XX", mediaType: "text/html") => {
         body: {
-            /**
-             *
-             * @since 1.1.0
-             */
             channel?: string;
-            /**
-             *
-             * @since 1.1.0
-             */
             messageId?: string;
         };
         headers: [ServerId<"x-ably-serverid">];
@@ -112,7 +111,7 @@ export interface Service {
      * @tag Status
      * @return 200 - OK
      */
-    getPresenceOfChannel(X_Ably_Version?: versionHeader, format?: responseFormat, channel_id: channelId, clientId?: Query<string>, connectionId?: Query<string>, limit?: Query<int64 /* todo: add defaultValue '100' */>): [[(code: 200, mediaType: "application/json") => {
+    getPresenceOfChannel(X_Ably_Version?: versionHeader, format?: responseFormat, channel_id: channelId, clientId?: Query<string>, connectionId?: Query<string>, limit?: Query<int64>): [[(code: 200, mediaType: "application/json") => {
         body: Array<PresenceMessage>;
         headers: [Link<"link">, ServerId<"x-ably-serverid">];
     }, (code: 200, mediaType: "application/x-msgpack") => {
@@ -165,7 +164,7 @@ export interface Service {
      * @param limit - The maximum number of records to return.
      * @return 2XX - OK
      */
-    getPushSubscriptionsOnChannels(X_Ably_Version?: versionHeader, format?: responseFormat, channel?: Query<string>, deviceId?: Query<string>, clientId?: Query<string>, limit?: Query<int64 /* todo: add defaultValue '100' */ & Maximum<1000>>): [(code: "2XX", mediaType: "application/json") => {
+    getPushSubscriptionsOnChannels(X_Ably_Version?: versionHeader, format?: responseFormat, channel?: Query<string>, deviceId?: Query<string>, clientId?: Query<string>, limit?: Query<int64 & Maximum<1000>>): [(code: "2XX", mediaType: "application/json") => {
         body: DeviceDetails;
     }, Error<"default", true>];
     /**
@@ -177,70 +176,22 @@ export interface Service {
      * @return 2XX - OK
      */
     subscribePushDeviceToChannel(X_Ably_Version?: versionHeader, format?: responseFormat, body?: Body<Xor<{
-        /**
-         * @description Channel name.
-         * @since 1.1.0
-         */
         channel?: string;
-        /**
-         * @description Must be set when clientId is empty, cannot be used with clientId.
-         * @since 1.1.0
-         */
         deviceId?: string;
     }, {
-        /**
-         * @description Channel name.
-         * @since 1.1.0
-         */
         channel?: string;
-        /**
-         * @description Must be set when deviceId is empty, cannot be used with deviceId.
-         * @since 1.1.0
-         */
         clientId?: string;
     }>, "application/json"> | Body<Xor<{
-        /**
-         * @description Channel name.
-         * @since 1.1.0
-         */
         channel?: string;
-        /**
-         * @description Must be set when clientId is empty, cannot be used with clientId.
-         * @since 1.1.0
-         */
         deviceId?: string;
     }, {
-        /**
-         * @description Channel name.
-         * @since 1.1.0
-         */
         channel?: string;
-        /**
-         * @description Must be set when deviceId is empty, cannot be used with deviceId.
-         * @since 1.1.0
-         */
         clientId?: string;
     }>, "application/x-msgpack"> | Body<Xor<{
-        /**
-         * @description Channel name.
-         * @since 1.1.0
-         */
         channel?: string;
-        /**
-         * @description Must be set when clientId is empty, cannot be used with clientId.
-         * @since 1.1.0
-         */
         deviceId?: string;
     }, {
-        /**
-         * @description Channel name.
-         * @since 1.1.0
-         */
         channel?: string;
-        /**
-         * @description Must be set when deviceId is empty, cannot be used with deviceId.
-         * @since 1.1.0
-         */
         clientId?: string;
     }>, "application/x-www-form-urlencoded">): [(code: "2XX") => {}, Error<"default", true>];
     /**
@@ -281,7 +232,7 @@ export interface Service {
      * @param limit - The maximum number of records to return.
      * @return 2XX - OK
      */
-    getRegisteredPushDevices(X_Ably_Version?: versionHeader, format?: responseFormat, deviceId?: Query<string>, clientId?: Query<string>, limit?: Query<int64 /* todo: add defaultValue '100' */ & Maximum<1000>>): [[(code: "2XX", mediaType: "application/json") => {
+    getRegisteredPushDevices(X_Ably_Version?: versionHeader, format?: responseFormat, deviceId?: Query<string>, clientId?: Query<string>, limit?: Query<int64 & Maximum<1000>>): [[(code: "2XX", mediaType: "application/json") => {
         body: DeviceDetails;
     }, (code: "2XX", mediaType: "application/x-msgpack") => {
         body: DeviceDetails;
@@ -392,37 +343,13 @@ export interface Service {
      * @return 2XX - OK
      */
     publishPushNotificationToDevices(X_Ably_Version?: versionHeader, format?: responseFormat, body?: Body<{
-        /**
-         *
-         * @since 1.1.0
-         */
         push?: Push;
-        /**
-         *
-         * @since 1.1.0
-         */
         recipient: Recipient;
     }, "application/json"> | Body<{
-        /**
-         *
-         * @since 1.1.0
-         */
         push?: Push;
-        /**
-         *
-         * @since 1.1.0
-         */
         recipient: Recipient;
     }, "application/x-msgpack"> | Body<{
-        /**
-         *
-         * @since 1.1.0
-         */
         push?: Push;
-        /**
-         *
-         * @since 1.1.0
-         */
         recipient: Recipient;
     }, "application/x-www-form-urlencoded">): [(code: "2XX") => {}, Error<"default", true>];
     /**

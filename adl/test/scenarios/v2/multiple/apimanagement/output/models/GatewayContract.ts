@@ -1,5 +1,5 @@
-import { GatewayContractProperties } from './GatewayContractProperties';
-import { Resource } from './Resource';
+import { GatewayContractProperties } from "./GatewayContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description Gateway details.
  * @since 2019-12-01

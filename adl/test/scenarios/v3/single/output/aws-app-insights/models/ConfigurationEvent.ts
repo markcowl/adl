@@ -1,5 +1,5 @@
-import { ConfigurationEventStatus } from '../enums/ConfigurationEventStatus';
-import { ConfigurationEventResourceType } from '../enums/ConfigurationEventResourceType';
+import { ConfigurationEventStatus } from "../enums/ConfigurationEventStatus";
+import { ConfigurationEventResourceType } from "../enums/ConfigurationEventResourceType";
 /**
  * @description  The event information.
  * @since 2018-11-25

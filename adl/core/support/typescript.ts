@@ -1,9 +1,10 @@
 import { Path } from '@azure-tools/sourcemap';
 import { fail } from 'assert';
-import { ClassDeclaration, EnumDeclaration, EnumMember, ImportDeclarationStructure, InterfaceDeclaration, Node, Project, SourceFile, StructureKind, SyntaxList, TypeAliasDeclaration, TypeNode, TypeParameterDeclaration, TypeReferenceNode, UnionTypeNode } from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, EnumMember, ImportDeclarationStructure, InterfaceDeclaration, Node, printNode, Project, SourceFile, StructureKind, SyntaxList, ts, TypeAliasDeclaration, TypeNode, TypeParameterDeclaration, TypeReferenceNode, UnionTypeNode } from 'ts-morph';
 import { ApiModel } from '../model/api-model';
 import { TypeReference } from '../model/schema/type';
 import { getAbsolutePath } from '../support/file-system';
+import { createUnionTypeNode, TypeSyntax } from './codegen';
 import { createSandbox } from './sandbox';
 
 /**
@@ -116,14 +117,6 @@ export function IsTypeDeclaration(node?: Node): node is TypeDeclaration {
   return node instanceof TypeAliasDeclaration || node instanceof ClassDeclaration || node instanceof InterfaceDeclaration || node instanceof EnumDeclaration;
 }
 
-export function getImportFor(type: EnumDeclaration | InterfaceDeclaration | TypeAliasDeclaration, relativeToSourceFile: SourceFile): ImportDeclarationStructure {
-  return {
-    kind: StructureKind.ImportDeclaration,
-    namedImports: [type.getName()],
-    moduleSpecifier: relativeToSourceFile.getRelativePathAsModuleSpecifierTo(type.getSourceFile())
-  };
-}
-
 export function createImportFor(name: string, sourceFile: SourceFile, relativeToSourceFile: SourceFile): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
@@ -132,42 +125,51 @@ export function createImportFor(name: string, sourceFile: SourceFile, relativeTo
   };
 }
 
-export function addImportsTo(sourceFile: SourceFile, typeReference: TypeReference) {
-  if (typeReference.sourceFile && sourceFile !== typeReference.sourceFile) {
-    const typeName = typeReference.declaration.text;
+export function addImportsTo(sourceFile: SourceFile, imports: Array<ImportDeclarationStructure>) {
+  const set = new Set<string>();
+  for (const each of sourceFile.getImportDeclarations().map(d => d.getStructure())) {
+    set.add(JSON.stringify(each));
+  }
 
-
-    const importDecls = sourceFile.getImportDeclarations();
-    let found = false;
-
-    for (const importDecl of importDecls) {
-      if (importDecl.getModuleSpecifierSourceFile() === typeReference.sourceFile) {
-        // we've got imports from that sourcefile
-        if (!importDecl.getNamedImports().find(imp => imp.getName() === typeName)) {
-          // we've referenced the file, but not imported the type.
-          importDecl.addNamedImport(typeName);
-        }
-        // it's imported now
-        found = true;
-        break;
-      }
-
-      // wasn't that file
-    }
-    // wasn't imported yet. Let's add it.
-    if (!found) {
-      sourceFile.addImportDeclaration(createImportFor(typeName, typeReference.sourceFile, sourceFile));
+  const unique = new Array<ImportDeclarationStructure>();
+  for (const each of imports) {
+    const id = JSON.stringify(each);
+    if (!set.has(id)) {
+      set.add(id);
+      unique.push(each);
     }
   }
 
-  // now, add any requiredTypes to this file too.
-  for (const each of typeReference.requiredReferences) {
-    addImportsTo(sourceFile, each);
-  }
+  sourceFile.addImportDeclarations(unique);
 }
 
-export function addNullable(declaration: string) {
-  return declaration.endsWith('| null') ? declaration : `${declaration} | null`;
+export function createImportsFor(sourceFile: SourceFile, typeReference: TypeReference): Array<ImportDeclarationStructure> {
+  const result = new Array<ImportDeclarationStructure>();
+
+  const impl = (typeReference: TypeReference) => {
+    if (typeReference.sourceFile && sourceFile !== typeReference.sourceFile && ts.isTypeReferenceNode(typeReference.declaration.node)) {
+      const typeName = printNode(typeReference.declaration.node.typeName);
+      const importDecls = sourceFile.getImportDeclarations();
+      result.push(createImportFor(typeName, typeReference.sourceFile, sourceFile));
+    }
+
+    // now, add any requiredTypes to this file too.
+    for (const each of typeReference.requiredReferences) {
+      impl(each);
+    }
+  };
+
+  impl(typeReference);
+  return result;
+}
+
+export function addNullable(typeReference: TypeReference): TypeReference {
+  return {
+    ...typeReference,
+    sourceFile: undefined,
+    requiredReferences: [typeReference],
+    declaration: new TypeSyntax(createUnionTypeNode(typeReference.declaration.node, ts.createKeywordTypeNode(ts.SyntaxKind.NullKeyword)))
+  };
 }
 
 export function getInnerText(declaration: InterfaceDeclaration) {

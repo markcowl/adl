@@ -1,6 +1,6 @@
-import { CountryCode } from '../aliases/CountryCode';
-import { Geo } from './Geo';
-import { PlaceType } from '../enums/PlaceType';
+import { CountryCode } from "../aliases/CountryCode";
+import { Geo } from "./Geo";
+import { PlaceType } from "../enums/PlaceType";
 /**
  *
  * @since 2.3

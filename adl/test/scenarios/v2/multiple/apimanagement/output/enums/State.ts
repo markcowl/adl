@@ -6,13 +6,13 @@
  */
 export enum State {
     /** The issue is proposed. */
-    proposed = 'proposed',
+    proposed = "proposed",
     /** The issue is opened. */
-    open = 'open',
+    open = "open",
     /** The issue was removed. */
-    removed = 'removed',
+    removed = "removed",
     /** The issue is now resolved. */
-    resolved = 'resolved',
+    resolved = "resolved",
     /** The issue was closed. */
-    closed = 'closed'
+    closed = "closed"
 }

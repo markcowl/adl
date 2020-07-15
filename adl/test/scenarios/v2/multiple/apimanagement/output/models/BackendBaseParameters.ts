@@ -1,7 +1,7 @@
-import { BackendProperties } from './BackendProperties';
-import { BackendCredentialsContract } from './BackendCredentialsContract';
-import { BackendProxyContract } from './BackendProxyContract';
-import { BackendTlsProperties } from './BackendTlsProperties';
+import { BackendProperties } from "./BackendProperties";
+import { BackendCredentialsContract } from "./BackendCredentialsContract";
+import { BackendProxyContract } from "./BackendProxyContract";
+import { BackendTlsProperties } from "./BackendTlsProperties";
 /**
  * @description Backend entity base Parameter set.
  * @since 2019-12-01

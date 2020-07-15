@@ -1,4 +1,4 @@
-import { OpenidConnectProviderContract } from './OpenidConnectProviderContract';
+import { OpenidConnectProviderContract } from "./OpenidConnectProviderContract";
 /**
  * @description Paged OpenIdProviders list representation.
  * @since 2019-12-01

@@ -9,37 +9,13 @@ export interface pullsComment {
      * @since v3
      */
     _links?: {
-        /**
-         *
-         * @since v3
-         */
         html?: {
-            /**
-             *
-             * @since v3
-             */
             href?: string;
         };
-        /**
-         *
-         * @since v3
-         */
         pull_request?: {
-            /**
-             *
-             * @since v3
-             */
             href?: string;
         };
-        /**
-         *
-         * @since v3
-         */
         self?: {
-            /**
-             *
-             * @since v3
-             */
             href?: string;
         };
     };
@@ -88,30 +64,10 @@ export interface pullsComment {
      * @since v3
      */
     user?: {
-        /**
-         *
-         * @since v3
-         */
         avatar_url?: string;
-        /**
-         *
-         * @since v3
-         */
         gravatar_id?: string;
-        /**
-         *
-         * @since v3
-         */
         id?: int64;
-        /**
-         *
-         * @since v3
-         */
         login?: string;
-        /**
-         *
-         * @since v3
-         */
         url?: string;
     };
 }

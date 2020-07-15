@@ -278,7 +278,10 @@ export class ApiModel extends Files {
       indentationText: IndentationText.TwoSpaces,
       insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces: true,
       newLineKind: NewLineKind.LineFeed,
-      quoteKind: QuoteKind.Single,
+      // It's an uphill battle to use single quotes because we are leveraging
+      // compiler and JSON API that use double quotes, so use double everywhere
+      // for consistency. At some point, we should have a separate formatting pass.
+      quoteKind: QuoteKind.Double,
     },
   });
 

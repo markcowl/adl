@@ -1,5 +1,5 @@
-import { ResourceGroupName } from '../aliases/ResourceGroupName';
-import { MaxEntities } from '../aliases/MaxEntities';
+import { ResourceGroupName } from "../aliases/ResourceGroupName";
+import { MaxEntities } from "../aliases/MaxEntities";
 /**
  * ListProblemsRequest
  * @since 2018-11-25

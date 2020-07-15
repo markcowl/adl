@@ -1,5 +1,5 @@
-import { SubscriptionsDelegationSettingsProperties } from './SubscriptionsDelegationSettingsProperties';
-import { RegistrationDelegationSettingsProperties } from './RegistrationDelegationSettingsProperties';
+import { SubscriptionsDelegationSettingsProperties } from "./SubscriptionsDelegationSettingsProperties";
+import { RegistrationDelegationSettingsProperties } from "./RegistrationDelegationSettingsProperties";
 /**
  * @description Delegation settings contract properties.
  * @since 2019-12-01

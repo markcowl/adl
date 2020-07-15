@@ -1,4 +1,4 @@
-import { GroupContract } from './GroupContract';
+import { GroupContract } from "./GroupContract";
 /**
  * @description Paged Group list representation.
  * @since 2019-12-01

@@ -1,4 +1,4 @@
-import { Observation } from './Observation';
+import { Observation } from "./Observation";
 /**
  *
  * @since 2018-11-25

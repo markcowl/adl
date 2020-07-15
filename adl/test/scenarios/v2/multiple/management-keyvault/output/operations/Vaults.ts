@@ -1,3 +1,16 @@
+import { ApiVersionParameter } from "../aliases/ApiVersionParameter";
+import { SubscriptionIdParameter } from "../aliases/SubscriptionIdParameter";
+import { Vault } from "../models/Vault";
+import { VaultCreateOrUpdateParameters } from "../models/VaultCreateOrUpdateParameters";
+import { VaultPatchParameters } from "../models/VaultPatchParameters";
+import { AccessPolicyUpdateKind } from "../enums/AccessPolicyUpdateKind";
+import { VaultAccessPolicyParameters } from "../models/VaultAccessPolicyParameters";
+import { VaultListResult } from "../models/VaultListResult";
+import { DeletedVaultListResult } from "../models/DeletedVaultListResult";
+import { DeletedVault } from "../models/DeletedVault";
+import { ResourceListResult } from "../models/ResourceListResult";
+import { VaultCheckNameAvailabilityParameters } from "../models/VaultCheckNameAvailabilityParameters";
+import { CheckNameAvailabilityResult } from "../models/CheckNameAvailabilityResult";
 export interface Vaults {
     /**
      * @description Gets the specified Azure key vault.
@@ -22,7 +35,7 @@ export interface Vaults {
      * @return 200 - Created or updated vault
      * @return 201 - Created or updated vault
      */
-    CreateOrUpdate(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, api_version: ApiVersionParameter, parameters: Body<VaultCreateOrUpdateParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
+    CreateOrUpdate(resourceGroupName: string, vaultName: string & RegularExpression<"^[a-zA-Z0-9-]{3,24}$">, api_version: ApiVersionParameter, parameters: Body<VaultCreateOrUpdateParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: Vault;
     }, (code: 201, mediaType: "application/json") => {
         body: Vault;
@@ -49,7 +62,7 @@ export interface Vaults {
      * @return 200 - Patched vault
      * @return 201 - Patched vault
      */
-    Update(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, api_version: ApiVersionParameter, parameters: Body<VaultPatchParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
+    Update(resourceGroupName: string, vaultName: string & RegularExpression<"^[a-zA-Z0-9-]{3,24}$">, api_version: ApiVersionParameter, parameters: Body<VaultPatchParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: Vault;
     }, (code: 201, mediaType: "application/json") => {
         body: Vault;
@@ -66,7 +79,7 @@ export interface Vaults {
      * @return 200 - The updated access policies
      * @return 201 - The updated access policies
      */
-    UpdateAccessPolicy(resourceGroupName: string, vaultName: string & RegularExpression<'^[a-zA-Z0-9-]{3,24}$'>, operationKind: AccessPolicyUpdateKind, api_version: ApiVersionParameter, parameters: Body<VaultAccessPolicyParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
+    UpdateAccessPolicy(resourceGroupName: string, vaultName: string & RegularExpression<"^[a-zA-Z0-9-]{3,24}$">, operationKind: AccessPolicyUpdateKind, api_version: ApiVersionParameter, parameters: Body<VaultAccessPolicyParameters, "application/json">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: VaultAccessPolicyParameters;
     }, (code: 201, mediaType: "application/json") => {
         body: VaultAccessPolicyParameters;
@@ -77,10 +90,10 @@ export interface Vaults {
      * @http GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults
      * @tag Vaults
      * @param resourceGroupName - The name of the Resource Group to which the vault belongs.
-     * @param __top - Maximum number of results to return.
+     * @param $top - Maximum number of results to return.
      * @return 200 - Get information about all key vaults in the specified resource group.
      */
-    ListByResourceGroup(resourceGroupName: string, __top?: Query<int32, "$top">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    ListByResourceGroup(resourceGroupName: string, $top?: Query<int32>, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: VaultListResult;
     }];
     /**
@@ -88,10 +101,10 @@ export interface Vaults {
      * @since 2019-09-01
      * @http GET /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/vaults
      * @tag Vaults
-     * @param __top - Maximum number of results to return.
+     * @param $top - Maximum number of results to return.
      * @return 200 - Get information about all key vaults in the specified subscription.
      */
-    ListBySubscription(__top?: Query<int32, "$top">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    ListBySubscription($top?: Query<int32>, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
         body: VaultListResult;
     }];
     /**
@@ -132,12 +145,12 @@ export interface Vaults {
      * @since 2019-09-01
      * @http GET /subscriptions/{subscriptionId}/resources
      * @tag Vaults
-     * @param __filter - The filter to apply on the operation.
-     * @param __top - Maximum number of results to return.
+     * @param $filter - The filter to apply on the operation.
+     * @param $top - Maximum number of results to return.
      * @param api_version - Azure Resource Manager Api Version.
      * @return 200 - Get information about all key vaults in the subscription.
      */
-    List(__filter: Query<"resourceType eq 'Microsoft.KeyVault/vaults'", "$filter">, __top?: Query<int32, "$top">, api_version: Query<"2015-11-01", "api-version">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
+    List($filter: Query<"resourceType eq 'Microsoft.KeyVault/vaults'">, $top?: Query<int32>, api_version: Query<"2015-11-01", "api-version">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: ResourceListResult;
     }];
     /**

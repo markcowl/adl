@@ -1,3 +1,5 @@
+import { BodyOfThing } from "../aliases/BodyOfThing";
+import { StringResponse } from "../aliases/StringResponse";
 export interface Service {
     /**
      * @since 1.0.0

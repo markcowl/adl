@@ -1,4 +1,4 @@
-import { SchemaContract } from './SchemaContract';
+import { SchemaContract } from "./SchemaContract";
 /**
  * @description The response of the list schema operation.
  * @since 2019-12-01

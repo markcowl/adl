@@ -1,2 +1,2 @@
-import { ConfigurationEvent } from '../models/ConfigurationEvent';
+import { ConfigurationEvent } from "../models/ConfigurationEvent";
 export type ConfigurationEventList = Array<ConfigurationEvent>;

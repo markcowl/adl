@@ -1,6 +1,6 @@
-import { ResourceGroupName } from '../aliases/ResourceGroupName';
-import { OpsItemSNSTopicArn } from '../aliases/OpsItemSNSTopicArn';
-import { TagList } from '../aliases/TagList';
+import { ResourceGroupName } from "../aliases/ResourceGroupName";
+import { OpsItemSNSTopicArn } from "../aliases/OpsItemSNSTopicArn";
+import { TagList } from "../aliases/TagList";
 /**
  * CreateApplicationRequest
  * @since 2018-11-25

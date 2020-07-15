@@ -1,5 +1,5 @@
-import { PollId } from '../aliases/PollId';
-import { PollOption } from './PollOption';
+import { PollId } from "../aliases/PollId";
+import { PollOption } from "./PollOption";
 /**
  * @description Represent a Poll attached to a Tweet
  * @since 2.3

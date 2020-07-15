@@ -13,7 +13,7 @@ export interface ContextAnnotationEntityFields {
      * @description The unique id for a context annotation entity.
      * @since 2.3
      */
-    id: string & RegularExpression<'^[0-9]{1,19}$'>;
+    id: string & RegularExpression<"^[0-9]{1,19}$">;
     /**
      * @description Name of the context annotation entity.
      * @since 2.3

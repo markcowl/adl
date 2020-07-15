@@ -1,5 +1,5 @@
-import { SchemaContractProperties } from './SchemaContractProperties';
-import { Resource } from './Resource';
+import { SchemaContractProperties } from "./SchemaContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description Schema Contract details.
  * @since 2019-12-01

@@ -1,4 +1,4 @@
-import { GroupType } from '../enums/GroupType';
+import { GroupType } from "../enums/GroupType";
 /**
  * @description Parameters supplied to the Create Group operation.
  * @since 2019-12-01

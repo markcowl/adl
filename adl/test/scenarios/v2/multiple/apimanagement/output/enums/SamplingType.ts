@@ -6,5 +6,5 @@
  */
 export enum SamplingType {
     /** Fixed-rate sampling. */
-    fixed = 'fixed'
+    fixed = "fixed"
 }

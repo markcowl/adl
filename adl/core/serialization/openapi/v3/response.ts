@@ -58,16 +58,19 @@ async function getResponseTypeReference(response: v3.Response, $: Context, optio
     ];
   }
 
+  const headers = await processResponseHeaders(response, $);
+  requiredReferences.push(...headers);
+
   if (length(response.content) == 0) {
-    types.push(await getIndividualResponseTypeNode(response, undefined, undefined, $, options));
+    types.push(await getIndividualResponseTypeNode(response, undefined, headers, undefined, $, options));
   } else {
     for (const [key, value] of items(response.content)) {
       const schema = value.schema ? await processSchema(value.schema, $, { isAnonymous: true }) : undefined;
-      const type = await getIndividualResponseTypeNode(response, schema, key, $, options);
-      types.push(type);
+      const type = await getIndividualResponseTypeNode(response, schema, headers, key, $, options);
       if (schema) {
-        requiredReferences.push(...schema.requiredReferences);
+        requiredReferences.push(schema);
       }
+      types.push(type);
     }
   }
 
@@ -81,9 +84,7 @@ async function getResponseTypeReference(response: v3.Response, $: Context, optio
   };
 }
 
-async function getIndividualResponseTypeNode(response: v3.Response, schema: TypeReference | undefined, mediaType: string | undefined, $: Context, options: ResponseOptions): Promise<ts.TypeNode> {
-  const headers = await processResponseHeaders(response, $);
-
+function getIndividualResponseTypeNode(response: v3.Response, schema: TypeReference | undefined, headers: Array<HeaderTypeReference>, mediaType: string | undefined, $: Context, options: ResponseOptions): ts.TypeNode {
   let code: string | ts.TypeNode;
   let isException: boolean | ts.TypeNode;
 
@@ -95,7 +96,6 @@ async function getIndividualResponseTypeNode(response: v3.Response, schema: Type
   }
 
   return getResponseType(code, isException, mediaType, schema, headers);
-
 }
 
 function getResponseTypeArguments(options: AnonymousResponseOptions): [string, boolean] {
@@ -127,7 +127,9 @@ function specializeResponse(responseRef: ResponseTypeReference, options: Anonymo
   return {
     ...responseRef,
     typeParameters: undefined,
+    sourceFile: undefined,
     declaration: new TypeSyntax(specializedType),
+    requiredReferences: [responseRef]
   };
 }
 

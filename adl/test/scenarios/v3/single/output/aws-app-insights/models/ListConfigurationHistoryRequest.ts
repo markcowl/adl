@@ -1,6 +1,6 @@
-import { ResourceGroupName } from '../aliases/ResourceGroupName';
-import { ConfigurationEventStatus } from '../enums/ConfigurationEventStatus';
-import { MaxEntities } from '../aliases/MaxEntities';
+import { ResourceGroupName } from "../aliases/ResourceGroupName";
+import { ConfigurationEventStatus } from "../enums/ConfigurationEventStatus";
+import { MaxEntities } from "../aliases/MaxEntities";
 /**
  * ListConfigurationHistoryRequest
  * @since 2018-11-25

@@ -1,4 +1,4 @@
-import { UserTokenParameterProperties } from './UserTokenParameterProperties';
+import { UserTokenParameterProperties } from "./UserTokenParameterProperties";
 /**
  * @description Get User Token parameters.
  * @since 2019-12-01

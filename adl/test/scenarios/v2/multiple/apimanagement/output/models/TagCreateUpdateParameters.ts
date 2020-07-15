@@ -1,4 +1,4 @@
-import { TagContractProperties } from './TagContractProperties';
+import { TagContractProperties } from "./TagContractProperties";
 /**
  * @description Parameters supplied to Create/Update Tag operations.
  * @since 2019-12-01

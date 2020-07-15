@@ -1,4 +1,4 @@
-import { GroupCreateParametersProperties } from './GroupCreateParametersProperties';
+import { GroupCreateParametersProperties } from "./GroupCreateParametersProperties";
 /**
  * @description Parameters supplied to the Create Group operation.
  * @since 2019-12-01

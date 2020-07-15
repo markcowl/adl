@@ -1,14 +1,14 @@
 import { items, length } from '@azure-tools/linq';
 import { isReference, StringFormat, v3 } from '@azure-tools/openapi';
 import { anonymous, nameOf, refTo } from '@azure-tools/sourcemap';
-import { PropertySignatureStructure } from 'ts-morph';
+import { ts } from 'ts-morph';
 import { createTypeAlias } from '../../../model/schema/alias';
 import { addConstraint, Constraints } from '../../../model/schema/constraint';
 import { addDefault } from '../../../model/schema/default';
 import { addEncoding, Encodings } from '../../../model/schema/encoding';
 import { createModelType } from '../../../model/schema/model';
 import { createArray, createDictionary } from '../../../model/schema/primitive';
-import { createPropertySignature } from '../../../model/schema/property';
+import { createPropertySignature, ModelPropertySignatureStructure } from '../../../model/schema/property';
 import { SchemaTypeReference } from '../../../model/schema/type';
 import { Identity } from '../../../model/types';
 import { TypeSyntax } from '../../../support/codegen';
@@ -197,10 +197,21 @@ export async function processAnyOf(schema: v3.Schema,$: Context<v3.Model>, optio
 
   // if this is combined with anything
   if (combineWith.length > 0) {
-    return createTypeAlias<SchemaTypeReference>($.api, anonymous(schemaName), { declaration: new TypeSyntax(`${schemas.map(each => each.declaration).join(' | ')} & ${combineWith.map(each => each.declaration).join(' & ')}`) , requiredReferences }, commonProperties(schema));
+    return createTypeAlias<SchemaTypeReference>($.api, anonymous(schemaName), {
+      declaration: new TypeSyntax(
+        ts.createIntersectionTypeNode([
+          ts.createUnionTypeNode(schemas.map(each => each.declaration.node)),
+          ts.createIntersectionTypeNode(combineWith.map(each => each.declaration.node))])),
+      requiredReferences,
+    },
+    commonProperties(schema));
   }
 
-  return createTypeAlias<SchemaTypeReference>($.api, anonymous(schemaName), {declaration: new TypeSyntax(schemas.map(each => each.declaration.text).join(' | ')), requiredReferences}, commonProperties(schema));
+  return createTypeAlias<SchemaTypeReference>(
+    $.api, anonymous(schemaName), {
+      declaration: new TypeSyntax(ts.createUnionTypeNode(schemas.map(each => each.declaration.node))),
+      requiredReferences
+    },commonProperties(schema));
 }
 
 
@@ -238,15 +249,15 @@ export async function processOneOf(schema: v3.Schema,$: Context<v3.Model>, optio
 
   if (objectSchema) {
     return createTypeAlias<SchemaTypeReference>($.api, schemaName, {
-      declaration: new TypeSyntax(`Xor<${[...schemas,objectSchema].map(each => each.declaration).join(',')}>`),
+      declaration: new TypeSyntax(ts.createTypeReferenceNode('Xor', [...schemas,objectSchema].map(each => each.declaration.node))),
       requiredReferences
     }, commonProperties(schema));
   }
 
   // no object combinations
   return createTypeAlias<SchemaTypeReference>($.api, schemaName, {
-    declaration: new TypeSyntax(`Xor<${[...schemas].map(each => each.declaration).join(',')}>`),
-    requiredReferences
+    declaration: new TypeSyntax(ts.createTypeReferenceNode('Xor', schemas.map(each => each.declaration.node))),
+    requiredReferences,
   }, commonProperties(schema));
 }
 
@@ -383,7 +394,7 @@ export async function processObjectSchema(schema: v3.Schema, $: Context<v3.Model
 
     result = <SchemaTypeReference> {
       sourceFile: file,
-      declaration: new TypeSyntax(name),
+      declaration: new TypeSyntax(ts.createTypeReferenceNode(name, undefined)),
       requiredReferences: []
     };
 
@@ -392,7 +403,7 @@ export async function processObjectSchema(schema: v3.Schema, $: Context<v3.Model
 
   const requiredReferences = new Array<SchemaTypeReference>();
   // process the properties
-  const properties = new Array<PropertySignatureStructure>();
+  const properties = new Array<ModelPropertySignatureStructure>();
   for (const [propertyName, property] of items(schema.properties)) {
     const pTypeRef = await processSchema(property, $, { isAnonymous: true });
     const prop = createPropertySignature(propertyName, pTypeRef, {

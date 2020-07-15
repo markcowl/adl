@@ -1,5 +1,5 @@
-import { EntityIndices } from './EntityIndices';
-import { HashtagFields } from './HashtagFields';
+import { EntityIndices } from "./EntityIndices";
+import { HashtagFields } from "./HashtagFields";
 /**
  *
  * @since 2.3

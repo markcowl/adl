@@ -5,7 +5,7 @@ import { equal, fail } from 'assert';
 import * as chalk from 'chalk';
 import { readdirSync, statSync } from 'fs';
 import { describe, it } from 'mocha';
-import { basename, resolve } from 'path';
+import { basename, extname, resolve } from 'path';
 import { ApiModel } from '../model/api-model';
 import { UrlFileSystem } from '../support/file-system';
 import { Stopwatch } from '../support/stopwatch';
@@ -45,7 +45,8 @@ describe('Load Single OAI2 files', () => {
     it(`Processes '${file}'`, async () => {
       console.log('\n');
 
-      const name = basename(file, '.yaml');
+      const ext = extname(file);
+      const name = basename(file, ext);
       const adlOutput = resolve(`${outputRoot}/${name}`);
       const api = new ApiModel(new UrlFileSystem(adlOutput));
       subscribeToMessages(api);
@@ -56,8 +57,9 @@ describe('Load Single OAI2 files', () => {
       const stopwatch = new Stopwatch();
       const n = await api.saveADL(true);
       console.log(chalk.cyan(`      save ADL: '${file}' - ${n} files saved - ${formatDuration(stopwatch.time)} `));
-      const apiOutput = resolve(`${adlOutput}/${file.replace(/.yaml$/ig, '.api.yaml')}`);
-      const atticOutput = resolve(`${adlOutput}/${file.replace(/.yaml$/ig, '.attic.yaml')}`);
+      const extRegex = new RegExp(`${ext}$`, 'ig');
+      const apiOutput = resolve(`${adlOutput}/${file.replace(extRegex, '.api.yaml')}`);
+      const atticOutput = resolve(`${adlOutput}/${file.replace(extRegex, '.attic.yaml')}`);
 
       const errors = new AccumulateErrors();
 

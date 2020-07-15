@@ -1,5 +1,5 @@
-import { IssueCommentContractProperties } from './IssueCommentContractProperties';
-import { Resource } from './Resource';
+import { IssueCommentContractProperties } from "./IssueCommentContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description Issue Comment Contract details.
  * @since 2019-12-01

@@ -1,4 +1,4 @@
-import { IssueAttachmentContract } from './IssueAttachmentContract';
+import { IssueAttachmentContract } from "./IssueAttachmentContract";
 /**
  * @description Paged Issue Attachment list representation.
  * @since 2019-12-01

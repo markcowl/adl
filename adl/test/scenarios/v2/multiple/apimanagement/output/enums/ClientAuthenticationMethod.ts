@@ -5,7 +5,7 @@
  */
 export enum ClientAuthenticationMethod {
     /** Basic Client Authentication method. */
-    Basic = 'Basic',
+    Basic = "Basic",
     /** Body based Authentication method. */
-    Body = 'Body'
+    Body = "Body"
 }

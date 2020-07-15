@@ -1,4 +1,4 @@
-import { GatewayContract } from './GatewayContract';
+import { GatewayContract } from "./GatewayContract";
 /**
  * @description Paged Gateway list representation.
  * @since 2019-12-01

@@ -1,5 +1,5 @@
-import { IssueContractProperties } from './IssueContractProperties';
-import { Resource } from './Resource';
+import { IssueContractProperties } from "./IssueContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description Issue Contract details.
  * @since 2019-12-01

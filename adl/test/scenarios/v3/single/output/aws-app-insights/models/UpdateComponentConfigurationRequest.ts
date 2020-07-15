@@ -1,6 +1,6 @@
-import { ResourceGroupName } from '../aliases/ResourceGroupName';
-import { Tier } from '../enums/Tier';
-import { ComponentConfiguration } from '../aliases/ComponentConfiguration';
+import { ResourceGroupName } from "../aliases/ResourceGroupName";
+import { Tier } from "../enums/Tier";
+import { ComponentConfiguration } from "../aliases/ComponentConfiguration";
 /**
  * UpdateComponentConfigurationRequest
  * @since 2018-11-25

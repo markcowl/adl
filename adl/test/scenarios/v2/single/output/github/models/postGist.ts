@@ -14,15 +14,7 @@ export interface postGist {
      * @since v3
      */
     files?: {
-        /**
-         *
-         * @since v3
-         */
-        'file1.txt'?: {
-            /**
-             *
-             * @since v3
-             */
+        "file1.txt"?: {
             content?: string;
         };
     };

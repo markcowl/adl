@@ -1,4 +1,4 @@
-import { BodyDiagnosticSettings } from './BodyDiagnosticSettings';
+import { BodyDiagnosticSettings } from "./BodyDiagnosticSettings";
 /**
  * @description Http message diagnostic settings.
  * @since 2019-12-01

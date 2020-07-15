@@ -1,4 +1,4 @@
-import { IdentityProviderBaseParameters } from './IdentityProviderBaseParameters';
+import { IdentityProviderBaseParameters } from "./IdentityProviderBaseParameters";
 /**
  * @description The external Identity Providers like Facebook, Google, Microsoft, Twitter or Azure Active Directory which can be used to enable access to the API Management service developer portal for all users.
  * @since 2019-12-01

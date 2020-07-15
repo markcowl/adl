@@ -1,3 +1,37 @@
+import { X_Amz_Content_Sha256 } from "../aliases/X_Amz_Content_Sha256";
+import { X_Amz_Date } from "../aliases/X_Amz_Date";
+import { X_Amz_Algorithm } from "../aliases/X_Amz_Algorithm";
+import { X_Amz_Credential } from "../aliases/X_Amz_Credential";
+import { X_Amz_Security_Token } from "../aliases/X_Amz_Security_Token";
+import { X_Amz_Signature } from "../aliases/X_Amz_Signature";
+import { X_Amz_SignedHeaders } from "../aliases/X_Amz_SignedHeaders";
+import { CreateApplicationResponse } from "../models/CreateApplicationResponse";
+import { CreateComponentResponse } from "../models/CreateComponentResponse";
+import { CreateLogPatternResponse } from "../models/CreateLogPatternResponse";
+import { DeleteApplicationResponse } from "../models/DeleteApplicationResponse";
+import { DeleteComponentResponse } from "../models/DeleteComponentResponse";
+import { DeleteLogPatternResponse } from "../models/DeleteLogPatternResponse";
+import { DescribeApplicationResponse } from "../models/DescribeApplicationResponse";
+import { DescribeComponentResponse } from "../models/DescribeComponentResponse";
+import { DescribeComponentConfigurationResponse } from "../models/DescribeComponentConfigurationResponse";
+import { DescribeComponentConfigurationRecommendationResponse } from "../models/DescribeComponentConfigurationRecommendationResponse";
+import { DescribeLogPatternResponse } from "../models/DescribeLogPatternResponse";
+import { DescribeObservationResponse } from "../models/DescribeObservationResponse";
+import { DescribeProblemResponse } from "../models/DescribeProblemResponse";
+import { DescribeProblemObservationsResponse } from "../models/DescribeProblemObservationsResponse";
+import { ListApplicationsResponse } from "../models/ListApplicationsResponse";
+import { ListComponentsResponse } from "../models/ListComponentsResponse";
+import { ListConfigurationHistoryResponse } from "../models/ListConfigurationHistoryResponse";
+import { ListLogPatternSetsResponse } from "../models/ListLogPatternSetsResponse";
+import { ListLogPatternsResponse } from "../models/ListLogPatternsResponse";
+import { ListProblemsResponse } from "../models/ListProblemsResponse";
+import { ListTagsForResourceResponse } from "../models/ListTagsForResourceResponse";
+import { TagResourceResponse } from "../models/TagResourceResponse";
+import { UntagResourceResponse } from "../models/UntagResourceResponse";
+import { UpdateApplicationResponse } from "../models/UpdateApplicationResponse";
+import { UpdateComponentResponse } from "../models/UpdateComponentResponse";
+import { UpdateComponentConfigurationResponse } from "../models/UpdateComponentConfigurationResponse";
+import { UpdateLogPatternResponse } from "../models/UpdateLogPatternResponse";
 export interface Service {
     /**
      * @description Adds an application that is created from a resource group.

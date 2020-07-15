@@ -1,4 +1,4 @@
-import { ProductUpdateProperties } from './ProductUpdateProperties';
+import { ProductUpdateProperties } from "./ProductUpdateProperties";
 /**
  * @description Product Update parameters.
  * @since 2019-12-01

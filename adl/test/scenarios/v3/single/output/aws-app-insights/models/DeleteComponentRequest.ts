@@ -1,4 +1,4 @@
-import { ResourceGroupName } from '../aliases/ResourceGroupName';
+import { ResourceGroupName } from "../aliases/ResourceGroupName";
 /**
  * DeleteComponentRequest
  * @since 2018-11-25

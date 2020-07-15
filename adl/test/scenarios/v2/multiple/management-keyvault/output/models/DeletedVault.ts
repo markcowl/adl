@@ -1,4 +1,4 @@
-import { DeletedVaultProperties } from './DeletedVaultProperties';
+import { DeletedVaultProperties } from "./DeletedVaultProperties";
 /**
  * @description Deleted vault information with extended details.
  * @since 2019-09-01

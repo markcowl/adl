@@ -1,5 +1,5 @@
-import { OpenidConnectProviderContractProperties } from './OpenidConnectProviderContractProperties';
-import { Resource } from './Resource';
+import { OpenidConnectProviderContractProperties } from "./OpenidConnectProviderContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description OpenId Connect Provider details.
  * @since 2019-12-01

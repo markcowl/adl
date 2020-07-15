@@ -1,4 +1,4 @@
-import { TagList } from '../aliases/TagList';
+import { TagList } from "../aliases/TagList";
 /**
  *
  * @since 2018-11-25
