@@ -40,7 +40,7 @@ export async function cmdLint(messages: Messages, args: CommandLine) {
     for (const result of results) {
       if (result.suggestions) {
         for (const type of fixTypes) {
-          result.suggestions.find(x => x.categories.includes(type))?.fix();
+          result.suggestions.find(x => x.categories?.includes(type))?.fix();
           fixesApplied = true;
         }
       }
