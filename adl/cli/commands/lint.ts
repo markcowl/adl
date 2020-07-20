@@ -38,10 +38,13 @@ export async function cmdLint(messages: Messages, args: CommandLine) {
   if (fixTypes) {
     messages.log('Running fixes...');
     for (const result of results) {
-      if (result.suggestions) {
+      if (result.suggestions && result.suggestions.length > 0) {
         for (const type of fixTypes) {
-          result.suggestions.find(x => x.categories?.includes(type))?.fix();
-          fixesApplied = true;
+          const match = result.suggestions.find(x => x.categories?.includes(type));
+          if (match) {
+            match.fix;
+            fixesApplied = true;
+          }
         }
       }
     }
