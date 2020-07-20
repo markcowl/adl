@@ -34,18 +34,18 @@ export async function cmdLint(messages: Messages, args: CommandLine) {
     }
   }
 
-  // const fixTypes = args.switches['fix-type'];
-  // if (fixTypes) {
-  //   messages.log('Running fixes...');
-  //   for (const result of results) {
-  //     if (result.suggestions) {
-  //       for (const type of fixTypes) {
-  //         result.suggestions.find(x => x.categories.includes(type))?.fix();
-  //         fixesApplied = true;
-  //       }
-  //     }
-  //   }
-  // }
+  const fixTypes = args.switches['fix-type'];
+  if (fixTypes) {
+    messages.log('Running fixes...');
+    for (const result of results) {
+      if (result.suggestions) {
+        for (const type of fixTypes) {
+          result.suggestions.find(x => x.categories.includes(type))?.fix();
+          fixesApplied = true;
+        }
+      }
+    }
+  }
 
   if (fixesApplied) {
     await api.saveADL();
