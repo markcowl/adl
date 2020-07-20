@@ -71,6 +71,11 @@ export interface Fix {
   description: string;
 
   /**
+   * The category of the fix.
+   */
+  categories?: Array<string>;
+
+  /**
    * This function is used to provide a fix on the node.
    */
   fix: () => void;

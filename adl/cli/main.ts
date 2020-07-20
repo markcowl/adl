@@ -14,9 +14,6 @@ adl
 - globbing on cmdline?
 
 - only anonymous components get automatically deduplicated (is this even possible?)
--
-
-
 */
 
 import { Messages } from '@azure-tools/adl.core';
@@ -28,6 +25,7 @@ import { cmdAdd } from './commands/add';
 import { cmdCode } from './commands/code';
 import { cmdImport } from './commands/import';
 import { cmdInit } from './commands/init';
+import { cmdLint } from './commands/lint';
 import { errorCount, subscribeToMessages } from './messages';
 
 require('source-map-support').install();
@@ -137,6 +135,9 @@ async function main() {
 
       case 'add':
         return await cmdAdd(messages, commandLine);
+
+      case 'lint':
+        return await cmdLint(messages, commandLine);
 
         // temporarily disable
         // case 'merge':
