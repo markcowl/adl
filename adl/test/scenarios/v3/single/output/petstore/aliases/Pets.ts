@@ -1,2 +1,2 @@
-import { Pet } from '../models/Pet';
+import { Pet } from "../models/Pet";
 export type Pets = Array<Pet>;

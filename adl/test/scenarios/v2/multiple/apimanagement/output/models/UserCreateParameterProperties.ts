@@ -1,6 +1,6 @@
-import { AppType } from '../enums/AppType';
-import { Confirmation } from '../enums/Confirmation';
-import { UserEntityBaseParameters } from './UserEntityBaseParameters';
+import { AppType } from "../enums/AppType";
+import { Confirmation } from "../enums/Confirmation";
+import { UserEntityBaseParameters } from "./UserEntityBaseParameters";
 /**
  * @description Parameters supplied to the Create User operation.
  * @since 2019-12-01

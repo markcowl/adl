@@ -24,20 +24,8 @@ export interface tagBody {
      * @since v3
      */
     tagger: {
-        /**
-         * @description Timestamp of when this object was tagged, in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
-         * @since v3
-         */
         date?: string;
-        /**
-         * @description String of the email of the author of the tag.
-         * @since v3
-         */
         email?: string;
-        /**
-         * @description String of the name of the author of the tag.
-         * @since v3
-         */
         name?: string;
     };
     /**

@@ -1,2 +1,2 @@
-import { ApplicationComponent } from '../models/ApplicationComponent';
+import { ApplicationComponent } from "../models/ApplicationComponent";
 export type ApplicationComponentList = Array<ApplicationComponent>;

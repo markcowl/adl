@@ -1,4 +1,4 @@
-import { ErrorFieldContract } from './ErrorFieldContract';
+import { ErrorFieldContract } from "./ErrorFieldContract";
 /**
  * @description Error Body contract.
  * @since 2019-12-01

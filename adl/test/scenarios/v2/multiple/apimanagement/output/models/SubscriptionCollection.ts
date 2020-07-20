@@ -1,4 +1,4 @@
-import { SubscriptionContract } from './SubscriptionContract';
+import { SubscriptionContract } from "./SubscriptionContract";
 /**
  * @description Paged Subscriptions list representation.
  * @since 2019-12-01

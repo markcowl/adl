@@ -1,4 +1,4 @@
-import { IssueCommentContract } from './IssueCommentContract';
+import { IssueCommentContract } from "./IssueCommentContract";
 /**
  * @description Paged Issue Comment list representation.
  * @since 2019-12-01

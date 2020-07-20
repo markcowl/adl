@@ -1,4 +1,4 @@
-import { UserCreateParameterProperties } from './UserCreateParameterProperties';
+import { UserCreateParameterProperties } from "./UserCreateParameterProperties";
 /**
  * @description User create details.
  * @since 2019-12-01

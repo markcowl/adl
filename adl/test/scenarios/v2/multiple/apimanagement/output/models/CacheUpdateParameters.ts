@@ -1,4 +1,4 @@
-import { CacheUpdateProperties } from './CacheUpdateProperties';
+import { CacheUpdateProperties } from "./CacheUpdateProperties";
 /**
  * @description Cache update details.
  * @since 2019-12-01

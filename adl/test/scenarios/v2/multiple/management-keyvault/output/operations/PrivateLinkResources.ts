@@ -1,3 +1,9 @@
+import { SubscriptionIdParameter } from "../aliases/SubscriptionIdParameter";
+import { ResourceGroupName } from "../aliases/ResourceGroupName";
+import { VaultName } from "../aliases/VaultName";
+import { ApiVersionParameter } from "../aliases/ApiVersionParameter";
+import { PrivateLinkResourceListResult } from "../models/PrivateLinkResourceListResult";
+import { CloudError } from "../models/CloudError";
 export interface PrivateLinkResources {
     /**
      * @description Gets the private link resources supported for the key vault.

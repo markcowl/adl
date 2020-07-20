@@ -1,2 +1,2 @@
-import { asset } from '../models/asset';
+import { asset } from "../models/asset";
 export type assets = Array<asset>;

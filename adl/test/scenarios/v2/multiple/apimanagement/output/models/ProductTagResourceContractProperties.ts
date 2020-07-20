@@ -1,4 +1,4 @@
-import { ProductEntityBaseParameters } from './ProductEntityBaseParameters';
+import { ProductEntityBaseParameters } from "./ProductEntityBaseParameters";
 /**
  * @description Product profile.
  * @since 2019-12-01

@@ -1,4 +1,4 @@
-import { CertificateCreateOrUpdateProperties } from './CertificateCreateOrUpdateProperties';
+import { CertificateCreateOrUpdateProperties } from "./CertificateCreateOrUpdateProperties";
 /**
  * @description Certificate create or update details.
  * @since 2019-12-01

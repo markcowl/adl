@@ -6,9 +6,9 @@
  */
 export enum Verbosity {
     /** All the traces emitted by trace policies will be sent to the logger attached to this diagnostic instance. */
-    verbose = 'verbose',
+    verbose = "verbose",
     /** Traces with 'severity' set to 'information' and 'error' will be sent to the logger attached to this diagnostic instance. */
-    information = 'information',
+    information = "information",
     /** Only traces with 'severity' set to 'error' will be sent to the logger attached to this diagnostic instance. */
-    error = 'error'
+    error = "error"
 }

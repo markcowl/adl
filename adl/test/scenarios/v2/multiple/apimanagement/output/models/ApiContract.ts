@@ -1,5 +1,5 @@
-import { ApiContractProperties } from './ApiContractProperties';
-import { Resource } from './Resource';
+import { ApiContractProperties } from "./ApiContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description Api details.
  * @since 2019-12-01

@@ -1,5 +1,5 @@
-import { UserState } from '../enums/UserState';
-import { UserIdentityContract } from './UserIdentityContract';
+import { UserState } from "../enums/UserState";
+import { UserIdentityContract } from "./UserIdentityContract";
 /**
  * @description User Entity Base Parameters set.
  * @since 2019-12-01

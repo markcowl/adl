@@ -13,7 +13,7 @@ export interface ContextAnnotationDomainFields {
      * @description The unique id for a context annotation domain.
      * @since 2.3
      */
-    id: string & RegularExpression<'^[0-9]{1,19}$'>;
+    id: string & RegularExpression<"^[0-9]{1,19}$">;
     /**
      * @description Name of the context annotation domain.
      * @since 2.3

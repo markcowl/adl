@@ -6,7 +6,7 @@
  */
 export enum LoggerType {
     /** Azure Event Hub as log destination. */
-    azureEventHub = 'azureEventHub',
+    azureEventHub = "azureEventHub",
     /** Azure Application Insights as log destination. */
-    applicationInsights = 'applicationInsights'
+    applicationInsights = "applicationInsights"
 }

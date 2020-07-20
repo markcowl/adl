@@ -1,4 +1,4 @@
-import { ApiRevisionContract } from './ApiRevisionContract';
+import { ApiRevisionContract } from "./ApiRevisionContract";
 /**
  * @description Paged Api Revision list representation.
  * @since 2019-12-01

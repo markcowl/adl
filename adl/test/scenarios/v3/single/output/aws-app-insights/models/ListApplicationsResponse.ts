@@ -1,4 +1,4 @@
-import { ApplicationInfoList } from '../aliases/ApplicationInfoList';
+import { ApplicationInfoList } from "../aliases/ApplicationInfoList";
 /**
  *
  * @since 2018-11-25

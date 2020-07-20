@@ -1,8 +1,8 @@
-import { Sku } from './Sku';
-import { AccessPolicyEntry } from './AccessPolicyEntry';
-import { CreateMode } from '../enums/CreateMode';
-import { NetworkRuleSet } from './NetworkRuleSet';
-import { PrivateEndpointConnectionItem } from './PrivateEndpointConnectionItem';
+import { Sku } from "./Sku";
+import { AccessPolicyEntry } from "./AccessPolicyEntry";
+import { CreateMode } from "../enums/CreateMode";
+import { NetworkRuleSet } from "./NetworkRuleSet";
+import { PrivateEndpointConnectionItem } from "./PrivateEndpointConnectionItem";
 /**
  * @description Properties of the vault
  * @since 2019-09-01
@@ -47,12 +47,12 @@ export interface VaultProperties {
      * @description Property to specify whether the 'soft delete' functionality is enabled for this key vault. If it's not set to any value(true or false) when creating new key vault, it will be set to true by default. Once set to true, it cannot be reverted to false.
      * @since 2019-09-01
      */
-    enableSoftDelete?: boolean /* todo: add defaultValue 'true' */;
+    enableSoftDelete?: boolean;
     /**
      * @description softDelete data retention days. It accepts >=7 and <=90.
      * @since 2019-09-01
      */
-    softDeleteRetentionInDays?: int32 /* todo: add defaultValue '90' */;
+    softDeleteRetentionInDays?: int32;
     /**
      * @description Property that controls how data actions are authorized. When true, the key vault will use Role Based Access Control (RBAC) for authorization of data actions, and the access policies specified in vault properties will be  ignored (warning: this is a preview feature). When false, the key vault will use the access policies specified in vault properties, and any policy stored on Azure Resource Manager will be ignored. If null or not specified, the vault is created with the default value of false. Note that management actions are always authorized with RBAC.
      * @since 2019-09-01

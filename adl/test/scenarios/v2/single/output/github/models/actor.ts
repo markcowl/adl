@@ -119,25 +119,9 @@ export interface actor {
      * @since v3
      */
     plan?: {
-        /**
-         *
-         * @since v3
-         */
         collaborators?: int64;
-        /**
-         *
-         * @since v3
-         */
         name?: string;
-        /**
-         *
-         * @since v3
-         */
         private_repos?: int64;
-        /**
-         *
-         * @since v3
-         */
         space?: int64;
     };
     /**

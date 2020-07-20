@@ -1,4 +1,4 @@
-import { LoggerType } from '../enums/LoggerType';
+import { LoggerType } from "../enums/LoggerType";
 /**
  * @description Parameters supplied to the Update Logger operation.
  * @since 2019-12-01

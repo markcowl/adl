@@ -1,4 +1,4 @@
-import { LoggerUpdateParameters } from './LoggerUpdateParameters';
+import { LoggerUpdateParameters } from "./LoggerUpdateParameters";
 /**
  * @description Logger update contract.
  * @since 2019-12-01

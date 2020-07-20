@@ -1,5 +1,5 @@
-import { SkuFamily } from '../enums/SkuFamily';
-import { SkuName } from '../enums/SkuName';
+import { SkuFamily } from "../enums/SkuFamily";
+import { SkuName } from "../enums/SkuName";
 /**
  * @description SKU details
  * @since 2019-09-01

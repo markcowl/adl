@@ -1,5 +1,5 @@
-import { ResourceGroupName } from '../aliases/ResourceGroupName';
-import { LogPatternList } from '../aliases/LogPatternList';
+import { ResourceGroupName } from "../aliases/ResourceGroupName";
+import { LogPatternList } from "../aliases/LogPatternList";
 /**
  *
  * @since 2018-11-25

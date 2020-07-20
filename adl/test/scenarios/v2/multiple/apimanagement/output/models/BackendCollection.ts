@@ -1,4 +1,4 @@
-import { BackendContract } from './BackendContract';
+import { BackendContract } from "./BackendContract";
 /**
  * @description Paged Backend list representation.
  * @since 2019-12-01

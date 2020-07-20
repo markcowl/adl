@@ -1,4 +1,4 @@
-import { bearerTokenSendingMethods } from '../enums/bearerTokenSendingMethods';
+import { bearerTokenSendingMethods } from "../enums/bearerTokenSendingMethods";
 /**
  * @description API OAuth2 Authentication settings details.
  * @since 2019-12-01

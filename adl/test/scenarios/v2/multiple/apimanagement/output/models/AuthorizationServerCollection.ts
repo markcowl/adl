@@ -1,4 +1,4 @@
-import { AuthorizationServerContract } from './AuthorizationServerContract';
+import { AuthorizationServerContract } from "./AuthorizationServerContract";
 /**
  * @description Paged OAuth2 Authorization Servers list representation.
  * @since 2019-12-01

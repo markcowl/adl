@@ -1,6 +1,6 @@
 import { isAnonymous } from '@azure-tools/sourcemap';
 import { EnumDeclaration, EnumMember, ts } from 'ts-morph';
-import { normalizeIdentifier, TypeSyntax } from '../../support/codegen';
+import { normalizeMemberName, TypeSyntax } from '../../support/codegen';
 import { createDocs, hasTag, setTag } from '../../support/doc-tag';
 import { ApiModel } from '../api-model';
 import { Identity } from '../types';
@@ -28,7 +28,7 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
       // which means there can be multiple declarations for the same enum
       // so, we just return the existing enum by name
       return {
-        declaration: new TypeSyntax(existing.getName()),
+        declaration: new TypeSyntax(ts.createTypeReferenceNode(existing.getName(), undefined)),
         sourceFile: file,
         requiredReferences: [],
       };
@@ -39,7 +39,7 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
       name,
       isExported: true,
       members: values.map(value => ({
-        name: value.name || normalizeIdentifier(value.value),
+        name: value.name || normalizeMemberName(value.value),
         value: typeof value.value !== 'string' && typeof value.value !== 'number' ?
           `/* ${typeof value.value} */${value.value}` :  // TODO: how would we represent enum of non-string, non-number?
           value.value,
@@ -50,7 +50,7 @@ export function createEnum(api: ApiModel, identity: Identity, values: Array<Enum
 
     // return the reference to this enum
     return {
-      declaration: new TypeSyntax(name),
+      declaration: new TypeSyntax(ts.createTypeReferenceNode(name, undefined)),
       sourceFile: file,
       requiredReferences: []
     };
@@ -91,7 +91,7 @@ export class EnumType extends NamedElement<EnumDeclaration> implements TypeRefer
   }
 
   get declaration() {
-    return new TypeSyntax(this.node.getName());
+    return new TypeSyntax(ts.createTypeReferenceNode(this.node.getName(), undefined));
   }
 
   get values(): Array<EnumValueElement> {

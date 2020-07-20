@@ -1,4 +1,4 @@
-import { air1_ClusterData } from './air1_ClusterData';
+import { air1_ClusterData } from "./air1_ClusterData";
 /**
  * @description Cluster Output Object
  * @since 0.0.0

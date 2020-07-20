@@ -1,5 +1,5 @@
-import { ResourceGroupName } from '../aliases/ResourceGroupName';
-import { OpsItemSNSTopicArn } from '../aliases/OpsItemSNSTopicArn';
+import { ResourceGroupName } from "../aliases/ResourceGroupName";
+import { OpsItemSNSTopicArn } from "../aliases/OpsItemSNSTopicArn";
 /**
  * @description Describes the status of the application.
  * @since 2018-11-25

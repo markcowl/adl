@@ -1,6 +1,6 @@
-import { AuthenticationSettingsContract } from './AuthenticationSettingsContract';
-import { SubscriptionKeyParameterNamesContract } from './SubscriptionKeyParameterNamesContract';
-import { ApiType } from '../enums/ApiType';
+import { AuthenticationSettingsContract } from "./AuthenticationSettingsContract";
+import { SubscriptionKeyParameterNamesContract } from "./SubscriptionKeyParameterNamesContract";
+import { ApiType } from "../enums/ApiType";
 /**
  * @description API base contract details.
  * @since 2019-12-01

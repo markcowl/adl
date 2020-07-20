@@ -1,4 +1,4 @@
-import { ProblemFields } from './ProblemFields';
+import { ProblemFields } from "./ProblemFields";
 /**
  * @description A problem that indicates your client is forbidden from making this request.
  * @since 2.3

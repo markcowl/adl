@@ -1,4 +1,4 @@
-import { PrivateEndpointConnectionProperties } from './PrivateEndpointConnectionProperties';
+import { PrivateEndpointConnectionProperties } from "./PrivateEndpointConnectionProperties";
 /**
  * @description Private endpoint connection item.
  * @since 2019-09-01

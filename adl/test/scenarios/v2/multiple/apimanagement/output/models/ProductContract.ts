@@ -1,5 +1,5 @@
-import { ProductContractProperties } from './ProductContractProperties';
-import { Resource } from './Resource';
+import { ProductContractProperties } from "./ProductContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description Product details.
  * @since 2019-12-01

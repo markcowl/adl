@@ -1,6 +1,6 @@
-import { ResourceGroupName } from '../aliases/ResourceGroupName';
-import { LogPatternSetName } from '../aliases/LogPatternSetName';
-import { LogPatternName } from '../aliases/LogPatternName';
+import { ResourceGroupName } from "../aliases/ResourceGroupName";
+import { LogPatternSetName } from "../aliases/LogPatternSetName";
+import { LogPatternName } from "../aliases/LogPatternName";
 /**
  * DeleteLogPatternRequest
  * @since 2018-11-25

@@ -1,4 +1,4 @@
-import { ProblemList } from '../aliases/ProblemList';
+import { ProblemList } from "../aliases/ProblemList";
 /**
  *
  * @since 2018-11-25

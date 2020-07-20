@@ -1,4 +1,4 @@
-import { ApiContract } from './ApiContract';
+import { ApiContract } from "./ApiContract";
 /**
  * @description Paged Api list representation.
  * @since 2019-12-01

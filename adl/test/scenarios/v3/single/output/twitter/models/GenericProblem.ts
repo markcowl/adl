@@ -1,4 +1,4 @@
-import { ProblemFields } from './ProblemFields';
+import { ProblemFields } from "./ProblemFields";
 /**
  * @description A generic problem with no additional information beyond that provided by the HTTP status code.
  * @since 2.3

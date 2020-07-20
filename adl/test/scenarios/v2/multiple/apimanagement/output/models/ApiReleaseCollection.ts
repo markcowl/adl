@@ -1,4 +1,4 @@
-import { ApiReleaseContract } from './ApiReleaseContract';
+import { ApiReleaseContract } from "./ApiReleaseContract";
 /**
  * @description Paged ApiRelease list representation.
  * @since 2019-12-01

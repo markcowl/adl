@@ -1,4 +1,4 @@
-import { X509CertificateName } from './X509CertificateName';
+import { X509CertificateName } from "./X509CertificateName";
 /**
  * @description Properties of the Service Fabric Type Backend.
  * @since 2019-12-01

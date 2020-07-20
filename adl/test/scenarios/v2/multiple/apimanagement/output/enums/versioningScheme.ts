@@ -6,9 +6,9 @@
  */
 export enum versioningScheme {
     /** The API Version is passed in a path segment. */
-    Segment = 'Segment',
+    Segment = "Segment",
     /** The API Version is passed in a query parameter. */
-    Query = 'Query',
+    Query = "Query",
     /** The API Version is passed in a HTTP header. */
-    Header = 'Header'
+    Header = "Header"
 }

@@ -1,4 +1,4 @@
-import { HttpMessageDiagnostic } from './HttpMessageDiagnostic';
+import { HttpMessageDiagnostic } from "./HttpMessageDiagnostic";
 /**
  * @description Diagnostic settings for incoming/outgoing HTTP messages to the Gateway.
  * @since 2019-12-01

@@ -1,4 +1,4 @@
-import { State } from '../enums/State';
+import { State } from "../enums/State";
 /**
  * @description Issue contract Base Properties.
  * @since 2019-12-01

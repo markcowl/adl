@@ -1,4 +1,4 @@
-import { ObservationId } from '../aliases/ObservationId';
+import { ObservationId } from "../aliases/ObservationId";
 /**
  * DescribeObservationRequest
  * @since 2018-11-25

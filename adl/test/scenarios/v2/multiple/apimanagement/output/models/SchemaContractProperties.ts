@@ -1,4 +1,4 @@
-import { SchemaDocumentProperties } from './SchemaDocumentProperties';
+import { SchemaDocumentProperties } from "./SchemaDocumentProperties";
 /**
  * @description API Schema create or update contract Properties.
  * @since 2019-12-01

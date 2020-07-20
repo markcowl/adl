@@ -1,4 +1,4 @@
-import { CommonMediaFields } from './CommonMediaFields';
+import { CommonMediaFields } from "./CommonMediaFields";
 /**
  *
  * @since 2.3

@@ -1,5 +1,5 @@
-import { IssueAttachmentContractProperties } from './IssueAttachmentContractProperties';
-import { Resource } from './Resource';
+import { IssueAttachmentContractProperties } from "./IssueAttachmentContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description Issue Attachment Contract details.
  * @since 2019-12-01

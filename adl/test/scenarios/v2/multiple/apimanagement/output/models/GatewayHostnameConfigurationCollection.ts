@@ -1,4 +1,4 @@
-import { GatewayHostnameConfigurationContract } from './GatewayHostnameConfigurationContract';
+import { GatewayHostnameConfigurationContract } from "./GatewayHostnameConfigurationContract";
 /**
  * @description Paged Gateway hostname configuration list representation.
  * @since 2019-12-01

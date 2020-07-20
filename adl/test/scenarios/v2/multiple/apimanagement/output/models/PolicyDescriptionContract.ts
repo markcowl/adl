@@ -1,5 +1,5 @@
-import { PolicyDescriptionContractProperties } from './PolicyDescriptionContractProperties';
-import { Resource } from './Resource';
+import { PolicyDescriptionContractProperties } from "./PolicyDescriptionContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description Policy description details.
  * @since 2019-12-01

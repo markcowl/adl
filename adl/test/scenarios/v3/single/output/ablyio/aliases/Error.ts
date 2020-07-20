@@ -1,4 +1,7 @@
-
+import { ErrorCode } from "./ErrorCode";
+import { ErrorMessage } from "./ErrorMessage";
+import { ServerId } from "./ServerId";
+import { Error } from "../models/Error";
 /** Error */
 export type Error<Code = undefined, IsException = false> = [(code: Code, mediaType: "application/json") => {
     body: Error;

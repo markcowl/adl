@@ -1,4 +1,4 @@
-import { OperationContract } from './OperationContract';
+import { OperationContract } from "./OperationContract";
 /**
  * @description Paged Operation list representation.
  * @since 2019-12-01

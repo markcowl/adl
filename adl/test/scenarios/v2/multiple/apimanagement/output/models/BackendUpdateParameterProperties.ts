@@ -1,5 +1,5 @@
-import { BackendProtocol } from '../enums/BackendProtocol';
-import { BackendBaseParameters } from './BackendBaseParameters';
+import { BackendProtocol } from "../enums/BackendProtocol";
+import { BackendBaseParameters } from "./BackendBaseParameters";
 /**
  * @description Parameters supplied to the Update Backend operation.
  * @since 2019-12-01

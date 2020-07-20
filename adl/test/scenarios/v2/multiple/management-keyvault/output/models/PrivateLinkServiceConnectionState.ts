@@ -1,4 +1,4 @@
-import { PrivateEndpointServiceConnectionStatus } from '../enums/PrivateEndpointServiceConnectionStatus';
+import { PrivateEndpointServiceConnectionStatus } from "../enums/PrivateEndpointServiceConnectionStatus";
 /**
  * @description An object that represents the approval state of the private link connection.
  * @since 2019-09-01

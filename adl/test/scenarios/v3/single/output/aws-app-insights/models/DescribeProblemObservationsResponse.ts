@@ -1,4 +1,4 @@
-import { RelatedObservations } from './RelatedObservations';
+import { RelatedObservations } from "./RelatedObservations";
 /**
  *
  * @since 2018-11-25

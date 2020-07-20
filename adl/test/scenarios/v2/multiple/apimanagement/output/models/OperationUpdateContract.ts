@@ -1,4 +1,4 @@
-import { OperationUpdateContractProperties } from './OperationUpdateContractProperties';
+import { OperationUpdateContractProperties } from "./OperationUpdateContractProperties";
 /**
  * @description Api Operation Update Contract details.
  * @since 2019-12-01

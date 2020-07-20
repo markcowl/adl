@@ -1,5 +1,5 @@
-import { SubscriptionContractProperties } from './SubscriptionContractProperties';
-import { Resource } from './Resource';
+import { SubscriptionContractProperties } from "./SubscriptionContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description Subscription details.
  * @since 2019-12-01

@@ -1,5 +1,5 @@
-import { ApplicationComponent } from './ApplicationComponent';
-import { ResourceList } from '../aliases/ResourceList';
+import { ApplicationComponent } from "./ApplicationComponent";
+import { ResourceList } from "../aliases/ResourceList";
 /**
  *
  * @since 2018-11-25

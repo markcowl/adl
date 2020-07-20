@@ -1,4 +1,4 @@
-import { user } from './user';
+import { user } from "./user";
 /**
  *
  * @since v3
@@ -9,60 +9,16 @@ export interface release {
      * @since v3
      */
     assets?: Array<{
-        /**
-         *
-         * @since v3
-         */
         content_type?: string;
-        /**
-         *
-         * @since v3
-         */
         created_at?: string;
-        /**
-         *
-         * @since v3
-         */
         download_count?: int64;
-        /**
-         *
-         * @since v3
-         */
         id?: int64;
-        /**
-         *
-         * @since v3
-         */
         label?: string;
-        /**
-         *
-         * @since v3
-         */
         name?: string;
-        /**
-         *
-         * @since v3
-         */
         size?: int64;
-        /**
-         *
-         * @since v3
-         */
         state?: string;
-        /**
-         *
-         * @since v3
-         */
         updated_at?: string;
-        /**
-         *
-         * @since v3
-         */
         uploader?: user;
-        /**
-         *
-         * @since v3
-         */
         url?: string;
     }>;
     /**

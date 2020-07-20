@@ -1,7 +1,7 @@
-import { LogPatternSetName } from '../aliases/LogPatternSetName';
-import { LogPatternName } from '../aliases/LogPatternName';
-import { LogPatternRegex } from '../aliases/LogPatternRegex';
-import { LogPatternRank } from '../aliases/LogPatternRank';
+import { LogPatternSetName } from "../aliases/LogPatternSetName";
+import { LogPatternName } from "../aliases/LogPatternName";
+import { LogPatternRegex } from "../aliases/LogPatternRegex";
+import { LogPatternRank } from "../aliases/LogPatternRank";
 /**
  * @description An object that defines the log patterns that belongs to a <code>LogPatternSet</code>.
  * @since 2018-11-25

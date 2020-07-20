@@ -1,5 +1,5 @@
-import { Protocol } from '../enums/Protocol';
-import { ApiEntityBaseContract } from './ApiEntityBaseContract';
+import { Protocol } from "../enums/Protocol";
+import { ApiEntityBaseContract } from "./ApiEntityBaseContract";
 /**
  * @description API contract properties for the Tag Resources.
  * @since 2019-12-01

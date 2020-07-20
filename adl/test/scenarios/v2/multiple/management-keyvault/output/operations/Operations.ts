@@ -1,3 +1,5 @@
+import { ApiVersionParameter } from "../aliases/ApiVersionParameter";
+import { OperationListResult } from "../models/OperationListResult";
 export interface Operations {
     /**
      * @description Lists all of the available Key Vault Rest API operations.

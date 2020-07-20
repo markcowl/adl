@@ -1,4 +1,4 @@
-import { UserUpdateParametersProperties } from './UserUpdateParametersProperties';
+import { UserUpdateParametersProperties } from "./UserUpdateParametersProperties";
 /**
  * @description User update parameters.
  * @since 2019-12-01

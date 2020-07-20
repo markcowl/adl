@@ -1,4 +1,4 @@
-import { BackendAuthorizationHeaderCredentials } from './BackendAuthorizationHeaderCredentials';
+import { BackendAuthorizationHeaderCredentials } from "./BackendAuthorizationHeaderCredentials";
 /**
  * @description Details of the Credentials used to connect to Backend.
  * @since 2019-12-01

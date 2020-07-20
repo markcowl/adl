@@ -1,4 +1,4 @@
-import { PolicyContract } from './PolicyContract';
+import { PolicyContract } from "./PolicyContract";
 /**
  * @description The response of the list policy operation.
  * @since 2019-12-01

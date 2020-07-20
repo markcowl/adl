@@ -1,4 +1,4 @@
-import { PrivateLinkResource } from './PrivateLinkResource';
+import { PrivateLinkResource } from "./PrivateLinkResource";
 /**
  * @description A list of private link resources
  * @since 2019-09-01

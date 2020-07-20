@@ -1,4 +1,4 @@
-import { GroupUpdateParametersProperties } from './GroupUpdateParametersProperties';
+import { GroupUpdateParametersProperties } from "./GroupUpdateParametersProperties";
 /**
  * @description Parameters supplied to the Update Group operation.
  * @since 2019-12-01

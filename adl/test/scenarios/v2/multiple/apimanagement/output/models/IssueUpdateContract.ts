@@ -1,4 +1,4 @@
-import { IssueUpdateContractProperties } from './IssueUpdateContractProperties';
+import { IssueUpdateContractProperties } from "./IssueUpdateContractProperties";
 /**
  * @description Issue update Parameters.
  * @since 2019-12-01

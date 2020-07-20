@@ -1,2 +1,2 @@
-import { repos } from './repos';
+import { repos } from "./repos";
 export type teamRepos = repos;

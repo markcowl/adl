@@ -1,4 +1,4 @@
-import { DeletedVault } from './DeletedVault';
+import { DeletedVault } from "./DeletedVault";
 /**
  * @description List of vaults
  * @since 2019-09-01

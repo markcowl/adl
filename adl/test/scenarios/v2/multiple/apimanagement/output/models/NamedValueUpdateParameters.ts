@@ -1,4 +1,4 @@
-import { NamedValueUpdateParameterProperties } from './NamedValueUpdateParameterProperties';
+import { NamedValueUpdateParameterProperties } from "./NamedValueUpdateParameterProperties";
 /**
  * @description NamedValue update Parameters.
  * @since 2019-12-01

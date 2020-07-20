@@ -1,14 +1,16 @@
-import { TypeSyntax } from '../../support/codegen';
+import { ts } from 'ts-morph';
+import { createIntersectionTypeNode, TypeSyntax } from '../../support/codegen';
 import { TypeReference } from './type';
 
 
 export interface ConstraintReference  {
-  implementation: string;
+  implementation: ts.TypeNode;
 }
 
 function createConstraint(constraintName: string, ... parameters: Array<string|number>): ConstraintReference {
+  const args = parameters.length == 0 ? undefined : parameters.map(p => ts.createLiteralTypeNode(<ts.LiteralExpression>ts.createLiteral(p)));
   return {
-    implementation: parameters.length ?   `${constraintName}<${parameters.map(each => typeof each === 'string' ? `'${each}'` : each).join(',')}>` :  constraintName
+    implementation: ts.createTypeReferenceNode(constraintName, args)
   };
 }
 
@@ -32,12 +34,14 @@ export const Constraints = {
 export function addConstraint(type: TypeReference, constraint: ConstraintReference): TypeReference {
   return {
     ... type,
-    declaration: new TypeSyntax(`${type.declaration} & ${constraint.implementation}`)
+    sourceFile: undefined,
+    requiredReferences: [type],
+    declaration: new TypeSyntax(createIntersectionTypeNode(type.declaration.node, constraint.implementation))
   };
 }
 
 export interface EncodingReference {
-  implementation: string;
+  implementation: ts.TypeNode;
 }
 
 export const Encodings= {
@@ -49,6 +53,7 @@ export const Encodings= {
 export function addEncoding(type: TypeReference, encoding: EncodingReference): TypeReference {
   return {
     ...type,
-    declaration: new TypeSyntax(`${type.declaration} & ${encoding.implementation}`)
+    declaration: new TypeSyntax(createIntersectionTypeNode(type.declaration.node, encoding.implementation))
   };
 }
+

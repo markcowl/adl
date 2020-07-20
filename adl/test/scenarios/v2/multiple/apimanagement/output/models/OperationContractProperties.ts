@@ -1,4 +1,4 @@
-import { OperationEntityBaseContract } from './OperationEntityBaseContract';
+import { OperationEntityBaseContract } from "./OperationEntityBaseContract";
 /**
  * @description Operation Contract Properties
  * @since 2019-12-01

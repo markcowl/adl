@@ -1,4 +1,4 @@
-import { EmailTemplateParametersContractProperties } from './EmailTemplateParametersContractProperties';
+import { EmailTemplateParametersContractProperties } from "./EmailTemplateParametersContractProperties";
 /**
  * @description Email Template Update Contract properties.
  * @since 2019-12-01

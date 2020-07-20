@@ -51,7 +51,7 @@ before the final language is even possible.
 
 <hr>
 
-  - `1.0+` - __ADL-Release__ - start enginieering the language to be __precisely__ what we want to be.
+  - `1.0+` - __ADL-Release__ - start enginieering the declaritive language to be __precisely__ what we want to be.
       <br>at some point in the not-too-distant future, we can opt to do extensive 
       alteration to the fork of TS to allow us to enrich the language with more natural constructs 
       instead of simply overloading the existing TS notation that we come up with.
@@ -61,6 +61,23 @@ before the final language is even possible.
        we can add linting and refactoring rules to auto-upgrade to the cleaner syntax to support
       new constructs. This allows developers to build prototype-level ADL definitions before the
       final syntax is decided upon, but does not lock them into the prototype-level syntax forever.
+
+      This stage would also be entirely declarative in the langauge -- additional traits like 
+      constraints, etc could be delcared, but the consumer would need to know how to use them based 
+      on information given. (_The syntax could support embedding a minimal language to illustrate
+      calculations, but the evaluation of that into a langauge-agnostic syntax tree would have to 
+      wait until 2.0_)
+
+<hr>
+
+  - `2.0+` - __Support LAST__ - at this point, with the declaritive langauge fundementals in place
+      we can start to add support for programmatic delcarations for traits/constructs that can be
+      turned into a language-agnostic-syntax-tree (`LAST`) that we can pass to code generators to 
+      generate specific code for a variety of purposes (custom constraints, custom version 
+      transformation,  multi-step-operations, test generation, protocol validation, code sample generation, )
+      <br>      
+      This would unblock a wide range of additional scenarios by building on top of the fundementals 
+      of the declaritive language.
 <hr>
 
 

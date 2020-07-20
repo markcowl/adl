@@ -1,4 +1,4 @@
-import { SubscriptionCreateParameterProperties } from './SubscriptionCreateParameterProperties';
+import { SubscriptionCreateParameterProperties } from "./SubscriptionCreateParameterProperties";
 /**
  * @description Subscription create details.
  * @since 2019-12-01

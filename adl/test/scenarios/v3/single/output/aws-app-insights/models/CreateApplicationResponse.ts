@@ -1,4 +1,4 @@
-import { ApplicationInfo } from './ApplicationInfo';
+import { ApplicationInfo } from "./ApplicationInfo";
 /**
  *
  * @since 2018-11-25

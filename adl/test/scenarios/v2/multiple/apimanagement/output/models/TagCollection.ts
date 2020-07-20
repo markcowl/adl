@@ -1,4 +1,4 @@
-import { TagContract } from './TagContract';
+import { TagContract } from "./TagContract";
 /**
  * @description Paged Tag list representation.
  * @since 2019-12-01

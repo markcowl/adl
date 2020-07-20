@@ -1,5 +1,5 @@
-import { OperationContractProperties } from './OperationContractProperties';
-import { Resource } from './Resource';
+import { OperationContractProperties } from "./OperationContractProperties";
+import { Resource } from "./Resource";
 /**
  * @description Api Operation details.
  * @since 2019-12-01

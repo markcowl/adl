@@ -1,6 +1,6 @@
-import { air1_ClusterOutput } from './air1_ClusterOutput';
-import { air3_Facilities } from './air3_Facilities';
-import { qp0 } from './qp0';
+import { air1_ClusterOutput } from "./air1_ClusterOutput";
+import { air3_Facilities } from "./air3_Facilities";
+import { qp0 } from "./qp0";
 /**
  * @description Results Object
  * @since 0.0.0

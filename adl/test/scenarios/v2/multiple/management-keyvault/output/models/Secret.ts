@@ -1,5 +1,5 @@
-import { SecretProperties } from './SecretProperties';
-import { Resource } from './Resource';
+import { SecretProperties } from "./SecretProperties";
+import { Resource } from "./Resource";
 /**
  * @description Resource information with extended details.
  * @since 2019-09-01
