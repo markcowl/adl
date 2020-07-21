@@ -10,6 +10,10 @@ export interface PrivateLinkResources {
      * @since 2019-09-01
      * @http GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/privateLinkResources
      * @tag PrivateLinkResources
+     * @param subscriptionId - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+     * @param resourceGroupName - Name of the resource group that contains the key vault.
+     * @param vaultName - The name of the key vault.
+     * @param api_version - Client Api Version.
      * @return 200 - Successfully retrieved private link resources.
      * @return default - Error response describing why the operation failed.
      */

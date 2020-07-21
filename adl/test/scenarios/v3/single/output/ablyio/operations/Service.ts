@@ -28,9 +28,12 @@ export interface Service {
      * @since 1.1.0
      * @http GET /channels
      * @tag Status
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
      * @param prefix - Optionally limits the query to only those channels whose name starts with the given prefix
      * @param by - optionally specifies whether to return just channel names (by=id) or ChannelDetails (by=value)
      * @return 2XX - OK
+     * @return default - Error
      */
     getMetadataOfAllChannels(X_Ably_Version?: versionHeader, format?: responseFormat, limit?: Query<int64>, prefix?: Query<string>, by?: Query<"value" | "id">): [[(code: "2XX", mediaType: "application/json") => {
         body: Xor<Array<ChannelDetails>, Array<string>>;
@@ -48,7 +51,11 @@ export interface Service {
      * @since 1.1.0
      * @http GET /channels/{channel_id}
      * @tag Status
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
+     * @param channel_id - The [Channel's ID](https://www.ably.io/documentation/rest/channels).
      * @return 200 - OK
+     * @return default - Error
      */
     getMetadataOfChannel(X_Ably_Version?: versionHeader, format?: responseFormat, channel_id: channelId): [(code: 200, mediaType: "application/json") => {
         body: ChannelDetails;
@@ -60,6 +67,9 @@ export interface Service {
      * @since 1.1.0
      * @http GET /channels/{channel_id}/messages
      * @tag History
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
+     * @param channel_id - The [Channel's ID](https://www.ably.io/documentation/rest/channels).
      * @return 2XX - OK
      * @return default - Error
      */
@@ -82,7 +92,11 @@ export interface Service {
      * @since 1.1.0
      * @http POST /channels/{channel_id}/messages
      * @tag Publishing
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
+     * @param channel_id - The [Channel's ID](https://www.ably.io/documentation/rest/channels).
      * @return 2XX - OK
+     * @return default - Error
      */
     publishMessagesToChannel(X_Ably_Version?: versionHeader, format?: responseFormat, channel_id: channelId, body?: Body<Message, "application/json"> | Body<Message, "application/x-msgpack"> | Body<Message, "application/x-www-form-urlencoded">): [[(code: "2XX", mediaType: "application/json") => {
         body: {
@@ -109,7 +123,11 @@ export interface Service {
      * @since 1.1.0
      * @http GET /channels/{channel_id}/presence
      * @tag Status
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
+     * @param channel_id - The [Channel's ID](https://www.ably.io/documentation/rest/channels).
      * @return 200 - OK
+     * @return default - Error
      */
     getPresenceOfChannel(X_Ably_Version?: versionHeader, format?: responseFormat, channel_id: channelId, clientId?: Query<string>, connectionId?: Query<string>, limit?: Query<int64>): [[(code: 200, mediaType: "application/json") => {
         body: Array<PresenceMessage>;
@@ -127,7 +145,11 @@ export interface Service {
      * @since 1.1.0
      * @http GET /channels/{channel_id}/presence/history
      * @tag History
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
+     * @param channel_id - The [Channel's ID](https://www.ably.io/documentation/rest/channels).
      * @return 2XX - OK
+     * @return default - Error
      */
     getPresenceHistoryOfChannel(X_Ably_Version?: versionHeader, format?: responseFormat, channel_id: channelId, start?: filterStart, limit?: filterLimit, end?: filterEnd, direction?: filterDirection): [[(code: "2XX", mediaType: "application/json") => {
         body: Array<PresenceMessage>;
@@ -145,7 +167,11 @@ export interface Service {
      * @since 1.1.0
      * @http POST /keys/{keyName}/requestToken
      * @tag Authentication
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
+     * @param keyName - The [key name](https://www.ably.io/documentation/rest-api/token-request-spec#api-key-format) comprises of the app ID and key ID of an API key.
      * @return 2XX - OK
+     * @return default - Error
      */
     requestAccessToken(X_Ably_Version?: versionHeader, format?: responseFormat, keyName: key_name, body?: Body<Xor<TokenRequest, SignedTokenRequest>, "application/json">): [[(code: "2XX", mediaType: "application/json") => {
         body: TokenDetails;
@@ -158,11 +184,14 @@ export interface Service {
      * @since 1.1.0
      * @http GET /push/channelSubscriptions
      * @tag Push
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
      * @param channel - Filter to restrict to subscriptions associated with that channel.
      * @param deviceId - Optional filter to restrict to devices associated with that deviceId. Cannot be used with clientId.
      * @param clientId - Optional filter to restrict to devices associated with that clientId. Cannot be used with deviceId.
      * @param limit - The maximum number of records to return.
      * @return 2XX - OK
+     * @return default - Error
      */
     getPushSubscriptionsOnChannels(X_Ably_Version?: versionHeader, format?: responseFormat, channel?: Query<string>, deviceId?: Query<string>, clientId?: Query<string>, limit?: Query<int64 & Maximum<1000>>): [(code: "2XX", mediaType: "application/json") => {
         body: DeviceDetails;
@@ -173,7 +202,10 @@ export interface Service {
      * @since 1.1.0
      * @http POST /push/channelSubscriptions
      * @tag Push
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
      * @return 2XX - OK
+     * @return default - Error
      */
     subscribePushDeviceToChannel(X_Ably_Version?: versionHeader, format?: responseFormat, body?: Body<Xor<{
         channel?: string;
@@ -200,10 +232,13 @@ export interface Service {
      * @since 1.1.0
      * @http DELETE /push/channelSubscriptions
      * @tag Push
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
      * @param channel - Filter to restrict to subscriptions associated with that channel.
      * @param deviceId - Must be set when clientId is empty, cannot be used with clientId.
      * @param clientId - Must be set when deviceId is empty, cannot be used with deviceId.
      * @return 2XX - OK
+     * @return default - Error
      */
     deletePushDeviceDetails(X_Ably_Version?: versionHeader, format?: responseFormat, channel?: Query<string>, deviceId?: Query<string>, clientId?: Query<string>): [(code: "2XX") => {}, Error<"default", true>];
     /**
@@ -212,7 +247,10 @@ export interface Service {
      * @since 1.1.0
      * @http GET /push/channels
      * @tag Push
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
      * @return 2XX - OK
+     * @return default - Error
      */
     getChannelsWithPushSubscribers(X_Ably_Version?: versionHeader, format?: responseFormat): [[(code: "2XX", mediaType: "application/json") => {
         body: Array<string>;
@@ -227,10 +265,13 @@ export interface Service {
      * @since 1.1.0
      * @http GET /push/deviceRegistrations
      * @tag Push
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
      * @param deviceId - Optional filter to restrict to devices associated with that deviceId.
      * @param clientId - Optional filter to restrict to devices associated with that clientId.
      * @param limit - The maximum number of records to return.
      * @return 2XX - OK
+     * @return default - Error
      */
     getRegisteredPushDevices(X_Ably_Version?: versionHeader, format?: responseFormat, deviceId?: Query<string>, clientId?: Query<string>, limit?: Query<int64 & Maximum<1000>>): [[(code: "2XX", mediaType: "application/json") => {
         body: DeviceDetails;
@@ -245,7 +286,10 @@ export interface Service {
      * @since 1.1.0
      * @http POST /push/deviceRegistrations
      * @tag Push
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
      * @return 2XX - OK
+     * @return default - Error
      */
     registerPushDevice(X_Ably_Version?: versionHeader, format?: responseFormat, body?: Body<DeviceDetails, "application/json"> | Body<DeviceDetails, "application/x-msgpack">): [[(code: "2XX", mediaType: "application/json") => {
         body: DeviceDetails;
@@ -260,9 +304,12 @@ export interface Service {
      * @since 1.1.0
      * @http DELETE /push/deviceRegistrations
      * @tag Push
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
      * @param deviceId - Optional filter to restrict to devices associated with that deviceId. Cannot be used with clientId.
      * @param clientId - Optional filter to restrict to devices associated with that clientId. Cannot be used with deviceId.
      * @return 2XX - OK
+     * @return default - Error
      */
     unregisterAllPushDevices(X_Ably_Version?: versionHeader, format?: responseFormat, deviceId?: Query<string>, clientId?: Query<string>): [(code: "2XX") => {}, Error<"default", true>];
     /**
@@ -271,7 +318,11 @@ export interface Service {
      * @since 1.1.0
      * @http GET /push/deviceRegistrations/{device_id}
      * @tag Push
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
+     * @param device_id - Device's ID.
      * @return 2XX - OK
+     * @return default - Error
      */
     getPushDeviceDetails(X_Ably_Version?: versionHeader, format?: responseFormat, device_id: deviceId): [[(code: "2XX", mediaType: "application/json") => {
         body: DeviceDetails;
@@ -286,7 +337,11 @@ export interface Service {
      * @since 1.1.0
      * @http PUT /push/deviceRegistrations/{device_id}
      * @tag Push
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
+     * @param device_id - Device's ID.
      * @return 2XX - OK
+     * @return default - Error
      */
     putPushDeviceDetails(X_Ably_Version?: versionHeader, format?: responseFormat, device_id: deviceId, body?: Body<DeviceDetails, "application/json"> | Body<DeviceDetails, "application/x-msgpack"> | Body<DeviceDetails, "application/x-www-form-urlencoded">): [[(code: "2XX", mediaType: "application/json") => {
         body: DeviceDetails;
@@ -301,7 +356,11 @@ export interface Service {
      * @since 1.1.0
      * @http DELETE /push/deviceRegistrations/{device_id}
      * @tag Push
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
+     * @param device_id - Device's ID.
      * @return 2XX - OK
+     * @return default - Error
      */
     unregisterPushDevice(X_Ably_Version?: versionHeader, format?: responseFormat, device_id: deviceId): [(code: "2XX") => {}, Error<"default", true>];
     /**
@@ -310,7 +369,11 @@ export interface Service {
      * @since 1.1.0
      * @http PATCH /push/deviceRegistrations/{device_id}
      * @tag Push
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
+     * @param device_id - Device's ID.
      * @return 2XX - OK
+     * @return default - Error
      */
     patchPushDeviceDetails(X_Ably_Version?: versionHeader, format?: responseFormat, device_id: deviceId, body?: Body<DeviceDetails, "application/json"> | Body<DeviceDetails, "application/x-msgpack"> | Body<DeviceDetails, "application/x-www-form-urlencoded">): [[(code: "2XX", mediaType: "application/json") => {
         body: DeviceDetails;
@@ -325,7 +388,11 @@ export interface Service {
      * @since 1.1.0
      * @http GET /push/deviceRegistrations/{device_id}/resetUpdateToken
      * @tag Push
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
+     * @param device_id - Device's ID.
      * @return 2XX - OK
+     * @return default - Error
      */
     updatePushDeviceDetails(X_Ably_Version?: versionHeader, format?: responseFormat, device_id: deviceId): [[(code: "2XX", mediaType: "application/json") => {
         body: DeviceDetails;
@@ -340,7 +407,10 @@ export interface Service {
      * @since 1.1.0
      * @http POST /push/publish
      * @tag Push
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
      * @return 2XX - OK
+     * @return default - Error
      */
     publishPushNotificationToDevices(X_Ably_Version?: versionHeader, format?: responseFormat, body?: Body<{
         push?: Push;
@@ -358,8 +428,11 @@ export interface Service {
      * @since 1.1.0
      * @http GET /stats
      * @tag Stats
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
      * @param unit - Specifies the unit of aggregation in the returned results.
      * @return 2XX - OK
+     * @return default - Error
      */
     getStats(X_Ably_Version?: versionHeader, format?: responseFormat, start?: filterStart, limit?: filterLimit, end?: filterEnd, direction?: filterDirection, unit?: Query<"minute" | "hour" | "day" | "month">): [(code: "2XX", mediaType: "application/json") => {
         body: {};
@@ -370,7 +443,10 @@ export interface Service {
      * @since 1.1.0
      * @http GET /time
      * @tag Stats
+     * @param X_Ably_Version - The version of the API you wish to use.
+     * @param format - The response format you would like
      * @return 2XX - OK
+     * @return default - Error
      */
     getTime(X_Ably_Version?: versionHeader, format?: responseFormat): [[(code: "2XX", mediaType: "application/json") => {
         body: Array<int64>;

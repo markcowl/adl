@@ -32,7 +32,7 @@ export async function processParameter(parameter: v3.Parameter | v3.ParameterRef
 
     const parameterRef: ParameterTypeReference = {
       name: parameter.name,
-      description: options?.isAnonymous ? parameter.description : undefined,
+      description: parameter.description,
       required: parameter.required ?? false,
       declaration: parameterTypeSyntax,
       requiredReferences: [schema],
@@ -43,7 +43,7 @@ export async function processParameter(parameter: v3.Parameter | v3.ParameterRef
       $.api,
       parameterTypeName,
       parameterRef, {
-        summary: !options?.isAnonymous ? parameter.description : undefined,
+        summary: parameter.description,
       });
   };
 

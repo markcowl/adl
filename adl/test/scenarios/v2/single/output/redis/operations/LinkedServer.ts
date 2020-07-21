@@ -12,9 +12,11 @@ export interface LinkedServer {
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the redis cache.
      * @param linkedServerName - The name of the linked server.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Response of get linked server.
      */
-    Get(resourceGroupName: string, name: string, linkedServerName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    Get(resourceGroupName: string, name: string, linkedServerName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: RedisLinkedServerWithProperties;
     }];
     /**
@@ -26,6 +28,8 @@ export interface LinkedServer {
      * @param name - The name of the Redis cache.
      * @param linkedServerName - The name of the linked server that is being added to the Redis cache.
      * @param parameters - Parameters supplied to the Create Linked server operation.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - The linked server was successfully added.
      * @return 201 - The linked server was successfully added.
      */
@@ -42,9 +46,11 @@ export interface LinkedServer {
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the redis cache.
      * @param linkedServerName - The name of the linked server that is being added to the Redis cache.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Linked server was successfully deleted.
      */
-    Delete(resourceGroupName: string, name: string, linkedServerName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {}];
+    Delete(resourceGroupName: string, name: string, linkedServerName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {}];
     /**
      * @description Gets the list of linked servers associated with this redis cache (requires Premium SKU).
      * @since 2018-03-01
@@ -52,9 +58,11 @@ export interface LinkedServer {
      * @tag Redis
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the redis cache.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Response of get linked servers.
      */
-    List(resourceGroupName: string, name: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    List(resourceGroupName: string, name: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: RedisLinkedServerWithPropertiesList;
     }];
 }

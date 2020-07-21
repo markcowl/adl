@@ -39,7 +39,7 @@ export async function processParameter(parameter: v2.Parameter | v2.ParameterRef
       $.api,
       parameterTypeName,
       parameterRef, {
-        summary: !options?.isAnonymous ? parameter.description : undefined,
+        summary: parameter.description
       });
   };
 
@@ -53,7 +53,7 @@ export function getParameterReference(parameter: v2.Parameter, schema: SchemaTyp
 
   return {
     name: parameter.name,
-    description: options?.isAnonymous ? parameter.description : undefined,
+    description: parameter.description,
     required: parameter.required ?? false,
     declaration: syntax.type,
     typeParameters: syntax.typeParameters,

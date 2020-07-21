@@ -42,7 +42,7 @@ export async function processRequestBody(requestBody: v3.RequestBody | v3.Reques
     const requestBodyRef: RequestBodyTypeReference = {
       declaration: new TypeSyntax(ts.createUnionTypeNode(requests)),
       requiredReferences,
-      description: options?.isAnonymous ? requestBody.description : undefined,
+      description: requestBody.description,
       required: requestBody.required ?? false,
     };
 

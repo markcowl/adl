@@ -33,7 +33,14 @@ export interface Service {
      * @http GET /labs/2/tweets
      * @tag Tweets
      * @param ids - A comma separated list of Tweet IDs. Up to 100 are allowed in a single request.
+     * @param expansions - A comma separated list of fields to expand.
+     * @param tweet_fields - A comma separated list of Tweet fields to display.
+     * @param user_fields - A comma separated list of User fields to display.
+     * @param media_fields - A comma separated list of Media fields to display.
+     * @param place_fields - A comma separated list of Place fields to display.
+     * @param poll_fields - A comma separated list of Poll fields to display.
      * @return 200 - The request was successful
+     * @return default - The request has failed.
      */
     findTweetsById(ids: Query<Array<TweetID> & MaximumElements<100> & MinimumElements<1>>, expansions?: TweetExpansionsParameter, tweet_fields?: TweetFieldsParameter, user_fields?: UserFieldsParameter, media_fields?: MediaFieldsParameter, place_fields?: PlaceFieldsParameter, poll_fields?: PollFieldsParameter): [(code: 200, mediaType: "application/json") => {
         body: TweetLookupResponse;
@@ -52,7 +59,14 @@ export interface Service {
      * @param until_id - Returns results with a Tweet ID less than (that is, older than) the specified ID.
      * @param max_results - The maximum number of search results to be returned by a request.
      * @param next_token - This parameter is used to get the next 'page' of results. The value used with the parameter is pulled directly from the response provided by the API, and should not be modified.
+     * @param expansions - A comma separated list of fields to expand.
+     * @param tweet_fields - A comma separated list of Tweet fields to display.
+     * @param user_fields - A comma separated list of User fields to display.
+     * @param media_fields - A comma separated list of Media fields to display.
+     * @param place_fields - A comma separated list of Place fields to display.
+     * @param poll_fields - A comma separated list of Poll fields to display.
      * @return 200 - Tweets recent search response
+     * @return default - The request has failed.
      */
     tweetsRecentSearch(query: Query<string & MaxLength<512> & MinLength<1>>, start_time?: Query<dateTime>, end_time?: Query<dateTime>, since_id?: Query<TweetID>, until_id?: Query<TweetID>, max_results?: Query<int32 & Minimum<10> & Maximum<100>>, next_token?: Query<string>, expansions?: TweetExpansionsParameter, tweet_fields?: TweetFieldsParameter, user_fields?: UserFieldsParameter, media_fields?: MediaFieldsParameter, place_fields?: PlaceFieldsParameter, poll_fields?: PollFieldsParameter): [(code: 200, mediaType: "application/json") => {
         body: TweetSearchResponse;
@@ -64,7 +78,14 @@ export interface Service {
      * @http GET /labs/2/tweets/{id}
      * @tag Tweets
      * @param id - A single Tweet ID.
+     * @param expansions - A comma separated list of fields to expand.
+     * @param tweet_fields - A comma separated list of Tweet fields to display.
+     * @param user_fields - A comma separated list of User fields to display.
+     * @param media_fields - A comma separated list of Media fields to display.
+     * @param place_fields - A comma separated list of Place fields to display.
+     * @param poll_fields - A comma separated list of Poll fields to display.
      * @return 200 - The request was successful
+     * @return default - The request has failed.
      */
     findTweetById(id: TweetID, expansions?: TweetExpansionsParameter, tweet_fields?: TweetFieldsParameter, user_fields?: UserFieldsParameter, media_fields?: MediaFieldsParameter, place_fields?: PlaceFieldsParameter, poll_fields?: PollFieldsParameter): [(code: 200, mediaType: "application/json") => {
         body: SingleTweetLookupResponse;
@@ -77,6 +98,7 @@ export interface Service {
      * @tag Tweets
      * @param id - The ID of the reply that you want to hide.
      * @return 200 - A successful response. The reply has been hidden.
+     * @return default - The request has failed.
      */
     hideReplyById(id: TweetID, body?: Body<{
         hidden?: true;
@@ -94,7 +116,14 @@ export interface Service {
      * @http GET /labs/2/users
      * @tag Users
      * @param ids - Required. A list of User IDs, comma-separated. You can specify up to 100 IDs.
+     * @param expansions - A comma separated list of fields to expand.
+     * @param tweet_fields - A comma separated list of Tweet fields to display.
+     * @param user_fields - A comma separated list of User fields to display.
+     * @param media_fields - A comma separated list of Media fields to display.
+     * @param place_fields - A comma separated list of Place fields to display.
+     * @param poll_fields - A comma separated list of Poll fields to display.
      * @return 200 - The request was successful
+     * @return default - The request has failed.
      */
     findUsersById(ids: Query<Array<UserID> & MaximumElements<100> & MinimumElements<1>>, expansions?: UserExpansionsParameter, tweet_fields?: TweetFieldsParameter, user_fields?: UserFieldsParameter, media_fields?: MediaFieldsParameter, place_fields?: PlaceFieldsParameter, poll_fields?: PollFieldsParameter): [(code: 200, mediaType: "application/json") => {
         body: UserLookupResponse;
@@ -106,7 +135,14 @@ export interface Service {
      * @http GET /labs/2/users/by
      * @tag Users
      * @param usernames - Required . A list of usernames, comma-separated. You can specify up to 100 usernames.
+     * @param expansions - A comma separated list of fields to expand.
+     * @param tweet_fields - A comma separated list of Tweet fields to display.
+     * @param user_fields - A comma separated list of User fields to display.
+     * @param media_fields - A comma separated list of Media fields to display.
+     * @param place_fields - A comma separated list of Place fields to display.
+     * @param poll_fields - A comma separated list of Poll fields to display.
      * @return 200 - The request was successful
+     * @return default - The request has failed.
      */
     findUsersByUsername(usernames: Query<Array<UserName> & MaximumElements<100> & MinimumElements<1>>, expansions?: UserExpansionsParameter, tweet_fields?: TweetFieldsParameter, user_fields?: UserFieldsParameter, media_fields?: MediaFieldsParameter, place_fields?: PlaceFieldsParameter, poll_fields?: PollFieldsParameter): [(code: 200, mediaType: "application/json") => {
         body: UserLookupResponse;
@@ -118,7 +154,14 @@ export interface Service {
      * @http GET /labs/2/users/by/username/{username}
      * @tag Users
      * @param username - Required. A username.
+     * @param expansions - A comma separated list of fields to expand.
+     * @param tweet_fields - A comma separated list of Tweet fields to display.
+     * @param user_fields - A comma separated list of User fields to display.
+     * @param media_fields - A comma separated list of Media fields to display.
+     * @param place_fields - A comma separated list of Place fields to display.
+     * @param poll_fields - A comma separated list of Poll fields to display.
      * @return 200 - The request was successful
+     * @return default - The request has failed.
      */
     findUserByUsername(username: UserName, expansions?: UserExpansionsParameter, tweet_fields?: TweetFieldsParameter, user_fields?: UserFieldsParameter, media_fields?: MediaFieldsParameter, place_fields?: PlaceFieldsParameter, poll_fields?: PollFieldsParameter): [(code: 200, mediaType: "application/json") => {
         body: SingleUserLookupResponse;
@@ -130,7 +173,14 @@ export interface Service {
      * @http GET /labs/2/users/{id}
      * @tag Users
      * @param id - Required. A User ID.
+     * @param expansions - A comma separated list of fields to expand.
+     * @param tweet_fields - A comma separated list of Tweet fields to display.
+     * @param user_fields - A comma separated list of User fields to display.
+     * @param media_fields - A comma separated list of Media fields to display.
+     * @param place_fields - A comma separated list of Place fields to display.
+     * @param poll_fields - A comma separated list of Poll fields to display.
      * @return 200 - The request was successful
+     * @return default - The request has failed.
      */
     findUserById(id: UserID, expansions?: UserExpansionsParameter, tweet_fields?: TweetFieldsParameter, user_fields?: UserFieldsParameter, media_fields?: MediaFieldsParameter, place_fields?: PlaceFieldsParameter, poll_fields?: PollFieldsParameter): [(code: 200, mediaType: "application/json") => {
         body: SingleUserLookupResponse;
