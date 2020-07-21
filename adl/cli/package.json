@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "source-map-support": "0.5.19",
-    "@azure-tools/adl.core": "~1.0.0",
+    "@azure-tools/adl.core": "~0.1.0",
     "@azure-tools/linq": "~4.0.0",
     "marked-terminal": "~4.1.0",
     "@azure-tools/async-io": "~4.0.0",
