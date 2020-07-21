@@ -61,9 +61,9 @@ async function processOperation(method: Method, path: string, operation: v2.Oper
     each => each.location == v2.ParameterLocation.Body ||
     each.location == v2.ParameterLocation.FormData) !== undefined;
 
-  if (length(consumes) > 0 && !hasBodyParameter()) {
-    // they specified a body content type, but no actual body parameter, which means
-    // they get an anonymous one added
+  if (operation?.consumes && length(consumes) > 0 && !hasBodyParameter()) {
+    // they specified a body content type on the operation, but no actual body
+    // parameter, which means they get an anonymous one added
     const bodyParameter: v2.BodyParameter = {
       name: 'body',
       in: v2.ParameterLocation.Body
