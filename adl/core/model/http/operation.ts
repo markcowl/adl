@@ -287,7 +287,7 @@ function createResponseStructures(responses?: Array<ResponseTypeReference>) {
     requiredReferences.push(each);
 
     if (each.description) {
-      const doc = `${each.code} - ${each.description}`;
+      const doc = `${each.code ?? 'default'} - ${each.description}`;
       tagStructures.push({
         kind: StructureKind.JSDocTag,
         tagName: 'return',

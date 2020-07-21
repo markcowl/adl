@@ -35,7 +35,7 @@ export async function processResponse(response: v2.Response | v2.ResponseReferen
 
     const name  = options?.isAnonymous ? anonymous('response') : nameOf(response);
     const responseRef = await getResponseTypeReference(response, $, options);
-    return createTypeAlias($.api, name, responseRef, { summary: options?.isAnonymous ? undefined : response.description });
+    return createTypeAlias($.api, name, responseRef, { summary: response.description });
   };
 
   const result = await impl();
@@ -75,7 +75,7 @@ async function getResponseTypeReference(response: v2.Response, $: Context, optio
     declaration: new TypeSyntax(type),
     requiredReferences,
     typeParameters,
-    description: options?.isAnonymous ? response.description : undefined,
+    description: response.description,
     code: options?.isAnonymous ? options.code : undefined,
   };
 }
@@ -115,6 +115,7 @@ function specializeResponse(responseRef: ResponseTypeReference, $: Context, opti
   const specializedType = ts.createTypeReferenceNode(type.typeName, args);
   return {
     ...responseRef,
+    code,
     typeParameters: undefined,
     sourceFile: undefined,
     requiredReferences: [responseRef],
