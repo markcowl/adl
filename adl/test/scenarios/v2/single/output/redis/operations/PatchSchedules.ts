@@ -14,7 +14,7 @@ export interface PatchSchedules {
      * @param cacheName - The name of the Redis cache.
      * @return 200 - Successfully got the current patch schedules
      */
-    ListByRedisResource(api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, resourceGroupName: string, cacheName: string, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    ListByRedisResource(api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, resourceGroupName: string, cacheName: string): [(code: 200, mediaType: "application/json") => {
         body: RedisPatchScheduleListResult;
     }];
     /**
@@ -28,7 +28,7 @@ export interface PatchSchedules {
      * @param _default - Default string modeled as parameter for auto generation to work correctly.
      * @return 200 - Response of get patch schedules.
      */
-    Get(resourceGroupName: string, name: string, _default: Path<defaultName, "default">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    Get(resourceGroupName: string, name: string, _default: Path<defaultName, "default">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: RedisPatchSchedule;
     }];
     /**
@@ -61,5 +61,5 @@ export interface PatchSchedules {
      * @return 200 - Success.
      * @return 204 - Success.
      */
-    Delete(resourceGroupName: string, name: string, _default: Path<defaultName, "default">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {}, (code: 204, mediaType: "application/json") => {}];
+    Delete(resourceGroupName: string, name: string, _default: Path<defaultName, "default">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {}, (code: 204, mediaType: "application/json") => {}];
 }

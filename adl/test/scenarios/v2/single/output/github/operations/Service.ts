@@ -132,7 +132,7 @@ export interface Service {
      * for details.
      *
      */
-    emojis(Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    emojis(Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: emojis;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -149,7 +149,7 @@ export interface Service {
      * for details.
      *
      */
-    events(Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    events(Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: events;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -169,7 +169,7 @@ export interface Service {
      * for details.
      *
      */
-    feeds(Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    feeds(Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: feeds;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -191,7 +191,7 @@ export interface Service {
      * for details.
      *
      */
-    gists(since?: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    gists(since?: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: gists;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -228,7 +228,7 @@ export interface Service {
      * for details.
      *
      */
-    public(since?: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    public(since?: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: gists;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -248,7 +248,7 @@ export interface Service {
      * for details.
      *
      */
-    starred(since?: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    starred(since?: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: gists;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -266,7 +266,7 @@ export interface Service {
      * for details.
      *
      */
-    gists(id: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    gists(id: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: gist;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -285,7 +285,7 @@ export interface Service {
      * for details.
      *
      */
-    gists(id: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    gists(id: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -320,7 +320,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(id: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    comments(id: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: comments;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -357,7 +357,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(id: int64, commentId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    comments(id: int64, commentId: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: comment;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -377,7 +377,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(id: int64, commentId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    comments(id: int64, commentId: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -414,7 +414,7 @@ export interface Service {
      *
      * @return 404 - Not exists.
      */
-    forks(id: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    forks(id: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -435,7 +435,7 @@ export interface Service {
      *
      * @return 404 - Not exists.
      */
-    star(id: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    star(id: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -455,7 +455,7 @@ export interface Service {
      * for details.
      *
      */
-    star(id: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    star(id: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -472,7 +472,7 @@ export interface Service {
      * for details.
      *
      */
-    star(id: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    star(id: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -490,7 +490,7 @@ export interface Service {
      * for details.
      *
      */
-    templates(Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    templates(Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: gitignore;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -507,7 +507,7 @@ export interface Service {
      * for details.
      *
      */
-    templates(language: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    templates(language: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: gitignore_lang;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -533,7 +533,7 @@ export interface Service {
      * for details.
      *
      */
-    issues(filter: Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state: Query<"open" | "closed">, labels: Query<string>, sort: Query<"created" | "updated" | "comments">, direction: Query<"asc" | "desc">, since?: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    issues(filter: Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state: Query<"open" | "closed">, labels: Query<string>, sort: Query<"created" | "updated" | "comments">, direction: Query<"asc" | "desc">, since?: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: issues;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -553,7 +553,7 @@ export interface Service {
      * for details.
      *
      */
-    search(keyword: string, state: "open" | "closed", owner: string, repository: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    search(keyword: string, state: "open" | "closed", owner: string, repository: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: search_issues_by_keyword;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -576,7 +576,7 @@ export interface Service {
      * for details.
      *
      */
-    search(keyword: string, order?: Query<"desc" | "asc">, language?: Query<string>, start_page?: Query<string>, sort?: Query<"updated" | "stars" | "forks">, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    search(keyword: string, order?: Query<"desc" | "asc">, language?: Query<string>, start_page?: Query<string>, sort?: Query<"updated" | "stars" | "forks">, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: search_repositories_by_keyword;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -595,7 +595,7 @@ export interface Service {
      * for details.
      *
      */
-    email(email: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    email(email: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: search_user_by_email;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -617,7 +617,7 @@ export interface Service {
      * for details.
      *
      */
-    search(keyword: string, order?: Query<"desc" | "asc">, start_page?: Query<string>, sort?: Query<"updated" | "stars" | "forks">, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    search(keyword: string, order?: Query<"desc" | "asc">, start_page?: Query<string>, sort?: Query<"updated" | "stars" | "forks">, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: search_users_by_keyword;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -666,7 +666,7 @@ export interface Service {
      * for details.
      *
      */
-    meta(Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    meta(Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: meta;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -685,7 +685,7 @@ export interface Service {
      * for details.
      *
      */
-    events(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    events(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: events;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -711,7 +711,7 @@ export interface Service {
      * for details.
      *
      */
-    notifications(all?: Query<boolean>, participating?: Query<boolean>, since?: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    notifications(all?: Query<boolean>, participating?: Query<boolean>, since?: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: notifications;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -747,7 +747,7 @@ export interface Service {
      * for details.
      *
      */
-    threads(id: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    threads(id: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: notifications;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -765,7 +765,7 @@ export interface Service {
      * for details.
      *
      */
-    threads(id: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 205, mediaType: "application/json") => {
+    threads(id: int64, Accept?: Header<string>): [(code: 205, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -782,7 +782,7 @@ export interface Service {
      * for details.
      *
      */
-    subscription(id: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    subscription(id: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: subscription;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -823,7 +823,7 @@ export interface Service {
      * for details.
      *
      */
-    subscription(id: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    subscription(id: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -840,7 +840,7 @@ export interface Service {
      * for details.
      *
      */
-    orgs(org: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    orgs(org: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: organization;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -876,7 +876,7 @@ export interface Service {
      * for details.
      *
      */
-    events(org: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    events(org: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: events;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -903,7 +903,7 @@ export interface Service {
      * for details.
      *
      */
-    issues(org: string, filter: Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state: Query<"open" | "closed">, labels: Query<string>, sort: Query<"created" | "updated" | "comments">, direction: Query<"asc" | "desc">, since?: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    issues(org: string, filter: Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state: Query<"open" | "closed">, labels: Query<string>, sort: Query<"created" | "updated" | "comments">, direction: Query<"asc" | "desc">, since?: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: issues;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -928,7 +928,7 @@ export interface Service {
      * for details.
      *
      */
-    members(org: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    members(org: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: users;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 302, mediaType: "application/json") => {
@@ -956,7 +956,7 @@ export interface Service {
      * b. Response if requester is not an organization member and is inquiring about themselves
      *
      */
-    members(org: string, username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    members(org: string, username: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 302, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -983,7 +983,7 @@ export interface Service {
      * for details.
      *
      */
-    members(org: string, username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    members(org: string, username: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -1003,7 +1003,7 @@ export interface Service {
      * for details.
      *
      */
-    public_members(org: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    public_members(org: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: users;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1023,7 +1023,7 @@ export interface Service {
      *
      * @return 404 - User is not a public member.
      */
-    public_members(org: string, username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    public_members(org: string, username: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -1044,7 +1044,7 @@ export interface Service {
      * for details.
      *
      */
-    public_members(org: string, username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    public_members(org: string, username: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -1062,7 +1062,7 @@ export interface Service {
      * for details.
      *
      */
-    public_members(org: string, username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    public_members(org: string, username: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -1079,7 +1079,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(org: string, type?: Query<"all" | "public" | "private" | "forks" | "sources" | "member">, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    repos(org: string, type?: Query<"all" | "public" | "private" | "forks" | "sources" | "member">, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: repos;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1117,7 +1117,7 @@ export interface Service {
      * for details.
      *
      */
-    teams(org: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    teams(org: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: teams;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1156,7 +1156,7 @@ export interface Service {
      * for details.
      *
      */
-    rate_limit(Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    rate_limit(Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: rate_limit;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1175,7 +1175,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    repos(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: repo;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1197,7 +1197,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    repos(owner: string, repo: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -1237,7 +1237,7 @@ export interface Service {
      * for details.
      *
      */
-    assignees(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    assignees(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: assignees;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1260,7 +1260,7 @@ export interface Service {
      *
      * @return 404 - User isn't an assignee.
      */
-    assignees(owner: string, repo: string, assignee: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    assignees(owner: string, repo: string, assignee: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -1281,7 +1281,7 @@ export interface Service {
      * for details.
      *
      */
-    branches(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    branches(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: branches;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1301,7 +1301,7 @@ export interface Service {
      * for details.
      *
      */
-    branches(owner: string, repo: string, branch: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    branches(owner: string, repo: string, branch: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: branch;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1325,7 +1325,7 @@ export interface Service {
      * for details.
      *
      */
-    collaborators(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    collaborators(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: users;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1346,7 +1346,7 @@ export interface Service {
      *
      * @return 404 - User is not a collaborator.
      */
-    collaborators(owner: string, repo: string, user: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    collaborators(owner: string, repo: string, user: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -1368,7 +1368,7 @@ export interface Service {
      * for details.
      *
      */
-    collaborators(owner: string, repo: string, user: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    collaborators(owner: string, repo: string, user: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -1387,7 +1387,7 @@ export interface Service {
      * for details.
      *
      */
-    collaborators(owner: string, repo: string, user: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    collaborators(owner: string, repo: string, user: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -1407,7 +1407,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    comments(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: repoComments;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1427,7 +1427,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: string, repo: string, commentId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    comments(owner: string, repo: string, commentId: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: commitComment;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1448,7 +1448,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: string, repo: string, commentId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    comments(owner: string, repo: string, commentId: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -1493,7 +1493,7 @@ export interface Service {
      * for details.
      *
      */
-    commits(owner: string, repo: string, since?: Query<string>, sha?: Query<string>, path?: Query<string>, author?: Query<string>, until?: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    commits(owner: string, repo: string, since?: Query<string>, sha?: Query<string>, path?: Query<string>, author?: Query<string>, until?: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: commits;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1516,7 +1516,7 @@ export interface Service {
      * for details.
      *
      */
-    status(owner: string, repo: string, ref: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    status(owner: string, repo: string, ref: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: refStatus;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1536,7 +1536,7 @@ export interface Service {
      * for details.
      *
      */
-    commits(owner: string, repo: string, shaCode: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    commits(owner: string, repo: string, shaCode: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: commit;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1556,7 +1556,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: string, repo: string, shaCode: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    comments(owner: string, repo: string, shaCode: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: repoComments;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1595,7 +1595,7 @@ export interface Service {
      * for details.
      *
      */
-    "..."(owner: string, repo: string, baseId: string, headId: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    "..."(owner: string, repo: string, baseId: string, headId: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: compare_commits;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1622,7 +1622,7 @@ export interface Service {
      * for details.
      *
      */
-    contents(owner: string, repo: string, path: string, path?: Query<string>, ref?: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    contents(owner: string, repo: string, path: string, path?: Query<string>, ref?: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: contents_path;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1682,7 +1682,7 @@ export interface Service {
      * for details.
      *
      */
-    contributors(owner: string, repo: string, anon: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    contributors(owner: string, repo: string, anon: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: users;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1701,7 +1701,7 @@ export interface Service {
      * for details.
      *
      */
-    deployments(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    deployments(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: repo_deployments;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1740,7 +1740,7 @@ export interface Service {
      * for details.
      *
      */
-    statuses(owner: string, repo: string, id: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    statuses(owner: string, repo: string, id: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: deployment_statuses;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1781,7 +1781,7 @@ export interface Service {
      * for details.
      *
      */
-    downloads(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    downloads(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: downloads;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1802,7 +1802,7 @@ export interface Service {
      * for details.
      *
      */
-    downloads(owner: string, repo: string, downloadId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    downloads(owner: string, repo: string, downloadId: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: download;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1824,7 +1824,7 @@ export interface Service {
      * for details.
      *
      */
-    downloads(owner: string, repo: string, downloadId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    downloads(owner: string, repo: string, downloadId: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -1842,7 +1842,7 @@ export interface Service {
      * for details.
      *
      */
-    events(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    events(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: events;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1861,7 +1861,7 @@ export interface Service {
      * for details.
      *
      */
-    forks(owner: string, repo: string, sort?: Query<"newes" | "oldes" | "watchers">, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    forks(owner: string, repo: string, sort?: Query<"newes" | "oldes" | "watchers">, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: forks;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1928,7 +1928,7 @@ export interface Service {
      * for details.
      *
      */
-    blobs(owner: string, repo: string, shaCode: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    blobs(owner: string, repo: string, shaCode: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: blob;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1967,7 +1967,7 @@ export interface Service {
      * for details.
      *
      */
-    commits(owner: string, repo: string, shaCode: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    commits(owner: string, repo: string, shaCode: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: repoCommit;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -1986,7 +1986,7 @@ export interface Service {
      * for details.
      *
      */
-    refs(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    refs(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: refs;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2024,7 +2024,7 @@ export interface Service {
      * for details.
      *
      */
-    refs(owner: string, repo: string, ref: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    refs(owner: string, repo: string, ref: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: headBranch;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2046,7 +2046,7 @@ export interface Service {
      * for details.
      *
      */
-    refs(owner: string, repo: string, ref: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    refs(owner: string, repo: string, ref: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -2108,7 +2108,7 @@ export interface Service {
      * for details.
      *
      */
-    tags(owner: string, repo: string, shaCode: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    tags(owner: string, repo: string, shaCode: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: tag;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2152,7 +2152,7 @@ export interface Service {
      * for details.
      *
      */
-    trees(owner: string, repo: string, shaCode: string, recursive?: Query<int64>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    trees(owner: string, repo: string, shaCode: string, recursive?: Query<int64>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: tree;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2171,7 +2171,7 @@ export interface Service {
      * for details.
      *
      */
-    hooks(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    hooks(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: hook;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2210,7 +2210,7 @@ export interface Service {
      * for details.
      *
      */
-    hooks(owner: string, repo: string, hookId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    hooks(owner: string, repo: string, hookId: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: hook;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2231,7 +2231,7 @@ export interface Service {
      * for details.
      *
      */
-    hooks(owner: string, repo: string, hookId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    hooks(owner: string, repo: string, hookId: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -2276,7 +2276,7 @@ export interface Service {
      * for details.
      *
      */
-    tests(owner: string, repo: string, hookId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    tests(owner: string, repo: string, hookId: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -2301,7 +2301,7 @@ export interface Service {
      * for details.
      *
      */
-    issues(owner: string, repo: string, filter: Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state: Query<"open" | "closed">, labels: Query<string>, sort: Query<"created" | "updated" | "comments">, direction: Query<"asc" | "desc">, since?: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    issues(owner: string, repo: string, filter: Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state: Query<"open" | "closed">, labels: Query<string>, sort: Query<"created" | "updated" | "comments">, direction: Query<"asc" | "desc">, since?: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: issues;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2345,7 +2345,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: string, repo: string, direction?: Query<string>, sort?: Query<"created" | "updated">, since?: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    comments(owner: string, repo: string, direction?: Query<string>, sort?: Query<"created" | "updated">, since?: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: issuesComments;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2365,7 +2365,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: string, repo: string, commentId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    comments(owner: string, repo: string, commentId: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: issuesComment;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2386,7 +2386,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: string, repo: string, commentId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    comments(owner: string, repo: string, commentId: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -2424,7 +2424,7 @@ export interface Service {
      * for details.
      *
      */
-    events(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    events(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: issueEvents;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2444,7 +2444,7 @@ export interface Service {
      * for details.
      *
      */
-    events(owner: string, repo: string, eventId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    events(owner: string, repo: string, eventId: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: issueEvent;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2464,7 +2464,7 @@ export interface Service {
      * for details.
      *
      */
-    issues(owner: string, repo: string, number: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    issues(owner: string, repo: string, number: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: issue;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2506,7 +2506,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: string, repo: string, number: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    comments(owner: string, repo: string, number: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: issuesComments;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2546,7 +2546,7 @@ export interface Service {
      * for details.
      *
      */
-    events(owner: string, repo: string, number: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    events(owner: string, repo: string, number: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: issueEvents;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2566,7 +2566,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: string, repo: string, number: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    labels(owner: string, repo: string, number: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: labels;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2629,7 +2629,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: string, repo: string, number: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    labels(owner: string, repo: string, number: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -2649,7 +2649,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: string, repo: string, number: int64, name: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    labels(owner: string, repo: string, number: int64, name: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -2667,7 +2667,7 @@ export interface Service {
      * for details.
      *
      */
-    keys(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    keys(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: keys;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2706,7 +2706,7 @@ export interface Service {
      * for details.
      *
      */
-    keys(owner: string, repo: string, keyId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    keys(owner: string, repo: string, keyId: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: user_keys_keyId;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2727,7 +2727,7 @@ export interface Service {
      * for details.
      *
      */
-    keys(owner: string, repo: string, keyId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    keys(owner: string, repo: string, keyId: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -2745,7 +2745,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    labels(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: labels;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2784,7 +2784,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: string, repo: string, name: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    labels(owner: string, repo: string, name: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: label;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2805,7 +2805,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: string, repo: string, name: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    labels(owner: string, repo: string, name: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -2846,7 +2846,7 @@ export interface Service {
      * for details.
      *
      */
-    languages(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    languages(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: languages;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2899,7 +2899,7 @@ export interface Service {
      * for details.
      *
      */
-    milestones(owner: string, repo: string, state?: Query<"open" | "closed">, direction?: Query<string>, sort?: Query<"due_date" | "completeness">, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    milestones(owner: string, repo: string, state?: Query<"open" | "closed">, direction?: Query<string>, sort?: Query<"due_date" | "completeness">, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: milestone;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2938,7 +2938,7 @@ export interface Service {
      * for details.
      *
      */
-    milestones(owner: string, repo: string, number: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    milestones(owner: string, repo: string, number: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: milestone;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -2959,7 +2959,7 @@ export interface Service {
      * for details.
      *
      */
-    milestones(owner: string, repo: string, number: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    milestones(owner: string, repo: string, number: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -2998,7 +2998,7 @@ export interface Service {
      * for details.
      *
      */
-    labels(owner: string, repo: string, number: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    labels(owner: string, repo: string, number: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: labels;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3026,7 +3026,7 @@ export interface Service {
      * for details.
      *
      */
-    notifications(owner: string, repo: string, all?: Query<boolean>, participating?: Query<boolean>, since?: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    notifications(owner: string, repo: string, all?: Query<boolean>, participating?: Query<boolean>, since?: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: notifications;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3071,7 +3071,7 @@ export interface Service {
      * for details.
      *
      */
-    pulls(owner: string, repo: string, state?: Query<"open" | "closed">, head?: Query<string>, base?: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    pulls(owner: string, repo: string, state?: Query<"open" | "closed">, head?: Query<string>, base?: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: pulls;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3115,7 +3115,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: string, repo: string, direction?: Query<string>, sort?: Query<"created" | "updated">, since?: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    comments(owner: string, repo: string, direction?: Query<string>, sort?: Query<"created" | "updated">, since?: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: issuesComments;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3135,7 +3135,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: string, repo: string, commentId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    comments(owner: string, repo: string, commentId: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: pullsComment;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3156,7 +3156,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: string, repo: string, commentId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    comments(owner: string, repo: string, commentId: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -3195,7 +3195,7 @@ export interface Service {
      * for details.
      *
      */
-    pulls(owner: string, repo: string, number: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    pulls(owner: string, repo: string, number: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: pullRequest;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3235,7 +3235,7 @@ export interface Service {
      * for details.
      *
      */
-    comments(owner: string, repo: string, number: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    comments(owner: string, repo: string, number: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: pullsComment;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3286,7 +3286,7 @@ export interface Service {
      * for details.
      *
      */
-    commits(owner: string, repo: string, number: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    commits(owner: string, repo: string, number: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: commits;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3306,7 +3306,7 @@ export interface Service {
      * for details.
      *
      */
-    files(owner: string, repo: string, number: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    files(owner: string, repo: string, number: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: pulls;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3327,7 +3327,7 @@ export interface Service {
      *
      * @return 404 - Pull request has not been merged.
      */
-    merge(owner: string, repo: string, number: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    merge(owner: string, repo: string, number: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -3376,7 +3376,7 @@ export interface Service {
      * for details.
      *
      */
-    readme(owner: string, repo: string, ref?: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    readme(owner: string, repo: string, ref?: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: contents_path;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3395,7 +3395,7 @@ export interface Service {
      * for details.
      *
      */
-    releases(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    releases(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: releases;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3435,7 +3435,7 @@ export interface Service {
      * for details.
      *
      */
-    assets(owner: string, repo: string, id: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    assets(owner: string, repo: string, id: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: asset;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3454,7 +3454,7 @@ export interface Service {
      * for details.
      *
      */
-    assets(owner: string, repo: string, id: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    assets(owner: string, repo: string, id: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -3493,7 +3493,7 @@ export interface Service {
      * for details.
      *
      */
-    releases(owner: string, repo: string, id: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    releases(owner: string, repo: string, id: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: release;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3512,7 +3512,7 @@ export interface Service {
      * for details.
      *
      */
-    releases(owner: string, repo: string, id: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    releases(owner: string, repo: string, id: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -3549,7 +3549,7 @@ export interface Service {
      * for details.
      *
      */
-    assets(owner: string, repo: string, id: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    assets(owner: string, repo: string, id: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: assets;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3568,7 +3568,7 @@ export interface Service {
      * for details.
      *
      */
-    stargazers(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    stargazers(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: users;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3590,7 +3590,7 @@ export interface Service {
      * for details.
      *
      */
-    code_frequency(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    code_frequency(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: codeFrequencyStats;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3612,7 +3612,7 @@ export interface Service {
      * for details.
      *
      */
-    commit_activity(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    commit_activity(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: commitActivityStats;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3631,7 +3631,7 @@ export interface Service {
      * for details.
      *
      */
-    contributors(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    contributors(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: contributorsStats;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3650,7 +3650,7 @@ export interface Service {
      * for details.
      *
      */
-    participation(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    participation(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: participationStats;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3678,7 +3678,7 @@ export interface Service {
      * for details.
      *
      */
-    punch_card(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    punch_card(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: codeFrequencyStats;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3699,7 +3699,7 @@ export interface Service {
      * for details.
      *
      */
-    statuses(owner: string, repo: string, ref: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    statuses(owner: string, repo: string, ref: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: ref;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3739,7 +3739,7 @@ export interface Service {
      * for details.
      *
      */
-    subscribers(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    subscribers(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: users;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3758,7 +3758,7 @@ export interface Service {
      * for details.
      *
      */
-    subscription(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    subscription(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: subscription;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3797,7 +3797,7 @@ export interface Service {
      * for details.
      *
      */
-    subscription(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    subscription(owner: string, repo: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -3815,7 +3815,7 @@ export interface Service {
      * for details.
      *
      */
-    tags(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    tags(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: tags;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3834,7 +3834,7 @@ export interface Service {
      * for details.
      *
      */
-    teams(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    teams(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: teams;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3853,7 +3853,7 @@ export interface Service {
      * for details.
      *
      */
-    watchers(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    watchers(owner: string, repo: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: users;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3879,7 +3879,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(owner: string, repo: string, archive_format: "tarball" | "zipball", path: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 302, mediaType: "application/json") => {
+    repos(owner: string, repo: string, archive_format: "tarball" | "zipball", path: string, Accept?: Header<string>): [(code: 302, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -3903,7 +3903,7 @@ export interface Service {
      * for details.
      *
      */
-    repositories(since?: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    repositories(since?: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: repos;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3939,7 +3939,7 @@ export interface Service {
      * for details.
      *
      */
-    code(order?: Query<"desc" | "asc">, q: Query<string>, sort?: Query<"indexed">, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    code(order?: Query<"desc" | "asc">, q: Query<string>, sort?: Query<"indexed">, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: search_code;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3959,7 +3959,7 @@ export interface Service {
      * for details.
      *
      */
-    issues(order?: Query<"desc" | "asc">, q: Query<string>, sort?: Query<"updated" | "created" | "comments">, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    issues(order?: Query<"desc" | "asc">, q: Query<string>, sort?: Query<"updated" | "created" | "comments">, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: search_issues;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -3992,7 +3992,7 @@ export interface Service {
      * for details.
      *
      */
-    repositories(order?: Query<"desc" | "asc">, q: Query<string>, sort?: Query<"stars" | "forks" | "updated">, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    repositories(order?: Query<"desc" | "asc">, q: Query<string>, sort?: Query<"stars" | "forks" | "updated">, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: search_repositories;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4024,7 +4024,7 @@ export interface Service {
      * for details.
      *
      */
-    users(order?: Query<"desc" | "asc">, q: Query<string>, sort?: Query<"followers" | "repositories" | "joined">, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    users(order?: Query<"desc" | "asc">, q: Query<string>, sort?: Query<"followers" | "repositories" | "joined">, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: search_users;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4042,7 +4042,7 @@ export interface Service {
      * for details.
      *
      */
-    teams(teamId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    teams(teamId: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: team;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4064,7 +4064,7 @@ export interface Service {
      * for details.
      *
      */
-    teams(teamId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    teams(teamId: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4105,7 +4105,7 @@ export interface Service {
      * for details.
      *
      */
-    members(teamId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    members(teamId: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: users;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4131,7 +4131,7 @@ export interface Service {
      *
      * @return 404 - User is not a member.
      */
-    members(teamId: int64, username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    members(teamId: int64, username: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4160,7 +4160,7 @@ export interface Service {
      *
      * @return 422 - If you attempt to add an organization to a team, you will get this.
      */
-    members(teamId: int64, username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    members(teamId: int64, username: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4190,7 +4190,7 @@ export interface Service {
      * for details.
      *
      */
-    members(teamId: int64, username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    members(teamId: int64, username: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4211,7 +4211,7 @@ export interface Service {
      *
      * @return 404 - User has no membership with team
      */
-    memberships(teamId: int64, username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    memberships(teamId: int64, username: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: teamMembership;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4240,7 +4240,7 @@ export interface Service {
      *
      * @return 422 - If you attempt to add an organization to a team, you will get this.
      */
-    memberships(teamId: int64, username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    memberships(teamId: int64, username: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: teamMembership;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4265,7 +4265,7 @@ export interface Service {
      * for details.
      *
      */
-    memberships(teamId: int64, username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    memberships(teamId: int64, username: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4282,7 +4282,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(teamId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    repos(teamId: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: teamRepos;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4301,7 +4301,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(teamId: int64, owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 403, mediaType: "application/json") => {
+    repos(teamId: int64, owner: string, repo: string, Accept?: Header<string>): [(code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
         isException: true;
     }];
@@ -4317,7 +4317,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(teamId: int64, owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 403, mediaType: "application/json") => {
+    repos(teamId: int64, owner: string, repo: string, Accept?: Header<string>): [(code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
         isException: true;
     }];
@@ -4335,7 +4335,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(teamId: int64, owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    repos(teamId: int64, owner: string, repo: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4351,7 +4351,7 @@ export interface Service {
      * for details.
      *
      */
-    user(Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    user(Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: user;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4391,7 +4391,7 @@ export interface Service {
      * for details.
      *
      */
-    emails(Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/vnd.github.v3") => {
+    emails(Accept?: Header<string>): [(code: 200, mediaType: "application/vnd.github.v3") => {
         body: user_emails;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/vnd.github.v3") => {
@@ -4442,7 +4442,7 @@ export interface Service {
      * for details.
      *
      */
-    followers(Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    followers(Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: users;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4459,7 +4459,7 @@ export interface Service {
      * for details.
      *
      */
-    following(Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    following(Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: users;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4478,7 +4478,7 @@ export interface Service {
      *
      * @return 404 - Response if you are not following this user.
      */
-    following(username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    following(username: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4501,7 +4501,7 @@ export interface Service {
      * for details.
      *
      */
-    following(username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    following(username: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4521,7 +4521,7 @@ export interface Service {
      * for details.
      *
      */
-    following(username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    following(username: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4547,7 +4547,7 @@ export interface Service {
      * for details.
      *
      */
-    issues(filter: Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state: Query<"open" | "closed">, labels: Query<string>, sort: Query<"created" | "updated" | "comments">, direction: Query<"asc" | "desc">, since?: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    issues(filter: Query<"assigned" | "created" | "mentioned" | "subscribed" | "all">, state: Query<"open" | "closed">, labels: Query<string>, sort: Query<"created" | "updated" | "comments">, direction: Query<"asc" | "desc">, since?: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: issues;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4567,7 +4567,7 @@ export interface Service {
      * for details.
      *
      */
-    keys(Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    keys(Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: gitignore;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4602,7 +4602,7 @@ export interface Service {
      * for details.
      *
      */
-    keys(keyId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    keys(keyId: int64, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: user_keys_keyId;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4621,7 +4621,7 @@ export interface Service {
      * for details.
      *
      */
-    keys(keyId: int64, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    keys(keyId: int64, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4637,7 +4637,7 @@ export interface Service {
      * for details.
      *
      */
-    orgs(Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    orgs(Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: gitignore;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4657,7 +4657,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(type?: Query<"all" | "public" | "private" | "forks" | "sources" | "member">, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    repos(type?: Query<"all" | "public" | "private" | "forks" | "sources" | "member">, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: repos;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4694,7 +4694,7 @@ export interface Service {
      * for details.
      *
      */
-    starred(direction?: Query<string>, sort?: Query<"created" | "updated">, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    starred(direction?: Query<string>, sort?: Query<"created" | "updated">, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: gitignore;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4714,7 +4714,7 @@ export interface Service {
      *
      * @return 404 - This repository is not starred by you.
      */
-    starred(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    starred(owner: string, repo: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4735,7 +4735,7 @@ export interface Service {
      * for details.
      *
      */
-    starred(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    starred(owner: string, repo: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4753,7 +4753,7 @@ export interface Service {
      * for details.
      *
      */
-    starred(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    starred(owner: string, repo: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4769,7 +4769,7 @@ export interface Service {
      * for details.
      *
      */
-    subscriptions(Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    subscriptions(Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: repos;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4790,7 +4790,7 @@ export interface Service {
      *
      * @return 404 - Repository is not watched by you.
      */
-    subscriptions(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    subscriptions(owner: string, repo: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4812,7 +4812,7 @@ export interface Service {
      * for details.
      *
      */
-    subscriptions(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    subscriptions(owner: string, repo: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4831,7 +4831,7 @@ export interface Service {
      * for details.
      *
      */
-    subscriptions(owner: string, repo: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    subscriptions(owner: string, repo: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4847,7 +4847,7 @@ export interface Service {
      * for details.
      *
      */
-    teams(Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    teams(Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: teams_list;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4869,7 +4869,7 @@ export interface Service {
      * for details.
      *
      */
-    users(since?: Query<int64>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    users(since?: Query<int64>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: users;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4887,7 +4887,7 @@ export interface Service {
      * for details.
      *
      */
-    users(username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    users(username: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: user;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4904,7 +4904,7 @@ export interface Service {
      * for details.
      *
      */
-    events(username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 403, mediaType: "application/json") => {
+    events(username: string, Accept?: Header<string>): [(code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
         isException: true;
     }];
@@ -4918,7 +4918,7 @@ export interface Service {
      * for details.
      *
      */
-    orgs(username: string, org: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 403, mediaType: "application/json") => {
+    orgs(username: string, org: string, Accept?: Header<string>): [(code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
         isException: true;
     }];
@@ -4933,7 +4933,7 @@ export interface Service {
      * for details.
      *
      */
-    followers(username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    followers(username: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: users;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4953,7 +4953,7 @@ export interface Service {
      *
      * @return 404 - Response if user does not follow target user.
      */
-    following(username: string, targetUser: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 204, mediaType: "application/json") => {
+    following(username: string, targetUser: string, Accept?: Header<string>): [(code: 204, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
@@ -4976,7 +4976,7 @@ export interface Service {
      * for details.
      *
      */
-    gists(username: string, since?: Query<string>, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    gists(username: string, since?: Query<string>, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: gists;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -4996,7 +4996,7 @@ export interface Service {
      * for details.
      *
      */
-    keys(username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    keys(username: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: gitignore;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -5014,7 +5014,7 @@ export interface Service {
      * for details.
      *
      */
-    orgs(username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    orgs(username: string, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: gitignore;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -5031,7 +5031,7 @@ export interface Service {
      * for details.
      *
      */
-    received_events(username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 403, mediaType: "application/json") => {
+    received_events(username: string, Accept?: Header<string>): [(code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
         isException: true;
     }];
@@ -5045,7 +5045,7 @@ export interface Service {
      * for details.
      *
      */
-    public(username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 403, mediaType: "application/json") => {
+    public(username: string, Accept?: Header<string>): [(code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
         isException: true;
     }];
@@ -5060,7 +5060,7 @@ export interface Service {
      * for details.
      *
      */
-    repos(username: string, type?: Query<"all" | "public" | "private" | "forks" | "sources" | "member">, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    repos(username: string, type?: Query<"all" | "public" | "private" | "forks" | "sources" | "member">, Accept?: Header<string>): [(code: 200, mediaType: "application/json") => {
         body: repos;
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
     }, (code: 403, mediaType: "application/json") => {
@@ -5077,7 +5077,7 @@ export interface Service {
      * for details.
      *
      */
-    starred(username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 403, mediaType: "application/json") => {
+    starred(username: string, Accept?: Header<string>): [(code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
         isException: true;
     }];
@@ -5091,7 +5091,7 @@ export interface Service {
      * for details.
      *
      */
-    subscriptions(username: string, Accept?: Header<string>, body?: Body<file, "application/json">): [(code: 403, mediaType: "application/json") => {
+    subscriptions(username: string, Accept?: Header<string>): [(code: 403, mediaType: "application/json") => {
         headers: [Header<string, "X-GitHub-Media-Type">, Header<int64, "X-GitHub-Request-Id">, Header<int64, "X-RateLimit-Limit">, Header<int64, "X-RateLimit-Remaining">, Header<int64, "X-RateLimit-Reset">];
         isException: true;
     }];

@@ -14,7 +14,7 @@ export interface FirewallRules {
      * @param cacheName - The name of the Redis cache.
      * @return 200 - Successfully got the current rules
      */
-    ListByRedisResource(api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, resourceGroupName: string, cacheName: string, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    ListByRedisResource(api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, resourceGroupName: string, cacheName: string): [(code: 200, mediaType: "application/json") => {
         body: RedisFirewallRuleListResult;
     }];
     /**
@@ -28,7 +28,7 @@ export interface FirewallRules {
      * @param ruleName - The name of the firewall rule.
      * @return 200 - Successfully found the rule
      */
-    Get(resourceGroupName: string, cacheName: string, ruleName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    Get(resourceGroupName: string, cacheName: string, ruleName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: RedisFirewallRule;
     }];
     /**
@@ -61,5 +61,5 @@ export interface FirewallRules {
      * @return 200 - Successfully deleted the rule
      * @return 204 - Successfully deleted the rule
      */
-    Delete(resourceGroupName: string, cacheName: string, ruleName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {}, (code: 204, mediaType: "application/json") => {}];
+    Delete(resourceGroupName: string, cacheName: string, ruleName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {}, (code: 204, mediaType: "application/json") => {}];
 }

@@ -8,7 +8,7 @@ export interface Operations {
      * @tag Operations
      * @return 200 - Success. The response describes the list of operations.
      */
-    List(api_version: ApiVersionParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    List(api_version: ApiVersionParameter): [(code: 200, mediaType: "application/json") => {
         body: OperationListResult;
     }];
 }

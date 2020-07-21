@@ -32,7 +32,7 @@ export interface Redis {
      * @param history - how many minutes in past to look for upgrade notifications
      * @return 200 - All upgrade notifications in given time range
      */
-    ListUpgradeNotifications(resourceGroupName: string, name: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, history: Query<double>, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    ListUpgradeNotifications(resourceGroupName: string, name: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, history: Query<double>): [(code: 200, mediaType: "application/json") => {
         body: NotificationListResponse;
     }];
     /**
@@ -44,7 +44,7 @@ export interface Redis {
      * @param name - The name of the Redis cache.
      * @return 200 - The redis cache was successfully found.
      */
-    Get(resourceGroupName: string, name: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    Get(resourceGroupName: string, name: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: RedisResource;
     }];
     /**
@@ -74,7 +74,7 @@ export interface Redis {
      * @return 202 - The redis cache 'delete' operation was successfully enqueued; follow the Location header to poll for final outcome.
      * @return 204 - The redis cache was successfully deleted.
      */
-    Delete(resourceGroupName: string, name: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {}, (code: 202, mediaType: "application/json") => {}, (code: 204, mediaType: "application/json") => {}];
+    Delete(resourceGroupName: string, name: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {}, (code: 202, mediaType: "application/json") => {}, (code: 204, mediaType: "application/json") => {}];
     /**
      * @description Update an existing Redis cache.
      * @since 2018-03-01
@@ -95,7 +95,7 @@ export interface Redis {
      * @tag Redis
      * @param resourceGroupName - The name of the resource group.
      */
-    ListByResourceGroup(resourceGroupName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    ListByResourceGroup(resourceGroupName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: RedisListResult;
     }];
     /**
@@ -104,7 +104,7 @@ export interface Redis {
      * @http GET /subscriptions/{subscriptionId}/providers/Microsoft.Cache/Redis
      * @tag Redis
      */
-    List(api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    List(api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: RedisListResult;
     }];
     /**
@@ -116,7 +116,7 @@ export interface Redis {
      * @param name - The name of the Redis cache.
      * @return 200 - Lists the keys for the specified Redis cache.
      */
-    ListKeys(resourceGroupName: string, name: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
+    ListKeys(resourceGroupName: string, name: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: RedisAccessKeys;
     }];
     /**
