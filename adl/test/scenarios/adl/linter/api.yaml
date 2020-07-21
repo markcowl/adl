@@ -1,6 +1,5 @@
 # API Project/Metadata
 
 # load the sample rules
-use: 
+use:
   - ../../../../plugins/azure
-
