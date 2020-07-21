@@ -19,6 +19,8 @@ export interface Redis {
      * @http POST /subscriptions/{subscriptionId}/providers/Microsoft.Cache/CheckNameAvailability
      * @tag Redis
      * @param parameters - Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is 'Microsoft.Cache/redis'
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Name is available
      */
     CheckNameAvailability(parameters: Body<CheckNameAvailabilityParameters, "application/json">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {}];
@@ -29,6 +31,8 @@ export interface Redis {
      * @tag Redis
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the Redis cache.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @param history - how many minutes in past to look for upgrade notifications
      * @return 200 - All upgrade notifications in given time range
      */
@@ -42,6 +46,8 @@ export interface Redis {
      * @tag Redis
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the Redis cache.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - The redis cache was successfully found.
      */
     Get(resourceGroupName: string, name: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
@@ -55,6 +61,8 @@ export interface Redis {
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the Redis cache.
      * @param parameters - Parameters supplied to the Create Redis operation.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - The existing redis cache was successfully updated. Check provisioningState to see detailed status.
      * @return 201 - The new redis cache was successfully created. Check provisioningState to see detailed status.
      */
@@ -70,6 +78,8 @@ export interface Redis {
      * @tag Redis
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the Redis cache.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - The redis cache was successfully deleted.
      * @return 202 - The redis cache 'delete' operation was successfully enqueued; follow the Location header to poll for final outcome.
      * @return 204 - The redis cache was successfully deleted.
@@ -83,6 +93,8 @@ export interface Redis {
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the Redis cache.
      * @param parameters - Parameters supplied to the Update Redis operation.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - The existing redis cache was successfully updated. Check provisioningState to see detailed status.
      */
     Update(resourceGroupName: string, name: string, parameters: Body<RedisUpdateParameters, "application/json">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
@@ -94,6 +106,8 @@ export interface Redis {
      * @http GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/Redis
      * @tag Redis
      * @param resourceGroupName - The name of the resource group.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      */
     ListByResourceGroup(resourceGroupName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: RedisListResult;
@@ -103,6 +117,8 @@ export interface Redis {
      * @since 2018-03-01
      * @http GET /subscriptions/{subscriptionId}/providers/Microsoft.Cache/Redis
      * @tag Redis
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      */
     List(api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
         body: RedisListResult;
@@ -114,6 +130,8 @@ export interface Redis {
      * @tag Redis
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the Redis cache.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Lists the keys for the specified Redis cache.
      */
     ListKeys(resourceGroupName: string, name: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
@@ -127,6 +145,8 @@ export interface Redis {
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the Redis cache.
      * @param parameters - Specifies which key to regenerate.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Lists the regenerated keys for Redis Cache
      */
     RegenerateKey(resourceGroupName: string, name: string, parameters: Body<RedisRegenerateKeyParameters, "application/json">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
@@ -140,6 +160,8 @@ export interface Redis {
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the Redis cache.
      * @param parameters - Specifies which Redis node(s) to reboot.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Reboot operation successfully enqueued
      */
     ForceReboot(resourceGroupName: string, name: string, parameters: Body<RedisRebootParameters, "application/json">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
@@ -153,6 +175,8 @@ export interface Redis {
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the Redis cache.
      * @param parameters - Parameters for Redis import operation.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Import operation succeeded.
      * @return 202 - Import operation successfully enqueued; follow the Location header to poll for final outcome.
      * @return 204 - Import operation succeeded.
@@ -166,6 +190,8 @@ export interface Redis {
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the Redis cache.
      * @param parameters - Parameters for Redis export operation.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Export operation succeeded.
      * @return 202 - Export operation successfully enqueued; follow the Location header to poll for final outcome.
      * @return 204 - Export operation succeeded.

@@ -19,6 +19,8 @@ export interface Vaults {
      * @tag Vaults
      * @param resourceGroupName - The name of the Resource Group to which the vault belongs.
      * @param vaultName - The name of the vault.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Retrieved vault
      */
     Get(resourceGroupName: string, vaultName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
@@ -31,7 +33,9 @@ export interface Vaults {
      * @tag Vaults
      * @param resourceGroupName - The name of the Resource Group to which the server belongs.
      * @param vaultName - Name of the vault
+     * @param api_version - Client Api Version.
      * @param parameters - Parameters to create or update the vault
+     * @param subscriptionId - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Created or updated vault
      * @return 201 - Created or updated vault
      */
@@ -47,6 +51,8 @@ export interface Vaults {
      * @tag Vaults
      * @param resourceGroupName - The name of the Resource Group to which the vault belongs.
      * @param vaultName - The name of the vault to delete
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - OK Response.
      * @return 204 - No Content.
      */
@@ -58,7 +64,9 @@ export interface Vaults {
      * @tag Vaults
      * @param resourceGroupName - The name of the Resource Group to which the server belongs.
      * @param vaultName - Name of the vault
+     * @param api_version - Client Api Version.
      * @param parameters - Parameters to patch the vault
+     * @param subscriptionId - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Patched vault
      * @return 201 - Patched vault
      */
@@ -75,7 +83,9 @@ export interface Vaults {
      * @param resourceGroupName - The name of the Resource Group to which the vault belongs.
      * @param vaultName - Name of the vault
      * @param operationKind - Name of the operation
+     * @param api_version - Client Api Version.
      * @param parameters - Access policy to merge into the vault
+     * @param subscriptionId - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - The updated access policies
      * @return 201 - The updated access policies
      */
@@ -91,6 +101,8 @@ export interface Vaults {
      * @tag Vaults
      * @param resourceGroupName - The name of the Resource Group to which the vault belongs.
      * @param $top - Maximum number of results to return.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Get information about all key vaults in the specified resource group.
      */
     ListByResourceGroup(resourceGroupName: string, $top?: Query<int32>, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
@@ -102,6 +114,8 @@ export interface Vaults {
      * @http GET /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/vaults
      * @tag Vaults
      * @param $top - Maximum number of results to return.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Get information about all key vaults in the specified subscription.
      */
     ListBySubscription($top?: Query<int32>, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
@@ -112,6 +126,8 @@ export interface Vaults {
      * @since 2019-09-01
      * @http GET /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults
      * @tag Vaults
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Retrieved information about all deleted key vaults in a subscription.
      */
     ListDeleted(api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
@@ -124,6 +140,8 @@ export interface Vaults {
      * @tag Vaults
      * @param vaultName - The name of the vault.
      * @param location - The location of the deleted vault.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Retrieved information about the deleted vault.
      */
     GetDeleted(vaultName: string, location: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
@@ -136,6 +154,8 @@ export interface Vaults {
      * @tag Vaults
      * @param vaultName - The name of the soft-deleted vault.
      * @param location - The location of the soft-deleted vault.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - The vault is purged.
      * @return 202 - Vault is being purged.
      */
@@ -148,6 +168,7 @@ export interface Vaults {
      * @param $filter - The filter to apply on the operation.
      * @param $top - Maximum number of results to return.
      * @param api_version - Azure Resource Manager Api Version.
+     * @param subscriptionId - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Get information about all key vaults in the subscription.
      */
     List($filter: Query<"resourceType eq 'Microsoft.KeyVault/vaults'">, $top?: Query<int32>, api_version: Query<"2015-11-01", "api-version">, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
@@ -159,6 +180,8 @@ export interface Vaults {
      * @http POST /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability
      * @tag Vaults
      * @param vaultName - The name of the vault.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - OK -- Operation to check the vault name availability was successful.
      */
     CheckNameAvailability(vaultName: Body<VaultCheckNameAvailabilityParameters, "application/json">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {

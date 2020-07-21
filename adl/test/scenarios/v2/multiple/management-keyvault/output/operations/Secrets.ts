@@ -13,6 +13,8 @@ export interface Secrets {
      * @param resourceGroupName - The name of the Resource Group to which the vault belongs.
      * @param vaultName - The name of the vault.
      * @param secretName - The name of the secret.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Retrieved secret
      */
     Get(resourceGroupName: string, vaultName: string, secretName: string, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {
@@ -26,7 +28,9 @@ export interface Secrets {
      * @param resourceGroupName - The name of the Resource Group to which the vault belongs.
      * @param vaultName - Name of the vault
      * @param secretName - Name of the secret
+     * @param api_version - Client Api Version.
      * @param parameters - Parameters to create or update the secret
+     * @param subscriptionId - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Created or updated secret
      * @return 201 - Created or updated vault
      */
@@ -43,7 +47,9 @@ export interface Secrets {
      * @param resourceGroupName - The name of the Resource Group to which the vault belongs.
      * @param vaultName - Name of the vault
      * @param secretName - Name of the secret
+     * @param api_version - Client Api Version.
      * @param parameters - Parameters to patch the secret
+     * @param subscriptionId - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Patched secret
      * @return 201 - Patched secret
      */
@@ -60,6 +66,8 @@ export interface Secrets {
      * @param resourceGroupName - The name of the Resource Group to which the vault belongs.
      * @param vaultName - The name of the vault.
      * @param $top - Maximum number of results to return.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Get information about secrets in the specified vault.
      */
     List(resourceGroupName: string, vaultName: string, $top?: Query<int32>, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter, body?: Body<file, "application/json">): [(code: 200, mediaType: "application/json") => {

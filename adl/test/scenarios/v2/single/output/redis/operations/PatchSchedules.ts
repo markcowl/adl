@@ -10,6 +10,8 @@ export interface PatchSchedules {
      * @http GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/Redis/{cacheName}/patchSchedules
      * @tag Redis
      * @tag PatchSchedules
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @param resourceGroupName - The name of the resource group.
      * @param cacheName - The name of the Redis cache.
      * @return 200 - Successfully got the current patch schedules
@@ -26,6 +28,8 @@ export interface PatchSchedules {
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the redis cache.
      * @param _default - Default string modeled as parameter for auto generation to work correctly.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Response of get patch schedules.
      */
     Get(resourceGroupName: string, name: string, _default: Path<defaultName, "default">, api_version: ApiVersionParameter, subscriptionId: SubscriptionIdParameter): [(code: 200, mediaType: "application/json") => {
@@ -41,6 +45,8 @@ export interface PatchSchedules {
      * @param name - The name of the Redis cache.
      * @param _default - Default string modeled as parameter for auto generation to work correctly.
      * @param parameters - Parameters to set the patching schedule for Redis cache.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - The patch schedule was successfully updated.
      * @return 201 - The patch schedule was successfully created.
      */
@@ -58,6 +64,8 @@ export interface PatchSchedules {
      * @param resourceGroupName - The name of the resource group.
      * @param name - The name of the redis cache.
      * @param _default - Default string modeled as parameter for auto generation to work correctly.
+     * @param api_version - Client Api Version.
+     * @param subscriptionId - Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
      * @return 200 - Success.
      * @return 204 - Success.
      */
