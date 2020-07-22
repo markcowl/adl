@@ -5,7 +5,7 @@ export { OperationGroup } from './model/operation';
 export { Protocol } from './model/project/protocol';
 export { NamedElement } from './model/typescript/named-element';
 export * from './model/typescript/position';
-export { Declaration, isDeclaration, isReference, Reference } from './model/typescript/reference';
+export { Declaration, isDeclaration, isInline, isReference, Reference } from './model/typescript/reference';
 export { exportFromPlugin } from './plugin/export-from-plugin';
 export * from './support/doc-tag';
 export { FileSystem, getAbsolutePath, getRelativePath, UrlFileSystem } from './support/file-system';
