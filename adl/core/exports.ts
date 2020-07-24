@@ -12,4 +12,4 @@ export { FileSystem, getAbsolutePath, getRelativePath, UrlFileSystem } from './s
 export { Messages, ProcessingMessages } from './support/message-channels';
 export * from './support/typescript';
 import { TSElement } from './model/typescript/typescript-element';
-export type Element  = TSElement<any>;
+export type Element = TSElement<any>;

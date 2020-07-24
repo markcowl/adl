@@ -14,7 +14,7 @@ export function isDeclaration<T>(instance: T | Declaration<T>): instance is Decl
 }
 
 export function isInline(typeReference: TypeReference): boolean {
-  return !ts.isTypeReferenceNode(typeReference.declaration.node);
+  return ts.isTypeLiteralNode(typeReference.declaration.node);
 }
 
 export type NodeType<T> =
