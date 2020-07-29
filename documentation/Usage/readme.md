@@ -10,7 +10,7 @@ The following tools are needed to use the ADL CLI and the VSCode extension
 ## Installing ADL tools, and the vscode extension
 Use the NodeJS `npm` tool to install the cli
 
-> `npm install -g @azure-tools\adl`
+> `npm install -g @azure-tools/adl`
 
 ``` text
 + @azure-tools/adl@1.0.179
