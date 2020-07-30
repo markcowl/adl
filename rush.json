@@ -45,6 +45,12 @@
   "telemetryEnabled": false,
   "projects": [
     {
+      "packageName": "@azure-tools/adl.language",
+      "projectFolder": "adl/language",
+      "reviewCategory": "production",
+      "shouldPublish": false
+    },
+    {
       "packageName": "@azure-tools/adl.core",
       "projectFolder": "adl/core",
       "reviewCategory": "production",
