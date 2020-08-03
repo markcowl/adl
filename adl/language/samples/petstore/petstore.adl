@@ -1,0 +1,47 @@
+model Pet {
+  id: int64,
+  name: string,
+  tag?: string 
+}
+
+model Error {
+  code: int32,
+  message: string
+}
+
+model Toy {
+  id: int64,
+  petId: int64,
+  name: string
+}
+
+@response
+model PetSuccessResponse {
+  statusCode: 202,
+  content: Pet
+}
+
+@response
+model PetNotModifiedResponse {
+  statusCode: 304,
+  content: Pet
+}
+
+@resource("/pets")
+interface PetsResource {
+  delete(petId: int32): [ {}, Error ],
+
+  @evenFancierDescription("list pets")
+  list(): [ Pet[], Error ],
+
+  @description("Returns a pet. Supports eTags.")
+  read(petId: string): [ PetSuccessResponse | PetNotModifiedResponse, Error ],
+
+  create(): [ Pet | {}, Error ]
+}
+
+
+@resource("/pets/{petId}/toys")
+interface ListPetToysResponse {
+  list(petId: string, nameFilter: string): [{}, Error]
+}
