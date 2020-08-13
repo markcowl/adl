@@ -18,7 +18,6 @@ const basePaths = new WeakMap();
 const responses = new WeakSet();
 
 export function response(program, entity) {
-
   responses.add(entity);
 }
 

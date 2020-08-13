@@ -1,6 +1,5 @@
 model Pet {
-  id: int64,
-  name: string,
+  name: string;
   tag?: string 
 }
 
@@ -17,17 +16,18 @@ model Toy {
 
 @response
 model PetSuccessResponse {
-  statusCode: 202,
   content: Pet
 }
 
 @response
 model PetNotModifiedResponse {
+  headers: {
+    'Modified-Since': date
+  },
   statusCode: 304,
   content: Pet
 }
 
-@resource("/pets")
 interface PetsResource {
   delete(petId: int32): [ {}, Error ],
 
@@ -37,9 +37,14 @@ interface PetsResource {
   @description("Returns a pet. Supports eTags.")
   read(petId: string): [ PetSuccessResponse | PetNotModifiedResponse, Error ],
 
-  create(): [ Pet | {}, Error ]
+  create(pet: PetRequest): [ PetSuccessResponse, Error ],
 }
 
+@response
+model PetRequest {
+  headers: {},
+  content: Pet
+}
 
 @resource("/pets/{petId}/toys")
 interface ListPetToysResponse {
