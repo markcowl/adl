@@ -1,4 +1,3 @@
-// @ts-check
 import { getDescription } from "../../lib/decorators.js";
 
 let init = false;
@@ -13,19 +12,7 @@ const root = {
   }
 }
 
-const resources = [];
-const basePaths = new WeakMap();
-const responses = new WeakSet();
-
-export function response(program, entity) {
-  responses.add(entity);
-}
-
-export function resource(program, entity, basePath) {
-  if (entity.kind !== 'Interface') return;
-  basePaths.set(entity, basePath);
-  resources.push(entity);
-
+export function openapi(program, entity) {
   if (!init) {
     program.onBuild(emitOpenAPI);
     init = true;

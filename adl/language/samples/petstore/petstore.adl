@@ -14,39 +14,40 @@ model Toy {
   name: string
 }
 
-@response
-model PetSuccessResponse {
-  content: Pet
+model Ok<T> {
+  @header statusCode: 200,
+  ... T
 }
 
-@response
-model PetNotModifiedResponse {
-  headers: {
-    'Modified-Since': date
-  },
-  statusCode: 304,
-  content: Pet
+model NotModified<T> {
+  @header statusCode: 304,
+  ... T
+}
+
+model Page<T> {
+  items: T[];
+  nextLink: string;
 }
 
 interface PetsResource {
-  delete(petId: int32): [ {}, Error ],
+  delete(@path petId: int32): Ok<{}> | Error;
 
-  @evenFancierDescription("list pets")
-  list(): [ Pet[], Error ],
+  @description("list pets")
+  list(@query nextLink?: string): Ok<Page<Pet>> | Error;
 
   @description("Returns a pet. Supports eTags.")
-  read(petId: string): [ PetSuccessResponse | PetNotModifiedResponse, Error ],
+  read(@path petId: string): Ok<Pet> | NotModified<Pet> | Error;
 
-  create(pet: PetRequest): [ PetSuccessResponse, Error ],
+  create(@body pet: Pet): Ok<Pet> | Error;
 }
 
 @response
 model PetRequest {
-  headers: {},
-  content: Pet
+  headers: {};
+  content: Pet;
 }
 
 @resource("/pets/{petId}/toys")
 interface ListPetToysResponse {
-  list(petId: string, nameFilter: string): [{}, Error]
+  list(@path petId: string, @query nameFilter: string): Ok<Page<Toy>> | Error;
 }
