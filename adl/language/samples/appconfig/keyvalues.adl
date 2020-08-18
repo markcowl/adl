@@ -9,12 +9,13 @@ interface KeyValuesResource(
   @operationId("GetKeyValues")
   list(
     ... AcceptDatetimeHeader,
-    @header After: date,
+    @query After: date,
 
     @description("Used to select what fields are present in the returned resource(s).")
     @query $Select?: KeyField[],
     
-    @query label: string
+    @query label: string,
+    @query key: string
   ): Ok<SyncTokenHeader & KeyValuePage> | Error;
 
   @description("Gets a list of key-values.")
@@ -22,12 +23,13 @@ interface KeyValuesResource(
   listHead(
     ... AcceptDatetimeHeader,
 
-    @header After: date,
+    @query After: date,
 
     @description("Used to select what fields are present in the returned resource(s).")
     @query $Select?: KeyField[],
-    
-    @query label: string
+
+    @query label: string,
+    @query key: string
   ): Ok<SyncTokenHeader> | Error;
 
 
