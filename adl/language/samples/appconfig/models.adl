@@ -1,0 +1,79 @@
+model ETagHeader {
+  @header eTag: string;
+}
+
+model ETagHeaders {
+  @header ifMatch: string;
+  @header ifNoneMatch: string;
+}
+
+model LastModifiedHeader {
+  @header lastModified: date;
+}
+
+model AcceptDatetimeHeader {
+  @header acceptDatetime: date;
+}
+
+model Ok<T> {
+  @header statusCode: 200;
+  ... T;
+}
+
+model SyncTokenHeader {
+  @description("Used to guarantee real-time consistency between requests.")
+  @header syncToken?: string;
+}
+
+model ServiceParams {
+  @path  endpoint: EndpointParam;
+  @query apiVersion: ApiVersionHeader;
+}
+
+model Error {
+  type: string;
+  title: string;
+  name: string;
+  detail: string;
+  statusCode: integer;
+}
+
+model Page<T> {
+  items: T[];
+  nextLink: string;
+}
+model KeyValuePage = Page<KeyValue>;
+model KeyPage = Page<Key>
+model LabelPage = Page<Label>
+
+
+model KeyValueHeaders =
+    SyncTokenHeader
+  & LastModifiedHeader
+  & ETagHeader;
+
+model KeyValue {
+  key: string;
+  label: string;
+  tags: Map<string, string>;
+  locked: boolean;
+}
+
+enum KeyField {
+  key,
+  label,
+  content_type,
+  value,
+  last_modified,
+  tags,
+  locked,
+  etag
+}
+
+model Label {
+  name: string;
+}
+
+enum LabelField {
+  name
+}

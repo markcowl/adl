@@ -1,0 +1,93 @@
+
+@resource('/kv')
+interface KeyValuesResource(
+  ... ServiceParams,
+  ... SyncTokenHeader
+) {
+
+  @description("Gets a list of key-values.")
+  @operationId("GetKeyValues")
+  list(
+    ... AcceptDatetimeHeader,
+    @header After: date,
+
+    @description("Used to select what fields are present in the returned resource(s).")
+    @query $Select?: KeyField[],
+    
+    @query label: string
+  ): Ok<SyncTokenHeader & KeyValuePage> | Error;
+
+  @description("Gets a list of key-values.")
+  @operationId("CheckKeyValues")
+  listHead(
+    ... AcceptDatetimeHeader,
+
+    @header After: date,
+
+    @description("Used to select what fields are present in the returned resource(s).")
+    @query $Select?: KeyField[],
+    
+    @query label: string
+  ): Ok<SyncTokenHeader> | Error;
+
+
+  @description("Gets a single key-value.")
+  @operationId("GetKeyValue")
+  read (
+    ... ETagHeaders,
+    ... AcceptDatetimeHeader,
+
+    @description("The key of the key-value to retrieve.")
+    @path key: string,
+
+    @description("A filter used to match labels")
+    @query label?: string,
+
+    @description("Used to select what fields are present in the returned resource(s).")
+    @query $Select?: KeyField[]
+  ): Ok<KeyValueHeaders & KeyValue> | Error;
+
+  @description("Requests the headers and status of the given resource.")
+  @operationId("CheckKeyValue")
+  readHeaders(
+    ... ETagHeaders,
+    ... AcceptDatetimeHeader,
+
+    @description("The key of the key-value to retrieve.")
+    @path key: string,
+
+    @description("A filter used to match labels")
+    @query label?: string
+  ): Ok<SyncTokenHeader & LastModifiedHeader> | Error;
+
+  @description("Creates a key-value.")
+  @operationId("PutKeyValue")
+  createOrUpdate(
+    @path key: string,
+    @header contentType: "application/json",
+    @query label?: string,
+    @body entity: KeyValue,
+    ... ETagHeaders
+  ): Ok<KeyValueHeaders & KeyValue> | Error;
+
+  @description("Updates a key-value pair")
+  createOrUpdate(
+    @path key: string,
+    @header contentType: "application/json-patch+json",
+    @query label?: string,
+    @body jsonPatch: string[]
+
+    ... ETagHeaders
+  ): Ok<KeyValueHeaders & KeyValue> | Error;
+
+
+  @description("Deletes a key-value.")
+  @operationId("DeleteKeyValue")
+  delete(
+    @path key: string,
+    @query label?: string,
+    @header ifMatch: string,
+    ... ETagHeaders
+  ): Ok<KeyValueHeaders & KeyValue> | NoContent<{}> | Error;
+
+}
