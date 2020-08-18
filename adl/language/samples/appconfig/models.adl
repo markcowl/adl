@@ -43,8 +43,8 @@ model Page<T> {
   nextLink: string;
 }
 model KeyValuePage = Page<KeyValue>;
-model KeyPage = Page<Key>
-model LabelPage = Page<Label>
+model KeyPage = Page<Key>;
+model LabelPage = Page<Label>;
 
 
 model KeyValueHeaders =
@@ -54,7 +54,7 @@ model KeyValueHeaders =
 
 model KeyValue {
   key: string;
-  label: string;
+  label?: string;
   tags: Map<string, string>;
   locked: boolean;
 }

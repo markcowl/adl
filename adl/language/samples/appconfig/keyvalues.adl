@@ -1,3 +1,20 @@
+@description("Used for /kv endpoints (key in query)")
+model KeyFilters = {
+  @description("A filter for the name of the returned keys.")
+  @query key?: string;
+
+  @description("A filter used to match labels")
+  @query label?: string;
+}
+
+@description("Used for /kv/{id} endpoints (key in path) ")
+model KeyWithFilters = {
+  @description("A filter for the name of the returned keys.")
+  @path key: string;
+
+  @description("A filter used to match labels")
+  @query label?: string;
+}
 
 @resource('/kv')
 interface KeyValuesResource(
@@ -9,27 +26,28 @@ interface KeyValuesResource(
   @operationId("GetKeyValues")
   list(
     ... AcceptDatetimeHeader,
+    ... KeyFilters,
+    
+    @description("Instructs the server to return elements that appear after the element referred to by the specified token.")
     @query After: date,
 
     @description("Used to select what fields are present in the returned resource(s).")
     @query $Select?: KeyField[],
-    
-    @query label: string,
-    @query key: string
+
   ): Ok<SyncTokenHeader & KeyValuePage> | Error;
 
   @description("Gets a list of key-values.")
   @operationId("CheckKeyValues")
   listHead(
     ... AcceptDatetimeHeader,
+    ... KeyFilters,
 
+    @description("Instructs the server to return elements that appear after the element referred to by the specified token.")
     @query After: date,
 
     @description("Used to select what fields are present in the returned resource(s).")
-    @query $Select?: KeyField[],
+    @query $Select?: KeyField[]
 
-    @query label: string,
-    @query key: string
   ): Ok<SyncTokenHeader> | Error;
 
 
@@ -38,15 +56,11 @@ interface KeyValuesResource(
   read (
     ... ETagHeaders,
     ... AcceptDatetimeHeader,
-
-    @description("The key of the key-value to retrieve.")
-    @path key: string,
-
-    @description("A filter used to match labels")
-    @query label?: string,
+    ... KeyWithFilters,
 
     @description("Used to select what fields are present in the returned resource(s).")
     @query $Select?: KeyField[]
+
   ): Ok<KeyValueHeaders & KeyValue> | Error;
 
   @description("Requests the headers and status of the given resource.")
@@ -54,42 +68,34 @@ interface KeyValuesResource(
   readHeaders(
     ... ETagHeaders,
     ... AcceptDatetimeHeader,
-
-    @description("The key of the key-value to retrieve.")
-    @path key: string,
-
-    @description("A filter used to match labels")
-    @query label?: string
+    ... KeyWithFilters
   ): Ok<SyncTokenHeader & LastModifiedHeader> | Error;
 
   @description("Creates a key-value.")
   @operationId("PutKeyValue")
   createOrUpdate(
-    @path key: string,
+    ... ETagHeaders,
+    ... KeyWithFilters,
+
     @header contentType: "application/json",
-    @query label?: string,
     @body entity: KeyValue,
-    ... ETagHeaders
   ): Ok<KeyValueHeaders & KeyValue> | Error;
 
   @description("Updates a key-value pair")
   createOrUpdate(
-    @path key: string,
-    @header contentType: "application/json-patch+json",
-    @query label?: string,
-    @body jsonPatch: string[]
+    ... ETagHeaders,
+    ... KeyWithFilters,
 
-    ... ETagHeaders
+    @header contentType: "application/json-patch+json",
+    @body jsonPatch: string[]
   ): Ok<KeyValueHeaders & KeyValue> | Error;
 
 
   @description("Deletes a key-value.")
   @operationId("DeleteKeyValue")
   delete(
-    @path key: string,
-    @query label?: string,
+    ... KeyWithFilters,
     @header ifMatch: string,
-    ... ETagHeaders
   ): Ok<KeyValueHeaders & KeyValue> | NoContent<{}> | Error;
 
 }

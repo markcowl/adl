@@ -9,7 +9,6 @@ interface KeysResource(
   @operationId("GetKeys")
   list(
     ... AcceptDatetimeHeader,
-
     @query name: string,
     @header after: string,
   ): Ok<SyncTokenHeader & KeyPage> | Error;
@@ -18,8 +17,8 @@ interface KeysResource(
   @operationId("CheckKeys")
   listHead(
     ... AcceptDatetimeHeader,
-
     @query name: string,
     @header after: string,
   ): Ok<SyncTokenHeader> | Error;
+  
 }
