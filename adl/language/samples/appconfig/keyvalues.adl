@@ -1,0 +1,106 @@
+@description("Used for /kv endpoints (key in query)")
+model KeyFilters {
+  @description("A filter for the name of the returned keys.")
+  @query key?: string;
+
+  @description("A filter used to match labels")
+  @query label?: string;
+}
+
+@description("Used for /kv/{id} endpoints (key in path)")
+model KeyWithFilters {
+  @description("A filter for the name of the returned keys.")
+  @path key: string;
+
+  @description("A filter used to match labels")
+  @query label?: string;
+}
+
+@resource('/kv')
+interface KeyValuesResource(
+  ... ServiceParams,
+  ... SyncTokenHeader
+) {
+
+  @description("Gets a list of key-values.")
+  @operationId("GetKeyValues")
+  list(
+    ... AcceptDatetimeHeader,
+    ... KeyFilters,
+    
+    @description("Instructs the server to return elements that appear after the element referred to by the specified token.")
+    @query After: date,
+
+    @description("Used to select what fields are present in the returned resource(s).")
+    @query $Select?: KeyField[],
+
+  ): Ok<SyncTokenHeader & Page<KeyValue>> | Error;
+
+  @description("Gets a list of key-values.")
+  @operationId("CheckKeyValues")
+  listHead(
+    ... AcceptDatetimeHeader,
+    ... KeyFilters,
+
+    @description("Instructs the server to return elements that appear after the element referred to by the specified token.")
+    @query After: date,
+
+    @description("Used to select what fields are present in the returned resource(s).")
+    @query $Select?: KeyField[]
+
+  ): Ok<SyncTokenHeader> | Error;
+
+
+  @description("Gets a single key-value.")
+  @operationId("GetKeyValue")
+  read(
+    ... ETagHeaders,
+    ... AcceptDatetimeHeader,
+    ... KeyWithFilters,
+
+    @description("Used to select what fields are present in the returned resource(s).")
+    @query $Select?: KeyField[]
+
+  ): Ok<KeyValueHeaders & KeyValue> | Error;
+
+  @description("Requests the headers and status of the given resource.")
+  @operationId("CheckKeyValue")
+  readHead(
+    ... ETagHeaders,
+    ... AcceptDatetimeHeader,
+    ... KeyWithFilters
+  ): Ok<SyncTokenHeader & LastModifiedHeader> | Error;
+
+  @description("Creates a key-value.")
+  @operationId("PutKeyValue")
+  createOrUpdate(
+    ... ETagHeaders,
+    ... KeyWithFilters,
+
+    @header contentType: "application/json",
+    @body entity: KeyValue,
+  ): Ok<KeyValueHeaders & KeyValue> | Error;
+
+  @description("Updates a key-value pair")
+  createOrUpdate(
+    ... ETagHeaders,
+    ... KeyWithFilters,
+
+    @header contentType: "application/json-patch+json",
+    @body jsonPatch: string[]
+  ): Ok<KeyValueHeaders & KeyValue> | Error;
+
+
+  @description("Deletes a key-value.")
+  @operationId("DeleteKeyValue")
+  delete(
+    ... KeyWithFilters,
+    @header ifMatch: string,
+  ): Ok<KeyValueHeaders & KeyValue> | NoContent<{}> | Error;
+
+}
+
+model NoContent<T> {
+  @header statusCode: 304;
+  ... T;
+}
