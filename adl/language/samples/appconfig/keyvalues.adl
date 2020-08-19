@@ -1,5 +1,5 @@
 @description("Used for /kv endpoints (key in query)")
-model KeyFilters = {
+model KeyFilters {
   @description("A filter for the name of the returned keys.")
   @query key?: string;
 
@@ -7,8 +7,8 @@ model KeyFilters = {
   @query label?: string;
 }
 
-@description("Used for /kv/{id} endpoints (key in path) ")
-model KeyWithFilters = {
+@description("Used for /kv/{id} endpoints (key in path)")
+model KeyWithFilters {
   @description("A filter for the name of the returned keys.")
   @path key: string;
 
@@ -34,7 +34,7 @@ interface KeyValuesResource(
     @description("Used to select what fields are present in the returned resource(s).")
     @query $Select?: KeyField[],
 
-  ): Ok<SyncTokenHeader & KeyValuePage> | Error;
+  ): Ok<SyncTokenHeader & Page<KeyValue>> | Error;
 
   @description("Gets a list of key-values.")
   @operationId("CheckKeyValues")
@@ -53,7 +53,7 @@ interface KeyValuesResource(
 
   @description("Gets a single key-value.")
   @operationId("GetKeyValue")
-  read (
+  read(
     ... ETagHeaders,
     ... AcceptDatetimeHeader,
     ... KeyWithFilters,
@@ -65,7 +65,7 @@ interface KeyValuesResource(
 
   @description("Requests the headers and status of the given resource.")
   @operationId("CheckKeyValue")
-  readHeaders(
+  readHead(
     ... ETagHeaders,
     ... AcceptDatetimeHeader,
     ... KeyWithFilters
@@ -98,4 +98,9 @@ interface KeyValuesResource(
     @header ifMatch: string,
   ): Ok<KeyValueHeaders & KeyValue> | NoContent<{}> | Error;
 
+}
+
+model NoContent<T> {
+  @header statusCode: 304;
+  ... T;
 }

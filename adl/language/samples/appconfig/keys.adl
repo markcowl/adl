@@ -1,7 +1,7 @@
 
 @resource('/keys')
 interface KeysResource(
-  ... serviceParams
+  ... serviceParams,
   ... SyncTokenHeader
 ) {
 
@@ -9,16 +9,17 @@ interface KeysResource(
   @operationId("GetKeys")
   list(
     ... AcceptDatetimeHeader,
+
     @query name: string,
     @header after: string,
-  ): Ok<SyncTokenHeader & KeyPage> | Error;
+  ): Ok<SyncTokenHeader & KeyPage> | Error,
 
   @description("Requests the headers and status of the given resource.")
   @operationId("CheckKeys")
   listHead(
     ... AcceptDatetimeHeader,
+
     @query name: string,
     @header after: string,
-  ): Ok<SyncTokenHeader> | Error;
-  
+  ): Ok<SyncTokenHeader> | Error
 }

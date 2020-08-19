@@ -20,14 +20,15 @@ model Ok<T> {
   ... T;
 }
 
+@inspectType
 model SyncTokenHeader {
   @description("Used to guarantee real-time consistency between requests.")
   @header syncToken?: string;
 }
 
 model ServiceParams {
-  @path  endpoint: EndpointParam;
-  @query apiVersion: ApiVersionHeader;
+  @path  endpoint: string;
+  @query apiVersion: string;
 }
 
 model Error {
@@ -35,13 +36,14 @@ model Error {
   title: string;
   name: string;
   detail: string;
-  statusCode: integer;
+  statusCode: int32;
 }
 
 model Page<T> {
   items: T[];
   nextLink: string;
 }
+
 model KeyValuePage = Page<KeyValue>;
 model KeyPage = Page<Key>;
 model LabelPage = Page<Label>;
@@ -52,28 +54,17 @@ model KeyValueHeaders =
   & LastModifiedHeader
   & ETagHeader;
 
-model KeyValue {
+model KeyValue = Key & Value;
+
+model Key {
   key: string;
+}
+
+model Value {
   label?: string;
   tags: Map<string, string>;
   locked: boolean;
 }
 
-enum KeyField {
-  key,
-  label,
-  content_type,
-  value,
-  last_modified,
-  tags,
-  locked,
-  etag
-}
-
-model Label {
-  name: string;
-}
-
-enum LabelField {
-  name
-}
+model KeyField = "key" | "label" | "content_type" | "value" | "last_modified" | "tags" ;
+model Label = "name";

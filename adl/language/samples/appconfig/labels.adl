@@ -1,7 +1,7 @@
 
 @resource('/labels')
 interface LabelsResource(
-  ... serviceParams
+  ... serviceParams,
   ... SyncTokenHeader
 ) {
 
@@ -10,8 +10,8 @@ interface LabelsResource(
   list(
     ... AcceptDatetimeHeader,
 
-    @query name: string,
-    @query after: string,
+    @query name?: string,
+    @query after?: string,
   ): Ok<SyncTokenHeader & LabelPage> | Error;
 
   @description("Requests the headers and status of the given resource.")
@@ -19,8 +19,8 @@ interface LabelsResource(
   listHead(
     ... AcceptDatetimeHeader,
 
-    @query name: string,
-    @query after: string,
-    @query $Select: LabelField[],
+    @query name?: string,
+    @query after?: string,
+    @query $Select?: LabelField[],
   ): Ok<SyncTokenHeader> | Error;
 }
