@@ -1,50 +1,54 @@
+model Ok<T> {
+  @header statusCode: 200;
+  blah: T;
+}
+
+model foo = Ok<int32>;
+
 model Pet {
   name: string;
-  tag?: string 
+  tag?: string;
 }
 
 model Error {
-  code: int32,
-  message: string
+  code: int32;
+  message: string;
 }
 
 model Toy {
-  id: int64,
-  petId: int64,
-  name: string
+  id: int64;
+  petId: int64;
+  name: string;
 }
 
-model Ok<T> {
-  @header statusCode: 200,
-  ... T
-}
-
+@inspectType
 model NotModified<T> {
-  @header statusCode: 304,
-  ... T
+  @header statusCode: 304;
+  ... T;
 }
+
+@inspectType
+model PetNotModified = NotModified<Pet & PetId>;
 
 model Page<T> {
   items: T[];
   nextLink: string;
 }
 
+model PetId {
+  @path petId: int32;
+}
+
 interface PetsResource {
-  delete(@path petId: int32): Ok<{}> | Error;
+  delete(... PetId): Ok<{}> | Error;
 
   @description("list pets")
   list(@query nextLink?: string): Ok<Page<Pet>> | Error;
 
   @description("Returns a pet. Supports eTags.")
-  read(@path petId: string): Ok<Pet> | NotModified<Pet> | Error;
+  read(... PetId): Ok<Pet> | NotModified<Pet> | Error;
 
   create(@body pet: Pet): Ok<Pet> | Error;
-}
-
-@response
-model PetRequest {
-  headers: {};
-  content: Pet;
 }
 
 @resource("/pets/{petId}/toys")
