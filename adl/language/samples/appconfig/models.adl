@@ -46,6 +46,10 @@ model Page<T> {
 
 model KeyValuePage = Page<KeyValue>;
 model KeyPage = Page<Key>;
+
+model Label {
+  name: string;
+}
 model LabelPage = Page<Label>;
 
 
@@ -67,4 +71,4 @@ model Value {
 }
 
 model KeyField = "key" | "label" | "content_type" | "value" | "last_modified" | "tags" ;
-model Label = "name";
+model LabelField = "name";

@@ -1,4 +1,3 @@
-
 @resource('/keys')
 interface KeysResource(
   ... serviceParams,
