@@ -5,22 +5,18 @@ interface RevisionsResource(
   ... SyncTokenHeader
 ) {
 
-  @description("Gets a list of revisions.")
+  "Gets a list of revisions."
   @operationId("GetRevisions")
   list(
     ... AcceptDatetimeHeader,
 
 
-    @query After: date,
-
-    @description("Used to select what fields are present in the returned resource(s).")
-    @query $Select?: KeyField[],
-    
-    @query label: string,
-    @query key: string
+    @query $Select?: KeyField[]   "Used to select what fields are present in the returned resource(s).",
+    @query label: string          "A filter used to match labels",
+    @query key: string            "A filter used to match keys.",
   ): Ok<SyncTokenHeader & Page<KeyValue>> | Error;
 
-  @description("Requests the headers and status of the given resource.")
+  "Requests the headers and status of the given resource."
   @operationId("CheckRevisions")
   listHead(
     ... AcceptDatetimeHeader,
