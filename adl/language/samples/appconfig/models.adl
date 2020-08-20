@@ -22,7 +22,9 @@ model Ok<T> {
 
 @inspectType
 model SyncTokenHeader {
-  @description("Used to guarantee real-time consistency between requests.")
+  """
+  Used to guarantee real-time consistency between requests.
+  """
   @header syncToken?: string;
 }
 
@@ -31,12 +33,15 @@ model ServiceParams {
   @query apiVersion: string;
 }
 
+"""
+Azure App Configuration error object.
+"""
 model Error {
-  type: string;
-  title: string;
-  name: string;
-  detail: string;
-  statusCode: int32;
+  type: string            "The type of the error";
+  title: string           "A brief summary of the error.";
+  name: string            "The name of the parameter that resulted in the error.";
+  detail: string          "A detailed description of the error.";
+  statusCode: int32        "The HTTP status code that the error maps to.";
 }
 
 model Page<T> {
