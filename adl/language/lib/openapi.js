@@ -5,6 +5,8 @@ import {
   getPathParamName,
   getQueryParamName,
   getResources,
+  isBody,
+  isStatus,
 } from './rest.js';
 
 let init = false;
@@ -21,415 +23,401 @@ let program;
 
 export function onBuild(p, entity) {
   program = p;
-  emitOpenAPI();
+  const emitter = createOAPIEmitter();
+  emitter.emitOpenAPI();
 }
 
 export function operationId() {}
 
-function emitOpenAPI(program) {
-  for (let resource of getResources()) {
-    emitPathsFromResource(resource);
-  }
-
-  console.log(JSON.stringify(root, null, 4));
-}
-
-function emitPathsFromResource(resource) {
-  let basePath = basePathForResource(resource);
-  basePath = basePath || '/';
-
-  if (!root.paths[basePath]) {
-    root.paths[basePath] = {};
-  }
-
-  const pathParams =
-    basePath.match(/\{\w+\}/g)?.map((s) => s.slice(1, -1)) ?? [];
-
-  if (resource.properties.has('list')) {
-    const prop = resource.properties.get('list');
-    const { endpointShape } = endpointShapeFromSignature(resource, prop);
-    root.paths[basePath].get = endpointShape;
-  }
-
-  if (resource.properties.has('create')) {
-    const prop = resource.properties.get('create');
-    const { endpointShape } = endpointShapeFromSignature(resource, prop);
-    root.paths[basePath].post = endpointShape;
-  }
-
-  if (resource.properties.has('read')) {
-    const prop = resource.properties.get('read');
-    const { endpointShape, pathParams } = endpointShapeFromSignature(
-      resource,
-      prop
-    );
-    const subPath = assembleSubpath(basePath, pathParams);
-    if (!root.paths[subPath]) {
-      root.paths[subPath] = {};
-    }
-    root.paths[subPath].get = endpointShape;
-  }
-
-  if (resource.properties.has('update')) {
-    const prop = resource.properties.get('update');
-    const { endpointShape, pathParams } = endpointShapeFromSignature(
-      resource,
-      prop
-    );
-    const subPath = assembleSubpath(basePath, pathParams);
-    if (!root.paths[subPath]) {
-      root.paths[subPath] = {};
-    }
-    root.paths[subPath].update = endpointShape;
-  }
-
-  if (resource.properties.has('delete')) {
-    const prop = resource.properties.get('delete');
-    const { endpointShape, pathParams } = endpointShapeFromSignature(
-      resource,
-      prop
-    );
-    const subPath = assembleSubpath(basePath, pathParams);
-    if (!root.paths[subPath]) {
-      root.paths[subPath] = {};
-    }
-    root.paths[subPath].delete = endpointShape;
-  }
-
-  if (resource.properties.has('deleteAll')) {
-    const prop = resource.properties.get('deleteAll');
-    const { endpointShape } = endpointShapeFromSignature(resource, prop);
-    root.paths[basePath].delete = endpointShape;
-  }
-
-  // the first parameters is the resource id
-}
-
-function assembleSubpath(basePath, pathParams) {
-  const firstPath = pathParams[0];
-  return `${basePath}${basePath.endsWith('/') ? '' : '/'}{${firstPath.name}}`;
-}
-
-/**
- *
- * @param {*} resource
- * @param {*} prop
- */
-function endpointShapeFromSignature(resource, prop) {
-  let parameters = [];
-  let pathParams = [];
-  if (resource.parameters) {
-    const { shapes, fields } = parameterShapesFromParameters(
-      resource.parameters
-    );
-    parameters = parameters.concat(shapes);
-    pathParams = [...pathParams, ...fields.pathParams.values()];
-  }
-
-  if (prop.parameters) {
-    const { shapes, fields } = parameterShapesFromParameters(prop.parameters);
-    parameters = parameters.concat(shapes);
-    pathParams = [...pathParams, ...fields.pathParams.values()];
-  }
-
-  return {
-    pathParams,
-    endpointShape: {
-      summary: getDescription(prop),
-      parameters,
-      responses: responseShapesFromReturnType(prop.returnType),
-    },
-  };
-}
-
-const knownParameters = new Map();
-function parameterShapesFromParameters(params) {
-  const shapes = [];
-  const fields = {
-    statusCode: undefined,
-    headers: new Map(),
-    queries: new Map(),
-    pathParams: new Map(),
-    schema: {},
+function createOAPIEmitter() {
+  const root = {
+    swagger: '2.0',
+    info: {},
+    schemes: ['https'],
+    paths: {},
+    definitions: {},
+    parameters: {},
   };
 
-  getSchemaForType(params, fields);
+  let currentBasePath = '';
+  let currentPath = root.paths;
+  let currentEndpoint;
 
-  // in the future, let's be more careful about clobbering prameters
-  // (but odds are these are just the same params declared multiple times)
+  // map types to their schemas
+  const schemas = new Map();
 
-  // TODO: refactor below, much is repeated.
-  for (const [name, value] of fields.headers) {
-    const description = getDescription(value);
+  // map types to their param nodes
+  const params = new Map();
 
-    // cache by node to disambiguate different type instantiations
-    const known = knownParameters.get(value.node);
-    if (known) {
-      shapes.push(known);
-      continue;
+  return { emitOpenAPI };
+
+  function emitOpenAPI(program) {
+    for (let resource of getResources()) {
+      emitResource(resource);
+    }
+    emitReferences();
+
+    console.log(JSON.stringify(root, null, 4));
+  }
+
+  function emitResource(resource) {
+    currentBasePath = basePathForResource(resource);
+
+    for (const [name, prop] of resource.properties) {
+      emitEndpoint(resource, prop);
+    }
+  }
+
+  function getPathParameters(iface, prop) {
+    return [
+      ...(iface.parameters?.properties.values() ?? []),
+      ...prop.parameters.properties.values(),
+    ].filter((param) => getPathParamName(param) !== undefined);
+  }
+
+  /**
+   * Translates endpoint names like `read` to REST verbs like `get`.
+   * @param {string} name
+   */
+  function pathForEndpoint(name, pathParams, declaredPathParamNames) {
+    const paramByName = new Map(pathParams.map((p) => [p.name, p]));
+    const pathSegments = [];
+
+    // for each param in the declared path parameters (e.g. /foo/{id} has one, id),
+    // delete it because it doesn't need to be added to the path.
+    for (const declaredParam of declaredPathParamNames) {
+      const param = paramByName.get(declaredParam);
+      if (!param) {
+        throw new Error(
+          `Path contains parameter ${declaredParam} but wasn't found in given parameters`
+        );
+      }
+
+      paramByName.delete(declaredParam);
     }
 
-    const paramSchema = getSchemaForType(value.type);
-    paramSchema.name = value.name;
-    paramSchema.in = 'header';
-    paramSchema.description = description;
-
-    root.parameters[value.name] = paramSchema;
-
-    const schema = {
-      $ref: '#/parameters/' + value.name,
-    };
-    knownParameters.set(value.node, schema);
-    shapes.push(schema);
-  }
-
-  for (const [name, value] of fields.queries) {
-    const description = getDescription(value);
-    const known = knownParameters.get(value.node);
-    if (known) {
-      shapes.push(known);
-      continue;
+    // for any remaining declared path params
+    for (const name of paramByName.keys()) {
+      pathSegments.push(name);
     }
 
-    const paramSchema = getSchemaForType(value.type);
-    paramSchema.name = value.name;
-    paramSchema.in = 'query';
-    paramSchema.description = description;
-    root.parameters[value.name] = paramSchema;
-
-    const schema = {
-      $ref: '#/parameters/' + value.name,
-    };
-
-    knownParameters.set(value.node, schema);
-    shapes.push(schema);
-  }
-
-  for (const [name, value] of fields.pathParams) {
-    const description = getDescription(value);
-    const known = knownParameters.get(value.node);
-    if (known) {
-      shapes.push(known);
-      continue;
-    }
-
-    const paramSchema = getSchemaForType(value.type);
-    paramSchema.name = value.name;
-    paramSchema.in = 'path';
-    paramSchema.description = description;
-
-    root.parameters[value.name] = paramSchema;
-
-    const schema = {
-      $ref: '#/parameters/' + value.name,
-    };
-
-    knownParameters.set(value.node, schema);
-    shapes.push(schema);
-  }
-
-  return {
-    shapes,
-    fields,
-  };
-}
-
-function responseShapesFromReturnType(returnType) {
-  const responseShapes = {};
-
-  let successType, errorType;
-  // TODO: Support discriminating based on statusCode header.
-  if (returnType.kind === 'Union') {
-    successType = returnType.options[0];
-    errorType = returnType.options[1];
-  } else {
-    successType = returnType;
-  }
-
-  responseShapeFromType(responseShapes, successType, 200);
-  if (errorType) {
-    responseShapeFromType(responseShapes, errorType, 'default');
-  }
-
-  return responseShapes;
-}
-
-function responseShapeFromType(responseShapes, type, defaultStatusCode) {
-  if (
-    type.kind === 'Model' &&
-    type.assignmentType === undefined &&
-    type.properties.size === 0
-  ) {
-    responseShapes[defaultStatusCode === 200 ? 201 : defaultStatusCode] = {
-      description: 'Null response',
-    };
-
-    return;
-  }
-
-  let statusCode = defaultStatusCode;
-  const { headers, schema } = unpackResponseType(type);
-  const response = {
-    headers: {},
-    content: {
-      'application/json': {
-        schema: schema,
-      },
-    },
-  };
-
-  for (let [name, value] of headers) {
-    // special case - could probably have separate decorator for status code?
-    if (name === 'statusCode') {
-      statusCode = getSchemaForType(value.type);
-      continue;
-    }
-    name = name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-    response.headers[name] = getSchemaForType(value.type);
-  }
-
-  responseShapes[statusCode] = response;
-}
-
-function unpackResponseType(type) {
-  const fields = {
-    statusCode: undefined,
-    headers: new Map(),
-    queries: new Map(),
-    pathParams: new Map(),
-    schema: {},
-  };
-
-  if (type.kind === 'Model' && type.assignmentType) {
-    type = type.assignmentType;
-  }
-
-  fields.schema = getSchemaForType(type, fields);
-
-  return fields;
-}
-
-const knownModels = new Map();
-function getSchemaForType(type, fields) {
-  if (knownModels.has(type)) {
-    return knownModels.get(type);
-  }
-
-  const builtinType = mapADLTypeToOpenAPI(type);
-  if (builtinType) return builtinType;
-
-  if (type.kind === 'Array') {
-    return getSchemaForArray(type, fields);
-  } else if (type.kind === 'Model') {
-    return getSchemaForModel(type, fields);
-  } else if (type.kind === 'Union') {
-    return getSchemaForUnion(type, fields);
-  }
-
-  throw new Error("Couldn't get schema for type " + type.kind);
-}
-
-function getSchemaForUnion(union, fields) {
-  return {
-    oneOf: union.options.map((o) => getSchemaForType(o, fields)),
-  };
-}
-
-const knownModelArrays = new Map();
-function getSchemaForArray(array, fields) {
-  const target = array.elementType;
-
-  if (knownModelArrays.has(target)) {
-    return knownModelArrays.get(target);
-  }
-
-  const schemaName = target.name + 'Array';
-  root.definitions[schemaName] = {
-    type: 'Array',
-    items: getSchemaForType(target, fields),
-  };
-
-  const schema = {
-    $ref: '#/definitions/' + schemaName,
-  };
-
-  knownModelArrays.set(target, schema);
-
-  return schema;
-}
-
-function getSchemaForModel(model, fields) {
-  const modelSchema = {
-    type: 'object',
-    required: [],
-    properties: {},
-    description: getDescription(model),
-  };
-
-  for (const [name, prop] of model.properties) {
-    const templateField = getTemplateField(model, name);
-    const headerInfo = getHeaderFieldName(templateField);
-    const queryInfo = getQueryParamName(templateField);
-    const pathInfo = getPathParamName(templateField);
-    const description = getDescription(prop);
-    if (headerInfo) {
-      fields.headers.set(headerInfo, prop);
-    } else if (queryInfo) {
-      fields.queries.set(queryInfo, prop);
-    } else if (pathInfo !== undefined) {
-      fields.pathParams.set(pathInfo, prop);
+    const verb = verbForEndpoint(name);
+    if (verb) {
+      return [verb, pathSegments];
     } else {
-      if (!prop.optional) {
-        modelSchema.required.push(name);
+      return ['get', pathSegments, name];
+    }
+  }
+
+  function verbForEndpoint(name) {
+    switch (name) {
+      case 'list':
+        return 'get';
+      case 'create':
+        return 'post';
+      case 'read':
+        return 'get';
+      case 'update':
+        return 'get';
+      case 'delete':
+        return 'delete';
+      case 'deleteAll':
+        return 'delete';
+    }
+  }
+
+  function emitEndpoint(resource, prop) {
+    const declaredPathParamNames =
+      currentBasePath.match(/\{\w+\}/g)?.map((s) => s.slice(1, -1)) ?? [];
+    const params = getPathParameters(resource, prop);
+    const [verb, newPathParams, subScope = ''] = pathForEndpoint(
+      prop.name,
+      params,
+      declaredPathParamNames
+    );
+    const subpath =
+      currentBasePath +
+      (subScope ? '/' + subScope : '') +
+      (newPathParams.length > 0
+        ? '/' + newPathParams.map((p) => '{' + p + '}').join('/')
+        : '');
+
+    if (subpath === undefined) throw new Error('uhoh');
+
+    if (!root.paths[subpath]) {
+      root.paths[subpath] = {};
+    }
+
+    currentPath = root.paths[subpath];
+    if (!currentPath[verb]) {
+      currentPath[verb] = {};
+    }
+    currentEndpoint = currentPath[verb];
+    currentEndpoint.summary = getDescription(prop);
+    currentEndpoint.consumes = [];
+    currentEndpoint.produces = [];
+    currentEndpoint.parameters = [];
+    currentEndpoint.responses = {};
+
+    emitEndpointParameters(
+      resource.parameters?.properties.values(),
+      prop.parameters?.properties.values()
+    );
+    emitResponses(prop.returnType);
+  }
+
+  function emitResponses(responseType) {
+    if (responseType.kind === 'Union') {
+      for (const [i, option] of responseType.options.entries()) {
+        emitResponseObject(option);
       }
-      modelSchema.properties[name] = getSchemaForType(prop.type, fields);
-      if (description) {
-        modelSchema.properties[name].description = description;
+    } else {
+      emitResponseObject(responseType);
+    }
+  }
+
+  function emitResponseObject(responseModel) {
+    if (
+      responseModel.kind === 'Model' &&
+      responseModel.assignmentType === undefined &&
+      responseModel.properties.size === 0
+    ) {
+      currentEndpoint.responses[200] = {
+        description: 'Null response',
+      };
+
+      return;
+    }
+
+    let statusCode = 200;
+    let contentType = 'application/json';
+    const response = {
+      headers: {},
+      schema: getSchemaPlaceholder(responseModel),
+    };
+
+    const desc = getDescription(responseModel);
+    if (desc) {
+      response.description = desc;
+    }
+
+    // the model could be an array type
+    if (responseModel.properties) {
+      for (const [name, prop] of responseModel.properties) {
+        const statusInfo = isStatus(prop);
+        const headerInfo = getHeaderFieldName(prop);
+        const desc = getDescription(prop);
+
+        if (statusInfo) {
+          // TODO: handle types other than number.
+          statusCode = prop.type.value;
+        } else if (headerInfo !== undefined) {
+          if (
+            (headerInfo === '' && name === 'contentType') ||
+            headerInfo === 'contentType'
+          ) {
+            contentType = prop.type.value;
+          }
+          // TODO: handle types other than string.
+          response.headers[headerInfo] = {
+            type: 'string',
+          };
+          if (desc) {
+            response.headers[headerInfo].description = desc;
+          }
+        }
+      }
+    }
+
+    if (!currentEndpoint.produces.includes(contentType)) {
+      currentEndpoint.produces.push(contentType);
+    }
+
+    currentEndpoint.responses[statusCode] = response;
+  }
+
+  function getSchemaPlaceholder(type) {
+    if (schemas.has(type)) {
+      return schemas.get(type);
+    }
+    const builtIn = mapADLTypeToOpenAPI(type);
+    if (builtIn) {
+      return builtIn;
+    }
+
+    const placeholder = {};
+
+    schemas.set(type, placeholder);
+    return placeholder;
+  }
+
+  function getParamPlaceholder(field) {
+    if (params.has(field)) {
+      return params.get(field);
+    }
+
+    const placeholder = {};
+
+    params.set(field, placeholder);
+    return placeholder;
+  }
+
+  function emitEndpointParameters(resourceParams = [], methodParams = []) {
+    const parameters = [...resourceParams, ...methodParams].filter(
+      (p) => getPathParamName(p) === undefined
+    );
+
+    let emittedImplicitBodyParam = false;
+    for (const param of parameters) {
+      if (params.has(param)) {
+        currentEndpoint.parameters.push(params.get(param));
+      }
+      const queryInfo = getQueryParamName(param);
+      const headerInfo = getHeaderFieldName(param);
+      const bodyInfo = isBody(param);
+
+      if (queryInfo) {
+        emitParameter(param, 'query');
+      } else if (headerInfo) {
+        emitParameter(param, 'header');
+      } else if (bodyInfo) {
+        emitParameter(param, 'body');
+      } else {
+        if (emittedImplicitBodyParam) {
+          throw new Error('request has multiple body types');
+        }
+        emittedImplicitBodyParam = true;
+        emitParameter(param, 'body');
       }
     }
   }
 
-  const name = program.checker.getTypeName(model);
-  if (!name || name === '(anonymous model)') return modelSchema;
+  function emitParameter(param, kind) {
+    const ph = getParamPlaceholder(param);
+    ph.name = param.name;
+    ph.in = kind;
+    ph.requred = !param.optional;
+    ph.schema = getSchemaPlaceholder(param.type);
+    ph.description = getDescription(param);
 
-  const refSchema = {
-    $ref: '#/definitions/' + name,
-  };
-
-  root.definitions[name] = modelSchema;
-
-  // next time we ask for this model, we'll just return
-  // the ref schema
-  knownModels.set(model, refSchema);
-
-  return refSchema;
-}
-
-function mapADLTypeToOpenAPI(adlType) {
-  switch (adlType.kind) {
-    case 'Number':
-    case 'String':
-      return adlType.value;
-    case 'Model':
-      switch (adlType.name) {
-        case 'int32':
-          return { type: 'integer', format: 'int32' };
-        case 'int64':
-          return { type: 'number' };
-        case 'float64':
-          return { type: 'number' };
-        case 'string':
-          return { type: 'string' };
-        case 'boolean':
-          return { type: 'boolean' };
-        case 'date':
-          return { type: 'string' };
+    if (kind === 'body') {
+      const contentType =
+        param.type.properties?.get('contentType')?.type.value ??
+        'application/json';
+      if (!currentEndpoint.consumes.includes(contentType)) {
+        currentEndpoint.consumes.push(contentType);
       }
-    default:
-      return false;
+    }
+    currentEndpoint.parameters.push(ph);
   }
-}
 
-function getTemplateField(type, field) {
-  return program.checker.getTypeForNode(type.properties.get(field).node);
+  function emitReferences() {
+    for (const [param, paramRef] of params) {
+      root.parameters[param.name] = {
+        ...paramRef,
+      };
+
+      for (const key of Object.keys(paramRef)) {
+        delete paramRef[key];
+      }
+
+      paramRef['$ref'] = '#/parameters/' + param.name;
+    }
+
+    for (const [type, schema] of schemas) {
+      const name = program.checker.getTypeName(type) || '(Anonymous Model)';
+
+      root.definitions[name] = getSchemaForType(type);
+
+      for (const key of Object.keys(schema)) {
+        delete schema[key];
+      }
+
+      schema['$ref'] = '#/parameters/' + name;
+    }
+  }
+  function getSchemaForType(type, fields) {
+    const builtinType = mapADLTypeToOpenAPI(type);
+    if (builtinType) return builtinType;
+
+    if (type.kind === 'Array') {
+      return getSchemaForArray(type, fields);
+    } else if (type.kind === 'Model') {
+      return getSchemaForModel(type, fields);
+    } else if (type.kind === 'Union') {
+      return getSchemaForUnion(type, fields);
+    }
+
+    throw new Error("Couldn't get schema for type " + type.kind);
+  }
+
+  function getSchemaForUnion(union, fields) {
+    return {
+      oneOf: union.options.map((o) => getSchemaForType(o, fields)),
+    };
+  }
+
+  function getSchemaForArray(array, fields) {
+    const target = array.elementType;
+
+    return {
+      type: 'Array',
+      items: getSchemaForType(target, fields),
+    };
+  }
+
+  function getSchemaForModel(model) {
+    const modelSchema = {
+      type: 'object',
+      required: [],
+      properties: {},
+      description: getDescription(model),
+    };
+
+    for (const [name, prop] of model.properties) {
+      const headerInfo = getHeaderFieldName(prop);
+      const queryInfo = getQueryParamName(prop);
+      const pathInfo = getPathParamName(prop);
+      const statusInfo = isStatus(prop);
+      const description = getDescription(prop);
+      if (headerInfo || queryInfo || pathInfo || statusInfo) {
+        continue;
+      } else {
+        if (!prop.optional) {
+          modelSchema.required.push(name);
+        }
+        modelSchema.properties[name] = getSchemaForType(prop.type);
+        if (description) {
+          modelSchema.properties[name].description = description;
+        }
+      }
+    }
+
+    return modelSchema;
+  }
+
+  function mapADLTypeToOpenAPI(adlType) {
+    switch (adlType.kind) {
+      case 'Number':
+      case 'String':
+        return adlType.value;
+      case 'Model':
+        switch (adlType.name) {
+          case 'int32':
+            return { type: 'integer', format: 'int32' };
+          case 'int64':
+            return { type: 'number' };
+          case 'float64':
+            return { type: 'number' };
+          case 'string':
+            return { type: 'string' };
+          case 'boolean':
+            return { type: 'boolean' };
+          case 'date':
+            return { type: 'string' };
+        }
+      default:
+        return false;
+    }
+  }
 }
