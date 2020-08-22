@@ -27,7 +27,10 @@ export function onBuild(p, entity) {
   emitter.emitOpenAPI();
 }
 
-export function operationId() {}
+const operationIds = new Map();
+export function operationId(program, entity, opId) {
+  operationIds.set(entity, opId);
+}
 
 function createOAPIEmitter() {
   const root = {
@@ -153,6 +156,9 @@ function createOAPIEmitter() {
       currentPath[verb] = {};
     }
     currentEndpoint = currentPath[verb];
+    if (operationIds.has(prop)) {
+      currentEndpoint.operationId = operationIds.get(prop);
+    }
     currentEndpoint.summary = getDescription(prop);
     currentEndpoint.consumes = [];
     currentEndpoint.produces = [];
@@ -207,7 +213,7 @@ function createOAPIEmitter() {
         const headerInfo = getHeaderFieldName(prop);
         const desc = getDescription(prop);
 
-        if (statusInfo) {
+        if (statusInfo && prop.type.value) {
           // TODO: handle types other than number.
           statusCode = prop.type.value;
         } else if (headerInfo !== undefined) {
