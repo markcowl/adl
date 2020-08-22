@@ -217,11 +217,12 @@ function createOAPIEmitter() {
             headerInfo === 'contentType'
           ) {
             contentType = prop.type.value;
+          } else {
+            // TODO: handle types other than string.
+            response.headers[headerInfo] = {
+              type: 'string',
+            };
           }
-          // TODO: handle types other than string.
-          response.headers[headerInfo] = {
-            type: 'string',
-          };
           if (desc) {
             response.headers[headerInfo].description = desc;
           }
@@ -336,33 +337,33 @@ function createOAPIEmitter() {
       schema['$ref'] = '#/parameters/' + name;
     }
   }
-  function getSchemaForType(type, fields) {
+  function getSchemaForType(type) {
     const builtinType = mapADLTypeToOpenAPI(type);
     if (builtinType) return builtinType;
 
     if (type.kind === 'Array') {
-      return getSchemaForArray(type, fields);
+      return getSchemaForArray(type);
     } else if (type.kind === 'Model') {
-      return getSchemaForModel(type, fields);
+      return getSchemaForModel(type);
     } else if (type.kind === 'Union') {
-      return getSchemaForUnion(type, fields);
+      return getSchemaForUnion(type);
     }
 
     throw new Error("Couldn't get schema for type " + type.kind);
   }
 
-  function getSchemaForUnion(union, fields) {
+  function getSchemaForUnion(union) {
     return {
-      oneOf: union.options.map((o) => getSchemaForType(o, fields)),
+      oneOf: union.options.map((o) => getSchemaPlaceholder(o)),
     };
   }
 
-  function getSchemaForArray(array, fields) {
+  function getSchemaForArray(array) {
     const target = array.elementType;
 
     return {
       type: 'Array',
-      items: getSchemaForType(target, fields),
+      items: getSchemaPlaceholder(target),
     };
   }
 
@@ -386,7 +387,7 @@ function createOAPIEmitter() {
         if (!prop.optional) {
           modelSchema.required.push(name);
         }
-        modelSchema.properties[name] = getSchemaForType(prop.type);
+        modelSchema.properties[name] = getSchemaPlaceholder(prop.type);
         if (description) {
           modelSchema.properties[name].description = description;
         }
