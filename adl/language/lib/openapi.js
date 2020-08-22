@@ -169,14 +169,14 @@ function createOAPIEmitter() {
   function emitResponses(responseType) {
     if (responseType.kind === 'Union') {
       for (const [i, option] of responseType.options.entries()) {
-        emitResponseObject(option);
+        emitResponseObject(option, i === 0 ? 200 : 'default');
       }
     } else {
       emitResponseObject(responseType);
     }
   }
 
-  function emitResponseObject(responseModel) {
+  function emitResponseObject(responseModel, statusCode = 200) {
     if (
       responseModel.kind === 'Model' &&
       responseModel.assignmentType === undefined &&
@@ -189,7 +189,6 @@ function createOAPIEmitter() {
       return;
     }
 
-    let statusCode = 200;
     let contentType = 'application/json';
     const response = {
       headers: {},
