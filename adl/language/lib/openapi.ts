@@ -1,3 +1,5 @@
+import { Program } from '../compiler/program.js';
+import { ArrayType, InterfaceType, InterfaceTypeProperty as InterfacePropertyType, ModelType, ModelTypeProperty as ModelPropertyType, Type, UnionType } from '../compiler/types.js';
 import { getDescription } from './decorators.js';
 import {
   basePathForResource,
@@ -6,8 +8,9 @@ import {
   getQueryParamName,
   getResources,
   isBody,
-  isStatus,
+  isStatus
 } from './rest.js';
+
 
 let init = false;
 
@@ -19,21 +22,18 @@ const root = {
   definitions: {},
   parameters: {},
 };
-let program;
-
-export function onBuild(p, entity) {
-  program = p;
-  const emitter = createOAPIEmitter();
+export function onBuild(p: Program) {
+  const emitter = createOAPIEmitter(p);
   emitter.emitOpenAPI();
 }
 
-const operationIds = new Map();
-export function operationId(program, entity, opId) {
+const operationIds = new Map<Type, string>();
+export function operationId(program: Program, entity: Type, opId: string) {
   operationIds.set(entity, opId);
 }
 
-function createOAPIEmitter() {
-  const root = {
+function createOAPIEmitter(program: Program) {
+  const root: any = {
     swagger: '2.0',
     info: {},
     schemes: ['https'],
@@ -42,9 +42,9 @@ function createOAPIEmitter() {
     parameters: {},
   };
 
-  let currentBasePath = '';
-  let currentPath = root.paths;
-  let currentEndpoint;
+  let currentBasePath: string | undefined = '';
+  let currentPath: any = root.paths;
+  let currentEndpoint: any;
 
   // map types to their schemas
   const schemas = new Map();
@@ -54,16 +54,20 @@ function createOAPIEmitter() {
 
   return { emitOpenAPI };
 
-  function emitOpenAPI(program) {
+  function emitOpenAPI() {
     for (let resource of getResources()) {
-      emitResource(resource);
+      if (resource.kind !== 'Interface') {
+        throw new Error("Resource goes on interface");
+      }
+      
+      emitResource(<InterfaceType>resource);
     }
     emitReferences();
 
     console.log(JSON.stringify(root, null, 4));
   }
 
-  function emitResource(resource) {
+  function emitResource(resource: InterfaceType) {
     currentBasePath = basePathForResource(resource);
 
     for (const [name, prop] of resource.properties) {
@@ -71,18 +75,17 @@ function createOAPIEmitter() {
     }
   }
 
-  function getPathParameters(iface, prop) {
+  function getPathParameters(iface: InterfaceType, prop: InterfacePropertyType) {
     return [
       ...(iface.parameters?.properties.values() ?? []),
-      ...prop.parameters.properties.values(),
+      ...(prop.parameters?.properties.values() ?? []),
     ].filter((param) => getPathParamName(param) !== undefined);
   }
 
   /**
    * Translates endpoint names like `read` to REST verbs like `get`.
-   * @param {string} name
    */
-  function pathForEndpoint(name, pathParams, declaredPathParamNames) {
+  function pathForEndpoint(name: string, pathParams: ModelPropertyType[], declaredPathParamNames: string[]): [string, string[], string?] {
     const paramByName = new Map(pathParams.map((p) => [p.name, p]));
     const pathSegments = [];
 
@@ -112,7 +115,7 @@ function createOAPIEmitter() {
     }
   }
 
-  function verbForEndpoint(name) {
+  function verbForEndpoint(name: string) {
     switch (name) {
       case 'list':
         return 'get';
@@ -127,11 +130,13 @@ function createOAPIEmitter() {
       case 'deleteAll':
         return 'delete';
     }
+
+    return undefined;
   }
 
-  function emitEndpoint(resource, prop) {
+  function emitEndpoint(resource: InterfaceType, prop: InterfacePropertyType) {
     const declaredPathParamNames =
-      currentBasePath.match(/\{\w+\}/g)?.map((s) => s.slice(1, -1)) ?? [];
+      currentBasePath?.match(/\{\w+\}/g)?.map((s) => s.slice(1, -1)) ?? [];
     const params = getPathParameters(resource, prop);
     const [verb, newPathParams, subScope = ''] = pathForEndpoint(
       prop.name,
@@ -166,23 +171,23 @@ function createOAPIEmitter() {
     currentEndpoint.responses = {};
 
     emitEndpointParameters(
-      resource.parameters?.properties.values(),
-      prop.parameters?.properties.values()
+      [...resource.parameters?.properties.values() ?? []],
+      [...prop.parameters?.properties.values() ?? []],
     );
     emitResponses(prop.returnType);
   }
 
-  function emitResponses(responseType) {
+  function emitResponses(responseType: Type) {
     if (responseType.kind === 'Union') {
       for (const [i, option] of responseType.options.entries()) {
-        emitResponseObject(option, i === 0 ? 200 : 'default');
+        emitResponseObject(option, i === 0 ? '200' : 'default');
       }
     } else {
       emitResponseObject(responseType);
     }
   }
 
-  function emitResponseObject(responseModel, statusCode = 200) {
+  function emitResponseObject(responseModel: Type, statusCode: string = '200') {
     if (
       responseModel.kind === 'Model' &&
       responseModel.assignmentType === undefined &&
@@ -196,7 +201,7 @@ function createOAPIEmitter() {
     }
 
     let contentType = 'application/json';
-    const response = {
+    const response: any = {
       headers: {},
       schema: getSchemaPlaceholder(responseModel),
     };
@@ -206,22 +211,22 @@ function createOAPIEmitter() {
       response.description = desc;
     }
 
-    // the model could be an array type
-    if (responseModel.properties) {
+    if (responseModel.kind === 'Model') {
       for (const [name, prop] of responseModel.properties) {
         const statusInfo = isStatus(prop);
         const headerInfo = getHeaderFieldName(prop);
         const desc = getDescription(prop);
+        const type = prop.type;
 
-        if (statusInfo && prop.type.value) {
+        if (statusInfo && type.kind === "Number") {
           // TODO: handle types other than number.
-          statusCode = prop.type.value;
-        } else if (headerInfo !== undefined) {
+          statusCode = String(type.value);
+        } else if (headerInfo !== undefined && type.kind === "String") {
           if (
             (headerInfo === '' && name === 'contentType') ||
             headerInfo === 'contentType'
           ) {
-            contentType = prop.type.value;
+            contentType = type.value;
           } else {
             // TODO: handle types other than string.
             response.headers[headerInfo] = {
@@ -242,7 +247,7 @@ function createOAPIEmitter() {
     currentEndpoint.responses[statusCode] = response;
   }
 
-  function getSchemaPlaceholder(type) {
+  function getSchemaPlaceholder(type: Type) {
     if (schemas.has(type)) {
       return schemas.get(type);
     }
@@ -257,7 +262,7 @@ function createOAPIEmitter() {
     return placeholder;
   }
 
-  function getParamPlaceholder(field) {
+  function getParamPlaceholder(field: ModelPropertyType) {
     if (params.has(field)) {
       return params.get(field);
     }
@@ -268,7 +273,10 @@ function createOAPIEmitter() {
     return placeholder;
   }
 
-  function emitEndpointParameters(resourceParams = [], methodParams = []) {
+  function emitEndpointParameters(
+    resourceParams: ModelPropertyType[] = [],
+    methodParams: ModelPropertyType[] = []
+  ) {
     const parameters = [...resourceParams, ...methodParams].filter(
       (p) => getPathParamName(p) === undefined
     );
@@ -298,7 +306,7 @@ function createOAPIEmitter() {
     }
   }
 
-  function emitParameter(param, kind) {
+  function emitParameter(param: ModelPropertyType, kind: string) {
     const ph = getParamPlaceholder(param);
     ph.name = param.name;
     ph.in = kind;
@@ -307,9 +315,18 @@ function createOAPIEmitter() {
     ph.description = getDescription(param);
 
     if (kind === 'body') {
-      const contentType =
-        param.type.properties?.get('contentType')?.type.value ??
-        'application/json';
+      let contentType = 'application/json';
+      if (param.type.kind === "Model") {
+        let contentTypeParam = param.type.properties.get('contentType');
+        if (contentTypeParam) {
+          if (contentTypeParam.type.kind === "String") {
+            contentType = contentTypeParam.type.value;
+          } else {
+            throw new Error("contentType parameter must be a string");
+          }
+        }
+      }
+
       if (!currentEndpoint.consumes.includes(contentType)) {
         currentEndpoint.consumes.push(contentType);
       }
@@ -331,7 +348,7 @@ function createOAPIEmitter() {
     }
 
     for (const [type, schema] of schemas) {
-      const name = program.checker.getTypeName(type) || '(Anonymous Model)';
+      const name = program.checker!.getTypeName(type) || '(Anonymous Model)';
 
       root.definitions[name] = getSchemaForType(type);
 
@@ -342,7 +359,7 @@ function createOAPIEmitter() {
       schema['$ref'] = '#/parameters/' + name;
     }
   }
-  function getSchemaForType(type) {
+  function getSchemaForType(type: Type) {
     const builtinType = mapADLTypeToOpenAPI(type);
     if (builtinType) return builtinType;
 
@@ -357,13 +374,13 @@ function createOAPIEmitter() {
     throw new Error("Couldn't get schema for type " + type.kind);
   }
 
-  function getSchemaForUnion(union) {
+  function getSchemaForUnion(union: UnionType) {
     return {
       oneOf: union.options.map((o) => getSchemaPlaceholder(o)),
     };
   }
 
-  function getSchemaForArray(array) {
+  function getSchemaForArray(array: ArrayType) {
     const target = array.elementType;
 
     return {
@@ -372,8 +389,8 @@ function createOAPIEmitter() {
     };
   }
 
-  function getSchemaForModel(model) {
-    const modelSchema = {
+  function getSchemaForModel(model: ModelType) {
+    const modelSchema: any = {
       type: 'object',
       required: [],
       properties: {},
@@ -402,7 +419,7 @@ function createOAPIEmitter() {
     return modelSchema;
   }
 
-  function mapADLTypeToOpenAPI(adlType) {
+  function mapADLTypeToOpenAPI(adlType: Type) {
     switch (adlType.kind) {
       case 'Number':
       case 'String':
