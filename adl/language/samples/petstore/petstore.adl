@@ -43,7 +43,7 @@ interface PetsResource {
   """
   delete(... PetId): Ok<{}> | Error;
 
-  @description("list pets")
+  @fancyDescription("list pets")
   list(@query nextLink?: string): Ok<Page<Pet>> | Error;
 
   @description("Returns a pet. Supports eTags.")
