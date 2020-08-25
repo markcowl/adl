@@ -252,7 +252,7 @@ function createOAPIEmitter(program: Program) {
       return schemas.get(type);
     }
     const builtIn = mapADLTypeToOpenAPI(type);
-    if (builtIn) {
+    if (builtIn !== undefined) {
       return builtIn;
     }
 
@@ -361,7 +361,7 @@ function createOAPIEmitter(program: Program) {
   }
   function getSchemaForType(type: Type) {
     const builtinType = mapADLTypeToOpenAPI(type);
-    if (builtinType) return builtinType;
+    if (builtinType !== undefined) return builtinType;
 
     if (type.kind === 'Array') {
       return getSchemaForArray(type);
@@ -423,6 +423,7 @@ function createOAPIEmitter(program: Program) {
     switch (adlType.kind) {
       case 'Number':
       case 'String':
+      case 'Boolean':
         return adlType.value;
       case 'Model':
         switch (adlType.name) {
@@ -440,7 +441,7 @@ function createOAPIEmitter(program: Program) {
             return { type: 'string' };
         }
       default:
-        return false;
+        return undefined;
     }
   }
 }
