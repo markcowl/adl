@@ -33,26 +33,22 @@ model PetId {
   @path petId: int32;
 }
 
-"""
-Manage your pets
-"""
-@resource("/pets")
+@doc "Manage your pets."
+@resource "/pets"
 interface PetsResource {
-  """
-  Delete a pet.
-  """
+  @doc "Delete a pet."
   delete(... PetId): Ok<{}> | Error;
 
-  @fancyDescription("list pets")
+  @fancyDoc "List pets."
   list(@query nextLink?: string): Ok<Page<Pet>> | Error;
 
-  @description("Returns a pet. Supports eTags.")
+  @doc "Returns a pet. Supports eTags."
   read(... PetId): Ok<Pet> | NotModified<Pet> | Error;
 
   create(@body pet: Pet): Ok<Pet> | Error;
 }
 
-@resource("/pets/{petId}/toys")
+@resource "/pets/{petId}/toys"
 interface ListPetToysResponse {
   list(@path petId: string, @query nameFilter: string): Ok<Page<Toy>> | Error;
 }

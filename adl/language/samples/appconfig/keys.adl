@@ -4,7 +4,7 @@ interface KeysResource(
   ... SyncTokenHeader
 ) {
 
-  @description("Gets a list of keys.")
+  @doc("Gets a list of keys.")
   @operationId("GetKeys")
   list(
     ... AcceptDatetimeHeader,
@@ -13,7 +13,7 @@ interface KeysResource(
     @header after: string,
   ): Ok<SyncTokenHeader & KeyPage> | Error,
 
-  @description("Requests the headers and status of the given resource.")
+  @doc("Requests the headers and status of the given resource.")
   @operationId("CheckKeys")
   listHead(
     ... AcceptDatetimeHeader,
