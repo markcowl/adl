@@ -44,7 +44,7 @@
       "skipFiles": [
         "<node_internals>/**/*.js"
       ],
-      "cwd": "${workspaceRoot}/adl/core"
+      "cwd": "${workspaceRoot}/adl/plugins/azure"
     },
     {
       "type": "extensionHost",
