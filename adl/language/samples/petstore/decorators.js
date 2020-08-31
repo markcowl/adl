@@ -1,12 +1,12 @@
 // pretend I just typed this file from scratch... and saved it
-import { description } from "../../dist/lib/decorators.js";
+import { doc } from "../../dist/lib/decorators.js";
 
-export function fancyDescription(program, target, text) {
+export function fancyDoc(program, target, text) {
   text = `<blink>${text}</blink>`;
-  description(program, target, text);
+  doc(program, target, text);
 }
 
-export function evenFancierDescription(program, target, ...args) {
+export function evenFancierDoc(program, target, ...args) {
   args[0] = `<marquee><blink>${args[0]}</blink></marquee>`;
-  description(program, target, ...args);
+  doc(program, target, ...args);
 }
