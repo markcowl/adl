@@ -1,6 +1,6 @@
 import { Program } from '../compiler/program.js';
 import { ArrayType, InterfaceType, InterfaceTypeProperty as InterfacePropertyType, ModelType, ModelTypeProperty as ModelPropertyType, Type, UnionType } from '../compiler/types.js';
-import { getDescription } from './decorators.js';
+import { getDoc } from './decorators.js';
 import {
   basePathForResource,
   getHeaderFieldName,
@@ -157,7 +157,7 @@ function createOAPIEmitter(program: Program) {
     if (operationIds.has(prop)) {
       currentEndpoint.operationId = operationIds.get(prop);
     }
-    currentEndpoint.summary = getDescription(prop);
+    currentEndpoint.summary = getDoc(prop);
     currentEndpoint.consumes = [];
     currentEndpoint.produces = [];
     currentEndpoint.parameters = [];
@@ -199,14 +199,14 @@ function createOAPIEmitter(program: Program) {
       schema: getSchemaPlaceholder(responseModel),
     };
 
-    const desc = getDescription(responseModel);
+    const desc = getDoc(responseModel);
     response.description = desc ?? "";
 
     if (responseModel.kind === 'Model') {
       for (const [name, prop] of responseModel.properties) {
         const statusInfo = isStatus(prop);
         const headerInfo = getHeaderFieldName(prop);
-        const desc = getDescription(prop);
+        const desc = getDoc(prop);
         const type = prop.type;
 
         if (statusInfo && type.kind === "Number") {
@@ -304,7 +304,7 @@ function createOAPIEmitter(program: Program) {
     ph.name = param.name;
     ph.in = kind;
     ph.required = !param.optional;
-    ph.description = getDescription(param);
+    ph.description = getDoc(param);
 
     let schema = getSchemaPlaceholder(param.type);
     if (kind == 'body') {
@@ -452,7 +452,7 @@ function createOAPIEmitter(program: Program) {
     const modelSchema: any = {
       type: 'object',
       properties: {},
-      description: getDescription(model),
+      description: getDoc(model),
     };
 
     for (const [name, prop] of model.properties) {
@@ -460,7 +460,7 @@ function createOAPIEmitter(program: Program) {
       const queryInfo = getQueryParamName(prop);
       const pathInfo = getPathParamName(prop);
       const statusInfo = isStatus(prop);
-      const description = getDescription(prop);
+      const description = getDoc(prop);
       if (headerInfo || queryInfo || pathInfo || statusInfo) {
         continue;
       } else {
