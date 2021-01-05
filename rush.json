@@ -49,60 +49,6 @@
       "projectFolder": "adl/language",
       "reviewCategory": "production",
       "shouldPublish": false
-    },
-    {
-      "packageName": "@azure-tools/adl.core",
-      "projectFolder": "adl/core",
-      "reviewCategory": "production",
-      "shouldPublish": true
-    },
-    {
-      "packageName": "@azure-tools/adl",
-      "projectFolder": "adl/cli",
-      "reviewCategory": "production",
-      "shouldPublish": true
-    },
-    {
-      "packageName": "@azure-tools/sourcemap",
-      "projectFolder": "adl/sourcemap",
-      "reviewCategory": "production",
-      "shouldPublish": true
-    },
-    {
-      "packageName": "adl-language",
-      "projectFolder": "adl/extension",
-      "reviewCategory": "production",
-      // the vscode extension publishes differently
-      // cd adl/extension
-      // npm install 
-      // vsce package
-      // then you have a .vsix file 
-      "shouldPublish": false
-    },
-    /** PLUGINS **/
-    {
-      "packageName": "@azure-tools/adl.types.arm",
-      "projectFolder": "adl/plugins/arm",
-      "reviewCategory": "production",
-      "shouldPublish": true
-    },
-    {
-      "packageName": "@azure-tools/adl.types.core",
-      "projectFolder": "adl/plugins/core",
-      "reviewCategory": "production",
-      "shouldPublish": true
-    },
-    {
-      "packageName": "@azure-tools/adl-plugin-sample",
-      "projectFolder": "adl/plugins/sample",
-      "reviewCategory": "production",
-      "shouldPublish": false
-    },
-    {
-      "packageName": "@azure-tools/adl.rules.azure",
-      "projectFolder": "adl/plugins/azure",
-      "reviewCategory": "production",
-      "shouldPublish": true
     }
   ]
 }

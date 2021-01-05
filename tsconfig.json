@@ -2,31 +2,7 @@
   "files": [],
   "references": [
     {
-      "path": "adl/cli/tsconfig.json"
-    },
-    {
       "path": "adl/language/tsconfig.json"
-    },
-    {
-      "path": "adl/core/tsconfig.json"
-    },
-    {
-      "path": "adl/extension/tsconfig.json"
-    },
-    {
-      "path": "adl/sourcemap/tsconfig.json"
-    },
-    {
-      "path": "adl/plugins/arm/tsconfig.json"
-    },
-    {
-      "path": "adl/plugins/core/tsconfig.json"
-    },
-    {
-      "path": "adl/plugins/sample/tsconfig.json"
-    },
-    {
-      "path": "adl/plugins/azure/tsconfig.json"
     },
   ]
 }
