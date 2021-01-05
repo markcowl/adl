@@ -1,0 +1,23 @@
+# Continuous Integration
+
+trigger:
+  - master
+pr: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '14.x'
+  displayName: 'Install Node.js'
+
+- script: node common/scripts/install-run-rush.js install
+  displayName: "Install Dependencies"
+
+- script: node common/scripts/install-run-rush.js rebuild
+  displayName: Build
+
+- script: node common/scripts/install-run-rush.js test
+  displayName: Test
