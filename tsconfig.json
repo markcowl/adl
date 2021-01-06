@@ -2,7 +2,7 @@
   "files": [],
   "references": [
     {
-      "path": "adl/language/tsconfig.json"
+      "path": "packages/adl/tsconfig.json"
     },
   ]
 }

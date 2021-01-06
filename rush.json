@@ -46,7 +46,7 @@
   "projects": [
     {
       "packageName": "@azure-tools/adl.language",
-      "projectFolder": "adl/language",
+      "projectFolder": "packages/adl",
       "reviewCategory": "production",
       "shouldPublish": false
     }

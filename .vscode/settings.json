@@ -56,7 +56,7 @@
   "eslint.workingDirectories": [
     {
       "changeProcessCWD": true,
-      "directory": "./adl/language",
+      "directory": "./packages/adl",
     }
   ],
   "git.ignoreLimitWarning": true,
@@ -65,8 +65,8 @@
     "source.organizeImports": true
   },
   "eslint.format.enable": true,
-  "mochaExplorer.files": "./adl/*/dist/test/**/*.js",
-  "mochaExplorer.cwd": "./adl/language",
+  "mochaExplorer.files": "./packages/adl/dist/test/**/*.js",
+  "mochaExplorer.cwd": "./packages/adl",
   "mochaExplorer.mochaPath": "./adl/language/node_modules/mocha",
   "mochaExplorer.timeout": 500000,
   "mochaExplorer.require": "source-map-support/register"
