@@ -56,51 +56,7 @@
   "eslint.workingDirectories": [
     {
       "changeProcessCWD": true,
-      "directory": "./adl/core",
-    },
-    {
-      "changeProcessCWD": true,
       "directory": "./adl/language",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./adl/cli",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./adl/sourcemap",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./adl/visitor",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./adl/openapi",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./adl/linq",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./adl/extension",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./adl/plugins/sample",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./adl/plugins/core",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./adl/plugins/arm",
-    },
-    {
-      "changeProcessCWD": true,
-      "directory": "./adl/plugins/azure",
     }
   ],
   "git.ignoreLimitWarning": true,
@@ -110,8 +66,8 @@
   },
   "eslint.format.enable": true,
   "mochaExplorer.files": "./adl/*/dist/test/**/*.js",
-  "mochaExplorer.cwd": "./adl/core",
-  "mochaExplorer.mochaPath": "./adl/core/node_modules/mocha",
+  "mochaExplorer.cwd": "./adl/language",
+  "mochaExplorer.mochaPath": "./adl/language/node_modules/mocha",
   "mochaExplorer.timeout": 500000,
   "mochaExplorer.require": "source-map-support/register"
 }
