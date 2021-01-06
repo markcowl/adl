@@ -12,7 +12,7 @@ function read(filename) {
   return JSON.parse(txt);
 }
 
-const repo = `${__dirname}/..`;
+const repo = `${__dirname}/../..`;
 
 const rush = read(`${repo}/rush.json`);
 const pjs = {};
