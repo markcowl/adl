@@ -1,3 +1,5 @@
+import * as fs from 'fs';
+import * as path from 'path';
 import { Program } from '../compiler/program.js';
 import { ArrayType, InterfaceType, InterfaceTypeProperty, ModelType, ModelTypeProperty, Type, UnionType } from '../compiler/types.js';
 import { getDoc } from './decorators.js';
@@ -10,9 +12,12 @@ import {
   isBody
 } from './rest.js';
 
-
 export function onBuild(p: Program) {
-  const emitter = createOAPIEmitter(p);
+  const options: OpenAPIEmitterOptions = {
+    outputFile: p.compilerOptions.swaggerOutputFile || path.resolve("./openapi.json")
+  };
+
+  const emitter = createOAPIEmitter(p, options);
   emitter.emitOpenAPI();
 }
 
@@ -21,7 +26,11 @@ export function operationId(program: Program, entity: Type, opId: string) {
   operationIds.set(entity, opId);
 }
 
-function createOAPIEmitter(program: Program) {
+export interface OpenAPIEmitterOptions {
+  outputFile: string;
+};
+
+function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
   const root: any = {
     swagger: '2.0',
     info: {
@@ -59,7 +68,10 @@ function createOAPIEmitter(program: Program) {
     }
     emitReferences();
 
-    console.log(JSON.stringify(root, null, 4));
+    // Write out the OpenAPI document to the output path
+    fs.writeFileSync(
+      path.resolve(options.outputFile),
+      JSON.stringify(root, null, 4));
   }
 
   function emitResource(resource: InterfaceType) {
