@@ -67,7 +67,7 @@
   "eslint.format.enable": true,
   "mochaExplorer.files": "./packages/adl/dist/test/**/*.js",
   "mochaExplorer.cwd": "./packages/adl",
-  "mochaExplorer.mochaPath": "./adl/language/node_modules/mocha",
+  "mochaExplorer.mochaPath": "./packages/adl/node_modules/mocha",
   "mochaExplorer.timeout": 500000,
   "mochaExplorer.require": "source-map-support/register"
 }
