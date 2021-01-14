@@ -9,7 +9,9 @@ import {
   getPathParamName,
   getQueryParamName,
   getResources,
-  isBody
+  isBody,
+  getOperationVerb,
+  HttpVerb
 } from './rest.js';
 
 export function onBuild(p: Program) {
@@ -92,7 +94,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
   /**
    * Translates endpoint names like `read` to REST verbs like `get`.
    */
-  function pathForEndpoint(name: string, pathParams: ModelTypeProperty[], declaredPathParamNames: string[]): [string, string[], string?] {
+  function pathForEndpoint(prop: InterfaceTypeProperty, pathParams: ModelTypeProperty[], declaredPathParamNames: string[]): [string, string[], string?] {
     const paramByName = new Map(pathParams.map((p) => [p.name, p]));
     const pathSegments = [];
 
@@ -114,15 +116,15 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       pathSegments.push(name);
     }
 
-    const verb = verbForEndpoint(name);
+    const verb = getOperationVerb(prop) || verbForEndpoint(prop.name);
     if (verb) {
       return [verb, pathSegments];
     } else {
-      return ['get', pathSegments, name];
+      return ['get', pathSegments, prop.name];
     }
   }
 
-  function verbForEndpoint(name: string) {
+  function verbForEndpoint(name: string): HttpVerb | undefined {
     switch (name) {
       case 'list':
         return 'get';
@@ -146,7 +148,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       currentBasePath?.match(/\{\w+\}/g)?.map((s) => s.slice(1, -1)) ?? [];
     const params = getPathParameters(resource, prop);
     const [verb, newPathParams, subScope = ''] = pathForEndpoint(
-      prop.name,
+      prop,
       params,
       declaredPathParamNames
     );
