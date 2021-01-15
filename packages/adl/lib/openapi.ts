@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Program } from '../compiler/program.js';
 import { ArrayType, InterfaceType, InterfaceTypeProperty, ModelType, ModelTypeProperty, Type, UnionType } from '../compiler/types.js';
-import { getDoc } from './decorators.js';
+import { getDoc, getFormat, getIntrinsicType, getMaxLength, getMinLength } from './decorators.js';
 import {
   basePathForResource,
   getHeaderFieldName,
@@ -73,7 +73,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     // Write out the OpenAPI document to the output path
     fs.writeFileSync(
       path.resolve(options.outputFile),
-      JSON.stringify(root, null, 4));
+      JSON.stringify(root, null, 2));
   }
 
   function emitResource(resource: InterfaceType) {
@@ -231,7 +231,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
             }
             break;
           case 'content-type':
-            if (type.kind === "String" ){
+            if (type.kind === "String") {
               contentType = type.value;
             }
             break;
@@ -579,7 +579,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     if (type.kind === 'Model') {
       type = getTypeForSchemaProperties(type);
       if (!hasSchemaProperties(type.properties)) {
-        return "{}";
+        return getIntrinsicType(type) || "{}";
       }
     }
     return program!.checker!.getTypeName(type);
@@ -594,7 +594,35 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     return false;
   }
 
-  function mapADLTypeToOpenAPI(adlType: Type) {
+  function applyStringDecorators(adlType: Type, schemaType: any): any {
+    const pattern = getFormat(adlType);
+    if (schemaType.type === "string" && !schemaType.format && pattern) {
+      schemaType = {
+        ...schemaType,
+        pattern
+      };
+    }
+
+    const minLength = getMinLength(adlType);
+    if (schemaType.type === "string" && !schemaType.minLength && minLength) {
+      schemaType = {
+        ...schemaType,
+        minLength
+      };
+    }
+
+    const maxLength = getMaxLength(adlType);
+    if (schemaType.type === "string" && !schemaType.maxLength && maxLength) {
+      schemaType = {
+        ...schemaType,
+        maxLength
+      };
+    }
+
+    return schemaType;
+  }
+
+  function mapADLTypeToOpenAPI(adlType: Type): any {
     switch (adlType.kind) {
       case 'Number':
         return { type: 'number', enum: [adlType.value] };
@@ -603,6 +631,11 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       case 'Boolean':
         return { type: 'boolean', enum: [adlType.value] };
       case 'Model':
+        // Is the type templated with only one type?
+        if (adlType.baseModels.length === 1 && !hasSchemaProperties(adlType.ownProperties)) {
+          return mapADLTypeToOpenAPI(adlType.baseModels[0]);
+        }
+
         switch (adlType.name) {
           case 'int32':
             return { type: 'integer', format: 'int32' };
@@ -611,11 +644,18 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
           case 'float64':
             return { type: 'number' };
           case 'string':
-            return { type: 'string' };
+            // Return a string schema augmented by decorators
+            return applyStringDecorators(adlType, { type: 'string' });
           case 'boolean':
             return { type: 'boolean' };
           case 'date':
             return { type: 'string', format: 'date' };
+          default:
+            // Recursively call this function to find the underlying OpenAPI type
+            if (adlType.assignmentType) {
+              return applyStringDecorators(adlType, mapADLTypeToOpenAPI(adlType.assignmentType));
+            }
+            break;
         }
       // fallthrough
       default:
