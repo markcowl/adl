@@ -631,9 +631,8 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       case 'Boolean':
         return { type: 'boolean', enum: [adlType.value] };
       case 'Model':
-        // Is the type templated?
-        if (adlType.baseModels.length > 0 && !hasSchemaProperties(adlType.ownProperties)) {
-          // NOTE: Arbitrarily picking first type for now
+        // Is the type templated with only one type?
+        if (adlType.baseModels.length === 1 && !hasSchemaProperties(adlType.ownProperties)) {
           return mapADLTypeToOpenAPI(adlType.baseModels[0]);
         }
 
