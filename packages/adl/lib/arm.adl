@@ -11,10 +11,11 @@ model ArmResource {
 }
 
 @doc("Common properties for all resources tracked by ARM.")
-model ArmTrackedResource {
+model ArmTrackedResource<TProperties> {
   ... ArmResource;
   location: string;
   tags?: Map<string, string>;
+  properties: TProperties;
 }
 
 @doc("Response envelope for ARM operations.")

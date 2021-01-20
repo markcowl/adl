@@ -33,10 +33,7 @@ export function TrackedResource(
       // Create the resource model type and evaluate it
       const resourceModelNode =
         parseStatement<ModelStatementNode>(
-          `model ${target.name}Resource{ \
-            ... ArmTrackedResource; \
-            properties: ${propertyType.name} \
-          }`);
+          `model ${target.name}Resource = ArmTrackedResource<${propertyType.name}>;`);
       const resourceModelType = checker.getTypeForNode(resourceModelNode) as ModelType;
 
       // TODO: Add a standard API for this!

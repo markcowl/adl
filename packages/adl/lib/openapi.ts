@@ -660,7 +660,10 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
           default:
             // Recursively call this function to find the underlying OpenAPI type
             if (adlType.assignmentType) {
-              return applyStringDecorators(adlType, mapADLTypeToOpenAPI(adlType.assignmentType));
+              const assignedType = mapADLTypeToOpenAPI(adlType.assignmentType)
+              return assignedType
+                ? applyStringDecorators(adlType, assignedType)
+                : undefined;
             }
             break;
         }
