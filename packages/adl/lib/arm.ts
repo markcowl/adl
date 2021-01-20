@@ -16,7 +16,8 @@ function parseStatement<TNode extends Statement>(adlStatement: string): TNode {
 }
 
 // TODO: We can't name this ArmTrackedResource because that name
-//       is already taken.  Is this name sufficient?
+//       is already taken.  Consider having decorators occupy a
+//       different namespace than types.
 export function TrackedResource(
   program: Program,
   target: Type,
@@ -31,25 +32,16 @@ export function TrackedResource(
   if (target.kind === "Interface") {
     if (propertyType.kind === "Model") {
       // Create the resource model type and evaluate it
-      const resourceModelNode =
-        parseStatement<ModelStatementNode>(
-          `model ${target.name}Resource = ArmTrackedResource<${propertyType.name}>;`);
-      const resourceModelType = checker.getTypeForNode(resourceModelNode) as ModelType;
-
-      // TODO: Add a standard API for this!
-      // Add the model type to the program's global scope
-      program.globalSymbols.set(resourceModelType.name, {
-        kind: 'type',
-        node: resourceModelNode
-      });
+      const resourceModelName = `${target.name}Resource`;
+      program.evalAdlScript(`model ${resourceModelName} = ArmTrackedResource<${propertyType.name}>;`);
 
       // Create a temporary interface type and parse it so
       // that we can harvest its interface properties
       const resourceInterfaceNode = parseStatement<InterfaceStatementNode>(
         `interface Temp { \
-          @get get(@path subscriptionId: string, @path resourceGroup: string, @path name: string): ArmResponse<${resourceModelType.name}>; \
-          @put createOrUpdate(@path subscriptionId: string, @path resourceGroup: string, @path name: string, @body resource: ${resourceModelType.name}) : ArmResponse<${resourceModelType.name}>; \
-          @patch update(@path subscriptionId: string, @path resourceGroup: string, @path name: string, @body resource: ${resourceModelType.name}): ArmResponse<${resourceModelType.name}>; \
+          @get get(@path subscriptionId: string, @path resourceGroup: string, @path name: string): ArmResponse<${resourceModelName}>; \
+          @put createOrUpdate(@path subscriptionId: string, @path resourceGroup: string, @path name: string, @body resource: ${resourceModelName}) : ArmResponse<${resourceModelName}>; \
+          @patch update(@path subscriptionId: string, @path resourceGroup: string, @path name: string, @body resource: ${resourceModelName}): ArmResponse<${resourceModelName}>; \
           @_delete delete(@path subscriptionId: string, @path resourceGroup: string, @path name: string): ArmResponse; \
         }`
       );
