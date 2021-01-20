@@ -650,6 +650,13 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
             return { type: 'boolean' };
           case 'date':
             return { type: 'string', format: 'date' };
+          case 'Map':
+            // We assert on valType because Map types always have a type
+            const valType = adlType.ownProperties.get("v");
+            return {
+              type: 'object',
+              additionalProperties: mapADLTypeToOpenAPI(valType!.type)
+            };
           default:
             // Recursively call this function to find the underlying OpenAPI type
             if (adlType.assignmentType) {
