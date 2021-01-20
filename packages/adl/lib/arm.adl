@@ -1,0 +1,32 @@
+@doc("Common properties for all ARM resources.")
+model ArmResource {
+  // @visibility('read')
+  id: string;
+
+  // @visibility('read')
+  name: string; 
+
+  // @visibility('read')
+  type: string;   
+}
+
+@doc("Common properties for all resources tracked by ARM.")
+model ArmTrackedResource<TProperties> {
+  ... ArmResource;
+  location: string;
+  tags?: Map<string, string>;
+  properties: TProperties;
+}
+
+@doc("Response envelope for ARM operations.")
+model ArmResponse<T> {
+  @header statusCode: 200;
+
+  @header("x-ms-client-request-id")
+  clientRequestId: string;
+
+  @header("x-ms-correlation-request-id")
+  correlationRequestId: string;
+
+  ... T;
+}
