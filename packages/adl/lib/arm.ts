@@ -33,7 +33,7 @@ export function TrackedResource(
       // Create the resource model type and evaluate it
       const resourceModelNode =
         parseStatement<ModelStatementNode>(
-          `model ${target.name}Model { \
+          `model ${target.name}Resource{ \
             ... ArmTrackedResource; \
             properties: ${propertyType.name} \
           }`);
