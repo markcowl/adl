@@ -172,6 +172,9 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     currentEndpoint = currentPath[verb];
     if (operationIds.has(prop)) {
       currentEndpoint.operationId = operationIds.get(prop);
+    } else {
+      // Synthesize an operation ID
+      currentEndpoint.operationId = `${resource.name}_${prop.name}`;
     }
     currentEndpoint.summary = getDoc(prop);
     currentEndpoint.consumes = [];
