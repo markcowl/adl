@@ -1,11 +1,13 @@
 dependencies:
   '@rush-temp/adl.language': 'file:projects/adl.language.tgz'
+  '@types/mkdirp': 1.0.1
   '@types/mocha': 7.0.2
   '@types/node': 14.0.27
   '@types/yargs': 15.0.12
   '@typescript-eslint/eslint-plugin': 2.28.0_d62df2f848be5291fc9d2809dd11a3fb
   '@typescript-eslint/parser': 2.28.0_eslint@6.8.0+typescript@3.9.7
   eslint: 6.8.0
+  mkdirp: 1.0.4
   mocha: 7.1.2
   ts-node: 8.10.2_typescript@3.9.7
   typescript: 3.9.7
@@ -38,6 +40,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-3c+yGKvVP5Y9TYBEibGNR+kLtijnj7mYrXRg+WpFb2X9xm04g/DXYkfg4hmzJQosc9snFNUPkbYIhu+KAm6jJw==
+  /@types/mkdirp/1.0.1:
+    dependencies:
+      '@types/node': 14.0.27
+    dev: false
+    resolution:
+      integrity: sha512-HkGSK7CGAXncr8Qn/0VqNtExEE+PHMWb+qlR1faHMao7ng6P3tAaoWWBMdva0gL5h4zprjIO89GJOLXsMcDm1Q==
   /@types/mocha/7.0.2:
     dev: false
     resolution:
@@ -1037,6 +1045,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
+  /mkdirp/1.0.4:
+    dev: false
+    engines:
+      node: '>=10'
+    hasBin: true
+    resolution:
+      integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
   /mocha/7.1.2:
     dependencies:
       ansi-colors: 3.2.3
@@ -1709,12 +1724,14 @@ packages:
       integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==
   'file:projects/adl.language.tgz':
     dependencies:
+      '@types/mkdirp': 1.0.1
       '@types/mocha': 7.0.2
       '@types/node': 14.0.27
       '@types/yargs': 15.0.12
       '@typescript-eslint/eslint-plugin': 2.28.0_d62df2f848be5291fc9d2809dd11a3fb
       '@typescript-eslint/parser': 2.28.0_eslint@6.8.0+typescript@3.9.7
       eslint: 6.8.0
+      mkdirp: 1.0.4
       mocha: 7.1.2
       ts-node: 8.10.2_typescript@3.9.7
       typescript: 3.9.7
@@ -1722,18 +1739,20 @@ packages:
     dev: false
     name: '@rush-temp/adl.language'
     resolution:
-      integrity: sha512-5RfwV8T4dFMJLbqc00Dfc735bL/hpvcn0psIdYnFeS7h8CSFyWx4INn2gNoZUAnt1pPgX/Npdks6MkKWWs4/XQ==
+      integrity: sha512-5pIxzhzb2BWZLwGZpFHfuwS+EcfE4SkXWsDMXp8OJBJRt3T0mPSW+tMXMBxup9vLj6ias4pOJ24dwFwwo3+xyg==
       tarball: 'file:projects/adl.language.tgz'
     version: 0.0.0
 registry: ''
 specifiers:
   '@rush-temp/adl.language': 'file:./projects/adl.language.tgz'
+  '@types/mkdirp': ~1.0.1
   '@types/mocha': ^7.0.2
   '@types/node': 14.0.27
   '@types/yargs': ~15.0.12
   '@typescript-eslint/eslint-plugin': 2.28.0
   '@typescript-eslint/parser': 2.28.0
   eslint: 6.8.0
+  mkdirp: ~1.0.4
   mocha: 7.1.2
   ts-node: ^8.10.2
   typescript: ~3.9.5

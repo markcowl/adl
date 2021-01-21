@@ -24,3 +24,8 @@ steps:
 
 - script: node common/scripts/install-run-rush.js test
   displayName: Test
+
+- script: |
+    cd packages/adl
+    node dist/lib/cli.js generate samples/confluent/ --client
+  displayName: "Sanity Check Client Generation"
