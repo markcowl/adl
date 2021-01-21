@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Program } from '../compiler/program.js';
 import { ArrayType, InterfaceType, InterfaceTypeProperty, ModelType, ModelTypeProperty, Type, UnionType } from '../compiler/types.js';
-import { getDoc, getFormat, getIntrinsicType, getMaxLength, getMinLength } from './decorators.js';
+import { getDoc, getFormat, getIntrinsicType, getMaxLength, getMinLength, isSecret } from './decorators.js';
 import {
   basePathForResource,
   getHeaderFieldName,
@@ -620,6 +620,13 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
         ...schemaType,
         maxLength
       };
+    }
+
+    if (isSecret(adlType)) {
+      schemaType = {
+        ...schemaType,
+        format: "password"
+      }
     }
 
     return schemaType;

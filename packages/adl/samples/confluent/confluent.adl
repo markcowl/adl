@@ -7,7 +7,6 @@ interface Organization {
 model OrganizationProperties {
   @doc("UTC Time when Organization resource was created.")
   // @visibility('read') 
-  // createdTime: DateTime;
   createdTime: date;
 
   @doc("Id of the Confluent organization.")
@@ -16,8 +15,7 @@ model OrganizationProperties {
 
   @doc("Single sign-on url for the Confluent organization.")
   // @visibility('read') 
-  // ssoUrl: Uri;
-  ssoUrl: string;
+  ssoUrl: Uri;
 
   @doc("Details of the product offering.")
   offerDetail: OfferDetail;
@@ -68,13 +66,14 @@ model UserDetail {
 
 model OrganizationKeys {
   @doc("The primary key.")
-  // primary: SecureString;
-  primary: string;
+  primary: OrganizationKey;
 
   @doc("The secondary Key.")
-  // secondary: SecureString;
-  secondary: string;
+  secondary: OrganizationKey;
 }
+
+@doc("A string that represents a URI.")
+model Uri = string;
 
 @doc("Reusable representation of an email address")
 @format("\\w+@\\w+\\.\\w+")
@@ -88,3 +87,7 @@ model string50 = string;
 @doc("Shorthand for setting length limit.")
 @maxLength(25)
 model string25 = string;
+
+@doc("An Organization key to be handled as a secret.")
+@secret
+model OrganizationKey = string;
