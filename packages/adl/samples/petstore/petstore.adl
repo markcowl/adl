@@ -1,18 +1,8 @@
-@doc "Success"
-model Ok<T> {
-  @header statusCode: 200;
-  ... T;
-}
+// Model types
 
 model Pet {
   name: string;
   tag?: string;
-}
-
-@doc "Error"
-model Error {
-  code: int32;
-  message: string;
 }
 
 model Toy {
@@ -21,13 +11,27 @@ model Toy {
   name: string;
 }
 
+// Response types
+
+@doc "Success"
+model Ok<T> {
+  @header statusCode: 200;
+  ... T;
+}
+
+@doc "Error"
+model Error {
+  code: int32;
+  message: string;
+}
+
 @doc "Not modified"
 model NotModified<T> {
   @header statusCode: 304;
   ... T;
 }
 
-model Page<T> {
+model ResponsePage<T> {
   items: T[];
   nextLink: string;
 }
@@ -38,12 +42,13 @@ model PetId {
 
 @doc "Manage your pets."
 @resource "/pets"
-interface PetsResource {
+interface Pets {
   @doc "Delete a pet."
   delete(... PetId): Ok<{}> | Error;
 
   @fancyDoc "List pets."
-  list(@query nextLink?: string): Ok<Page<Pet>> | Error;
+  @pageable
+  list(@query nextLink?: string): Ok<ResponsePage<Pet>> | Error;
 
   @doc "Returns a pet. Supports eTags."
   read(... PetId): Ok<Pet> | NotModified<Pet> | Error;
@@ -53,5 +58,6 @@ interface PetsResource {
 
 @resource "/pets/{petId}/toys"
 interface ListPetToysResponse {
-  list(@path petId: string, @query nameFilter: string): Ok<Page<Toy>> | Error;
+  @pageable
+  list(@path petId: string, @query nameFilter: string): Ok<ResponsePage<Toy>> | Error;
 }
