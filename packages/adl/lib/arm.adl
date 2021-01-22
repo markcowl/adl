@@ -19,7 +19,7 @@ model ArmTrackedResource<TProperties> {
 }
 
 @doc("Response envelope for ARM operations.")
-model ArmResponse<T> {
+model ArmResponseBase {
   @header statusCode: 200;
 
   @header("x-ms-client-request-id")
@@ -27,6 +27,17 @@ model ArmResponse<T> {
 
   @header("x-ms-correlation-request-id")
   correlationRequestId: string;
+}
 
+@doc("Typed response envelope for ARM operations.")
+model ArmResponse<T> {
+  ... ArmResponseBase;
   ... T;
+}
+
+@doc("Paged response")
+model Page<T> {
+  ... ArmResponseBase;
+  value: T[];
+  nextLink: string;
 }

@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Program } from '../compiler/program.js';
 import { ArrayType, InterfaceType, InterfaceTypeProperty, ModelType, ModelTypeProperty, Type, UnionType } from '../compiler/types.js';
-import { getDoc, getFormat, getIntrinsicType, getMaxLength, getMinLength, isSecret } from './decorators.js';
+import { getDoc, getFormat, getIntrinsicType, getMaxLength, getMinLength, isSecret, isList } from './decorators.js';
 import {
   basePathForResource,
   getHeaderFieldName,
@@ -26,6 +26,26 @@ export function onBuild(p: Program) {
 const operationIds = new Map<Type, string>();
 export function operationId(program: Program, entity: Type, opId: string) {
   operationIds.set(entity, opId);
+}
+
+const pageableOperations = new Map<Type, string>();
+export function pageable(program: Program, entity: Type, nextLinkName: string = "nextLink") {
+  pageableOperations.set(entity, nextLinkName);
+}
+
+function getPageable(entity: Type): string | undefined {
+  return pageableOperations.get(entity);
+}
+
+const openApiExtensions = new Map<Type, Map<string, any>>();
+export function extension(program: Program, entity: Type, extensionName: string, value: any) {
+  let typeExtensions = openApiExtensions.get(entity) ?? new Map<string, any>();
+  typeExtensions.set(extensionName, value);
+  openApiExtensions.set(entity, typeExtensions);
+}
+
+function getExtensions(entity: Type): Map<string, any> {
+  return openApiExtensions.get(entity) ?? new Map<string, any>();
 }
 
 export interface OpenAPIEmitterOptions {
@@ -181,6 +201,15 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     currentEndpoint.produces = [];
     currentEndpoint.parameters = [];
     currentEndpoint.responses = {};
+
+    if (isList(prop)) {
+      const nextLinkName = getPageable(prop) || "nextLink";
+      if (nextLinkName) {
+        currentEndpoint["x-ms-pageable"] = {
+          nextLinkName
+        }
+      }
+    }
 
     emitEndpointParameters(
       prop.parameters,
@@ -527,6 +556,16 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
         }
       }
     }
+
+    // Attach any OpenAPI extensions
+    const extensions = getExtensions(model);
+    if (extensions) {
+      for (const key of extensions.keys()) {
+        // console.log("Adding extension", key, extensions.get(key));
+        modelSchema[key] = extensions.get(key);
+      }
+    }
+
     return modelSchema;
   }
 
