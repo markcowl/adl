@@ -33,7 +33,20 @@ export function TrackedResource(
     if (propertyType.kind === "Model") {
       // Create the resource model type and evaluate it
       const resourceModelName = `${target.name}Resource`;
-      program.evalAdlScript(`model ${resourceModelName} = ArmTrackedResource<${propertyType.name}>;`);
+      program.evalAdlScript(`
+         @extension("x-ms-azure-resource", true) \
+         model ${resourceModelName} = ArmTrackedResource<${propertyType.name}>;
+
+         @resource("/subscriptions/{subscriptionId}/providers/${resourceRoot}")
+         interface ${target.name}ListAll {
+           @pageable @get listAll(@path subscriptionId: string): Page<${resourceModelName}>;
+         }
+
+         @resource("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/${resourceRoot}")
+         interface ${target.name}List {
+           @pageable @get listByResourceGroup(@path subscriptionId: string, @path resourceGroup: string): Page<${resourceModelName}>;
+         }
+      `);
 
       // Create a temporary interface type and parse it so
       // that we can harvest its interface properties
