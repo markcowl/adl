@@ -47,7 +47,7 @@ interface Pets {
   delete(... PetId): Ok<{}> | Error;
 
   @fancyDoc "List pets."
-  @pageable
+  @list
   list(@query nextLink?: string): Ok<ResponsePage<Pet>> | Error;
 
   @doc "Returns a pet. Supports eTags."
@@ -58,6 +58,6 @@ interface Pets {
 
 @resource "/pets/{petId}/toys"
 interface ListPetToysResponse {
-  @pageable
+  @list
   list(@path petId: string, @query nameFilter: string): Ok<ResponsePage<Toy>> | Error;
 }

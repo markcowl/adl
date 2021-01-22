@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Program } from '../compiler/program.js';
 import { ArrayType, InterfaceType, InterfaceTypeProperty, ModelType, ModelTypeProperty, Type, UnionType } from '../compiler/types.js';
-import { getDoc, getFormat, getIntrinsicType, getMaxLength, getMinLength, isSecret } from './decorators.js';
+import { getDoc, getFormat, getIntrinsicType, getMaxLength, getMinLength, isSecret, isList } from './decorators.js';
 import {
   basePathForResource,
   getHeaderFieldName,
@@ -202,10 +202,12 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     currentEndpoint.parameters = [];
     currentEndpoint.responses = {};
 
-    const nextLinkName = getPageable(prop);
-    if (nextLinkName) {
-      currentEndpoint["x-ms-pageable"] = {
-        nextLinkName
+    if (isList(prop)) {
+      const nextLinkName = getPageable(prop) || "nextLink";
+      if (nextLinkName) {
+        currentEndpoint["x-ms-pageable"] = {
+          nextLinkName
+        }
       }
     }
 

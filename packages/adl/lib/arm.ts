@@ -39,12 +39,12 @@ export function TrackedResource(
 
          @resource("/subscriptions/{subscriptionId}/providers/${resourceRoot}")
          interface ${target.name}ListAll {
-           @pageable @get listAll(@path subscriptionId: string): Page<${resourceModelName}>;
+           @list @get listAll(@path subscriptionId: string): Page<${resourceModelName}>;
          }
 
          @resource("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/${resourceRoot}")
          interface ${target.name}List {
-           @pageable @get listByResourceGroup(@path subscriptionId: string, @path resourceGroup: string): Page<${resourceModelName}>;
+           @list @get listByResourceGroup(@path subscriptionId: string, @path resourceGroup: string): Page<${resourceModelName}>;
          }
       `);
 
