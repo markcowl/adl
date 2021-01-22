@@ -6,7 +6,7 @@
     {
       "label": "build/watch",
       "type": "shell",
-      "command": "node ${workspaceFolder}/adl/core/node_modules/typescript/lib/tsc.js --build --watch",
+      "command": "node ${workspaceFolder}/packages/adl/node_modules/typescript/lib/tsc.js --build --watch",
       "isBackground": true,
       "problemMatcher": "$tsc-watch",
       "group": {
@@ -23,10 +23,10 @@
       }
     },
     {
-      "label": "test core",
+      "label": "test",
       "type": "shell",
       "options": {
-        "cwd": "${workspaceFolder}/adl/core"
+        "cwd": "${workspaceFolder}/packages/adl"
       },
       "command": "npm test",
       "group": {

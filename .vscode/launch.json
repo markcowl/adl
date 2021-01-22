@@ -20,21 +20,25 @@
       "protocol": "inspector",
       "request": "launch",
       "name": "run compiler",
-      "program": "${workspaceRoot}/adl/language/dist/compiler/program.js",
-      "args": [],
+      "program": "${workspaceRoot}/packages/adl/dist/lib/cli.js",
+      "args": [
+        "compile",
+        "samples/scratch",
+        "--output-file=dist/scratch.openapi.json"
+      ],
       "smartStep": true,
       "sourceMaps": true,
       "skipFiles": [
         "<node_internals>/**/*.js"
       ],
-      "cwd": "${workspaceRoot}/adl/language"
+      "cwd": "${workspaceRoot}/packages/adl"
     },
     {
       "type": "node",
       "protocol": "inspector",
       "request": "launch",
-      "name": "run test",
-      "program": "${workspaceRoot}/adl/core/node_modules/mocha/bin/_mocha",
+      "name": "run tests",
+      "program": "${workspaceRoot}/packages/adl/node_modules/mocha/bin/_mocha",
       "args": [
         "dist/test",
         "--timeout=2000000"
@@ -45,41 +49,6 @@
         "<node_internals>/**/*.js"
       ],
       "cwd": "${workspaceRoot}/adl/plugins/azure"
-    },
-    {
-      "type": "extensionHost",
-      "request": "launch",
-      "name": "vscode-extension",
-      "runtimeExecutable": "${execPath}",
-      "args": [
-        "--extensionDevelopmentPath=${workspaceRoot}/adl/extension"
-      ],
-      "env": {
-        "no-static-loader": "true"
-      },
-      "outFiles": [
-        "${workspaceRoot}/adl/extension/dist/client/**/*.js"
-      ]
-    },
-    {
-      "type": "node",
-      "request": "attach",
-      "name": "vscode-server",
-      "port": 6009,
-      "timeout": 100000,
-      "restart": true,
-      "outFiles": [
-        "${workspaceRoot}/adl/extension/dist/server/**/*.js"
-      ]
-    }
-  ],
-  "compounds": [
-    {
-      "name": "VSCode Client+Server",
-      "configurations": [
-        "vscode-extension",
-        "vscode-server"
-      ]
     }
   ]
 }

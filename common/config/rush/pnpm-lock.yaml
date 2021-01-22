@@ -8,6 +8,7 @@ dependencies:
   '@typescript-eslint/parser': 2.28.0_eslint@6.8.0+typescript@3.9.7
   autorest: 3.0.6322
   eslint: 6.8.0
+  grammarkdown: 3.1.1
   mkdirp: 1.0.4
   mocha: 7.1.2
   ts-node: 8.10.2_typescript@3.9.7
@@ -33,6 +34,97 @@ packages:
     dev: false
     resolution:
       integrity: sha512-i6rgnR/YgPEQzZZnbTHHuZdlE8qyoBNalD6F+q4vAFlcMEcqmkoG+mPqJYJCo63qPf74+Y1UZsl3l6f7/RIkmA==
+  /@esfx/async-canceltoken/1.0.0-pre.16:
+    dependencies:
+      '@esfx/cancelable': 1.0.0-pre.16
+      '@esfx/collections-linkedlist': 1.0.0-pre.16
+      '@esfx/disposable': 1.0.0-pre.16
+      '@esfx/internal-guards': 1.0.0-pre.16
+      '@esfx/internal-tag': 1.0.0-pre.6
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-gGV068eL5+Rx5TPQDW8ZlLMvlKtwYL1ICR3NZpTTwA8Wo1+MyQOZN9rz/M85lJsV3kYVMrXYmDeNN6xH8rCF/Q==
+  /@esfx/cancelable/1.0.0-pre.16:
+    dependencies:
+      '@esfx/disposable': 1.0.0-pre.16
+      '@esfx/internal-deprecate': 1.0.0-pre.16
+      '@esfx/internal-guards': 1.0.0-pre.16
+      '@esfx/internal-tag': 1.0.0-pre.6
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-xKwB92EEem1iMiT9t9eM5kNllXyqdZy4hb/ycWBURnScspxiE1x3O+hugX953Iq1zv9Iy4JgVWdTknH9SEO/+A==
+  /@esfx/collection-core/1.0.0-pre.16:
+    dependencies:
+      '@esfx/internal-deprecate': 1.0.0-pre.16
+      '@esfx/internal-guards': 1.0.0-pre.16
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-lMV+7P3d85AOjgghRnGYMnI36GEjcMlJESH7cYs42PpbbhFAmRx42Czq57RuoV6IKlo4F2MawO2RqjzQy7OR+g==
+  /@esfx/collections-linkedlist/1.0.0-pre.16:
+    dependencies:
+      '@esfx/collection-core': 1.0.0-pre.16
+      '@esfx/equatable': 1.0.0-pre.16
+      '@esfx/internal-guards': 1.0.0-pre.16
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-IHQJy0o8hOFf/o/0DknY1mgbg9n0iXPfOfmQmET3XMj30A28udB/GztI+bY7x04NcB9y9VuClMqnhu3O294+7A==
+  /@esfx/disposable/1.0.0-pre.16:
+    dependencies:
+      '@esfx/internal-deprecate': 1.0.0-pre.16
+      '@esfx/internal-guards': 1.0.0-pre.16
+      '@esfx/internal-tag': 1.0.0-pre.6
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-FYsDunVx1nyd0Fey9gG03AYmU33/+yt8xbyTnBq4mTN0u2n2kqldq/SnFYmbhreK36TdAsqmiLiCub+sARRquA==
+  /@esfx/equatable/1.0.0-pre.16:
+    dependencies:
+      '@esfx/internal-deprecate': 1.0.0-pre.16
+      '@esfx/internal-hashcode': 1.0.0-pre.16
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-HmHXim5IILl42CY0MXFAFwQEZN2EqZeVnXm2CDz3zKy6cJiuBGzxA128uQNRFdKLcwiglE/55Yl8zEFo9QYxmQ==
+  /@esfx/internal-deprecate/1.0.0-pre.16:
+    dependencies:
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-PpxFI0LqkQrkrUppsJnAYjyrC5s+rEAcM7yZO04uazVZtbWGddgovHiJEbRBbrBpzpwA4KvAOrMl9vi2sdcs5A==
+  /@esfx/internal-guards/1.0.0-pre.16:
+    dependencies:
+      '@esfx/type-model': 1.0.0-pre.16
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-7859KZwi7PQDebsNG/cdM36ysEgv1YPtNZ1ixeZaSQG3YOE3NszPk8TcYESqCmfd3vQ3t4wEGpTNjQuHGuw4sw==
+  /@esfx/internal-hashcode/1.0.0-pre.16:
+    dependencies:
+      '@esfx/internal-murmur3': 1.0.0-pre.16
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-pDap4fI2Topgq5+9GQvstyNa/rrD1BbK5v0naaGWHeOKsZq+YL2bLSJzTDmm5Yyvh7h6FUnjP7D7OWv72fMwcg==
+  /@esfx/internal-murmur3/1.0.0-pre.16:
+    dependencies:
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-jjdoJMHGiiYNXpdxCRxEoZ7GYGkfZ7tKKIaSRK7C1THgTZbuKmtFQxrLRYFvvqJ/gRmDpVkqh+rg4eLL9t7jMw==
+  /@esfx/internal-tag/1.0.0-pre.6:
+    dev: false
+    resolution:
+      integrity: sha512-nODidP9/RBLqX39HL12IhFLgaoBHrC5nrm6D/BwquCGNoPQI9EXNPau+IdmGqeUcaMoVOFLFOkYtnHU52RVngw==
+  /@esfx/type-model/1.0.0-pre.16:
+    dependencies:
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-TCYm7KoidPSbVS+Rt3xiFc5/GZrOxO70YsvDCqmF2YZP9pXSOlL5mKUkeCIJmIzg0kdmjpGNjATXF33jOfdadQ==
   /@types/eslint-visitor-keys/1.0.0:
     dev: false
     resolution:
@@ -788,6 +880,14 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-BWICuzzDvDoH54NHKCseDanAhE3CeDorgDL5MT6LMXXj2WCnd9UC2szdk4AWLfjdgNBCXLUanXYcpBBKOSWGwg==
+  /grammarkdown/3.1.1:
+    dependencies:
+      '@esfx/async-canceltoken': 1.0.0-pre.16
+      '@esfx/cancelable': 1.0.0-pre.16
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-z7v8HVTc0LtWiGz+1w2lK3QBkha2DsczMrtxprBi7o31wxqgryE5BqKfVvMmUjJPMo+dY0572Z1vBG0r9wlmOQ==
   /growl/1.10.5:
     dev: false
     engines:
@@ -1741,6 +1841,7 @@ packages:
       '@typescript-eslint/parser': 2.28.0_eslint@6.8.0+typescript@3.9.7
       autorest: 3.0.6322
       eslint: 6.8.0
+      grammarkdown: 3.1.1
       mkdirp: 1.0.4
       mocha: 7.1.2
       ts-node: 8.10.2_typescript@3.9.7
@@ -1749,7 +1850,7 @@ packages:
     dev: false
     name: '@rush-temp/adl.language'
     resolution:
-      integrity: sha512-JUdt5fJ8X6Bnexg9DNQVbolKMOG7WSw7EGGpbTxpF5xkW/cYmM/MWcV5mKCqXHe+GAta/a8uUJyAks6wd8sEfw==
+      integrity: sha512-TO73incK4wkyY5y0xCVwq//f8hsCtZlTFCLKzQksSivcahfkKc+Ola1Y3gYMbzFMd1pJogc/cppJY9cqeeGzvw==
       tarball: 'file:projects/adl.language.tgz'
     version: 0.0.0
 registry: ''
@@ -1763,6 +1864,7 @@ specifiers:
   '@typescript-eslint/parser': 2.28.0
   autorest: ~3.0.6322
   eslint: 6.8.0
+  grammarkdown: ^3.1.1
   mkdirp: ~1.0.4
   mocha: 7.1.2
   ts-node: ^8.10.2
