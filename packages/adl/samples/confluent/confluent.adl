@@ -8,11 +8,11 @@ model email = string;
 @doc('Shorthand for setting length limit.')
 @minLength(5)
 @maxLength(50)
-model string50 = string;
+model MediumString = string;
 
 @doc("Shorthand for setting length limit.")
 @maxLength(25)
-model string25 = string;
+model ShortString = string;
 
 @doc("An Organization key to be handled as a secret.")
 @secret
@@ -47,19 +47,19 @@ model OrganizationProperties {
 @doc("Details of the product offering.")
 model OfferDetail {
   @doc("Id of the product publisher.")
-  publisherId: string50;
+  publisherId: MediumString;
 
   @doc("Id of the product offering.")
-  id: string50;
+  id: MediumString;
 
   @doc("Id of the product offer plan.")
-  planId: string50;
+  planId: MediumString;
 
   @doc("Name of the product offer plan.")
-  planName: string50;
+  planName: MediumString;
 
   @doc("Offer plan term unit.")
-  termUnit: string25;
+  termUnit: ShortString;
   
   @doc("SaaS offer status.")
   status: 'Started' | 'PendingFulfillmentStart' | 'InProgress' |
@@ -70,10 +70,10 @@ model OfferDetail {
 @doc("Details of the subscriber")
 model UserDetail {
   @doc("Subscriber first name.")
-  firstName: string50;
+  firstName: MediumString;
 
   @doc("Subscriber last name.")
-  lastName: string50;
+  lastName: MediumString;
 
   @doc("Subscriber email address.")
   emailAddress: email
