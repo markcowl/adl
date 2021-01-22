@@ -1,3 +1,23 @@
+@doc("A string that represents a URI.")
+model Uri = string;
+
+@doc("Reusable representation of an email address")
+@format("\\w+@\\w+\\.\\w+")
+model email = string;
+
+@doc('Shorthand for setting length limit.')
+@minLength(5)
+@maxLength(50)
+model string50 = string;
+
+@doc("Shorthand for setting length limit.")
+@maxLength(25)
+model string25 = string;
+
+@doc("An Organization key to be handled as a secret.")
+@secret
+model OrganizationKey = string;
+
 @TrackedResource("Microsoft.Confluent/organizations", OrganizationProperties)
 interface Organization {
   @post getKeys(@path subscriptionId: string, @path resourceGroup: string, @path name: string) : ArmResponse<OrganizationKeys>;
@@ -6,18 +26,16 @@ interface Organization {
 @doc("Details of the Confluent organization.")
 model OrganizationProperties {
   @doc("UTC Time when Organization resource was created.")
-  // @visibility('read') 
-  // createdTime: DateTime;
+  @visibility('read')
   createdTime: date;
 
   @doc("Id of the Confluent organization.")
-  // @visibility('read') 
+  @visibility('read')
   organizationId: string;
 
   @doc("Single sign-on url for the Confluent organization.")
-  // @visibility('read') 
-  // ssoUrl: Uri;
-  ssoUrl: string;
+  @visibility('read')
+  ssoUrl: Uri;
 
   @doc("Details of the product offering.")
   offerDetail: OfferDetail;
@@ -25,11 +43,6 @@ model OrganizationProperties {
   @doc("Subscriber details.")
   userDetail: UserDetail;
 }
-
-// @doc("Details of the Confluent organization (read only properties)")
-// @withVisibility("read")
-// model OrganizationReadProperties {
-// }
 
 @doc("Details of the product offering.")
 model OfferDetail {
@@ -68,23 +81,13 @@ model UserDetail {
 
 model OrganizationKeys {
   @doc("The primary key.")
-  // primary: SecureString;
-  primary: string;
+  primary: OrganizationKey;
 
   @doc("The secondary Key.")
-  // secondary: SecureString;
-  secondary: string;
+  secondary: OrganizationKey;
 }
 
-@doc("Reusable representation of an email address")
-@format("\\w+@\\w+\\.\\w+")
-model email = string;
-
-@doc('Shorthand for setting length limit.')
-@minLength(5)
-@maxLength(50)
-model string50 = string;
-
-@doc("Shorthand for setting length limit.")
-@maxLength(25)
-model string25 = string;
+// @doc("Details of the Confluent organization (read only properties)")
+// @withVisibility("read")
+// model OrganizationReadProperties {
+// }

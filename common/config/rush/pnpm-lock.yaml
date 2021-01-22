@@ -6,6 +6,7 @@ dependencies:
   '@types/yargs': 15.0.12
   '@typescript-eslint/eslint-plugin': 2.28.0_d62df2f848be5291fc9d2809dd11a3fb
   '@typescript-eslint/parser': 2.28.0_eslint@6.8.0+typescript@3.9.7
+  autorest: 3.0.6322
   eslint: 6.8.0
   mkdirp: 1.0.4
   mocha: 7.1.2
@@ -237,6 +238,14 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-+Ryf6g3BKoRc7jfp7ad8tM4TtMiaWvbF/1/sQcZPkkS7ag3D5nMBCe2UfOTONtAkaG0tO0ij3C5Lwmf1EiyjHg==
+  /autorest/3.0.6322:
+    dev: false
+    engines:
+      node: '>=10.13.0'
+    hasBin: true
+    requiresBuild: true
+    resolution:
+      integrity: sha512-q0W5FD8TmxCqpPiD9fXGPbt+DCyf3brGvAAnzoFSngcaBgwy/CfvUVVXbwcHEUYzFive++tpQwM6Q0SFHEfKbQ==
   /balanced-match/1.0.0:
     dev: false
     resolution:
@@ -1730,6 +1739,7 @@ packages:
       '@types/yargs': 15.0.12
       '@typescript-eslint/eslint-plugin': 2.28.0_d62df2f848be5291fc9d2809dd11a3fb
       '@typescript-eslint/parser': 2.28.0_eslint@6.8.0+typescript@3.9.7
+      autorest: 3.0.6322
       eslint: 6.8.0
       mkdirp: 1.0.4
       mocha: 7.1.2
@@ -1739,7 +1749,7 @@ packages:
     dev: false
     name: '@rush-temp/adl.language'
     resolution:
-      integrity: sha512-5pIxzhzb2BWZLwGZpFHfuwS+EcfE4SkXWsDMXp8OJBJRt3T0mPSW+tMXMBxup9vLj6ias4pOJ24dwFwwo3+xyg==
+      integrity: sha512-JUdt5fJ8X6Bnexg9DNQVbolKMOG7WSw7EGGpbTxpF5xkW/cYmM/MWcV5mKCqXHe+GAta/a8uUJyAks6wd8sEfw==
       tarball: 'file:projects/adl.language.tgz'
     version: 0.0.0
 registry: ''
@@ -1751,6 +1761,7 @@ specifiers:
   '@types/yargs': ~15.0.12
   '@typescript-eslint/eslint-plugin': 2.28.0
   '@typescript-eslint/parser': 2.28.0
+  autorest: ~3.0.6322
   eslint: 6.8.0
   mkdirp: ~1.0.4
   mocha: 7.1.2
