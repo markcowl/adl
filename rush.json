@@ -16,7 +16,7 @@
   "projectFolderMaxDepth": 5,
   "gitPolicy": {},
   "repository": {
-    "url": "https://github.com/azure/adl"
+    "url": "https://github.com/Azure/adl",
   },
   /**
    * Event hooks are customized script actions that Rush executes when specific events occur
@@ -45,10 +45,10 @@
   "telemetryEnabled": false,
   "projects": [
     {
-      "packageName": "@azure-tools/adl.language",
+      "packageName": "@azure-tools/adl",
       "projectFolder": "packages/adl",
       "reviewCategory": "production",
-      "shouldPublish": false
+      "shouldPublish": true
     }
   ]
 }
