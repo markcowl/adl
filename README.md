@@ -13,9 +13,7 @@ using the preview.
 You can install the current preview build of ADL using Node.js (12+) and `npm`:
 
 ```
-
 npm install -g @azure-tools/adl
-
 ```
 
 ADL will now be accessible via the `adl` command in your shell.
@@ -25,9 +23,7 @@ ADL will now be accessible via the `adl` command in your shell.
 See full usage documentation by typing:
 
 ```
-
 adl --help
-
 ```
 
 You can launch ADL in one of two ways:
@@ -38,9 +34,7 @@ You can compile a folder containing `.adl` files into a single OpenAPI document 
 using the following command:
 
 ```
-
 adl compile samples/petstore/
-
 ```
 
 You can now examine the emitted OpenAPI document in `./adl-output/openapi.json`.
@@ -51,9 +45,7 @@ You can compile a folder containing `.adl` files into a single OpenAPI document 
 using the following command:
 
 ```
-
 adl generate --client samples/petstore/
-
 ```
 
 Parameters for generating clients in other languages will be added soon.
