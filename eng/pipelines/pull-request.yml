@@ -27,5 +27,6 @@ steps:
 
 - script: |
     cd packages/adl
-    node dist/lib/cli.js generate samples/confluent/ --client
+    npm link
+    npx adl generate samples/confluent/ --client
   displayName: "Sanity Check Client Generation"
