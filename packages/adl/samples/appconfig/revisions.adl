@@ -1,5 +1,5 @@
 
-@resource('/revisions')
+@resource("/revisions")
 interface RevisionsResource(
   ... ServiceParams,
   ... SyncTokenHeader

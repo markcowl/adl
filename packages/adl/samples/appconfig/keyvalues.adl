@@ -16,7 +16,7 @@ model KeyWithFilters {
   @query label?: string;
 }
 
-@resource('/kv')
+@resource("/kv")
 interface KeyValuesResource(
   ... ServiceParams,
   ... SyncTokenHeader

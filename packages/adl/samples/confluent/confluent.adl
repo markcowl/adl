@@ -5,7 +5,7 @@ model Uri = string;
 @format("\\w+@\\w+\\.\\w+")
 model email = string;
 
-@doc('Shorthand for setting length limit.')
+@doc("Shorthand for setting length limit.")
 @minLength(5)
 @maxLength(50)
 model MediumString = string;
@@ -26,15 +26,15 @@ interface Organization {
 @doc("Details of the Confluent organization.")
 model OrganizationProperties {
   @doc("UTC Time when Organization resource was created.")
-  @visibility('read')
+  @visibility("read")
   createdTime: date;
 
   @doc("Id of the Confluent organization.")
-  @visibility('read')
+  @visibility("read")
   organizationId: string;
 
   @doc("Single sign-on url for the Confluent organization.")
-  @visibility('read')
+  @visibility("read")
   ssoUrl: Uri;
 
   @doc("Details of the product offering.")
@@ -62,9 +62,9 @@ model OfferDetail {
   termUnit: ShortString;
   
   @doc("SaaS offer status.")
-  status: 'Started' | 'PendingFulfillmentStart' | 'InProgress' |
-          'Subscribed' | 'Suspended' | 'Reinstated' | 'Succeeded' |
-          'Failed' | 'Unsubscribed' | 'Updating';
+  status: "Started" | "PendingFulfillmentStart" | "InProgress" |
+          "Subscribed" | "Suspended" | "Reinstated" | "Succeeded" |
+          "Failed" | "Unsubscribed" | "Updating";
 }
 
 @doc("Details of the subscriber")
