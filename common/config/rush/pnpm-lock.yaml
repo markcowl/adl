@@ -1,5 +1,5 @@
 dependencies:
-  '@rush-temp/adl.language': 'file:projects/adl.language.tgz'
+  '@rush-temp/adl': 'file:projects/adl.tgz'
   '@types/mkdirp': 1.0.1
   '@types/mocha': 7.0.2
   '@types/node': 14.0.27
@@ -1831,7 +1831,7 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==
-  'file:projects/adl.language.tgz':
+  'file:projects/adl.tgz':
     dependencies:
       '@types/mkdirp': 1.0.1
       '@types/mocha': 7.0.2
@@ -1848,14 +1848,14 @@ packages:
       typescript: 3.9.7
       yargs: 16.2.0
     dev: false
-    name: '@rush-temp/adl.language'
+    name: '@rush-temp/adl'
     resolution:
-      integrity: sha512-TO73incK4wkyY5y0xCVwq//f8hsCtZlTFCLKzQksSivcahfkKc+Ola1Y3gYMbzFMd1pJogc/cppJY9cqeeGzvw==
-      tarball: 'file:projects/adl.language.tgz'
+      integrity: sha512-EHElfoVitL2IOdVB1VRuuPkqsmLP7PQRWoPLKiJK9q5xC7DAKj3Z62+0bR4Ra9sKvt6of3AFsRS+HuB+7grUzg==
+      tarball: 'file:projects/adl.tgz'
     version: 0.0.0
 registry: ''
 specifiers:
-  '@rush-temp/adl.language': 'file:./projects/adl.language.tgz'
+  '@rush-temp/adl': 'file:./projects/adl.tgz'
   '@types/mkdirp': ~1.0.1
   '@types/mocha': ^7.0.2
   '@types/node': 14.0.27
