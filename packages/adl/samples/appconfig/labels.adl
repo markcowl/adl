@@ -1,5 +1,5 @@
 
-@resource('/labels')
+@resource("/labels")
 interface LabelsResource(
   ... ServiceParams,
   ... SyncTokenHeader

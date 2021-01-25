@@ -1,4 +1,4 @@
-@resource('/locks')
+@resource("/locks")
 interface LocksResource(
   ... ServiceParams,
   ... SyncTokenHeader

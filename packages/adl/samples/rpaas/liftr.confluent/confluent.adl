@@ -9,15 +9,15 @@ model OrganizationProperties
 {
   
   """ UTC Time when Organization resource was created. """
-  @visibility('read') 
+  @visibility("read") 
   createdTime: DateTime;
 
   """ Id of the Confluent organization."""
-  @visibility('read') 
+  @visibility("read") 
   organizationId: string;
 
   """ Single sign-on url for the Confluent organization."""
-  @visibility('read') 
+  @visibility("read") 
   ssoUrl: Uri;
 
   """ Details of the product offering."""
@@ -46,9 +46,9 @@ model OfferDetail
   termUnit: string25;
   
   """ SaaS offer status. """
-  status: 'Started' | 'PendingFulfillmentStart' | 'InProgress' |
-          'Subscribed' | 'Suspended' | 'Reinstated' | 'Succeeded' |
-          'Failed' | 'Unsubscribed' | 'Updating';
+  status: "Started" | "PendingFulfillmentStart" | "InProgress" |
+          "Subscribed" | "Suspended" | "Reinstated" | "Succeeded" |
+          "Failed" | "Unsubscribed" | "Updating";
 }
 
 """ Details of the subscriber """
@@ -73,11 +73,11 @@ model OrganizationKeys
   secondary: SecureString;
 }
 
-@doc('Reusable representation of an email address')
-@format('\w+@\w+\.\w+)
+@doc("Reusable representation of an email address")
+@format("\w+@\w+\.\w+)
 model email: string;
 
-@doc('Shorthand for setting length limit.')
+@doc("Shorthand for setting length limit.")
 @length(50)
 model string50: string;
 
