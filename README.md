@@ -10,7 +10,7 @@ using the preview.
 
 ## Installation
 
-You can install the current preview build of ADL using Node.js (12+) and `npm`:
+You can install the current preview build of ADL using Node.js (14+) and `npm`:
 
 ```
 npm install -g @azure-tools/adl
