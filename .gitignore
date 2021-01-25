@@ -171,3 +171,5 @@ common/temp/**
 package-deps.json
 
 *.vsix
+
+.npmrc
