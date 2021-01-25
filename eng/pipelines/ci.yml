@@ -26,5 +26,6 @@ steps:
     echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" > ./.npmrc
     git config --local user.email "azuresdk@microsoft.com"
     git config --local user.name "Azure SDK Bot"
+    git remote set-url --push origin https://azure-sdk:$(azuresdk-github-pat)@github.com/Azure/adl.git
     node common/scripts/install-run-rush.js publish --apply --publish --target-branch master --set-access-level public
   displayName: Release
