@@ -170,6 +170,9 @@ temp
 common/temp/**
 package-deps.json
 
+# Default ADL output
+adl-output/
+
 *.vsix
 
 .npmrc
