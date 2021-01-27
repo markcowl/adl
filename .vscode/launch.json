@@ -24,7 +24,7 @@
       "args": [
         "compile",
         "samples/scratch",
-        "--output-file=dist/scratch.openapi.json"
+        "--output-path=dist/scratch-adl-output"
       ],
       "smartStep": true,
       "sourceMaps": true,
