@@ -693,7 +693,9 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
           case 'int64':
             return { type: 'integer', format: 'int64' };
           case 'float64':
-            return { type: 'number' };
+            return { type: 'number', format: 'double' };
+          case 'float32':
+            return { type: 'number', format: 'float' };
           case 'string':
             // Return a string schema augmented by decorators
             return applyStringDecorators(adlType, { type: 'string' });
