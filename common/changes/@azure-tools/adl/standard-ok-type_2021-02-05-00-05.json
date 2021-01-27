@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@azure-tools/adl",
+      "comment": "Add standard Ok<T> type for success responses in rest.adl",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@azure-tools/adl",
+  "email": "daviwil@microsoft.com"
+}

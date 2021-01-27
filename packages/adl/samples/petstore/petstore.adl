@@ -11,14 +11,6 @@ model Toy {
   name: string;
 }
 
-// Response types
-
-@doc "Success"
-model Ok<T> {
-  @header statusCode: 200;
-  ... T;
-}
-
 @doc "Error"
 model Error {
   code: int32;
