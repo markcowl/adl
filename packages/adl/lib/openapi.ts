@@ -10,7 +10,7 @@ import {
   getQueryParamName,
   getResources,
   isBody,
-  getOperationVerb,
+  getOperationRoute,
   HttpVerb
 } from './rest.js';
 
@@ -136,11 +136,16 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       pathSegments.push(name);
     }
 
-    const verb = getOperationVerb(prop) || verbForEndpoint(prop.name);
-    if (verb) {
-      return [verb, pathSegments];
+    const route = getOperationRoute(prop)
+    if (route) {
+      return [route.verb, pathSegments, route.subPath?.replace(/^\//g, '')];
     } else {
-      return ['get', pathSegments, prop.name];
+      const verb = verbForEndpoint(prop.name);
+      if (verb) {
+        return [verb , pathSegments];
+      } else {
+        return ['get', pathSegments, prop.name];
+      }
     }
   }
 
