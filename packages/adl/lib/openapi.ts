@@ -686,6 +686,8 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
         }
 
         switch (adlType.name) {
+          case 'byte':
+            return { type: 'string', format: 'byte' };
           case 'int32':
             return { type: 'integer', format: 'int32' };
           case 'int64':
