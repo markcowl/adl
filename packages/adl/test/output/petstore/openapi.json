@@ -1,0 +1,281 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "(title)",
+    "version": "0000-00-00"
+  },
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/pets/{petId}": {
+      "delete": {
+        "operationId": "Pets_delete",
+        "summary": "Delete a pet.",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/PetId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "x-adl-name": "{}"
+            },
+            "description": "Success"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Error"
+          }
+        }
+      },
+      "get": {
+        "operationId": "Pets_read",
+        "summary": "Returns a pet. Supports eTags.",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/PetId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Pet"
+            },
+            "description": "Success"
+          },
+          "304": {
+            "schema": {
+              "$ref": "#/definitions/Pet"
+            },
+            "description": "Not modified"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/pets": {
+      "get": {
+        "operationId": "Pets_list",
+        "summary": "<blink>List pets.</blink>",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "nextLink",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Pet"
+                  },
+                  "x-adl-name": "Pet[]"
+                },
+                "nextLink": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "items",
+                "nextLink"
+              ],
+              "x-adl-name": "ResponsePage<Pet>"
+            },
+            "description": "Success"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Error"
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        }
+      },
+      "post": {
+        "operationId": "Pets_create",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "pet",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Pet"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Pet"
+            },
+            "description": "Success"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/pets/{petId}/toys": {
+      "get": {
+        "operationId": "ListPetToysResponse_list",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "nameFilter",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Toy"
+                  },
+                  "x-adl-name": "Toy[]"
+                },
+                "nextLink": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "items",
+                "nextLink"
+              ],
+              "x-adl-name": "ResponsePage<Toy>"
+            },
+            "description": "Success"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Error"
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "description": "Error",
+      "required": [
+        "code",
+        "message"
+      ]
+    },
+    "Pet": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "Toy": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "petId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "petId",
+        "name"
+      ]
+    }
+  },
+  "parameters": {
+    "PetId": {
+      "name": "petId",
+      "in": "path",
+      "required": true,
+      "type": "integer",
+      "format": "int32"
+    }
+  }
+}
