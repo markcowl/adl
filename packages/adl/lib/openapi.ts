@@ -691,12 +691,16 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
         }
 
         switch (adlType.name) {
+          case 'byte':
+            return { type: 'string', format: 'byte' };
           case 'int32':
             return { type: 'integer', format: 'int32' };
           case 'int64':
             return { type: 'integer', format: 'int64' };
           case 'float64':
-            return { type: 'number' };
+            return { type: 'number', format: 'double' };
+          case 'float32':
+            return { type: 'number', format: 'float' };
           case 'string':
             // Return a string schema augmented by decorators
             return applyStringDecorators(adlType, { type: 'string' });
@@ -704,6 +708,8 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
             return { type: 'boolean' };
           case 'date':
             return { type: 'string', format: 'date' };
+          case 'datetime':
+            return { type: 'string', format: 'date-time' };
           case 'Map':
             // We assert on valType because Map types always have a type
             const valType = adlType.ownProperties.get("v");
