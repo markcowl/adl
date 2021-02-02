@@ -1,28 +1,68 @@
-@ETag
-@PrivateEndpointProvider
+model ArmCreateRequest<T>
+{
+    @header if-none-match: string = '*';
+    ... ArmRequest<T>;
+}
+
+model ArmUpdateRequest<T>
+{
+    // note: placeholder, how do we access the value from an input type?
+    @header if-match: string = T.eTag;
+    ... ArmRequest<T>
+}
+
+model AccountResource: ArmTrackedResource<AccountProperties>;
+
 @ArmTrackedResource(AccountProperties, 'Microsoft.CognitiveServices/accounts')
 interface Account {
+  @doc("Create the account if it does not exist")
+  @put create(@body request: ArmCreateRequest<AccountResource>)  : ArmResponse<AccountResource>;
+  @doc("Update the account, if the server eTag matches the request eTag")
+  @put update(@body request: ArmUpdateRequest<AccountResource>) : ArmResponse<AccountResource>;
   @post listKeys() : ArmResponse<AccountKeys>;
   @post generateKey(@body parameters: RegenerateKeyParameters) : ArmResponse<AccountKeys>;
 
-  @get('skus')
-  listAvailableSkus() : Page<AccountSku>;
+  @rest('accountSkus')
+  interface AccountSkus {
+    @get
+    listAvailableSkus() : Page<AccountSku>;
+  }
 
-  @get('usages')
-  getUsages(@query filter: OdataFilter) : Page<AccountUsage>;
+  @rest('usages')
+  interface AccountUsages{
+    @get
+    getUsages(@query filter: OdataFilter) : Page<AccountUsage>;
+  }
 
-  // POST actions on different URIs
-  @post('/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices')
-  checkDomainAvailability(@body parameters: DomainAvailabilityParameters) : Response<DomainAvailabilityResult>;
+  @ArmSubResource(PrivateEndpointConnectionProperties, 'privateEndpointConnections')
+  interface PrivateEndpointConnections {}
 
-  // assume that we can automatically substitute for a range of common path parameters
-  // subscription, resourceGroupName, location, etc.
-  @post('/subscriptions/{subscriptionId}/locations/{location}/providers/Microsoft.CognitiveServices')
-  checkSkuAvailability(@body parameters: SkuAvailabilityParameters) : Response<SkuAvailabilityResult>;
-
-  @get('/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/skus')
-  listSkus() : Page<AccountSku>;
+  @rest('privateLinkResources')
+  interface PrivateLinkResources {
+      @get list() : Page<PrivateLinkResource>;
+  }
 }
+
+@rest('/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices')
+interface AccountNameAvailability {
+  @post
+  checkDomainAvailability(@path subscriptionId: string, @body parameters: DomainAvailabilityParameters) : Response<DomainAvailabilityResult>;
+}
+
+@rest('/subscriptions/{subscriptionId}/locations/{location}/providers/Microsoft.CognitiveServices')
+interface AccountSkuAvailability {
+  @post
+  checkSkuAvailability(@path subscriptionId: string, @path location: string, @body parameters: SkuAvailabilityParameters) : Response<SkuAvailabilityResult>;
+}
+
+@rest('/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/skus')
+interface AccountSkuList {
+  @get
+  listSkus(@path subscriptionId: string) : Page<AccountSku>;
+}
+
+// Private endpoint resources
+
 
 // TODO: appropriate pattern restrictions for specialized string values
 @format("[a-z]\w+")
@@ -46,11 +86,11 @@ model KeyCredential : string;
 @format("([a-z]\w+\/)+[a-z]\w+")
 model ResourceType: string;
 
-model DefaultNetworkRuleAction: "Allow" | "Deny" | string;
+model NetworkRuleAction: "Allow" | "Deny" | string;
 model NetworkRuleset {
   //TODO: Modeling non-restrictive enumerations
   @doc("The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated.")
-  defaultAction: DefaultNetworkRuleAction = "Deny";
+  defaultAction: NetworkRuleAction = "Deny";
             
   @doc("The list of IP address rules.")
   ipRules: IPRule[];
@@ -69,7 +109,7 @@ model VirtualNetworkRule {
   //TODO: define a restriction for ResourceReference that allows specifying type and other constraints
   @doc("Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'.")
   @required
-  @ResourceReference("Microsoft.Network/virtualNetworks/subnets")
+  @format("/subscriptions/\w+/resourceGroups/\w+/providers/Microsoft.Network/virtualNetworks/\w+/subnets/\w+")
   id: string;
   
   @doc("Gets the state of the virtual network rule")
@@ -103,7 +143,7 @@ model Encryption {
 // Again, a resource reference standard would be very useful, including type and potentially property constraints
 model UserOwnedStorage {
   @doc("Resource id of a Microsoft.Storage account")
-  @ResourceReference("Microsoft.Storage/accounts")
+  @format("/subscriptions/\w+/resourceGroups/\w+/providers/Microsoft.Storage/accounts/\w+")
   resourceId: string;
 }
 
@@ -127,12 +167,14 @@ model BingSearchProperties {
 
 model PersonalizationProperties {
   @doc("(Personalization Only) The flag to enable statistics of Bing Search.")
-  @ConnectionString('serviceBus')
+  @secret
+  @format("^( *)Endpoint=sb://(.*);( *)SharedAccessKeyName=(.*);( *)SharedAccessKey=(.*)$")
   @length(1000)
   eventHubConnectionString : string;
   
   @doc("(Personalization Only) The storage account connection string.")
-  @ConnectionString('storage')
+  @secret
+  @format("^(( *)DefaultEndpointsProtocol=(http|https)( *);( *))?AccountName=(.*)AccountKey=(.*)EndpointSuffix=(.*)$")
   @length(1000)
   storageAccountConnectionString: string;
 }
@@ -141,7 +183,7 @@ model MetricsAdvisorProperties {
   // TODO GUID/uuid pattern
   @doc("(Metrics Advisor Only) The Azure AD Client Id (Application Id).")
   @length(500)
-  aadClientId : uuid;
+  aadClientId : string;
   
   @doc("(Metrics Advisor Only) The Azure AD Tenant Id.")
   @length(500)
@@ -157,14 +199,14 @@ model MetricsAdvisorProperties {
 }
 
 model AccountProvisioningState: "Creating" | "ResolvingDNS" | "Moving" | 
-              "Deleting" | "Succeeded" | "Failed" | string;
+              "Deleting" | "Succeeded" | "Failed";
 
 @doc('Properties of a Cognitive Services Account')
 model AccountProperties {
      // note: one possible modeling of a non-restrictive enum
      @visibility('read')
      @doc("Gets the status of the cognitive services account at the time the operation was called")
-     provisioningState : AccountProvisioningState;
+     provisioningState : AccountProvisioningState | string;
           
      @doc("Endpoint of the created account.")
      @visibility('read')
@@ -198,11 +240,43 @@ model AccountProperties {
      @doc("The api properties for special APIs.")      
      apiProperties: AccountApiProperties;
 
+    // Priavte endpoint sdditions
+    @doc("Private endpoint connections for this account.")
+    privateEndpointConnections: PrivateEndpointCollection[];
 
      // This is somewhat annoying.  Should we simply standardize on creationDate and modificationDate 
      // and allow opt out if there is good reason?       
      @doc("Gets the date of cognitive services account creation.")
      dateCreated: DateTime;  
+}
+
+model PrivateEndpointConnection {
+    ... ArmResource<PrivateEndpointConnectionProperties>;
+}
+
+model PrivateEndpointConnectionProperties {
+    privateEndpoint: PrivateEndpoint;
+    privateLinkServiceConnectionState: PrivateLinkServiceConnectionState | string;
+    // resource reference for resource groupIds
+    @format("/subscriptions/\w+/resourceGroups/\w+")
+    groupIds: string[];
+}
+
+model PrivateEndpoint {
+    // resource reference for private Endpoint
+    @format("/subscriptions/\w+/resourceGroups/\w+/providers/Microsoft.Network/privateEndpoints/\w+")
+    id: string;
+}
+
+model PrivateLinkServiceConnectionState : "Pending" | "Approved" | "Rejected" | "Disconnected";
+
+model PrivateLinkResource : ArmResource<PrivateLinkResourceProperties>;
+
+model PrivateLinkResourceProperties {
+    groupId: string;
+    displayName: string;
+    requiredMembers: string[];
+    requiredZoneName: string[];
 }
 
 model AccountKeys {
@@ -248,7 +322,6 @@ model SkuAvailabilityParameters {
   // TODO: should have a link to the api to retrieve valid values
   @doc("The SKU of the resource.")
   @required
-  @ListValues(Account.ListSkus)
   skus: string[];
 
   @doc("The kind of the resource.")
@@ -267,8 +340,8 @@ model SkuAvailabilityResult {
     @doc("The type of the resource.")
     type: string;
     
+    //TODO: Should have a link to the API that lists valid values
     @doc("The Sku name of the resource.")
-    @ListValues(Account.ListSkus)
     skuName: string;
     
     @doc("Indicates the given SKU is available or not.")
@@ -309,7 +382,7 @@ model AccountSku {
 }
 
 // enum types: use this pattern to allow client names
-model RestrictionReason: "QuotaId" | "NotAvailableForSubscription" | string;
+model RestrictionReason: "QuotaId" | "NotAvailableForSubscription";
 model RestrictionType: "Location" | "Zone";
 
 model SkuRestriction {
@@ -326,7 +399,7 @@ model SkuRestriction {
 
   @doc("The reason for the restriction.")
   @visibility('read')
-  reasonCode: RestrictionReason;
+  reasonCode: RestrictionReason | string;
 }
 
 model RestrictionInfo{
@@ -339,7 +412,7 @@ model RestrictionInfo{
   zones: string[];
 }
 
-model UnitType: "Count" | "Bytes" | "Seconds" | "Percent" | "CountPerSecond" | "BytesPerSecond" | "Milliseconds" | string;
+model UnitType: "Count" | "Bytes" | "Seconds" | "Percent" | "CountPerSecond" | "BytesPerSecond" | "Milliseconds";
 
 model MetricName {
   @doc("The name of the metric.")
@@ -351,11 +424,12 @@ model MetricName {
   localizedValue: string;
 }
 
-model AccountQuotaStatus: "Included" | "Blocked" | "InOverage" | "Unknown" | string;
+model AccountQuotaStatus: "Included" | "Blocked" | "InOverage" | "Unknown";
 model AccountUsage {
   @doc("The unit of the metric.")
   @visibility('read')
-  unit: UnitType;
+  // one possibility for marking an enumeration as open
+  unit: UnitType | string;
 
   @doc("The name information for the metric.")
   @visibility('read')
@@ -379,7 +453,7 @@ model AccountUsage {
   
   @doc("Cognitive Services account quota usage status.")
   @visibility('read')
-  status: AccountQuotaStatus;
+  status: AccountQuotaStatus | string;
 }
 
 // placeholder - we should have some opinionated default for Odata filters

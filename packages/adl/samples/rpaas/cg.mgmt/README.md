@@ -2,6 +2,7 @@
 - KeyCredential: Handles storage-like keys
 - @PrivatendpointProvider
 - @ETag: adds an 'eTag' property to a model, and optional 'eTag' headers to requests, note that this might belong in ADL-Rest
+- @ConnectionString: syntactic sugar for a set of predefined connection string formats (storage, sql, servicebus, etc), also appropriately marks as secret.
 - ResourceType: strign representing a resource type
 - DnsPart: constrained string that obeys rules for DNS segment
 - DNSName: constrined string for DNS Name
