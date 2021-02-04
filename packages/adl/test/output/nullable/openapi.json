@@ -90,13 +90,29 @@
           ],
           "x-nullable": true,
           "x-adl-name": "one | two | null"
+        },
+        "manyNullsOneString": {
+          "type": "string",
+          "x-nullable": true,
+          "x-adl-name": "null | null | string | null"
+        },
+        "manyNullsSomeValues": {
+          "type": "number",
+          "enum": [
+            42,
+            100
+          ],
+          "x-nullable": true,
+          "x-adl-name": "null | 42 | null | 100 | null"
         }
       },
       "required": [
         "str",
         "strOrNull",
         "modelOrNull",
-        "literalsOrNull"
+        "literalsOrNull",
+        "manyNullsOneString",
+        "manyNullsSomeValues"
       ]
     }
   },

@@ -483,7 +483,13 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
 
   function getSchemaForUnion(union: UnionType) {
     let type: string;
-    const kind = union.options[0].kind;
+    const nonNullOptions = union.options.filter(t => !isNullType(t));
+    const nullable = union.options.length != nonNullOptions.length;
+    if (nonNullOptions.length === 0) {
+      throw new Error("Cannot have a union containing only null types.");
+    }
+
+    const kind = nonNullOptions[0].kind;
     switch (kind) {
       case 'String':
         type = 'string';
@@ -504,31 +510,23 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     const values = [];
     if (type === 'model') {
       // Model unions can only ever be a model type with 'null'
-      if (union.options.length > 2) {
-        throw invalidModelUnionForOpenAPIV2();
-      }
-
-      const otherType = union.options[1];
-      if (isNullType(otherType)) {
+      if (nonNullOptions.length == 1) {
         // Get the schema for the model type
-        const schema: any = getSchemaForType(union.options[0]);
-        schema["x-nullable"] = true;
+        const schema: any = getSchemaForType(nonNullOptions[0]);
+        schema["x-nullable"] = nullable;
         return schema;
       } else {
-        throw invalidModelUnionForOpenAPIV2();
+        throw new Error("Unions containing multiple model types cannot be emitted to OpenAPI v2 unless the union is between one model type and 'null'.");
       }
     }
 
-    let nullable: boolean = false;
-    for (const option of union.options) {
-      if (isNullType(option)) {
-        nullable = true;
-      } else if (option.kind != kind) {
+    for (const option of nonNullOptions) {
+      if (option.kind != kind) {
         throw invalidUnionForOpenAPIV2();
-      } else {
-        // We already know it's not a model type
-        values.push((<any>option).value);
-      }
+      } 
+
+      // We already know it's not a model type
+      values.push((<any>option).value);
     }
 
     const schema: any = { type };
@@ -543,10 +541,6 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
 
     function invalidUnionForOpenAPIV2() {
       return new Error("Unions cannot be emitted to OpenAPI v2 unless all options are literals of the same type.");
-    }
-
-    function invalidModelUnionForOpenAPIV2() {
-      return new Error("Unions containing multiple model types cannot be emitted to OpenAPI v2 unless the union is between one model type and 'null'.");
     }
   }
 
