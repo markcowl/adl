@@ -142,7 +142,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     } else {
       const verb = verbForEndpoint(prop.name);
       if (verb) {
-        return [verb , pathSegments];
+        return [verb, pathSegments];
       } else {
         return ['get', pathSegments, prop.name];
       }

@@ -5,9 +5,9 @@ model HasNullables {
   literalsOrNull: "one" | "two" | null;
 }
 
-@resource("test")
+@resource("/test")
 interface NullableMethods {
-  get(@query someParam: string | null, modelOrNull: AnotherModel | null): HasNullables
+  @get read(@query someParam: string | null, modelOrNull: AnotherModel | null): HasNullables
 }
 
 model AnotherModel {
