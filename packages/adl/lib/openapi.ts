@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Program } from '../compiler/program.js';
 import { ArrayType, InterfaceType, InterfaceTypeProperty, ModelType, ModelTypeProperty, Type, UnionType } from '../compiler/types.js';
-import { getDoc, getFormat, getIntrinsicType, getMaxLength, getMinLength, isSecret, isList } from './decorators.js';
+import { getDoc, getFormat, getIntrinsicType, getMaxLength, getMinLength, isSecret, isList, isIntrinsic } from './decorators.js';
 import {
   basePathForResource,
   getHeaderFieldName,
@@ -494,19 +494,52 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       case 'Boolean':
         type = 'boolean';
         break;
+      case 'Model':
+        type = 'model';
+        break;
       default:
         throw invalidUnionForOpenAPIV2();
     }
 
     const values = [];
-    for (const option of union.options) {
-      if (option.kind != kind) {
+    if (type === 'model') {
+      // Model unions can only ever be a model type with 'null'
+      if (union.options.length > 2) {
         throw invalidUnionForOpenAPIV2();
       }
-      values.push(option.value);
+
+      const otherType = union.options[1];
+      if (isNullType(otherType)) {
+        // Get the schema for the model type
+        const schema: any = getSchemaForType(union.options[0]);
+        schema["x-nullable"] = true;
+        return schema;
+      } else {
+        throw invalidUnionForOpenAPIV2();
+      }
     }
 
-    return { type, enum: values };
+    let nullable: boolean = false;
+    for (const option of union.options) {
+      if (isNullType(option)) {
+        nullable = true;
+      } else if (option.kind != kind) {
+        throw invalidUnionForOpenAPIV2();
+      } else {
+        // We already know it's not a model type
+        values.push((<any>option).value);
+      }
+    }
+
+    const schema: any = { type };
+    if (values.length > 0) {
+      schema.enum = values;
+    }
+    if (nullable) {
+      schema["x-nullable"] = true;
+    }
+
+    return schema;
 
     function invalidUnionForOpenAPIV2() {
       return new Error("Unions cannot be emitted to OpenAPI v2 unless all options are literals of the same type.");
@@ -520,6 +553,10 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       type: 'array',
       items: getSchemaOrPlaceholder(target),
     };
+  }
+
+  function isNullType(type: Type): boolean {
+    return type.kind === "Model" && type.name === "null" && isIntrinsic(type);
   }
 
   function getSchemaForModel(model: ModelType) {

@@ -1,0 +1,15 @@
+model HasNullables {
+  str: string;
+  strOrNull: string | null;
+  modelOrNull: AnotherModel | null;
+  literalsOrNull: "one" | "two" | null;
+}
+
+@resource("test")
+interface NullableMethods {
+  get(@query someParam: string | null, modelOrNull: AnotherModel | null): HasNullables
+}
+
+model AnotherModel {
+  num: int32;
+}
