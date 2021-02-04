@@ -505,7 +505,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     if (type === 'model') {
       // Model unions can only ever be a model type with 'null'
       if (union.options.length > 2) {
-        throw invalidUnionForOpenAPIV2();
+        throw invalidModelUnionForOpenAPIV2();
       }
 
       const otherType = union.options[1];
@@ -515,7 +515,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
         schema["x-nullable"] = true;
         return schema;
       } else {
-        throw invalidUnionForOpenAPIV2();
+        throw invalidModelUnionForOpenAPIV2();
       }
     }
 
@@ -543,6 +543,10 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
 
     function invalidUnionForOpenAPIV2() {
       return new Error("Unions cannot be emitted to OpenAPI v2 unless all options are literals of the same type.");
+    }
+
+    function invalidModelUnionForOpenAPIV2() {
+      return new Error("Unions containing multiple model types cannot be emitted to OpenAPI v2 unless the union is between one model type and 'null'.");
     }
   }
 
