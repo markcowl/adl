@@ -10,7 +10,8 @@ import { spawnSync, fork } from "child_process";
 // Get this from samples/ directory listing when reliable
 const sampleFolders = [
   "petstore",
-  "confluent"
+  "confluent",
+  "nullable"
 ];
 
 function resolvePath(...parts) {

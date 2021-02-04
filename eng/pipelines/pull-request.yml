@@ -31,7 +31,8 @@ steps:
 
     echo ""
     echo "Checking for changed output files..."
-    git diff --exit-code --name-only test/output
+    git add -A
+    git diff --exit-code --cached --name-only test/output
 
     code=$?; if [ $code -ne 0 ]; then
       echo ""
@@ -39,7 +40,7 @@ steps:
       echo "Please run `npm run regen-samples`, evaluate the output, and add it to the PR if the output is expected."
       echo "Here's the diff:"
       echo ""
-      git diff test/output
+      git diff --cached test/output
       exit $code
     fi
   displayName: "Check Compiled Sample Output"
