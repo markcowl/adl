@@ -253,7 +253,9 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     };
 
     const desc = getDoc(responseModel);
-    response.description = desc ?? "";
+    if (desc) {
+      response.description = desc;
+    }
 
     if (responseModel.kind === 'Model') {
       for (const prop of responseModel.properties.values()) {

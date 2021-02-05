@@ -49,8 +49,7 @@
           "200": {
             "schema": {
               "$ref": "#/definitions/HasNullables"
-            },
-            "description": ""
+            }
           }
         }
       }
