@@ -2,7 +2,7 @@
   "changes": [
     {
       "packageName": "@azure-tools/adl",
-      "comment": "Add standard Ok<T> type for success responses in rest.adl",
+      "comment": "Add response model types for many standard HTTP responses in rest.adl",
       "type": "minor"
     }
   ],
