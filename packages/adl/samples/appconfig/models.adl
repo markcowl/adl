@@ -16,7 +16,7 @@ model AcceptDatetimeHeader {
 }
 
 @doc "Success"
-model Ok<T> {
+model OkResponse<T> {
   @header statusCode: 200;
   ... T;
 }

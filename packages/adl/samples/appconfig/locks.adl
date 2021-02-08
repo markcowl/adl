@@ -8,12 +8,12 @@ interface LocksResource(
     @path key: string,
     @query label: string,
     ... ETagHeaders,
-  ): Ok<SyncTokenHeader & KeyValue> | Error;
+  ): OkResponse<SyncTokenHeader & KeyValue> | Error;
 
   @operationId("DeleteLock")
   delete(
     @path key: string,
     @query label: string,
     ... ETagHeaders,
-  ): Ok<SyncTokenHeader & KeyValue> | Error;
+  ): OkResponse<SyncTokenHeader & KeyValue> | Error;
 }

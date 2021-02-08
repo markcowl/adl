@@ -27,8 +27,7 @@
               "type": "object",
               "properties": {},
               "x-adl-name": "{}"
-            },
-            "description": "Success"
+            }
           },
           "default": {
             "schema": {
@@ -54,8 +53,7 @@
           "200": {
             "schema": {
               "$ref": "#/definitions/Pet"
-            },
-            "description": "Success"
+            }
           },
           "304": {
             "schema": {
@@ -109,8 +107,7 @@
                 "nextLink"
               ],
               "x-adl-name": "ResponsePage<Pet>"
-            },
-            "description": "Success"
+            }
           },
           "default": {
             "schema": {
@@ -145,8 +142,7 @@
           "200": {
             "schema": {
               "$ref": "#/definitions/Pet"
-            },
-            "description": "Success"
+            }
           },
           "default": {
             "schema": {
@@ -199,8 +195,7 @@
                 "nextLink"
               ],
               "x-adl-name": "ResponsePage<Toy>"
-            },
-            "description": "Success"
+            }
           },
           "default": {
             "schema": {

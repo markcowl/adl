@@ -18,7 +18,7 @@ interface RevisionsResource(
 
     @doc "A filter used to match keys."
     @query key: string,
-  ): Ok<SyncTokenHeader & Page<KeyValue>> | Error;
+  ): OkResponse<SyncTokenHeader & Page<KeyValue>> | Error;
 
   @doc "Requests the headers and status of the given resource."
   @operationId "CheckRevisions"
@@ -27,5 +27,5 @@ interface RevisionsResource(
 
     @query name: string,
     @query after: string,
-  ): Ok<SyncTokenHeader> | Error;
+  ): OkResponse<SyncTokenHeader> | Error;
 }
