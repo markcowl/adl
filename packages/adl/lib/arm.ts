@@ -40,12 +40,12 @@ export function TrackedResource(
 
          @resource("/subscriptions/{subscriptionId}/providers/${resourceRoot}")
          namespace ${target.name}ListAll {
-           @list @get listAll(@path subscriptionId: string): Page<${resourceModelName}>;
+           @list @get op listAll(@path subscriptionId: string): Page<${resourceModelName}>;
          }
 
          @resource("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/${resourceRoot}")
          namespace ${target.name}List {
-           @list @get listByResourceGroup(@path subscriptionId: string, @path resourceGroup: string): Page<${resourceModelName}>;
+           @list @get op listByResourceGroup(@path subscriptionId: string, @path resourceGroup: string): Page<${resourceModelName}>;
          }
       `);
 
@@ -54,10 +54,10 @@ export function TrackedResource(
       const resourceNamespaceNode = parseStatement<NamespaceStatementNode>(
         // TODO: Might need to generate dynamic namespace here!
         `namespace Temp { \
-          @get get(@path subscriptionId: string, @path resourceGroup: string, @path name: string): ArmResponse<${resourceModelName}>; \
-          @put createOrUpdate(@path subscriptionId: string, @path resourceGroup: string, @path name: string, @body resource: ${resourceModelName}) : ArmResponse<${resourceModelName}>; \
-          @patch update(@path subscriptionId: string, @path resourceGroup: string, @path name: string, @body resource: ${resourceModelName}): ArmResponse<${resourceModelName}>; \
-          @_delete delete(@path subscriptionId: string, @path resourceGroup: string, @path name: string): ArmResponse; \
+          @get op get(@path subscriptionId: string, @path resourceGroup: string, @path name: string): ArmResponse<${resourceModelName}>; \
+          @put op createOrUpdate(@path subscriptionId: string, @path resourceGroup: string, @path name: string, @body resource: ${resourceModelName}) : ArmResponse<${resourceModelName}>; \
+          @patch op update(@path subscriptionId: string, @path resourceGroup: string, @path name: string, @body resource: ${resourceModelName}): ArmResponse<${resourceModelName}>; \
+          @_delete op delete(@path subscriptionId: string, @path resourceGroup: string, @path name: string): ArmResponse; \
         }`
       );
 
