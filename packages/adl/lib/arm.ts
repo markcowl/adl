@@ -1,4 +1,4 @@
-import { InterfaceStatementNode, ModelStatementNode, ModelType, Type, Statement } from "../compiler/types";
+import { NamespaceStatementNode, ModelStatementNode, ModelType, Type, Statement } from "../compiler/types";
 import { Program } from "../compiler/program";
 import { parse } from "../compiler/parser.js";
 import { resource } from "./rest.js";
@@ -29,29 +29,31 @@ export function TrackedResource(
     throw new Error("Program does not have a checker assigned");
   }
 
-  if (target.kind === "Interface") {
+  if (target.kind === "Namespace") {
     if (propertyType.kind === "Model") {
       // Create the resource model type and evaluate it
       const resourceModelName = `${target.name}Resource`;
+      // TODO: How do I put this in a parent namespace?
       program.evalAdlScript(`
          @extension("x-ms-azure-resource", true) \
          model ${resourceModelName} = ArmTrackedResource<${propertyType.name}>;
 
          @resource("/subscriptions/{subscriptionId}/providers/${resourceRoot}")
-         interface ${target.name}ListAll {
+         namespace ${target.name}ListAll {
            @list @get listAll(@path subscriptionId: string): Page<${resourceModelName}>;
          }
 
          @resource("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/${resourceRoot}")
-         interface ${target.name}List {
+         namespace ${target.name}List {
            @list @get listByResourceGroup(@path subscriptionId: string, @path resourceGroup: string): Page<${resourceModelName}>;
          }
       `);
 
-      // Create a temporary interface type and parse it so
-      // that we can harvest its interface properties
-      const resourceInterfaceNode = parseStatement<InterfaceStatementNode>(
-        `interface Temp { \
+      // Create a temporary namespace and parse it so
+      // that we can harvest its namespace properties
+      const resourceNamespaceNode = parseStatement<NamespaceStatementNode>(
+        // TODO: Might need to generate dynamic namespace here!
+        `namespace Temp { \
           @get get(@path subscriptionId: string, @path resourceGroup: string, @path name: string): ArmResponse<${resourceModelName}>; \
           @put createOrUpdate(@path subscriptionId: string, @path resourceGroup: string, @path name: string, @body resource: ${resourceModelName}) : ArmResponse<${resourceModelName}>; \
           @patch update(@path subscriptionId: string, @path resourceGroup: string, @path name: string, @body resource: ${resourceModelName}): ArmResponse<${resourceModelName}>; \
@@ -59,9 +61,9 @@ export function TrackedResource(
         }`
       );
 
-      // Add all of the properties from the parsed interface
-      for (const prop of resourceInterfaceNode.properties) {
-        target.properties.set(prop.id.sv, checker.checkInterfaceProperty(prop));
+      // Add all of the properties from the parsed namespace 
+      for (const prop of resourceNamespaceNode.properties) {
+        target.properties.set(prop.id.sv, checker.checkNamespaceProperty(prop));
       }
 
       // Add the @resource decorator
@@ -70,6 +72,6 @@ export function TrackedResource(
       throw new Error("TrackedResource property type must be a model");
     }
   } else {
-    throw new Error("TrackedResource decorator can only be applied to interfaces");
+    throw new Error("TrackedResource decorator can only be applied to namespaces");
   }
 }
