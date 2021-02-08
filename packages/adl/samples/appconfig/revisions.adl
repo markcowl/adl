@@ -7,7 +7,7 @@ namespace RevisionsResource(
 
   @doc "Gets a list of revisions."
   @operationId "GetRevisions"
-  list(
+  op list(
     ... AcceptDatetimeHeader,
 
     @doc "Used to select what fields are present in the returned resource(s)."
@@ -22,7 +22,7 @@ namespace RevisionsResource(
 
   @doc "Requests the headers and status of the given resource."
   @operationId "CheckRevisions"
-  listHead(
+  op listHead(
     ... AcceptDatetimeHeader,
 
     @query name: string,

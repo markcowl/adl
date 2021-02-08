@@ -7,7 +7,7 @@ namespace LabelsResource(
 
   @doc("Gets a list of labels.")
   @operationId("GetLabels")
-  list(
+  op list(
     ... AcceptDatetimeHeader,
 
     @query name?: string,
@@ -16,7 +16,7 @@ namespace LabelsResource(
 
   @doc("Requests the headers and status of the given resource.")
   @operationId("CheckLabels")
-  listHead(
+  op listHead(
     ... AcceptDatetimeHeader,
 
     @query name?: string,

@@ -20,7 +20,7 @@ model OrganizationKey = string;
 
 @TrackedResource("Microsoft.Confluent/organizations", OrganizationProperties)
 namespace Organization {
-  @post getKeys(@path subscriptionId: string, @path resourceGroup: string, @path name: string) : ArmResponse<OrganizationKeys>;
+  @post op getKeys(@path subscriptionId: string, @path resourceGroup: string, @path name: string) : ArmResponse<OrganizationKeys>;
 }
 
 @doc("Details of the Confluent organization.")

@@ -36,20 +36,20 @@ model PetId {
 @resource "/pets"
 namespace Pets {
   @doc "Delete a pet."
-  delete(... PetId): OkResponse<{}> | Error;
+  op delete(... PetId): OkResponse<{}> | Error;
 
   @fancyDoc "List pets."
   @list
-  list(@query nextLink?: string): OkResponse<ResponsePage<Pet>> | Error;
+  op list(@query nextLink?: string): OkResponse<ResponsePage<Pet>> | Error;
 
   @doc "Returns a pet. Supports eTags."
-  read(... PetId): OkResponse<Pet> | NotModified<Pet> | Error;
+  op read(... PetId): OkResponse<Pet> | NotModified<Pet> | Error;
 
-  create(@body pet: Pet): OkResponse<Pet> | Error;
+  op create(@body pet: Pet): OkResponse<Pet> | Error;
 }
 
 @resource "/pets/{petId}/toys"
 namespace ListPetToysResponse {
   @list
-  list(@path petId: string, @query nameFilter: string): OkResponse<ResponsePage<Toy>> | Error;
+  op list(@path petId: string, @query nameFilter: string): OkResponse<ResponsePage<Toy>> | Error;
 }

@@ -6,7 +6,7 @@ namespace KeysResource(
 
   @doc("Gets a list of keys.")
   @operationId("GetKeys")
-  list(
+  op list(
     ... AcceptDatetimeHeader,
 
     @query name: string,
@@ -15,7 +15,7 @@ namespace KeysResource(
 
   @doc("Requests the headers and status of the given resource.")
   @operationId("CheckKeys")
-  listHead(
+  op listHead(
     ... AcceptDatetimeHeader,
 
     @query name: string,
