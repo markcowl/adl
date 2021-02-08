@@ -34,7 +34,7 @@ interface KeyValuesResource(
     @doc("Used to select what fields are present in the returned resource(s).")
     @query $Select?: KeyField[],
 
-  ): Ok<SyncTokenHeader & Page<KeyValue>> | Error;
+  ): OkResponse<SyncTokenHeader & Page<KeyValue>> | Error;
 
   @doc("Gets a list of key-values.")
   @operationId("CheckKeyValues")
@@ -48,7 +48,7 @@ interface KeyValuesResource(
     @doc("Used to select what fields are present in the returned resource(s).")
     @query $Select?: KeyField[]
 
-  ): Ok<SyncTokenHeader> | Error;
+  ): OkResponse<SyncTokenHeader> | Error;
 
 
   @doc("Gets a single key-value.")
@@ -61,7 +61,7 @@ interface KeyValuesResource(
     @doc("Used to select what fields are present in the returned resource(s).")
     @query $Select?: KeyField[]
 
-  ): Ok<KeyValueHeaders & KeyValue> | Error;
+  ): OkResponse<KeyValueHeaders & KeyValue> | Error;
 
   @doc("Requests the headers and status of the given resource.")
   @operationId("CheckKeyValue")
@@ -69,7 +69,7 @@ interface KeyValuesResource(
     ... ETagHeaders,
     ... AcceptDatetimeHeader,
     ... KeyWithFilters
-  ): Ok<SyncTokenHeader & LastModifiedHeader> | Error;
+  ): OkResponse<SyncTokenHeader & LastModifiedHeader> | Error;
 
   @doc("Creates a key-value.")
   @operationId("PutKeyValue")
@@ -79,7 +79,7 @@ interface KeyValuesResource(
 
     @header contentType: "application/json",
     @body entity: KeyValue,
-  ): Ok<KeyValueHeaders & KeyValue> | Error;
+  ): OkResponse<KeyValueHeaders & KeyValue> | Error;
 
   @doc("Updates a key-value pair")
   @operationId("UpdateKeyValue")
@@ -89,7 +89,7 @@ interface KeyValuesResource(
 
     @header contentType: "application/json-patch+json",
     @body jsonPatch: string[]
-  ): Ok<KeyValueHeaders & KeyValue> | Error;
+  ): OkResponse<KeyValueHeaders & KeyValue> | Error;
 
 
   @doc("Deletes a key-value.")
@@ -97,7 +97,7 @@ interface KeyValuesResource(
   delete(
     ... KeyWithFilters,
     @header ifMatch: string,
-  ): Ok<KeyValueHeaders & KeyValue> | NoContent<{}> | Error;
+  ): OkResponse<KeyValueHeaders & KeyValue> | NoContent<{}> | Error;
 
 }
 

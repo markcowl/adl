@@ -632,7 +632,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
    *
    * This ensures we use the best name in OpenAPI when the ADL pattern of adding
    * headers and status codes is done by instantiating a template. For example,
-   * given `Ok<T> { @header statusCode: 200; ... T }`, then T is the schema
+   * given `OkResponse<T> { @header statusCode: 200; ... T }`, then T is the schema
    * type.
    */
   function getTypeForSchemaProperties(type: ModelType): ModelType {
