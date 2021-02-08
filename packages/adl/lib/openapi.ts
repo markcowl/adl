@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Program } from '../compiler/program.js';
-import { ArrayType, InterfaceType, InterfaceTypeProperty, ModelType, ModelTypeProperty, Type, UnionType } from '../compiler/types.js';
+import { ArrayType, Namespace, NamespaceProperty, ModelType, ModelTypeProperty, Type, UnionType } from '../compiler/types.js';
 import { getDoc, getFormat, getIntrinsicType, getMaxLength, getMinLength, isSecret, isList, isIntrinsic } from './decorators.js';
 import {
   basePathForResource,
@@ -82,11 +82,11 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
 
   function emitOpenAPI() {
     for (let resource of getResources()) {
-      if (resource.kind !== 'Interface') {
-        throw new Error("Resource goes on interface");
+      if (resource.kind !== 'Namespace') {
+        throw new Error("Resource goes on namespace");
       }
 
-      emitResource(<InterfaceType>resource);
+      emitResource(<Namespace>resource);
     }
     emitReferences();
 
@@ -96,7 +96,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       JSON.stringify(root, null, 2));
   }
 
-  function emitResource(resource: InterfaceType) {
+  function emitResource(resource: Namespace) {
     currentBasePath = basePathForResource(resource);
 
     for (const [name, prop] of resource.properties) {
@@ -104,7 +104,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     }
   }
 
-  function getPathParameters(iface: InterfaceType, prop: InterfaceTypeProperty) {
+  function getPathParameters(iface: Namespace, prop: NamespaceProperty) {
     return [
       ...(iface.parameters?.properties.values() ?? []),
       ...(prop.parameters?.properties.values() ?? []),
@@ -114,7 +114,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
   /**
    * Translates endpoint names like `read` to REST verbs like `get`.
    */
-  function pathForEndpoint(prop: InterfaceTypeProperty, pathParams: ModelTypeProperty[], declaredPathParamNames: string[]): [string, string[], string?] {
+  function pathForEndpoint(prop: NamespaceProperty, pathParams: ModelTypeProperty[], declaredPathParamNames: string[]): [string, string[], string?] {
     const paramByName = new Map(pathParams.map((p) => [p.name, p]));
     const pathSegments = [];
 
@@ -168,7 +168,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     return undefined;
   }
 
-  function emitEndpoint(resource: InterfaceType, prop: InterfaceTypeProperty) {
+  function emitEndpoint(resource: Namespace, prop: NamespaceProperty) {
     const declaredPathParamNames =
       currentBasePath?.match(/\{\w+\}/g)?.map((s) => s.slice(1, -1)) ?? [];
     const params = getPathParameters(resource, prop);

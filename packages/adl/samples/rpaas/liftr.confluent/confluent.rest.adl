@@ -1,29 +1,29 @@
 ﻿
 @rest("/subscriptions/{subscription}/resourceGroups/{resourceGroup}/providers/Microsoft.Confluent/organizations/{name}")
-interface Organization 
+namespace Organization
 {
-  @get get(@path subscription: string, @path resourceGroup: string, @path name: string) : ArmResponse<Organization>;
+  @get op get(@path subscription: string, @path resourceGroup: string, @path name: string) : ArmResponse<Organization>;
 
   @slro("/operations", OperationStatus)
-  @put createOrUpdate(@path subscription: string, @path resourceGroup: string, @path name: string, Organization) : ArmResponse<Organization>;
-  @patch update(@path subscription: string, @path resourceGroup: string, @path name: string, OrganizationUpdate) : ArmResponse<Organization>;
+  @put op createOrUpdate(@path subscription: string, @path resourceGroup: string, @path name: string, Organization) : ArmResponse<Organization>;
+  @patch op update(@path subscription: string, @path resourceGroup: string, @path name: string, OrganizationUpdate) : ArmResponse<Organization>;
   
   @slro("/operations", OperationStatus)
-  @delete delete(@path subscription: string, @path resourceGroup: string, @path name: string) : ArmResponse;
+  @delete op delete(@path subscription: string, @path resourceGroup: string, @path name: string) : ArmResponse;
 
-  @post getKeys(@path subscription: string, @path resourceGroup: string, @path name: string) : ArmResponse<OrganizationKeys>;
+  @post op getKeys(@path subscription: string, @path resourceGroup: string, @path name: string) : ArmResponse<OrganizationKeys>;
 }
 
 @rest("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}")
-interface OrganizationListAll
+namespace OrganizationListAll
 {
-  @get listAll(@path subscription: string) : Page<OrganizationKeys>;
+  @get op listAll(@path subscription: string) : Page<OrganizationKeys>;
 }
 
 @rest("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}")
-interface OrganizationList
+namespace OrganizationList
 {
-  @get listByResourceGroup(@path subscription: string, @path resourceGroup: string) : Page<OrganizationKeys>;
+  @get op listByResourceGroup(@path subscription: string, @path resourceGroup: string) : Page<OrganizationKeys>;
 }
 
 """ Paged response """

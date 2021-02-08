@@ -1,17 +1,17 @@
 @resource("/locks")
-interface LocksResource(
+namespace LocksResource(
   ... ServiceParams,
   ... SyncTokenHeader
 ) {
   @operationId("GetLock")
-  read(
+  op read(
     @path key: string,
     @query label: string,
     ... ETagHeaders,
   ): OkResponse<SyncTokenHeader & KeyValue> | Error;
 
   @operationId("DeleteLock")
-  delete(
+  op delete(
     @path key: string,
     @query label: string,
     ... ETagHeaders,

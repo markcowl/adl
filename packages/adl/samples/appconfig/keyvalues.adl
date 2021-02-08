@@ -17,14 +17,14 @@ model KeyWithFilters {
 }
 
 @resource("/kv")
-interface KeyValuesResource(
+namespace KeyValuesResource(
   ... ServiceParams,
   ... SyncTokenHeader
 ) {
 
   @doc("Gets a list of key-values.")
   @operationId("GetKeyValues")
-  list(
+  op list(
     ... AcceptDatetimeHeader,
     ... KeyFilters,
     
@@ -38,7 +38,7 @@ interface KeyValuesResource(
 
   @doc("Gets a list of key-values.")
   @operationId("CheckKeyValues")
-  listHead(
+  op listHead(
     ... AcceptDatetimeHeader,
     ... KeyFilters,
 
@@ -53,7 +53,7 @@ interface KeyValuesResource(
 
   @doc("Gets a single key-value.")
   @operationId("GetKeyValue")
-  read(
+  op read(
     ... ETagHeaders,
     ... AcceptDatetimeHeader,
     ... KeyWithFilters,
@@ -65,7 +65,7 @@ interface KeyValuesResource(
 
   @doc("Requests the headers and status of the given resource.")
   @operationId("CheckKeyValue")
-  readHead(
+  op readHead(
     ... ETagHeaders,
     ... AcceptDatetimeHeader,
     ... KeyWithFilters
@@ -73,7 +73,7 @@ interface KeyValuesResource(
 
   @doc("Creates a key-value.")
   @operationId("PutKeyValue")
-  createOrUpdate(
+  op createOrUpdate(
     ... ETagHeaders,
     ... KeyWithFilters,
 
@@ -83,7 +83,7 @@ interface KeyValuesResource(
 
   @doc("Updates a key-value pair")
   @operationId("UpdateKeyValue")
-  createOrUpdate(
+  op createOrUpdate(
     ... ETagHeaders,
     ... KeyWithFilters,
 
@@ -94,7 +94,7 @@ interface KeyValuesResource(
 
   @doc("Deletes a key-value.")
   @operationId("DeleteKeyValue")
-  delete(
+  op delete(
     ... KeyWithFilters,
     @header ifMatch: string,
   ): OkResponse<KeyValueHeaders & KeyValue> | NoContent<{}> | Error;
