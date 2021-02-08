@@ -1,5 +1,5 @@
 ﻿@ArmTrackedResource("Microsft.Confluent/organizations", OrganizationProperties)
-interface Organization
+namespace Organization
 {
   @post getKeys() : ArmResponse<OrganizationKeys>;
 }

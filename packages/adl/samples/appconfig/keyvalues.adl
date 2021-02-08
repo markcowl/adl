@@ -17,7 +17,7 @@ model KeyWithFilters {
 }
 
 @resource("/kv")
-interface KeyValuesResource(
+namespace KeyValuesResource(
   ... ServiceParams,
   ... SyncTokenHeader
 ) {

@@ -1,6 +1,6 @@
 ﻿
 @rest("/subscriptions/{subscription}/resourceGroups/{resourceGroup}/providers/Microsoft.Confluent/organizations/{name}")
-interface Organization 
+namespace Organization
 {
   @get get(@path subscription: string, @path resourceGroup: string, @path name: string) : ArmResponse<Organization>;
 
@@ -15,13 +15,13 @@ interface Organization
 }
 
 @rest("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}")
-interface OrganizationListAll
+namespace OrganizationListAll
 {
   @get listAll(@path subscription: string) : Page<OrganizationKeys>;
 }
 
 @rest("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}")
-interface OrganizationList
+namespace OrganizationList
 {
   @get listByResourceGroup(@path subscription: string, @path resourceGroup: string) : Page<OrganizationKeys>;
 }

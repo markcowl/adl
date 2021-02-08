@@ -19,7 +19,7 @@ model ShortString = string;
 model OrganizationKey = string;
 
 @TrackedResource("Microsoft.Confluent/organizations", OrganizationProperties)
-interface Organization {
+namespace Organization {
   @post getKeys(@path subscriptionId: string, @path resourceGroup: string, @path name: string) : ArmResponse<OrganizationKeys>;
 }
 

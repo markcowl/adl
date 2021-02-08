@@ -9,7 +9,7 @@ model HasNullables {
 }
 
 @resource("/test")
-interface NullableMethods {
+namespace NullableMethods {
   @get read(@query someParam: string | null, modelOrNull: AnotherModel | null): HasNullables
 }
 

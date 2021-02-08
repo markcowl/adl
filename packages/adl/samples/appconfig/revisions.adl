@@ -1,6 +1,6 @@
 
 @resource("/revisions")
-interface RevisionsResource(
+namespace RevisionsResource(
   ... ServiceParams,
   ... SyncTokenHeader
 ) {

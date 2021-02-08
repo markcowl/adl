@@ -1,5 +1,5 @@
 @resource("/locks")
-interface LocksResource(
+namespace LocksResource(
   ... ServiceParams,
   ... SyncTokenHeader
 ) {

@@ -1,6 +1,6 @@
 
 @resource("/labels")
-interface LabelsResource(
+namespace LabelsResource(
   ... ServiceParams,
   ... SyncTokenHeader
 ) {

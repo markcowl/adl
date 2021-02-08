@@ -34,7 +34,7 @@ model PetId {
 
 @doc "Manage your pets."
 @resource "/pets"
-interface Pets {
+namespace Pets {
   @doc "Delete a pet."
   delete(... PetId): OkResponse<{}> | Error;
 
@@ -49,7 +49,7 @@ interface Pets {
 }
 
 @resource "/pets/{petId}/toys"
-interface ListPetToysResponse {
+namespace ListPetToysResponse {
   @list
   list(@path petId: string, @query nameFilter: string): OkResponse<ResponsePage<Toy>> | Error;
 }
