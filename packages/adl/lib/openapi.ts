@@ -627,7 +627,8 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
         modelSchema.required.push(name);
       }
 
-      modelSchema.properties[name] = getSchemaOrPlaceholder(prop.type);
+      // Apply decorators on the property to the type's schema
+      modelSchema.properties[name] = applyStringDecorators(prop, getSchemaOrPlaceholder(prop.type));
       if (description) {
         modelSchema.properties[name].description = description;
       }
@@ -734,7 +735,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     }
 
     const minLength = getMinLength(adlType);
-    if (schemaType.type === "string" && !schemaType.minLength && minLength) {
+    if (schemaType.type === "string" && !schemaType.minLength && minLength !== undefined) {
       schemaType = {
         ...schemaType,
         minLength
@@ -742,7 +743,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     }
 
     const maxLength = getMaxLength(adlType);
-    if (schemaType.type === "string" && !schemaType.maxLength && maxLength) {
+    if (schemaType.type === "string" && !schemaType.maxLength && maxLength !== undefined) {
       schemaType = {
         ...schemaType,
         maxLength

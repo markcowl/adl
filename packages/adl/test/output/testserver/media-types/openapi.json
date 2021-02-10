@@ -67,6 +67,8 @@
       "properties": {
         "source": {
           "type": "string",
+          "minLength": 0,
+          "maxLength": 2048,
           "description": "File source path."
         }
       },
