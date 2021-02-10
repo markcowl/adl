@@ -84,6 +84,7 @@
       "name": "input",
       "in": "body",
       "required": true,
+      "description": "Input parameter.",
       "schema": {
         "$ref": "#/definitions/SourcePath"
       }

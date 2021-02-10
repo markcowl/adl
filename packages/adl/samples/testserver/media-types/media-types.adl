@@ -7,6 +7,7 @@ model SourcePath {
 }
 
 model Input {
+  @doc "Input parameter."
   @body input: SourcePath;
 }
 
