@@ -1,0 +1,90 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "(title)",
+    "version": "0000-00-00"
+  },
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/mediatypes/analyze": {
+      "post": {
+        "operationId": "AnalyzeBody",
+        "summary": "Analyze body, that could be different media types.",
+        "consumes": [
+          "application/pdf",
+          "application/json",
+          "image/jpeg",
+          "image/png",
+          "image/tiff"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/Input"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/mediatypes/contentTypeWithEncoding": {
+      "post": {
+        "operationId": "contentTypeWithEncoding",
+        "summary": "Pass in contentType 'text/plain; encoding=UTF-8' to pass test. Value for input does not matter",
+        "consumes": [
+          "text/plain"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/Input"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SourcePath": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "description": "File source path."
+        }
+      },
+      "description": "Uri or local path to source data.",
+      "required": [
+        "source"
+      ]
+    }
+  },
+  "parameters": {
+    "Input": {
+      "x-ms-parameter-location": "method",
+      "name": "input",
+      "in": "body",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/SourcePath"
+      }
+    }
+  }
+}

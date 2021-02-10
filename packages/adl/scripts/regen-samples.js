@@ -11,7 +11,8 @@ import { spawnSync, fork } from "child_process";
 const sampleFolders = [
   "petstore",
   "confluent",
-  "nullable"
+  "nullable",
+  "testserver/media-types"
 ];
 
 function resolvePath(...parts) {

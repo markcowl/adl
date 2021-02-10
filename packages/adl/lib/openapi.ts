@@ -375,28 +375,71 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     }
   }
 
-  function emitParameter(parent: ModelType | undefined, param: ModelTypeProperty, kind: string) {
-    const ph = getParamPlaceholder(parent, param);
-    populateParameter(ph, param, kind);
-
-    if (kind === 'body') {
-      let contentType = 'application/json';
-      if (param.type.kind === "Model") {
-        let contentTypeParam = param.type.properties.get('contentType');
-        if (contentTypeParam) {
-          if (contentTypeParam.type.kind === "String") {
-            contentType = contentTypeParam.type.value;
-          } else {
-            throw new Error("contentType parameter must be a string");
-          }
+  function getContentTypes(param: ModelTypeProperty): string[] {
+    if (param.type.kind === "String") {
+      return [param.type.value];
+    } else if (param.type.kind === "Union") {
+      const contentTypes = [];
+      for (const option of param.type.options) {
+        if (option.kind === "String") {
+          contentTypes.push(option.value);
+        } else {
+          throw new Error("The contentType property union must contain only string values");
         }
       }
 
-      if (!currentEndpoint.consumes.includes(contentType)) {
-        currentEndpoint.consumes.push(contentType);
+      return contentTypes;
+    }
+
+    throw new Error("contentType parameter must be a string or union of strings");
+  }
+
+  function getModelTypeIfNullable(type: Type): ModelType | undefined {
+    if (type.kind === "Model") {
+      return type;
+    } else if (type.kind === "Union") {
+      // Remove all `null` types and make sure there's a single model type
+      const nonNulls = type.options.filter(o => !isNullType(o));
+      if (nonNulls.every(t => t.kind === "Model")) {
+        return nonNulls.length === 1 ? nonNulls[0] as ModelType : undefined;
       }
     }
-    currentEndpoint.parameters.push(ph);
+
+    return undefined;
+  }
+
+  function emitParameter(parent: ModelType | undefined, param: ModelTypeProperty, kind: string) {
+    let skipParam = false;
+    const ph = getParamPlaceholder(parent, param);
+    populateParameter(ph, param, kind);
+
+    let contentTypes: string[] = [];
+    if (kind === 'body') {
+      const modelType = getModelTypeIfNullable(param.type);
+      if (modelType) {
+        let contentTypeParam = modelType.properties.get('contentType');
+        if (contentTypeParam) {
+          contentTypes = getContentTypes(contentTypeParam);
+        } else {
+          contentTypes = ['application/json'];
+        }
+      }
+    } else if (kind === 'header' && param.name === 'contentType') {
+      contentTypes = getContentTypes(param);
+      skipParam = true;
+    }
+
+    if (contentTypes.length > 0) {
+      contentTypes.forEach(contentType => {
+        if (!currentEndpoint.consumes.includes(contentType)) {
+          currentEndpoint.consumes.push(contentType);
+        }
+      })
+    }
+
+    if (!skipParam) {
+      currentEndpoint.parameters.push(ph);
+    }
   }
 
   function populateParameter(ph: any, param: ModelTypeProperty, kind: string | undefined) {
