@@ -466,6 +466,9 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     for (const [property, param] of params) {
       const key = getParameterKey(property, param);
       root.parameters[key] = {
+        // Add an extension which tells AutoRest that this is a shared operation
+        // parameter definition
+        "x-ms-parameter-location": "method",
         ...param,
       };
 
