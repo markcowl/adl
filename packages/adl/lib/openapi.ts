@@ -114,11 +114,24 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
   /**
    * Translates endpoint names like `read` to REST verbs like `get`.
    */
-  function pathForEndpoint(prop: NamespaceProperty, pathParams: ModelTypeProperty[], declaredPathParamNames: string[]): [string, string[], string?] {
+  function pathForEndpoint(prop: NamespaceProperty, pathParams: ModelTypeProperty[]): [string, string[], string] {
     const paramByName = new Map(pathParams.map((p) => [p.name, p]));
-    const pathSegments = [];
+    const route = getOperationRoute(prop);
+    const inferredVerb = verbForEndpoint(prop.name);
+    const verb = route?.verb || inferredVerb || 'get';
 
-    // for each param in the declared path parameters (e.g. /foo/{id} has one, id),
+    // Build the full route path including any sub-path
+    const routePath =
+      (currentBasePath || "") +
+      (route?.subPath
+       ? `/${route?.subPath?.replace(/^\//g, '')}`
+       : (!inferredVerb && !route ? "/get" : ""));
+
+    // Find path parameter names
+    const declaredPathParamNames =
+      routePath.match(/\{\w+\}/g)?.map((s) => s.slice(1, -1)) ?? [];
+
+    // For each param in the declared path parameters (e.g. /foo/{id} has one, id),
     // delete it because it doesn't need to be added to the path.
     for (const declaredParam of declaredPathParamNames) {
       const param = paramByName.get(declaredParam);
@@ -131,22 +144,13 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       paramByName.delete(declaredParam);
     }
 
-    // for any remaining declared path params
+    // Add any remaining declared path params
+    const pathSegments = [];
     for (const name of paramByName.keys()) {
       pathSegments.push(name);
     }
 
-    const route = getOperationRoute(prop)
-    if (route) {
-      return [route.verb, pathSegments, route.subPath?.replace(/^\//g, '')];
-    } else {
-      const verb = verbForEndpoint(prop.name);
-      if (verb) {
-        return [verb, pathSegments];
-      } else {
-        return ['get', pathSegments, prop.name];
-      }
-    }
+    return [verb, pathSegments, routePath];
   }
 
   function verbForEndpoint(name: string): HttpVerb | undefined {
@@ -169,28 +173,24 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
   }
 
   function emitEndpoint(resource: Namespace, prop: NamespaceProperty) {
-    const declaredPathParamNames =
-      currentBasePath?.match(/\{\w+\}/g)?.map((s) => s.slice(1, -1)) ?? [];
     const params = getPathParameters(resource, prop);
-    const [verb, newPathParams, subScope = ''] = pathForEndpoint(
+    const [verb, newPathParams, resolvedPath] = pathForEndpoint(
       prop,
-      params,
-      declaredPathParamNames
+      params
     );
-    const subpath =
-      currentBasePath +
-      (subScope ? '/' + subScope : '') +
+    const fullPath =
+      resolvedPath +
       (newPathParams.length > 0
         ? '/' + newPathParams.map((p) => '{' + p + '}').join('/')
         : '');
 
-    if (subpath === undefined) throw new Error('uhoh');
+    if (fullPath === undefined) throw new Error('uhoh');
 
-    if (!root.paths[subpath]) {
-      root.paths[subpath] = {};
+    if (!root.paths[fullPath]) {
+      root.paths[fullPath] = {};
     }
 
-    currentPath = root.paths[subpath];
+    currentPath = root.paths[fullPath];
     if (!currentPath[verb]) {
       currentPath[verb] = {};
     }
