@@ -266,6 +266,7 @@
   },
   "parameters": {
     "PetId": {
+      "x-ms-parameter-location": "method",
       "name": "petId",
       "in": "path",
       "required": true,
