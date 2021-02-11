@@ -1,0 +1,202 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "(title)",
+    "version": "0000-00-00"
+  },
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/bool/true": {
+      "get": {
+        "operationId": "bool_getTrue",
+        "summary": "Get true Boolean value",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "boolean",
+              "enum": [
+                true
+              ]
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Error"
+          }
+        }
+      },
+      "put": {
+        "operationId": "bool_putTrue",
+        "summary": "Set Boolean value true",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "value",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "enum": [
+                true
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "x-adl-name": "{}"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/bool/false": {
+      "get": {
+        "operationId": "bool_getFalse",
+        "summary": "Get true Boolean false",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "boolean",
+              "enum": [
+                false
+              ]
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Error"
+          }
+        }
+      },
+      "put": {
+        "operationId": "bool_putFalse",
+        "summary": "Set Boolean value false",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "value",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "enum": [
+                false
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Null response"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/bool/null": {
+      "get": {
+        "operationId": "bool_getNull",
+        "summary": "Get null Boolean value",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "boolean",
+              "x-nullable": true,
+              "x-adl-name": "boolean | null"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/bool/invalid": {
+      "get": {
+        "operationId": "bool_getInvalid",
+        "summary": "Get invalid Boolean value",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Null response"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "description": "Error",
+      "required": [
+        "code",
+        "message"
+      ]
+    }
+  },
+  "parameters": {}
+}
