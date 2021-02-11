@@ -6,31 +6,43 @@ model Error {
 }
 
 
-@doc "Success"
-model Ok<T> {
-  @header statusCode: 200;
-  ... T;
-}
-
-
 @doc "AutoRest Bool Test Service"
-@resource "/bool"
-interface Bools {
+@resource("/bool/true")
+namespace BoolsTrue {
   @doc "Get true Boolean value"
-  @get getTrue(): true | Error;
+  @operationId("bool_getTrue")
+  @get op getTrue(): true | Error;
   
   @doc "Set Boolean value true"
-  @put setTrue(@body value: true): Ok | Error;
+  @operationId("bool_putTrue")
+  @put op setTrue(@body value: true): OkResponse | Error;
+}
+
+@doc "AutoRest Bool Test Service"
+@resource("/bool/false")
+namespace BoolsFalse {
 
   @doc "Get true Boolean false"
-  @get getFalse(): false | Error;
+  @operationId("bool_getFalse")
+  @get op getFalse(): false | Error;
   
   @doc "Set Boolean value false"
-  @put setFalse(@body value: false): boolean | Error;
-  
-  @doc "Get null Boolean value"
-  @get getNull(): boolean | Error;
+  @operationId("bool_putFalse")
+  @put op setFalse(@body value: false): boolean | Error;
+}
 
+@doc "AutoRest Bool Test Service"
+@resource("/bool/null")
+namespace BoolsNull {
+  @doc "Get null Boolean value"
+  @operationId("bool_getNull")
+  @get op getNull(): null | Error;
+}
+
+@doc "AutoRest Bool Test Service"
+@resource("/bool/invalid")
+namespace BoolsNull {
   @doc "Get invalid Boolean value"
-  @get getInvalid(): boolean | Error;
+  @operationId("bool_getInvalid")
+  @get op getInvalid(): boolean | Error;
 }
