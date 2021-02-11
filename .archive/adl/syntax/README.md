@@ -1,3 +1,0 @@
-# adl-syntax README
-
-placeholder

@@ -10,13 +10,14 @@ import { resolvePath } from './util.js';
 import {
   ADLScriptNode,
   DecoratorExpressionNode, IdentifierNode,
-  InterfaceType,
+  Namespace,
   LiteralType,
   ModelStatementNode,
   ModelType,
   SyntaxKind,
   Type
 } from './types.js';
+import { createSourceFile } from "./scanner.js";
 
 export interface Program {
   compilerOptions: CompilerOptions;
@@ -27,7 +28,7 @@ export interface Program {
   checker?: ReturnType<typeof createChecker>;
   evalAdlScript(adlScript: string, filePath?: string): void;
   onBuild(cb: (program: Program) => void): void;
-  executeInterfaceDecorators(type: InterfaceType): void;
+  executeInterfaceDecorators(type: Namespace): void;
   executeModelDecorators(type: ModelType): void;
   executeDecorators(type: Type): void;
 }
@@ -37,7 +38,7 @@ export interface ADLSourceFile {
   path: string;
   symbols: SymbolTable;
   models: Array<ModelType>;
-  interfaces: Array<InterfaceType>;
+  interfaces: Array<Namespace>;
 }
 
 export async function compile(rootDir: string, options?: CompilerOptions) {
@@ -71,7 +72,7 @@ export async function compile(rootDir: string, options?: CompilerOptions) {
    * does type checking.
    */
 
-  function executeInterfaceDecorators(type: InterfaceType) {
+  function executeInterfaceDecorators(type: Namespace) {
     const stmt = type.node;
 
     for (const dec of stmt.decorators) {
@@ -118,7 +119,7 @@ export async function compile(rootDir: string, options?: CompilerOptions) {
       throw new Error('Decorator must be identifier');
     }
 
-    const decName = (<IdentifierNode>dec.target).sv;
+    const decName = dec.target.sv;
     const args = dec.arguments.map((a) =>
       toJSON(checker.getTypeForNode(a))
     );
@@ -219,7 +220,7 @@ export async function compile(rootDir: string, options?: CompilerOptions) {
   // virtual file path
   function evalAdlScript(adlScript: string, filePath?: string): void {
     filePath = filePath ?? `__virtual_file_${++virtualFileCount}`;
-    const ast = parse(adlScript);
+    const ast = parse(createSourceFile(adlScript, filePath));
     const sourceFile = {
       ast,
       path: filePath,

@@ -13,8 +13,8 @@ export type Type =
   | ModelType
   | ModelTypeProperty
   | TemplateParameterType
-  | InterfaceType
-  | InterfaceTypeProperty
+  | Namespace
+  | NamespaceProperty
   | StringLiteralType
   | NumericLiteralType
   | BooleanLiteralType
@@ -41,19 +41,19 @@ export interface ModelTypeProperty {
   optional: boolean;
 }
 
-export interface InterfaceTypeProperty {
-  kind: 'InterfaceProperty';
-  node: InterfacePropertyNode;
+export interface NamespaceProperty {
+  kind: 'NamespaceProperty';
+  node: NamespacePropertyNode;
   name: string;
   parameters?: ModelType;
   returnType: Type;
 }
 
-export interface InterfaceType extends BaseType {
-  kind: 'Interface';
+export interface Namespace extends BaseType {
+  kind: 'Namespace';
   name: string;
-  node: InterfaceStatementNode;
-  properties: Map<string, InterfaceTypeProperty>;
+  node: NamespaceStatementNode;
+  properties: Map<string, NamespaceProperty>;
   parameters?: ModelType;
 }
 
@@ -109,8 +109,8 @@ export enum SyntaxKind {
   NamedImport,
   DecoratorExpression,
   MemberExpression,
-  InterfaceStatement,
-  InterfaceProperty,
+  NamespaceStatement,
+  NamespaceProperty,
   ModelStatement,
   ModelExpression,
   ModelProperty,
@@ -126,14 +126,26 @@ export enum SyntaxKind {
   TemplateParameterDeclaration
 }
 
-export interface Node {
+export interface BaseNode {
   kind: SyntaxKind;
   pos: number;
   end: number;
   parent?: Node;
 }
 
-export interface ADLScriptNode extends Node {
+export type Node = 
+  | ADLScriptNode 
+  | TemplateParameterDeclarationNode
+  | ModelPropertyNode
+  | NamespacePropertyNode
+  | NamedImportNode
+  | ModelPropertyNode
+  | ModelSpreadPropertyNode
+  | DecoratorExpressionNode
+  | Statement 
+  | Expression;
+
+export interface ADLScriptNode extends BaseNode {
   kind: SyntaxKind.ADLScript;
   statements: Array<Statement>;
 }
@@ -141,25 +153,25 @@ export interface ADLScriptNode extends Node {
 export type Statement =
   | ImportStatementNode
   | ModelStatementNode
-  | InterfaceStatementNode;
+  | NamespaceStatementNode;
 
-export interface ImportStatementNode extends Node {
+export interface ImportStatementNode extends BaseNode {
   kind: SyntaxKind.ImportStatement;
   id: IdentifierNode;
   as: Array<NamedImportNode>;
 }
 
-export interface IdentifierNode extends Node {
+export interface IdentifierNode extends BaseNode {
   kind: SyntaxKind.Identifier;
   sv: string;
 }
 
-export interface NamedImportNode extends Node {
+export interface NamedImportNode extends BaseNode {
   kind: SyntaxKind.NamedImport;
   id: IdentifierNode;
 }
 
-export interface DecoratorExpressionNode extends Node {
+export interface DecoratorExpressionNode extends BaseNode {
   kind: SyntaxKind.DecoratorExpression;
   target: IdentifierNode | MemberExpressionNode;
   arguments: Array<Expression>;
@@ -178,22 +190,22 @@ export type Expression =
   | NumericLiteralNode
   | BooleanLiteralNode;
 
-export interface MemberExpressionNode extends Node {
+export interface MemberExpressionNode extends BaseNode {
   kind: SyntaxKind.MemberExpression;
   id: IdentifierNode;
-  base: Expression | IdentifierNode;
+  base: MemberExpressionNode | IdentifierNode;
 }
 
-export interface InterfaceStatementNode extends Node {
-  kind: SyntaxKind.InterfaceStatement;
+export interface NamespaceStatementNode extends BaseNode {
+  kind: SyntaxKind.NamespaceStatement;
   id: IdentifierNode;
   parameters?: ModelExpressionNode;
-  properties: Array<InterfacePropertyNode>;
+  properties: Array<NamespacePropertyNode>;
   decorators: Array<DecoratorExpressionNode>;
 }
 
-export interface InterfacePropertyNode extends Node {
-  kind: SyntaxKind.InterfaceProperty;
+export interface NamespacePropertyNode extends BaseNode {
+  kind: SyntaxKind.NamespaceProperty;
   id: IdentifierNode;
   parameters: ModelExpressionNode;
   returnType: Expression;
@@ -201,7 +213,7 @@ export interface InterfacePropertyNode extends Node {
 }
 
 
-export interface ModelStatementNode extends Node {
+export interface ModelStatementNode extends BaseNode {
   kind: SyntaxKind.ModelStatement;
   id: IdentifierNode;
   properties?: Array<ModelPropertyNode | ModelSpreadPropertyNode>;
@@ -211,22 +223,22 @@ export interface ModelStatementNode extends Node {
   decorators: Array<DecoratorExpressionNode>;
 }
 
-export interface ModelExpressionNode extends Node {
+export interface ModelExpressionNode extends BaseNode {
   kind: SyntaxKind.ModelExpression;
   properties: Array<ModelPropertyNode | ModelSpreadPropertyNode>;
   decorators: Array<DecoratorExpressionNode>;
 }
 
-export interface ArrayExpressionNode extends Node {
+export interface ArrayExpressionNode extends BaseNode {
   kind: SyntaxKind.ArrayExpression;
   elementType: Expression;
 }
-export interface TupleExpressionNode extends Node {
+export interface TupleExpressionNode extends BaseNode {
   kind: SyntaxKind.TupleExpression;
   values: Array<Expression>;
 }
 
-export interface ModelPropertyNode extends Node {
+export interface ModelPropertyNode extends BaseNode {
   kind: SyntaxKind.ModelProperty;
   id: IdentifierNode | StringLiteralNode;
   value: Expression;
@@ -234,48 +246,94 @@ export interface ModelPropertyNode extends Node {
   optional: boolean;
 }
 
-export interface ModelSpreadPropertyNode extends Node {
+export interface ModelSpreadPropertyNode extends BaseNode {
   kind: SyntaxKind.ModelSpreadProperty;
   target: IdentifierNode;
 }
 
 export type LiteralNode = StringLiteralNode | NumericLiteralNode | BooleanLiteralNode;
 
-export interface StringLiteralNode extends Node {
+export interface StringLiteralNode extends BaseNode {
   kind: SyntaxKind.StringLiteral;
   value: string;
-  text: string;
 }
 
-export interface NumericLiteralNode extends Node {
+export interface NumericLiteralNode extends BaseNode {
   kind: SyntaxKind.NumericLiteral;
   value: number;
-  text: string;
 }
 
-export interface BooleanLiteralNode extends Node {
+export interface BooleanLiteralNode extends BaseNode {
   kind: SyntaxKind.BooleanLiteral;
   value: boolean;
-  text: string;
 }
 
-export interface UnionExpressionNode extends Node {
+export interface UnionExpressionNode extends BaseNode {
   kind: SyntaxKind.UnionExpression;
   options: Array<Expression>;
 }
 
-export interface IntersectionExpressionNode extends Node {
+export interface IntersectionExpressionNode extends BaseNode {
   kind: SyntaxKind.IntersectionExpression;
   options: Array<Expression>;
 }
 
-export interface TemplateApplicationNode extends Node {
+export interface TemplateApplicationNode extends BaseNode {
   kind: SyntaxKind.TemplateApplication;
   target: Expression;
   arguments: Array<Expression>;
 }
 
-export interface TemplateParameterDeclarationNode extends Node {
+export interface TemplateParameterDeclarationNode extends BaseNode {
   kind: SyntaxKind.TemplateParameterDeclaration;
   sv: string;
 }
+
+/**
+ * Identifies the position within a source file by line number and offset from
+ * beginning of line.
+ */
+export interface LineAndCharacter {
+  /** The line number. 0-based. */
+  line: number;
+
+  /**
+   * The offset in UTF-16 code units to the character from the beginning of the
+   * line. 0-based.
+   *
+   * NOTE: This is not necessarily the same as what a given text editor might
+   * call the "column". Tabs, combining characters, surrogate pairs, and so on
+   * can all cause an editor to report the column differently. Indeed, different
+   * text editors report different column numbers for the same position in a
+   * given document.
+   */
+  character: number;
+}
+
+export interface SourceFile {
+  /** The source code text. */
+  readonly text: string;
+
+  /**
+   * The source file path.
+   *
+   * This is used only for diagnostics. The command line compiler will populate
+   * it with the actual path from which the file was read, but it can actually
+   * be an aribitrary name for other scenarios.
+   */
+  readonly path: string;
+
+  /**
+   * Array of positions in the text where each line begins. There is one entry
+   * per line, in order of lines, and each entry represents the offset in UTF-16
+   * code units from the start of the document to the beginning of the line.
+   */
+  getLineStarts(): ReadonlyArray<number>;
+
+  /**
+   * Converts a one-dimensional position in the document (measured in UTF-16
+   * code units) to line number and offset from line start.
+   */
+  getLineAndCharacterOfPosition(position: number): LineAndCharacter;
+}
+

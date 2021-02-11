@@ -24,7 +24,8 @@ Keyword :
     BooleanLiteral
     `import`
     `model`
-    `interface`
+    `namespace`
+    `op`
 
 Identifier :
     IdentifierName but not Keyword
@@ -111,7 +112,7 @@ EscapeCharacter :
     one of `"` `r` `n` `t` `\`
 
 Punctuator : 
-    one of  `|` `:` `,` `;` `.` `<` `>` `(` `)` `{` `}` `[` `]` `@` `...`
+    one of  `|` `?` `=` `&`  `:` `,` `;` `.` `<` `>` `(` `)` `{` `}` `[` `]` `@` `...`
 
 WhiteSpace :
     <TAB>
@@ -171,7 +172,8 @@ StatementList :
 Statement :
     ImportStatement
     ModelStatement
-    InterfaceStatement
+    NamespaceStatement
+    `;`
 
 ImportStatement :
     `import` Identifier `;`
@@ -182,8 +184,15 @@ NamedImports :
     NamedImports `,` Identifier
 
 ModelStatement :
-    DecoratorList? `model` Identifier `{` ModelBody? `}`
-    DecoratorList? `model` Identifier `=` Expression `;`
+    DecoratorList? `model` Identifier TemplateParameters? `{` ModelBody? `}`
+    DecoratorList? `model` Identifier TemplateParameters? `=` Expression `;`
+
+TemplateParameters :
+    `<` IdentifierList `>`
+
+IdentifierList :
+    Identifier
+    IdentifierList `,` Identifier
 
 ModelBody :
     ModelPropertyList `,`?
@@ -196,53 +205,46 @@ ModelPropertyList :
 
 ModelProperty:
     ModelSpreadProperty
-    DecoratorList? Identifier `:` Expression
-    DecoratorList? StringLiteral `:` Expression
+    DecoratorList? Identifier `?`? `:` Expression
+    DecoratorList? StringLiteral `?`? `:` Expression
 
 ModelSpreadProperty :
     `...` Identifier
 
-InterfaceStatement : 
-    DecoratorList? `interface` Identifier `{` InterfaceBody? `}`
+NamespaceStatement: 
+    DecoratorList? `namespace` Identifier `{` NamespaceBody? `}`
 
-InterfaceBody :
-    InterfacePropertyList `,`?
-    InterfacePropertyList `;`?
+NamespaceBody :
+    NamespacePropertyList `,`?
+    NamespacePropertyList `;`?
 
-InterfacePropertyList :
-    InterfaceProperty
-    InterfacePropertyList `,` InterfaceProperty
-    InterfacePropertyList `;` InterfaceProperty
+NamespacePropertyList :
+    NamespaceProperty
+    NamespacePropertyList `,` NamespaceProperty
+    NamespacePropertyList `;` NamespaceProperty
 
-InterfaceProperty :
-    DecoratorList? Identifier `(` ModelPropertyList? `)` `:` Expression
+NamespaceProperty :
+    DecoratorList? `op` Identifier `(` ModelPropertyList? `)` `:` Expression
 
 Expression :
-    UnionExpression
+    UnionExpressionOrHigher
 
-UnionExpression :
-    IntersectionExpression
-    UnionExpression `|` IntersectionExpression
+UnionExpressionOrHigher :
+    IntersectionExpressionOrHigher
+    UnionExpressionOrHigher `|` IntersectionExpressionOrHigher
 
-IntersectionExpression :
-    ArrayExpression
-    IntersectionExpression `&` ArrayExpression
+IntersectionExpressionOrHigher :
+    ArrayExpressionOrHigher
+    IntersectionExpressionOrHigher `&` ArrayExpressionOrHigher
 
-ArrayExpression :
-    TemplateApplication
-    TemplateApplication `[` `]`
-
-TemplateApplication :
-    MemberExpression
-    MemberExpression `<` ExpressionList `>`
-
-MemberExpression :
+ArrayExpressionOrHigher :
     PrimaryExpression
-    MemberExpression `.` Identifier
+    ArrayExpressionOrHigher `[` `]`
 
 PrimaryExpression :
-    Identifier
     Literal
+    ReferenceExpression
+    ParenthesizedExpression
     ModelExpression
     TupleExpression
 
@@ -250,6 +252,19 @@ Literal :
     StringLiteral
     BooleanLiteral
     NumericLiteral
+
+ReferenceExpression :
+    IdentifierOrMemberExpression TemplateArguments?
+
+IdentifierOrMemberExpression :
+    Identifier
+    IdentifierOrMemberExpression `.` Identifier
+
+TemplateArguments :
+    `<` ExpressionList `>`
+
+ParenthesizedExpression : 
+    `(` Expression `)`
 
 ModelExpression :
     `{` ModelBody? `}`
@@ -265,7 +280,7 @@ DecoratorList :
     DecoratorList? Decorator
 
 Decorator :
-    `@` MemberExpression DecoratorArguments?
+    `@` IdentifierOrMemberExpression DecoratorArguments?
 
 DecoratorArguments :
    Literal

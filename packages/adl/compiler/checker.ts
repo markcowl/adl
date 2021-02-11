@@ -5,10 +5,10 @@ import {
   BooleanLiteralNode,
   BooleanLiteralType,
   IdentifierNode,
-  InterfacePropertyNode,
-  InterfaceStatementNode,
-  InterfaceType,
-  InterfaceTypeProperty,
+  NamespacePropertyNode,
+  NamespaceStatementNode,
+  Namespace,
+  NamespaceProperty,
   IntersectionExpressionNode,
   LiteralNode,
   LiteralType,
@@ -79,7 +79,7 @@ export function createChecker(program: Program) {
     checkProgram,
     getLiteralType,
     getTypeName,
-    checkInterfaceProperty
+    checkNamespaceProperty
   };
 
   function getTypeForNode(node: Node): Type {
@@ -88,36 +88,36 @@ export function createChecker(program: Program) {
 
     switch (node.kind) {
       case SyntaxKind.ModelExpression:
-        return checkModel(<ModelExpressionNode>node);
+        return checkModel(node);
       case SyntaxKind.ModelStatement:
-        return checkModel(<ModelStatementNode>node);
+        return checkModel(node);
       case SyntaxKind.ModelProperty:
-        return checkModelProperty(<ModelPropertyNode>node);
-      case SyntaxKind.InterfaceStatement:
-        return checkInterface(<InterfaceStatementNode>node);
-      case SyntaxKind.InterfaceProperty:
-        return checkInterfaceProperty(<InterfacePropertyNode>node);
+        return checkModelProperty(node);
+      case SyntaxKind.NamespaceStatement:
+        return checkNamespace(node);
+      case SyntaxKind.NamespaceProperty:
+        return checkNamespaceProperty(node);
       case SyntaxKind.Identifier:
         // decorator bindings presently return an empty binding
-        return <any>checkIdentifier(<IdentifierNode>node);
+        return <any>checkIdentifier(node);
       case SyntaxKind.NumericLiteral:
-        return checkNumericLiteral(<NumericLiteralNode>node);
+        return checkNumericLiteral(node);
       case SyntaxKind.BooleanLiteral:
-        return checkBooleanLiteral(<BooleanLiteralNode>node);
+        return checkBooleanLiteral(node);
       case SyntaxKind.TupleExpression:
-        return checkTupleExpression(<TupleExpressionNode>node);
+        return checkTupleExpression(node);
       case SyntaxKind.StringLiteral:
-        return checkStringLiteral(<StringLiteralNode>node);
+        return checkStringLiteral(node);
       case SyntaxKind.ArrayExpression:
-        return checkArrayExpression(<ArrayExpressionNode>node);
+        return checkArrayExpression(node);
       case SyntaxKind.UnionExpression:
-        return checkUnionExpression(<UnionExpressionNode>node);
+        return checkUnionExpression(node);
       case SyntaxKind.IntersectionExpression:
-        return checkIntersectionExpression(<IntersectionExpressionNode>node);
+        return checkIntersectionExpression(node);
       case SyntaxKind.TemplateApplication:
-        return checkTemplateApplication(<TemplateApplicationNode>node);
+        return checkTemplateApplication(node);
       case SyntaxKind.TemplateParameterDeclaration:
-        return checkTemplateParameterDeclaration(<TemplateParameterDeclarationNode>node);
+        return checkTemplateParameterDeclaration(node);
     }
 
     throw new Error('cant eval ' + SyntaxKind[node.kind]);
@@ -126,11 +126,11 @@ export function createChecker(program: Program) {
   function getTypeName(type: Type): string {
     switch (type.kind) {
       case 'Model':
-        return getModelName(<ModelType>type);
+        return getModelName(type);
       case 'Union':
-        return (<UnionType>type).options.map(getTypeName).join(' | ');
+        return type.options.map(getTypeName).join(' | ');
       case 'Array':
-        return getTypeName((<ArrayType>type).elementType) + '[]';
+        return getTypeName(type.elementType) + '[]';
       case 'String':
       case 'Number':
       case 'Boolean':
@@ -254,9 +254,9 @@ export function createChecker(program: Program) {
     });
   }
 
-  function checkInterface(node: InterfaceStatementNode) {
-    const type: InterfaceType = createType({
-      kind: 'Interface',
+  function checkNamespace(node: NamespaceStatementNode) {
+    const type: Namespace = createType({
+      kind: 'Namespace',
       name: node.id.sv,
       node: node,
       properties: new Map(),
@@ -264,15 +264,15 @@ export function createChecker(program: Program) {
     });
 
     for (const prop of node.properties) {
-      type.properties.set(prop.id.sv, checkInterfaceProperty(prop));
+      type.properties.set(prop.id.sv, checkNamespaceProperty(prop));
     }
 
     return type;
   }
 
-  function checkInterfaceProperty(prop: InterfacePropertyNode): InterfaceTypeProperty {
+  function checkNamespaceProperty(prop: NamespacePropertyNode): NamespaceProperty {
     return createType({
-      kind: 'InterfaceProperty',
+      kind: 'NamespaceProperty',
       name: prop.id.sv,
       node: prop,
       parameters: <ModelType>getTypeForNode(prop.parameters),

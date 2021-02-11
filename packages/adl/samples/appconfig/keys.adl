@@ -1,24 +1,24 @@
 @resource("/keys")
-interface KeysResource(
+namespace KeysResource(
   ... ServiceParams,
   ... SyncTokenHeader
 ) {
 
   @doc("Gets a list of keys.")
   @operationId("GetKeys")
-  list(
+  op list(
     ... AcceptDatetimeHeader,
 
     @query name: string,
     @header after: string,
-  ): Ok<SyncTokenHeader & KeyPage> | Error,
+  ): OkResponse<SyncTokenHeader & KeyPage> | Error,
 
   @doc("Requests the headers and status of the given resource.")
   @operationId("CheckKeys")
-  listHead(
+  op listHead(
     ... AcceptDatetimeHeader,
 
     @query name: string,
     @header after: string,
-  ): Ok<SyncTokenHeader> | Error
+  ): OkResponse<SyncTokenHeader> | Error
 }

@@ -20,7 +20,7 @@
       "protocol": "inspector",
       "request": "launch",
       "name": "run compiler",
-      "program": "${workspaceRoot}/packages/adl/dist/lib/cli.js",
+      "program": "${workspaceRoot}/packages/adl/dist/compiler/cli.js",
       "args": [
         "compile",
         "samples/scratch",

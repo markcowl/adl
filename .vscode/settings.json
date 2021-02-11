@@ -29,7 +29,7 @@
     "editor.detectIndentation": false
   },
   "[typescript]": {
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": false,
     "editor.formatOnPaste": true,
     "editor.tabSize": 2,
     "editor.detectIndentation": false
@@ -38,13 +38,13 @@
     "editor.tabSize": 4,
   },
   "[json]": {
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": false,
     "editor.formatOnPaste": true,
     "editor.tabSize": 2,
     "editor.detectIndentation": false
   },
   "[jsonc]": {
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": false,
     "editor.formatOnPaste": true,
     "editor.tabSize": 2,
     "editor.detectIndentation": false
@@ -61,10 +61,10 @@
   ],
   "git.ignoreLimitWarning": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.organizeImports": true
+    "source.fixAll.eslint": false,
+    "source.organizeImports": false
   },
-  "eslint.format.enable": true,
+  "eslint.format.enable": false,
   "mochaExplorer.files": "./packages/adl/dist/test/**/*.js",
   "mochaExplorer.cwd": "./packages/adl",
   "mochaExplorer.mochaPath": "./packages/adl/node_modules/mocha",

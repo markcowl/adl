@@ -15,12 +15,6 @@ model AcceptDatetimeHeader {
   @header acceptDatetime: date;
 }
 
-@doc "Success"
-model Ok<T> {
-  @header statusCode: 200;
-  ... T;
-}
-
 model SyncTokenHeader {
   @doc "Used to guarantee real-time consistency between requests."
   @header syncToken?: string;
