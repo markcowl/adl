@@ -14,6 +14,7 @@ const sampleFolders = [
   "nullable",
   "testserver/media-types",
   "testserver/body-boolean"
+  "visibility"
 ];
 
 function resolvePath(...parts) {

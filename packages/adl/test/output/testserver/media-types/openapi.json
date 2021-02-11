@@ -13,8 +13,8 @@
         "operationId": "AnalyzeBody",
         "summary": "Analyze body, that could be different media types.",
         "consumes": [
-          "application/pdf",
           "application/json",
+          "application/pdf",
           "image/jpeg",
           "image/png",
           "image/tiff"
@@ -30,7 +30,9 @@
         "responses": {
           "200": {
             "schema": {
-              "type": "string"
+              "type": "object",
+              "properties": {},
+              "x-adl-name": "{}"
             }
           }
         }
@@ -41,6 +43,7 @@
         "operationId": "contentTypeWithEncoding",
         "summary": "Pass in contentType 'text/plain; encoding=UTF-8' to pass test. Value for input does not matter",
         "consumes": [
+          "application/json",
           "text/plain"
         ],
         "produces": [
@@ -54,7 +57,9 @@
         "responses": {
           "200": {
             "schema": {
-              "type": "string"
+              "type": "object",
+              "properties": {},
+              "x-adl-name": "{}"
             }
           }
         }

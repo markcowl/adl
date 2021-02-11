@@ -38,7 +38,39 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/OrganizationResource"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "location": {
+                  "type": "string"
+                },
+                "tags": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                },
+                "properties": {
+                  "$ref": "#/definitions/OrganizationProperties"
+                }
+              },
+              "description": "Typed response envelope for ARM operations.",
+              "required": [
+                "id",
+                "name",
+                "type",
+                "location",
+                "properties"
+              ],
+              "x-adl-name": "ArmResponse<OrganizationResource>"
             },
             "description": "Typed response envelope for ARM operations.",
             "headers": {
@@ -91,7 +123,39 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/OrganizationResource"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "location": {
+                  "type": "string"
+                },
+                "tags": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                },
+                "properties": {
+                  "$ref": "#/definitions/OrganizationProperties"
+                }
+              },
+              "description": "Typed response envelope for ARM operations.",
+              "required": [
+                "id",
+                "name",
+                "type",
+                "location",
+                "properties"
+              ],
+              "x-adl-name": "ArmResponse<OrganizationResource>"
             },
             "description": "Typed response envelope for ARM operations.",
             "headers": {
@@ -144,7 +208,39 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/OrganizationResource"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "location": {
+                  "type": "string"
+                },
+                "tags": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                },
+                "properties": {
+                  "$ref": "#/definitions/OrganizationProperties"
+                }
+              },
+              "description": "Typed response envelope for ARM operations.",
+              "required": [
+                "id",
+                "name",
+                "type",
+                "location",
+                "properties"
+              ],
+              "x-adl-name": "ArmResponse<OrganizationResource>"
             },
             "description": "Typed response envelope for ARM operations.",
             "headers": {
@@ -189,7 +285,7 @@
             "schema": {
               "type": "object",
               "properties": {},
-              "description": "Response envelope for ARM operations.",
+              "description": "Typed response envelope for ARM operations.",
               "x-adl-name": "{}"
             },
             "description": "Typed response envelope for ARM operations.",
@@ -233,7 +329,25 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/OrganizationKeys"
+              "type": "object",
+              "properties": {
+                "primary": {
+                  "type": "string",
+                  "format": "password",
+                  "description": "The primary key."
+                },
+                "secondary": {
+                  "type": "string",
+                  "format": "password",
+                  "description": "The secondary Key."
+                }
+              },
+              "description": "Typed response envelope for ARM operations.",
+              "required": [
+                "primary",
+                "secondary"
+              ],
+              "x-adl-name": "ArmResponse<OrganizationKeys>"
             },
             "description": "Typed response envelope for ARM operations.",
             "headers": {
@@ -364,70 +478,6 @@
     }
   },
   "definitions": {
-    "OrganizationResource": {
-      "type": "object",
-      "properties": {
-        "location": {
-          "type": "string"
-        },
-        "tags": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
-        },
-        "properties": {
-          "$ref": "#/definitions/OrganizationProperties"
-        }
-      },
-      "required": [
-        "location",
-        "properties"
-      ],
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
-            },
-            "name": {
-              "type": "string"
-            },
-            "type": {
-              "type": "string"
-            }
-          },
-          "description": "Common properties for all ARM resources.",
-          "required": [
-            "id",
-            "name",
-            "type"
-          ],
-          "x-adl-name": "ArmResource<OrganizationProperties>"
-        }
-      ],
-      "x-ms-azure-resource": true
-    },
-    "OrganizationKeys": {
-      "type": "object",
-      "properties": {
-        "primary": {
-          "type": "string",
-          "format": "password",
-          "description": "The primary key."
-        },
-        "secondary": {
-          "type": "string",
-          "format": "password",
-          "description": "The secondary Key."
-        }
-      },
-      "required": [
-        "primary",
-        "secondary"
-      ]
-    },
     "OrganizationProperties": {
       "type": "object",
       "properties": {
@@ -459,6 +509,40 @@
         "offerDetail",
         "userDetail"
       ]
+    },
+    "OrganizationResource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "properties": {
+          "$ref": "#/definitions/OrganizationProperties"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "location",
+        "properties"
+      ],
+      "x-ms-azure-resource": true
     },
     "OfferDetail": {
       "type": "object",

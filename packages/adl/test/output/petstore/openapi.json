@@ -52,12 +52,37 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/Pet"
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "tag": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "x-adl-name": "OkResponse<Pet>"
             }
           },
           "304": {
             "schema": {
-              "$ref": "#/definitions/Pet"
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "tag": {
+                  "type": "string"
+                }
+              },
+              "description": "Not modified",
+              "required": [
+                "name"
+              ],
+              "x-adl-name": "NotModified<Pet>"
             },
             "description": "Not modified"
           },
@@ -106,7 +131,7 @@
                 "items",
                 "nextLink"
               ],
-              "x-adl-name": "ResponsePage<Pet>"
+              "x-adl-name": "OkResponse<ResponsePage<Pet>>"
             }
           },
           "default": {
@@ -141,7 +166,19 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/Pet"
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "tag": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "x-adl-name": "OkResponse<Pet>"
             }
           },
           "default": {
@@ -194,7 +231,7 @@
                 "items",
                 "nextLink"
               ],
-              "x-adl-name": "ResponsePage<Toy>"
+              "x-adl-name": "OkResponse<ResponsePage<Toy>>"
             }
           },
           "default": {
