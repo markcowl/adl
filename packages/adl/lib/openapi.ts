@@ -623,7 +623,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
   }
 
   function getSchemaForModel(model: ModelType) {
-    model = getTypeForSchemaProperties(model);``
+    model = getTypeForSchemaProperties(model);
 
     const modelSchema: any = {
       type: 'object',
@@ -842,5 +842,4 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     return name.replace(/^[A-Za-z0-9-_.]/g, '_');
   }
 }
-
 
