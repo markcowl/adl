@@ -5,6 +5,7 @@ model Error {
   message: string;
 }
 
+model NullableBoolean = boolean | null;
 
 @doc "AutoRest Bool Test Service"
 @resource("/bool/true")
@@ -36,7 +37,7 @@ namespace BoolsFalse {
 namespace BoolsNull {
   @doc "Get null Boolean value"
   @operationId("bool_getNull")
-  @get op getNull(): null | Error;
+  @get op getNull(): NullableBoolean | Error;
 }
 
 @doc "AutoRest Bool Test Service"
