@@ -12,7 +12,8 @@ const sampleFolders = [
   "petstore",
   "confluent",
   "nullable",
-  "testserver/media-types"
+  "testserver/media-types",
+  "testserver/body-boolean"
 ];
 
 function resolvePath(...parts) {
