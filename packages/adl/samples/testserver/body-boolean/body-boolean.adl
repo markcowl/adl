@@ -16,7 +16,7 @@ namespace BoolsTrue {
   
   @doc "Set Boolean value true"
   @operationId("bool_putTrue")
-  @put op setTrue(@body value: true): OkResponse | Error;
+  @put op setTrue(@body value: true): OkResponse<{}> | Error;
 }
 
 @doc "AutoRest Bool Test Service"
