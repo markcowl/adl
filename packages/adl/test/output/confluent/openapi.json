@@ -47,39 +47,7 @@
               }
             },
             "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "type": {
-                  "type": "string"
-                },
-                "location": {
-                  "type": "string"
-                },
-                "tags": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  }
-                },
-                "properties": {
-                  "$ref": "#/definitions/OrganizationProperties"
-                }
-              },
-              "description": "Typed response envelope for ARM operations.",
-              "required": [
-                "id",
-                "name",
-                "type",
-                "location",
-                "properties"
-              ],
-              "x-adl-name": "ArmResponse<OrganizationResource>"
+              "$ref": "#/definitions/OrganizationResource"
             }
           }
         }
@@ -132,39 +100,7 @@
               }
             },
             "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "type": {
-                  "type": "string"
-                },
-                "location": {
-                  "type": "string"
-                },
-                "tags": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  }
-                },
-                "properties": {
-                  "$ref": "#/definitions/OrganizationProperties"
-                }
-              },
-              "description": "Typed response envelope for ARM operations.",
-              "required": [
-                "id",
-                "name",
-                "type",
-                "location",
-                "properties"
-              ],
-              "x-adl-name": "ArmResponse<OrganizationResource>"
+              "$ref": "#/definitions/OrganizationResource"
             }
           }
         }
@@ -217,39 +153,7 @@
               }
             },
             "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "type": {
-                  "type": "string"
-                },
-                "location": {
-                  "type": "string"
-                },
-                "tags": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  }
-                },
-                "properties": {
-                  "$ref": "#/definitions/OrganizationProperties"
-                }
-              },
-              "description": "Typed response envelope for ARM operations.",
-              "required": [
-                "id",
-                "name",
-                "type",
-                "location",
-                "properties"
-              ],
-              "x-adl-name": "ArmResponse<OrganizationResource>"
+              "$ref": "#/definitions/OrganizationResource"
             }
           }
         }
@@ -294,7 +198,6 @@
             "schema": {
               "type": "object",
               "properties": {},
-              "description": "Typed response envelope for ARM operations.",
               "x-adl-name": "{}"
             }
           }
@@ -338,25 +241,7 @@
               }
             },
             "schema": {
-              "type": "object",
-              "properties": {
-                "primary": {
-                  "type": "string",
-                  "format": "password",
-                  "description": "The primary key."
-                },
-                "secondary": {
-                  "type": "string",
-                  "format": "password",
-                  "description": "The secondary Key."
-                }
-              },
-              "description": "Typed response envelope for ARM operations.",
-              "required": [
-                "primary",
-                "secondary"
-              ],
-              "x-adl-name": "ArmResponse<OrganizationKeys>"
+              "$ref": "#/definitions/OrganizationKeys"
             }
           }
         }
@@ -402,12 +287,11 @@
                   "type": "string"
                 }
               },
-              "description": "Paged response",
               "required": [
                 "value",
                 "nextLink"
               ],
-              "x-adl-name": "Page<OrganizationResource>"
+              "x-adl-name": "<OrganizationResource>"
             }
           }
         },
@@ -462,12 +346,11 @@
                   "type": "string"
                 }
               },
-              "description": "Paged response",
               "required": [
                 "value",
                 "nextLink"
               ],
-              "x-adl-name": "Page<OrganizationResource>"
+              "x-adl-name": "<OrganizationResource>"
             }
           }
         },
@@ -478,38 +361,6 @@
     }
   },
   "definitions": {
-    "OrganizationProperties": {
-      "type": "object",
-      "properties": {
-        "createdTime": {
-          "type": "string",
-          "format": "date",
-          "description": "UTC Time when Organization resource was created."
-        },
-        "organizationId": {
-          "type": "string",
-          "description": "Id of the Confluent organization."
-        },
-        "ssoUrl": {
-          "type": "string",
-          "description": "Single sign-on url for the Confluent organization."
-        },
-        "offerDetail": {
-          "$ref": "#/definitions/OfferDetail"
-        },
-        "userDetail": {
-          "$ref": "#/definitions/UserDetail"
-        }
-      },
-      "description": "Details of the Confluent organization.",
-      "required": [
-        "createdTime",
-        "organizationId",
-        "ssoUrl",
-        "offerDetail",
-        "userDetail"
-      ]
-    },
     "OrganizationResource": {
       "type": "object",
       "properties": {
@@ -543,6 +394,57 @@
         "properties"
       ],
       "x-ms-azure-resource": true
+    },
+    "OrganizationKeys": {
+      "type": "object",
+      "properties": {
+        "primary": {
+          "type": "string",
+          "format": "password",
+          "description": "The primary key."
+        },
+        "secondary": {
+          "type": "string",
+          "format": "password",
+          "description": "The secondary Key."
+        }
+      },
+      "required": [
+        "primary",
+        "secondary"
+      ]
+    },
+    "OrganizationProperties": {
+      "type": "object",
+      "properties": {
+        "createdTime": {
+          "type": "string",
+          "format": "date",
+          "description": "UTC Time when Organization resource was created."
+        },
+        "organizationId": {
+          "type": "string",
+          "description": "Id of the Confluent organization."
+        },
+        "ssoUrl": {
+          "type": "string",
+          "description": "Single sign-on url for the Confluent organization."
+        },
+        "offerDetail": {
+          "$ref": "#/definitions/OfferDetail"
+        },
+        "userDetail": {
+          "$ref": "#/definitions/UserDetail"
+        }
+      },
+      "description": "Details of the Confluent organization.",
+      "required": [
+        "createdTime",
+        "organizationId",
+        "ssoUrl",
+        "offerDetail",
+        "userDetail"
+      ]
     },
     "OfferDetail": {
       "type": "object",
