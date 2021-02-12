@@ -248,17 +248,23 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     }
 
     let contentType = 'application/json';
-    const response: any = {
-      schema: getSchemaOrPlaceholder(responseModel),
-    };
+    const response: any = {};
 
     const desc = getDoc(responseModel);
     if (desc) {
       response.description = desc;
     }
 
+    let bodyModel = responseModel;
     if (responseModel.kind === 'Model') {
       for (const prop of responseModel.properties.values()) {
+        if (isBody(prop)) {
+          if (bodyModel !== responseModel) {
+            throw new Error("Duplicate @body declarations on response type");
+          }
+
+          bodyModel = prop.type;
+        }
         const type = prop.type;
         const headerName = getHeaderFieldName(prop);
         switch (headerName) {
@@ -283,9 +289,13 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       }
     }
 
+    response.schema = getSchemaOrPlaceholder(bodyModel);
+
+
     if (!currentEndpoint.produces.includes(contentType)) {
       currentEndpoint.produces.push(contentType);
     }
+
 
     currentEndpoint.responses[statusCode] = response;
   }
