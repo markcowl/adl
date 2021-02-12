@@ -1,17 +1,17 @@
 
 model Person {
-  @v("read") id: string;
-  @v("write") secret: string;
+  @visibility("read") id: string;
+  @visibility("write") secret: string;
   name: string;
   test: string;
 }
 
-@wv("read")
+@withVisibility("read")
 model Readable<T> {
   ... T;
 }
 
-@wv("write")
+@withVisibility("write")
 model Writable<T> {
   ... T;
 }
