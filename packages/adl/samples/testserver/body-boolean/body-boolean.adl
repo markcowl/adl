@@ -42,7 +42,7 @@ namespace BoolsNull {
 
 @doc "AutoRest Bool Test Service"
 @resource("/bool/invalid")
-namespace BoolsNull {
+namespace BoolsInvalid {
   @doc "Get invalid Boolean value"
   @operationId("bool_getInvalid")
   @get op getInvalid(): boolean | Error;
