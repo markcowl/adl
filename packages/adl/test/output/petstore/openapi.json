@@ -30,10 +30,10 @@
             }
           },
           "default": {
+            "description": "Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            },
-            "description": "Error"
+            }
           }
         }
       },
@@ -52,22 +52,11 @@
         "responses": {
           "200": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "tag": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "name"
-              ],
-              "x-adl-name": "OkResponse<Pet>"
+              "$ref": "#/definitions/Pet"
             }
           },
           "304": {
+            "description": "Not modified",
             "schema": {
               "type": "object",
               "properties": {
@@ -83,14 +72,13 @@
                 "name"
               ],
               "x-adl-name": "NotModified<Pet>"
-            },
-            "description": "Not modified"
+            }
           },
           "default": {
+            "description": "Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            },
-            "description": "Error"
+            }
           }
         }
       }
@@ -131,14 +119,14 @@
                 "items",
                 "nextLink"
               ],
-              "x-adl-name": "OkResponse<ResponsePage<Pet>>"
+              "x-adl-name": "ResponsePage<Pet>"
             }
           },
           "default": {
+            "description": "Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            },
-            "description": "Error"
+            }
           }
         },
         "x-ms-pageable": {
@@ -166,26 +154,14 @@
         "responses": {
           "200": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "tag": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "name"
-              ],
-              "x-adl-name": "OkResponse<Pet>"
+              "$ref": "#/definitions/Pet"
             }
           },
           "default": {
+            "description": "Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            },
-            "description": "Error"
+            }
           }
         }
       }
@@ -231,14 +207,14 @@
                 "items",
                 "nextLink"
               ],
-              "x-adl-name": "OkResponse<ResponsePage<Toy>>"
+              "x-adl-name": "ResponsePage<Toy>"
             }
           },
           "default": {
+            "description": "Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            },
-            "description": "Error"
+            }
           }
         },
         "x-ms-pageable": {

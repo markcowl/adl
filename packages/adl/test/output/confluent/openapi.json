@@ -37,6 +37,15 @@
         ],
         "responses": {
           "200": {
+            "description": "Typed response envelope for ARM operations.",
+            "headers": {
+              "x-ms-client-request-id": {
+                "type": "string"
+              },
+              "x-ms-correlation-request-id": {
+                "type": "string"
+              }
+            },
             "schema": {
               "type": "object",
               "properties": {
@@ -71,15 +80,6 @@
                 "properties"
               ],
               "x-adl-name": "ArmResponse<OrganizationResource>"
-            },
-            "description": "Typed response envelope for ARM operations.",
-            "headers": {
-              "x-ms-client-request-id": {
-                "type": "string"
-              },
-              "x-ms-correlation-request-id": {
-                "type": "string"
-              }
             }
           }
         }
@@ -122,6 +122,15 @@
         ],
         "responses": {
           "200": {
+            "description": "Typed response envelope for ARM operations.",
+            "headers": {
+              "x-ms-client-request-id": {
+                "type": "string"
+              },
+              "x-ms-correlation-request-id": {
+                "type": "string"
+              }
+            },
             "schema": {
               "type": "object",
               "properties": {
@@ -156,15 +165,6 @@
                 "properties"
               ],
               "x-adl-name": "ArmResponse<OrganizationResource>"
-            },
-            "description": "Typed response envelope for ARM operations.",
-            "headers": {
-              "x-ms-client-request-id": {
-                "type": "string"
-              },
-              "x-ms-correlation-request-id": {
-                "type": "string"
-              }
             }
           }
         }
@@ -207,6 +207,15 @@
         ],
         "responses": {
           "200": {
+            "description": "Typed response envelope for ARM operations.",
+            "headers": {
+              "x-ms-client-request-id": {
+                "type": "string"
+              },
+              "x-ms-correlation-request-id": {
+                "type": "string"
+              }
+            },
             "schema": {
               "type": "object",
               "properties": {
@@ -241,15 +250,6 @@
                 "properties"
               ],
               "x-adl-name": "ArmResponse<OrganizationResource>"
-            },
-            "description": "Typed response envelope for ARM operations.",
-            "headers": {
-              "x-ms-client-request-id": {
-                "type": "string"
-              },
-              "x-ms-correlation-request-id": {
-                "type": "string"
-              }
             }
           }
         }
@@ -282,12 +282,6 @@
         ],
         "responses": {
           "200": {
-            "schema": {
-              "type": "object",
-              "properties": {},
-              "description": "Typed response envelope for ARM operations.",
-              "x-adl-name": "{}"
-            },
             "description": "Typed response envelope for ARM operations.",
             "headers": {
               "x-ms-client-request-id": {
@@ -296,6 +290,12 @@
               "x-ms-correlation-request-id": {
                 "type": "string"
               }
+            },
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "description": "Typed response envelope for ARM operations.",
+              "x-adl-name": "{}"
             }
           }
         }
@@ -328,6 +328,15 @@
         ],
         "responses": {
           "200": {
+            "description": "Typed response envelope for ARM operations.",
+            "headers": {
+              "x-ms-client-request-id": {
+                "type": "string"
+              },
+              "x-ms-correlation-request-id": {
+                "type": "string"
+              }
+            },
             "schema": {
               "type": "object",
               "properties": {
@@ -348,15 +357,6 @@
                 "secondary"
               ],
               "x-adl-name": "ArmResponse<OrganizationKeys>"
-            },
-            "description": "Typed response envelope for ARM operations.",
-            "headers": {
-              "x-ms-client-request-id": {
-                "type": "string"
-              },
-              "x-ms-correlation-request-id": {
-                "type": "string"
-              }
             }
           }
         }
@@ -379,6 +379,15 @@
         ],
         "responses": {
           "200": {
+            "description": "Paged response",
+            "headers": {
+              "x-ms-client-request-id": {
+                "type": "string"
+              },
+              "x-ms-correlation-request-id": {
+                "type": "string"
+              }
+            },
             "schema": {
               "type": "object",
               "properties": {
@@ -399,15 +408,6 @@
                 "nextLink"
               ],
               "x-adl-name": "Page<OrganizationResource>"
-            },
-            "description": "Paged response",
-            "headers": {
-              "x-ms-client-request-id": {
-                "type": "string"
-              },
-              "x-ms-correlation-request-id": {
-                "type": "string"
-              }
             }
           }
         },
@@ -439,6 +439,15 @@
         ],
         "responses": {
           "200": {
+            "description": "Paged response",
+            "headers": {
+              "x-ms-client-request-id": {
+                "type": "string"
+              },
+              "x-ms-correlation-request-id": {
+                "type": "string"
+              }
+            },
             "schema": {
               "type": "object",
               "properties": {
@@ -459,15 +468,6 @@
                 "nextLink"
               ],
               "x-adl-name": "Page<OrganizationResource>"
-            },
-            "description": "Paged response",
-            "headers": {
-              "x-ms-client-request-id": {
-                "type": "string"
-              },
-              "x-ms-correlation-request-id": {
-                "type": "string"
-              }
             }
           }
         },
