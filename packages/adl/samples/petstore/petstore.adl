@@ -20,7 +20,7 @@ model Error {
 @doc "Not modified"
 model NotModified<T> {
   @header statusCode: 304;
-  ... T;
+  @body body: T;
 }
 
 model ResponsePage<T> {

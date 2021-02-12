@@ -248,17 +248,23 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     }
 
     let contentType = 'application/json';
-    const response: any = {
-      schema: getSchemaOrPlaceholder(responseModel),
-    };
+    const response: any = {};
 
     const desc = getDoc(responseModel);
     if (desc) {
       response.description = desc;
     }
 
+    let bodyModel = responseModel;
     if (responseModel.kind === 'Model') {
       for (const prop of responseModel.properties.values()) {
+        if (isBody(prop)) {
+          if (bodyModel !== responseModel) {
+            throw new Error("Duplicate @body declarations on response type");
+          }
+
+          bodyModel = prop.type;
+        }
         const type = prop.type;
         const headerName = getHeaderFieldName(prop);
         switch (headerName) {
@@ -283,9 +289,13 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       }
     }
 
+    response.schema = getSchemaOrPlaceholder(bodyModel);
+
+
     if (!currentEndpoint.produces.includes(contentType)) {
       currentEndpoint.produces.push(contentType);
     }
+
 
     currentEndpoint.responses[statusCode] = response;
   }
@@ -327,15 +337,32 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
   }
 
   function getParamPlaceholder(parent: ModelType | undefined, property: ModelTypeProperty) {
+
+    let spreadParam = false;
+    
+    if (property.sourceProperty) {
+      // chase our sources all the way back to the first place this property
+      // was defined.
+      spreadParam = true;
+      property = property.sourceProperty;
+      while (property.sourceProperty) {
+        property = property.sourceProperty;
+      }
+    }
+
     if (params.has(property)) {
       return params.get(property);
     }
 
     const placeholder = {};
-    if (!parent?.ownProperties.has(property.name)) {
-      // only parameters inherited by spreading or from interface are shared in #/parameters
+    // only parameters inherited by spreading or from interface are shared in #/parameters
+    // bt: not sure about the interface part of this comment?
+    
+    if (spreadParam) {
       params.set(property, placeholder);
     }
+
+
     return placeholder;
   }
 
@@ -346,6 +373,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
   ) {
     const parameters = [...resourceParams, ...methodParams];
 
+    let bodyType: Type | undefined;
     let emittedImplicitBodyParam = false;
     for (const param of parameters) {
       if (params.has(param)) {
@@ -362,15 +390,34 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       } else if (queryInfo) {
         emitParameter(parent, param, 'query');
       } else if (headerInfo) {
-        emitParameter(parent, param, 'header');
+        if (headerInfo === 'content-type') {
+          currentEndpoint.consumes = getContentTypes(param);
+        } else {
+          emitParameter(parent, param, 'header');
+        }
       } else if (bodyInfo) {
+        bodyType = param.type;
         emitParameter(parent,param, 'body');
       } else {
         if (emittedImplicitBodyParam) {
           throw new Error('request has multiple body types');
         }
         emittedImplicitBodyParam = true;
+        bodyType = param.type;
         emitParameter(parent, param, 'body');
+      }
+    }
+
+    if (currentEndpoint.consumes.length === 0 && bodyType) {
+      // we didn't find an explicit content type anywhere, so infer from body.
+      const modelType = getModelTypeIfNullable(bodyType);
+      if (modelType) {
+        let contentTypeParam = modelType.properties.get('contentType');
+        if (contentTypeParam) {
+          currentEndpoint.consumes = getContentTypes(contentTypeParam);
+        } else {
+          currentEndpoint.consumes = ['application/json'];
+        }
       }
     }
   }
@@ -409,37 +456,9 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
   }
 
   function emitParameter(parent: ModelType | undefined, param: ModelTypeProperty, kind: string) {
-    let skipParam = false;
     const ph = getParamPlaceholder(parent, param);
     populateParameter(ph, param, kind);
-
-    let contentTypes: string[] = [];
-    if (kind === 'body') {
-      const modelType = getModelTypeIfNullable(param.type);
-      if (modelType) {
-        let contentTypeParam = modelType.properties.get('contentType');
-        if (contentTypeParam) {
-          contentTypes = getContentTypes(contentTypeParam);
-        } else {
-          contentTypes = ['application/json'];
-        }
-      }
-    } else if (kind === 'header' && param.name === 'contentType') {
-      contentTypes = getContentTypes(param);
-      skipParam = true;
-    }
-
-    if (contentTypes.length > 0) {
-      contentTypes.forEach(contentType => {
-        if (!currentEndpoint.consumes.includes(contentType)) {
-          currentEndpoint.consumes.push(contentType);
-        }
-      })
-    }
-
-    if (!skipParam) {
-      currentEndpoint.parameters.push(ph);
-    }
+    currentEndpoint.parameters.push(ph);
   }
 
   function populateParameter(ph: any, param: ModelTypeProperty, kind: string | undefined) {
@@ -495,7 +514,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
   function getParameterKey(property: ModelTypeProperty, param: any) {
     const parent = program.checker!.getTypeForNode(property.node.parent!) as ModelType;
     let key = program.checker!.getTypeName(parent);
-    if (parent.ownProperties.size > 1) {
+    if (parent.properties.size > 1) {
       key += `.${property.name}`;
     }
 
@@ -614,7 +633,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       description: getDoc(model),
     };
 
-    for (const [name, prop] of model.ownProperties) {
+    for (const [name, prop] of model.properties) {
       if (!isSchemaProperty(prop)) {
         continue;
       }
@@ -683,7 +702,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
    * type.
    */
   function getTypeForSchemaProperties(type: ModelType): ModelType {
-    if (type.baseModels.length === 0 || hasSchemaProperties(type.ownProperties)) {
+    if (type.baseModels.length === 0 || hasSchemaProperties(type.properties)) {
       return type;
     }
 
@@ -770,7 +789,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
         return { type: 'boolean', enum: [adlType.value] };
       case 'Model':
         // Is the type templated with only one type?
-        if (adlType.baseModels.length === 1 && !hasSchemaProperties(adlType.ownProperties)) {
+        if (adlType.baseModels.length === 1 && !hasSchemaProperties(adlType.properties)) {
           return mapADLTypeToOpenAPI(adlType.baseModels[0]);
         }
 
@@ -796,7 +815,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
             return { type: 'string', format: 'date-time' };
           case 'Map':
             // We assert on valType because Map types always have a type
-            const valType = adlType.ownProperties.get("v");
+            const valType = adlType.properties.get("v");
             return {
               type: 'object',
               additionalProperties: mapADLTypeToOpenAPI(valType!.type)
@@ -825,5 +844,4 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     return name.replace(/^[A-Za-z0-9-_.]/g, '_');
   }
 }
-
 

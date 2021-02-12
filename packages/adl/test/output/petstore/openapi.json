@@ -30,10 +30,10 @@
             }
           },
           "default": {
+            "description": "Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            },
-            "description": "Error"
+            }
           }
         }
       },
@@ -56,16 +56,16 @@
             }
           },
           "304": {
+            "description": "Not modified",
             "schema": {
               "$ref": "#/definitions/Pet"
-            },
-            "description": "Not modified"
+            }
           },
           "default": {
+            "description": "Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            },
-            "description": "Error"
+            }
           }
         }
       }
@@ -110,10 +110,10 @@
             }
           },
           "default": {
+            "description": "Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            },
-            "description": "Error"
+            }
           }
         },
         "x-ms-pageable": {
@@ -145,10 +145,10 @@
             }
           },
           "default": {
+            "description": "Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            },
-            "description": "Error"
+            }
           }
         }
       }
@@ -198,10 +198,10 @@
             }
           },
           "default": {
+            "description": "Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            },
-            "description": "Error"
+            }
           }
         },
         "x-ms-pageable": {
