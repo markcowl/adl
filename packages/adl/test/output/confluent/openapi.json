@@ -364,15 +364,6 @@
     "OrganizationResource": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "type": {
-          "type": "string"
-        },
         "location": {
           "type": "string"
         },
@@ -387,11 +378,31 @@
         }
       },
       "required": [
-        "id",
-        "name",
-        "type",
         "location",
         "properties"
+      ],
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "description": "Common properties for all ARM resources.",
+          "required": [
+            "id",
+            "name",
+            "type"
+          ],
+          "x-adl-name": "ArmResource<OrganizationProperties>"
+        }
       ],
       "x-ms-azure-resource": true
     },
