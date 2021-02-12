@@ -416,7 +416,6 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
         if (contentTypeParam) {
           currentEndpoint.consumes = getContentTypes(contentTypeParam);
         } else {
-          console.log('emitting default content txype');
           currentEndpoint.consumes = ['application/json'];
         }
       }
