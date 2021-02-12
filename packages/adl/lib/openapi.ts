@@ -68,6 +68,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
   let currentBasePath: string | undefined = '';
   let currentPath: any = root.paths;
   let currentEndpoint: any;
+  let currentBodyType: any;
 
   // Map types to their schema definition that will go in #/definitions. Inlined
   // schemas do not go in this map.
@@ -373,6 +374,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
   ) {
     const parameters = [...resourceParams, ...methodParams];
 
+    let bodyType: Type | undefined;
     let emittedImplicitBodyParam = false;
     for (const param of parameters) {
       if (params.has(param)) {
@@ -389,15 +391,35 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       } else if (queryInfo) {
         emitParameter(parent, param, 'query');
       } else if (headerInfo) {
-        emitParameter(parent, param, 'header');
+        if (headerInfo === 'content-type') {
+          currentEndpoint.consumes = getContentTypes(param);
+        } else {
+          emitParameter(parent, param, 'header');
+        }
       } else if (bodyInfo) {
+        bodyType = param.type;
         emitParameter(parent,param, 'body');
       } else {
         if (emittedImplicitBodyParam) {
           throw new Error('request has multiple body types');
         }
         emittedImplicitBodyParam = true;
+        bodyType = param.type;
         emitParameter(parent, param, 'body');
+      }
+    }
+
+    if (currentEndpoint.consumes.length === 0 && bodyType) {
+      // we didn't find an explicit content type anywhere, so infer from body.
+      const modelType = getModelTypeIfNullable(bodyType);
+      if (modelType) {
+        let contentTypeParam = modelType.properties.get('contentType');
+        if (contentTypeParam) {
+          currentEndpoint.consumes = getContentTypes(contentTypeParam);
+        } else {
+          console.log('emitting default content txype');
+          currentEndpoint.consumes = ['application/json'];
+        }
       }
     }
   }
@@ -436,37 +458,9 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
   }
 
   function emitParameter(parent: ModelType | undefined, param: ModelTypeProperty, kind: string) {
-    let skipParam = false;
     const ph = getParamPlaceholder(parent, param);
     populateParameter(ph, param, kind);
-
-    let contentTypes: string[] = [];
-    if (kind === 'body') {
-      const modelType = getModelTypeIfNullable(param.type);
-      if (modelType) {
-        let contentTypeParam = modelType.properties.get('contentType');
-        if (contentTypeParam) {
-          contentTypes = getContentTypes(contentTypeParam);
-        } else {
-          contentTypes = ['application/json'];
-        }
-      }
-    } else if (kind === 'header' && param.name === 'contentType') {
-      contentTypes = getContentTypes(param);
-      skipParam = true;
-    }
-
-    if (contentTypes.length > 0) {
-      contentTypes.forEach(contentType => {
-        if (!currentEndpoint.consumes.includes(contentType)) {
-          currentEndpoint.consumes.push(contentType);
-        }
-      })
-    }
-
-    if (!skipParam) {
-      currentEndpoint.parameters.push(ph);
-    }
+    currentEndpoint.parameters.push(ph);
   }
 
   function populateParameter(ph: any, param: ModelTypeProperty, kind: string | undefined) {
