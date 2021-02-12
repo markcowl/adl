@@ -58,20 +58,7 @@
           "304": {
             "description": "Not modified",
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "tag": {
-                  "type": "string"
-                }
-              },
-              "description": "Not modified",
-              "required": [
-                "name"
-              ],
-              "x-adl-name": "NotModified<Pet>"
+              "$ref": "#/definitions/Pet"
             }
           },
           "default": {
