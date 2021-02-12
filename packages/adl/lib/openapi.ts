@@ -68,7 +68,6 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
   let currentBasePath: string | undefined = '';
   let currentPath: any = root.paths;
   let currentEndpoint: any;
-  let currentBodyType: any;
 
   // Map types to their schema definition that will go in #/definitions. Inlined
   // schemas do not go in this map.
