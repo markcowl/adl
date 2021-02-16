@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { getSourceLocationOfType, throwDiagnostic } from '../compiler/diagnostics.js';
+import { throwDiagnostic } from '../compiler/diagnostics.js';
 import { Program } from '../compiler/program.js';
 import { ArrayType, Namespace, NamespaceProperty, ModelType, ModelTypeProperty, Type, UnionType } from '../compiler/types.js';
 import { getDoc, getFormat, getIntrinsicType, getMaxLength, getMinLength, isSecret, isList, isIntrinsic } from './decorators.js';
@@ -84,7 +84,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
   function emitOpenAPI() {
     for (let resource of getResources()) {
       if (resource.kind !== 'Namespace') {
-        throwDiagnostic("Resource goes on namespace", getSourceLocationOfType(resource));
+        throwDiagnostic("Resource goes on namespace", resource);
       }
 
       emitResource(<Namespace>resource);
@@ -139,7 +139,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       if (!param) {
         throwDiagnostic(
           `Path contains parameter ${declaredParam} but wasn't found in given parameters`,
-          getSourceLocationOfType(prop)
+          prop
         );
       }
 
@@ -263,7 +263,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       for (const prop of responseModel.properties.values()) {
         if (isBody(prop)) {
           if (bodyModel !== responseModel) {
-            throwDiagnostic("Duplicate @body declarations on response type", getSourceLocationOfType(responseModel));
+            throwDiagnostic("Duplicate @body declarations on response type", responseModel);
           }
 
           bodyModel = prop.type;
@@ -404,7 +404,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
         emitParameter(parent,param, 'body');
       } else {
         if (emittedImplicitBodyParam) {
-          throwDiagnostic('request has multiple body types', getSourceLocationOfType(property));
+          throwDiagnostic('request has multiple body types', property);
         }
         emittedImplicitBodyParam = true;
         bodyType = param.type;
@@ -435,14 +435,14 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
         if (option.kind === "String") {
           contentTypes.push(option.value);
         } else {
-          throwDiagnostic("The contentType property union must contain only string values", getSourceLocationOfType(param));
+          throwDiagnostic("The contentType property union must contain only string values", param);
         }
       }
 
       return contentTypes;
     }
 
-    throwDiagnostic("contentType parameter must be a string or union of strings", getSourceLocationOfType(param));
+    throwDiagnostic("contentType parameter must be a string or union of strings", param);
   }
 
   function getModelTypeIfNullable(type: Type): ModelType | undefined {
@@ -549,7 +549,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       return getSchemaForUnion(type);
     }
 
-    throwDiagnostic("Couldn't get schema for type " + type.kind, getSourceLocationOfType(type));
+    throwDiagnostic("Couldn't get schema for type " + type.kind, type);
   }
 
   function getSchemaForUnion(union: UnionType) {
@@ -557,7 +557,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     const nonNullOptions = union.options.filter(t => !isNullType(t));
     const nullable = union.options.length != nonNullOptions.length;
     if (nonNullOptions.length === 0) {
-      throwDiagnostic("Cannot have a union containing only null types.", getSourceLocationOfType(union));
+      throwDiagnostic("Cannot have a union containing only null types.", union);
     }
 
     const kind = nonNullOptions[0].kind;
@@ -587,7 +587,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
         schema["x-nullable"] = nullable;
         return schema;
       } else {
-        throwDiagnostic("Unions containing multiple model types cannot be emitted to OpenAPI v2 unless the union is between one model type and 'null'.", getSourceLocationOfType(union));
+        throwDiagnostic("Unions containing multiple model types cannot be emitted to OpenAPI v2 unless the union is between one model type and 'null'.", union);
       }
     }
 
@@ -611,7 +611,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     return schema;
 
     function throwInvalidUnionForOpenAPIV2(): never {
-      throwDiagnostic("Unions cannot be emitted to OpenAPI v2 unless all options are literals of the same type.", getSourceLocationOfType(union));
+      throwDiagnostic("Unions cannot be emitted to OpenAPI v2 unless all options are literals of the same type.", union);
     }
   }
 
