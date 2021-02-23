@@ -11,6 +11,7 @@ import { spawnSync, fork } from "child_process";
 const sampleFolders = [
   "petstore",
   "confluent",
+  "documentation",
   "nullable",
   "testserver/media-types",
   "testserver/body-boolean",
