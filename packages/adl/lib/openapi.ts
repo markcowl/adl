@@ -253,8 +253,6 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     let contentType = 'application/json';
     const response: any = {};
 
-    response.description = getResponseDescription(responseModel, statusCode);
-
     let bodyModel = responseModel;
     if (responseModel.kind === 'Model') {
       for (const prop of responseModel.properties.values()) {
@@ -289,6 +287,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       }
     }
 
+    response.description = getResponseDescription(responseModel, statusCode);
     response.schema = getSchemaOrPlaceholder(bodyModel);
 
 

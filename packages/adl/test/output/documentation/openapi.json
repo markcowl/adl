@@ -102,7 +102,7 @@
             }
           },
           "404": {
-            "description": "An unexpected error response",
+            "description": "A successful response",
             "schema": {
               "$ref": "#/definitions/NotFoundResp"
             }
