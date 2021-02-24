@@ -253,11 +253,6 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     let contentType = 'application/json';
     const response: any = {};
 
-    const desc = getDoc(responseModel);
-    if (desc) {
-      response.description = desc;
-    }
-
     let bodyModel = responseModel;
     if (responseModel.kind === 'Model') {
       for (const prop of responseModel.properties.values()) {
@@ -292,6 +287,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       }
     }
 
+    response.description = getResponseDescription(responseModel, statusCode);
     response.schema = getSchemaOrPlaceholder(bodyModel);
 
 
@@ -301,6 +297,18 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
 
 
     currentEndpoint.responses[statusCode] = response;
+  }
+
+  function getResponseDescription(responseModel: Type, statusCode: string) {
+    const desc = getDoc(responseModel);
+    if (desc) {
+      return desc;
+    }
+
+    if (statusCode === 'default') {
+      return "An unexpected error response"
+    }
+    return "A successful response"
   }
 
   function getResponseHeader(prop: ModelTypeProperty) {
@@ -330,7 +338,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       // Users will have to rename / alias type to have it get ref'ed.
       const schema = getSchemaForType(type);
       // helps to read output and correlate to ADL
-      schema['x-adl-name'] = name; 
+      schema['x-adl-name'] = name;
       return schema;
     } else {
       const placeholder = {};
@@ -342,7 +350,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
   function getParamPlaceholder(parent: ModelType | undefined, property: ModelTypeProperty) {
 
     let spreadParam = false;
-    
+
     if (property.sourceProperty) {
       // chase our sources all the way back to the first place this property
       // was defined.
@@ -360,7 +368,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     const placeholder = {};
     // only parameters inherited by spreading or from interface are shared in #/parameters
     // bt: not sure about the interface part of this comment?
-    
+
     if (spreadParam) {
       params.set(property, placeholder);
     }
@@ -594,7 +602,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
     for (const option of nonNullOptions) {
       if (option.kind != kind) {
         throwInvalidUnionForOpenAPIV2();
-      } 
+      }
 
       // We already know it's not a model type
       values.push((<any>option).value);
@@ -698,7 +706,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
    * If a model type has an unspeakable name in OpenAPI, no schema properties of
    * its own, and exactly one base model that has schema properties, then when
    * emitting the type as a schema, we can use the single base model with schema
-   * properties directly. The other properties will go elsewhere in OpenAPI. 
+   * properties directly. The other properties will go elsewhere in OpenAPI.
    *
    * This ensures we use the best name in OpenAPI when the ADL pattern of adding
    * headers and status codes is done by instantiating a template. For example,
@@ -720,7 +728,7 @@ function createOAPIEmitter(program: Program, options: OpenAPIEmitterOptions) {
       if (hasSchemaProperties(base.properties)) {
         if (schemaBase) {
           // more than one base with schema properties, can't reduce.
-          return type; 
+          return type;
         }
         schemaBase = base;
       }

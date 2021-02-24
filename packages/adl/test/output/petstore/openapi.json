@@ -23,6 +23,7 @@
         ],
         "responses": {
           "200": {
+            "description": "A successful response",
             "schema": {
               "type": "object",
               "properties": {},
@@ -51,6 +52,7 @@
         ],
         "responses": {
           "200": {
+            "description": "A successful response",
             "schema": {
               "$ref": "#/definitions/Pet"
             }
@@ -88,6 +90,7 @@
         ],
         "responses": {
           "200": {
+            "description": "A successful response",
             "schema": {
               "type": "object",
               "properties": {
@@ -140,6 +143,7 @@
         ],
         "responses": {
           "200": {
+            "description": "A successful response",
             "schema": {
               "$ref": "#/definitions/Pet"
             }
@@ -176,6 +180,7 @@
         ],
         "responses": {
           "200": {
+            "description": "A successful response",
             "schema": {
               "type": "object",
               "properties": {
